@@ -18,18 +18,18 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       login: '',
       password: ''
     }
   },
   methods: {
-    onSubmit() {
+    onSubmit () {
       this.agent.login(this.login, this.password)
     }
   },
-  created() {
+  created () {
     this.agent = this.$parent.agent
   }
 }

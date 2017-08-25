@@ -8,12 +8,12 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
     }
   },
   methods: {
-    created() {
+    created () {
       this.agent = this.$parent.agent
     }
   }

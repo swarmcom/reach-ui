@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  created() {
+  created () {
     this.agent = this.$parent.agent
   }
 }

@@ -33,22 +33,20 @@
 </template>
 
 <script>
-import { EventBus } from './event_bus.js';
-
 export default {
-  data() {
+  data () {
     return {
       a: {}
     }
   },
   methods: {
-    logout() { this.agent.logout() },
-    release() { this.agent.release() },
-    available() { this.agent.available() },
-    answer() { this.agent.answer() },
-    hangup() { this.agent.hangup() },
+    logout () { this.agent.logout() },
+    release () { this.agent.release() },
+    available () { this.agent.available() },
+    answer () { this.agent.answer() },
+    hangup () { this.agent.hangup() }
   },
-  created() {
+  created () {
     this.agent = this.$parent.agent
     this.a = this.agent.getData()
   }
