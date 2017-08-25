@@ -28,6 +28,7 @@ export default class WsProto {
     }
     this.r[this.id] = Cb
     this.id++
+    console.log('Cmd', msg)
     return this.ws.send(JSON.stringify(msg))
   }
 
