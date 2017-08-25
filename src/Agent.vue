@@ -55,6 +55,8 @@ export default {
   },
   created() {
     this.agent = this.$parent.agent
+    this.hangup_state = this.agent.hangup_state
+    this.state = this.agent.state
     EventBus.$on("agent_state", (S) => this.handleState(S.info))
   }
 }

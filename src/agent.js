@@ -1,12 +1,16 @@
 import { EventBus } from './event_bus.js';
 
 export default class Agent {
+
 	constructor() {
 		this.id = 1
 		this.r = {}
 		this.agent_auth = undefined
+		this.state = undefined
+		this.hangup_state = undefined
 		this.connect()
 		setTimeout( () => this.ping(), 30000)
+		EventBus.$on("agent_state", (S) => this.handleState(S.info))
 	}
 
 	connect() {
@@ -14,6 +18,11 @@ export default class Agent {
 		this.ws.onmessage = Ev => this.onMessage(Ev)
 		this.ws.onclose = Ev => this.onClose(Ev)
 		this.ws.onerror = Ev => this.onError(Ev)
+	}
+
+	handleState(S) {
+		this.hangup_state = S.hangup_state
+		this.state = S.state
 	}
 
 	login(Login, Password, Cb = (A) => A) {
@@ -85,5 +94,4 @@ export default class Agent {
 		this.handleAuth()
 		this.connect()
 	}
-
 }
