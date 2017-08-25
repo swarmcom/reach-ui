@@ -1,28 +1,38 @@
 import { EventBus } from './event_bus.js';
+import WsProto from './ws-proto.js'
+import Vue from 'vue'
 
-export default class Agent {
+export default class Agent extends WsProto {
 
 	constructor() {
-		this.id = 1
-		this.r = {}
-		this.agent_auth = undefined
-		this.state = undefined
-		this.hangup_state = undefined
-		this.connect()
-		setTimeout( () => this.ping(), 30000)
+		super("ws://localhost:8937/ws")
+		this.vm = new Vue({
+			data: {
+				agent_auth: undefined,
+				state: undefined,
+				hangup_state: undefined
+			}
+		}),
 		EventBus.$on("agent_state", (S) => this.handleState(S.info))
 	}
 
-	connect() {
-		this.ws = new WebSocket("ws://localhost:8937/ws")
-		this.ws.onmessage = Ev => this.onMessage(Ev)
-		this.ws.onclose = Ev => this.onClose(Ev)
-		this.ws.onerror = Ev => this.onError(Ev)
+	getData() {
+		return this.vm
+	}
+
+	onDisconnect() {
+		this.handleAuth()
 	}
 
 	handleState(S) {
-		this.hangup_state = S.hangup_state
-		this.state = S.state
+		this.vm.hangup_state = S.hangup_state
+		this.vm.state = S.state
+	}
+
+	handleAuth(A = undefined, Cb = (A) => A) {
+		this.vm.agent_auth = A
+		Cb(A)
+		EventBus.$emit('agent-auth', this.isAuth())
 	}
 
 	login(Login, Password, Cb = (A) => A) {
@@ -46,52 +56,7 @@ export default class Agent {
 	}
 
 	isAuth() {
-		return this.agent_auth !== undefined
+		return this.vm.agent_auth !== undefined
 	}
 
-	handleAuth(A = undefined, Cb = (A) => A) {
-		this.agent_auth = A
-		Cb(A)
-		EventBus.$emit('agent-auth', this.isAuth())
-	}
-
-	call(F, A = [], Cb = (A) => A) {
-		var msg = {
-			id: this.id,
-			type: "call",
-			args: [F, A]
-		}
-		this.r[this.id] = Cb
-		this.id++
-		return this.ws.send(JSON.stringify(msg))
-	}
-
-	ping() {
-		this.ws.send("ping") // they don't have ping support in browser O_O
-		setTimeout( () => this.ping(), 30000)
-	}
-
-	onMessage(Ev) {
-		var Data = JSON.parse(Ev.data)
-		console.log("IN:", Data)
-		var Cb = this.r[Data.id]
-		if(Cb !== undefined) {
-			delete this.r[Data.id]
-			Cb(Data.reply)
-		} else if (Data.event) {
-			EventBus.$emit(Data.event, Data)
-		}
-	}
-
-	onClose(Ev) {
-		console.log("CONN CLOSE:", Ev)
-		this.handleAuth()
-		this.connect()
-	}
-
-	onError(Ev) {
-		console.log("CONN ERROR:", Ev)
-		this.handleAuth()
-		this.connect()
-	}
 }

@@ -5,6 +5,9 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
+        <router-link class="nav-link" to="/admin">Admin</router-link>
+      </li>
+      <li class="nav-item">
         <router-link class="nav-link" to="/about">About</router-link>
       </li>
     </ul>
