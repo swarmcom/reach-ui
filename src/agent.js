@@ -31,6 +31,10 @@ export default class Agent extends WsProto {
     this.mfa('ws_admin', 'agents', ['all'], Cb)
   }
 
+  inqueues (Cb = (A) => A) {
+    this.mfa('ws_admin', 'inqueues', ['all'], Cb)
+  }
+
   handleState (S) {
     if (S && this.vm.agent_auth && this.vm.agent_auth.login === S.login) {
       this.vm.hangup_state = S.hangup_state

@@ -57,7 +57,7 @@ export default class WsProto {
     console.log('WS CLOSE:', Ev)
     this.onDisconnect()
     this.ws.close()
-    setTimeout( () => this.connect(), 5000 )
+    setTimeout( () => this.connect(), 2000 )
   }
 
   onError (Ev) {

@@ -43,7 +43,10 @@ export default {
       this.agent.agents(List => this.agents = List)
     },
     onTimer() {
-      this.agents.forEach((E, i, A) => { E.time = E.time + 1000; A.splice(i, 1, E) })
+      this.agents.forEach((E, i, A) => {
+        E.time = E.time + 1000
+        A.splice(i, 1, E)
+      })
       setTimeout( this.onTimer, 1000 )
     }
   },
