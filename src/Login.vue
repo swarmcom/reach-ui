@@ -27,9 +27,6 @@ export default {
   methods: {
     onSubmit() {
       this.agent.login(this.login, this.password)
-    },
-    onTest() {
-      console.log(this)
     }
   },
   created() {
