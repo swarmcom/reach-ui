@@ -20,8 +20,8 @@
 export default {
   data () {
     return {
-      login: '',
-      password: ''
+      login: 'agent2',
+      password: '1234'
     }
   },
   methods: {

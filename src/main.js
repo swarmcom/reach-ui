@@ -5,6 +5,7 @@ import About from './About.vue'
 import Login from './Login.vue'
 import Agent from './Agent.vue'
 import Admin from './Admin.vue'
+import Monitor from './Monitor.vue'
 import AgentWs from './agent.js'
 
 import { EventBus } from './event_bus.js'
@@ -16,6 +17,7 @@ const router = new VueRouter({
     { path: '/admin', component: Admin },
     { path: '/about', component: About },
     { path: '/login', component: Login },
+    { path: '/monitor', component: Monitor },
     { path: '/', component: Agent }
   ]
 })

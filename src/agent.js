@@ -23,19 +23,33 @@ export default class Agent extends WsProto {
     this.handleAuth()
   }
 
-  handleState (S) {
-    this.vm.hangup_state = S.hangup_state
-    this.vm.state = S.state
+  subscribe (Channel) {
+    this.mfa('ws_admin', 'subscribe', [Channel])
   }
 
-  handleAuth (A = undefined, Cb = (A) => A) {
-    this.vm.agent_auth = A
-    Cb(A)
+  agents (Cb = (A) => A) {
+    this.mfa('ws_admin', 'agents', ['all'], Cb)
+  }
+
+  handleState (S) {
+    if (S && this.vm.agent_auth && this.vm.agent_auth.login === S.login) {
+      this.vm.hangup_state = S.hangup_state
+      this.vm.state = S.state
+    }
+  }
+
+  handleAuth (AuthInfo = undefined, Cb = (A) => A) {
+    this.vm.agent_auth = AuthInfo
+    Cb(AuthInfo)
     EventBus.$emit('agent-auth', this.isAuth())
   }
 
   login (Login, Password, Cb = (A) => A) {
-    this.call('auth', [Login, Password], (A) => this.handleAuth(A, Cb))
+    if (this.isAuth()) {
+      this.handleAuth(this.vm.agent_auth)
+    } else {
+      this.call('auth', [Login, Password], (A) => this.handleAuth(A, Cb))
+    }
   }
 
   logout () {

@@ -17,10 +17,14 @@ export default class WsProto {
   }
 
   call (F, A = [], Cb = (A) => A) {
+    this.mfa('ws_agent', F, A, Cb)
+  }
+
+  mfa (M, F, A = [], Cb = (A) => A) {
     var msg = {
       id: this.id,
       type: 'call',
-      args: [F, A]
+      args: [M, F, A]
     }
     this.r[this.id] = Cb
     this.id++
@@ -39,10 +43,11 @@ export default class WsProto {
     var Data = JSON.parse(Ev.data)
     var Cb = this.r[Data.id]
     if (Cb !== undefined) {
-      console.log('Re:', Data)
+      console.log('Re', Data)
       delete this.r[Data.id]
       Cb(Data.reply)
     } else if (Data.event) {
+      console.log('Ev', Data)
       EventBus.$emit(Data.event, Data)
     }
   }
@@ -50,12 +55,12 @@ export default class WsProto {
   onClose (Ev) {
     console.log('WS CLOSE:', Ev)
     this.onDisconnect()
-    this.connect()
+    setTimeout( () => this.connect(), 5000 )
   }
 
   onError (Ev) {
     console.log('WS ERROR:', Ev)
     this.onDisconnect()
-    this.connect()
+    setTimeout( () => this.connect(), 5000 )
   }
 }
