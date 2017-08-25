@@ -48,11 +48,13 @@ export default {
       setTimeout( this.onTimer, 1000 )
     }
   },
+  mounted () {
+    this.onTimer()
+  },
   created () {
     this.agent = this.$parent.agent
     this.agent.subscribe('inqueues')
     this.query()
-    this.onTimer()
     EventBus.$on('inqueue_state', (S) => this.handleState(S))
   }
 }
