@@ -1,5 +1,7 @@
 <template>
-<table class="table table-hover table-sm">
+<div>
+<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+<table style="margin-top: 20px" class="table table-hover table-sm">
   <thead class="thead-default">
     <tr>
       <th>Name</th>
@@ -9,7 +11,7 @@
     </tr>
   </thead>
   <tbody v-for="profile in profiles">
-    <tr>
+    <tr @click="onClick(profile.name)">
       <td>{{ profile.name }}</td>
       <td>{{ profile.perm_profile }}</td>
       <td>{{ profile.ring_timeout }}</td>
@@ -17,6 +19,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 </template>
 
 
@@ -32,6 +35,12 @@ export default {
     query () {
       this.agent.get_profiles(List => this.profiles = List)
     },
+    add () {
+      this.$router.push(`/admin/profile/`)
+    },
+    onClick(id) {
+      this.$router.push(`/admin/profile/${id}`)
+    }
   },
   created () {
    this.agent = this.$parent.agent

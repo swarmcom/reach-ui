@@ -1,5 +1,7 @@
 <template>
-<table class="table table-hover table-sm">
+<div>
+<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+<table style="margin-top: 20px" class="table table-hover table-sm">
   <thead class="thead-default">
     <tr>
       <th>Name</th>
@@ -11,7 +13,7 @@
     </tr>
   </thead>
   <tbody v-for="queue in queues">
-    <tr>
+    <tr @click="onClick(queue.name)">
       <td>{{ queue.name }}</td>
       <td>{{ queue.group }}</td>
       <td>{{ queue.hold_music }}</td>
@@ -21,6 +23,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 </template>
 
 <script>
@@ -35,6 +38,12 @@ export default {
     query () {
       this.agent.get_queues(List => this.queues = List)
     },
+    add () {
+      this.$router.push(`/admin/queue/`)
+    },
+    onClick(id) {
+      this.$router.push(`/admin/queue/${id}`)
+    }
   },
   created () {
     this.agent = this.$parent.agent

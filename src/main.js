@@ -9,10 +9,14 @@ import Monitor from './Monitor.vue'
 import AgentWs from './agent.js'
 import AdminAgent from './Admin/Agent.vue'
 import AdminAgents from './Admin/Agents.vue'
+import AdminQueue from './Admin/Queue.vue'
 import AdminQueues from './Admin/Queues.vue'
-import AdminParams from './Admin/Params.vue'
+import AdminGroup from './Admin/Group.vue'
 import AdminGroups from './Admin/Groups.vue'
+import AdminProfile from './Admin/Profile.vue'
 import AdminProfiles from './Admin/Profiles.vue'
+
+import AdminParams from './Admin/Params.vue'
 
 import { EventBus } from './event_bus.js'
 
@@ -33,7 +37,13 @@ const router = new VueRouter({
       { path: 'groups', component: AdminGroups },
       { path: 'profiles', component: AdminProfiles },
       { path: 'agent', component: AdminAgent },
-      { path: 'agent/:id', component: AdminAgent, props: true }
+      { path: 'agent/:id', component: AdminAgent, props: true },
+      { path: 'queue', component: AdminQueue },
+      { path: 'queue/:id', component: AdminQueue, props: true },
+      { path: 'profile', component: AdminProfile },
+      { path: 'profile/:id', component: AdminProfile, props: true },
+      { path: 'group', component: AdminGroup },
+      { path: 'group/:id', component: AdminGroup, props: true }
     ] },
     { path: '/help', component: Help },
     { path: '/login', component: Login },

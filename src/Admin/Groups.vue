@@ -1,16 +1,18 @@
 <template>
-<table class="table table-hover table-sm">
+<div>
+<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+<table style="margin-top: 20px" class="table table-hover table-sm">
   <thead class="thead-default">
     <tr>
       <th>Name</th>
       <th>Aging</th>
       <th>Sort</th>
       <th>Music</th>
-      <th>Wrp</th>
+      <th>Wrap</th>
     </tr>
   </thead>
   <tbody v-for="group in groups">
-    <tr>
+    <tr @click="onClick(group.name)">
       <td>{{ group.name }}</td>
       <td>{{ group.aging_factor }}</td>
       <td>{{ group.sort }}</td>
@@ -19,6 +21,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 </template>
 
 
@@ -34,6 +37,12 @@ export default {
     query () {
       this.agent.get_groups(List => this.groups = List)
     },
+    add () {
+      this.$router.push(`/admin/group/`)
+    },
+    onClick(id) {
+      this.$router.push(`/admin/group/${id}`)
+    }
   },
   created () {
    this.agent = this.$parent.agent
