@@ -1,5 +1,7 @@
 <template>
-<table class="table table-hover table-sm">
+<div>
+<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+<table style="margin-top: 20px" class="table table-hover table-sm">
   <thead class="thead-default">
     <tr>
       <th>Login</th>
@@ -11,7 +13,7 @@
     </tr>
   </thead>
   <tbody v-for="agent in agents">
-    <tr>
+    <tr @click="onClick(agent.login)">
       <td>{{ agent.login }}</td>
       <td>{{ agent.firstname }}</td>
       <td>{{ agent.lastname }}</td>
@@ -21,6 +23,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 </template>
 
 <script>
@@ -35,6 +38,12 @@ export default {
     query () {
       this.agent.get_agents(List => this.agents = List)
     },
+    add () {
+      this.$router.push(`/admin/agent/`)
+    },
+    onClick(id) {
+      this.$router.push(`/admin/agent/${id}`)
+    }
   },
   created () {
     this.agent = this.$parent.agent

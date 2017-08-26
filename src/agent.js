@@ -27,6 +27,30 @@ export default class Agent extends WsProto {
     this.mfa('ws_admin', 'subscribe', [Channel])
   }
 
+  get_agent (Id, Cb = (A) => A) {
+    this.mfa('ws_admin', 'get_agent', [Id], Cb)
+  }
+
+  update_agent (Obj, Cb = (A) => A) {
+    this.mfa('ws_admin', 'update_agent', [Obj], Cb)
+  }
+
+  delete_agent (Id, Cb = (A) => A) {
+    this.mfa('ws_admin', 'delete_agent', [Id], Cb)
+  }
+
+  get_queue (Id, Cb = (A) => A) {
+    this.mfa('ws_admin', 'get_queue', [Id], Cb)
+  }
+
+  get_profile (Id, Cb = (A) => A) {
+    this.mfa('ws_admin', 'get_profile', [Id], Cb)
+  }
+
+  get_group (Id, Cb = (A) => A) {
+    this.mfa('ws_admin', 'get_group', [Id], Cb)
+  }
+
   get_agents (Cb = (A) => A) {
     this.mfa('ws_admin', 'get_agents', [], Cb)
   }
