@@ -7,6 +7,11 @@ import Agent from './Agent.vue'
 import Admin from './Admin.vue'
 import Monitor from './Monitor.vue'
 import AgentWs from './agent.js'
+import AdminAgents from './Admin/Agents.vue'
+import AdminQueues from './Admin/Queues.vue'
+import AdminParams from './Admin/Params.vue'
+import AdminGroups from './Admin/Groups.vue'
+import AdminProfiles from './Admin/Profiles.vue'
 
 import { EventBus } from './event_bus.js'
 
@@ -14,7 +19,13 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
-    { path: '/admin', component: Admin },
+    { path: '/admin', component: Admin, children: [
+      { path: 'agents', component: AdminAgents },
+      { path: 'queues', component: AdminQueues },
+      { path: 'params', component: AdminParams },
+      { path: 'groups', component: AdminGroups },
+      { path: 'profiles', component: AdminProfiles }
+    ] },
     { path: '/help', component: Help },
     { path: '/login', component: Login },
     { path: '/monitor', component: Monitor },
