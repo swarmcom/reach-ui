@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
-import About from './About.vue'
+import Help from './Help.vue'
 import Login from './Login.vue'
 import Agent from './Agent.vue'
 import Admin from './Admin.vue'
@@ -15,7 +15,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     { path: '/admin', component: Admin },
-    { path: '/about', component: About },
+    { path: '/help', component: Help },
     { path: '/login', component: Login },
     { path: '/monitor', component: Monitor },
     { path: '/', component: Agent }
@@ -52,6 +52,6 @@ const app = new Vue({
     if (!this.agent.isAuth()) {
       this.$router.replace('/login')
     }
-    EventBus.$on('agent-auth', Auth => handleAuth(this.$router, Auth))
+    EventBus.$on('agent_auth', Auth => handleAuth(this.$router, Auth))
   }
 })

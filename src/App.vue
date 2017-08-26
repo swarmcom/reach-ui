@@ -1,8 +1,8 @@
 <template>
 <div>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<nav v-if="auth" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+  <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <router-link class="nav-link" to="/admin">Admin</router-link>
@@ -11,9 +11,11 @@
         <router-link class="nav-link" to="/monitor">Monitor</router-link>
       </li>
       <li class="nav-item">
-        <router-link class="nav-link" to="/about">About</router-link>
+        <router-link class="nav-link" to="/help">Help</router-link>
       </li>
     </ul>
+    <span class="navbar-text" v-if="auth">{{ this.agent.vm.agent_auth.login }}</span>
+    </li>
   </div>
 </nav>
 <div class="container">
@@ -23,9 +25,17 @@
 </template>
 
 <script>
+import { EventBus } from './event_bus.js'
+
 export default {
+  data () {
+    return {
+      auth: false
+    }
+  },
   created () {
     this.agent = this.$parent.agent
+    EventBus.$on('agent_auth', (Auth) => this.auth = Auth)
   }
 }
 </script>
@@ -33,5 +43,8 @@ export default {
 <style>
 body {
   padding-top: 70px;
+}
+#navbars > span {
+  color: white;
 }
 </style>

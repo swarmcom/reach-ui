@@ -45,7 +45,7 @@ export default class Agent extends WsProto {
   handleAuth (AuthInfo = undefined, Cb = (A) => A) {
     this.vm.agent_auth = AuthInfo
     Cb(AuthInfo)
-    EventBus.$emit('agent-auth', this.isAuth())
+    EventBus.$emit('agent_auth', this.isAuth())
   }
 
   login (Login, Password, Cb = (A) => A) {

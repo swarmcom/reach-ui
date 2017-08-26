@@ -57,7 +57,7 @@ export default {
     this.agent = this.$parent.agent
     this.agent.subscribe('agents')
     this.query()
-    EventBus.$on('agent_state', (S) => this.handleState(S))
+    EventBus.$on('agent-auth', (S) => this.handleState(S))
   }
 }
 </script>

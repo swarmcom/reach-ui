@@ -2,31 +2,25 @@
 <div>
 <div class="row">
   <div class="col">
-    <h1>Agent UI</h1>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <div class="alert alert-primary" role="alert">state: {{a.state}}, {{a.hangup_state}}</div>
+    <button type="button" disabled class="btn btn-outline-primary">{{a.state}}</button>
+    <button type="button" disabled class="btn btn-outline-secondary">{{a.hangup_state}}</button>
   </div>
   <div class="col">
-    <template v-if="a.state === 'ringing'">
-      <button @click="hangup" class="btn">Hangup</button>
-    </template>
-
-    <template v-if="a.state === 'oncall'">
-      <button @click="hangup" class="btn">Hangup</button>
-    </template>
-
-    <template v-if="a.hangup_state === 'available'">
-      <button @click="release" class="btn">Release</button>
-    </template>
-
-    <template v-if="a.hangup_state === 'release'">
-      <button @click="available" class="btn">Available</button>
-    </template>
-    
-    <button @click="logout" class="btn">Logout</button>
+    <div class="row justify-content-end">
+      <button v-if="a.state == 'ringing'" @click="hangup" class="btn btn-outline-warning">Hangup</button>
+      <button v-if="a.state == 'oncall'" @click="hangup" class="btn btn-outline-warning">Hangup</button>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row justify-content-end">
+      <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-outline-info">Release</button>
+      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-success">Available</button>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row justify-content-end">
+      <button @click="logout" class="btn btn-outline-danger">Logout</button>
+    </div>
   </div>
 </div>
 </div>
