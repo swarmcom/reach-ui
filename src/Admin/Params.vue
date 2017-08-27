@@ -29,7 +29,7 @@ export default {
     },
   },
   created () {
-    this.queue()
+    this.query()
   }
 }
 </script>
