@@ -22,12 +22,12 @@ import AdminParams from './Admin/Params.vue'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
+import Notifications from 'vue-notification'
 
-// globally (in your main .js file)
 Vue.component('icon', Icon)
-
 Vue.use(VueRouter)
 Vue.use(AgentAPI)
+Vue.use(Notifications)
 
 const router = new VueRouter({
   routes: [

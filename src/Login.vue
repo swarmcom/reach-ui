@@ -6,31 +6,26 @@
   <label for="inputPassword" class="sr-only">Password</label>
   <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
   <button @click="onSubmit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  <alert style="margin-top: 40px" v-bind:visible="authFailed" text="Login failed!"></alert>
 </div>
 </template>
 
 <script>
-import AlertWidget from './Widget/Alert.vue'
 
 export default {
   data () {
     return {
       login: 'agent2',
-      password: '1234',
-      authFailed: false
+      password: '1234'
     }
   },
   methods: {
     onSubmit () {
       this.$agent.login(this.login, this.password, (Auth) => {
-        this.authFailed = ~Auth
-        setTimeout(() => this.authFailed = false, 3000)
+        if(!Auth) {
+          this.$notify({ title: 'Authentication', text: 'Login failed!', type: 'error' });
+        }
       })
     }
-  },
-  components: {
-    alert: AlertWidget
   }
 }
 </script>
