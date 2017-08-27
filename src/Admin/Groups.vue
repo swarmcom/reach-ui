@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     query () {
-      this.agent.get_groups(List => this.groups = List)
+      this.$agent.get_groups(List => this.groups = List)
     },
     add () {
       this.$router.push(`/admin/group/`)
@@ -45,7 +45,6 @@ export default {
     }
   },
   created () {
-   this.agent = this.$parent.agent
    this.query()
   }
 }

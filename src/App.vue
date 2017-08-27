@@ -14,7 +14,7 @@
         <router-link class="nav-link" to="/help">Help</router-link>
       </li>
     </ul>
-    <span class="navbar-text" v-if="auth">{{ this.agent.vm.agent_auth.login }}</span>
+    <span class="navbar-text" v-if="auth">{{ this.$agent.vm.agent_auth.login }}</span>
     </li>
   </div>
 </nav>
@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import { EventBus } from './event_bus.js'
-
 export default {
   data () {
     return {
@@ -34,8 +32,7 @@ export default {
     }
   },
   created () {
-    this.agent = this.$parent.agent
-    EventBus.$on('agent_auth', (Auth) => this.auth = Auth)
+    this.$bus.$on('agent_auth', (Auth) => this.auth = Auth)
   }
 }
 </script>

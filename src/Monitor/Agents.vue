@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { EventBus } from './event_bus.js'
-
 export default {
   name: 'agents',
   data () {
@@ -40,7 +38,7 @@ export default {
       }
     },
     query () {
-      this.agent.agents(List => this.agents = List)
+      this.$agent.agents(List => this.agents = List)
     },
     onTimer() {
       this.agents.forEach((E, i, A) => {
@@ -54,10 +52,9 @@ export default {
     this.onTimer()
   },
   created () {
-    this.agent = this.$parent.agent
-    this.agent.subscribe('agents')
+    this.$agent.subscribe('agents')
     this.query()
-    EventBus.$on('agent-auth', (S) => this.handleState(S))
+    this.$bus.$on('agent-auth', (S) => this.handleState(S))
   }
 }
 </script>

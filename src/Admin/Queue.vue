@@ -44,22 +44,21 @@ export default {
   methods: {
     query () {
       if (this.id) {
-        this.ws_agent.get_queue(this.id, Obj => { this.queue = Obj; this.skills = object2list(Obj.skills) })
+        this.$agent.get_queue(this.id, Obj => { this.queue = Obj; this.skills = object2list(Obj.skills) })
       }
     },
     onCommit () {
       this.queue.skills = list2object(this.skills)
-      this.ws_agent.update_queue(this.queue, () => this.$router.push('/admin/queues'))
+      this.$agent.update_queue(this.queue, () => this.$router.push('/admin/queues'))
     },
     onDelete () {
       if (this.id) {
-        this.ws_agent.delete_queue(this.id, () => this.$router.push('/admin/queues'))
+        this.$agent.delete_queue(this.id, () => this.$router.push('/admin/queues'))
       }
     },
 
   },
   created () {
-    this.ws_agent = this.$parent.agent
     this.query()
   }
 }

@@ -34,15 +34,14 @@ export default {
     }
   },
   methods: {
-    logout () { this.agent.logout() },
-    release () { this.agent.release() },
-    available () { this.agent.available() },
-    answer () { this.agent.answer() },
-    hangup () { this.agent.hangup() }
+    logout () { this.$agent.logout() },
+    release () { this.$agent.release() },
+    available () { this.$agent.available() },
+    answer () { this.$agent.answer() },
+    hangup () { this.$agent.hangup() }
   },
   created () {
-    this.agent = this.$parent.agent
-    this.a = this.agent.getData()
+    this.a = this.$agent.getData()
   }
 }
 </script>

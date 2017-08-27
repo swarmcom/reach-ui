@@ -23,14 +23,11 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.agent.login(this.login, this.password, (Auth) => {
+      this.$agent.login(this.login, this.password, (Auth) => {
         this.authFailed = ~Auth
         setTimeout(() => this.authFailed = false, 3000)
       })
     }
-  },
-  created () {
-    this.agent = this.$parent.agent
   },
   components: {
     alert: AlertWidget

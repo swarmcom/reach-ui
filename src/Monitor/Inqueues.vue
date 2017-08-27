@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import { EventBus } from './event_bus.js'
-
 export default {
   name: 'inqueues',
   data () {
@@ -37,7 +35,7 @@ export default {
       }
     },
     query () {
-      this.agent.inqueues(List => this.inqueues = List)
+      this.$agent.inqueues(List => this.inqueues = List)
     },
     onTimer() {
       this.inqueues.forEach((E, i, Arr) => { 
@@ -52,10 +50,9 @@ export default {
     this.onTimer()
   },
   created () {
-    this.agent = this.$parent.agent
-    this.agent.subscribe('inqueues')
+    this.$agent.subscribe('inqueues')
     this.query()
-    EventBus.$on('inqueue_state', (S) => this.handleState(S))
+    this.$bus.$on('inqueue_state', (S) => this.handleState(S))
   }
 }
 </script>

@@ -11,16 +11,13 @@
 </template>
 
 <script>
-import Agents from './Agents.vue'
-import Inqueues from './Inqueues.vue'
+import Agents from './Monitor/Agents.vue'
+import Inqueues from './Monitor/Inqueues.vue'
 
 export default {
   data () {
     return {
     }
-  },
-  created () {
-    this.agent = this.$parent.agent
   },
   components: {
     'agents': Agents,

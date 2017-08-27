@@ -1,4 +1,4 @@
-import { EventBus } from './event_bus.js'
+import {EventBus} from './event-bus.js'
 
 export default class WsProto {
   constructor (Uri) {

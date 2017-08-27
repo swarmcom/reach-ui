@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     query () {
-      this.agent.get_profiles(List => this.profiles = List)
+      this.$agent.get_profiles(List => this.profiles = List)
     },
     add () {
       this.$router.push(`/admin/profile/`)
@@ -43,7 +43,6 @@ export default {
     }
   },
   created () {
-   this.agent = this.$parent.agent
    this.query()
   }
 }

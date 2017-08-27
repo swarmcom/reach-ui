@@ -43,22 +43,22 @@ export default {
   methods: {
     query () {
       if (this.id) {
-        this.ws_agent.get_agent(this.id, Obj => { this.agent = Obj; this.skills = object2list(Obj.skills) })
+        this.$agent.get_agent(this.id, Obj => { this.agent = Obj; this.skills = object2list(Obj.skills) })
       }
     },
     onCommit () {
       this.agent.skills = list2object(this.skills)
-      this.ws_agent.update_agent(this.agent, () => this.$router.push('/admin/agents'))
+      this.$agent.update_agent(this.agent, () => this.$router.push('/admin/agents'))
     },
     onDelete () {
       if (this.id) {
-        this.ws_agent.delete_agent(this.id, () => this.$router.push('/admin/agents'))
+        this.$agent.delete_agent(this.id, () => this.$router.push('/admin/agents'))
       }
     },
 
   },
   created () {
-    this.ws_agent = this.$parent.agent
+    this.$agent = this.$parent.agent
     this.query()
   }
 }

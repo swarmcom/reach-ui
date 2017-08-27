@@ -25,11 +25,10 @@ export default {
   },
   methods: {
     query () {
-      this.agent.get_params(List => this.params = List)
+      this.$agent.get_params(List => this.params = List)
     },
   },
   created () {
-    this.agent = this.$parent.agent
     this.queue()
   }
 }

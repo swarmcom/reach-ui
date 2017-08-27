@@ -1,6 +1,6 @@
-import { EventBus } from './event_bus.js'
-import WsProto from './ws-proto.js'
 import Vue from 'vue'
+import WsProto from './ws-proto.js'
+import {EventBus} from './event-bus.js'
 
 export default class Agent extends WsProto {
   constructor () {

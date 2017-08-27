@@ -38,21 +38,20 @@ export default {
   methods: {
     query () {
       if (this.id) {
-        this.ws_agent.get_profile(this.id, Obj => { this.profile = Obj; this.skills = object2list(Obj.skills) })
+        this.$agent.get_profile(this.id, Obj => { this.profile = Obj; this.skills = object2list(Obj.skills) })
       }
     },
     onCommit () {
       this.profile.skills = list2object(this.skills)
-      this.ws_agent.update_profile(this.profile, () => this.$router.push('/admin/profiles'))
+      this.$agent.update_profile(this.profile, () => this.$router.push('/admin/profiles'))
     },
     onDelete () {
       if (this.id) {
-        this.ws_agent.delete_profile(this.id, () => this.$router.push('/admin/profiles'))
+        this.$agent.delete_profile(this.id, () => this.$router.push('/admin/profiles'))
       }
     }
   },
   created () {
-    this.ws_agent = this.$parent.agent
     this.query()
   }
 }

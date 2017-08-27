@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     query () {
-      this.agent.get_queues(List => this.queues = List)
+      this.$agent.get_queues(List => this.queues = List)
     },
     add () {
       this.$router.push(`/admin/queue/`)
@@ -46,7 +46,6 @@ export default {
     }
   },
   created () {
-    this.agent = this.$parent.agent
     this.query()
   }
 }

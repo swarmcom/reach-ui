@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
+
+import AgentAPI from './agent-api-plugin.js'
+
 import Help from './Help.vue'
 import Login from './Login.vue'
 import Agent from './Agent.vue'
 import Admin from './Admin.vue'
 import Monitor from './Monitor.vue'
-import AgentWs from './agent.js'
 import AdminAgent from './Admin/Agent.vue'
 import AdminAgents from './Admin/Agents.vue'
 import AdminQueue from './Admin/Queue.vue'
@@ -18,8 +20,6 @@ import AdminProfiles from './Admin/Profiles.vue'
 
 import AdminParams from './Admin/Params.vue'
 
-import { EventBus } from './event_bus.js'
-
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 
@@ -27,6 +27,7 @@ import Icon from 'vue-awesome/components/Icon.vue'
 Vue.component('icon', Icon)
 
 Vue.use(VueRouter)
+Vue.use(AgentAPI)
 
 const router = new VueRouter({
   routes: [
@@ -77,11 +78,10 @@ const app = new Vue({
   template: '<App/>',
   components: { App },
   created () {
-    this.agent = new AgentWs()
-    this.$router.beforeEach((to, from, next) => guard(this.agent, to, from, next))
-    if (!this.agent.isAuth()) {
+    this.$router.beforeEach((to, from, next) => guard(this.$agent, to, from, next))
+    if (!this.$agent.isAuth()) {
       this.$router.replace('/login')
     }
-    EventBus.$on('agent_auth', Auth => handleAuth(this.$router, Auth))
+    this.$bus.$on('agent_auth', Auth => handleAuth(this.$router, Auth))
   }
 })
