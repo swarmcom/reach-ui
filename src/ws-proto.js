@@ -1,6 +1,7 @@
 import {EventBus} from './event-bus.js'
 
 export default class WsProto {
+
   constructor (Uri) {
     this.id = 1
     this.r = {}

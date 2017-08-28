@@ -2,9 +2,14 @@ import Vue from 'vue'
 import WsProto from './ws-proto.js'
 import {EventBus} from './event-bus.js'
 
+function config(key, default_value) {
+  return process.env[key] ? process.env[key] : default_value
+}
+
 export default class Agent extends WsProto {
+
   constructor () {
-    super('ws://localhost:8937/ws')
+    super(config('REACH_WS', 'ws://localhost:8937/ws'))
     this.vm = new Vue({
       data: {
         agent_auth: undefined,
