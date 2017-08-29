@@ -3,8 +3,8 @@
   <form-text id="name" label="Name" v-model="queue.name"></form-text>
   <form-select id="group" label="Group" v-model="queue.group"></form-select>
   <form-text id="hold_music" label="Music on hold" v-model="queue.hold_music"></form-text>
-  <form-text id="aging_factor" label="Aging" v-model="queue.aging_factor"></form-text>
   <form-text id="weight" label="Weight" v-model="queue.weight"></form-text>
+  <form-text id="aging_factor" label="Aging" v-model="queue.aging_factor"></form-text>
   <form-text id="auto_wrapup" label="Auto Wrap-up" v-model="queue.auto_wrapup"></form-text>
   <form-text id="wrapup_enabled" label="Wrap-up enabled" v-model="queue.wrapup_enabled"></form-text>
   <form-text id="wrapup_timer" label="Wrap-up timer" v-model="queue.wrapup_timer"></form-text>

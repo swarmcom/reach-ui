@@ -5,8 +5,8 @@
   <thead class="thead-default">
     <tr>
       <th>Name</th>
+      <th>Weight</th>
       <th>Aging</th>
-      <th>Sort</th>
       <th>Music</th>
       <th>Wrap</th>
     </tr>
@@ -14,8 +14,8 @@
   <tbody v-for="group in groups">
     <tr @click="onClick(group.name)">
       <td>{{ group.name }}</td>
+      <td>{{ group.weight }}</td>
       <td>{{ group.aging_factor }}</td>
-      <td>{{ group.sort }}</td>
       <td>{{ group.hold_music }}</td>
       <td>{{ group.wrapup_enabled }}</td>
     </tr>

@@ -55,6 +55,9 @@ export default class Agent extends WsProto {
   update_group (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_group', [Obj], Cb) }
   delete_group (Id, Cb = (A) => A) { this.mfa('ws_admin', 'delete_group', [Id], Cb) }
 
+  get_params (Cb = (A) => A) { this.mfa('ws_admin', 'get_params', [], Cb) }
+  set_params (Params, Cb = (A) => A) { this.mfa('ws_admin', 'set_params', [Params], Cb) }
+
   // AGENT API
   logout () { this.call('stop', [], () => this.handleAuth()) }
   release () { this.call('release')  }

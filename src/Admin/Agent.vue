@@ -5,7 +5,7 @@
   <form-text id="firstname" label="First name" v-model="agent.firstname"></form-text>
   <form-text id="lastname" label="Last name" v-model="agent.lastname"></form-text>
   <form-select id="profile" label="Profile" v-model="agent.profile"></form-select>
-  <form-text id="permissions" label="Permissions" v-model="agent.perm_profile"></form-text>
+  <form-text id="permissions" label="Permissions" v-model="agent.permissions"></form-text>
   <form-text id="uri" label="SIP URI" v-model="agent.uri"></form-text>
   <form-text id="ring_timeout" label="Ring timeout" v-model="agent.ring_timeout"></form-text>
   <form-text id="max_ring_fails" label="Max rings" v-model="agent.max_ring_fails"></form-text>

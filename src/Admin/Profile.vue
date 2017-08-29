@@ -1,7 +1,7 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="profile.name"></form-text>
-  <form-text id="permissions" label="Permissions" v-model="profile.perm_profile"></form-text>
+  <form-text id="permissions" label="Permissions" v-model="profile.permissions"></form-text>
   <form-text id="ring_timeout" label="Ring timeout" v-model="profile.ring_timeout"></form-text>
   <form-text id="max_ring_fails" label="Max rings" v-model="profile.max_ring_fails"></form-text>
   <form-text id="autologout" label="Auto logout" v-model="profile.autologout"></form-text>
