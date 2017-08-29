@@ -44,7 +44,7 @@ export default {
   methods: {
     query () {
       if (this.id) {
-        this.$agent.get_group(this.id, Obj => { this.group = Obj; this.skills = object2list(Obj.skills) })
+        this.$agent.get_group(this.id, Obj => { this.group = Obj.repl; this.skills = object2list(Obj.reply.skills) })
       }
     },
     onCommit () {

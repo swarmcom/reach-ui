@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     query () {
-      this.$agent.get_agents(List => this.agents = List)
+      this.$agent.get_agents(List => this.agents = List.reply)
     },
     add () {
       this.$router.push(`/admin/agent/`)

@@ -38,7 +38,7 @@ export default {
   methods: {
     query () {
       if (this.id) {
-        this.$agent.get_profile(this.id, Obj => { this.profile = Obj; this.skills = object2list(Obj.skills) })
+        this.$agent.get_profile(this.id, Obj => { this.profile = Obj.reply; this.skills = object2list(Obj.reply.skills) })
       }
     },
     onCommit () {

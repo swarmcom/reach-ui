@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     query () {
-      this.$agent.get_params(Params => this.params = object2list(Params))
+      this.$agent.get_params(Obj => this.params = object2list(Obj.reply))
     },
     add () {
       this.params.push({ key: this.name, value: this.value })

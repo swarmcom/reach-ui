@@ -44,7 +44,7 @@ export default {
   methods: {
     query () {
       if (this.id) {
-        this.$agent.get_agent(this.id, Obj => { this.agent = Obj; this.skills = object2list(Obj.skills) })
+        this.$agent.get_agent(this.id, Obj => { this.agent = Obj.reply; this.skills = object2list(Obj.reply.skills) })
       }
     },
     onCommit () {

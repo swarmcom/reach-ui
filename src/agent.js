@@ -26,6 +26,7 @@ export default class Agent extends WsProto {
   }
 
   onDisconnect () {
+    super.onDisconnect()
     this.handleAuth()
   }
 
@@ -81,9 +82,13 @@ export default class Agent extends WsProto {
     }
   }
 
-  handleAuth (AuthInfo = undefined, Cb = (A) => A) {
-    this.vm.agent_auth = AuthInfo
-    Cb(AuthInfo)
+  handleAuth (Re, Cb = (A) => A) {
+    if (Re && Re.reply) {
+      this.vm.agent_auth = Re.reply
+    } else {
+      this.vm.agent_auth = undefined
+    }
+    Cb(Re)
     EventBus.$emit('agent_auth', this.isAuth())
   }
 

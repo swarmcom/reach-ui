@@ -27,10 +27,15 @@ export default class WsProto {
       type: 'call',
       args: [M, F, A]
     }
-    this.r[this.id] = Cb
-    this.id++
-    console.log('Cmd', msg)
-    return this.ws.send(JSON.stringify(msg))
+    if (this.ws.readyState === 1) {
+      this.r[this.id] = Cb
+      this.id++
+      console.log('Cmd', msg)
+      return this.ws.send(JSON.stringify(msg))
+    } else {
+      console.log("wrong websocket state", this.ws.readyState)
+      Cb({ error: 'wrong websocket state'})
+    }
   }
 
   ping () {
@@ -39,6 +44,13 @@ export default class WsProto {
   }
 
   onDisconnect () {
+    for (var id in this.r) {
+      var Cb = this.r[id]
+      if (Cb) {
+        Cb({ error: "websocket disconnect" })
+      }
+      delete this.r[id]
+    }
   }
 
   onMessage (Ev) {
@@ -47,7 +59,7 @@ export default class WsProto {
     if (Cb !== undefined) {
       console.log('Re', Data)
       delete this.r[Data.id]
-      Cb(Data.reply)
+      Cb(Data)
     } else if (Data.event) {
       console.log('Ev', Data)
       EventBus.$emit(Data.event, Data)

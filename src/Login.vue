@@ -20,9 +20,9 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.$agent.login(this.login, this.password, (Auth) => {
-        if(!Auth) {
-          this.$notify({ title: 'Authentication', text: 'Login failed!', type: 'error' });
+      this.$agent.login(this.login, this.password, (Re) => {
+        if(Re.error) {
+          this.$notify({ title: 'Authentication:', text: Re.error, type: 'error' });
         }
       })
     }
