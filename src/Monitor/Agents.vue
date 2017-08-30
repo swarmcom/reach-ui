@@ -54,7 +54,7 @@ export default {
   created () {
     this.$agent.subscribe('agents')
     this.query()
-    this.$bus.$on('agent-auth', (S) => this.handleState(S))
+    this.$bus.$on('agent_state', (S) => this.handleState(S))
   }
 }
 </script>

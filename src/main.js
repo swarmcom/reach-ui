@@ -82,6 +82,6 @@ const app = new Vue({
     if (!this.$agent.isAuth()) {
       this.$router.replace('/login')
     }
-    this.$bus.$on('agent_auth', Auth => handleAuth(this.$router, Auth))
+    this.$bus.$on('agent-auth', Auth => handleAuth(this.$router, Auth))
   }
 })

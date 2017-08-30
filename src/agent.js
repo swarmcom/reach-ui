@@ -89,7 +89,7 @@ export default class Agent extends WsProto {
       this.vm.agent_auth = undefined
     }
     Cb(Re)
-    EventBus.$emit('agent_auth', this.isAuth())
+    EventBus.$emit('agent-auth', this.isAuth())
   }
 
 }

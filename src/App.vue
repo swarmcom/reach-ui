@@ -33,7 +33,7 @@ export default {
     }
   },
   created () {
-    this.$bus.$on('agent_auth', (Auth) => this.auth = Auth)
+    this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
   }
 }
 </script>

@@ -61,7 +61,7 @@ export default class WsProto {
       delete this.r[Data.id]
       Cb(Data)
     } else if (Data.event) {
-      console.log('Ev', Data)
+      console.log('Ev', Data.event, Data)
       EventBus.$emit(Data.event, Data)
     }
   }
