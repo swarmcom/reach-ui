@@ -38,7 +38,7 @@ export default {
       }
     },
     query () {
-      this.$agent.agents(List => this.agents = List)
+      this.$agent.agents(Obj => this.agents = Obj.reply)
     },
     onTimer() {
       this.agents.forEach((E, i, A) => {

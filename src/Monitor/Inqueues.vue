@@ -35,7 +35,7 @@ export default {
       }
     },
     query () {
-      this.$agent.inqueues(List => this.inqueues = List)
+      this.$agent.inqueues(Obj => this.inqueues = Obj.reply)
     },
     onTimer() {
       this.inqueues.forEach((E, i, Arr) => { 
