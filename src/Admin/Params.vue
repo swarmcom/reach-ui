@@ -64,8 +64,15 @@ export default {
     },
     onCommit () {
       let Params = list2object(this.params)
-      this.$agent.set_params(Params)
+      this.$agent.set_params(Params, (Re) => this.handleCommit(Re))
     },
+    handleCommit (Re) {
+      if (Re.reply === 'ok') {
+        this.$notify({ title: 'Success:', text: 'Parameters updated.', type: 'success' });
+      } else {
+        this.$notify({ title: 'Error:', text: Re.error, type: 'error' });
+      }
+    }
   },
   created () {
     this.query()

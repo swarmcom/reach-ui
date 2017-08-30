@@ -21,7 +21,7 @@
 <div class="container">
   <router-view></router-view>
 </div>
-<notifications position="top right" :speed="500" />
+<notifications position="bottom right" :speed="500" :duration="1000"/>
 </div>
 </template>
 
