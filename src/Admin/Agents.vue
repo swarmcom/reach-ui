@@ -13,11 +13,11 @@
     </tr>
   </thead>
   <tbody v-for="agent in agents">
-    <tr @click="onClick(agent.login)">
+    <tr @click="onClick(agent.agent_id)">
       <td>{{ agent.login }}</td>
       <td>{{ agent.firstname }}</td>
       <td>{{ agent.lastname }}</td>
-      <td>{{ agent.perm_profile }}</td>
+      <td>{{ agent.permissions }}</td>
       <td>{{ agent.profile }}</td>
       <td>{{ agent.uri }}</td>
     </tr>

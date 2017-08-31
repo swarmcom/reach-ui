@@ -4,7 +4,7 @@
   <form-text id="password" label="Password" v-model="agent.password"></form-text>
   <form-text id="firstname" label="First name" v-model="agent.firstname"></form-text>
   <form-text id="lastname" label="Last name" v-model="agent.lastname"></form-text>
-  <form-select id="profile" label="Profile" v-model="agent.profile"></form-select>
+  <profiles id="profile" label="Profile" v-model="agent.profile"></profiles>
   <form-text id="permissions" label="Permissions" v-model="agent.permissions"></form-text>
   <form-text id="uri" label="SIP URI" v-model="agent.uri"></form-text>
   <form-text id="ring_timeout" label="Ring timeout" v-model="agent.ring_timeout"></form-text>
@@ -40,7 +40,7 @@ export default {
       skills: []
     }
   },
-  components: { 'form-text': FormText, 'form-select': Profiles, 'skills': Skills },
+  components: { 'form-text': FormText, 'profiles': Profiles, 'skills': Skills },
   methods: {
     query () {
       if (this.id) {

@@ -4,7 +4,7 @@
   <div class="col"><h3>Logged in agents</h3></div>
 </div>
 <div class="row" v-for="agent in agents">
-  <div class="col-2">{{ agent.login }}</div>
+  <div class="col-3">{{ agent.agent_id }}</div>
   <div class="col-2">{{ agent.state }}</div>
   <div class="col-2">{{ Math.round(agent.time/1000) }}s</div>
 </div>
@@ -54,7 +54,7 @@ export default {
   created () {
     this.$agent.subscribe('agents')
     this.query()
-    this.$bus.$on('agent_state', (S) => this.handleState(S))
+    this.$bus.$on('agents_state', (S) => this.handleState(S))
   }
 }
 </script>

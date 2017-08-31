@@ -3,7 +3,8 @@
   <label :for="id" class="col-2 col-form-label">{{ label }}</label>
   <div class="col-10">
     <select class="custom-select" :value="value" @change="onUpdate($event.target.value)" :id="id">
-      <option v-for="group in groups" :value="group.name" :selected="isActive(group.name)">{{ group.name }}</option>
+      <option></option>
+      <option v-for="group in groups" :value="group.id" :selected="isActive(group.id)">{{ group.name }}</option>
     </select>
   </div>
 </div>
@@ -19,11 +20,11 @@ export default {
     }
   },
   methods: {
-    isActive(Name) {
-      return Name === this.value
+    isActive(Id) {
+      return Id === this.value
     },
     query () {
-      this.$agent.get_groups(Profiles => this.groups = Profiles)
+      this.$agent.get_groups(Obj => this.groups = Obj.reply)
     },
     onUpdate (value) {
       this.$emit('input', value)

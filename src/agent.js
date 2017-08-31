@@ -76,7 +76,7 @@ export default class Agent extends WsProto {
   }
 
   handleState (S) {
-    if (S && this.vm.agent_auth && this.vm.agent_auth.login === S.login) {
+    if (S && this.vm.agent_auth && this.vm.agent_auth.agent_id === S.agent_id) {
       this.vm.hangup_state = S.hangup_state
       this.vm.state = S.state
     }
