@@ -1,7 +1,7 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-2 col-form-label">{{ label }}</label>
-  <div class="col-10">
+  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <div class="col-9">
     <select class="custom-select" :value="value" @change="onUpdate($event.target.value)" :id="id">
       <option></option>
       <option v-for="profile in profiles" :value="profile.id" :selected="isActive(profile.id)">{{ profile.name }}</option>
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     isActive(Id) {
-      return Id === this.value
+      return Id == this.value
     },
     query () {
       this.$agent.get_profiles(Obj => this.profiles = Obj.reply)

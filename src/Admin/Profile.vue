@@ -43,7 +43,11 @@ export default {
     },
     onCommit () {
       this.profile.skills = list2object(this.skills)
-      this.$agent.update_profile(this.profile, () => this.$router.push('/admin/profiles'))
+      if (this.id) {
+        this.$agent.update_profile(this.id, this.profile, () => this.$router.push('/admin/profiles'))
+      } else {
+        this.$agent.create_profile(this.profile, () => this.$router.push('/admin/profiles'))
+      }
     },
     onDelete () {
       if (this.id) {

@@ -4,22 +4,24 @@
 <table style="margin-top: 20px" class="table table-hover table-sm">
   <thead class="thead-default">
     <tr>
+      <th>Id</th>
       <th>Login</th>
       <th>First Name</th>
       <th>Last Name</th>
-      <th>Permission</th>
+      <th>Permissions</th>
       <th>Profile</th>
       <th>Uri</th>
     </tr>
   </thead>
   <tbody v-for="agent in agents">
     <tr @click="onClick(agent.agent_id)">
+      <td>{{ agent.agent_id }}</td>
       <td>{{ agent.login }}</td>
-      <td>{{ agent.firstname }}</td>
-      <td>{{ agent.lastname }}</td>
-      <td>{{ agent.permissions }}</td>
-      <td>{{ agent.profile }}</td>
-      <td>{{ agent.uri }}</td>
+      <td>{{ defined(agent.firstname) }}</td>
+      <td>{{ defined(agent.lastname) }}</td>
+      <td>{{ defined(agent.permissions) }}</td>
+      <td>{{ profile_name(agent.profile_id) }}</td>
+      <td>{{ defined(agent.uri) }}</td>
     </tr>
   </tbody>
 </table>
@@ -31,11 +33,13 @@ export default {
   name: 'admin-agents',
   data () {
     return {
-      agents: []
+      agents: [],
+      profiles: []
     }
   },
   methods: {
     query () {
+      this.$agent.get_profiles(Obj => this.profiles = Obj.reply)
       this.$agent.get_agents(List => this.agents = List.reply)
     },
     add () {
@@ -43,7 +47,23 @@ export default {
     },
     onClick(id) {
       this.$router.push(`/admin/agent/${id}`)
-    }
+    },
+    profile_name (Id) {
+      let Profile = this.profiles.find(I =>  I.id == Id)
+      if (Profile) {
+        return Profile.name
+      } else {
+        return ''
+      }
+    },
+    defined (V) {
+      console.log("v:", V)
+      if (V == "undefined") {
+        return ''
+      } else {
+        return V
+      }
+    },
   },
   created () {
     this.query()

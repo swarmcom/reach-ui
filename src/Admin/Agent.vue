@@ -4,7 +4,7 @@
   <form-text id="password" label="Password" v-model="agent.password"></form-text>
   <form-text id="firstname" label="First name" v-model="agent.firstname"></form-text>
   <form-text id="lastname" label="Last name" v-model="agent.lastname"></form-text>
-  <profiles id="profile" label="Profile" v-model="agent.profile"></profiles>
+  <profiles id="profile" label="Profile" v-model="agent.profile_id"></profiles>
   <form-text id="permissions" label="Permissions" v-model="agent.permissions"></form-text>
   <form-text id="uri" label="SIP URI" v-model="agent.uri"></form-text>
   <form-text id="ring_timeout" label="Ring timeout" v-model="agent.ring_timeout"></form-text>
@@ -49,7 +49,11 @@ export default {
     },
     onCommit () {
       this.agent.skills = list2object(this.skills)
-      this.$agent.update_agent(this.agent, () => this.$router.push('/admin/agents'))
+      if (this.id) {
+        this.$agent.update_agent(this.id, this.agent, () => this.$router.push('/admin/agents'))
+      } else {
+        this.$agent.create_agent(this.agent, () => this.$router.push('/admin/agents'))
+      }
     },
     onDelete () {
       if (this.id) {

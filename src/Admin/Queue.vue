@@ -1,7 +1,7 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="queue.name"></form-text>
-  <form-select id="group" label="Group" v-model="queue.group"></form-select>
+  <groups id="group_id" label="Group" v-model="queue.group_id"></groups>
   <form-text id="hold_music" label="Music on hold" v-model="queue.hold_music"></form-text>
   <form-text id="weight" label="Weight" v-model="queue.weight"></form-text>
   <form-text id="aging_factor" label="Aging" v-model="queue.aging_factor"></form-text>
@@ -41,7 +41,7 @@ export default {
       recipe: []
     }
   },
-  components: { 'form-select': Groups, 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
+  components: { 'groups': Groups, 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
   methods: {
     query () {
       if (this.id) {
@@ -50,14 +50,17 @@ export default {
     },
     onCommit () {
       this.queue.skills = list2object(this.skills)
-      this.$agent.update_queue(this.queue, () => this.$router.push('/admin/queues'))
+      if (this.id) {
+        this.$agent.update_queue(this.id, this.queue, () => this.$router.push('/admin/queues'))
+      } else {
+        this.$agent.create_queue(this.queue, () => this.$router.push('/admin/queues'))
+      }
     },
     onDelete () {
       if (this.id) {
         this.$agent.delete_queue(this.id, () => this.$router.push('/admin/queues'))
       }
     },
-
   },
   created () {
     this.query()

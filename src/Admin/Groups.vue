@@ -4,6 +4,7 @@
 <table style="margin-top: 20px" class="table table-hover table-sm">
   <thead class="thead-default">
     <tr>
+      <th>Id</th>
       <th>Name</th>
       <th>Weight</th>
       <th>Aging</th>
@@ -12,7 +13,8 @@
     </tr>
   </thead>
   <tbody v-for="group in groups">
-    <tr @click="onClick(group.name)">
+    <tr @click="onClick(group.id)">
+      <td>{{ group.id }}</td>
       <td>{{ group.name }}</td>
       <td>{{ group.weight }}</td>
       <td>{{ group.aging_factor }}</td>

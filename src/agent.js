@@ -38,22 +38,26 @@ export default class Agent extends WsProto {
   // CRUD API
   get_agents (Cb = (A) => A) { this.mfa('ws_admin', 'get_agents', [], Cb) }
   get_agent (Id, Cb = (A) => A) { this.mfa('ws_admin', 'get_agent', [Id], Cb) }
-  update_agent (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_agent', [Obj], Cb)  }
+  create_agent (Id, Obj, Cb = (A) => A) { this.mfa('ws_admin', 'create_agent', [Obj], Cb)  }
+  update_agent (Id, Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_agent', [Id, Obj], Cb)  }
   delete_agent (Id, Cb = (A) => A) { this.mfa('ws_admin', 'delete_agent', [Id], Cb) }
 
   get_queues (Cb = (A) => A) { this.mfa('ws_admin', 'get_queues', [], Cb) }
   get_queue (Id, Cb = (A) => A) { this.mfa('ws_admin', 'get_queue', [Id], Cb) }
-  update_queue (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_queue', [Obj], Cb) }
+  create_queue (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'create_queue', [Obj], Cb) }
+  update_queue (Id, Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_queue', [Id, Obj], Cb) }
   delete_queue (Id, Cb = (A) => A) { this.mfa('ws_admin', 'delete_queue', [Id], Cb) }
 
   get_profiles (Cb = (A) => A) { this.mfa('ws_admin', 'get_profiles', [], Cb) }
   get_profile (Id, Cb = (A) => A) { this.mfa('ws_admin', 'get_profile', [Id], Cb) }
-  update_profile (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_profile', [Obj], Cb) }
+  create_profile (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'create_profile', [Obj], Cb) }
+  update_profile (Id, Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_profile', [Id, Obj], Cb) }
   delete_profile (Id, Cb = (A) => A) { this.mfa('ws_admin', 'delete_profile', [Id], Cb) }
 
   get_groups (Cb = (A) => A) { this.mfa('ws_admin', 'get_groups', [], Cb) }
   get_group (Id, Cb = (A) => A) { this.mfa('ws_admin', 'get_group', [Id], Cb) }
-  update_group (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_group', [Obj], Cb) }
+  create_group (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'create_group', [Obj], Cb) }
+  update_group (Id, Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_group', [Id, Obj], Cb) }
   delete_group (Id, Cb = (A) => A) { this.mfa('ws_admin', 'delete_group', [Id], Cb) }
 
   get_params (Cb = (A) => A) { this.mfa('ws_admin', 'get_params', [], Cb) }

@@ -1,7 +1,7 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-2 col-form-label">{{ label }}</label>
-  <div class="col-10">
+  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <div class="col-9">
     <input class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)" :id="id">
   </div>
 </div>

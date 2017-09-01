@@ -1,13 +1,12 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="group.name"></form-text>
-  <form-text id="group" label="Group" v-model="group.group"></form-text>
   <form-text id="hold_music" label="Music on hold" v-model="group.hold_music"></form-text>
   <form-text id="aging_factor" label="Aging" v-model="group.aging_factor"></form-text>
   <form-text id="weight" label="Weight" v-model="group.weight"></form-text>
-  <form-text id="auto_wrapup" label="Auto Wrap-up" v-model="group.auto_wrapup"></form-text>
   <form-text id="wrapup_enabled" label="Wrap-up enabled" v-model="group.wrapup_enabled"></form-text>
   <form-text id="wrapup_timer" label="Wrap-up timer" v-model="group.wrapup_timer"></form-text>
+  <form-text id="auto_wrapup" label="Auto wrap-up" v-model="group.auto_wrapup"></form-text>
   <skills id="skills" label="Skills" v-model="skills"></skills>
   <recipe id="recipe" label="Recipe" v-model="recipe"></recipe>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
@@ -44,12 +43,16 @@ export default {
   methods: {
     query () {
       if (this.id) {
-        this.$agent.get_group(this.id, Obj => { this.group = Obj.repl; this.skills = object2list(Obj.reply.skills) })
+        this.$agent.get_group(this.id, Obj => { this.group = Obj.reply; this.skills = object2list(Obj.reply.skills) })
       }
     },
     onCommit () {
       this.group.skills = list2object(this.skills)
-      this.$agent.update_group(this.group, () => this.$router.push('/admin/groups'))
+      if (this.id) {
+        this.$agent.update_group(this.id, this.group, () => this.$router.push('/admin/groups'))
+      } else {
+        this.$agent.create_group(this.group, () => this.$router.push('/admin/groups'))
+      }
     },
     onDelete () {
       if (this.id) {

@@ -1,7 +1,7 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-2 col-form-label">{{ label }}</label>
-  <div class="col-10">
+  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <div class="col-9">
     <div v-for="sk of value" class="form-row">
       <div class="for_group col-1">
         <button @click="del(sk.key)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
