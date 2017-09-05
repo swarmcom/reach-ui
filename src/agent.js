@@ -7,13 +7,18 @@ function config(key, default_value) {
   return sys_config[key] ? sys_config[key] : default_value
 }
 
+function guess_ws () {
+  let proto = window.location.protocol == "http:" ? "ws://" : "wss://"
+  return proto + window.location.hostname + ":" + window.location.port + "/reach/ws"
+}
+
 export default class Agent extends WsProto {
 
   constructor () {
-    super(config('reach_ws', 'ws://localhost:8937/ws'))
+    super(config('reach_ws', guess_ws()))
     this.vm = new Vue({
       data: {
-        agent_auth: undefined,
+        agent: undefined,
         state: undefined,
         hangup_state: undefined
       }
@@ -85,28 +90,34 @@ export default class Agent extends WsProto {
   get_transfer_agents (Cb = (A) => A) { this.call('get_transfer_agents', [], Cb) }
   get_transfer_queues (Cb = (A) => A) { this.call('get_transfer_queues', [], Cb) }
 
-  isAuth () { return this.vm.agent_auth !== undefined }
+  isAuth () { return this.vm.agent !== undefined }
 
   login (Login, Password, Cb = (A) => A) {
     if (this.isAuth()) {
-      this.handleAuth(this.vm.agent_auth)
+      this.handleAuth(this.vm.agent)
     } else {
       this.call('auth', [Login, Password], (A) => this.handleAuth(A, Cb))
     }
   }
 
   handleState (S) {
-    if (S && this.vm.agent_auth && this.vm.agent_auth.agent_id === S.agent_id) {
+    if (S && this.vm.agent && this.vm.agent.agent_id === S.agent_id) {
       this.vm.hangup_state = S.hangup_state
       this.vm.state = S.state
     }
   }
 
+  is_active () { console.log("active"); return (this.vm.state !== 'release' || this.vm.state !== 'available') }
+  is_idle() { return (this.vm.state == 'release' || this.vm.state == 'available') }
+  is_oncall () { return this.vm && this.vm.state == 'oncall' }
+  is_wrapup () { return this.vm && this.vm.state == 'wrapup' }
+  is_hold () { return this.vm && this.vm.state == 'hold' }
+
   handleAuth (Re, Cb = (A) => A) {
     if (Re && Re.reply) {
-      this.vm.agent_auth = Re.reply
+      this.vm.agent = Re.reply
     } else {
-      this.vm.agent_auth = undefined
+      this.vm.agent = undefined
     }
     Cb(Re)
     EventBus.$emit('agent-auth', this.isAuth())
