@@ -18,6 +18,8 @@ import AdminGroup from './Admin/Group.vue'
 import AdminGroups from './Admin/Groups.vue'
 import AdminProfile from './Admin/Profile.vue'
 import AdminProfiles from './Admin/Profiles.vue'
+import AdminRelease from './Admin/Release.vue'
+import AdminReleases from './Admin/Releases.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -39,6 +41,7 @@ const router = new VueRouter({
       { path: 'params', component: AdminParams },
       { path: 'groups', component: AdminGroups },
       { path: 'profiles', component: AdminProfiles },
+      { path: 'releases', component: AdminReleases },
       { path: 'agent', component: AdminAgent },
       { path: 'agent/:id', component: AdminAgent, props: true },
       { path: 'queue', component: AdminQueue },
@@ -46,7 +49,9 @@ const router = new VueRouter({
       { path: 'profile', component: AdminProfile },
       { path: 'profile/:id', component: AdminProfile, props: true },
       { path: 'group', component: AdminGroup },
-      { path: 'group/:id', component: AdminGroup, props: true }
+      { path: 'group/:id', component: AdminGroup, props: true },
+      { path: 'release', component: AdminRelease },
+      { path: 'release/:id', component: AdminRelease, props: true }
     ] },
     { path: '/help', component: Help },
     { path: '/login', component: Login },

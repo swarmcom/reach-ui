@@ -16,6 +16,9 @@
   <li class="nav-item">
     <router-link class="nav-link" to="/admin/params">Params</router-link>
   </li>
+  <li class="nav-item">
+    <router-link class="nav-link" to="/admin/releases">Releases</router-link>
+  </li>
 </ul>
 <router-view style="margin-top: 20px"></router-view>
 </div>

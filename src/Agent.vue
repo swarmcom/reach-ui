@@ -13,7 +13,7 @@
     </div>
     <div class="col">
       <div class="row justify-content-end">
-        <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-outline-info">Release</button>
+        <release v-if="a.hangup_state == 'available'">Release</release>
         <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-success">Available</button>
       </div>
     </div>
@@ -35,16 +35,17 @@
 <script>
 import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
+import Release from './Agent/Release'
 
 export default {
   data () {
     return {
-      a: {}
+      a: {},
+      releases: []
     }
   },
   methods: {
     logout () { this.$agent.logout() },
-    release () { this.$agent.release() },
     available () { this.$agent.available() },
     answer () { this.$agent.answer() },
     hangup () { this.$agent.hangup() }
@@ -52,6 +53,6 @@ export default {
   created () {
     this.a = this.$agent.getData()
   },
-  components: { 'inqueue': Inqueue, 'dialer': Dialer },
+  components: { 'inqueue': Inqueue, 'dialer': Dialer, 'release': Release },
 }
 </script>

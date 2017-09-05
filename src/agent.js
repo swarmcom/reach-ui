@@ -65,12 +65,18 @@ export default class Agent extends WsProto {
   update_group (Id, Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_group', [Id, Obj], Cb) }
   delete_group (Id, Cb = (A) => A) { this.mfa('ws_admin', 'delete_group', [Id], Cb) }
 
+  get_releases (Cb = (A) => A) { this.mfa('ws_admin', 'get_releases', [], Cb) }
+  get_release (Id, Cb = (A) => A) { this.mfa('ws_admin', 'get_release', [Id], Cb) }
+  create_release (Obj, Cb = (A) => A) { this.mfa('ws_admin', 'create_release', [Obj], Cb) }
+  update_release (Id, Obj, Cb = (A) => A) { this.mfa('ws_admin', 'update_release', [Id, Obj], Cb) }
+  delete_release (Id, Cb = (A) => A) { this.mfa('ws_admin', 'delete_release', [Id], Cb) }
+
   get_params (Cb = (A) => A) { this.mfa('ws_admin', 'get_params', [], Cb) }
   set_params (Params, Cb = (A) => A) { this.mfa('ws_admin', 'set_params', [Params], Cb) }
 
   // AGENT API
   logout () { this.call('stop', [], () => this.handleAuth()) }
-  release () { this.call('release')  }
+  release (Id) { this.call('release', [Id]) }
   available () { this.call('available') }
   hangup () { this.call('hangup') }
   hold () { this.call('hold') }
