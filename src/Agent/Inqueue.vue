@@ -21,10 +21,10 @@
       </tr>
     </tbody>
   </table>
-  <div v-if="is_active()" class="row">
+  <div v-if="this.$agent.is_active()" class="row">
     <div class="col">
-      <button v-if="is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
-      <button v-if="is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
+      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
+      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
       <transfer-agent></transfer-agent>
       <transfer-queue></transfer-queue>
     </div>
@@ -35,6 +35,7 @@
 <script>
 import TransferAgent from '../Agent/TransferAgent'
 import TransferQueue from '../Agent/TransferQueue'
+import Dialer from '../Agent/Dialer'
 
 export default {
   data () {
@@ -66,10 +67,6 @@ export default {
         setTimeout( this.onTimer, 1000 )
       }
     },
-    is_active () { return this.info && (this.info.state !== 'release' || this.info.state !== 'available')  },
-    is_oncall () { return this.info && this.info.state == 'oncall' },
-    is_wrapup () { return this.info && this.info.state == 'wrapup' },
-    is_hold () { return this.info && this.info.state == 'hold' },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
     end_wrapup () { this.$agent.end_wrapup() },
@@ -80,6 +77,6 @@ export default {
   created () {
     this.$bus.$on('agent_state', (S) => this.handleState(S))
   },
-  components: { 'transfer-agent': TransferAgent, 'transfer-queue': TransferQueue },
+  components: { 'transfer-agent': TransferAgent, 'transfer-queue': TransferQueue, 'dialer': Dialer },
 }
 </script>

@@ -14,7 +14,7 @@
         <router-link class="nav-link" to="/help">Help</router-link>
       </li>
     </ul>
-    <span class="navbar-text" v-if="auth">{{ this.$agent.vm.agent_auth.login }}</span>
+    <span class="navbar-text" v-if="auth">{{ this.$agent.vm.agent.login }}</span>
     </li>
   </div>
 </nav>
