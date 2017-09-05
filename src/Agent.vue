@@ -23,10 +23,13 @@
     </div>
   </div>
 </div>
+<inqueue></inqueue>
 </div>
 </template>
 
 <script>
+import Inqueue from './Agent/Inqueue'
+
 export default {
   data () {
     return {
@@ -42,6 +45,7 @@ export default {
   },
   created () {
     this.a = this.$agent.getData()
-  }
+  },
+  components: { 'inqueue': Inqueue },
 }
 </script>

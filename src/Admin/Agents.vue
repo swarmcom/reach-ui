@@ -20,7 +20,7 @@
       <td>{{ defined(agent.firstname) }}</td>
       <td>{{ defined(agent.lastname) }}</td>
       <td>{{ defined(agent.permissions) }}</td>
-      <td>{{ profile_name(agent.profile_id) }}</td>
+      <td>{{ profile_name(agent.group_id) }}</td>
       <td>{{ defined(agent.uri) }}</td>
     </tr>
   </tbody>

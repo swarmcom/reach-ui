@@ -46,7 +46,6 @@ export default {
       this.$router.push(`/admin/queue/`)
     },
     defined (V) {
-      console.log("v:", V)
       if (V == "undefined") {
         return ''
       } else {

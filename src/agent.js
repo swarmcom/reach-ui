@@ -68,6 +68,22 @@ export default class Agent extends WsProto {
   release () { this.call('release')  }
   available () { this.call('available') }
   hangup () { this.call('hangup') }
+  hold () { this.call('hold') }
+  unhold () { this.call('unhold') }
+  make_call (Target) { this.call('call', [Target]) }
+  record (Cmd) { this.call('record', [Cmd]) }
+  play (UUID) { this.call('record', ['play', UUID]) }
+  end_wrapup () { this.call('end_wrapup') }
+
+  transfer_to_agent (Agent) { this.call('transfer_to_agent', [Agent]) }
+  transfer_to_queue (Queue) { this.call('transfer_to_queue', [Queue]) }
+  transfer_to_uri (Uri) { this.call('transfer_to_uri', [Uri]) }
+  conference_to_agent (Agent) { this.call('conference_to_agent', [Agent]) }
+  conference_to_queue (Queue) { this.call('conference_to_queue', [Queue]) }
+  conference_to_uri (Uri) { this.call('conference_to_uri', [Uri]) }
+
+  get_transfer_agents (Cb = (A) => A) { this.call('get_transfer_agents', [], Cb) }
+  get_transfer_queues (Cb = (A) => A) { this.call('get_transfer_queues', [], Cb) }
 
   isAuth () { return this.vm.agent_auth !== undefined }
 

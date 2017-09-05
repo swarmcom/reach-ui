@@ -4,7 +4,7 @@
   <form-text id="password" label="Password" v-model="agent.password"></form-text>
   <form-text id="firstname" label="First name" v-model="agent.firstname"></form-text>
   <form-text id="lastname" label="Last name" v-model="agent.lastname"></form-text>
-  <profiles id="profile" label="Profile" v-model="agent.profile_id"></profiles>
+  <profiles id="profile" label="Profile" v-model="agent.group_id"></profiles>
   <form-text id="permissions" label="Permissions" v-model="agent.permissions"></form-text>
   <form-text id="uri" label="SIP URI" v-model="agent.uri"></form-text>
   <form-text id="ring_timeout" label="Ring timeout" v-model="agent.ring_timeout"></form-text>

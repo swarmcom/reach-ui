@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
+import BootstrapVue from 'bootstrap-vue'
 
 import AgentAPI from './agent-api-plugin.js'
 
@@ -28,6 +29,7 @@ Vue.component('icon', Icon)
 Vue.use(VueRouter)
 Vue.use(AgentAPI)
 Vue.use(Notifications)
+Vue.use(BootstrapVue)
 
 const router = new VueRouter({
   routes: [

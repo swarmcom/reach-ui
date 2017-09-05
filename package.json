@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "babel-preset-latest": "^6.24.1",
+    "bootstrap-vue": "^1.0.0-beta.7",
     "http-server": "^0.10.0",
     "jslint": "^0.11.0",
     "vue": "^2.3.3",
