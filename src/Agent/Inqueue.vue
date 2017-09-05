@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     handleState ({ info, inqueue, call_info }) {
-      console.log(info, inqueue, call_info)
       if (info.state == 'ringing') {
         this.info = info
         this.inqueue = inqueue

@@ -57,7 +57,6 @@ export default {
       }
     },
     defined (V) {
-      console.log("v:", V)
       if (V == "undefined") {
         return ''
       } else {

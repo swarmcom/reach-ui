@@ -107,7 +107,7 @@ export default class Agent extends WsProto {
     }
   }
 
-  is_active () { console.log("active"); return (this.vm.state !== 'release' || this.vm.state !== 'available') }
+  is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
   is_idle() { return (this.vm.state == 'release' || this.vm.state == 'available') }
   is_oncall () { return this.vm && this.vm.state == 'oncall' }
   is_wrapup () { return this.vm && this.vm.state == 'wrapup' }
