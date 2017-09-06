@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import WsProto from './ws-proto.js'
 import {EventBus} from './event-bus.js'
-import sys_config from './config.js'
+import config from 'config'
 
-function config(key, default_value) {
-  return sys_config[key] ? sys_config[key] : default_value
+function cfg(key, default_value) {
+  return config[key] ? config[key] : default_value
 }
 
 function guess_ws () {
@@ -15,7 +15,7 @@ function guess_ws () {
 export default class Agent extends WsProto {
 
   constructor () {
-    super(config('reach_ws', guess_ws()))
+    super(cfg('reach_ws', guess_ws()))
     this.vm = new Vue({
       data: {
         agent: undefined,

@@ -1,52 +1,34 @@
 var path = require('path')
 var webpack = require('webpack')
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: ['babel-polyfill', './src/main.js'],
+  entry: {
+    build: ['babel-polyfill', './src/main.js']
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].js'
+  },
+  externals: {
+    config: 'config'
   },
   module: {
     rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-          }
-          // other vue-loader options go here
-        }
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
-      }
+      { test: /\.vue$/, loader: 'vue-loader', options: { loaders: {} } },
+      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.(png|jpg|gif|svg)$/, loader: 'file-loader', options: { name: '[name].[ext]?[hash]' } }
     ]
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js'
-    }
+    alias: { 'vue$': 'vue/dist/vue.esm.js' }
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true
-  },
-  performance: {
-    hints: false
-  },
-  devtool: '#eval-source-map'
+  devServer: { historyApiFallback: true, noInfo: true  },
+  performance: { hints: false },
+  devtool: '#eval-source-map',
+  plugins: [new CopyWebpackPlugin([{from: 'src/config.js', to: 'config.js'}])]
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -60,12 +42,8 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
-      compress: {
-        warnings: false
-      }
+      compress: { warnings: false }
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
+    new webpack.LoaderOptionsPlugin({ minimize: true })
   ])
 }

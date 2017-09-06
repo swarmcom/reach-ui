@@ -24,6 +24,7 @@
     "babel-loader": "^6.0.0",
     "babel-preset-env": "^1.5.1",
     "callback-loader": "^0.2.4",
+    "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "eslint": "^4.5.0",

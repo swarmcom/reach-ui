@@ -19,6 +19,7 @@ export default class WsProto {
   }
 
   connect () {
+    console.log("connect:", this.uri)
     this.ws = new WebSocket(this.uri)
     this.ws.onmessage = Ev => this.onMessage(Ev)
     this.ws.onclose = Ev => this.onClose(Ev)
