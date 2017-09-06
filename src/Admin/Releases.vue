@@ -21,29 +21,25 @@
 </template>
 
 <script>
+import Common from './Common'
+
 export default {
   name: 'admin-releases',
+  mixins: [Common],
   data () {
     return {
       releases: []
     }
   },
   methods: {
-    query () {
-      this.$agent.get_releases(List => this.releases = List.reply)
+    query: async function () {
+      this.releases = await this.$agent.p_mfa('ws_admin', 'get_releases')
     },
     add () {
       this.$router.push(`/admin/release/`)
     },
-    onClick(id) {
+    onClick (id) {
       this.$router.push(`/admin/release/${id}`)
-    },
-    defined (V) {
-      if (V == "undefined") {
-        return ''
-      } else {
-        return V
-      }
     },
   },
   created () {

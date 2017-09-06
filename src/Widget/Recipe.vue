@@ -1,6 +1,6 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
   </div>
 </div>

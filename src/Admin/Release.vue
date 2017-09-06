@@ -9,42 +9,36 @@
 
 <script>
 import FormText from '../Widget/FormText.vue'
-
-function object2list(Obj) {
-  return Object.keys(Obj).map( K => { return { "key": K, "value": Obj[K] } } )
-}
-
-function list2object(List) {
-  let Re = {}
-  List.forEach(Obj => Re[Obj.key] = Obj.value)
-  return Re
-}
+import Common from './Common'
 
 export default {
   name: 'admin-release',
   props: ['id'],
+  components: { 'form-text': FormText },
+  mixins: [Common],
   data () {
     return {
       release: {}
     }
   },
-  components: { 'form-text': FormText },
   methods: {
-    query () {
+    query: async function () {
       if (this.id) {
-        this.$agent.get_release(this.id, Obj => this.release = Obj.reply)
+        this.release = await this.$agent.p_mfa('ws_admin', 'get_release', [this.id])
       }
     },
-    onCommit () {
+    onCommit: async function () {
       if (this.id) {
-        this.$agent.update_release(this.id, this.release, () => this.$router.push('/admin/releases'))
+        await this.$agent.p_mfa('ws_admin', 'update_release', [this.id, this.release])
       } else {
-        this.$agent.create_release(this.release, () => this.$router.push('/admin/releases'))
+        await this.$agent.p_mfa('ws_admin', 'create_release', [this.release])
       }
+      this.$router.push('/admin/releases')
     },
-    onDelete () {
+    onDelete: async function () {
       if (this.id) {
-        this.$agent.delete_release(this.id, () => this.$router.push('/admin/releases'))
+        await this.$agent.p_mfa('ws_admin', 'delete_release', [this.id])
+        this.$router.push('/admin/releases')
       }
     },
   },

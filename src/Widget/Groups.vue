@@ -1,8 +1,8 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-7">
-    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)" :id="id">
+    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="group in groups" :value="group.id" :selected="isActive(group.id)">{{ group.name }}</option>
     </select>
@@ -13,7 +13,7 @@
 <script>
 export default {
   name: 'form-text',
-  props: ['id', 'label', 'value'],
+  props: ['label', 'value'],
   data () {
     return {
       groups: []
@@ -23,8 +23,8 @@ export default {
     isActive(Id) {
       return Id == this.value
     },
-    query () {
-      this.$agent.get_groups(Obj => this.groups = Obj.reply)
+    query: async function () {
+      this.groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
     },
     onUpdate (value) {
       this.$emit('input', value)

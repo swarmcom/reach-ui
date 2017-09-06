@@ -1,6 +1,6 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
     <div v-for="sk of value" class="form-row">
       <div class="for_group col-1">
@@ -31,7 +31,7 @@
 <script>
 export default {
   name: 'skills',
-  props: ['id', 'label', 'value'],
+  props: ['label', 'value'],
   data () {
     return {
       k: '',

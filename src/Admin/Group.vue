@@ -1,14 +1,14 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="group.name"></form-text>
-  <form-text id="hold_music" label="Music on hold" v-model="group.hold_music"></form-text>
-  <form-text id="aging_factor" label="Aging" v-model="group.aging_factor"></form-text>
-  <form-text id="weight" label="Weight" v-model="group.weight"></form-text>
-  <form-text id="wrapup_enabled" label="Wrap-up enabled" v-model="group.wrapup_enabled"></form-text>
-  <form-text id="wrapup_timer" label="Wrap-up timer" v-model="group.wrapup_timer"></form-text>
-  <form-text id="auto_wrapup" label="Auto wrap-up" v-model="group.auto_wrapup"></form-text>
-  <skills id="skills" label="Skills" v-model="skills"></skills>
-  <recipe id="recipe" label="Recipe" v-model="recipe"></recipe>
+  <form-text label="Name" v-model="group.name"></form-text>
+  <form-text label="Music on hold" v-model="group.hold_music"></form-text>
+  <form-text label="Aging" v-model="group.aging_factor"></form-text>
+  <form-text label="Weight" v-model="group.weight"></form-text>
+  <form-text label="Wrap-up enabled" v-model="group.wrapup_enabled"></form-text>
+  <form-text label="Wrap-up timer" v-model="group.wrapup_timer"></form-text>
+  <form-text label="Auto wrap-up" v-model="group.auto_wrapup"></form-text>
+  <skills label="Skills" v-model="skills"></skills>
+  <recipe label="Recipe" v-model="recipe"></recipe>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
@@ -18,20 +18,13 @@
 import FormText from '../Widget/FormText.vue'
 import Skills from '../Widget/Skills.vue'
 import Recipe from '../Widget/Recipe.vue'
-
-function object2list(Obj) {
-  return Object.keys(Obj).map( K => { return { "key": K, "value": Obj[K] } } )
-}
-
-function list2object(List) {
-  let Re = {}
-  List.forEach(Obj => Re[Obj.key] = Obj.value)
-  return Re
-}
+import Common from './Common'
 
 export default {
   name: 'admin-group',
   props: ['id'],
+  mixins: [Common],
+  components: { 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
   data () {
     return {
       group: {},
@@ -39,27 +32,28 @@ export default {
       recipe: []
     }
   },
-  components: { 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
   methods: {
-    query () {
+    query: async function () {
       if (this.id) {
-        this.$agent.get_group(this.id, Obj => { this.group = Obj.reply; this.skills = object2list(Obj.reply.skills) })
+        this.group = await this.$agent.p_mfa('ws_admin', 'get_group')
+        this.skills = this.object2list(this.group.skills)
       }
     },
-    onCommit () {
-      this.group.skills = list2object(this.skills)
+    onCommit: async function () {
+      this.group.skills = this.list2object(this.skills)
       if (this.id) {
-        this.$agent.update_group(this.id, this.group, () => this.$router.push('/admin/groups'))
+        await this.$agent.p_mfa('ws_admin', 'update_group', [this.id, this.group])
       } else {
-        this.$agent.create_group(this.group, () => this.$router.push('/admin/groups'))
+        await this.$agent.p_mfa('ws_admin', 'create_group', [this.group])
       }
+      this.$router.push('/admin/groups')
     },
-    onDelete () {
+    onDelete: async function () {
       if (this.id) {
-        this.$agent.delete_group(this.id, () => this.$router.push('/admin/groups'))
+        await this.$agent.p_mfa('ws_admin', 'delete_group', [this.id])
+        this.$router.push('/admin/groups')
       }
     },
-
   },
   created () {
     this.query()

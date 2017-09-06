@@ -28,18 +28,11 @@
 </template>
 
 <script>
-function object2list(Obj) {
-  return Object.keys(Obj).map( K => { return { "key": K, "value": Obj[K] } } )
-}
-
-function list2object(List) {
-  let Re = {}
-  List.forEach(Obj => Re[Obj.key] = Obj.value)
-  return Re
-}
+import Common from './Common'
 
 export default {
   name: 'admin-params',
+  mixins: [Common],
   data () {
     return {
       params: [],
@@ -48,8 +41,9 @@ export default {
     }
   },
   methods: {
-    query () {
-      this.$agent.get_params(Obj => this.params = object2list(Obj.reply))
+    query: async function () {
+      let Params = await this.$agent.p_mfa('ws_admin', 'get_params')
+      this.params = this.object2list(Params)
     },
     add () {
       this.params.push({ key: this.name, value: this.value })
@@ -62,17 +56,11 @@ export default {
         this.params.splice(id, 1)
       }
     },
-    onCommit () {
-      let Params = list2object(this.params)
-      this.$agent.set_params(Params, (Re) => this.handleCommit(Re))
+    onCommit: async function () {
+      let Params = this.list2object(this.params)
+      await this.$agent.p_mfa('ws_admin', 'set_params', [Params])
+      this.$notify({ title: 'Success:', text: 'Parameters updated.', type: 'success' });
     },
-    handleCommit (Re) {
-      if (Re.reply === 'ok') {
-        this.$notify({ title: 'Success:', text: 'Parameters updated.', type: 'success' });
-      } else {
-        this.$notify({ title: 'Error:', text: Re.error, type: 'error' });
-      }
-    }
   },
   created () {
     this.query()

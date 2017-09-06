@@ -1,5 +1,13 @@
 import {EventBus} from './event-bus.js'
 
+function handleReply (Re, resolve, reject) {
+  if (Re && Re.reply) {
+    resolve(Re.reply)
+  } else {
+    reject(Re.error)
+  }
+} 
+
 export default class WsProto {
 
   constructor (Uri) {
@@ -18,7 +26,17 @@ export default class WsProto {
   }
 
   call (F, A = [], Cb = (A) => A) {
-    this.mfa('ws_agent', F, A, Cb)
+    return this.mfa('ws_agent', F, A, Cb)
+  }
+
+  p_call (F, A = []) {
+    return this.p_mfa('ws_agent', F, A)
+  }
+
+  p_mfa (M, F, A = []) {
+    return new Promise((resolve, reject) => {
+      this.mfa(M, F, A, (Re) => handleReply(Re, resolve, reject))
+    })
   }
 
   mfa (M, F, A = [], Cb = (A) => A) {

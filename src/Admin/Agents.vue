@@ -29,8 +29,11 @@
 </template>
 
 <script>
+import Common from './Common'
+
 export default {
   name: 'admin-agents',
+  mixins: [Common],
   data () {
     return {
       agents: [],
@@ -38,9 +41,9 @@ export default {
     }
   },
   methods: {
-    query () {
-      this.$agent.get_profiles(Obj => this.profiles = Obj.reply)
-      this.$agent.get_agents(List => this.agents = List.reply)
+    query: async function () {
+      this.profiles = await this.$agent.p_mfa('ws_admin', 'get_profiles')
+      this.agents = await this.$agent.p_mfa('ws_admin', 'get_agents')
     },
     add () {
       this.$router.push(`/admin/agent/`)
@@ -49,19 +52,8 @@ export default {
       this.$router.push(`/admin/agent/${id}`)
     },
     profile_name (Id) {
-      let Profile = this.profiles.find(I =>  I.id == Id)
-      if (Profile) {
-        return Profile.name
-      } else {
-        return ''
-      }
-    },
-    defined (V) {
-      if (V == "undefined") {
-        return ''
-      } else {
-        return V
-      }
+      let Profile = this.profiles.find(I => I.id == Id)
+      return Profile ? Profile.name : ''
     },
   },
   created () {

@@ -13,8 +13,8 @@ export default {
     }
   },
   methods: {
-    query () {
-      this.$agent.get_releases(Obj => this.releases = Obj.reply)
+    query: async function () {
+      this.releases = await this.$agent.p_call('get_releases')
     },
     release (id) {
       this.$agent.release(id)

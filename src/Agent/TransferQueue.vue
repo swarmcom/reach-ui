@@ -13,8 +13,8 @@ export default {
     }
   },
   methods: {
-    query () {
-      this.$agent.get_transfer_queues(Obj => this.queues = Obj.reply)
+    query: async function () {
+      this.queues = await this.$agent.p_call('get_transfer_queues')
     },
     onUpdate (id) {
       this.$agent.transfer_to_queue(id)

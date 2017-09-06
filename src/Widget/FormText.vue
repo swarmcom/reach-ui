@@ -1,8 +1,8 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
-    <input class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)" :id="id">
+    <input class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)">
   </div>
 </div>
 </template>
@@ -10,22 +10,18 @@
 <script>
 export default {
   name: 'form-text',
-  props: ['id', 'label', 'value'],
+  props: ['label', 'value'],
   data () {
     return {}
   },
   computed: {
     safe_value () {
-      if(this.value === 'undefined') {
-        return ''
-      } else {
-        return this.value
-      }
+      return this.value === 'undefined' ? '' : this.value
     }
   },
   methods: {
-    onUpdate (value) {
-      this.$emit('input', value)
+    onUpdate (Value) {
+      this.$emit('input', Value)
     }
   }
 }

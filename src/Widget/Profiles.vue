@@ -1,8 +1,8 @@
 <template>
 <div class="form-group row">
-  <label :for="id" class="col-3 col-form-label">{{ label }}</label>
+  <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
-    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)" :id="id">
+    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="profile in profiles" :value="profile.id" :selected="isActive(profile.id)">{{ profile.name }}</option>
     </select>
@@ -13,7 +13,7 @@
 <script>
 export default {
   name: 'form-text',
-  props: ['id', 'label', 'value'],
+  props: ['label', 'value'],
   data () {
     return {
       profiles: []
@@ -23,8 +23,8 @@ export default {
     isActive(Id) {
       return Id == this.value
     },
-    query () {
-      this.$agent.get_profiles(Obj => this.profiles = Obj.reply)
+    query: async function () {
+      this.profiles = await this.$agent.p_mfa('ws_admin', 'get_profiles')
     },
     onUpdate (value) {
       this.$emit('input', value)

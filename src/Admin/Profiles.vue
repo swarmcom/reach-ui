@@ -15,27 +15,29 @@
     <tr @click="onClick(profile.id)">
       <td>{{ profile.id }}</td>
       <td>{{ profile.name }}</td>
-      <td>{{ profile.permissions }}</td>
-      <td>{{ profile.ring_timeout }}</td>
-      <td>{{ profile.max_ring_fails }}</td>
+      <td>{{ defined(profile.permissions) }}</td>
+      <td>{{ defined(profile.ring_timeout) }}</td>
+      <td>{{ defined(profile.max_ring_fails) }}</td>
     </tr>
   </tbody>
 </table>
 </div>
 </template>
 
-
 <script>
+import Common from './Common'
+
 export default {
   name: 'admin-profiles',
+  mixins: [Common],
   data () {
     return {
       profiles: []
     }
   },
   methods: {
-    query () {
-      this.$agent.get_profiles(Obj => this.profiles = Obj.reply)
+    query: async function () {
+      this.profiles = await this.$agent.p_mfa('ws_admin', 'get_profiles')
     },
     add () {
       this.$router.push(`/admin/profile/`)

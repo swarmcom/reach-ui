@@ -18,7 +18,7 @@
       <td>{{ group.name }}</td>
       <td>{{ group.weight }}</td>
       <td>{{ group.aging_factor }}</td>
-      <td>{{ group.hold_music }}</td>
+      <td>{{ defined(group.hold_music) }}</td>
       <td>{{ group.wrapup_enabled }}</td>
     </tr>
   </tbody>
@@ -28,16 +28,19 @@
 
 
 <script>
+import Common from './Common'
+
 export default {
   name: 'admin-groups',
+  mixins: [Common],
   data () {
     return {
       groups: []
     }
   },
   methods: {
-    query () {
-      this.$agent.get_groups(Obj => this.groups = Obj.reply)
+    query: async function () {
+      this.groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
     },
     add () {
       this.$router.push(`/admin/group/`)
@@ -47,7 +50,7 @@ export default {
     }
   },
   created () {
-   this.query()
+    this.query()
   }
 }
 </script>

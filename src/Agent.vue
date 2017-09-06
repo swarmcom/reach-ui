@@ -48,7 +48,7 @@ export default {
     logout () { this.$agent.logout() },
     available () { this.$agent.available() },
     answer () { this.$agent.answer() },
-    hangup () { this.$agent.hangup() }
+    hangup () { this.$agent.hangup() },
   },
   created () {
     this.a = this.$agent.getData()

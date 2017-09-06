@@ -20,8 +20,8 @@
       <td>{{ group_name(queue.group_id) }}</td>
       <td>{{ defined(queue.hold_music) }}</td>
       <td>{{ queue.wrapup_enabled }}</td>
-      <td>{{ queue.aging_factor }}</td>
-      <td>{{ queue.weight }}</td>
+      <td>{{ defined(queue.aging_factor) }}</td>
+      <td>{{ defined(queue.weight) }}</td>
     </tr>
   </tbody>
 </table>
@@ -29,8 +29,11 @@
 </template>
 
 <script>
+import Common from './Common'
+
 export default {
   name: 'admin-queues',
+  mixins: [Common],
   data () {
     return {
       queues: [],
@@ -38,27 +41,16 @@ export default {
     }
   },
   methods: {
-    query () {
-      this.$agent.get_groups(Obj => this.groups = Obj.reply)
-      this.$agent.get_queues(Obj => this.queues = Obj.reply)
+    query: async function () {
+      this.groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
+      this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues')
     },
     add () {
       this.$router.push(`/admin/queue/`)
     },
-    defined (V) {
-      if (V == "undefined") {
-        return ''
-      } else {
-        return V
-      }
-    },
     group_name (Id) {
-      let Group = this.groups.find(I =>  I.id == Id)
-      if (Group) {
-        return Group.name
-      } else {
-        return ''
-      }
+      let Group = this.groups.find(I => I.id == Id)
+      return Group? Group.name : ''
     },
     onClick(id) {
       this.$router.push(`/admin/queue/${id}`)

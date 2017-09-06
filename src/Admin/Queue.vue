@@ -20,20 +20,14 @@ import FormText from '../Widget/FormText.vue'
 import Skills from '../Widget/Skills.vue'
 import Recipe from '../Widget/Recipe.vue'
 import Groups from '../Widget/Groups.vue'
-
-function object2list(Obj) {
-  return Object.keys(Obj).map( K => { return { "key": K, "value": Obj[K] } } )
-}
-
-function list2object(List) {
-  let Re = {}
-  List.forEach(Obj => Re[Obj.key] = Obj.value)
-  return Re
-}
+import Common from './Common'
 
 export default {
-  name: 'admin-agent',
+  name: 'admin-queue',
   props: ['id'],
+  components: { 'groups': Groups, 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
+  mixins: [Common],
+
   data () {
     return {
       queue: {},
@@ -41,24 +35,26 @@ export default {
       recipe: []
     }
   },
-  components: { 'groups': Groups, 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
   methods: {
-    query () {
+    query: async function () {
       if (this.id) {
-        this.$agent.get_queue(this.id, Obj => { this.queue = Obj.reply; this.skills = object2list(Obj.reply.skills) })
+        this.queue = await this.$agent.p_mfa('ws_admin', 'get_queue', [this.id])
+        this.skills = this.object2list(this.queue.skills)
       }
     },
-    onCommit () {
-      this.queue.skills = list2object(this.skills)
+    onCommit: async function () {
+      this.queue.skills = this.list2object(this.skills)
       if (this.id) {
-        this.$agent.update_queue(this.id, this.queue, () => this.$router.push('/admin/queues'))
+        await this.$agent.p_mfa('ws_admin', 'update_queue', [this.id, this.queue])
       } else {
-        this.$agent.create_queue(this.queue, () => this.$router.push('/admin/queues'))
+        await this.$agent.p_mfa('ws_admin', 'create_queue', [this.queue])
       }
+      this.$router.push('/admin/queues')
     },
-    onDelete () {
+    onDelete: async function () {
       if (this.id) {
-        this.$agent.delete_queue(this.id, () => this.$router.push('/admin/queues'))
+        await this.$agent.p_mfa('ws_admin', 'delete_queue', [this.id])
+        this.$router.push('/admin/queues')
       }
     },
   },
