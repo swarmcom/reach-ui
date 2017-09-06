@@ -27,6 +27,7 @@
       <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
       <transfer-agent></transfer-agent>
       <transfer-queue></transfer-queue>
+      <transfer-uri></transfer-uri>
     </div>
   </div>
 </div>
@@ -36,6 +37,7 @@
 import TransferAgent from '../Agent/TransferAgent'
 import TransferQueue from '../Agent/TransferQueue'
 import Dialer from '../Agent/Dialer'
+import TransferUri from '../Agent/TransferUri'
 
 export default {
   data () {
@@ -76,6 +78,6 @@ export default {
   created () {
     this.$bus.$on('agent_state', (S) => this.handleState(S))
   },
-  components: { 'transfer-agent': TransferAgent, 'transfer-queue': TransferQueue, 'dialer': Dialer },
+  components: { 'transfer-agent': TransferAgent, 'transfer-queue': TransferQueue, 'dialer': Dialer, 'transfer-uri': TransferUri },
 }
 </script>
