@@ -87,6 +87,14 @@ export default {
   created () {
     this.$bus.$on('agent_state', (S) => this.handleState(S))
   },
-  components: { 'transfer-agent': TransferAgent, 'transfer-queue': TransferQueue, 'dialer': Dialer, 'transfer-uri': TransferUri, 'conference-agent': ConferenceAgent, 'conference-queue': ConferenceQueue, 'conference-uri': ConferenceUri },
+  components: {
+    'transfer-agent': TransferAgent,
+    'transfer-queue': TransferQueue,
+    'dialer': Dialer,
+    'transfer-uri': TransferUri,
+    'conference-agent': ConferenceAgent,
+    'conference-queue': ConferenceQueue,
+    'conference-uri': ConferenceUri
+  },
 }
 </script>
