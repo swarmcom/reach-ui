@@ -9,7 +9,8 @@ function cfg(key, default_value) {
 
 function guess_ws () {
   let proto = window.location.protocol == "http:" ? "ws://" : "wss://"
-  return proto + window.location.hostname + ":" + window.location.port + "/reach/ws"
+  let port = window.location.port ? ":" + window.location.port : ""
+  return proto + window.location.hostname + port + "/reach/ws"
 }
 
 export default class Agent extends WsProto {
