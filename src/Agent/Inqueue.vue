@@ -28,6 +28,9 @@
       <transfer-agent></transfer-agent>
       <transfer-queue></transfer-queue>
       <transfer-uri></transfer-uri>
+      <conference-agent></conference-agent>
+      <conference-queue></conference-queue>
+      <conference-uri></conference-uri>
     </div>
   </div>
 </div>
@@ -38,6 +41,9 @@ import TransferAgent from '../Agent/TransferAgent'
 import TransferQueue from '../Agent/TransferQueue'
 import Dialer from '../Agent/Dialer'
 import TransferUri from '../Agent/TransferUri'
+import ConferenceAgent from '../Agent/ConferenceAgent'
+import ConferenceQueue from '../Agent/ConferenceQueue'
+import ConferenceUri from '../Agent/ConferenceUri'
 
 export default {
   data () {
@@ -74,10 +80,13 @@ export default {
     transfer_to_agent (Agent) { this.$agent.transfer_to_agent(Agent) },
     transfer_to_queue (Queue) { this.$agent.transfer_to_queue(Queue) },
     transfer_to_uri (Uri) { this.$agent.transfer_to_uri(Uri) },
+    conference_to_agent (Agent) { this.$agent.conference_to_agent(Agent) },
+    conference_to_queue (Queue) { this.$agent.conference_to_queue(Queue) },
+    conference_to_uri (Uri) { this.$agent.conference_to_uri(Uri) },
   },
   created () {
     this.$bus.$on('agent_state', (S) => this.handleState(S))
   },
-  components: { 'transfer-agent': TransferAgent, 'transfer-queue': TransferQueue, 'dialer': Dialer, 'transfer-uri': TransferUri },
+  components: { 'transfer-agent': TransferAgent, 'transfer-queue': TransferQueue, 'dialer': Dialer, 'transfer-uri': TransferUri, 'conference-agent': ConferenceAgent, 'conference-queue': ConferenceQueue, 'conference-uri': ConferenceUri },
 }
 </script>
