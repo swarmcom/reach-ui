@@ -1,23 +1,31 @@
 <template>
 <div>
 <div class="row">
-  <div class="col"><h3>Inqueue requests</h3></div>
+  <div class="col"><h3 style="color:#42b983">Inqueue requests</h3></div>
 </div>
-<div class="row" v-for="inqueue in inqueues">
-  <div class="col">{{ inqueue.state }}</div>
-  <div class="col">{{ inqueue.record }}</div>
-  <div class="col">{{ inqueue.queue }}</div>
-  <div class="col">{{ Math.round(inqueue.time/1000) }}s</div>
-  <div class="col">{{ inqueue.effective_time.weight }}-{{ Math.round(inqueue.effective_time.time/1000) }}s</div>
-</div>
+<form id="search" style="float: right; margin-bottom: 10px;">
+  Search <input name="query" v-model="searchQuery">
+</form>
+<custom-table style="margin-top: 20px"
+  :data="computedInqueues"
+  :columns="columns"
+  :dataArguments="dataArguments"
+  :filter-key="searchQuery"
+  :clickable="0">
+</custom-table>
 </div>
 </template>
 
 <script>
+import CustomTable from '../Widget/CustomTable'
+
 export default {
   name: 'inqueues',
   data () {
     return {
+      searchQuery: '',
+      columns: ['State', 'Record', 'Queue', 'Time', 'Effective Time'],
+      dataArguments: ['state', 'record', 'queue', 'timeComputed', 'effective'],
       inqueues: []
     }
   },
@@ -53,6 +61,19 @@ export default {
     this.$agent.subscribe('inqueues')
     this.query()
     this.$bus.$on('inqueue_state', (S) => this.handleState(S))
+  },
+  components: {
+    'custom-table': CustomTable
+  },
+  computed: {
+    computedInqueues: function() {
+      let inqueues = this.inqueues;
+      inqueues.forEach(function (key) {
+        key.timeComputed = Math.round(key.time/1000).toString() + 's'
+        key.effective =  key.effective_time.weight.toString() + '-' + Math.round(key.effective_time.time/1000).toString() + 's'
+      })
+      return inqueues;
+    }
   }
 }
 </script>

@@ -1,41 +1,29 @@
 <template>
 <div>
-<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
-<table style="margin-top: 20px" class="table table-hover table-sm">
-  <thead class="thead-default">
-    <tr>
-      <th>Id</th>
-      <th>Login</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Permissions</th>
-      <th>Profile</th>
-      <th>Uri</th>
-    </tr>
-  </thead>
-  <tbody v-for="agent in agents">
-    <tr @click="onClick(agent.agent_id)">
-      <td>{{ agent.agent_id }}</td>
-      <td>{{ agent.login }}</td>
-      <td>{{ defined(agent.firstname) }}</td>
-      <td>{{ defined(agent.lastname) }}</td>
-      <td>{{ defined(agent.permissions) }}</td>
-      <td>{{ profile_name(agent.group_id) }}</td>
-      <td>{{ defined(agent.uri) }}</td>
-    </tr>
-  </tbody>
-</table>
+<button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+<form id="search" style="float: right;">
+  Search <input name="query" v-model="searchQuery">
+</form>
+<custom-table style="margin-top: 20px"
+  :data="computedAgents"
+  :dataArguments="dataArguments"
+  :columns="columns"
+  :filter-key="searchQuery"
+  :clickable="1">
+</custom-table>
 </div>
 </template>
 
 <script>
-import Common from './Common'
+import CustomTable from '../Widget/CustomTable'
 
 export default {
   name: 'admin-agents',
-  mixins: [Common],
   data () {
     return {
+      searchQuery: '',
+      dataArguments: ['agent_id', 'login', 'firstname', 'lastname', 'permissions', 'group_id', 'uri'],
+      columns: ['Id', 'Login', 'First Name', 'Last Name', 'Permissions', 'Profile', 'Uri'],
       agents: [],
       profiles: []
     }
@@ -48,16 +36,30 @@ export default {
     add () {
       this.$router.push(`/admin/agent/`)
     },
-    onClick(id) {
-      this.$router.push(`/admin/agent/${id}`)
-    },
     profile_name (Id) {
       let Profile = this.profiles.find(I => I.id == Id)
       return Profile ? Profile.name : ''
     },
+    onClicked(data) {
+      this.$router.push(`/admin/agent/${data.agent_id}`)
+    }
   },
   created () {
     this.query()
+  },
+  components: {
+    'custom-table': CustomTable
+  },
+  computed: {
+    computedAgents: function() {
+      let agents = this.agents;
+      let profiles = this.profiles;
+      agents.forEach(function (key) {
+        let Profile = profiles.find(I => I.id == key.group_id)
+        Profile ? key.group_id = Profile.name : key.group_id = ''
+      })
+      return agents;
+    }
   }
 }
 </script>

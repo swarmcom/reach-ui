@@ -1,40 +1,32 @@
 <template>
 <div>
-<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
-<table style="margin-top: 20px" class="table table-hover table-sm">
-  <thead class="thead-default">
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Weight</th>
-      <th>Aging</th>
-      <th>Music</th>
-      <th>Wrap</th>
-    </tr>
-  </thead>
-  <tbody v-for="group in groups">
-    <tr @click="onClick(group.id)">
-      <td>{{ group.id }}</td>
-      <td>{{ group.name }}</td>
-      <td>{{ group.weight }}</td>
-      <td>{{ group.aging_factor }}</td>
-      <td>{{ defined(group.hold_music) }}</td>
-      <td>{{ group.wrapup_enabled }}</td>
-    </tr>
-  </tbody>
-</table>
+<button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+<form id="search" style="float: right;">
+  Search <input name="query" v-model="searchQuery">
+</form>
+<custom-table style="margin-top: 20px"
+  :data="groups"
+  :dataArguments="dataArguments"
+  :columns="columns"
+  :filter-key="searchQuery"
+  :clickable="1">
+</custom-table>
 </div>
 </template>
 
 
 <script>
 import Common from './Common'
+import CustomTable from '../Widget/CustomTable'
 
 export default {
   name: 'admin-groups',
   mixins: [Common],
   data () {
     return {
+      searchQuery: '',
+      dataArguments: ['id', 'name', 'weight', 'aging_factor', 'hold_music', 'wrapup_enabled'],
+      columns: ['Id', 'Name', 'Weight', 'Aging', 'Music', 'Wrap' ],
       groups: []
     }
   },
@@ -45,12 +37,15 @@ export default {
     add () {
       this.$router.push(`/admin/group/`)
     },
-    onClick(id) {
-      this.$router.push(`/admin/group/${id}`)
+    onClicked(data) {
+      this.$router.push(`/admin/group/${data.id}`)
     }
   },
   created () {
     this.query()
-  }
+  },
+  components: {
+    'custom-table': CustomTable
+  },
 }
 </script>
