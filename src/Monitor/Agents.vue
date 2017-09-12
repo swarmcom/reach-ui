@@ -49,7 +49,7 @@ export default {
     query () {
       this.$agent.agents(Obj => this.agents = Obj.reply)
     },
-    onTimer() {
+    onTimer () {
       this.agents.forEach((E, i, A) => {
         E.time = E.time + 1000
         A.splice(i, 1, E)
@@ -69,11 +69,9 @@ export default {
     'custom-table': CustomTable
   },
   computed: {
-    computedAgents: function() {
+    computedAgents () {
       let agents = this.agents;
-      agents.forEach(function (key) {
-        key.timeComputed = Math.round(key.time/1000).toString() + 's'
-      })
+      agents.forEach( (key) => key.timeComputed = Math.round(key.time/1000).toString() + 's' )
       return agents;
     }
   }
