@@ -1,7 +1,7 @@
 <template>
 <div>
 <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-<form id="search">
+<form id="search" style="float: right;">
   Search <input name="query" v-model="searchQuery">
 </form>
 <custom-table style="margin-top: 20px"

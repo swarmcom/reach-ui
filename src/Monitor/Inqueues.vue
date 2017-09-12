@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col"><h3 style="color:#42b983">Inqueue requests</h3></div>
 </div>
-<form id="search">
+<form id="search" style="float: right; margin-bottom: 10px;">
   Search <input name="query" v-model="searchQuery">
 </form>
 <custom-table style="margin-top: 20px"
