@@ -1,41 +1,29 @@
 <template>
 <div>
-<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
-<table style="margin-top: 20px" class="table table-hover table-sm">
-  <thead class="thead-default">
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Group</th>
-      <th>Music</th>
-      <th>Wrap</th>
-      <th>Aging</th>
-      <th>Weight</th>
-    </tr>
-  </thead>
-  <tbody v-for="queue in queues">
-    <tr @click="onClick(queue.id)">
-      <td>{{ queue.id }}</td>
-      <td>{{ queue.name }}</td>
-      <td>{{ group_name(queue.group_id) }}</td>
-      <td>{{ defined(queue.hold_music) }}</td>
-      <td>{{ queue.wrapup_enabled }}</td>
-      <td>{{ defined(queue.aging_factor) }}</td>
-      <td>{{ defined(queue.weight) }}</td>
-    </tr>
-  </tbody>
-</table>
+<button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+<form id="search">
+  Search <input name="query" v-model="searchQuery">
+</form>
+<custom-table style="margin-top: 20px"
+  :data="computedQueues"
+  :dataArguments="dataArguments"
+  :columns="columns"
+  :filter-key="searchQuery"
+  :clickable="1">
+</custom-table>
 </div>
 </template>
 
 <script>
-import Common from './Common'
+import CustomTable from '../Widget/CustomTable'
 
 export default {
   name: 'admin-queues',
-  mixins: [Common],
   data () {
     return {
+      searchQuery: '',
+      dataArguments: ['id', 'name', 'group_id', 'hold_music', 'wrapup_enabled', 'aging_factor', 'weight'],
+      columns: ['Id', 'Name', 'Group', 'Music', 'Wrap', 'Aging', 'Weight'],
       queues: [],
       groups: []
     }
@@ -52,12 +40,26 @@ export default {
       let Group = this.groups.find(I => I.id == Id)
       return Group? Group.name : ''
     },
-    onClick(id) {
-      this.$router.push(`/admin/queue/${id}`)
+    onClicked(data) {
+      this.$router.push(`/admin/queue/${data.id}`)
     }
   },
   created () {
     this.query()
+  },
+  components: {
+    'custom-table': CustomTable
+  },
+  computed: {
+    computedQueues: function() {
+      let queues = this.queues;
+      let groups = this.groups;
+      queues.forEach(function (key) {
+        let Group = groups.find(I => I.id == key.group_id)
+        Group ? key.group_id = Group.name : key.group_id = ''
+      })
+      return queues;
+    }
   }
 }
 </script>

@@ -1,33 +1,29 @@
 <template>
 <div>
-<button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
-<table style="margin-top: 20px" class="table table-hover table-sm">
-  <thead class="thead-default">
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Score</th>
-    </tr>
-  </thead>
-  <tbody v-for="release in releases">
-    <tr @click="onClick(release.id)">
-      <td>{{ release.id }}</td>
-      <td>{{ defined(release.name) }}</td>
-      <td>{{ defined(release.score) }}</td>
-    </tr>
-  </tbody>
-</table>
+<button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+<form id="search">
+  Search <input name="query" v-model="searchQuery">
+</form>
+<custom-table style="margin-top: 20px"
+  :data="releases"
+  :dataArguments="dataArguments"
+  :columns="columns"
+  :filter-key="searchQuery"
+  :clickable="1">
+</custom-table>
 </div>
 </template>
 
 <script>
-import Common from './Common'
+import CustomTable from '../Widget/CustomTable'
 
 export default {
   name: 'admin-releases',
-  mixins: [Common],
   data () {
     return {
+      searchQuery: '',
+      dataArguments: ['id', 'name', 'score'],
+      columns: ['Id', 'Name', 'Score'],
       releases: []
     }
   },
@@ -38,12 +34,15 @@ export default {
     add () {
       this.$router.push(`/admin/release/`)
     },
-    onClick (id) {
-      this.$router.push(`/admin/release/${id}`)
+    onClicked (data) {
+      this.$router.push(`/admin/release/${data.id}`)
     },
   },
   created () {
     this.query()
+  },
+  components: {
+   'custom-table': CustomTable
   }
 }
 </script>

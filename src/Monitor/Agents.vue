@@ -1,21 +1,30 @@
 <template>
 <div>
 <div class="row">
-  <div class="col"><h3>Logged in agents</h3></div>
+  <div class="col"><h3 style="color:#42b983">Logged in agents</h3></div>
 </div>
-<div class="row" v-for="agent in agents">
-  <div class="col-3">{{ agent.agent_id }}</div>
-  <div class="col-2">{{ agent.state }}</div>
-  <div class="col-2">{{ Math.round(agent.time/1000) }}s</div>
-</div>
+<form id="search">
+  Search <input name="query" v-model="searchQuery">
+</form>
+<custom-table style="margin-top: 20px; margin-bottom: 20px"
+  :data="computedAgents"
+  :columns="columns"
+  :dataArguments="dataArguments"
+  :filter-key="searchQuery"
+  :clickable="0">
+</custom-table>
 </div>
 </template>
 
 <script>
+import CustomTable from '../Widget/CustomTable'
 export default {
   name: 'agents',
   data () {
     return {
+      searchQuery: '',
+      columns: ['ID', 'State', 'Time'],
+      dataArguments: ['agent_id', 'state', 'timeComputed'],
       agents: []
     }
   },
@@ -55,6 +64,18 @@ export default {
     this.$agent.subscribe('agents')
     this.query()
     this.$bus.$on('agents_state', (S) => this.handleState(S))
+  },
+  components: {
+    'custom-table': CustomTable
+  },
+  computed: {
+    computedAgents: function() {
+      let agents = this.agents;
+      agents.forEach(function (key) {
+        key.timeComputed = Math.round(key.time/1000).toString() + 's'
+      })
+      return agents;
+    }
   }
 }
 </script>
