@@ -45,7 +45,7 @@ export default {
     query () {
       this.$agent.inqueues(Obj => this.inqueues = Obj.reply)
     },
-    onTimer() {
+    onTimer () {
       this.inqueues.forEach((E, i, Arr) => { 
         E.time = E.time + 1000
         E.effective_time.time = E.effective_time.time + 1000
@@ -66,9 +66,9 @@ export default {
     'custom-table': CustomTable
   },
   computed: {
-    computedInqueues: function() {
+    computedInqueues () {
       let inqueues = this.inqueues;
-      inqueues.forEach(function (key) {
+      inqueues.forEach((key) => {
         key.timeComputed = Math.round(key.time/1000).toString() + 's'
         key.effective =  key.effective_time.weight.toString() + '-' + Math.round(key.effective_time.time/1000).toString() + 's'
       })
