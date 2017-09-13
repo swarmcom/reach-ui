@@ -8,6 +8,7 @@
   :data="computedAgents"
   :dataArguments="dataArguments"
   :columns="columns"
+  :rowsPerPage="20"
   :filter-key="searchQuery"
   :clickable="1">
 </custom-table>
@@ -52,8 +53,8 @@ export default {
   },
   computed: {
     computedAgents () {
-      let agents = this.agents;
-      let profiles = this.profiles;
+      let agents = this.agents
+      let profiles = this.profiles
       agents.forEach(function (key) {
         let Profile = profiles.find(I => I.id == key.group_id)
         Profile ? key.group_id = Profile.name : key.group_id = ''

@@ -8,12 +8,12 @@
   :data="groups"
   :dataArguments="dataArguments"
   :columns="columns"
+  :rowsPerPage="20"
   :filter-key="searchQuery"
   :clickable="1">
 </custom-table>
 </div>
 </template>
-
 
 <script>
 import Common from './Common'
@@ -46,6 +46,6 @@ export default {
   },
   components: {
     'custom-table': CustomTable
-  },
+  }
 }
 </script>

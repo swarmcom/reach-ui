@@ -8,6 +8,7 @@
   :data="computedQueues"
   :dataArguments="dataArguments"
   :columns="columns"
+  :rowsPerPage="20"
   :filter-key="searchQuery"
   :clickable="1">
 </custom-table>
