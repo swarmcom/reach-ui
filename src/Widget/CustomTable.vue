@@ -82,7 +82,7 @@ export default {
         return data.slice(this.startRow, this.startRow + this.rowsPerPage)
     },
     computedPaginatePages () {
-      return this.data.length%this.rowsPerPage > 0 ? (Math.round(this.data.length/this.rowsPerPage) + 1)
+      return this.data.length%this.rowsPerPage > 0 ? (Math.floor(this.data.length/this.rowsPerPage) + 1)
         : this.data.length/this.rowsPerPage
     }
   },
