@@ -1,7 +1,7 @@
 <template>
 <div>
 <div class="row">
-  <div class="col"><h3 style="color:#42b983">Logged in agents</h3></div>
+  <div class="col"><h3>Logged in agents</h3></div>
 </div>
 <form id="search" style="float: right; margin-bottom: 10px;">
   Filter <input name="query" v-model="searchQuery">
@@ -10,6 +10,7 @@
   :data="computedAgents"
   :columns="columns"
   :dataArguments="dataArguments"
+  :rowsPerPage="0"
   :filter-key="searchQuery"
   :clickable="0">
 </custom-table>
