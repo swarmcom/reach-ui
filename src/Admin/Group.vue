@@ -35,7 +35,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.group = await this.$agent.p_mfa('ws_admin', 'get_group')
+        this.group = await this.$agent.p_mfa('ws_admin', 'get_group', [this.id])
         this.skills = this.object2list(this.group.skills)
       }
     },
