@@ -3,7 +3,7 @@
 # On
 
 1. Display other inqueue types
-4. Make UI refreshable (e.g. reload window and reconnect to the same state)
+2. Make UI refreshable (e.g. reload window and reconnect to the same state)
 
 # Good to have
 
