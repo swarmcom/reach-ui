@@ -42,12 +42,17 @@ export default {
     },
     onCommit: async function () {
       this.agent.skills = this.list2object(this.skills)
-      if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'update_agent', [this.id, this.agent])
-      } else {
-        await this.$agent.p_mfa('ws_admin', 'create_agent', [this.agent])
+      try {
+        if (this.id) {
+          await this.$agent.p_mfa('ws_admin', 'update_agent', [this.id, this.agent])
+        } else {
+          await this.$agent.p_mfa('ws_admin', 'create_agent', [this.agent])
+        }
+        this.$router.push('/admin/agents')
       }
-      this.$router.push('/admin/agents')
+      catch (error) {
+        this.$notify({ title: 'Data error:', text: error, type: 'error' });
+      }
     },
     onDelete: async function () {
       if (this.id) {
