@@ -1,5 +1,5 @@
 <template>
-  <input v-model="uri" v-on:keyup.enter="onEnter" type="text" placeholder="Transfer to uri, press enter" autofocus="true">
+<input v-model="uri" v-on:keyup.enter="onEnter" type="text" placeholder="Enter number" autofocus="true">
 </template>
 
 <script>
