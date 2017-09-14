@@ -1,18 +1,21 @@
 <template>
-<div>
-<button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-<form id="search" style="float: right;">
-  Filter <input name="query" v-model="searchQuery">
-</form>
-<custom-table style="margin-top: 20px"
-  :data="groups"
-  :dataArguments="dataArguments"
-  :columns="columns"
-  :rowsPerPage="20"
-  :filter-key="searchQuery"
-  :clickable="1">
-</custom-table>
-</div>
+  <div>
+    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+    <div style="float: right">
+      Rows
+      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
+      Filter
+      <input v-model="searchQuery" type="text" style="height:38px">
+    </div>
+    <custom-table style="margin-top: 20px"
+      :data="groups"
+      :dataArguments="dataArguments"
+      :columns="columns"
+      :rowsPerPage="rowsPerPage"
+      :filter-key="searchQuery"
+      :clickable="1">
+    </custom-table>
+  </div>
 </template>
 
 <script>
@@ -24,6 +27,7 @@ export default {
   mixins: [Common],
   data () {
     return {
+      rowsPerPage: 0,
       searchQuery: '',
       dataArguments: ['id', 'name', 'weight', 'aging_factor', 'hold_music', 'wrapup_enabled'],
       columns: ['Id', 'Name', 'Weight', 'Aging', 'Music', 'Wrap' ],
@@ -43,6 +47,15 @@ export default {
   },
   created () {
     this.query()
+    if(localStorage.getItem('adminGroupsRows')) this.rowsPerPage = localStorage.getItem('adminGroupsRows')
+  },
+  watch: {
+    rowsPerPage: {
+      handler() {
+        localStorage.setItem('adminGroupsRows', this.rowsPerPage);
+      },
+      deep: true,
+    },
   },
   components: {
     'custom-table': CustomTable

@@ -1,20 +1,23 @@
 <template>
-<div>
-<div class="row">
-  <div class="col"><h3>Logged in agents</h3></div>
-</div>
-<form id="search" style="float: right; margin-bottom: 10px;">
-  Filter <input name="query" v-model="searchQuery">
-</form>
-<custom-table style="margin-top: 20px; margin-bottom: 20px"
-  :data="computedAgents"
-  :columns="columns"
-  :dataArguments="dataArguments"
-  :rowsPerPage="0"
-  :filter-key="searchQuery"
-  :clickable="0">
-</custom-table>
-</div>
+  <div>
+    <div class="row">
+      <div class="col"><h3>Logged in agents</h3></div>
+    </div>
+    <div style="float: right; margin-bottom:10px;">
+      Rows
+      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
+      Filter
+      <input v-model="searchQuery" type="text" style="height:38px">
+    </div>
+    <custom-table style="margin-top: 20px; margin-bottom: 20px"
+      :data="computedAgents"
+      :columns="columns"
+      :dataArguments="dataArguments"
+      :rowsPerPage="rowsPerPage"
+      :filter-key="searchQuery"
+      :clickable="0">
+    </custom-table>
+  </div>
 </template>
 
 <script>
@@ -23,6 +26,7 @@ export default {
   name: 'agents',
   data () {
     return {
+      rowsPerPage: 0,
       searchQuery: '',
       columns: ['ID', 'State', 'Time'],
       dataArguments: ['agent_id', 'state', 'timeComputed'],
@@ -60,6 +64,15 @@ export default {
   },
   mounted () {
     this.onTimer()
+    if(localStorage.getItem('monitorAgentsRows')) this.rowsPerPage = localStorage.getItem('monitorAgentsRows')
+  },
+  watch: {
+    rowsPerPage: {
+      handler() {
+        localStorage.setItem('monitorAgentsRows', this.rowsPerPage);
+      },
+      deep: true,
+    },
   },
   created () {
     this.$agent.subscribe('agents')

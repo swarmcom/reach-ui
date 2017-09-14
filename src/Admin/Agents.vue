@@ -1,18 +1,21 @@
 <template>
-<div>
-<button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-<form id="search" style="float: right;">
-  Filter <input name="query" v-model="searchQuery">
-</form>
-<custom-table style="margin-top: 20px"
-  :data="computedAgents"
-  :dataArguments="dataArguments"
-  :columns="columns"
-  :rowsPerPage="20"
-  :filter-key="searchQuery"
-  :clickable="1">
-</custom-table>
-</div>
+  <div>
+    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+    <div style="float: right">
+      Rows
+      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
+      Filter
+      <input v-model="searchQuery" type="text" style="height:38px">
+    </div>
+    <custom-table style="margin-top: 20px"
+      :data="computedAgents"
+      :dataArguments="dataArguments"
+      :columns="columns"
+      :rowsPerPage="rowsPerPage"
+      :filter-key="searchQuery"
+      :clickable="1">
+    </custom-table>
+  </div>
 </template>
 
 <script>
@@ -23,6 +26,7 @@ export default {
   data () {
     return {
       searchQuery: '',
+      rowsPerPage: 0,
       dataArguments: ['agent_id', 'login', 'firstname', 'lastname', 'permissions', 'group_id', 'uri'],
       columns: ['Id', 'Login', 'First Name', 'Last Name', 'Permissions', 'Profile', 'Uri'],
       agents: [],
@@ -47,6 +51,15 @@ export default {
   },
   created () {
     this.query()
+    if(localStorage.getItem('adminAgentsRows')) this.rowsPerPage = localStorage.getItem('adminAgentsRows')
+  },
+  watch: {
+    rowsPerPage: {
+      handler() {
+        localStorage.setItem('adminAgentsRows', this.rowsPerPage);
+      },
+      deep: true,
+    },
   },
   components: {
     'custom-table': CustomTable
