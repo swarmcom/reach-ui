@@ -76,7 +76,7 @@ export default {
         })
       }
       //paginations when rowsPerPage > 0 or no filtering
-      if (this.rowsPerPage == 0 || filterKey)
+      if (this.rowsPerPage < 1 || filterKey)
         return data
       else
         return data.slice(this.startRow, this.startRow + this.rowsPerPage)
