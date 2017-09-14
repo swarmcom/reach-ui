@@ -44,12 +44,17 @@ export default {
     },
     onCommit: async function () {
       this.queue.skills = this.list2object(this.skills)
-      if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'update_queue', [this.id, this.queue])
-      } else {
-        await this.$agent.p_mfa('ws_admin', 'create_queue', [this.queue])
+      try {
+        if (this.id) {
+          await this.$agent.p_mfa('ws_admin', 'update_queue', [this.id, this.queue])
+        } else {
+          await this.$agent.p_mfa('ws_admin', 'create_queue', [this.queue])
+        }
+        this.$router.push('/admin/queues')
       }
-      this.$router.push('/admin/queues')
+      catch (error) {
+        this.$notify({ title: 'Data error:', text: error, type: 'error' });
+      }
     },
     onDelete: async function () {
       if (this.id) {

@@ -41,12 +41,17 @@ export default {
     },
     onCommit: async function () {
       this.group.skills = this.list2object(this.skills)
-      if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'update_group', [this.id, this.group])
-      } else {
-        await this.$agent.p_mfa('ws_admin', 'create_group', [this.group])
+      try {
+        if (this.id) {
+          await this.$agent.p_mfa('ws_admin', 'update_group', [this.id, this.group])
+        } else {
+          await this.$agent.p_mfa('ws_admin', 'create_group', [this.group])
+        }
+        this.$router.push('/admin/groups')
       }
-      this.$router.push('/admin/groups')
+      catch (error) {
+        this.$notify({ title: 'Data error:', text: error, type: 'error' });
+      }
     },
     onDelete: async function () {
       if (this.id) {

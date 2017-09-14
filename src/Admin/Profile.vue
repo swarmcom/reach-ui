@@ -35,13 +35,18 @@ export default {
       }
     },
     onCommit: async function () {
-      this.profile.skills = this.list2object(this.skills)
-      if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'update_profile', [this.id, this.profile])
-      } else {
-        await this.$agent.p_mfa('ws_admin', 'create_profile', [this.profile])
+      try {
+        this.profile.skills = this.list2object(this.skills)
+        if (this.id) {
+          await this.$agent.p_mfa('ws_admin', 'update_profile', [this.id, this.profile])
+        } else {
+          await this.$agent.p_mfa('ws_admin', 'create_profile', [this.profile])
+        }
+        this.$router.push('/admin/profiles')
       }
-      this.$router.push('/admin/profiles')
+      catch (error) {
+        this.$notify({ title: 'Data error:', text: error, type: 'error' });
+      }
     },
     onDelete: async function () {
       if (this.id) {
