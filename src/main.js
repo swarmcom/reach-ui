@@ -23,6 +23,12 @@ import AdminProfile from './Admin/Profile.vue'
 import AdminProfiles from './Admin/Profiles.vue'
 import AdminRelease from './Admin/Release.vue'
 import AdminReleases from './Admin/Releases.vue'
+import AdminLineIn from './Admin/LineIn.vue'
+import AdminLineIns from './Admin/LineIns.vue'
+import AdminLineOut from './Admin/LineOut.vue'
+import AdminLineOuts from './Admin/LineOuts.vue'
+import AdminClient from './Admin/Client.vue'
+import AdminClients from './Admin/Clients.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -45,6 +51,9 @@ const router = new VueRouter({
       { path: 'groups', component: AdminGroups },
       { path: 'profiles', component: AdminProfiles },
       { path: 'releases', component: AdminReleases },
+      { path: 'clients', component: AdminClients },
+      { path: 'line_ins', component: AdminLineIns },
+      { path: 'line_outs', component: AdminLineOuts },
       { path: 'agent', component: AdminAgent },
       { path: 'agent/:id', component: AdminAgent, props: true },
       { path: 'queue', component: AdminQueue },
@@ -54,7 +63,13 @@ const router = new VueRouter({
       { path: 'group', component: AdminGroup },
       { path: 'group/:id', component: AdminGroup, props: true },
       { path: 'release', component: AdminRelease },
-      { path: 'release/:id', component: AdminRelease, props: true }
+      { path: 'release/:id', component: AdminRelease, props: true },
+      { path: 'client', component: AdminClient },
+      { path: 'client/:id', component: AdminClient, props: true },
+      { path: 'line_in', component: AdminLineIn },
+      { path: 'line_in/:id', component: AdminLineIn, props: true },
+      { path: 'line_out', component: AdminLineOut },
+      { path: 'line_out/:id', component: AdminLineOut, props: true }
     ] },
     { path: '/help', component: Help },
     { path: '/login', component: Login },

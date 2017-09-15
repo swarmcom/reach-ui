@@ -109,13 +109,13 @@ export default {
 <style>
   table {
     width: 100%;
-    border: 2px solid #42b983;
+    border: 2px solid #eee;
     border-radius: 3px;
     background-color: #fff;
   }
   th {
-    background-color: #42b983;
-    color: rgba(255,255,255,0.66);
+    background-color: #333;
+    color: #fff;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -129,7 +129,7 @@ export default {
     opacity: 1;
   }
   tr.cursor {
-      cursor: pointer;
+    cursor: pointer;
   }
   .arrow {
     display: inline-block;
