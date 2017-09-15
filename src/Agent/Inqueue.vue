@@ -28,7 +28,7 @@
         <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
       </div>
     </div>
-    <div class="row" style="margin-top:20px">
+    <div v-if="this.$agent.is_oncall()" class="row" style="margin-top:20px">
       <div class="col">
         <h4>Transfer to</h4>
         <div class="form-inline">
