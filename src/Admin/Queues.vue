@@ -1,18 +1,21 @@
 <template>
-<div>
-<button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-<form id="search" style="float: right;">
-  Filter <input name="query" v-model="searchQuery">
-</form>
-<custom-table style="margin-top: 20px"
-  :data="computedQueues"
-  :dataArguments="dataArguments"
-  :columns="columns"
-  :rowsPerPage="20"
-  :filter-key="searchQuery"
-  :clickable="1">
-</custom-table>
-</div>
+  <div>
+    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+    <div style="float: right">
+      Rows
+      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
+      Filter
+      <input v-model="searchQuery" type="text" style="height:38px">
+    </div>
+    <custom-table style="margin-top: 20px"
+      :data="computedQueues"
+      :dataArguments="dataArguments"
+      :columns="columns"
+      :rowsPerPage="rowsPerPage"
+      :filter-key="searchQuery"
+      :clickable="1">
+    </custom-table>
+  </div>
 </template>
 
 <script>
@@ -22,6 +25,7 @@ export default {
   name: 'admin-queues',
   data () {
     return {
+      rowsPerPage: 0,
       searchQuery: '',
       dataArguments: ['id', 'name', 'group_id', 'hold_music', 'wrapup_enabled', 'aging_factor', 'weight'],
       columns: ['Id', 'Name', 'Group', 'Music', 'Wrap', 'Aging', 'Weight'],
@@ -47,6 +51,15 @@ export default {
   },
   created () {
     this.query()
+    if(localStorage.getItem('adminQueuesRows')) this.rowsPerPage = localStorage.getItem('adminQueuesRows')
+  },
+  watch: {
+    rowsPerPage: {
+      handler() {
+        localStorage.setItem('adminQueuesRows', this.rowsPerPage);
+      },
+      deep: true,
+    },
   },
   components: {
     'custom-table': CustomTable

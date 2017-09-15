@@ -21,16 +21,30 @@
       </tr>
     </tbody>
   </table>
-  <div v-if="this.$agent.is_active()" class="row">
-    <div class="col">
-      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
-      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
-      <transfer-agent></transfer-agent>
-      <transfer-queue></transfer-queue>
-      <transfer-uri></transfer-uri>
-      <conference-agent></conference-agent>
-      <conference-queue></conference-queue>
-      <conference-uri></conference-uri>
+  <div v-if="this.$agent.is_active()">
+    <div class="row">
+      <div class="col">
+        <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
+        <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+      <div class="col">
+        <h4>Transfer to</h4>
+        <div class="form-inline">
+          <transfer-agent></transfer-agent>&nbsp;
+          <transfer-queue></transfer-queue>&nbsp;
+          <transfer-uri class="form-control"></transfer-uri>
+        </div>
+      </div>
+      <div class="col">
+        <h4>Conference with</h4>
+        <div class="form-inline">
+          <conference-agent></conference-agent>&nbsp;
+          <conference-queue></conference-queue>&nbsp;
+          <conference-uri class="form-control"></conference-uri>
+        </div>
+      </div>
     </div>
   </div>
 </div>
