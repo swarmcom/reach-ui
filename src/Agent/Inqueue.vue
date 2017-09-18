@@ -72,7 +72,6 @@ export default {
         this.info = info
         this.inqueue = inqueue
         this.call_info = call_info
-        this.onTimer()
       } else if (info.state == 'oncall') {
         this.info = info
       } else if (info.state == 'hold') {
@@ -85,8 +84,8 @@ export default {
     onTimer() {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
-        setTimeout( this.onTimer, 1000 )
       }
+      setTimeout(this.onTimer, 1000)
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -100,6 +99,9 @@ export default {
   },
   created () {
     this.$bus.$on('agent_state', (S) => this.handleState(S))
+  },
+  mounted () {
+    this.onTimer()
   },
   components: {
     'transfer-agent': TransferAgent,
