@@ -4,8 +4,8 @@
     <custom-table
       :data="profiles"
       :dataArguments="dataArguments"
+      :columns="columns"
       :name="name"
-      :filter-key="searchQuery"
       :clickable="1">
     </custom-table>
   </div>
