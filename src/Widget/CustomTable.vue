@@ -106,7 +106,6 @@ export default {
     rowsPerPage: {
       handler() {
         this.startRow = 0;
-        console.log("saving");
         localStorage.setItem(this.name, this.rowsPerPage);
       },
       deep: true,
