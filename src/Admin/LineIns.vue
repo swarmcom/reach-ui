@@ -1,18 +1,11 @@
 <template>
   <div>
     <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <div style="float: right">
-      Rows
-      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
-      Filter
-      <input v-model="searchQuery" type="text" style="height:38px">
-    </div>
-    <custom-table style="margin-top: 20px"
+    <custom-table
       :data="line_ins"
       :dataArguments="dataArguments"
       :columns="columns"
-      :rowsPerPage="rowsPerPage"
-      :filter-key="searchQuery"
+      :name="name"
       :clickable="1">
     </custom-table>
   </div>
@@ -25,8 +18,7 @@ export default {
   name: 'admin-line-ins',
   data () {
     return {
-      rowsPerPage: 20,
-      searchQuery: '',
+      name: "adminLineInRows",
       dataArguments: ['id', 'name', 'number'],
       columns: ['Id', 'Name', 'Number'],
       line_ins: []
@@ -45,15 +37,6 @@ export default {
   },
   created () {
     this.query()
-    if (localStorage.getItem('adminLineInRows')) this.rowsPerPage = localStorage.getItem('adminLineInRows')
-  },
-  watch: {
-    rowsPerPage: {
-      handler () {
-        localStorage.setItem('adminLineInRows', this.rowsPerPage);
-      },
-      deep: true,
-    },
   },
   components: {
     'custom-table': CustomTable

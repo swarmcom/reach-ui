@@ -3,18 +3,11 @@
     <div class="row">
       <div class="col"><h3>Inqueue requests</h3></div>
     </div>
-    <div style="float: right; margin-bottom:10px;">
-      Rows
-      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
-      Filter
-      <input v-model="searchQuery" type="text" style="height:38px">
-    </div>
-    <custom-table style="margin-top: 20px"
+    <custom-table
       :data="computedInqueues"
       :columns="columns"
       :dataArguments="dataArguments"
-      :rowsPerPage="rowsPerPage"
-      :filter-key="searchQuery"
+      :name="name"
       :clickable="0">
     </custom-table>
   </div>
@@ -27,10 +20,9 @@ export default {
   name: 'inqueues',
   data () {
     return {
-      rowsPerPage: 0,
-      searchQuery: '',
       columns: ['State', 'Record', 'Queue', 'Time', 'Effective Time'],
       dataArguments: ['state', 'record', 'queue', 'timeComputed', 'effective'],
+      name: "monitorInqueuesRows",
       inqueues: []
     }
   },
@@ -61,15 +53,6 @@ export default {
   },
   mounted () {
     this.onTimer()
-    if(localStorage.getItem('monitorInqueuesRows')) this.rowsPerPage = localStorage.getItem('monitorInqueuesRows')
-  },
-  watch: {
-    rowsPerPage: {
-      handler() {
-        localStorage.setItem('monitorInqueuesRows', this.rowsPerPage);
-      },
-      deep: true,
-    },
   },
   created () {
     this.$agent.subscribe('inqueues')
