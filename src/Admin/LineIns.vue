@@ -19,8 +19,8 @@ export default {
   data () {
     return {
       name: "adminLineInRows",
-      dataArguments: ['id', 'name', 'number'],
-      columns: ['Id', 'Name', 'Number'],
+      dataArguments: ['id', 'name', 'number', 'queue_id'],
+      columns: ['Id', 'Name', 'Number', 'Queue'],
       line_ins: []
     }
   },
