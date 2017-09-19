@@ -1,7 +1,7 @@
 <template>
 <div>
   <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-  <b-table striped hover small responsive :items="line_ins" :fields="fields" @row-clicked="onClick">
+  <b-table striped hover small responsive :sort-by="sortBy" :items="line_ins" :fields="fields" @row-clicked="onClick">
   </b-table>
 </div>
 </template>
@@ -14,6 +14,7 @@ export default {
   data () {
     return {
       fields: ['id', 'name', 'number', 'queue', 'client'],
+      sortBy: 'id',
       line_ins: [],
       queues: []
     }
