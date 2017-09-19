@@ -21,7 +21,7 @@
       </tr>
     </tbody>
   </table>
-  <div v-if="this.$agent.is_active()">
+  <div>
     <div class="row">
       <div class="col">
         <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
@@ -34,7 +34,7 @@
         <div class="form-inline">
           <transfer-agent></transfer-agent>&nbsp;
           <transfer-queue></transfer-queue>&nbsp;
-          <transfer-uri class="form-control"></transfer-uri>
+          <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
         </div>
       </div>
       <div class="col">
@@ -42,7 +42,7 @@
         <div class="form-inline">
           <conference-agent></conference-agent>&nbsp;
           <conference-queue></conference-queue>&nbsp;
-          <conference-uri class="form-control"></conference-uri>
+          <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
         </div>
       </div>
     </div>
