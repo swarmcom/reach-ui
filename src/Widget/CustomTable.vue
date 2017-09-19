@@ -2,7 +2,7 @@
 <div>
   <form class="form-inline float-right">
     <label for="rowsInput" class="col-form-label">Rows</label>
-    <input type="number" class="form-control" v-model.number="rowsPerPage" id="rowsInput">
+    <input type="number" class="form-control" v-model.number="rowsPerPage" id="rowsInput" min="0">
     <label for="filterInput" class="col-form-label">Filter</label>
     <input type="string" class="form-control" v-model="filterKey" id="filterInput">
   </form>
