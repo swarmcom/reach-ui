@@ -1,5 +1,11 @@
 <template>
 <div>
+  <form class="form-inline float-right">
+    <label for="rowsInput" class="col-form-label">Rows</label>
+    <input type="number" class="form-control" v-model.number="rowsPerPage" id="rowsInput">
+    <label for="filterInput" class="col-form-label">Filter</label>
+    <input type="string" class="form-control" v-model="filterKey" id="filterInput">
+  </form>
   <table class="table table-sm table-striped table-hover table-responsive">
     <thead>
       <tr>
@@ -20,9 +26,9 @@
       </tr>
     </tbody>
   </table>
-  <div v-if="computedPaginatePages > 1 && Number(rowsPerPage) > 0 && filterKey ===''" class="page-navigation">
+  <div v-if="computedPaginatePages > 1 && rowsPerPage > 0 && filterKey ===''" class="page-navigation">
     <button @click=movePages(-1)><<</button>
-    <p>{{ startRow / Number(rowsPerPage) + 1}} / {{computedPaginatePages}}</p>
+    <p>{{ startRow / rowsPerPage + 1}} / {{computedPaginatePages}}</p>
     <button @click=movePages(1)>>></button>
   </div>
 </div>
@@ -37,8 +43,7 @@ export default {
     data: Array,
     columns: Array,
     dataArguments: Array,
-    rowsPerPage: String,
-    filterKey: String,
+    name: String,
     clickable: Number
   },
   data () {
@@ -47,6 +52,8 @@ export default {
       sortOrders[key] = 1
     })
     return {
+      filterKey: '',
+      rowsPerPage: 0,
       startRow: 0,
       searchQuery: '',
       sortKey: '',
@@ -76,15 +83,15 @@ export default {
         })
       }
       //paginations when rowsPerPage > 0 or no filtering
-      if (Number(this.rowsPerPage) < 1 || filterKey)
+      if (this.rowsPerPage < 1 || filterKey)
         return data
       else{
-        return data.slice(this.startRow, this.startRow + Number(this.rowsPerPage))
+        return data.slice(this.startRow, this.startRow + this.rowsPerPage)
       }
     },
     computedPaginatePages () {
-      return this.data.length%Number(this.rowsPerPage) > 0 ? (Math.floor(this.data.length/Number(this.rowsPerPage)) + 1)
-        : this.data.length/Number(this.rowsPerPage)
+      return this.data.length%this.rowsPerPage > 0 ? (Math.floor(this.data.length/this.rowsPerPage) + 1)
+        : this.data.length/this.rowsPerPage
     }
   },
   filters: {
@@ -92,10 +99,15 @@ export default {
       return str.charAt(0).toUpperCase() + str.slice(1)
     }
   },
+  created () {
+    if(localStorage.getItem(this.name)) this.rowsPerPage = localStorage.getItem(this.name)
+  },
   watch: {
     rowsPerPage: {
       handler() {
         this.startRow = 0;
+        console.log("saving");
+        localStorage.setItem(this.name, this.rowsPerPage);
       },
       deep: true,
     },
@@ -106,7 +118,7 @@ export default {
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
     movePages (amount) {
-      let row = this.startRow + (amount * Number(this.rowsPerPage));
+      let row = this.startRow + (amount * this.rowsPerPage);
       if (row >= 0 && row < this.data.length) {
         this.startRow = row;
       }

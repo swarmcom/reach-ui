@@ -1,18 +1,11 @@
 <template>
   <div>
     <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <form class="form-inline float-right">
-      <label for="rowsInput" class="col-form-label">Rows</label>
-      <input type="number" class="form-control" v-model="rowsPerPage" id="rowsInput">
-      <label for="filterInput" class="col-form-label">Filter</label>
-      <input type="string" class="form-control" v-model="searchQuery" id="filterInput">
-    </form>
-    <custom-table style="margin-top: 20px"
+    <custom-table
       :data="releases"
       :dataArguments="dataArguments"
       :columns="columns"
-      :rowsPerPage="rowsPerPage"
-      :filter-key="searchQuery"
+      :name="name"
       :clickable="1">
     </custom-table>
   </div>
@@ -25,10 +18,9 @@ export default {
   name: 'admin-releases',
   data () {
     return {
-      rowsPerPage: "0",
-      searchQuery: '',
       dataArguments: ['id', 'name', 'score'],
       columns: ['Id', 'Name', 'Score'],
+      name: "adminReleasesRows",
       releases: []
     }
   },
@@ -45,15 +37,6 @@ export default {
   },
   created () {
     this.query()
-    if(localStorage.getItem('adminReleasesRows')) this.rowsPerPage = localStorage.getItem('adminReleasesRows')
-  },
-  watch: {
-    rowsPerPage: {
-      handler() {
-        localStorage.setItem('adminReleasesRows', this.rowsPerPage);
-      },
-      deep: true,
-    },
   },
   components: {
    'custom-table': CustomTable

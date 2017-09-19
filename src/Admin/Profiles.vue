@@ -1,17 +1,10 @@
 <template>
   <div>
     <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <form class="form-inline float-right">
-      <label for="rowsInput" class="col-form-label">Rows</label>
-      <input type="number" class="form-control" v-model="rowsPerPage" id="rowsInput">
-      <label for="filterInput" class="col-form-label">Filter</label>
-      <input type="string" class="form-control" v-model="searchQuery" id="filterInput">
-    </form>
-    <custom-table style="margin-top: 20px"
+    <custom-table
       :data="profiles"
       :dataArguments="dataArguments"
-      :columns="columns"
-      :rowsPerPage="rowsPerPage"
+      :name="name"
       :filter-key="searchQuery"
       :clickable="1">
     </custom-table>
@@ -25,10 +18,9 @@ export default {
   name: 'admin-profiles',
   data () {
     return {
-      rowsPerPage: "0",
-      searchQuery: '',
       dataArguments: ['id', 'name', 'permissions', 'ring_timeout', 'max_ring_fails'],
       columns: ['Id', 'Name', 'Permissions', 'Ring Timeout', 'Ring Fails'],
+      name:"adminProfilesRows",
       profiles: []
     }
   },
