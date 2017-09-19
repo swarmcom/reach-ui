@@ -159,22 +159,21 @@ export default {
     border-top: 4px solid #fff;
   }
   .page-navigation {
-    display: flex;
-    width: 150px;
-    height: 30px;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-  .page-navigation p {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-  .page-navigation button {
-    background-color: #42b983;
-    border-color: #42b983;
-    color: rgba(255, 255, 255, 0.66);
-  }
+      display: flex;
+      width: 200px;
+      height: 30px;
+      top:0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    .page-navigation p {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .page-navigation button {
+      width: 50px;
+      border-color: #fff;
+    }
 </style>
