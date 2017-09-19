@@ -1,18 +1,11 @@
 <template>
   <div>
     <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <div style="float: right">
-      Rows
-      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
-      Filter
-      <input v-model="searchQuery" type="text" style="height:38px">
-    </div>
-    <custom-table style="margin-top: 20px"
+    <custom-table
       :data="line_outs"
       :dataArguments="dataArguments"
       :columns="columns"
-      :rowsPerPage="rowsPerPage"
-      :filter-key="searchQuery"
+      :name="name"
       :clickable="1">
     </custom-table>
   </div>
@@ -25,10 +18,9 @@ export default {
   name: 'admin-line-outs',
   data () {
     return {
-      rowsPerPage: 20,
-      searchQuery: '',
       dataArguments: ['id', 'name', 'number'],
       columns: ['Id', 'Name', 'Number'],
+      name: "adminLineOutRows",
       line_outs: []
     }
   },
@@ -45,15 +37,6 @@ export default {
   },
   created () {
     this.query()
-    if (localStorage.getItem('adminLineOutRows')) this.rowsPerPage = localStorage.getItem('adminLineOutRows')
-  },
-  watch: {
-    rowsPerPage: {
-      handler () {
-        localStorage.setItem('adminLineOutRows', this.rowsPerPage);
-      },
-      deep: true,
-    },
   },
   components: {
     'custom-table': CustomTable

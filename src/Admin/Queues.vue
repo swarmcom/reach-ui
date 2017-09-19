@@ -1,18 +1,11 @@
 <template>
   <div>
     <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <div style="float: right">
-      Rows
-      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
-      Filter
-      <input v-model="searchQuery" type="text" style="height:38px">
-    </div>
-    <custom-table style="margin-top: 20px"
+    <custom-table
       :data="computedQueues"
       :dataArguments="dataArguments"
       :columns="columns"
-      :rowsPerPage="rowsPerPage"
-      :filter-key="searchQuery"
+      :name="name"
       :clickable="1">
     </custom-table>
   </div>
@@ -25,10 +18,9 @@ export default {
   name: 'admin-queues',
   data () {
     return {
-      rowsPerPage: 0,
-      searchQuery: '',
       dataArguments: ['id', 'name', 'group_id', 'hold_music', 'wrapup_enabled', 'aging_factor', 'weight'],
       columns: ['Id', 'Name', 'Group', 'Music', 'Wrap', 'Aging', 'Weight'],
+      name: "adminQueuesRows",
       queues: [],
       groups: []
     }
@@ -51,15 +43,6 @@ export default {
   },
   created () {
     this.query()
-    if(localStorage.getItem('adminQueuesRows')) this.rowsPerPage = localStorage.getItem('adminQueuesRows')
-  },
-  watch: {
-    rowsPerPage: {
-      handler() {
-        localStorage.setItem('adminQueuesRows', this.rowsPerPage);
-      },
-      deep: true,
-    },
   },
   components: {
     'custom-table': CustomTable

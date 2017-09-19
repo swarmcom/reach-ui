@@ -1,6 +1,12 @@
 <template>
 <div>
-  <table class="table-hover">
+  <form class="form-inline float-right">
+    <label for="rowsInput" class="col-form-label">Rows</label>
+    <input type="number" class="form-control" v-model.number="rowsPerPage" id="rowsInput" min="0">
+    <label for="filterInput" class="col-form-label">Filter</label>
+    <input type="string" class="form-control" v-model="filterKey" id="filterInput">
+  </form>
+  <table class="table table-sm table-striped table-hover table-responsive">
     <thead>
       <tr>
         <th v-for="key in columns"
@@ -21,9 +27,9 @@
     </tbody>
   </table>
   <div v-if="computedPaginatePages > 1 && rowsPerPage > 0 && filterKey ===''" class="page-navigation">
-    <button @click=movePages(-1)>Back</button>
-    <p>{{startRow / rowsPerPage + 1}} / {{computedPaginatePages}}</p>
-    <button @click=movePages(1)>Next</button>
+    <button @click=movePages(-1)><<</button>
+    <p>{{ startRow / rowsPerPage + 1}} / {{computedPaginatePages}}</p>
+    <button @click=movePages(1)>>></button>
   </div>
 </div>
 </template>
@@ -37,8 +43,7 @@ export default {
     data: Array,
     columns: Array,
     dataArguments: Array,
-    rowsPerPage: Number,
-    filterKey: String,
+    name: String,
     clickable: Number
   },
   data () {
@@ -47,6 +52,8 @@ export default {
       sortOrders[key] = 1
     })
     return {
+      filterKey: '',
+      rowsPerPage: 0,
       startRow: 0,
       searchQuery: '',
       sortKey: '',
@@ -78,8 +85,9 @@ export default {
       //paginations when rowsPerPage > 0 or no filtering
       if (this.rowsPerPage < 1 || filterKey)
         return data
-      else
+      else{
         return data.slice(this.startRow, this.startRow + this.rowsPerPage)
+      }
     },
     computedPaginatePages () {
       return this.data.length%this.rowsPerPage > 0 ? (Math.floor(this.data.length/this.rowsPerPage) + 1)
@@ -91,13 +99,25 @@ export default {
       return str.charAt(0).toUpperCase() + str.slice(1)
     }
   },
+  created () {
+    if(localStorage.getItem(this.name)) this.rowsPerPage = localStorage.getItem(this.name)
+  },
+  watch: {
+    rowsPerPage: {
+      handler() {
+        this.startRow = 0;
+        localStorage.setItem(this.name, this.rowsPerPage);
+      },
+      deep: true,
+    },
+  },
   methods: {
     sortBy (key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
     movePages (amount) {
-      var row = this.startRow + (amount * this.rowsPerPage);
+      let row = this.startRow + (amount * this.rowsPerPage);
       if (row >= 0 && row < this.data.length) {
         this.startRow = row;
       }
@@ -150,22 +170,21 @@ export default {
     border-top: 4px solid #fff;
   }
   .page-navigation {
-    display: flex;
-    width: 150px;
-    height: 30px;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
-  .page-navigation p {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-  .page-navigation button {
-    background-color: #42b983;
-    border-color: #42b983;
-    color: rgba(255, 255, 255, 0.66);
-  }
+      display: flex;
+      width: 200px;
+      height: 30px;
+      top:0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    .page-navigation p {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .page-navigation button {
+      width: 50px;
+      border-color: #fff;
+    }
 </style>
