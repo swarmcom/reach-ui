@@ -1,6 +1,6 @@
 <template>
 <div>
-  <table class="table-hover">
+  <table class="table table-sm table-striped table-hover table-responsive">
     <thead>
       <tr>
         <th v-for="key in columns"
@@ -20,10 +20,10 @@
       </tr>
     </tbody>
   </table>
-  <div v-if="computedPaginatePages > 1 && rowsPerPage > 0 && filterKey ===''" class="page-navigation">
-    <button @click=movePages(-1)>Back</button>
-    <p>{{startRow / rowsPerPage + 1}} / {{computedPaginatePages}}</p>
-    <button @click=movePages(1)>Next</button>
+  <div v-if="computedPaginatePages > 1 && Number(rowsPerPage) > 0 && filterKey ===''" class="page-navigation">
+    <button @click=movePages(-1)><<</button>
+    <p>{{ startRow / Number(rowsPerPage) + 1}} / {{computedPaginatePages}}</p>
+    <button @click=movePages(1)>>></button>
   </div>
 </div>
 </template>
@@ -37,7 +37,7 @@ export default {
     data: Array,
     columns: Array,
     dataArguments: Array,
-    rowsPerPage: Number,
+    rowsPerPage: String,
     filterKey: String,
     clickable: Number
   },
@@ -76,14 +76,15 @@ export default {
         })
       }
       //paginations when rowsPerPage > 0 or no filtering
-      if (this.rowsPerPage < 1 || filterKey)
+      if (Number(this.rowsPerPage) < 1 || filterKey)
         return data
-      else
-        return data.slice(this.startRow, this.startRow + this.rowsPerPage)
+      else{
+        return data.slice(this.startRow, this.startRow + Number(this.rowsPerPage))
+      }
     },
     computedPaginatePages () {
-      return this.data.length%this.rowsPerPage > 0 ? (Math.floor(this.data.length/this.rowsPerPage) + 1)
-        : this.data.length/this.rowsPerPage
+      return this.data.length%Number(this.rowsPerPage) > 0 ? (Math.floor(this.data.length/Number(this.rowsPerPage)) + 1)
+        : this.data.length/Number(this.rowsPerPage)
     }
   },
   filters: {
@@ -91,13 +92,21 @@ export default {
       return str.charAt(0).toUpperCase() + str.slice(1)
     }
   },
+  watch: {
+    rowsPerPage: {
+      handler() {
+        this.startRow = 0;
+      },
+      deep: true,
+    },
+  },
   methods: {
     sortBy (key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
     movePages (amount) {
-      var row = this.startRow + (amount * this.rowsPerPage);
+      let row = this.startRow + (amount * Number(this.rowsPerPage));
       if (row >= 0 && row < this.data.length) {
         this.startRow = row;
       }

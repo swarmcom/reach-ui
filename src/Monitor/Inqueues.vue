@@ -3,12 +3,12 @@
     <div class="row">
       <div class="col"><h3>Inqueue requests</h3></div>
     </div>
-    <div style="float: right; margin-bottom:10px;">
-      Rows
-      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
-      Filter
-      <input v-model="searchQuery" type="text" style="height:38px">
-    </div>
+    <form class="form-inline float-right">
+      <label for="rowsInput" class="col-form-label">Rows</label>
+      <input type="number" class="form-control" v-model="rowsPerPage" id="rowsInput">
+      <label for="filterInput" class="col-form-label">Filter</label>
+      <input type="string" class="form-control" v-model="searchQuery" id="filterInput">
+    </form>
     <custom-table style="margin-top: 20px"
       :data="computedInqueues"
       :columns="columns"
@@ -27,7 +27,7 @@ export default {
   name: 'inqueues',
   data () {
     return {
-      rowsPerPage: 0,
+      rowsPerPage: "0",
       searchQuery: '',
       columns: ['State', 'Record', 'Queue', 'Time', 'Effective Time'],
       dataArguments: ['state', 'record', 'queue', 'timeComputed', 'effective'],

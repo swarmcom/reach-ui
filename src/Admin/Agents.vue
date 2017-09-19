@@ -1,12 +1,12 @@
 <template>
   <div>
     <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <div style="float: right">
-      Rows
-      <input v-model.number="rowsPerPage" type="number" min="0" style="height:38px">
-      Filter
-      <input v-model="searchQuery" type="text" style="height:38px">
-    </div>
+    <form class="form-inline float-right">
+      <label for="rowsInput" class="col-form-label">Rows</label>
+      <input type="number" class="form-control" v-model="rows" id="rowsInput">
+      <label for="filterInput" class="col-form-label">Filter</label>
+      <input type="string" class="form-control" v-model="searchQuery" id="filterInput">
+    </form>
     <custom-table style="margin-top: 20px"
       :data="computedAgents"
       :dataArguments="dataArguments"
@@ -26,7 +26,7 @@ export default {
   data () {
     return {
       searchQuery: '',
-      rowsPerPage: 0,
+      rowsPerPage: "0",
       dataArguments: ['agent_id', 'login', 'firstname', 'lastname', 'permissions', 'group_id', 'uri'],
       columns: ['Id', 'Login', 'First Name', 'Last Name', 'Permissions', 'Profile', 'Uri'],
       agents: [],
