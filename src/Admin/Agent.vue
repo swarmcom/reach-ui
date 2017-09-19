@@ -5,6 +5,7 @@
   <form-text label="First name" v-model="agent.firstname"></form-text>
   <form-text label="Last name" v-model="agent.lastname"></form-text>
   <profiles label="Profile" v-model="agent.group_id"></profiles>
+  <lines label="Line Out" v-model="agent.line_id"></lines>
   <form-text label="Permissions" v-model="agent.permissions"></form-text>
   <form-text label="SIP URI" v-model="agent.uri"></form-text>
   <form-text label="Ring timeout" v-model="agent.ring_timeout"></form-text>
@@ -20,11 +21,17 @@
 import FormText from '../Widget/FormText.vue'
 import Profiles from '../Widget/Profiles.vue'
 import Skills from '../Widget/Skills.vue'
+import Lines from '../Widget/Lines.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-agent',
-  components: { 'form-text': FormText, 'profiles': Profiles, 'skills': Skills },
+  components: {
+    'form-text': FormText,
+    profiles: Profiles,
+    skills: Skills,
+    lines: Lines,
+  },
   mixins: [Common],
   props: ['id'],
   data () {
