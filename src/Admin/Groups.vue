@@ -20,9 +20,7 @@ export default {
   mixins: [Common],
   data () {
     return {
-      rowsPerPage: "0",
       name: "adminGroupsRows",
-      searchQuery: '',
       dataArguments: ['id', 'name', 'weight', 'aging_factor', 'hold_music', 'wrapup_enabled'],
       columns: ['Id', 'Name', 'Weight', 'Aging', 'Music', 'Wrap' ],
       groups: []

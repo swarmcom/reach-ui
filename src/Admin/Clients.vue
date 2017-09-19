@@ -18,7 +18,6 @@ export default {
   name: 'admin-line-ins',
   data () {
     return {
-      rowsPerPage: "0",
       name:"adminClientRows",
       dataArguments: ['id', 'name'],
       columns: ['Id', 'Name'],
