@@ -59,7 +59,7 @@ export default class WsProto {
 
   ping () {
     this.ws.send('ping') // they don't have ping support in browser O_O
-    setTimeout(() => this.ping(), 30000)
+    setTimeout(() => this.ping(), 3000)
   }
 
   onDisconnect () {
