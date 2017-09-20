@@ -6,6 +6,7 @@
       :dataArguments="dataArguments"
       :columns="columns"
       :name="name"
+      :sortKey="sortKey"
       :clickable="1">
     </custom-table>
   </div>
@@ -21,6 +22,7 @@ export default {
       dataArguments: ['agent_id', 'login', 'firstname', 'lastname', 'permissions', 'group_id', 'uri'],
       columns: ['Id', 'Login', 'First Name', 'Last Name', 'Permissions', 'Profile', 'Uri'],
       name: "adminAgentsRows",
+      sortKey: "Id",
       agents: [],
       profiles: []
     }

@@ -6,6 +6,7 @@
       :dataArguments="dataArguments"
       :columns="columns"
       :name="name"
+      :sortKey="sortKey"
       :clickable="1">
     </custom-table>
   </div>
@@ -23,6 +24,7 @@ export default {
       name: "adminGroupsRows",
       dataArguments: ['id', 'name', 'weight', 'aging_factor', 'hold_music', 'wrapup_enabled'],
       columns: ['Id', 'Name', 'Weight', 'Aging', 'Music', 'Wrap' ],
+      sortKey: "Id",
       groups: []
     }
   },

@@ -8,6 +8,7 @@
       :columns="columns"
       :dataArguments="dataArguments"
       :name="name"
+      :sortKey="sortKey"
       :clickable="0">
     </custom-table>
   </div>
@@ -23,6 +24,7 @@ export default {
       columns: ['State', 'Record', 'Queue', 'Time', 'Effective Time'],
       dataArguments: ['state', 'record', 'queue', 'timeComputed', 'effective'],
       name: "monitorInqueuesRows",
+      sortKey: "State",
       inqueues: []
     }
   },

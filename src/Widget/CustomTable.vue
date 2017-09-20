@@ -44,7 +44,8 @@ export default {
     columns: Array,
     dataArguments: Array,
     name: String,
-    clickable: Number
+    clickable: Number,
+    sortKey: String
   },
   data () {
     var sortOrders = {}
@@ -56,7 +57,6 @@ export default {
       rowsPerPage: 0,
       startRow: 0,
       searchQuery: '',
-      sortKey: '',
       sortOrders: sortOrders
     }
   },

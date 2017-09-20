@@ -6,6 +6,7 @@
       :dataArguments="dataArguments"
       :columns="columns"
       :name="name"
+      :sortKey="sortKey"
       :clickable="1">
     </custom-table>
   </div>
@@ -21,6 +22,7 @@ export default {
       dataArguments: ['id', 'name', 'group_id', 'hold_music', 'wrapup_enabled', 'aging_factor', 'weight'],
       columns: ['Id', 'Name', 'Group', 'Music', 'Wrap', 'Aging', 'Weight'],
       name: "adminQueuesRows",
+      sortKey: "Id",
       queues: [],
       groups: []
     }

@@ -8,6 +8,7 @@
       :columns="columns"
       :dataArguments="dataArguments"
       :name="name"
+      :sortKey="sortKey"
       :clickable="0">
     </custom-table>
   </div>
@@ -22,6 +23,7 @@ export default {
       name: "monitorAgentsRows",
       columns: ['ID', 'State', 'Time'],
       dataArguments: ['agent_id', 'state', 'timeComputed'],
+      sortKey: "ID",
       agents: []
     }
   },
