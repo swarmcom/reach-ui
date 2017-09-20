@@ -4,6 +4,7 @@
 
 1. Display other inqueue types
 2. Make UI refreshable (e.g. reload window and reconnect to the same state)
+3. Make table views to remember column ordering
 
 # Good to have
 
@@ -13,6 +14,7 @@
 
 # Done
 
+3. Fix time counter on incoming call on actions like requeue
 2. Have a config as a separate file (apart from web-pack)
 2. Add transfer_to_uri
 3. Add conference buttons

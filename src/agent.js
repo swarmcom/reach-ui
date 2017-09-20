@@ -82,6 +82,7 @@ export default class Agent extends WsProto {
   is_oncall () { return this.vm && this.vm.state == 'oncall' }
   is_wrapup () { return this.vm && this.vm.state == 'wrapup' }
   is_hold () { return this.vm && this.vm.state == 'hold' }
+  can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
 
   handleAuth (Re, Cb = (A) => A) {
     if (Re && Re.reply) {

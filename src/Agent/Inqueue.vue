@@ -21,7 +21,7 @@
       </tr>
     </tbody>
   </table>
-  <div v-if="this.$agent.is_active()">
+  <div>
     <div class="row">
       <div class="col">
         <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
@@ -34,7 +34,7 @@
         <div class="form-inline">
           <transfer-agent></transfer-agent>&nbsp;
           <transfer-queue></transfer-queue>&nbsp;
-          <transfer-uri class="form-control"></transfer-uri>
+          <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
         </div>
       </div>
       <div class="col">
@@ -42,7 +42,7 @@
         <div class="form-inline">
           <conference-agent></conference-agent>&nbsp;
           <conference-queue></conference-queue>&nbsp;
-          <conference-uri class="form-control"></conference-uri>
+          <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
         </div>
       </div>
     </div>
@@ -72,7 +72,6 @@ export default {
         this.info = info
         this.inqueue = inqueue
         this.call_info = call_info
-        this.onTimer()
       } else if (info.state == 'oncall') {
         this.info = info
       } else if (info.state == 'hold') {
@@ -85,8 +84,8 @@ export default {
     onTimer() {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
-        setTimeout( this.onTimer, 1000 )
       }
+      setTimeout(this.onTimer, 1000)
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -100,6 +99,9 @@ export default {
   },
   created () {
     this.$bus.$on('agent_state', (S) => this.handleState(S))
+  },
+  mounted () {
+    this.onTimer()
   },
   components: {
     'transfer-agent': TransferAgent,

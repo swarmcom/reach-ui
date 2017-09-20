@@ -1,5 +1,5 @@
 <template>
-<b-form-group label="Call a number:">
+<b-form-group v-if="this.$agent.can_call()" label="Call a number:">
   <b-input-group>
     <b-form-input v-model="number" type="text"></b-form-input>
     <b-input-group-button>
