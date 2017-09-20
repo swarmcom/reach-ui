@@ -33,13 +33,13 @@ export default {
   data () {
     return {
       fields: {
-        agent_id: { label: 'Id', sortable: true, tdClass:"pointer" },
-        login: { label: 'Login', sortable: true, tdClass:"pointer"  },
-        firstname: { label: 'First Name', sortable: true, tdClass:"pointer"  },
-        lastname: { label: 'Last Name', sortable: true, tdClass:"pointer"  },
-        permissions: { label: 'Permissions', sortable: true, tdClass:"pointer"  },
-        group: { label: 'Group', sortable: true, tdClass:"pointer"  },
-        uri: { label: 'Uri', sortable: true, tdClass:"pointer"  }
+        agent_id: { label: 'Id', sortable: true },
+        login: { label: 'Login', sortable: true  },
+        firstname: { label: 'First Name', sortable: true  },
+        lastname: { label: 'Last Name', sortable: true  },
+        permissions: { label: 'Permissions', sortable: true  },
+        group: { label: 'Group', sortable: true  },
+        uri: { label: 'Uri', sortable: true  }
       },
       currentPage: 1,
       pageOptions: [
@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style>
-  .pointer {
+  table tr{
     cursor: pointer;
   }
 </style>
