@@ -33,13 +33,13 @@ export default {
   data () {
     return {
       fields: {
-        agent_id: { label: 'Id', sortable: true },
-        login: { label: 'Login', sortable: true  },
-        firstname: { label: 'First Name', sortable: true  },
-        lastname: { label: 'Last Name', sortable: true  },
-        permissions: { label: 'Permissions', sortable: true  },
-        group: { label: 'Group', sortable: true  },
-        uri: { label: 'Uri', sortable: true  }
+        agent_id: { label: 'Id', sortable: true, class:"cursor" },
+        login: { label: 'Login', sortable: true, class:"cursor"  },
+        firstname: { label: 'First Name', sortable: true, class:"cursor"  },
+        lastname: { label: 'Last Name', sortable: true, class:"cursor"  },
+        permissions: { label: 'Permissions', sortable: true, class:"cursor"  },
+        group: { label: 'Group', sortable: true, class:"cursor"  },
+        uri: { label: 'Uri', sortable: true, class:"cursor"  }
       },
       currentPage: 1,
       pageOptions: [
@@ -84,3 +84,9 @@ export default {
   },
 }
 </script>
+
+<style>
+  .cursor {
+    cursor: pointer;
+  }
+</style>
