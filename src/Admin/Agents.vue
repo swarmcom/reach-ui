@@ -5,7 +5,7 @@
         <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
       </div>
       <div class="col-md-2 float-right">
-        <b-form-select :options="pageOptions" v-model="perPage" />
+        <b-form-select :options="pageOptions" v-model="perPage" @input="onSelectChange" />
       </div>
       <div class="col-md-4 float-right">
         <b-form-input v-model="filter" placeholder="Type to Filter" />
@@ -20,7 +20,8 @@
       :filter="filter"
       :sortDesc="sortDesc"
       @row-clicked="onClicked"
-      @filtered="onFiltered">
+      @filtered="onFiltered"
+      @sort-changed="onSortingChanged">
     </b-table>
     <b-pagination align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
   </div>
@@ -52,7 +53,8 @@ export default {
       sortDesc: false,
       agents: [],
       groups: [],
-      totalRows: 0
+      totalRows: 0,
+      storageName: "adminAgents"
     }
   },
   methods: {
@@ -77,10 +79,27 @@ export default {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
+    },
+    onSelectChange (value) {
+      let data = { "sortBy": this.sortBy, "sortDesc": this.sortDesc, "perPage": value }
+      localStorage.setItem(this.storageName, JSON.stringify(data))
+    },
+    onSortingChanged (ctx){
+      let data = { "sortBy": ctx.sortBy, "sortDesc": ctx.sortDesc, "perPage": this.perPage }
+      localStorage.setItem(this.storageName, JSON.stringify(data))
+    },
+    loadDataStorage(name) {
+      if(localStorage.getItem(name)) {
+        let data = JSON.parse(localStorage.getItem(name));
+        this.sortBy = data.sortBy
+        this.sortDesc = data.sortDesc
+        this.perPage = data.perPage
+      }
     }
   },
   created () {
     this.query()
+    this.loadDataStorage(this.storageName)
   },
 }
 </script>
