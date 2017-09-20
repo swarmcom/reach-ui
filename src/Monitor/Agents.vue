@@ -22,7 +22,8 @@ export default {
       name: "monitorAgentsRows",
       columns: ['ID', 'State', 'Time'],
       dataArguments: ['agent_id', 'state', 'timeComputed'],
-      agents: []
+      agents: [],
+      updater: ''
     }
   },
   methods: {
@@ -43,24 +44,24 @@ export default {
         }
       }
     },
-    query () {
-      this.$agent.agents(Obj => this.agents = Obj.reply)
+    query: async function() {
+      this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
     },
     onTimer () {
       this.agents.forEach((E, i, A) => {
         E.time = E.time + 1000
         A.splice(i, 1, E)
       })
-      setTimeout( this.onTimer, 1000 )
     }
   },
-  mounted () {
-    this.onTimer()
-  },
   created () {
-    this.$agent.subscribe('agents')
     this.query()
+    this.$agent.subscribe('agents')
     this.$bus.$on('agents_state', (S) => this.handleState(S))
+    this.updater = setInterval( () => this.onTimer(), 1000 )
+  },
+  destroyed () {
+    clearInterval(this.updater)
   },
   components: {
     'custom-table': CustomTable
@@ -68,7 +69,7 @@ export default {
   computed: {
     computedAgents () {
       let agents = this.agents;
-      agents.forEach( (key) => key.timeComputed = Math.round(key.time/1000).toString() + 's' )
+      agents.forEach( (key) => key.timeComputed = Math.round(key.time/1000).toString() )
       return agents;
     }
   }

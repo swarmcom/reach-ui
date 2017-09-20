@@ -23,7 +23,8 @@ export default {
       columns: ['State', 'Record', 'Queue', 'Time', 'Effective Time'],
       dataArguments: ['state', 'record', 'queue', 'timeComputed', 'effective'],
       name: "monitorInqueuesRows",
-      inqueues: []
+      inqueues: [],
+      updater: null
     }
   },
   methods: {
@@ -39,8 +40,8 @@ export default {
         this.inqueues.push(info)
       }
     },
-    query () {
-      this.$agent.inqueues(Obj => this.inqueues = Obj.reply)
+    query: async function() {
+      this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
     },
     onTimer () {
       this.inqueues.forEach((E, i, Arr) => { 
@@ -48,16 +49,19 @@ export default {
         E.effective_time.time = E.effective_time.time + 1000
         Arr.splice(i, 1, E)
       })
-      setTimeout( this.onTimer, 1000 )
     }
   },
   mounted () {
     this.onTimer()
   },
   created () {
-    this.$agent.subscribe('inqueues')
     this.query()
+    this.$agent.subscribe('inqueues')
     this.$bus.$on('inqueue_state', (S) => this.handleState(S))
+    this.updater = setInterval( () => this.onTimer(), 1000 )
+  },
+  destroyed () {
+    clearInterval(this.updater)
   },
   components: {
     'custom-table': CustomTable

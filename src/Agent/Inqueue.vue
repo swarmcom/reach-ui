@@ -64,6 +64,7 @@ export default {
     return {
       inqueue: {},
       call_info: {},
+      updater: ''
     }
   },
   methods: {
@@ -97,10 +98,11 @@ export default {
     conference_to_uri (Uri) { this.$agent.conference_to_uri(Uri) },
   },
   created () {
+    this.updater = setInterval(() => this.onTimer(), 1000)
     this.$bus.$on('agent_state', (S) => this.handleState(S))
   },
-  mounted () {
-    setInterval(() => this.onTimer(), 1000)
+  destroyed () {
+    clearInterval(this.updater)
   },
   components: {
     'transfer-agent': TransferAgent,
