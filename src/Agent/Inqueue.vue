@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{ this.inqueue.queue }}, {{ this.inqueue.effective_time.weight }}</td>
+        <td>{{ this.inqueue.queue_id }}, {{ this.inqueue.effective_time.weight }}</td>
         <td>{{ this.inqueue.state }}</td>
         <td>{{ Math.round(this.inqueue.time/1000) }}</td>
         <td>{{ this.call_info['Caller-Caller-ID-Number'] }}</td>
@@ -63,7 +63,7 @@ export default {
   data () {
     return {
       inqueue: {},
-      call_info: {}
+      call_info: {},
     }
   },
   methods: {
@@ -85,7 +85,6 @@ export default {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
       }
-      setTimeout(this.onTimer, 1000)
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -101,7 +100,7 @@ export default {
     this.$bus.$on('agent_state', (S) => this.handleState(S))
   },
   mounted () {
-    this.onTimer()
+    setInterval(() => this.onTimer(), 1000)
   },
   components: {
     'transfer-agent': TransferAgent,
