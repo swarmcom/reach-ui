@@ -84,3 +84,9 @@ export default {
   },
 }
 </script>
+
+<style>
+  table tr{
+    cursor: pointer;
+  }
+</style>
