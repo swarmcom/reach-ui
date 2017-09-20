@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import CustomTable from '../Widget/CustomTable'
-
 export default {
   name: 'admin-line-ins',
   data () {
@@ -48,9 +46,6 @@ export default {
   },
   created () {
     this.query()
-  },
-  components: {
-    'custom-table': CustomTable
   }
 }
 </script>
