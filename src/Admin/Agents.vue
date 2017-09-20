@@ -1,16 +1,14 @@
 <template>
   <div>
-    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
     <div class="my-1 row">
-      <div class="col-md-6">
-        <b-form-fieldset horizontal label="Rows per page" :label-cols="6">
-          <b-form-select :options="pageOptions" v-model="perPage" />
-        </b-form-fieldset>
+      <div class="col-md-9">
+        <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
       </div>
-      <div class="col-md-6">
-        <b-form-fieldset horizontal label="Filter" :label-cols="3">
-          <b-form-input v-model="filter" placeholder="Type to Search" />
-        </b-form-fieldset>
+      <div class="col-md-1">
+        <b-form-select :options="pageOptions" v-model="perPage" />
+      </div>
+      <div class="col-md-2">
+        <b-form-input v-model="filter" placeholder="Type to Search" />
       </div>
     </div>
     <b-table striped hover small responsive
