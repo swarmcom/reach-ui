@@ -1,5 +1,11 @@
 <template>
 <div>
+  <form class="form-inline float-right">
+    <label for="rowsInput" class="col-form-label">Rows</label>
+    <input type="number" class="form-control" v-model.number="rowsPerPage" id="rowsInput" min="0">
+    <label for="filterInput" class="col-form-label">Filter</label>
+    <input type="string" class="form-control" v-model="filterKey" id="filterInput">
+  </form>
   <table class="table table-sm table-striped table-hover table-responsive">
     <thead>
       <tr>
@@ -38,7 +44,8 @@ export default {
     columns: Array,
     dataArguments: Array,
     name: String,
-    clickable: Number
+    clickable: Number,
+    sortKey: String
   },
   data () {
     var sortOrders = {}
@@ -50,7 +57,6 @@ export default {
       rowsPerPage: 0,
       startRow: 0,
       searchQuery: '',
-      sortKey: '',
       sortOrders: sortOrders
     }
   },
@@ -94,7 +100,7 @@ export default {
     }
   },
   created () {
-    if(localStorage.getItem(this.name)) this.rowsPerPage = localStorage.getItem(this.name)
+    if(localStorage.getItem(this.name)) this.rowsPerPage = Number(localStorage.getItem(this.name))
   },
   watch: {
     rowsPerPage: {
