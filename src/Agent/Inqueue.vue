@@ -100,6 +100,7 @@ export default {
   created () {
     this.updater = setInterval(this.onTimer, 1000)
     this.$bus.$on('agent_state', this.handleState)
+    this.$agent.p_call('request_state')
   },
   beforeDestroy () {
     this.$bus.$off('agent_state', this.handleState)
