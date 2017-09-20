@@ -57,10 +57,11 @@ export default {
   created () {
     this.query()
     this.$agent.subscribe('inqueues')
-    this.$bus.$on('inqueue_state', (S) => this.handleState(S))
-    this.updater = setInterval( () => this.onTimer(), 1000 )
+    this.$bus.$on('inqueue_state', this.handleState)
+    this.updater = setInterval(this.onTimer, 1000)
   },
-  destroyed () {
+  beforeDestroy () {
+    this.$bus.$off('inqueue_state', this.handleState)
     clearInterval(this.updater)
   },
   components: {
@@ -70,8 +71,8 @@ export default {
     computedInqueues () {
       let inqueues = this.inqueues;
       inqueues.forEach((key) => {
-        key.timeComputed = Math.round(key.time/1000).toString() + 's'
-        key.effective =  key.effective_time.weight.toString() + '-' + Math.round(key.effective_time.time/1000).toString() + 's'
+        key.timeComputed = Math.round(key.time/1000).toString()
+        key.effective =  key.effective_time.weight.toString() + '-' + Math.round(key.effective_time.time/1000).toString()
       })
       return inqueues;
     }

@@ -57,10 +57,11 @@ export default {
   created () {
     this.query()
     this.$agent.subscribe('agents')
-    this.$bus.$on('agents_state', (S) => this.handleState(S))
-    this.updater = setInterval( () => this.onTimer(), 1000 )
+    this.$bus.$on('agents_state', this.handleState)
+    this.updater = setInterval(this.onTimer, 1000)
   },
-  destroyed () {
+  beforeDestroy () {
+    this.$bus.$off('agents_state', this.handleState)
     clearInterval(this.updater)
   },
   components: {

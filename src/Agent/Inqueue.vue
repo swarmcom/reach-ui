@@ -98,10 +98,11 @@ export default {
     conference_to_uri (Uri) { this.$agent.conference_to_uri(Uri) },
   },
   created () {
-    this.updater = setInterval(() => this.onTimer(), 1000)
-    this.$bus.$on('agent_state', (S) => this.handleState(S))
+    this.updater = setInterval(this.onTimer, 1000)
+    this.$bus.$on('agent_state', this.handleState)
   },
-  destroyed () {
+  beforeDestroy () {
+    this.$bus.$off('agent_state', this.handleState)
     clearInterval(this.updater)
   },
   components: {
