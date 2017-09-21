@@ -1,28 +1,27 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col"><h3>Inqueue requests</h3></div>
-    </div>
-    <custom-table
-      :data="computedInqueues"
-      :columns="columns"
-      :dataArguments="dataArguments"
-      :name="name"
-      :clickable="0">
-    </custom-table>
+<div>
+  <div class="row">
+    <div class="col"><h3>Inqueue requests</h3></div>
   </div>
+  <btable :fields="fields" :data="inqueues" :storageName="name" :add_button=false></btable>
+</div>
 </template>
 
 <script>
-import CustomTable from '../Widget/CustomTable'
+import Btable from '../Widget/Btable'
 
 export default {
   name: 'inqueues',
   data () {
     return {
-      columns: ['State', 'Record', 'Queue', 'Time', 'Effective Time'],
-      dataArguments: ['state', 'record', 'queue', 'timeComputed', 'effective'],
-      name: "monitorInqueuesRows",
+      fields: {
+        state: { label: 'State', sortable: true },
+        record: { label: 'Record', sortable: true },
+        queue_id: { label: 'Queue', sortable: true },
+        time: { label: 'Time', sortable: true },
+        effective: { label: 'Effective', sortable: true }
+      },
+      name: 'monitor/inqueues',
       inqueues: [],
       updater: null
     }
@@ -41,18 +40,19 @@ export default {
       }
     },
     query: async function() {
-      this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
+      this.inqueues = await this.$agent.p_mfa('ws_admin', 'inqueues', ['all'])
+      this.inqueues.forEach((inq) => {
+        inq.time = Math.round(inq.time/1000)
+        inq.effective = Math.round(inq.effective_time.time/1000)
+      })
     },
     onTimer () {
       this.inqueues.forEach((E, i, Arr) => { 
-        E.time = E.time + 1000
-        E.effective_time.time = E.effective_time.time + 1000
+        E.time = E.time + 1
+        E.effective = E.effective + 1
         Arr.splice(i, 1, E)
       })
     }
-  },
-  mounted () {
-    this.onTimer()
   },
   created () {
     this.query()
@@ -65,17 +65,7 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    'custom-table': CustomTable
-  },
-  computed: {
-    computedInqueues () {
-      let inqueues = this.inqueues;
-      inqueues.forEach((key) => {
-        key.timeComputed = Math.round(key.time/1000).toString()
-        key.effective =  key.effective_time.weight.toString() + '-' + Math.round(key.effective_time.time/1000).toString()
-      })
-      return inqueues;
-    }
+    'btable': Btable
   }
 }
 </script>
