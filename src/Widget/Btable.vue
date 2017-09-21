@@ -85,8 +85,8 @@ export default {
   },
   created () {
     this.query()
-    this.loadDataStorage(this.storageName)
     this.sortBy = Object.keys(this.fields)[0]
+    this.loadDataStorage(this.storageName)
   },
 }
 </script>
