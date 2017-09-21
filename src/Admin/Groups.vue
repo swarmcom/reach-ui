@@ -1,28 +1,32 @@
 <template>
   <div>
-    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <custom-table
+    <btable
+      :fields="fields"
       :data="groups"
-      :dataArguments="dataArguments"
-      :columns="columns"
-      :name="name"
-      :clickable="1">
-    </custom-table>
+      :storageName="name"
+      :add_button=true>
+    </btable>
   </div>
 </template>
 
 <script>
 import Common from './Common'
-import CustomTable from '../Widget/CustomTable'
+import Btable from '../Widget/Btable'
 
 export default {
   name: 'admin-groups',
   mixins: [Common],
   data () {
     return {
-      name: "adminGroupsRows",
-      dataArguments: ['id', 'name', 'weight', 'aging_factor', 'hold_music', 'wrapup_enabled'],
-      columns: ['Id', 'Name', 'Weight', 'Aging', 'Music', 'Wrap' ],
+      fields: {
+        id: { label: 'Id', sortable: true },
+        name: { label: 'Name', sortable: true },
+        weight: { label: 'Weight', sortable: true },
+        aging_factor: { label: 'Aging', sortable: true },
+        hold_music: { label: 'Music', sortable: true },
+        wrapup_enabled: { label: 'Wrap', sortable: true }
+      },
+      name: "adminGroups",
       groups: []
     }
   },
@@ -33,7 +37,7 @@ export default {
     add () {
       this.$router.push(`/admin/group/`)
     },
-    onClicked(data) {
+    onClick(data) {
       this.$router.push(`/admin/group/${data.id}`)
     }
   },
@@ -41,7 +45,7 @@ export default {
     this.query()
   },
   components: {
-    'custom-table': CustomTable
+    'btable': Btable
   }
 }
 </script>

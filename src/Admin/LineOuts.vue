@@ -1,18 +1,28 @@
 <template>
 <div>
-  <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-  <b-table striped hover small responsive :sort-by="sortBy" :items="line_outs" :fields="fields" @row-clicked="onClick">
-  </b-table>
+  <btable
+    :fields="fields"
+    :data="line_outs"
+    :storageName="name"
+    :add_button=true>
+  </btable>
 </div>
 </template>
 
 <script>
+import Btable from '../Widget/Btable'
+
 export default {
   name: 'admin-line-outs',
   data () {
     return {
-      fields: ['id', 'name', 'number', 'client'],
-      sortBy: 'id',
+      fields: {
+        id: { label: 'Id', sortable: true },
+        name: { label: 'Name', sortable: true },
+        number: { label: 'Number', sortable: true },
+        client: { label: 'Client', sortable: true }
+      },
+      name: "adminLineOuts",
       line_outs: []
     }
   },
@@ -36,6 +46,9 @@ export default {
   },
   created () {
     this.query()
+  },
+  components: {
+    'btable': Btable
   }
 }
 </script>

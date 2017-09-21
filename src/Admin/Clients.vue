@@ -1,26 +1,26 @@
 <template>
   <div>
-    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <custom-table
+    <btable
+      :fields="fields"
       :data="clients"
-      :dataArguments="dataArguments"
-      :columns="columns"
-      :name="name"
-      :clickable="1">
-    </custom-table>
+      :storageName="name"
+      :add_button=true>
+    </btable>
   </div>
 </template>
 
 <script>
-import CustomTable from '../Widget/CustomTable'
+import Btable from '../Widget/Btable'
 
 export default {
   name: 'admin-line-ins',
   data () {
     return {
-      name:"adminClientRows",
-      dataArguments: ['id', 'name'],
-      columns: ['Id', 'Name'],
+      fields: {
+        id: { label: 'Id', sortable: true },
+        name: { label: 'Name', sortable: true }
+      },
+      name: "adminClient",
       clients: []
     }
   },
@@ -31,7 +31,7 @@ export default {
     add () {
       this.$router.push(`/admin/client/`)
     },
-    onClicked (data) {
+    onClick (data) {
       this.$router.push(`/admin/client/${data.id}`)
     },
   },
@@ -39,7 +39,7 @@ export default {
     this.query()
   },
   components: {
-    'custom-table': CustomTable
+    'btable': Btable
   }
 }
 </script>

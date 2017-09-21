@@ -3,25 +3,27 @@
     <div class="row">
       <div class="col"><h3>Logged in agents</h3></div>
     </div>
-    <custom-table
+    <btable
+      :fields="fields"
       :data="computedAgents"
-      :columns="columns"
-      :dataArguments="dataArguments"
-      :name="name"
-      :clickable="0">
-    </custom-table>
+      :storageName="name"
+      :add_button=false>
+      </btable>
   </div>
 </template>
 
 <script>
-import CustomTable from '../Widget/CustomTable'
+import Btable from '../Widget/Btable'
 export default {
   name: 'agents',
   data () {
     return {
-      name: "monitorAgentsRows",
-      columns: ['ID', 'State', 'Time'],
-      dataArguments: ['agent_id', 'state', 'timeComputed'],
+      fields: {
+        agent_id: { label: 'Id', sortable: true },
+        state: { label: 'State', sortable: true },
+        timeComputed: { label: 'Time', sortable:true }
+      },
+      name: "monitorAgents",
       agents: [],
       updater: ''
     }
@@ -52,6 +54,9 @@ export default {
         E.time = E.time + 1000
         A.splice(i, 1, E)
       })
+    },
+    onClick (data) {
+      this.$router.push(`/admin/agent/${data.agent_id}`)
     }
   },
   created () {
@@ -65,7 +70,7 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    'custom-table': CustomTable
+    'btable': Btable
   },
   computed: {
     computedAgents () {

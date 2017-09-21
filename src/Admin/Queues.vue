@@ -2,7 +2,7 @@
   <div>
     <btable
       :fields="fields"
-      :data="computedQueues"
+      :data="queues"
       :storageName="name"
       :add_button=true>
     </btable>
@@ -33,7 +33,13 @@ export default {
   methods: {
     query: async function () {
       this.groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
-      this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues')
+      let queues = await this.$agent.p_mfa('ws_admin', 'get_queues')
+
+      queues.forEach( (key) => {
+        let Group = this.groups.find(I => I.id == key.group_id)
+        Group ? key.group_id = Group.name : key.group_id = ''
+      })
+      this.queues = queues;
     },
     add () {
       this.$router.push(`/admin/queue/`)
@@ -51,17 +57,6 @@ export default {
   },
   components: {
     'btable': Btable
-  },
-  computed: {
-    computedQueues () {
-      let queues = this.queues;
-      let groups = this.groups;
-      queues.forEach(function (key) {
-        let Group = groups.find(I => I.id == key.group_id)
-        Group ? key.group_id = Group.name : key.group_id = ''
-      })
-      return queues;
-    }
   }
 }
 </script>
