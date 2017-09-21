@@ -3,7 +3,16 @@
   <div class="row">
     <div class="col"><h3>Inqueue requests</h3></div>
   </div>
-  <btable :fields="fields" :data="inqueues" :storageName="name" :add_button=false></btable>
+  <b-table style="margin-top:10px" striped hover responsive :items="inqueues" :fields="fields">
+    <template slot="twe" scope="data">
+      {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
+    </template>
+    <template slot="actions" scope="data">
+      <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
+      <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
+      <b-button size="sm" variant="danger" @click="barge(data.item)">Barge</b-button>
+    </template>
+  </b-table>
 </div>
 </template>
 
@@ -16,13 +25,14 @@ export default {
     return {
       fields: {
         state: { label: 'State', sortable: true },
-        record: { label: 'Record', sortable: true },
-        queue_id: { label: 'Queue', sortable: true },
-        time: { label: 'Time', sortable: true },
-        effective: { label: 'Effective', sortable: true }
+        record: { label: 'Type', sortable: true },
+        queue: { label: 'Queue', sortable: true },
+        twe: { label: 'T.W.E.', sortable: true },
+        actions: { label: 'Actions' }
       },
       name: 'monitor/inqueues',
       inqueues: [],
+      queues: [],
       updater: null
     }
   },
@@ -40,10 +50,12 @@ export default {
       }
     },
     query: async function() {
+      this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues', [])
       this.inqueues = await this.$agent.p_mfa('ws_admin', 'inqueues', ['all'])
       this.inqueues.forEach((inq) => {
         inq.time = Math.round(inq.time/1000)
         inq.effective = Math.round(inq.effective_time.time/1000)
+        inq.queue = this.queue_name(inq.queue_id)
       })
     },
     onTimer () {
@@ -52,6 +64,19 @@ export default {
         E.effective = E.effective + 1
         Arr.splice(i, 1, E)
       })
+    },
+    queue_name (Id) {
+      let Queue = this.queues.find(I => I.id == Id)
+      return Queue? Queue.name : ''
+    },
+    take (Id) {
+      console.log(Id)
+    },
+    spy (Id) {
+      console.log(Id)
+    },
+    barge (Id) {
+      console.log(Id)
     }
   },
   created () {

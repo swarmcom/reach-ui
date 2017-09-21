@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style>
-  table tr{
+  table tbody tr {
     cursor: pointer;
   }
 </style>
