@@ -1,5 +1,11 @@
 <template>
   <div>
+    <btable
+      :fields="fields"
+      :data="profiles"
+      :storageName="name"
+      :add_button=true>
+    </btable>
     <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
     <custom-table
       :data="profiles"
@@ -12,15 +18,20 @@
 </template>
 
 <script>
-import CustomTable from '../Widget/CustomTable'
+import Btable from '../Widget/Btable'
 
 export default {
   name: 'admin-profiles',
   data () {
     return {
-      dataArguments: ['id', 'name', 'permissions', 'ring_timeout', 'max_ring_fails'],
-      columns: ['Id', 'Name', 'Permissions', 'Ring Timeout', 'Ring Fails'],
-      name:"adminProfilesRows",
+      fields: {
+        id: { label: 'Id', sortable: true },
+        name: { label: 'Name', sortable: true },
+        permissions: { label: 'Permissions', sortable: true },
+        ring_timeout: { label: 'Ring Timeout', sortable: true },
+        max_ring_fails: { label: 'Max Ring Fails', sortable: true }
+      },
+      name:"adminProfiles",
       profiles: []
     }
   },
@@ -37,18 +48,9 @@ export default {
   },
   created () {
     this.query()
-    if(localStorage.getItem('adminProfilesRows')) this.rowsPerPage = localStorage.getItem('adminProfilesRows')
-  },
-  watch: {
-    rowsPerPage: {
-      handler() {
-        localStorage.setItem('adminProfilesRows', this.rowsPerPage);
-      },
-      deep: true,
-    },
   },
   components: {
-    'custom-table': CustomTable
+    'btable': Btable
   }
 }
 </script>

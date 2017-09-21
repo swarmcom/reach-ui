@@ -1,33 +1,16 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-      </div>
-      <div class="col-md-2 float-right">
-        <b-form-select :options="pageOptions" v-model="perPage" @input="onSelectChange" />
-      </div>
-      <div class="col-md-4 float-right">
-        <b-form-input v-model="filter" placeholder="Type to Filter" />
-      </div>
-    </div>
-    <b-table style="margin-top:10px" striped hover small responsive
-      :current-page="currentPage"
-      :per-page="perPage"
-      :sort-by="sortBy"
-      :items="agents"
+    <btable
       :fields="fields"
-      :filter="filter"
-      :sortDesc="sortDesc"
-      @row-clicked="onClicked"
-      @filtered="onFiltered"
-      @sort-changed="onSortingChanged">
-    </b-table>
-    <b-pagination align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
+      :data="agents"
+      :storageName="name"
+      :add_button=true>
+    </btable>
   </div>
 </template>
 
 <script>
+import Btable from '../Widget/Btable'
 
 export default {
   name: 'admin-agents',
@@ -42,19 +25,9 @@ export default {
         group: { label: 'Group', sortable: true  },
         uri: { label: 'Uri', sortable: true  }
       },
-      currentPage: 1,
-      pageOptions: [
-        {text:'All', value:0},
-        {text:5,value:5},{text:10,value:10},{text:15,value:15}, {text:20,value:20}, {text:25,value:25}, {text:30,value:30}
-      ],
-      perPage: 0,
-      filter: null,
-      sortBy: 'agent_id',
-      sortDesc: false,
       agents: [],
       groups: [],
-      totalRows: 0,
-      storageName: "adminAgents"
+      name: "adminAgents"
     }
   },
   methods: {
@@ -72,40 +45,15 @@ export default {
       let Group = this.groups.find(I => I.id == Id)
       return Group ? Group.name : ''
     },
-    onClicked (data) {
+    onClick (data) {
       this.$router.push(`/admin/agent/${data.agent_id}`)
-    },
-    onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
-    },
-    onSelectChange (value) {
-      let data = { "sortBy": this.sortBy, "sortDesc": this.sortDesc, "perPage": value }
-      localStorage.setItem(this.storageName, JSON.stringify(data))
-    },
-    onSortingChanged (ctx){
-      let data = { "sortBy": ctx.sortBy, "sortDesc": ctx.sortDesc, "perPage": this.perPage }
-      localStorage.setItem(this.storageName, JSON.stringify(data))
-    },
-    loadDataStorage(name) {
-      if(localStorage.getItem(name)) {
-        let data = JSON.parse(localStorage.getItem(name));
-        this.sortBy = data.sortBy
-        this.sortDesc = data.sortDesc
-        this.perPage = data.perPage
-      }
     }
   },
   created () {
     this.query()
-    this.loadDataStorage(this.storageName)
   },
+  components: {
+   'btable': Btable
+  }
 }
 </script>
-
-<style>
-  table tr{
-    cursor: pointer;
-  }
-</style>

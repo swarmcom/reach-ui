@@ -1,26 +1,27 @@
 <template>
   <div>
-    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <custom-table
+    <btable
+      :fields="fields"
       :data="releases"
-      :dataArguments="dataArguments"
-      :columns="columns"
-      :name="name"
-      :clickable="1">
-    </custom-table>
+      :storageName="name"
+      :add_button=true>
+    </btable>
   </div>
 </template>
 
 <script>
-import CustomTable from '../Widget/CustomTable'
+import Btable from '../Widget/Btable'
 
 export default {
   name: 'admin-releases',
   data () {
     return {
-      dataArguments: ['id', 'name', 'score'],
-      columns: ['Id', 'Name', 'Score'],
-      name: "adminReleasesRows",
+      fields: {
+        id: { label: 'Id', sortable: true },
+        name: { label: 'Name', sortable: true },
+        score: { label: 'Score', sortable: true }
+      },
+      name: "adminReleases",
       releases: []
     }
   },
@@ -31,7 +32,7 @@ export default {
     add () {
       this.$router.push(`/admin/release/`)
     },
-    onClicked (data) {
+    onClick (data) {
       this.$router.push(`/admin/release/${data.id}`)
     },
   },
@@ -39,7 +40,7 @@ export default {
     this.query()
   },
   components: {
-   'custom-table': CustomTable
+   'btable': Btable
   }
 }
 </script>
