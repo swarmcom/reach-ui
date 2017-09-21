@@ -6,14 +6,6 @@
       :storageName="name"
       :add_button=true>
     </btable>
-    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <custom-table
-      :data="profiles"
-      :dataArguments="dataArguments"
-      :columns="columns"
-      :name="name"
-      :clickable="1">
-    </custom-table>
   </div>
 </template>
 
