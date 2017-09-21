@@ -1,26 +1,31 @@
 <template>
   <div>
-    <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
-    <custom-table
+    <btable
+      :fields="fields"
       :data="computedQueues"
-      :dataArguments="dataArguments"
-      :columns="columns"
-      :name="name"
-      :clickable="1">
-    </custom-table>
+      :storageName="name"
+      :add_button=true>
+    </btable>
   </div>
 </template>
 
 <script>
-import CustomTable from '../Widget/CustomTable'
+import Btable from '../Widget/Btable'
 
 export default {
   name: 'admin-queues',
   data () {
     return {
-      dataArguments: ['id', 'name', 'group_id', 'hold_music', 'wrapup_enabled', 'aging_factor', 'weight'],
-      columns: ['Id', 'Name', 'Group', 'Music', 'Wrap', 'Aging', 'Weight'],
-      name: "adminQueuesRows",
+      fields: {
+        id: { label: 'Id', sortable: true },
+        name: { label: 'Name', sortable: true },
+        group_id: { label: 'Group', sortable:true },
+        hold_music: { label: 'Music', sortable: true },
+        wrapup_enabled: { label: 'Wrap', sortable: true },
+        aging_factor: { label: 'Aging', sortable: true },
+        weight: { label: 'Weight', sortable: true }
+      },
+      name: "adminQueues",
       queues: [],
       groups: []
     }
@@ -37,7 +42,7 @@ export default {
       let Group = this.groups.find(I => I.id == Id)
       return Group? Group.name : ''
     },
-    onClicked(data) {
+    onClick(data) {
       this.$router.push(`/admin/queue/${data.id}`)
     }
   },
@@ -45,7 +50,7 @@ export default {
     this.query()
   },
   components: {
-    'custom-table': CustomTable
+    'btable': Btable
   },
   computed: {
     computedQueues () {
