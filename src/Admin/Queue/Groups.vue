@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Common from './../Common'
+import Common from '../Common'
 import Btable from '../../Widget/Btable'
 
 export default {
