@@ -5,7 +5,7 @@
     <router-link class="nav-link" to="/admin/agents">Agents</router-link>
   </li>
   <li class="nav-item greenColor">
-    <router-link class="nav-link" to="/admin/profiles">Profiles</router-link>
+    <router-link class="nav-link" to="/admin/agent_groups">Agent Groups</router-link>
   </li>
   <li class="nav-item greenColor">
     <router-link class="nav-link" to="/admin/queues">Queues</router-link>

@@ -2,7 +2,7 @@
   <div>
     <btable
       :fields="fields"
-      :data="profiles"
+      :data="agent_groups"
       :storageName="name"
       :add_button=true>
     </btable>
@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import Btable from '../Widget/Btable'
+import Btable from '../../Widget/Btable'
 
 export default {
-  name: 'admin-profiles',
+  name: 'admin-agent-groups',
   data () {
     return {
       fields: {
@@ -23,19 +23,19 @@ export default {
         ring_timeout: { label: 'Ring Timeout', sortable: true },
         max_ring_fails: { label: 'Max Ring Fails', sortable: true }
       },
-      name:"adminProfiles",
-      profiles: []
+      name:"adminAgentsGroups",
+      agent_groups: []
     }
   },
   methods: {
     query: async function () {
-      this.profiles = await this.$agent.p_mfa('ws_admin', 'get_profiles')
+      this.agent_groups = await this.$agent.p_mfa('ws_admin', 'get_profiles')
     },
     add () {
-      this.$router.push(`/admin/profile/`)
+      this.$router.push(`/admin/agent_group/`)
     },
-    onClicked(data) {
-      this.$router.push(`/admin/profile/${data.id}`)
+    onClick(data) {
+      this.$router.push(`/admin/agent_group/${data.id}`)
     }
   },
   created () {
