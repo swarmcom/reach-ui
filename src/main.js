@@ -17,8 +17,8 @@ import AdminAgent from './Admin/Agent.vue'
 import AdminAgents from './Admin/Agents.vue'
 import AdminQueue from './Admin/Queue.vue'
 import AdminQueues from './Admin/Queues.vue'
-import AdminGroup from './Admin/Group.vue'
-import AdminGroups from './Admin/Groups.vue'
+import AdminQueueGroup from './Admin/Queue/Group.vue'
+import AdminQueueGroups from './Admin/Queue/Groups.vue'
 import AdminAgentGroup from './Admin/Agent/Group.vue'
 import AdminAgentGroups from './Admin/Agent/Groups.vue'
 import AdminRelease from './Admin/Release.vue'
@@ -48,7 +48,7 @@ const router = new VueRouter({
       { path: 'agents', component: AdminAgents },
       { path: 'queues', component: AdminQueues },
       { path: 'params', component: AdminParams },
-      { path: 'groups', component: AdminGroups },
+      { path: 'queue_groups', component: AdminQueueGroups },
       { path: 'agent_groups', component: AdminAgentGroups },
       { path: 'releases', component: AdminReleases },
       { path: 'clients', component: AdminClients },
@@ -60,8 +60,8 @@ const router = new VueRouter({
       { path: 'queue/:id', component: AdminQueue, props: true },
       { path: 'agent_group', component: AdminAgentGroup },
       { path: 'agent_group/:id', component: AdminAgentGroup, props: true },
-      { path: 'group', component: AdminGroup },
-      { path: 'group/:id', component: AdminGroup, props: true },
+      { path: 'queue_group', component: AdminQueueGroup },
+      { path: 'queue_group/:id', component: AdminQueueGroup, props: true },
       { path: 'release', component: AdminRelease },
       { path: 'release/:id', component: AdminRelease, props: true },
       { path: 'client', component: AdminClient },

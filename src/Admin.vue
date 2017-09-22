@@ -11,7 +11,7 @@
     <router-link class="nav-link" to="/admin/queues">Queues</router-link>
   </li>
   <li class="nav-item greenColor">
-    <router-link class="nav-link" to="/admin/groups">Groups</router-link>
+    <router-link class="nav-link" to="/admin/queue_groups">Queue Groups</router-link>
   </li>
   <li class="nav-item">
     <router-link class="nav-link" to="/admin/params">Params</router-link>
