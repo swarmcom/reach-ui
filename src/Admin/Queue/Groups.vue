@@ -2,7 +2,7 @@
   <div>
     <btable
       :fields="fields"
-      :data="groups"
+      :data="queue_groups"
       :storageName="name"
       :add_button=true>
     </btable>
@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import Common from './Common'
-import Btable from '../Widget/Btable'
+import Common from '../Common'
+import Btable from '../../Widget/Btable'
 
 export default {
-  name: 'admin-groups',
+  name: 'admin-queue-groups',
   mixins: [Common],
   data () {
     return {
@@ -27,18 +27,18 @@ export default {
         wrapup_enabled: { label: 'Wrap', sortable: true }
       },
       name: "adminGroups",
-      groups: []
+      queue_groups: []
     }
   },
   methods: {
     query: async function () {
-      this.groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
+      this.queue_groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
     },
     add () {
-      this.$router.push(`/admin/group/`)
+      this.$router.push(`/admin/queue_group/`)
     },
     onClick(data) {
-      this.$router.push(`/admin/group/${data.id}`)
+      this.$router.push(`/admin/queue_group/${data.id}`)
     }
   },
   created () {
