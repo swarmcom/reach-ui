@@ -40,7 +40,7 @@ export default {
     this.query()
   },
   components: {
-   'btable': Btable
+    'btable': Btable
   }
 }
 </script>
