@@ -90,7 +90,7 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    'btable': Btable
+    btable: Btable
   }
 }
 </script>
