@@ -19,7 +19,7 @@
 import FormText from '../Widget/FormText.vue'
 import Skills from '../Widget/Skills.vue'
 import Recipe from '../Widget/Recipe.vue'
-import Groups from '../Widget/Groups.vue'
+import Groups from '../Widget/Queue/Groups.vue'
 import Common from './Common'
 
 export default {

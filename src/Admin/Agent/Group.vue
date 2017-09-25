@@ -30,7 +30,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.agent_group = await this.$agent.p_mfa('ws_admin', 'get_profile', [this.id])
+        this.agent_group = await this.$agent.p_mfa('ws_admin', 'get_agent_group', [this.id])
         this.skills = this.object2list(this.agent_group.skills)
       }
     },
@@ -38,9 +38,9 @@ export default {
       try {
         this.agent_group.skills = this.list2object(this.skills)
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_profile', [this.id, this.agent_group])
+          await this.$agent.p_mfa('ws_admin', 'update_agent_group', [this.id, this.agent_group])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_profile', [this.agent_group])
+          await this.$agent.p_mfa('ws_admin', 'create_agent_group', [this.agent_group])
         }
         this.$router.push('/admin/agent_groups')
       }
@@ -50,7 +50,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_profile', [this.id])
+        await this.$agent.p_mfa('ws_admin', 'delete_agent_group', [this.id])
         this.$router.push('/admin/agent_groups')
       }
     },

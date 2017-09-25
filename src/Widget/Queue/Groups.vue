@@ -1,10 +1,10 @@
 <template>
 <div class="form-group row">
   <label class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9">
+  <div class="col-7">
     <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
       <option></option>
-      <option v-for="profile in profiles" :value="profile.id" :selected="isActive(profile.id)">{{ profile.name }}</option>
+      <option v-for="group in groups" :value="group.id" :selected="isActive(group.id)">{{ group.name }}</option>
     </select>
   </div>
 </div>
@@ -12,11 +12,11 @@
 
 <script>
 export default {
-  name: 'form-text',
+  name: 'queue-groups',
   props: ['label', 'value'],
   data () {
     return {
-      profiles: []
+      groups: []
     }
   },
   methods: {
@@ -24,7 +24,7 @@ export default {
       return Id == this.value
     },
     query: async function () {
-      this.profiles = await this.$agent.p_mfa('ws_admin', 'get_profiles')
+      this.groups = await this.$agent.p_mfa('ws_admin', 'get_queue_groups')
     },
     onUpdate (value) {
       this.$emit('input', value)

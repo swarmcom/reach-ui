@@ -35,7 +35,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.queue_group = await this.$agent.p_mfa('ws_admin', 'get_group', [this.id])
+        this.queue_group = await this.$agent.p_mfa('ws_admin', 'get_queue_group', [this.id])
         this.skills = this.object2list(this.queue_group.skills)
       }
     },
@@ -43,9 +43,9 @@ export default {
       this.queue_group.skills = this.list2object(this.skills)
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_group', [this.id, this.queue_group])
+          await this.$agent.p_mfa('ws_admin', 'update_queue_group', [this.id, this.queue_group])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_group', [this.queue_group])
+          await this.$agent.p_mfa('ws_admin', 'create_queue_group', [this.queue_group])
         }
         this.$router.push('/admin/queue_groups')
       }
@@ -55,7 +55,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_group', [this.id])
+        await this.$agent.p_mfa('ws_admin', 'delete_queue_group', [this.id])
         this.$router.push('/admin/queue_groups')
       }
     },
