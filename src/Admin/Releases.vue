@@ -1,12 +1,5 @@
 <template>
-  <div>
-    <btable
-      :fields="fields"
-      :data="releases"
-      :storageName="name"
-      :add_button=true>
-    </btable>
-  </div>
+<btable :fields="fields" :data="releases" :add_button=true></btable>
 </template>
 
 <script>
@@ -21,7 +14,6 @@ export default {
         name: { label: 'Name', sortable: true },
         score: { label: 'Score', sortable: true }
       },
-      name: "adminReleases",
       releases: []
     }
   },

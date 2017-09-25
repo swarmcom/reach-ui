@@ -1,6 +1,5 @@
 <template>
-<btable :fields="fields" :data="agents" :storageName="name" :add_button=true>
-</btable>
+<btable :fields="fields" :data="agents" :add_button=true></btable>
 </template>
 
 <script>
@@ -19,8 +18,7 @@ export default {
         group: { label: 'Group', sortable: true, formatter: (group) => group.name },
         uri: { label: 'Uri', sortable: true }
       },
-      agents: [],
-      name: "adminAgents"
+      agents: []
     }
   },
   methods: {

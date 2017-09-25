@@ -34,7 +34,6 @@ export default {
   props: {
     fields: Object,
     data: Array,
-    storageName: String,
     add_button: Boolean
   },
   data () {
@@ -44,6 +43,7 @@ export default {
         {text:'All', value:0},
         {text:5,value:5},{text:10,value:10},{text:15,value:15}, {text:20,value:20}, {text:25,value:25}, {text:30,value:30}
       ],
+      storageName: '',
       perPage: 0,
       filter: null,
       sortBy: '',
@@ -52,9 +52,6 @@ export default {
     }
   },
   methods: {
-    query: async function () {
-      this.totalRows = this.data.length
-    },
     add () {
       this.$parent.add();
     },
@@ -84,7 +81,8 @@ export default {
     }
   },
   created () {
-    this.query()
+    this.storageName = this.$parent.$options.name
+    this.totalRows = this.data.length
     this.sortBy = Object.keys(this.fields)[0]
     this.loadDataStorage(this.storageName)
   },

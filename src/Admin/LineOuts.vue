@@ -1,12 +1,5 @@
 <template>
-<div>
-  <btable
-    :fields="fields"
-    :data="line_outs"
-    :storageName="name"
-    :add_button=true>
-  </btable>
-</div>
+<btable :fields="fields" :data="line_outs" :add_button=true></btable>
 </template>
 
 <script>
@@ -22,7 +15,6 @@ export default {
         number: { label: 'Number', sortable: true },
         client: { label: 'Client', sortable: true, formatter: (client) => client.name }
       },
-      name: "adminLineOuts",
       line_outs: []
     }
   },

@@ -1,21 +1,16 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col"><h3>Logged in agents</h3></div>
-    </div>
-    <btable
-      :fields="fields"
-      :data="computedAgents"
-      :storageName="name"
-      :add_button=false>
-      </btable>
+<div>
+  <div class="row">
+    <div class="col"><h3>Logged in agents</h3></div>
   </div>
+  <btable :fields="fields" :data="computedAgents" :add_button=false></btable>
+</div>
 </template>
 
 <script>
 import Btable from '../Widget/Btable'
 export default {
-  name: 'agents',
+  name: 'monitor-agents',
   data () {
     return {
       fields: {
@@ -23,7 +18,6 @@ export default {
         state: { label: 'State', sortable: true },
         timeComputed: { label: 'Time', sortable:true }
       },
-      name: "monitorAgents",
       agents: [],
       updater: ''
     }

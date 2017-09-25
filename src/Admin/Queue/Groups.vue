@@ -1,12 +1,5 @@
 <template>
-  <div>
-    <btable
-      :fields="fields"
-      :data="queue_groups"
-      :storageName="name"
-      :add_button=true>
-    </btable>
-  </div>
+<btable :fields="fields" :data="queue_groups" :add_button=true></btable>
 </template>
 
 <script>
@@ -26,7 +19,6 @@ export default {
         hold_music: { label: 'Music', sortable: true },
         wrapup_enabled: { label: 'Wrap', sortable: true }
       },
-      name: "adminGroups",
       queue_groups: []
     }
   },

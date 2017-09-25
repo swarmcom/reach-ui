@@ -1,26 +1,18 @@
 <template>
-  <div>
-    <btable
-      :fields="fields"
-      :data="clients"
-      :storageName="name"
-      :add_button=true>
-    </btable>
-  </div>
+<btable :fields="fields" :data="clients" :add_button=true></btable>
 </template>
 
 <script>
 import Btable from '../Widget/Btable'
 
 export default {
-  name: 'admin-line-ins',
+  name: 'admin-clients',
   data () {
     return {
       fields: {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true }
       },
-      name: "adminClient",
       clients: []
     }
   },

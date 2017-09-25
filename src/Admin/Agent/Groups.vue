@@ -1,12 +1,5 @@
 <template>
-  <div>
-    <btable
-      :fields="fields"
-      :data="agent_groups"
-      :storageName="name"
-      :add_button=true>
-    </btable>
-  </div>
+<btable :fields="fields" :data="agent_groups" :add_button=true></btable>
 </template>
 
 <script>
@@ -23,7 +16,6 @@ export default {
         ring_timeout: { label: 'Ring Timeout', sortable: true },
         max_ring_fails: { label: 'Max Ring Fails', sortable: true }
       },
-      name:"adminAgentsGroups",
       agent_groups: []
     }
   },
