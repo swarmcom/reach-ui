@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.queue_groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
+      this.queue_groups = await this.$agent.p_mfa('ws_admin', 'get_queue_groups')
     },
     add () {
       this.$router.push(`/admin/queue_group/`)

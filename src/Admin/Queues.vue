@@ -19,7 +19,7 @@ export default {
       fields: {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
-        group_id: { label: 'Group', sortable:true },
+        group: { label: 'Group', sortable:true, formatter: (group) => group.name },
         hold_music: { label: 'Music', sortable: true },
         wrapup_enabled: { label: 'Wrap', sortable: true },
         aging_factor: { label: 'Aging', sortable: true },
@@ -32,14 +32,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.groups = await this.$agent.p_mfa('ws_admin', 'get_groups')
-      let queues = await this.$agent.p_mfa('ws_admin', 'get_queues')
-
-      queues.forEach( (key) => {
-        let Group = this.groups.find(I => I.id == key.group_id)
-        Group ? key.group_id = Group.name : key.group_id = ''
-      })
-      this.queues = queues;
+      this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues')
     },
     add () {
       this.$router.push(`/admin/queue/`)

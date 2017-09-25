@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.agent_groups = await this.$agent.p_mfa('ws_admin', 'get_profiles')
+      this.agent_groups = await this.$agent.p_mfa('ws_admin', 'get_agent_groups')
     },
     add () {
       this.$router.push(`/admin/agent_group/`)

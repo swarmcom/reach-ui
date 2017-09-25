@@ -20,24 +20,16 @@ export default {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
         number: { label: 'Number', sortable: true },
-        queue: { label: 'Queue', sortable: true },
-        client: { label: 'Client', sortable: true }
+        queue: { label: 'Queue', sortable: true, formatter: (queue) => queue.name },
+        client: { label: 'Client', sortable: true, formatter: (client) => client.name }
       },
-      name: "adminLineIns",
       line_ins: [],
-      queues: []
+      name: "adminLineIns"
     }
   },
   methods: {
     query: async function () {
-      this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues')
-      this.clients = await this.$agent.p_mfa('ws_admin', 'get_clients')
-      let line_ins = await this.$agent.p_mfa('ws_admin', 'get_line_ins')
-      line_ins.forEach( (line) => {
-        line.queue = this.queue(line.queue_id)
-        line.client = this.client(line.client_id)
-      })
-      this.line_ins = line_ins
+      this.line_ins = await this.$agent.p_mfa('ws_admin', 'get_line_ins')
     },
     add () {
       this.$router.push(`/admin/line_in/`)
@@ -45,14 +37,6 @@ export default {
     onClick (data) {
       console.log(data)
       this.$router.push(`/admin/line_in/${data.id}`)
-    },
-    queue (Id) {
-      let Queue = this.queues.find(I => I.id == Id)
-      return Queue ? Queue.name : Id
-    },
-    client (Id) {
-      let Client = this.clients.find(I => I.id == Id)
-      return Client ? Client.name : Id
     }
   },
   created () {

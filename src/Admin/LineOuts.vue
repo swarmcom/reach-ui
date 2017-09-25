@@ -20,7 +20,7 @@ export default {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
         number: { label: 'Number', sortable: true },
-        client: { label: 'Client', sortable: true }
+        client: { label: 'Client', sortable: true, formatter: (client) => client.name }
       },
       name: "adminLineOuts",
       line_outs: []
@@ -28,20 +28,13 @@ export default {
   },
   methods: {
     query: async function () {
-      this.clients = await this.$agent.p_mfa('ws_admin', 'get_clients')
-      let line_outs = await this.$agent.p_mfa('ws_admin', 'get_line_outs')
-      line_outs.forEach( (line) => line.client = this.client(line.client_id) )
-      this.line_outs = line_outs
+      this.line_outs = await this.$agent.p_mfa('ws_admin', 'get_line_outs')
     },
     add () {
       this.$router.push(`/admin/line_out/`)
     },
     onClick (data) {
       this.$router.push(`/admin/line_out/${data.id}`)
-    },
-    client (Id) {
-      let Client = this.clients.find(I => I.id == Id)
-      return Client ? Client.name : Id
     }
   },
   created () {

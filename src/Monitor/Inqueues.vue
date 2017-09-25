@@ -69,14 +69,14 @@ export default {
       let Queue = this.queues.find(I => I.id == Id)
       return Queue? Queue.name : ''
     },
-    take (Id) {
-      console.log(Id)
+    take ({record, uuid}) {
+      this.$agent.p_mfa('ws_admin', 'take', [record, uuid])
     },
-    spy (Id) {
-      console.log(Id)
+    spy ({record, uuid}) {
+      this.$agent.p_mfa('ws_admin', 'spy', [record, uuid])
     },
-    barge (Id) {
-      console.log(Id)
+    barge ({record, uuid}) {
+      this.$agent.p_mfa('ws_admin', 'barge', [record, uuid])
     }
   },
   created () {
