@@ -1,10 +1,6 @@
 <template>
 <div>
-  <btable
-    :fields="fields"
-    :data="line_ins"
-    :storageName="name"
-    :add_button=true>
+  <btable :fields="fields" :data="line_ins" :add_button=true>
   </btable>
 </div>
 </template>
@@ -23,8 +19,7 @@ export default {
         queue: { label: 'Queue', sortable: true, formatter: (queue) => queue.name },
         client: { label: 'Client', sortable: true, formatter: (client) => client.name }
       },
-      line_ins: [],
-      name: "adminLineIns"
+      line_ins: []
     }
   },
   methods: {

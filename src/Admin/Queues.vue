@@ -1,12 +1,5 @@
 <template>
-  <div>
-    <btable
-      :fields="fields"
-      :data="queues"
-      :storageName="name"
-      :add_button=true>
-    </btable>
-  </div>
+<btable :fields="fields" :data="queues" :add_button=true></btable>
 </template>
 
 <script>
@@ -25,9 +18,7 @@ export default {
         aging_factor: { label: 'Aging', sortable: true },
         weight: { label: 'Weight', sortable: true }
       },
-      name: "adminQueues",
-      queues: [],
-      groups: []
+      queues: []
     }
   },
   methods: {
