@@ -40,13 +40,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.form-signin {
-  padding: 25px;
-  margin: 0 auto;
-  background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-}
-</style>

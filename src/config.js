@@ -1,3 +1,3 @@
 window.config = {
-  reach_ws: "ws://localhost:8937/ws"
+  reach_ws: "ws://reach.ezuce:8937/ws"
 }
