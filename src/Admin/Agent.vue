@@ -1,14 +1,12 @@
 <template>
 <div class="form">
+  <form-text label="Name" v-model="agent.name"></form-text>
   <form-text label="Login" v-model="agent.login"></form-text>
   <form-text label="Password" v-model="agent.password"></form-text>
-  <form-text label="First name" v-model="agent.firstname"></form-text>
-  <form-text label="Last name" v-model="agent.lastname"></form-text>
   <groups label="Group" v-model="agent.group_id"></groups>
   <lines label="Line Out" v-model="agent.line_id"></lines>
   <form-text label="Permissions" v-model="agent.permissions"></form-text>
   <form-text label="SIP URI" v-model="agent.uri"></form-text>
-  <form-text label="Caller Id Name" v-model="agent.caller_id_name"></form-text>
   <form-text label="Caller Id Number" v-model="agent.caller_id_number"></form-text>
   <form-text label="Ring timeout" v-model="agent.ring_timeout"></form-text>
   <form-text label="Max rings" v-model="agent.max_ring_fails"></form-text>
