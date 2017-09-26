@@ -1,0 +1,51 @@
+$form-signin-bg-color: #f5f5f5;
+$background: rgb(46,143,177);
+$backgroundColor1: rgba(46,143,177,1);
+$backgroundColor2: rgba(33,134,169,1);
+$backgroundColor3: rgba(13,119,153,1);
+
+body {
+  padding-top: 45px;
+}
+/* custom login form to fit old UI*/
+.form-signin {
+  padding: 25px;
+  margin: 0 auto;
+  background-color: $form-signin-bg-color;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+}
+/* custom navbar to fit old UI */
+.navbar-custom {
+  height: 45px;
+  background: $background; /* Old browsers */
+  background: -moz-linear-gradient(top,  $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$backgroundColor1), color-stop(53%,$backgroundColor2), color-stop(100%,$backgroundColor3)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* IE10+ */
+  background: linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e8fb1', endColorstr='#0d7799',GradientType=0 ); /* IE6-9 */
+}
+/* change the brand and text color */
+.navbar-custom .navbar-text {
+    color: rgba(255,255,255,.8);
+}
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+#navbars > span {
+  color: white;
+}
+/* custom b-nav to fit old UI */
+.custom-b-nav {
+  background: #EFF1F1;
+  font-weight: bold;
+  color:#666;
+}
