@@ -10,7 +10,7 @@
           <router-link class="nav-link" v-on:click.native="logout" to="/">LOGOUT</router-link>
         </li>
       </ul>
-      <span class="navbar-text" v-if="auth">{{ this.$agent.vm.agent.login }}</span>
+      <span class="navbar-text">{{ date | filterDate }}</span>
     </div>
   </nav>
   <b-nav v-if="auth" class="custom-b-nav" tabs>
@@ -27,10 +27,12 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   data () {
     return {
-      auth: false
+      auth: false,
+      date: null
     }
   },
   methods: {
@@ -38,6 +40,13 @@ export default {
   },
   created () {
     this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
+    this.date = new Date()
+    setInterval(() => this.date = new Date, 1000)
+  },
+  filters: {
+    filterDate: function (date) {
+      return moment(date).format('ddd[,] Do MMM YYYY[,] HH:mm:ss');
+    }
   }
 }
 </script>
