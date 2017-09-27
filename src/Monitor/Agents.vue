@@ -1,7 +1,7 @@
 <template>
 <div>
   <toggleBar></toggleBar>
-  <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2">
+  <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
     <btable :fields="fields" :data="computedAgents" :add_button=false></btable>
   </b-collapse>
 </div>
