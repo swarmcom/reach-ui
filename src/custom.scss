@@ -45,7 +45,23 @@ body {
 }
 /* custom b-nav to fit old UI */
 .custom-b-nav {
-  background: #EFF1F1;
-  font-weight: bold;
+  background: #eff1f1;
   color:#666;
+}
+/* custom toogle bar to fit old UI */
+.toggle-bar-custom {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  margin-top: 10px;
+  background: #e6e6e6;
+  border-bottom: 1px solid #b4b4b4;
+  border-radius: 4px;
+}
+.toggle-bar-custom .title{
+  margin-left: 10px;
+  padding-top: 5px;
+  font-size: 15px;
+  color: #8c8c8c;
 }
