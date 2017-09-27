@@ -4,7 +4,7 @@
     <div v-if="auth" class="navbar-collapse collapse" id="navbarCustom">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <router-link class="nav-link" to="/">HOME</router-link>
+          <router-link class="nav-link" to="/main">HOME</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" v-on:click.native="logout" to="/">LOGOUT</router-link>
@@ -14,10 +14,10 @@
     </div>
   </nav>
   <b-nav v-if="auth" class="custom-b-nav" tabs>
-    <b-nav-item to="/">MAIN</b-nav-item>
     <b-nav-item to="/admin/agents">ADMIN</b-nav-item>
+    <b-nav-item to="/main">MAIN</b-nav-item>
     <b-nav-item to="/monitor">MONITOR </b-nav-item>
-    <b-nav-item to="/help">Help</b-nav-item>
+    <b-nav-item to="/reports">REPORTS</b-nav-item>
   </b-nav>
   <div class="container">
     <router-view></router-view>
