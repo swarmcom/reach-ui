@@ -1,16 +1,18 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col"><h3>Logged in agents</h3></div>
-  </div>
-  <btable :fields="fields" :data="computedAgents" :add_button=false></btable>
+  <toggleBar></toggleBar>
+  <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2">
+    <btable :fields="fields" :data="computedAgents" :add_button=false></btable>
+  </b-collapse>
 </div>
 </template>
 
 <script>
 import Btable from '../Widget/Btable'
+import ToggleBar from '../Widget/ToggleBar'
 export default {
   name: 'monitor-agents',
+  widgetName: 'AGENT MANAGER',
   data () {
     return {
       fields: {
@@ -19,7 +21,8 @@ export default {
         timeComputed: { label: 'Time', sortable:true }
       },
       agents: [],
-      updater: ''
+      updater: '',
+      showCollapse: true
     }
   },
   methods: {
@@ -48,9 +51,6 @@ export default {
         E.time = E.time + 1000
         A.splice(i, 1, E)
       })
-    },
-    onClick (data) {
-      this.$router.push(`/admin/agent/${data.agent_id}`)
     }
   },
   created () {
@@ -64,7 +64,8 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    btable: Btable
+    btable: Btable,
+    toggleBar: ToggleBar
   },
   computed: {
     computedAgents () {

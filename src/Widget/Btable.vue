@@ -56,7 +56,7 @@ export default {
       this.$parent.add();
     },
     onClick (data) {
-      this.$parent.onClick(data);
+      if (typeof this.$parent.onClick === "function")  this.$parent.onClick(data)
     },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering

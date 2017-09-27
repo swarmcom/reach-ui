@@ -1,26 +1,27 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col"><h3>Inqueue requests</h3></div>
-  </div>
-  <b-table style="margin-top:10px" striped hover responsive :items="inqueues" :fields="fields">
-    <template slot="twe" scope="data">
-      {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
-    </template>
-    <template slot="actions" scope="data">
-      <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
-      <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
-      <b-button size="sm" variant="danger" @click="barge(data.item)">Barge</b-button>
-    </template>
-  </b-table>
+  <toggleBar></toggleBar>
+  <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
+    <b-table style="margin-top:10px" striped hover responsive :items="inqueues" :fields="fields">
+      <template slot="twe" scope="data">
+        {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
+      </template>
+      <template slot="actions" scope="data">
+        <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
+        <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
+        <b-button size="sm" variant="danger" @click="barge(data.item)">Barge</b-button>
+      </template>
+    </b-table>
+  </b-collapse>
 </div>
 </template>
 
 <script>
 import Btable from '../Widget/Btable'
-
+import ToggleBar from '../Widget/ToggleBar'
 export default {
   name: 'inqueues',
+  widgetName: 'QUEUE MANAGER',
   data () {
     return {
       fields: {
@@ -33,7 +34,8 @@ export default {
       name: 'monitor/inqueues',
       inqueues: [],
       queues: [],
-      updater: null
+      updater: null,
+      showCollapse: true
     }
   },
   methods: {
@@ -90,7 +92,8 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    btable: Btable
+    btable: Btable,
+    toggleBar: ToggleBar
   }
 }
 </script>
