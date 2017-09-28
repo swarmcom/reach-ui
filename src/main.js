@@ -8,7 +8,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import AgentAPI from './agent-api-plugin.js'
 
-import Help from './Help.vue'
+import Reports from './Reports.vue'
 import Login from './Login.vue'
 import Agent from './Agent.vue'
 import Admin from './Admin.vue'
@@ -71,10 +71,10 @@ const router = new VueRouter({
       { path: 'line_out', component: AdminLineOut },
       { path: 'line_out/:id', component: AdminLineOut, props: true }
     ] },
-    { path: '/help', component: Help },
+    { path: '/reports', component: Reports },
     { path: '/login', component: Login },
     { path: '/monitor', component: Monitor },
-    { path: '/', component: Agent }
+    { path: '/main', component: Agent }
   ]
 })
 
@@ -91,7 +91,7 @@ function guard (agent, to, from, next) {
 
 function handleAuth (R, Auth) {
   if (Auth) {
-    R.replace('/')
+    R.replace('/main')
   } else {
     R.replace('/login')
   }
