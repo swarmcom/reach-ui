@@ -1,19 +1,13 @@
 <template>
-<div v-if="this.outgoing" style="margin-top: 20px">
+<div v-if="this.outgoing" style="margin-top: 10px">
   <div v-if="this.state == 'agent_leg'">
-    <h2>Calling: self</h2>
+    <h6>Calling: self</h6>
   </div>
   <div v-if="this.state == 'target_leg'">
-    <h2>Calling: {{ target }}</h2>
+    <h6>Calling: {{ target }}</h6>
   </div>
   <div v-if="this.state == 'oncall'">
-    <h2>Call: {{ target }}</h2>
-  </div>
-  <div class="row">
-    <div class="col">
-      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
-      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
-    </div>
+    <h6>Call: {{ target }}</h6>
   </div>
 </div>
 </template>
