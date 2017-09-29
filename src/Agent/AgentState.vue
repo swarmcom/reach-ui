@@ -33,20 +33,20 @@
   </div>
   <div class="row"></div>
     <div class="row">
-      <div class="col-5">State:</div>
-      <div class="col-7"> {{a.state}} </div>
+      <div class="col-5 agent-state-text">State:</div>
+      <div class="col-7 agent-state-text"> {{a.state}} </div>
     </div>
     <div class="row">
-      <div class="col-5">Hang_up State:</div>
-      <div class="col-7"> {{a.hangup_state}} </div>
+      <div class="col-5 agent-state-text">Hang_up State:</div>
+      <div class="col-7 agent-state-text"> {{a.hangup_state}} </div>
     </div>
     <div class="row">
-      <div class="col-5">Since:</div>
-      <div class="col-7"> {{date}} </div>
+      <div class="col-5 agent-state-text">Since:</div>
+      <div class="col-7 agent-state-text"> {{date}} </div>
     </div>
     <div class="row">
-      <div class="col-5">Activity Time:</div>
-      <div class="col-7"> {{activity_time | secondsToHms }} </div>
+      <div class="col-5 agent-state-text">Activity Time:</div>
+      <div class="col-7 agent-state-text"> {{activity_time | secondsToHms }} </div>
     </div>
   </div>
 </template>
