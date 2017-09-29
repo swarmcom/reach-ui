@@ -1,5 +1,5 @@
 <template>
-<b-dropdown id="ddown1" text="Release" variant="outline-primary">
+<b-dropdown id="ddown1" text="Reason" variant="outline-secondary">
   <b-dropdown-item v-for="r in releases" :key="r.id" @click="release(r.id)">{{ r.name }}</b-dropdown-item>
 </b-dropdown>
 </template>

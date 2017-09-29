@@ -3,7 +3,7 @@
   <b-input-group>
     <b-form-input v-model="number" type="text"></b-form-input>
     <b-input-group-button>
-      <b-btn @click="onClick" variant="outline-primary">Call</b-btn>
+      <b-btn @click="onClick" variant="outline-success"><icon name="phone" scale="1.5"></icon></b-btn>
     </b-input-group-button>
   </b-input-group>
 </b-form-group>
