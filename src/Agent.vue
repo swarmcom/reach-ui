@@ -18,10 +18,17 @@
             </b-col>
           </b-row>
           <div class="col-2 pull-right text-right">
-            <button v-if="this.$agent.is_hold()" @click="unhold"" class="btn btn-outline-secondary"><icon name="pause" scale="2"></icon></button>
-            <button v-if="this.$agent.vm.state == 'oncall'" @click="hold" class="btn btn-outline-success"><icon name="pause" scale="2"></icon></button>
-            <button v-if="this.$agent.vm.state == 'ringing'" @click="hangup" class="btn btn-outline-danger"><icon name="close" scale="2"></icon></button>
-            <button v-if="this.$agent.vm.state == 'oncall'" @click="hangup" class="btn btn-outline-danger"><icon name="close" scale="2"></icon></button>
+            <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-secondary">
+              <icon name="pause" scale="2"></icon>
+            </button>
+            <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success">
+              <icon name="pause" scale="2"></icon>
+            </button>
+            <button v-if="this.$agent.is_ringing()" @click="hangup" class="btn btn-outline-danger">
+              <icon name="close" scale="2"></icon></button>
+            <button v-if="this.$agent.is_oncall()" @click="hangup" class="btn btn-outline-danger">
+              <icon name="close" scale="2"></icon>
+            </button>
           </div>
         </div>
       </div>
