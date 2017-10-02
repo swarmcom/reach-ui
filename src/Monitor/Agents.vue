@@ -1,9 +1,8 @@
 <template>
 <div>
   <toggleBar></toggleBar>
-  <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <btable :fields="fields" :data="agents" :filter_button=true :paginate=true></btable>
-  </b-collapse>
+  <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2"></b-collapse>
+  <btable v-if="showCollapse" :fields="fields" :data="agents" :filter_button=true :paginate=true></btable>
 </div>
 </template>
 
