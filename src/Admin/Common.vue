@@ -12,7 +12,7 @@ export default {
     defined (V) {
       return V == "undefined" ? '' : V
     },
-    msToHms: function (duration) {
+    msToHms (duration) {
       let s = Math.floor((duration/1000)%60)
       let m = Math.floor((duration/(1000*60))%60)
       let h = Math.floor((duration/(1000*60*60))%24);
