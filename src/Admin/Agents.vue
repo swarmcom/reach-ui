@@ -10,10 +10,9 @@ export default {
   data () {
     return {
       fields: {
-        agent_id: { label: 'Id', sortable: true },
+        id: { label: 'Id', sortable: true },
         login: { label: 'Login', sortable: true },
-        firstname: { label: 'First Name', sortable: true },
-        lastname: { label: 'Last Name', sortable: true },
+        name: { label: 'Name', sortable: true },
         permissions: { label: 'Permissions', sortable: true },
         group: { label: 'Group', sortable: true, formatter: (group) => group.name },
         uri: { label: 'Uri', sortable: true }
@@ -31,7 +30,7 @@ export default {
       this.$router.push(`/admin/agent/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/agent/${data.agent_id}`)
+      this.$router.push(`/admin/agent/${data.id}`)
     }
   },
   created () {
