@@ -1,56 +1,11 @@
 <template>
 <div v-if="inqueue.uuid">
   <btable :fields="fields" :data="data"></btable>
-  <!--<table class="table table-sm">
-    <thead class="thead-default">
-      <tr>
-        <th>Queue</th>
-        <th>State</th>
-        <th>Time</th>
-        <th>Caller</th>
-        <th>Calling</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ this.inqueue.queue_id }}, {{ this.inqueue.effective_time.weight }}</td>
-        <td>{{ this.inqueue.state }}</td>
-        <td>{{ Math.round(this.inqueue.time/1000) }}</td>
-        <td>{{ this.call_info['Caller-Caller-ID-Number'] }}</td>
-        <td>{{ this.call_info['Caller-Destination-Number'] }}</td>
-      </tr>
-    </tbody>
-  </table>-->
-  <div style="margin-left:15px;">
-    <div class="row" style="margin-top:10px">
-      <h6>Transfer to</h6><br>
-    </div>
-    <div class="row form-inline">
-      <transfer-agent></transfer-agent>&nbsp;
-      <transfer-queue></transfer-queue>&nbsp;
-      <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
-    </div>
-
-    <div class="row" style="margin-top:10px">
-      <h6>Conference with</h6><br>
-    </div>
-    <div class="row form-inline">
-      <conference-agent></conference-agent>&nbsp;
-      <conference-queue></conference-queue>&nbsp;
-      <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
-    </div>
-  </div>
 </div>
 </template>
 
 <script>
-import TransferAgent from '../Agent/TransferAgent'
-import TransferQueue from '../Agent/TransferQueue'
 import Dialer from '../Agent/Dialer'
-import TransferUri from '../Agent/TransferUri'
-import ConferenceAgent from '../Agent/ConferenceAgent'
-import ConferenceQueue from '../Agent/ConferenceQueue'
-import ConferenceUri from '../Agent/ConferenceUri'
 import Btable from '../Widget/Btable'
 import Common from '../Admin/Common'
 export default {
@@ -63,7 +18,8 @@ export default {
       fields: {
         queue_id: { label: 'Queue' },
         state: { label: 'State' },
-        computedTime: { label: 'Time' },
+        time: { label: 'Time', formatter: (time) => this.msToHms(this.inqueue.time) },
+        callDirection: { label: 'Direction'},
         callerCallerIDNumber : { label: 'Caller' },
         callerDestinationNumber : { label: 'Calling' }
       },
@@ -78,6 +34,7 @@ export default {
         this.call_info = call_info
         this.data[0] = this.inqueue;
         this.data[0].callerCallerIDNumber = this.call_info['Caller-Caller-ID-Number'];
+        this.data[0].callDirection = this.call_info['Call-Direction'];
         this.data[0].callerDestinationNumber = this.call_info['Caller-Destination-Number'];
       } else if (info.state == 'oncall') {
         this.info = info
@@ -92,18 +49,11 @@ export default {
     onTimer() {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
-        this.data[0].computedTime = this.msToHms(this.inqueue.time)
       }
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
     end_wrapup () { this.$agent.end_wrapup() },
-    transfer_to_agent (Agent) { this.$agent.transfer_to_agent(Agent) },
-    transfer_to_queue (Queue) { this.$agent.transfer_to_queue(Queue) },
-    transfer_to_uri (Uri) { this.$agent.transfer_to_uri(Uri) },
-    conference_to_agent (Agent) { this.$agent.conference_to_agent(Agent) },
-    conference_to_queue (Queue) { this.$agent.conference_to_queue(Queue) },
-    conference_to_uri (Uri) { this.$agent.conference_to_uri(Uri) },
   },
   created () {
     this.updater = setInterval(this.onTimer, 1000)
@@ -115,13 +65,7 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    'transfer-agent': TransferAgent,
-    'transfer-queue': TransferQueue,
     'dialer': Dialer,
-    'transfer-uri': TransferUri,
-    'conference-agent': ConferenceAgent,
-    'conference-queue': ConferenceQueue,
-    'conference-uri': ConferenceUri,
     'btable': Btable
   },
 }
