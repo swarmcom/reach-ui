@@ -11,6 +11,16 @@ export default {
     },
     defined (V) {
       return V == "undefined" ? '' : V
+    },
+    msToHms: function (duration) {
+      let s = Math.floor((duration/1000)%60)
+      let m = Math.floor((duration/(1000*60))%60)
+      let h = Math.floor((duration/(1000*60*60))%24);
+
+      let hDisplay = h > 0 ? (h <= 9 ? "0"+h : h) + ":" : ""
+      let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : ""
+      let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
+      return hDisplay + mDisplay + sDisplay
     }
   }
 }

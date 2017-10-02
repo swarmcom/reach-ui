@@ -10,9 +10,11 @@
 <script>
 import Btable from '../Widget/Btable'
 import ToggleBar from '../Widget/ToggleBar'
+import Common from '../Admin/Common'
 export default {
   name: 'monitor-agents',
   widgetName: 'AGENT MANAGER',
+  mixins: [Common],
   data () {
     return {
       fields: {
@@ -51,16 +53,6 @@ export default {
         E.time = E.time + 1000
         A.splice(i, 1, E)
       })
-    },
-    msToHms: function (duration) {
-      let s = Math.floor((duration/1000)%60)
-      let m = Math.floor((duration/(1000*60))%60)
-      let h = Math.floor((duration/(1000*60*60))%24);
-
-      let hDisplay = h > 0 ? (h <= 9 ? "0"+h : h) + ":" : ""
-      let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : ""
-      let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
-      return hDisplay + mDisplay + sDisplay
     }
   },
   created () {

@@ -52,8 +52,9 @@ import ConferenceAgent from '../Agent/ConferenceAgent'
 import ConferenceQueue from '../Agent/ConferenceQueue'
 import ConferenceUri from '../Agent/ConferenceUri'
 import Btable from '../Widget/Btable'
-
+import Common from '../Admin/Common'
 export default {
+  mixins: [Common],
   data () {
     return {
       inqueue: {},
@@ -93,16 +94,6 @@ export default {
         this.inqueue.time += 1000
         this.data[0].computedTime = this.msToHms(this.inqueue.time)
       }
-    },
-    msToHms: function (duration) {
-      let s = Math.floor((duration/1000)%60)
-      let m = Math.floor((duration/(1000*60))%60)
-      let h = Math.floor((duration/(1000*60*60))%24);
-
-      let hDisplay = h > 0 ? (h <= 9 ? "0"+h : h) + ":" : ""
-      let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : ""
-      let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
-      return hDisplay + mDisplay + sDisplay
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
