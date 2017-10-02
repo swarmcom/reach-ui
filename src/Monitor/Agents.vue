@@ -2,7 +2,7 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <btable :fields="fields" :data="computedAgents" :add_button=false></btable>
+    <btable :fields="fields" :data="agents" :filter_button=true :paginate=true></btable>
   </b-collapse>
 </div>
 </template>
@@ -18,7 +18,7 @@ export default {
       fields: {
         agent_id: { label: 'Id', sortable: true },
         state: { label: 'State', sortable: true },
-        timeComputed: { label: 'Time', sortable:true }
+        time: { label: 'Time', sortable:true, formatter: (time) => this.msToHms(time) }
       },
       agents: [],
       updater: '',
@@ -51,6 +51,16 @@ export default {
         E.time = E.time + 1000
         A.splice(i, 1, E)
       })
+    },
+    msToHms: function (duration) {
+      let s = Math.floor((duration/1000)%60)
+      let m = Math.floor((duration/(1000*60))%60)
+      let h = Math.floor((duration/(1000*60*60))%24);
+
+      let hDisplay = h > 0 ? (h <= 9 ? "0"+h : h) + ":" : ""
+      let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : ""
+      let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
+      return hDisplay + mDisplay + sDisplay
     }
   },
   created () {
@@ -66,13 +76,6 @@ export default {
   components: {
     btable: Btable,
     toggleBar: ToggleBar
-  },
-  computed: {
-    computedAgents () {
-      let agents = this.agents;
-      agents.forEach( (key) => key.timeComputed = Math.round(key.time/1000).toString() )
-      return agents;
-    }
   }
 }
 </script>

@@ -11,19 +11,19 @@
     </div>
     <div class="col-7">
       <div v-if="a.state == 'available'" style="background:orange; padding-top:5px; padding-left:15px;">
-        <icon  name="circle-o" scale="5"></icon>
+        <icon  name="circle-o" scale="4"></icon>
         <div>Available</div>
       </div>
       <div v-if="a.state == 'release'" style="background:silver; padding-top:5px; padding-left:15px;">
-        <icon name="stop" scale="5"></icon>
+        <icon name="stop" scale="4"></icon>
         <div>Released</div>
       </div>
       <div v-if="a.state == 'ringing'" style="background:#28a745; padding-top:5px; padding-left:10px;">
-        <icon  name="wifi" scale="5"></icon>
+        <icon  name="wifi" scale="5" style="transform: rotate(270deg);"></icon>
         <div>Ringing</div>
       </div>
       <div v-if="a.state == 'oncall'" style="background:#28a745; padding-top:5px; padding-left:15px;">
-        <icon  name="phone" scale="5"></icon>
+        <icon  name="phone" scale="4"></icon>
         <div>On call</div>
       </div>
     </div>
