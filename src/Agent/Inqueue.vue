@@ -1,6 +1,7 @@
 <template>
 <div v-if="inqueue.uuid">
-  <table class="table table-sm">
+  <btable :fields="fields" :data="data"></btable>
+  <!--<table class="table table-sm">
     <thead class="thead-default">
       <tr>
         <th>Queue</th>
@@ -19,7 +20,7 @@
         <td>{{ this.call_info['Caller-Destination-Number'] }}</td>
       </tr>
     </tbody>
-  </table>
+  </table>-->
   <div style="margin-left:15px;">
     <div class="row" style="margin-top:10px">
       <h6>Transfer to</h6><br>
@@ -50,13 +51,22 @@ import TransferUri from '../Agent/TransferUri'
 import ConferenceAgent from '../Agent/ConferenceAgent'
 import ConferenceQueue from '../Agent/ConferenceQueue'
 import ConferenceUri from '../Agent/ConferenceUri'
+import Btable from '../Widget/Btable'
 
 export default {
   data () {
     return {
       inqueue: {},
       call_info: {},
-      updater: ''
+      updater: '',
+      fields: {
+        queue_id: { label: 'Queue' },
+        state: { label: 'State' },
+        computedTime: { label: 'Time' },
+        callerCallerIDNumber : { label: 'Caller' },
+        callerDestinationNumber : { label: 'Calling' }
+      },
+      data: []
     }
   },
   methods: {
@@ -65,6 +75,9 @@ export default {
         this.info = info
         this.inqueue = inqueue
         this.call_info = call_info
+        this.data[0] = this.inqueue;
+        this.data[0].callerCallerIDNumber = this.call_info['Caller-Caller-ID-Number'];
+        this.data[0].callerDestinationNumber = this.call_info['Caller-Destination-Number'];
       } else if (info.state == 'oncall') {
         this.info = info
       } else if (info.state == 'hold') {
@@ -72,12 +85,24 @@ export default {
       } else {
         this.inqueue = {}
         this.call_info = {}
+        this.data[0] = {}
       }
     },
     onTimer() {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
+        this.data[0].computedTime = this.msToHms(this.inqueue.time)
       }
+    },
+    msToHms: function (duration) {
+      let s = Math.floor((duration/1000)%60)
+      let m = Math.floor((duration/(1000*60))%60)
+      let h = Math.floor((duration/(1000*60*60))%24);
+
+      let hDisplay = h > 0 ? (h <= 9 ? "0"+h : h) + ":" : ""
+      let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : ""
+      let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
+      return hDisplay + mDisplay + sDisplay
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -105,7 +130,8 @@ export default {
     'transfer-uri': TransferUri,
     'conference-agent': ConferenceAgent,
     'conference-queue': ConferenceQueue,
-    'conference-uri': ConferenceUri
+    'conference-uri': ConferenceUri,
+    'btable': Btable
   },
 }
 </script>
