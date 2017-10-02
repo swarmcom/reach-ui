@@ -1,27 +1,34 @@
 <template>
-<div v-if="inqueue.uuid" style="margin-top: 20px">
-  <h2>Call info</h2>
-  <table style="margin-top: 20px" class="table table-sm">
-    <thead class="thead-default">
-      <tr>
-        <th>Queue</th>
-        <th>State</th>
-        <th>Time</th>
-        <th>Caller</th>
-        <th>Calling</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ this.inqueue.queue_id }}, {{ this.inqueue.effective_time.weight }}</td>
-        <td>{{ this.inqueue.state }}</td>
-        <td>{{ Math.round(this.inqueue.time/1000) }}</td>
-        <td>{{ this.call_info['Caller-Caller-ID-Number'] }}</td>
-        <td>{{ this.call_info['Caller-Destination-Number'] }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
+<div class="container" v-if="inqueue.uuid" style="margin-top: 20px">
+<div class="row"><div class="col"><h2>Call info:</h2></div></div>
+<div class="row">
+  <div class="col">
+    <dl class="row">
+      <dt class="col-sm-3">From:</dt>
+      <dd class="col-sm-9">
+        "{{ this.call_info['Caller-Caller-ID-Name'] }}" &lt;{{ this.call_info['Caller-Caller-ID-Number'] }}&gt;
+      </dd>
+      <dt class="col-sm-3">To:</dt>
+      <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
+      <dt class="col-sm-3">State:</dt>
+      <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
+      <dt class="col-sm-3">Queue:</dt>
+      <dd class="col-sm-9">{{ this.inqueue.queue.name }}</dd>
+      <dt class="col-sm-3">Weight:</dt>
+      <dd class="col-sm-9">{{ this.inqueue.effective_time.weight }}</dd>
+      <dt class="col-sm-3">Time:</dt>
+      <dd class="col-sm-9">{{ Math.round(this.inqueue.time/1000) }}</dd>
+      <dt class="col-sm-3">Transferers:</dt>
+      <dd class="col-sm-9">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
+    </dl>
+  </div>
+
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <h4>Actions:</h4>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
         <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
@@ -30,15 +37,17 @@
     </div>
     <div v-if="this.$agent.is_oncall()" class="row" style="margin-top:20px">
       <div class="col">
-        <h4>Transfer to</h4>
+        <h4>Transfer to:</h4>
         <div class="form-inline">
           <transfer-agent></transfer-agent>&nbsp;
           <transfer-queue></transfer-queue>&nbsp;
           <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
         </div>
       </div>
+    </div>
+    <div v-if="this.$agent.is_oncall()" class="row" style="margin-top:20px">
       <div class="col">
-        <h4>Conference with</h4>
+        <h4>Conference with:</h4>
         <div class="form-inline">
           <conference-agent></conference-agent>&nbsp;
           <conference-queue></conference-queue>&nbsp;
@@ -47,6 +56,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 </template>
 
