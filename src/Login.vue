@@ -6,13 +6,13 @@
     <div class="form-group row align-items-center">
       <label for="inputLogin" class="sr-only">Email</label>
       <div class="col-sm-3">
-        <input v-model="login" type="text" class="form-control" id="inputLogin" placeholder="Login" required="true" autofocus="true">
+        <input v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" id="inputLogin" placeholder="Login" required="true" autofocus="true">
       </div>
     </div>
     <div class="form-group row">
       <label for="inputPassword" class="sr-only">Password</label>
       <div class="col-sm-3">
-        <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
+        <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
       </div>
     </div>
     <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2" type="submit">Login</button>
