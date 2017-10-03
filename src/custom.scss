@@ -65,7 +65,26 @@ body {
   font-size: 15px;
   color: #8c8c8c;
 }
-
 .agent-state-text {
   font-size: 15px;
+}
+.agent-state-available {
+  background:#f7c180;
+  padding-top:5px;
+  padding-left:15px;
+}
+.agent-state-released {
+  background:#dbeffa;
+  padding-top:5px;
+  padding-left:15px;
+}
+.agent-state-ringing {
+  background:#28a745;
+  padding-top:5px;
+  padding-left:10px;
+}
+.agent-state-oncall {
+  background:#28a745;
+  padding-top:5px;
+  padding-left:15px;
 }

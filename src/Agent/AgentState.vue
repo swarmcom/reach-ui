@@ -10,19 +10,19 @@
       </button>
     </div>
     <div class="col-7">
-      <div v-if="a.state == 'available'" style="background:orange; padding-top:5px; padding-left:15px;">
+      <div v-if="a.state == 'available'" class="agent-state-available">
         <icon  name="circle-o" scale="4"></icon>
         <div>Available</div>
       </div>
-      <div v-if="a.state == 'release'" style="background:#dbeffa; padding-top:5px; padding-left:15px;">
+      <div v-if="a.state == 'release'" class="agent-state-released">
         <icon name="stop" scale="4"></icon>
         <div>Released</div>
       </div>
-      <div v-if="a.state == 'ringing'" style="background:#28a745; padding-top:5px; padding-left:10px;">
+      <div v-if="a.state == 'ringing'" class="agent-state-ringing">
         <icon  name="wifi" scale="5" style="transform: rotate(270deg);"></icon>
         <div>Ringing</div>
       </div>
-      <div v-if="a.state == 'oncall'" style="background:#28a745; padding-top:5px; padding-left:15px;">
+      <div v-if="a.state == 'oncall'" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
         <div>On call</div>
       </div>
