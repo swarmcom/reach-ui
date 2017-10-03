@@ -24,7 +24,7 @@ export default class Agent extends WsProto {
         hangup_state: undefined
       }
     }),
-    EventBus.$on('agent_state', (S) => this.handleState(S.info))
+    EventBus.$on('agent_state', (S) => this.handleState(S.state))
   }
 
   getData () {

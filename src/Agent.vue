@@ -24,7 +24,6 @@
     </div>
   </div>
   <inqueue></inqueue>
-  <outgoing></outgoing>
   <b-row style="margin-top: 20px">
     <b-col cols="6">
       <dialer v-if="this.$agent.is_idle()"></dialer>
@@ -36,8 +35,7 @@
 <script>
 import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
-import Release from './Agent/Release'
-import Outgoing from './Agent/Outgoing'
+import Release from './Agent/Widget/Release'
 
 export default {
   data () {
@@ -58,8 +56,7 @@ export default {
   components: {
     inqueue: Inqueue,
     dialer: Dialer,
-    release: Release,
-    outgoing: Outgoing
+    release: Release
   },
 }
 </script>

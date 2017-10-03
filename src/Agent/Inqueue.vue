@@ -1,129 +1,38 @@
 <template>
-<div class="container" v-if="inqueue.uuid" style="margin-top: 20px">
-<div class="row"><div class="col"><h2>Call info:</h2></div></div>
-<div class="row">
-  <div class="col">
-    <dl class="row">
-      <dt class="col-sm-3">From:</dt>
-      <dd class="col-sm-9">
-        "{{ this.call_info['Caller-Caller-ID-Name'] }}" &lt;{{ this.call_info['Caller-Caller-ID-Number'] }}&gt;
-      </dd>
-      <dt class="col-sm-3">To:</dt>
-      <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
-      <dt class="col-sm-3">State:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
-      <dt class="col-sm-3">Queue:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.queue.name }}</dd>
-      <dt class="col-sm-3">Weight:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.effective_time.weight }}</dd>
-      <dt class="col-sm-3">Time:</dt>
-      <dd class="col-sm-9">{{ Math.round(this.inqueue.time/1000) }}</dd>
-      <dt class="col-sm-3">Transferers:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
-    </dl>
-  </div>
-
-  <div class="col">
-    <div class="row">
-      <div class="col">
-        <h4>Actions:</h4>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
-        <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
-      </div>
-    </div>
-    <div v-if="this.$agent.is_oncall()" class="row" style="margin-top:20px">
-      <div class="col">
-        <h4>Transfer to:</h4>
-        <div class="form-inline">
-          <transfer-agent></transfer-agent>&nbsp;
-          <transfer-queue></transfer-queue>&nbsp;
-          <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
-        </div>
-      </div>
-    </div>
-    <div v-if="this.$agent.is_oncall()" class="row" style="margin-top:20px">
-      <div class="col">
-        <h4>Conference with:</h4>
-        <div class="form-inline">
-          <conference-agent></conference-agent>&nbsp;
-          <conference-queue></conference-queue>&nbsp;
-          <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
+<call v-if="call_visible" :uuid="uuid"></call>
 </template>
 
 <script>
-import TransferAgent from '../Agent/TransferAgent'
-import TransferQueue from '../Agent/TransferQueue'
-import Dialer from '../Agent/Dialer'
-import TransferUri from '../Agent/TransferUri'
-import ConferenceAgent from '../Agent/ConferenceAgent'
-import ConferenceQueue from '../Agent/ConferenceQueue'
-import ConferenceUri from '../Agent/ConferenceUri'
+import Call from './Inqueue/Call'
 
 export default {
   data () {
     return {
-      inqueue: {},
-      call_info: {},
-      updater: ''
+      call_visible: false,
+      uuid: undefined
     }
   },
   methods: {
-    handleState ({ info, inqueue, call_info }) {
-      if (info.state == 'ringing') {
-        this.info = info
-        this.inqueue = inqueue
-        this.call_info = call_info
-      } else if (info.state == 'oncall') {
-        this.info = info
-      } else if (info.state == 'hold') {
-        this.info = info
+    handleState ({ state }) {
+      if (state.state == "available" || state.state == "release") {
+        this.call_visible = false
+        this.uuid = undefined
       } else {
-        this.inqueue = {}
-        this.call_info = {}
+        if (state.inqueue.inqueue_call) {
+          this.call_visible = true
+          this.uuid = state.inqueue.inqueue_call
+        }
       }
-    },
-    onTimer() {
-      if (this.inqueue.time) {
-        this.inqueue.time += 1000
-      }
-    },
-    hold () { this.$agent.hold() },
-    unhold () { this.$agent.unhold() },
-    end_wrapup () { this.$agent.end_wrapup() },
-    transfer_to_agent (Agent) { this.$agent.transfer_to_agent(Agent) },
-    transfer_to_queue (Queue) { this.$agent.transfer_to_queue(Queue) },
-    transfer_to_uri (Uri) { this.$agent.transfer_to_uri(Uri) },
-    conference_to_agent (Agent) { this.$agent.conference_to_agent(Agent) },
-    conference_to_queue (Queue) { this.$agent.conference_to_queue(Queue) },
-    conference_to_uri (Uri) { this.$agent.conference_to_uri(Uri) },
+    }
   },
   created () {
-    this.updater = setInterval(this.onTimer, 1000)
     this.$bus.$on('agent_state', this.handleState)
-    this.$agent.p_call('request_state')
   },
   beforeDestroy () {
     this.$bus.$off('agent_state', this.handleState)
-    clearInterval(this.updater)
   },
   components: {
-    'transfer-agent': TransferAgent,
-    'transfer-queue': TransferQueue,
-    'dialer': Dialer,
-    'transfer-uri': TransferUri,
-    'conference-agent': ConferenceAgent,
-    'conference-queue': ConferenceQueue,
-    'conference-uri': ConferenceUri
+    call: Call
   },
 }
 </script>
