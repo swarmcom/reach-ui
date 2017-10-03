@@ -5,7 +5,7 @@
       <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-outline-secondary">
         <icon name="stop" scale="5"></icon>
       </button>
-      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-success"">
+      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-secondary"">
           <icon name="play" scale="5"></icon>
       </button>
     </div>
@@ -14,7 +14,7 @@
         <icon  name="circle-o" scale="4"></icon>
         <div>Available</div>
       </div>
-      <div v-if="a.state == 'release'" style="background:silver; padding-top:5px; padding-left:15px;">
+      <div v-if="a.state == 'release'" style="background:#dbeffa; padding-top:5px; padding-left:15px;">
         <icon name="stop" scale="4"></icon>
         <div>Released</div>
       </div>
