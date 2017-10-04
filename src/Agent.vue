@@ -7,8 +7,7 @@
     </div>
     <div class="col">
       <div class="row justify-content-end">
-        <button v-if="a.state == 'ringing'" @click="hangup" class="btn btn-outline-warning">Hangup</button>
-        <button v-if="a.state == 'oncall'" @click="hangup" class="btn btn-outline-warning">Hangup</button>
+        <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-warning">Hangup</button>
       </div>
     </div>
     <div class="col">

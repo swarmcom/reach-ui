@@ -10,7 +10,7 @@
     <b-button size="sm" variant="outline-success" @click="undeaf('all')">Undeaf All</b-button>
   </div>
   <div class="col">
-    <b-button size="sm" variant="outline-warning" @click="inqueue()">Invite Inqueue</b-button>
+    <b-button size="sm" variant="outline-warning" @click="inqueue()">Add Inqueue</b-button>
   </div>
 </div>
 <div class="row" style="margin-top: 10px" v-for="(v,k) in members">
