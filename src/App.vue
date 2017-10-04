@@ -1,18 +1,18 @@
 <template>
 <div>
-  <nav class="navbar navbar-expand-md fixed-top navbar-custom">
-    <div v-if="auth" class="navbar-collapse collapse" id="navbarCustom">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <router-link class="nav-link" to="/main">HOME</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link class="nav-link" v-on:click.native="logout" to="/">LOGOUT</router-link>
-        </li>
-      </ul>
-      <span class="navbar-text">{{ date | filterDate }}</span>
-    </div>
-  </nav>
+  <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
+    <b-nav-toggle v-if="auth" target="nav_collapse"></b-nav-toggle>
+    <b-navbar-brand v-if="auth" to="/main">HOME</b-navbar-brand>
+    <b-collapse v-if="auth" is-nav id="nav_collapse">
+      <b-nav is-nav-bar>
+        <b-nav-item @click="logout">LOGOUT</b-nav-item>
+      </b-nav>
+      <!-- Right aligned nav items -->
+      <b-nav is-nav-bar class="ml-auto">
+        <span class="navbar-text">{{ date | filterDate }}</span>
+      </b-nav>
+    </b-collapse>
+  </b-navbar>
   <b-nav v-if="auth" class="custom-b-nav" tabs>
     <b-nav-item to="/admin/agents">ADMIN</b-nav-item>
     <b-nav-item to="/main">MAIN</b-nav-item>

@@ -5,7 +5,7 @@ $backgroundColor2: rgba(33,134,169,1);
 $backgroundColor3: rgba(13,119,153,1);
 
 body {
-  padding-top: 45px;
+  padding-top: 56px;
 }
 /* custom login form to fit old UI*/
 .form-signin {
@@ -17,7 +17,7 @@ body {
 }
 /* custom navbar to fit old UI */
 .navbar-custom {
-  height: 45px;
+  min-height: 56px;
   background: $background; /* Old browsers */
   background: -moz-linear-gradient(top,  $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$backgroundColor1), color-stop(53%,$backgroundColor2), color-stop(100%,$backgroundColor3)); /* Chrome,Safari4+ */
