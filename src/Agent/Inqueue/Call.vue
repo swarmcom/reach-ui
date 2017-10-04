@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div v-if="this.$agent.is_oncall()" class="row" style="margin-top:20px">
+    <div v-if="this.$agent.can_conference()" class="row" style="margin-top:20px">
       <div class="col">
         <h4>Conference with:</h4>
         <div class="form-inline">
