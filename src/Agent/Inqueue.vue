@@ -36,6 +36,7 @@ export default {
     }
   },
   created () {
+    this.$agent.p_call('request_state', [])
     this.$bus.$on('agent_state', this.handleState)
   },
   beforeDestroy () {
