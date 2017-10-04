@@ -32,11 +32,6 @@
         </div>
       </div>
     </div>
-  <b-row style="margin-top: 20px">
-    <b-col cols="6">
-      <dialer v-if="this.$agent.is_idle()"></dialer>
-    </b-col>
-  </b-row>
   </b-collapse>
 </div>
 </template>
