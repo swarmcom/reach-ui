@@ -4,10 +4,10 @@
       <div class="col">
         <button v-if="add_button" @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
       </div>
-      <div class="col-md-2 float-right">
+      <div v-if="paginate" class="col-md-2 float-right">
         <b-form-select :options="pageOptions" v-model="perPage" @input="onSelectChange" />
       </div>
-      <div class="col-md-4 float-right">
+      <div v-if="filter_button" class="col-md-4 float-right">
         <b-form-input v-model="filter" placeholder="Type to Filter" />
       </div>
     </div>
@@ -34,7 +34,9 @@ export default {
   props: {
     fields: Object,
     data: Array,
-    add_button: Boolean
+    add_button: Boolean,
+    filter_button: Boolean,
+    paginate: Boolean
   },
   data () {
     return {
@@ -56,7 +58,7 @@ export default {
       this.$parent.add();
     },
     onClick (data) {
-      this.$parent.onClick(data);
+      if (typeof this.$parent.onClick === "function")  this.$parent.onClick(data)
     },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering

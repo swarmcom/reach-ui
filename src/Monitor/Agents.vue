@@ -1,25 +1,28 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col"><h3>Logged in agents</h3></div>
-  </div>
-  <btable :fields="fields" :data="computedAgents" :add_button=false></btable>
+  <toggleBar></toggleBar>
+  <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
+    <btable :fields="fields" :data="agents" :filter_button=true :paginate=true></btable>
+  </b-collapse>
 </div>
 </template>
 
 <script>
 import Btable from '../Widget/Btable'
+import ToggleBar from '../Widget/ToggleBar'
 export default {
   name: 'monitor-agents',
+  widgetName: 'AGENT MANAGER',
   data () {
     return {
       fields: {
         agent_id: { label: 'Id', sortable: true },
         state: { label: 'State', sortable: true },
-        timeComputed: { label: 'Time', sortable:true }
+        time: { label: 'Time', sortable:true, formatter: (time) => this.msToHms(time) }
       },
       agents: [],
-      updater: ''
+      updater: '',
+      showCollapse: true
     }
   },
   methods: {
@@ -49,8 +52,15 @@ export default {
         A.splice(i, 1, E)
       })
     },
-    onClick (data) {
-      this.$router.push(`/admin/agent/${data.agent_id}`)
+    msToHms: function (duration) {
+      let s = Math.floor((duration/1000)%60)
+      let m = Math.floor((duration/(1000*60))%60)
+      let h = Math.floor((duration/(1000*60*60))%24);
+
+      let hDisplay = h > 0 ? (h <= 9 ? "0"+h : h) + ":" : ""
+      let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : ""
+      let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
+      return hDisplay + mDisplay + sDisplay
     }
   },
   created () {
@@ -64,14 +74,8 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    btable: Btable
-  },
-  computed: {
-    computedAgents () {
-      let agents = this.agents;
-      agents.forEach( (key) => key.timeComputed = Math.round(key.time/1000).toString() )
-      return agents;
-    }
+    btable: Btable,
+    toggleBar: ToggleBar
   }
 }
 </script>

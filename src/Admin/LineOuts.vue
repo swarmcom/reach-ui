@@ -1,5 +1,5 @@
 <template>
-<btable :fields="fields" :data="line_outs" :add_button=true></btable>
+<btable :fields="fields" :data="line_outs" :add_button=true :filter_button=true :paginate=true></btable>
 </template>
 
 <script>
