@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <div v-if="this.$agent.is_oncall()" class="row" style="margin-top:20px">
+    <div v-if="this.$agent.can_transfer()" class="row" style="margin-top:20px">
       <div class="col">
         <h4>Transfer to:</h4>
         <div class="form-inline">
