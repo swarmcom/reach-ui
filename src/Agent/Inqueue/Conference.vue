@@ -1,6 +1,6 @@
 <template>
 <div class="container" v-if="visible">
-<h3>Conference call:</h3>
+<h3>Conference:</h3>
 <div class="row" style="margin-top: 10px">
   <div class="col">
     <b-button size="sm" variant="outline-success" @click="kick('all')">Kick All</b-button>
@@ -16,6 +16,7 @@
 <div class="row" style="margin-top: 10px" v-for="(v,k) in members">
   <div class="col">
     "{{v['Caller-Caller-ID-Name']}}" &lt;{{v['Caller-Caller-ID-Number']}}&gt;
+    <b-badge v-if="v.Floor =='true'" variant="danger">Floor</b-badge>
   </div>
   <div class="col-1">
     <b-button size="sm" variant="outline-primary" @click="kick(k)">Kick</b-button>
