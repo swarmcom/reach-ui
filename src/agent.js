@@ -84,6 +84,7 @@ export default class Agent extends WsProto {
   is_hold () { return this.vm && this.vm.state == 'hold' }
   can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
   can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
+  can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
 
   handleAuth (Re, Cb = (A) => A) {
     if (Re && Re.reply) {
