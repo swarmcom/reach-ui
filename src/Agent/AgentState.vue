@@ -51,7 +51,7 @@
   </div>
 </template>
 <script>
-import Release from '../Agent/Release'
+import Release from './Widget/Release'
 import moment from 'moment'
 export default {
   name: 'agent-state',

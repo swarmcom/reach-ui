@@ -14,7 +14,6 @@
             </b-col>
             <b-col cols="12">
               <inqueue></inqueue>
-              <outgoing></outgoing>
             </b-col>
           </b-row>
           <div class="col-2 pull-right text-right">
@@ -41,7 +40,7 @@
 import ToggleBar from './Widget/ToggleBar'
 import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
-import Outgoing from './Agent/Outgoing'
+import Release from './Agent/Widget/Release'
 import AgentState from './Agent/AgentState'
 export default {
   widgetName: 'SESSION MANAGER',
@@ -60,7 +59,7 @@ export default {
   components: {
     inqueue: Inqueue,
     dialer: Dialer,
-    outgoing: Outgoing,
+    release: Release,
     toggleBar: ToggleBar,
     agentState: AgentState
   },

@@ -1,6 +1,6 @@
 <template>
 <b-dropdown id="ddown1" text="Agent" variant="outline-primary">
-  <b-dropdown-item v-for="agent in agents" :key="agent.agent_id" @click="onUpdate(agent.agent_id)">{{ agent.login }}</b-dropdown-item>
+  <b-dropdown-item v-for="agent in agents" :key="agent.id" @click="onUpdate(agent.id)">{{ agent.login }}</b-dropdown-item>
 </b-dropdown>
 </template>
 
