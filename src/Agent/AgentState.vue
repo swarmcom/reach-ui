@@ -19,7 +19,7 @@
         <div>Released</div>
       </div>
       <div v-if="a.state == 'ringing'" class="agent-state-ringing">
-        <icon  name="wifi" scale="5" style="transform: rotate(270deg);"></icon>
+        <icon  name="wifi" scale="4" style="transform: rotate(270deg);"></icon>
         <div>Ringing</div>
       </div>
       <div v-if="a.state == 'oncall'" class="agent-state-oncall">
