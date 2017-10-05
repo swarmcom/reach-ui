@@ -2,7 +2,7 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <btable :fields="fields" :data="agents" :filter_button=true :paginate=true></btable>
+  <btable :fields="fields" :data="computedAgents" :filter_button=true :paginate=true></btable>
   </b-collapse>
 </div>
 </template>
@@ -17,6 +17,8 @@ export default {
     return {
       fields: {
         agent_id: { label: 'Id', sortable: true },
+        agent_login: { label: 'Login', sortable: true },
+        agent_name: { label: 'Name', sortable: true },
         state: { label: 'State', sortable: true },
         time: { label: 'Time', sortable:true, formatter: (time) => this.msToHms(time) }
       },
@@ -76,6 +78,17 @@ export default {
   components: {
     btable: Btable,
     toggleBar: ToggleBar
+  },
+  computed: {
+    computedAgents () {
+      let agents = this.agents;
+      agents.forEach( (key) => {
+        key.timeComputed = Math.round(key.time/1000).toString()
+        key.agent_name = key.agent.name
+        key.agent_login = key.agent.login
+      } )
+      return agents;
+    }
   }
 }
 </script>

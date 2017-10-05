@@ -61,7 +61,7 @@ export default {
     dialer: Dialer,
     release: Release,
     toggleBar: ToggleBar,
-    agentState: AgentState
+    agentState: AgentState,
     'agent-info': AgentInfo
   },
 }
