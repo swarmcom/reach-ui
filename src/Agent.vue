@@ -22,6 +22,7 @@
       </div>
     </div>
   </div>
+  <agent-info></agent-info>
   <inqueue></inqueue>
   <b-row style="margin-top: 20px">
     <b-col cols="6">
@@ -35,6 +36,7 @@
 import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
 import Release from './Agent/Widget/Release'
+import AgentInfo from './Agent/Info'
 
 export default {
   data () {
@@ -55,7 +57,8 @@ export default {
   components: {
     inqueue: Inqueue,
     dialer: Dialer,
-    release: Release
+    release: Release,
+    'agent-info': AgentInfo
   },
 }
 </script>
