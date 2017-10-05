@@ -23,11 +23,8 @@
             <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success">
               <icon name="pause" scale="2"></icon>
             </button>
-            <button v-if="this.$agent.is_ringing()" @click="hangup" class="btn btn-outline-danger">
+            <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-danger">
               <icon name="close" scale="2"></icon></button>
-            <button v-if="this.$agent.is_oncall()" @click="hangup" class="btn btn-outline-danger">
-              <icon name="close" scale="2"></icon>
-            </button>
           </div>
         </div>
       </div>
