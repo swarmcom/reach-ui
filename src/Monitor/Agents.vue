@@ -15,6 +15,8 @@ export default {
     return {
       fields: {
         agent_id: { label: 'Id', sortable: true },
+        agent_login: { label: 'Login', sortable: true },
+        agent_name: { label: 'Name', sortable: true },
         state: { label: 'State', sortable: true },
         timeComputed: { label: 'Time', sortable:true }
       },
@@ -69,7 +71,11 @@ export default {
   computed: {
     computedAgents () {
       let agents = this.agents;
-      agents.forEach( (key) => key.timeComputed = Math.round(key.time/1000).toString() )
+      agents.forEach( (key) => {
+        key.timeComputed = Math.round(key.time/1000).toString()
+        key.agent_name = key.agent.name
+        key.agent_login = key.agent.login
+      } )
       return agents;
     }
   }
