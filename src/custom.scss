@@ -3,6 +3,8 @@ $background: rgb(46,143,177);
 $backgroundColor1: rgba(46,143,177,1);
 $backgroundColor2: rgba(33,134,169,1);
 $backgroundColor3: rgba(13,119,153,1);
+$agent-state-width: 90px;
+$agent-state-font: 13px;
 
 body {
   padding-top: 56px;
@@ -72,23 +74,34 @@ body {
   background:#f7c180;
   padding-top:5px;
   padding-left:15px;
-  width:90px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
 }
 .agent-state-released {
   background:#dbeffa;
   padding-top:5px;
   padding-left:15px;
-  width:90px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
 }
 .agent-state-ringing {
   background:#28a745;
   padding-top:15px;
   padding-left:10px;
-  width:90px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
 }
 .agent-state-oncall {
   background:#28a745;
   padding-top:5px;
   padding-left:15px;
-  width:90px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
+}
+.agent-state-hold {
+  background:#28a745;
+  padding-top:5px;
+  padding-left:15px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
 }

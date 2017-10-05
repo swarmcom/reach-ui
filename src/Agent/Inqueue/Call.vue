@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col">
-    <h2>Call info:</h2>
+    <h4>Call info:</h4>
   </div>
 </div>
 
@@ -30,21 +30,7 @@
   </div>
 
   <div class="col">
-
-    <div class="row" v-if="this.$agent.is_oncall()">
-      <div class="col">
-        <h4>Actions:</h4>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
-        <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
-      </div>
-    </div>
-
-    <div v-if="this.$agent.can_transfer()" class="row" style="margin-top:20px">
+    <div v-if="this.$agent.can_transfer()" class="row">
       <div class="col">
         <h4>Transfer to:</h4>
         <div class="form-inline">

@@ -12,19 +12,23 @@
     <div class="col-7">
       <div v-if="a.state == 'available'" class="agent-state-available">
         <icon  name="circle-o" scale="4"></icon>
-        <div>Available</div>
+        <div>{{a.state}}</div>
       </div>
       <div v-if="a.state == 'release'" class="agent-state-released">
         <icon name="stop" scale="4"></icon>
-        <div>Released</div>
+        <div>released</div>
       </div>
       <div v-if="a.state == 'ringing'" class="agent-state-ringing">
         <icon  name="wifi" scale="4" style="transform: rotate(270deg);"></icon>
-        <div>Ringing</div>
+        <div>{{a.state}}</div>
       </div>
-      <div v-if="a.state == 'oncall'" class="agent-state-oncall">
+      <div v-if="this.$agent.is_onsession()" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
-        <div>On call</div>
+        <div>{{a.state}}</div>
+      </div>
+      <div v-if="this.$agent.is_hold()" class="agent-state-hold">
+        <icon  name="pause" scale="4"></icon>
+        <div>{{a.state}}</div>
       </div>
     </div>
   </div>
