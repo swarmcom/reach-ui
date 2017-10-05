@@ -5,7 +5,8 @@
 1. Display other inqueue types
 2. Make UI refreshable (e.g. reload window and reconnect to the same state)
 3. Make table views to remember column ordering
-
+4. Make Transfer/Conference drop-down list updated
+ 
 # Good to have
 
 1. Make certain components more abstract, inheritance maybe
