@@ -98,3 +98,10 @@ body {
   width: $agent-state-width;
   font-size: $agent-state-font;
 }
+.agent-state-hold {
+  background:#28a745;
+  padding-top:5px;
+  padding-left:15px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
+}

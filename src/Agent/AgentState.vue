@@ -26,6 +26,10 @@
         <icon  name="phone" scale="4"></icon>
         <div>{{a.state}}</div>
       </div>
+      <div v-if="this.$agent.is_hold()" class="agent-state-hold">
+        <icon  name="pause" scale="4"></icon>
+        <div>{{a.state}}</div>
+      </div>
     </div>
   </div>
   <div class="row col">
