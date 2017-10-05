@@ -2,7 +2,12 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
-    <b-table style="margin-top:10px" striped hover responsive :items="inqueues" :fields="fields">
+    <b-table style="margin-top:10px" striped hover small responsive
+      :items="inqueues"
+      :fields="fields"
+      :sort-by="sortBy"
+      :sortDesc="sortDesc"
+      @sort-changed="onSortingChanged">
       <template slot="twe" scope="data">
         {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
       </template>
@@ -35,7 +40,10 @@ export default {
       inqueues: [],
       queues: [],
       updater: null,
-      showCollapse: true
+      showCollapse: true,
+      storageName: '',
+      sortBy: '',
+      sortDesc: false,
     }
   },
   methods: {
@@ -79,6 +87,17 @@ export default {
     },
     barge ({record, uuid}) {
       this.$agent.p_mfa('ws_admin', 'barge', [record, uuid])
+    },
+    onSortingChanged (ctx){
+      let data = { "sortBy": ctx.sortBy, "sortDesc": ctx.sortDesc }
+      localStorage.setItem(this.storageName, JSON.stringify(data))
+    },
+    loadDataStorage(name) {
+      if(localStorage.getItem(name)) {
+        let dataStore = JSON.parse(localStorage.getItem(name));
+        this.sortBy = dataStore.sortBy
+        this.sortDesc = dataStore.sortDesc
+      }
     }
   },
   created () {
@@ -86,6 +105,9 @@ export default {
     this.$agent.subscribe('inqueues')
     this.$bus.$on('inqueue_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
+    this.sortBy = Object.keys(this.fields)[0]
+    this.storageName = this.$agent.vm.agent.login + '-' +this.$options.name
+    this.loadDataStorage(this.storageName)
   },
   beforeDestroy () {
     this.$bus.$off('inqueue_state', this.handleState)

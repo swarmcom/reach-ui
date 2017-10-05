@@ -83,7 +83,7 @@ export default {
     }
   },
   created () {
-    this.storageName = this.$parent.$options.name
+    this.storageName = this.$agent.vm.agent.login + '-' +this.$parent.$options.name
     this.totalRows = this.data.length
     this.sortBy = Object.keys(this.fields)[0]
     this.loadDataStorage(this.storageName)
