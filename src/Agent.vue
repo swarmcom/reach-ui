@@ -13,6 +13,7 @@
               <dialer v-if="this.$agent.is_idle()"></dialer>
             </b-col>
             <b-col cols="12">
+              <agent-info></agent-info>
               <inqueue></inqueue>
             </b-col>
           </b-row>
@@ -39,6 +40,8 @@ import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
 import Release from './Agent/Widget/Release'
 import AgentState from './Agent/AgentState'
+import AgentInfo from './Agent/Info'
+
 export default {
   widgetName: 'SESSION MANAGER',
   data () {
@@ -59,6 +62,7 @@ export default {
     release: Release,
     toggleBar: ToggleBar,
     agentState: AgentState
+    'agent-info': AgentInfo
   },
 }
 </script>
