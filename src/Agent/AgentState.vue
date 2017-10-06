@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="row">
+  <div class="row" style="margin-top:5px;">
     <div class="col-5">
       <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-outline-secondary">
         <icon name="stop" scale="5"></icon>
