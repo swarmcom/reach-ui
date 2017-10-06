@@ -2,7 +2,7 @@
 <div class="form">
   <form-text id="name" label="Name" v-model="line_out.name"></form-text>
   <form-text id="number" label="Number" v-model="line_out.number"></form-text>
-  <form-text id="description" label="Description" v-model="line_in.description"></form-text>
+  <form-text id="description" label="Description" v-model="line_out.description"></form-text>
   <clients label="Client" v-model="line_out.client_id"></clients>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
