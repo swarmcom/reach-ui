@@ -2,6 +2,7 @@
 <div class="form">
   <form-text id="name" label="Name" v-model="release.name"></form-text>
   <form-text id="score" label="Score" v-model="release.score"></form-text>
+  <form-text id="description" label="Description" v-model="release.description"></form-text>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
