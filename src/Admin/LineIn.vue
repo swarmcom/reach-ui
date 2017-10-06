@@ -2,6 +2,7 @@
 <div class="form">
   <form-text id="name" label="Name" v-model="line_in.name"></form-text>
   <form-text id="number" label="Number" v-model="line_in.number"></form-text>
+  <form-text id="description" label="Description" v-model="line_in.description"></form-text>
   <queues label="Queue" v-model="line_in.queue_id"></queues>
   <clients label="Client" v-model="line_in.client_id"></clients>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
