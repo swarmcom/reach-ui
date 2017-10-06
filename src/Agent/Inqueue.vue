@@ -32,10 +32,10 @@ export default {
   },
   methods: {
     handleState ({ state }) {
-      console.log('state', state)
       if (state.state == "available" || state.state == "release") {
         this.call_visible = false
         this.conf_visible = false
+        this.ringer_visible = false
         this.uuid = undefined
       } else {
         if (state.inqueue.inqueue_call) {
@@ -43,6 +43,9 @@ export default {
           this.uuid = state.inqueue.inqueue_call
         }
         if (state.state == 'conference') {
+          this.conf_visible = true
+        }
+        if (state.state == 'inconference') {
           this.conf_visible = true
         }
       }
