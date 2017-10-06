@@ -9,6 +9,7 @@
   <form-text label="SIP URI" v-model="agent.uri"></form-text>
   <form-text label="Caller Id Number" v-model="agent.caller_id_number"></form-text>
   <form-text label="Ring timeout" v-model="agent.ring_timeout"></form-text>
+  <form-text label="Suspend time" v-model="agent.suspend_time"></form-text>
   <form-text label="Max rings" v-model="agent.max_ring_fails"></form-text>
   <form-text label="Auto logout" v-model="agent.autologout"></form-text>
   <skills label="Skills" v-model="skills"></skills>

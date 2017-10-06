@@ -3,6 +3,7 @@
   <form-text label="Name" v-model="agent_group.name"></form-text>
   <form-text label="Permissions" v-model="agent_group.permissions"></form-text>
   <form-text label="Ring timeout" v-model="agent_group.ring_timeout"></form-text>
+  <form-text label="Suspend time" v-model="agent_group.suspend_time"></form-text>
   <form-text label="Max rings" v-model="agent_group.max_ring_fails"></form-text>
   <form-text label="Auto logout" v-model="agent_group.autologout"></form-text>
   <skills label="Skills" v-model="skills"></skills>
