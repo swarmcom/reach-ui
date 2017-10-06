@@ -1,53 +1,68 @@
 <template>
-<div class="container" style="margin-top: 20px">
-  <h3>Agent:</h3>
-  <div class="row">
-    <div class="col-5">
-      <dl class="row">
-        <dt class="col-sm-3">Name:</dt>
-        <dd class="col-sm-9">{{ agent.name }}</dd>
-        <dt class="col-sm-3">Login:</dt>
-        <dd class="col-sm-9">{{ agent.login }}</dd>
-        <dt class="col-sm-3">Group:</dt>
-        <dd class="col-sm-9">{{ agent.group.name || '&nbsp' }}</dd>
-        <dt class="col-sm-3">Permissions:</dt>
-        <dd class="col-sm-9">{{ agent.permissions }}</dd>
-      </dl>
+<div>
+  <toggleBar></toggleBar>
+  <b-collapse v-model="showCollapse" id="collapseAgentInfo" class="mt-2">
+    <div class="row agent-state-text"><b>Agent:</b></div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Name:</div>
+      <div class="col-7 agent-state-text"> {{agent.name}} </div>
     </div>
-    <div class="col-5">
-      <dl class="row">
-        <dt class="col-sm-4">Line Out:</dt>
-        <dd class="col-sm-8">{{ agent.line.name || '&nbsp' }}</dd>
-        <dt class="col-sm-4">Caller Id:</dt>
-        <dd class="col-sm-8">{{ agent.caller_id_number || '&nbsp' }}</dd>
-        <dt class="col-sm-4">Ring timeout:</dt>
-        <dd class="col-sm-8">{{ agent.ring_timeout || '&nbsp' }}</dd>
-        <dt class="col-sm-4">Max rings:</dt>
-        <dd class="col-sm-8">{{ agent.max_ring_fails || '&nbsp' }}</dd>
-        <dt class="col-sm-4">Auto logout:</dt>
-        <dd class="col-sm-8">{{ agent.autologout || '&nbsp' }}</dd>
-      </dl>
+    <div class="row">
+      <div class="col-5 agent-state-text">Login:</div>
+      <div class="col-7 agent-state-text"> {{agent.login}} </div>
     </div>
-    <div class="col">
-      <div class="row">Skills:</div>
-      <div class="row" v-for="(v, k) in agent.skills">
-        <dt class="col">{{ k }}:</dt>
-        <dd class="col">{{ v }}</dd>
-      </div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Group:</div>
+      <div class="col-7 agent-state-text"> {{ agent.group.name || '&nbsp' }} </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Permissions:</div>
+      <div class="col-7 agent-state-text"> {{ agent.permissions }} </div>
+    </div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Line Out:</div>
+      <div class="col-7 agent-state-text"> {{ agent.line.name || '&nbsp' }} </div>
+    </div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Caller Id:</div>
+      <div class="col-7 agent-state-text"> {{ agent.caller_id_number || '&nbsp' }} </div>
+    </div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Ring timeout:</div>
+      <div class="col-7 agent-state-text"> {{ agent.ring_timeout || '&nbsp' }} </div>
+    </div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Max rings:</div>
+      <div class="col-7 agent-state-text"> {{ agent.max_ring_fails || '&nbsp' }} </div>
+    </div>
+    <div class="row">
+      <div class="col-5 agent-state-text">Auto logout:</div>
+      <div class="col-7 agent-state-text"> {{ agent.autologout || '&nbsp' }} </div>
+    </div>
+
+    <div class="row agent-state-text"><b>Skills:</b></div>
+    <div class="row" v-for="(v, k) in agent.skills">
+      <dd class="col-5 agent-state-text">{{ k }}:</dd>
+      <dd class="col-7 agent-state-text">{{ v }}</dd>
+    </div>
+  </b-collapse>
 </div>
 </template>
 
 <script>
 import Skills from '../Widget/Skills.vue'
-
+import ToggleBar from '../Widget/ToggleBar'
 export default {
+  widgetName: 'MY PROFILE',
   name: 'agent-info',
   data () {
     return {
-      agent: this.$agent.vm.agent
+      agent: this.$agent.vm.agent,
+      showCollapse: false
     }
+  },
+  components: {
+    toggleBar: ToggleBar,
   }
 }
 </script>

@@ -4,6 +4,7 @@
   <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2">
     <div class="row">
       <div class="col-12 col-md-3">
+        <agent-info></agent-info>
         <agentState></agentState>
       </div>
       <div class="col-md-9 col-12">
@@ -13,7 +14,6 @@
               <dialer v-if="this.$agent.is_idle()"></dialer>
             </b-col>
             <b-col cols="12">
-              <agent-info></agent-info>
               <inqueue></inqueue>
             </b-col>
           </b-row>
