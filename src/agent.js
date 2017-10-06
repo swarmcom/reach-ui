@@ -20,11 +20,13 @@ export default class Agent extends WsProto {
     this.vm = new Vue({
       data: {
         agent: undefined,
+        transfer_agents: [],
         state: undefined,
         hangup_state: undefined
       }
     }),
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
+    EventBus.$on('agents_state', (S) => this.handleAgents(S))
   }
 
   getData () {
@@ -65,6 +67,8 @@ export default class Agent extends WsProto {
       this.handleAuth(this.vm.agent)
     } else {
       this.call('auth', [Login, Password], (A) => this.handleAuth(A, Cb))
+      this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
+      this.subscribe('agents')
     }
   }
 
@@ -72,6 +76,18 @@ export default class Agent extends WsProto {
     if (S && this.vm.agent && this.vm.agent.id === S.agent_id) {
       this.vm.hangup_state = S.hangup_state
       this.vm.state = S.state
+    }
+  }
+
+  handleAgents ({info}) {
+    if (info.state === 'available') {
+      this.vm.transfer_agents.push(info.agent)
+    }
+    else {
+      let i = this.vm.transfer_agents.findIndex(E => E.login === info.agent.login)
+      if (i >= 0) {
+        this.vm.transfer_agents.splice(i, 1)
+      }
     }
   }
 
