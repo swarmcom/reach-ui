@@ -50,15 +50,17 @@
     </div>
     <div class="row">
       <div class="col-5 agent-state-text">Activity Time:</div>
-      <div class="col-7 agent-state-text"> {{activity_time | secondsToHms }} </div>
+      <div class="col-7 agent-state-text"> {{msToHms(activity_time) }} </div>
     </div>
   </div>
 </template>
 <script>
 import Release from './Widget/Release'
 import moment from 'moment'
+import Common from '../Admin/Common'
 export default {
   name: 'agent-state',
+  mixins: [Common],
   data () {
     return {
       a: {},
@@ -77,20 +79,7 @@ export default {
   created () {
     this.a = this.$agent.getData()
     this.date = moment(new Date()).format('Do MMM YYYY[,] HH:mm:ss')
-    this.updater = setInterval(() => { this.$agent.vm.state != 'release' ? this.activity_time++ : this.activity_time=0 } , 1000)
-  },
-  filters: {
-    secondsToHms: function (d) {
-      d = Number(d)
-      let h = Math.floor(d / 3600)
-      let m = Math.floor(d % 3600 / 60)
-      let s = Math.floor(d % 3600 % 60)
-
-      let hDisplay = h > 0 ? (h <= 9 ? "0"+h : h) + ":" : "00:"
-      let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : "00:"
-      let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
-      return hDisplay + mDisplay + sDisplay
-    }
+    this.updater = setInterval(() => { this.$agent.vm.state != 'release' ? this.activity_time+=1000 : this.activity_time=0 } , 1000)
   },
   components: {
     release: Release
