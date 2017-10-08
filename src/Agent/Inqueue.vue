@@ -19,6 +19,7 @@
 <script>
 import Call from './Inqueue/Call'
 import Conference from './Inqueue/Conference'
+import Outgoing from './Inqueue/Outgoing'
 
 export default {
   data () {
@@ -32,6 +33,7 @@ export default {
   },
   methods: {
     handleState ({ state }) {
+      console.log('inqueue state', state)
       if (state.state == "available" || state.state == "release") {
         this.call_visible = false
         this.conf_visible = false
@@ -75,7 +77,8 @@ export default {
   },
   components: {
     call: Call,
-    conference: Conference
+    conference: Conference,
+    outgoing: Outgoing
   },
 }
 </script>
