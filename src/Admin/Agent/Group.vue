@@ -1,6 +1,7 @@
 <template>
 <div class="form">
   <form-text label="Name" v-model="agent_group.name"></form-text>
+  <lines label="Line Out" v-model="agent_group.line_id"></lines>
   <form-text label="Permissions" v-model="agent_group.permissions"></form-text>
   <form-text label="Ring timeout" v-model="agent_group.ring_timeout"></form-text>
   <form-text label="Max number of unanswered calls before unavailable" v-model="agent_group.max_ring_fails"></form-text>
@@ -14,13 +15,14 @@
 <script>
 import FormText from '../../Widget/FormText.vue'
 import Skills from '../../Widget/Skills.vue'
+import Lines from '../../Widget/Lines.vue'
 import Common from '../Common'
 
 export default {
   name: 'admin-agent-group',
   props: ['id'],
   mixins: [Common],
-  components: { 'form-text': FormText, 'skills': Skills },
+  components: { 'form-text': FormText, 'skills': Skills, 'lines': Lines, },
   data () {
     return {
       agent_group: {},
