@@ -1,12 +1,6 @@
 <template>
 <div class="form">
   <form-text label="Name" v-model="queue_group.name"></form-text>
-  <form-text label="Music on hold" v-model="queue_group.hold_music"></form-text>
-  <form-text label="Aging" v-model="queue_group.aging_factor"></form-text>
-  <form-text label="Weight" v-model="queue_group.weight"></form-text>
-  <form-text label="Wrap-up enabled" v-model="queue_group.wrapup_enabled"></form-text>
-  <form-text label="Wrap-up timer" v-model="queue_group.wrapup_timer"></form-text>
-  <form-text label="Auto wrap-up" v-model="queue_group.auto_wrapup"></form-text>
   <skills label="Skills" v-model="skills"></skills>
   <recipe label="Recipe" v-model="recipe"></recipe>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
