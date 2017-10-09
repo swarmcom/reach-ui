@@ -23,7 +23,7 @@
       <dt class="col-sm-3">Weight:</dt>
       <dd class="col-sm-9">{{ this.inqueue.effective_time.weight }}</dd>
       <dt class="col-sm-3">Time:</dt>
-      <dd class="col-sm-9">{{ Math.round(this.inqueue.time/1000) }}</dd>
+      <dd class="col-sm-9">{{ msToHms(this.inqueue.time) }}</dd>
       <dt class="col-sm-3">Transferers:</dt>
       <dd class="col-sm-9">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
     </dl>
@@ -63,11 +63,12 @@ import TransferUri from '../Widget/TransferUri'
 import ConferenceAgent from '../Widget/ConferenceAgent'
 import ConferenceQueue from '../Widget/ConferenceQueue'
 import ConferenceUri from '../Widget/ConferenceUri'
-
+import Common from '../../Admin/Common'
 export default {
   props: {
     uuid: String
   },
+  mixins: [Common],
   data () {
     return {
       inqueue: {},
