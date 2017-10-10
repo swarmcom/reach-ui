@@ -30,8 +30,6 @@
   </div>
 </div><!-- row -->
 
-<div class="row"><div class="col"><h2></h2> </div></div>
-
 <div class="row" style="margin-top: 20px">
 
   <div class="col-1">
