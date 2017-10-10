@@ -26,7 +26,7 @@
   </div>
   <div class="col-7">
     <h4>Skills editor:</h4>
-    <skills label="Skills" v-model="skills"></skills>
+    <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
     <div class="row" style="margin-top:10px">
       <div class="col-6">
         <div v-if="this.$agent.can_transfer()" class="row">
