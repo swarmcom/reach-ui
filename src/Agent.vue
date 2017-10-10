@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
   <div class="row">
     <div class="col">
       <button type="button" disabled class="btn btn-outline-primary">{{a.state}}</button>
@@ -26,6 +26,9 @@
   <inqueue></inqueue>
   <b-row style="margin-top: 20px">
     <b-col cols="6">
+      <override></override>
+    </b-col>
+    <b-col cols="6">
       <dialer v-if="this.$agent.is_idle()"></dialer>
     </b-col>
   </b-row>
@@ -35,6 +38,7 @@
 <script>
 import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
+import Override from './Agent/Override'
 import Release from './Agent/Widget/Release'
 import AgentInfo from './Agent/Info'
 
@@ -58,7 +62,8 @@ export default {
     inqueue: Inqueue,
     dialer: Dialer,
     release: Release,
-    'agent-info': AgentInfo
+    'agent-info': AgentInfo,
+    override: Override
   },
 }
 </script>
