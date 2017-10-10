@@ -26,7 +26,7 @@
   </div>
 
   <div class="col">
-    <skills label="Skills" v-model="skills"></skills>
+    <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
   </div>
 </div><!-- row -->
 
@@ -106,6 +106,9 @@ export default {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
       }
+    },
+    update_skills () {
+      this.$agent.p_call('skills', ['inqueue', this.uuid, this.list2object(this.skills)])
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },

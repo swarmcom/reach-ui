@@ -2,24 +2,29 @@
 <div class="container">
   <div v-for="sk of value" class="row">
     <div class="for_group col-1">
-      <button @click="del(sk.key)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
+      <button @click="del(sk.key)" class="btn btn-sm btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </div>
     <div class="form-group col-3">
-      <input type="text" class="form-control" v-model="sk.key">
+      <input type="text" class="form-control form-control-sm" v-model="sk.key">
     </div>
     <div class="form-group col">
-      <input type="text" class="form-control" v-model="sk.value">
+      <input type="text" class="form-control form-control-sm" v-model="sk.value">
     </div>
   </div>
   <div class="row">
     <div class="form-group col-1">
-      <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-sm btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </div>
     <div class="form-group col-3">
-      <input type="text" class="form-control" v-model="k">
+      <input type="text" class="form-control form-control-sm" v-model="k">
     </div>
     <div class="form-group col">
-      <input type="text" class="form-control" v-model="v">
+      <input type="text" class="form-control form-control-sm" v-model="v">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button @click="commit" class="btn btn-sm btn-primary float-right">Commit</button>
     </div>
   </div>
 </div>
@@ -46,6 +51,9 @@ export default {
       if (id >= 0) {
         this.value.splice(id, 1)
       }
+    },
+    commit () {
+      this.$emit('input', this.value)
     }
   }
 }
