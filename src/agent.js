@@ -98,6 +98,7 @@ export default class Agent extends WsProto {
   is_oncall () { return this.vm && this.vm.state == 'oncall' }
   is_wrapup () { return this.vm && this.vm.state == 'wrapup' }
   is_hold () { return this.vm && this.vm.state == 'hold' }
+  is_barge () { return this.vm && this.vm.state == 'barge' }
   can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
   can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
