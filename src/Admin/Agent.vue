@@ -12,6 +12,7 @@
   <form-text label="Suspend time" v-model="agent.suspend_time"></form-text>
   <form-text label="Max rings" v-model="agent.max_ring_fails"></form-text>
   <form-text label="Auto logout" v-model="agent.autologout"></form-text>
+  <form-text label="Persistent" v-model="agent.persistent"></form-text>
   <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
