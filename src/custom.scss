@@ -21,12 +21,10 @@ body {
 .navbar-custom {
   min-height: 56px;
   background: $background; /* Old browsers */
-  background: -moz-linear-gradient(top,  rgba(46,143,177,1) 0%, rgba(33,134,169,1) 53%, rgba(33,134,169,1) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$backgroundColor1), color-stop(53%,$backgroundColor2), color-stop(100%,$backgroundColor3)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  rgba(46,143,177,1) 0%,rgba(33,134,169,1) 53%,rgba(33,134,169,1) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  rgba(46,143,177,1) 0%,rgba(33,134,169,1) 53%,rgba(33,134,169,1) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  rgba(46,143,177,1) 0%,rgba(33,134,169,1) 53%,rgba(33,134,169,1) 100%); /* IE10+ */
-  background: linear-gradient(top,  rgba(46,143,177,1) 0%,rgba(33,134,169,1) 53%,rgba(33,134,169,1) 100%); /* W3C */
+  background: -webkit-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* IE10+ */
+  background: linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e8fb1', endColorstr='#0d7799',GradientType=0 ); /* IE6-9 */
 }
 /* change the brand and text color */
