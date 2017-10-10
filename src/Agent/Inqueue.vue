@@ -5,7 +5,7 @@
     <h3>Ringer:</h3>
     <div class="row">
       <div class="col">
-        Calling: {{ ringer.uri }} attempt: {{ ringer.attempt }}/{{ ringer.attempts }}, timeout: {{ ringer.timeout }}
+        Calling: {{ ringer.uri }} timeout: {{ ringer.timeout }}
       </div>
       <div class="col">
         <b-button size="sm" variant="outline-danger" @click="stop_ringer(ringer.agent_id)">Cancel</b-button>
@@ -53,7 +53,7 @@ export default {
       }
     },
     handleRinger ({ringer, state, agent_id}) {
-      if (ringer == "originate") {
+      if (ringer == 'originate') {
         this.ringer_visible = true
         this.ringer = state
         this.ringer.agent_id = agent_id
@@ -69,11 +69,11 @@ export default {
   created () {
     this.$agent.p_call('request_state', [])
     this.$bus.$on('agent_state', this.handleState)
-    this.$bus.$on('agent_conference_ringer', this.handleRinger)
+    this.$bus.$on('agents_ringer', this.handleRinger)
   },
   beforeDestroy () {
     this.$bus.$off('agent_state', this.handleState)
-    this.$bus.$off('agent_conference_ringer', this.handleRinger)
+    this.$bus.$off('agents_ringer', this.handleRinger)
   },
   components: {
     call: Call,
