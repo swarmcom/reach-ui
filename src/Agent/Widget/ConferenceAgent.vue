@@ -1,6 +1,11 @@
 <template>
 <b-dropdown text="Agent" variant="outline-primary">
-  <b-dropdown-item v-for="agent in this.$agent.vm.transfer_agents" :key="agent.id" @click="onUpdate(agent.id)">{{ agent.login }}</b-dropdown-item>
+  <div v-if="this.$agent.vm.transfer_agents.length > 0">
+    <b-dropdown-item v-for="agent in this.$agent.vm.transfer_agents" :key="agent.id" @click="onUpdate(agent.id)">{{ agent.login }}</b-dropdown-item>
+  </div>
+  <div v-else>
+    <b-dropdown-item>No Other Agents</b-dropdown-item>
+  </div>
 </b-dropdown>
 </template>
 
