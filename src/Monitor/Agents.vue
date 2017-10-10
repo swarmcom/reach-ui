@@ -41,7 +41,7 @@ export default {
         }
       }
       else {
-        let i = this.agents.findIndex(E => E.login === info.login)
+        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
         if (i >= 0) {
           this.agents.splice(i, 1, info)
         }
