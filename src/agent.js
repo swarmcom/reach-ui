@@ -23,7 +23,7 @@ export default class Agent extends WsProto {
         transfer_agents: [],
         state: undefined,
         hangup_state: undefined,
-        autoLogout_id: undefined
+        auto_logout_timer: undefined
       }
     }),
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
@@ -84,16 +84,16 @@ export default class Agent extends WsProto {
   autoLogout(state) {
     if(this.vm.agent.autologout > 0){
       if(state === 'release'){
-        if (this.vm.autoLogout_id != 'undefined'){
-          clearTimeout(this.vm.autoLogout_id)
-          this.vm.autoLogout_id = 'undefined'
+        if (this.vm.auto_logout_timer != 'undefined'){
+          clearTimeout(this.vm.auto_logout_timer)
+          this.vm.auto_logout_timer = 'undefined'
         }
-        this.vm.autoLogout_id = setTimeout (() =>  { this.logout() }, this.vm.agent.autologout*1000)
+        this.vm.auto_logout_timer = setTimeout (() =>  { this.logout() }, this.vm.agent.autologout*1000)
       }
       else{
-        if(this.vm.autoLogout_id != 'undefined') {
-          clearTimeout(this.vm.autoLogout_id)
-          this.vm.autoLogout_id = 'undefined'
+        if(this.vm.auto_logout_timer != 'undefined') {
+          clearTimeout(this.vm.auto_logout_timer)
+          this.vm.auto_logout_timer = 'undefined'
         }
       }
     }
