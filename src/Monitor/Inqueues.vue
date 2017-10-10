@@ -9,8 +9,9 @@
     </template>
     <template slot="actions" scope="data">
       <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
+      <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
       <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
-      <b-button size="sm" variant="danger" @click="barge(data.item)">Barge</b-button>
+      <b-button size="sm" variant="danger" @click="hangup(data.item)">Hangup</b-button>
     </template>
   </b-table>
 </div>
@@ -43,11 +44,17 @@ export default {
         if (info.state === 'terminate') {
           this.inqueues.splice(i, 1)
         } else {
-          this.inqueues.splice(i, 1, info)
+          this.inqueues.splice(i, 1, this.enrich_queue(info))
         }
       } else {
-        this.inqueues.push(info)
+        this.inqueues.push(this.enrich_queue(info))
       }
+    },
+    enrich_queue (info) {
+      info.time = Math.round(info.time/1000)
+      info.effective = Math.round(info.effective_time.time/1000)
+      info.queue = this.queue_name(info.queue_id)
+      return info
     },
     query: async function() {
       this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues', [])
@@ -70,13 +77,16 @@ export default {
       return Queue? Queue.name : ''
     },
     take ({record, uuid}) {
-      this.$agent.p_mfa('ws_admin', 'take', [record, uuid])
+      this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
+    },
+    takeover ({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
     },
     spy ({record, uuid}) {
-      this.$agent.p_mfa('ws_admin', 'spy', [record, uuid])
+      this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
     },
-    barge ({record, uuid}) {
-      this.$agent.p_mfa('ws_admin', 'barge', [record, uuid])
+    hangup ({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
     }
   },
   created () {
