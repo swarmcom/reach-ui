@@ -28,6 +28,7 @@ export default {
         state: { label: 'State', sortable: true },
         record: { label: 'Type', sortable: true },
         queue: { label: 'Queue', sortable: true },
+        skills: { label: 'Skills' },
         twe: { label: 'T.W.E.', sortable: true },
         actions: { label: 'Actions' }
       },
