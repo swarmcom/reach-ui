@@ -3,7 +3,12 @@
   <div class="row">
     <div class="col"><h3>Logged in agents</h3></div>
   </div>
-  <btable :fields="fields" :data="computedAgents" :add_button=false></btable>
+  <b-table style="margin-top:10px" striped hover responsive :items="computedAgents" :fields="fields">
+    <template slot="actions" scope="data">
+      <b-button size="sm" variant="primary" @click="release(data.item)">Release</b-button>
+      <b-button size="sm" variant="danger" @click="kill(data.item)">Kill</b-button>
+    </template>
+  </b-table>
 </div>
 </template>
 
@@ -18,7 +23,8 @@ export default {
         agent_login: { label: 'Login', sortable: true },
         agent_name: { label: 'Name', sortable: true },
         state: { label: 'State', sortable: true },
-        timeComputed: { label: 'Time', sortable:true }
+        timeComputed: { label: 'Time', sortable:true },
+        actions: { label: 'Actions' }
       },
       agents: [],
       updater: ''
@@ -53,6 +59,12 @@ export default {
     },
     onClick (data) {
       this.$router.push(`/admin/agent/${data.agent_id}`)
+    },
+    release (agent) {
+      this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])
+    },
+    kill (agent) {
+      this.$agent.mfa('ws_supervisor', 'kill', [agent.agent_id])
     }
   },
   created () {
