@@ -8,6 +8,7 @@
     <div class="col">
       <div class="row justify-content-end">
         <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-warning">Hangup</button>
+        <button v-if="this.$agent.is_wrapup()" @click="wrapup" class="btn btn-outline-warning">Wrap up</button>
       </div>
     </div>
     <div class="col">
@@ -54,6 +55,7 @@ export default {
     available () { this.$agent.available() },
     answer () { this.$agent.answer() },
     hangup () { this.$agent.hangup() },
+    wrapup () { this.$agent.p_call('end_wrapup', []) },
   },
   created () {
     this.a = this.$agent.getData()

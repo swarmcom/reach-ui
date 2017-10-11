@@ -12,6 +12,8 @@
       </dd>
       <dt class="col-sm-3">To:</dt>
       <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
+      <dt class="col-sm-3">Client:</dt>
+      <dd class="col-sm-9">{{ this.inqueue.client.name }}</dd>
       <dt class="col-sm-3">State:</dt>
       <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
       <dt class="col-sm-3">Queue:</dt>

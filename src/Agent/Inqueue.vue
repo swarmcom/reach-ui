@@ -29,7 +29,7 @@ export default {
   methods: {
     handleState ({ state }) {
       console.log('inqueue state', state)
-      if (state.state == "available" || state.state == "release") {
+      if (state.state == "available" || state.state == "release" || state.state == "wrapup") {
         this.call_visible = false
         this.conf_visible = false
         this.ringer_visible = false
