@@ -31,6 +31,10 @@ import AdminLineOut from './Admin/LineOut.vue'
 import AdminLineOuts from './Admin/LineOuts.vue'
 import AdminClient from './Admin/Client.vue'
 import AdminClients from './Admin/Clients.vue'
+import AdminPrompt from './Admin/Prompt.vue'
+import AdminPrompts from './Admin/Prompts.vue'
+import AdminMOH from './Admin/MOH.vue'
+import AdminMOHs from './Admin/MOHs.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -57,6 +61,8 @@ const router = new VueRouter({
       { path: 'clients', component: AdminClients },
       { path: 'line_ins', component: AdminLineIns },
       { path: 'line_outs', component: AdminLineOuts },
+      { path: 'prompts', component: AdminPrompts },
+      { path: 'mohs', component: AdminMOHs },
       { path: 'agent', component: AdminAgent },
       { path: 'agent/:id', component: AdminAgent, props: true },
       { path: 'queue', component: AdminQueue },
@@ -69,6 +75,10 @@ const router = new VueRouter({
       { path: 'release/:id', component: AdminRelease, props: true },
       { path: 'disposition', component: AdminDisposition },
       { path: 'disposition/:id', component: AdminDisposition, props: true },
+      { path: 'prompt', component: AdminPrompt },
+      { path: 'prompt/:id', component: AdminPrompt, props: true },
+      { path: 'moh', component: AdminMOH },
+      { path: 'moh/:id', component: AdminMOH, props: true },
       { path: 'client', component: AdminClient },
       { path: 'client/:id', component: AdminClient, props: true },
       { path: 'line_in', component: AdminLineIn },
