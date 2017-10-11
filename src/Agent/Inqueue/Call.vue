@@ -4,7 +4,7 @@
 <div class="row"><div class="col"><h2>Call info:</h2> </div></div>
 
 <div class="row">
-  <div class="col">
+  <div class="col-5">
     <dl class="row">
       <dt class="col-sm-3">From:</dt>
       <dd class="col-sm-9">
@@ -24,35 +24,33 @@
       <dd class="col-sm-9">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
     </dl>
   </div>
-
-  <div class="col">
-    <div v-if="this.$agent.can_transfer()" class="row">
-      <div class="col">
-        <h4>Transfer to:</h4>
+  <div class="col-7">
+    <h4>Skills editor:</h4>
+    <skills label="Skills" v-model="skills"></skills>
+    <div class="row" style="margin-top:10px">
+      <div class="col-6">
+        <div v-if="this.$agent.can_transfer()" class="row">
+          <div class="col">
+            <h5>Transfer to:</h5>
+            <div class="form-inline">
+              <transfer-agent></transfer-agent>&nbsp;
+              <transfer-queue></transfer-queue>&nbsp;
+              <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6" v-if="this.$agent.can_conference()">
+        <h5>Conference with:</h5>
         <div class="form-inline">
-          <transfer-agent></transfer-agent>&nbsp;
-          <transfer-queue></transfer-queue>&nbsp;
-          <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
+          <conference-agent></conference-agent>&nbsp;
+          <conference-queue></conference-queue>&nbsp;
+          <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="col" v-if="this.$agent.can_conference()">
-    <h4>Conference with:</h4>
-    <div class="form-inline">
-      <conference-agent></conference-agent>&nbsp;
-      <conference-queue></conference-queue>&nbsp;
-      <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
-    </div>
-  </div>
-
-  <div class="col">
-    <skills label="Skills" v-model="skills"></skills>
-  </div>
-
 </div>
-
 </div><!-- container -->
 </template>
 
