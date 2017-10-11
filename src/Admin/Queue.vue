@@ -6,7 +6,7 @@
   <form-text id="weight" label="Weight" v-model="queue.weight"></form-text>
   <form-text id="aging_factor" label="Aging" v-model="queue.aging_factor"></form-text>
   <form-text id="auto_wrapup" label="Auto Wrap-up" v-model="queue.auto_wrapup"></form-text>
-  <form-text id="wrapup_enabled" label="Wrap-up enabled" v-model="queue.wrapup_enabled"></form-text>
+  <form-bool label="Wrap-up enabled" v-model="queue.wrapup_enabled"></form-bool>
   <form-text id="wrapup_timer" label="Wrap-up timer" v-model="queue.wrapup_timer"></form-text>
   <skills id="skills" label="Skills" v-model="skills"></skills>
   <recipe id="recipe" label="Recipe" v-model="recipe"></recipe>
@@ -17,6 +17,7 @@
 
 <script>
 import FormText from '../Widget/FormText.vue'
+import FormBool from '../Widget/FormBool.vue'
 import Skills from '../Widget/Skills.vue'
 import Recipe from '../Widget/Recipe.vue'
 import Groups from '../Widget/Queue/Groups.vue'
@@ -25,7 +26,7 @@ import Common from './Common'
 export default {
   name: 'admin-queue',
   props: ['id'],
-  components: { 'groups': Groups, 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
+  components: { 'groups': Groups, 'form-text': FormText, 'form-bool': FormBool, 'skills': Skills, 'recipe': Recipe },
   mixins: [Common],
 
   data () {
