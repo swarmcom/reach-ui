@@ -20,6 +20,9 @@
     <router-link class="nav-link" to="/admin/releases">Releases</router-link>
   </li>
   <li class="nav-item">
+    <router-link class="nav-link" to="/admin/dispositions">Dispositions</router-link>
+  </li>
+  <li class="nav-item">
     <router-link class="nav-link" to="/admin/clients">Clients</router-link>
   </li>
   <li class="nav-item">
