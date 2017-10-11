@@ -61,6 +61,9 @@ export default {
     hangup () { this.$agent.hangup() },
     wrapup () { this.$agent.p_call('end_wrapup', []) }
   },
+  created () {
+    this.a = this.$agent.getData()
+  },
   components: {
     inqueue: Inqueue,
     dialer: Dialer,
