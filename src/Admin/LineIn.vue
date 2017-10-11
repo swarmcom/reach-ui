@@ -5,7 +5,9 @@
   <form-text id="description" label="Description" v-model="line_in.description"></form-text>
   <queues label="Queue" v-model="line_in.queue_id"></queues>
   <clients label="Client" v-model="line_in.client_id"></clients>
+  <prompts label="Announce" v-model="line_in.announce_id"></prompts>
   <form-select-bool label="Allow Voicemail" v-model="line_in.allow_voicemail"></form-select-bool>
+  <prompts label="Voicemail prompt" v-model="line_in.voicemail_prompt_id"></prompts>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
@@ -16,12 +18,13 @@ import FormText from '../Widget/FormText.vue'
 import FormSelectBool from '../Widget/FormSelectBool.vue'
 import Queues from '../Widget/Queues.vue'
 import Clients from '../Widget/Clients.vue'
+import Prompts from '../Widget/Prompts.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-line-in',
   props: ['id'],
-  components: { 'form-select-bool': FormSelectBool, 'form-text': FormText, 'queues': Queues, 'clients': Clients },
+  components: { 'form-select-bool': FormSelectBool, 'form-text': FormText, 'queues': Queues, 'clients': Clients, prompts: Prompts },
   mixins: [Common],
   data () {
     return {
