@@ -1,53 +1,48 @@
 <template>
-<div v-if="this.outgoing" style="margin-top: 10px">
-  <div v-if="this.state == 'agent_leg'">
-    <h6>Calling: self</h6>
+<div class="container" style="margin-top: 20px" v-if="visible">
+
+  <div class="row"><div class="col"><h2>Outgoing info:</h2> </div></div>
+
+  <div class="row">
+    <div class="col">
+      <dl class="row">
+        <dt class="col-sm-3">To:</dt>
+        <dd class="col-sm-9">{{ this.outgoing.target }}</dd>
+      </dl>
+    </div>
+  </div><!-- row -->
+
+  <div class="row" style="margin-top: 20px">
+    <div class="col-1">
+      <h4>Hold:</h4>
+      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
+      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
+    </div>
   </div>
-  <div v-if="this.state == 'target_leg'">
-    <h6>Calling: {{ target }}</h6>
-  </div>
-  <div v-if="this.state == 'oncall'">
-    <h6>Call: {{ target }}</h6>
-  </div>
-</div>
+
+</div><!-- container -->
 </template>
 
 <script>
 export default {
   data () {
     return {
-      outgoing: false,
-      target: '',
-      state: ''
+      visible: false,
+      outgoing: {}
     }
   },
   methods: {
-    handleState ({ info, inqueue, call_info }) {
-      if (info.state == 'ringing' && info.inqueue.outgoing) {
-        this.target = info.inqueue.outgoing
-        this.state = 'agent_leg'
-        this.outgoing = true
-      } else if (info.state == 'outgoing') {
-        this.state = 'target_leg'
-      } else if (info.state == 'oncall') {
-        this.state = 'oncall'
-      } else if (info.state == 'hold') {
-      } else {
-        this.state = ''
-        this.target = ''
-        this.outgoing = false
-      }
-    },
-    onTimer () {
+    query: async function () {
+      this.outgoing = await this.$agent.p_call('get_outgoing', [])
+      this.visible = true
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() }
   },
   created () {
-    this.$bus.$on('agent_state', (S) => this.handleState(S))
+    this.query()
   },
-  mounted () {
-    this.onTimer()
-  }
+  beforeDestroy () {
+  },
 }
 </script>

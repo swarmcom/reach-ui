@@ -1,11 +1,7 @@
 <template>
 <div class="container" style="margin-top: 20px" v-if="visible">
 
-<div class="row">
-  <div class="col">
-    <h4>Call info:</h4>
-  </div>
-</div>
+<div class="row"><div class="col"><h2>Call info:</h2> </div></div>
 
 <div class="row">
   <div class="col">
@@ -40,20 +36,24 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div v-if="this.$agent.can_conference()" class="row" style="margin-top:20px">
-      <div class="col">
-        <h4>Conference with:</h4>
-        <div class="form-inline">
-          <conference-agent></conference-agent>&nbsp;
-          <conference-queue></conference-queue>&nbsp;
-          <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
-        </div>
-      </div>
+  <div class="col" v-if="this.$agent.can_conference()">
+    <h4>Conference with:</h4>
+    <div class="form-inline">
+      <conference-agent></conference-agent>&nbsp;
+      <conference-queue></conference-queue>&nbsp;
+      <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
     </div>
   </div>
+
+  <div class="col">
+    <skills label="Skills" v-model="skills"></skills>
+  </div>
+
 </div>
-</div>
+
+</div><!-- container -->
 </template>
 
 <script>
@@ -63,17 +63,29 @@ import TransferUri from '../Widget/TransferUri'
 import ConferenceAgent from '../Widget/ConferenceAgent'
 import ConferenceQueue from '../Widget/ConferenceQueue'
 import ConferenceUri from '../Widget/ConferenceUri'
+import Skills from '../Widget/Skills'
 import Common from '../../Admin/Common'
+
 export default {
+  components: {
+    'transfer-agent': TransferAgent,
+    'transfer-queue': TransferQueue,
+    'transfer-uri': TransferUri,
+    'conference-agent': ConferenceAgent,
+    'conference-queue': ConferenceQueue,
+    'conference-uri': ConferenceUri,
+    'skills': Skills
+  },
   props: {
     uuid: String
   },
   mixins: [Common],
   data () {
     return {
-      inqueue: {},
       visible: false,
+      inqueue: {},
       call_info: {},
+      skills: {},
       updater: undefined
     }
   },
@@ -81,12 +93,17 @@ export default {
     query: async function () {
       this.inqueue = await this.$agent.p_call('inqueue_state', ['inqueue_call', this.uuid])
       this.call_info = await this.$agent.p_call('call_info', [this.uuid])
+      let skills = await this.$agent.p_call('skills', ['inqueue', this.uuid])
+      this.skills = this.object2list(skills)
       this.visible = true
     },
     onTimer() {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
       }
+    },
+    update_skills () {
+      this.$agent.p_call('skills', ['inqueue', this.uuid, this.list2object(this.skills)])
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -104,14 +121,6 @@ export default {
   },
   beforeDestroy () {
     clearInterval(this.updater)
-  },
-  components: {
-    'transfer-agent': TransferAgent,
-    'transfer-queue': TransferQueue,
-    'transfer-uri': TransferUri,
-    'conference-agent': ConferenceAgent,
-    'conference-queue': ConferenceQueue,
-    'conference-uri': ConferenceUri
   },
 }
 </script>
