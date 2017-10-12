@@ -30,6 +30,10 @@
         <icon  name="pause" scale="4"></icon>
         <div>{{a.state}}</div>
       </div>
+      <div v-if="this.$agent.is_wrapup()" class="agent-state-wrap-up">
+        <icon  name="pause" scale="4"></icon>
+        <div>{{a.state}}</div>
+      </div>
     </div>
   </div>
   <div class="row col">
