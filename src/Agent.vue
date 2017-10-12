@@ -26,6 +26,8 @@
             </button>
             <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-danger">
               <icon name="close" scale="2"></icon></button>
+            <button v-if="this.$agent.is_wrapup()" @click="wrapup" class="btn btn-outline-danger">
+              <icon name="close" scale="2"></icon></button>
           </div>
         </div>
       </div>
@@ -54,7 +56,8 @@ export default {
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
     answer () { this.$agent.answer() },
-    hangup () { this.$agent.hangup() }
+    hangup () { this.$agent.hangup() },
+    wrapup () { this.$agent.p_call('end_wrapup', []) }
   },
   components: {
     inqueue: Inqueue,
