@@ -35,6 +35,7 @@ import AdminPrompt from './Admin/Prompt.vue'
 import AdminPrompts from './Admin/Prompts.vue'
 import AdminMOH from './Admin/MOH.vue'
 import AdminMOHs from './Admin/MOHs.vue'
+import AdminDialplan from './Admin/Dialplan.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -64,6 +65,7 @@ const router = new VueRouter({
       { path: 'prompts', component: AdminPrompts },
       { path: 'mohs', component: AdminMOHs },
       { path: 'agent', component: AdminAgent },
+      { path: 'dialplan', component: AdminDialplan },
       { path: 'agent/:id', component: AdminAgent, props: true },
       { path: 'queue', component: AdminQueue },
       { path: 'queue/:id', component: AdminQueue, props: true },
