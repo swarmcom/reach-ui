@@ -6,6 +6,7 @@
   <clients label="Client" v-model="line_in.client_id"></clients>
   <prompts label="Announce" v-model="line_in.announce_id"></prompts>
   <form-select-bool label="Allow Voicemail" v-model="line_in.allow_voicemail"></form-select-bool>
+  <form-select-bool label="Enable call recording" v-model="line_in.enable_call_recording"></form-select-bool>
   <prompts label="Voicemail prompt" v-model="line_in.voicemail_prompt_id"></prompts>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
