@@ -58,7 +58,7 @@ export default {
   data () {
     return {
       agent: this.$agent.vm.agent,
-      showCollapse: false
+      showCollapse: true
     }
   },
   components: {

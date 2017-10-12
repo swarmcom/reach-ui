@@ -23,7 +23,10 @@ export default class Agent extends WsProto {
         transfer_agents: [],
         state: undefined,
         hangup_state: undefined,
-        auto_logout_timer: undefined
+        auto_logout_timer: undefined,
+        activity_time: undefined,
+        release_id: undefined,
+        previous_state: 'released'
       }
     }),
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
@@ -102,13 +105,19 @@ export default class Agent extends WsProto {
   handleAgents ({info}) {
     if (info.state === 'available') {
       this.vm.transfer_agents.push(info.agent)
+      if (this.vm.previous_state === 'release')
+        this.vm.activity_time = new Date() - info.time
     }
     else {
       let i = this.vm.transfer_agents.findIndex(E => E.login === info.agent.login)
       if (i >= 0) {
         this.vm.transfer_agents.splice(i, 1)
       }
+      if (info.state === 'release')
+        this.vm.activity_time = new Date() - info.time
     }
+    this.vm.previous_state = info.state
+    this.vm.release_id = info.release_id
   }
 
   isAuth () { return this.vm.agent !== undefined }

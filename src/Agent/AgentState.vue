@@ -37,16 +37,21 @@
     </div>
   </div>
   <div class="row col">
-    <release v-if="a.hangup_state == 'available'"></release>
+    <release v-if="this.$agent.is_active()"></release>
   </div>
   <div class="row"></div>
-    <div class="row">
-      <div class="col-5 agent-state-text">State:</div>
-      <div class="col-7 agent-state-text"> {{a.state}} </div>
+    <div class="row" v-if="a.state === 'release'">
+      <div class="col-5 agent-state-text">Release reason:</div>
+      <div class="col-7 agent-state-text"> {{release_reason}} </div>
     </div>
     <div class="row">
-      <div class="col-5 agent-state-text">Hang_up State:</div>
-      <div class="col-7 agent-state-text"> {{a.hangup_state}} </div>
+      <div class="col-5 agent-state-text">State:</div>
+      <div v-if="a.state != 'release'">
+        <div class="col-7 agent-state-text">Active</div>
+      </div>
+      <div v-else>
+        <div class="col-7 agent-state-text">Release</div>
+      </div>
     </div>
     <div class="row">
       <div class="col-5 agent-state-text">Since:</div>
@@ -54,7 +59,7 @@
     </div>
     <div class="row">
       <div class="col-5 agent-state-text">Activity Time:</div>
-      <div class="col-7 agent-state-text"> {{msToHms(activity_time) }} </div>
+      <div class="col-7 agent-state-text"> {{msToHms(time_activity) }} </div>
     </div>
   </div>
 </template>
@@ -69,21 +74,36 @@ export default {
     return {
       a: {},
       releases: [],
-      updater: null,
-      activity_time: 0
+      updater: undefined,
+      time_activity: null
     }
   },
   methods: {
     available () { this.$agent.available() },
     release () { this.$agent.release() },
+    onTimer() {
+      this.time_activity = Date.now() - this.a.activity_time
+    },
+    query: async function () {
+      this.a = this.$agent.getData()
+      this.releases = await this.$agent.p_call('get_releases')
+    },
   },
   beforeDestroy () {
     clearInterval(this.updater)
   },
   created () {
-    this.a = this.$agent.getData()
-    this.date = moment(new Date()).format('Do MMM YYYY[,] HH:mm:ss')
-    this.updater = setInterval(() => { this.$agent.vm.state != 'release' ? this.activity_time+=1000 : this.activity_time=0 } , 1000)
+    this.query()
+    this.updater = setInterval(this.onTimer, 1000)
+  },
+  computed: {
+    date: function () {
+      return moment(this.a.activity_time).format('Do MMM YYYY[,] HH:mm')
+    },
+    release_reason: function () {
+      let name = this.releases.find(I => I.id == this.a.release_id)
+      return name ? name.name : ''
+    }
   },
   components: {
     release: Release
