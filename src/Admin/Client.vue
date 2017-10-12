@@ -1,6 +1,11 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="client.name"></form-text>
+  <mohs label="Music on hold" v-model="client.moh_id"></mohs>
+  <prompts label="Announce" v-model="client.announce_id"></prompts>
+  <form-select-bool label="Allow Voicemail" v-model="client.allow_voicemail"></form-select-bool>
+  <form-select-bool label="Enable call recording" v-model="client.enable_call_recording"></form-select-bool>
+  <prompts label="Voicemail prompt" v-model="client.voicemail_prompt_id"></prompts>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
@@ -8,12 +13,15 @@
 
 <script>
 import FormText from '../Widget/FormText.vue'
+import MOHs from '../Widget/MOHs.vue'
 import Common from './Common'
+import FormSelectBool from '../Widget/FormSelectBool.vue'
+import Prompts from '../Widget/Prompts.vue'
 
 export default {
   name: 'admin-client',
   props: ['id'],
-  components: { 'form-text': FormText },
+  components: { 'form-select-bool': FormSelectBool, 'form-text': FormText, mohs: MOHs, prompts: Prompts },
   mixins: [Common],
   data () {
     return {
