@@ -12,6 +12,7 @@
           <b-row class="col-10">
             <b-col cols="8">
               <dialer v-if="this.$agent.is_idle()"></dialer>
+              <override></override>
             </b-col>
             <b-col cols="12">
               <inqueue></inqueue>
@@ -40,6 +41,7 @@
 import ToggleBar from './Widget/ToggleBar'
 import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
+import Override from './Agent/Override'
 import Release from './Agent/Widget/Release'
 import AgentState from './Agent/AgentState'
 import AgentInfo from './Agent/Info'
@@ -59,13 +61,17 @@ export default {
     hangup () { this.$agent.hangup() },
     wrapup () { this.$agent.p_call('end_wrapup', []) }
   },
+  created () {
+    this.a = this.$agent.getData()
+  },
   components: {
     inqueue: Inqueue,
     dialer: Dialer,
     release: Release,
     toggleBar: ToggleBar,
     agentState: AgentState,
-    'agent-info': AgentInfo
+    'agent-info': AgentInfo,
+    override: Override
   },
 }
 </script>

@@ -3,6 +3,7 @@
   <call v-if="call_visible" :uuid="uuid"></call>
   <outgoing v-if="outgoing_visible"></outgoing>
   <ringer v-if="ringer_visible"></ringer>
+  <spy v-if="spy_visible" :uuid="uuid"></spy>
   <conference v-if="conf_visible"></conference>
 </div>
 </template>
@@ -12,6 +13,7 @@ import Call from './Inqueue/Call'
 import Conference from './Inqueue/Conference'
 import Outgoing from './Inqueue/Outgoing'
 import Ringer from './Inqueue/Ringer'
+import Spy from './Inqueue/Spy'
 
 export default {
   data () {
@@ -20,6 +22,7 @@ export default {
       conf_visible: false,
       ringer_visible: false,
       outgoing_visible: false,
+      spy_visible: false,
       uuid: undefined
     }
   },
@@ -31,6 +34,7 @@ export default {
         this.conf_visible = false
         this.ringer_visible = false
         this.outgoing_visible = false
+        this.spy_visible = false
         this.uuid = undefined
       } else {
         if (state.inqueue.inqueue_call) {
@@ -39,6 +43,10 @@ export default {
         }
         if (state.inqueue.outgoing) {
           this.outgoing_visible = true
+        }
+        if (state.inqueue.spy) {
+          this.spy_visible = true
+          this.uuid = state.inqueue.spy
         }
         if (state.state == 'ringing') {
           this.ringer_visible = true
@@ -66,7 +74,8 @@ export default {
     call: Call,
     conference: Conference,
     outgoing: Outgoing,
-    ringer: Ringer
+    ringer: Ringer,
+    spy: Spy
   },
 }
 </script>

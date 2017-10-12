@@ -15,7 +15,6 @@ export default {
       fields: {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
-        number: { label: 'Number', sortable: true },
         queue: { label: 'Queue', sortable: true, formatter: (queue) => queue.name },
         client: { label: 'Client', sortable: true, formatter: (client) => client.name }
       },

@@ -4,7 +4,7 @@
   <div class="col-9">
     <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
       <option></option>
-      <option v-for="line in lines" :value="line.id" :selected="isActive(line.id)">{{ line.name }}</option>
+      <option v-for="prompt in prompts" :value="prompt.id" :selected="isActive(prompt.id)">{{ prompt.name }}</option>
     </select>
   </div>
 </div>
@@ -12,11 +12,11 @@
 
 <script>
 export default {
-  name: 'form-text',
+  name: 'widget-prompts',
   props: ['label', 'value'],
   data () {
     return {
-      lines: []
+      prompts: []
     }
   },
   methods: {
@@ -24,7 +24,7 @@ export default {
       return Id == this.value
     },
     query: async function () {
-      this.lines = await this.$agent.p_mfa('ws_admin', 'get_line_outs')
+      this.prompts = await this.$agent.p_mfa('ws_admin', 'get_prompts')
     },
     onUpdate (value) {
       this.$emit('input', value)

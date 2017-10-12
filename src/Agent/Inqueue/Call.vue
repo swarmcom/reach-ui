@@ -12,6 +12,8 @@
       </dd>
       <dt class="col-sm-3">To:</dt>
       <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
+      <dt class="col-sm-3">Client:</dt>
+      <dd class="col-sm-9">{{ this.inqueue.client.name }}</dd>
       <dt class="col-sm-3">State:</dt>
       <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
       <dt class="col-sm-3">Queue:</dt>
@@ -26,7 +28,7 @@
   </div>
   <div class="col-7">
     <h4>Skills editor:</h4>
-    <skills label="Skills" v-model="skills"></skills>
+    <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
     <div class="row" style="margin-top:10px">
       <div class="col-6">
         <div v-if="this.$agent.can_transfer()" class="row">

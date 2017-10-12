@@ -1,33 +1,41 @@
 <template>
 <div>
 <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <router-link class="nav-link" to="/admin/agents">Agents</router-link>
-  </li>
-  <li class="nav-item greenColor">
-    <router-link class="nav-link" to="/admin/agent_groups">Agent Groups</router-link>
-  </li>
-  <li class="nav-item greenColor">
-    <router-link class="nav-link" to="/admin/queues">Queues</router-link>
-  </li>
-  <li class="nav-item greenColor">
-    <router-link class="nav-link" to="/admin/queue_groups">Queue Groups</router-link>
-  </li>
-  <li class="nav-item">
-    <router-link class="nav-link" to="/admin/params">Params</router-link>
-  </li>
-  <li class="nav-item">
-    <router-link class="nav-link" to="/admin/releases">Releases</router-link>
-  </li>
+
+  <b-nav-item-dropdown text="Agents">
+    <b-dropdown-item to="/admin/agents">Agents</b-dropdown-item>
+    <b-dropdown-item to="/admin/agent_groups">Groups</b-dropdown-item>
+  </b-nav-item-dropdown>
+
+  <b-nav-item-dropdown text="Queues">
+    <b-dropdown-item to="/admin/queues">Queues</b-dropdown-item>
+    <b-dropdown-item to="/admin/queue_groups">Groups</b-dropdown-item>
+  </b-nav-item-dropdown>
+
   <li class="nav-item">
     <router-link class="nav-link" to="/admin/clients">Clients</router-link>
   </li>
+
+  <b-nav-item-dropdown text="Config">
+    <b-dropdown-item to="/admin/releases">Releases</b-dropdown-item>
+    <b-dropdown-item to="/admin/dispositions">Dispositions</b-dropdown-item>
+  </b-nav-item-dropdown>
+
+  <b-nav-item-dropdown text="Sounds">
+    <b-dropdown-item to="/admin/prompts">Prompts</b-dropdown-item>
+    <b-dropdown-item to="/admin/mohs">MOHs</b-dropdown-item>
+  </b-nav-item-dropdown>
+
+  <b-nav-item-dropdown text="Lines">
+    <b-dropdown-item to="/admin/dialplan">Dialplan</b-dropdown-item>
+    <b-dropdown-item to="/admin/line_ins">Lines In</b-dropdown-item>
+    <b-dropdown-item to="/admin/line_outs">Lines Out</b-dropdown-item>
+  </b-nav-item-dropdown>
+
   <li class="nav-item">
-    <router-link class="nav-link" to="/admin/line_ins">Line In</router-link>
+    <router-link class="nav-link" to="/admin/params">Params</router-link>
   </li>
-  <li class="nav-item">
-    <router-link class="nav-link" to="/admin/line_outs">Line Out</router-link>
-  </li>
+
 </ul>
 <router-view style="margin-top: 20px"></router-view>
 </div>

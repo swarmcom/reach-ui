@@ -2,7 +2,12 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-  <btable :fields="fields" :data="computedAgents" :filter_button=true :paginate=true></btable>
+  <b-table style="margin-top:10px" striped hover responsive :items="computedAgents" :fields="fields">
+    <template slot="actions" scope="data">
+      <b-button size="sm" variant="primary" @click="release(data.item)">Release</b-button>
+      <b-button size="sm" variant="danger" @click="kill(data.item)">Kill</b-button>
+    </template>
+  </b-table>
   </b-collapse>
 </div>
 </template>
@@ -22,7 +27,8 @@ export default {
         agent_login: { label: 'Login', sortable: true },
         agent_name: { label: 'Name', sortable: true },
         state: { label: 'State', sortable: true },
-        time: { label: 'Time', sortable:true, formatter: (time) => this.msToHms(time) }
+        timeComputed: { label: 'Time', sortable:true },
+        actions: { label: 'Actions' }
       },
       agents: [],
       updater: '',
@@ -41,7 +47,7 @@ export default {
         }
       }
       else {
-        let i = this.agents.findIndex(E => E.login === info.login)
+        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
         if (i >= 0) {
           this.agents.splice(i, 1, info)
         }
@@ -55,6 +61,15 @@ export default {
         E.time = E.time + 1000
         A.splice(i, 1, E)
       })
+    },
+    onClick (data) {
+      this.$router.push(`/admin/agent/${data.agent_id}`)
+    },
+    release (agent) {
+      this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])
+    },
+    kill (agent) {
+      this.$agent.mfa('ws_supervisor', 'kill', [agent.agent_id])
     }
   },
   created () {

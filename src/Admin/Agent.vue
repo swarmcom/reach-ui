@@ -12,6 +12,8 @@
   <form-text label="Max number of unanswered calls before unavailable" v-model="agent.max_ring_fails"></form-text>
   <form-text label="Suspend time" v-model="agent.suspend_time"></form-text>
   <form-text label="Auto logout" v-model="agent.autologout"></form-text>
+  <form-bool label="Persistent" v-model="agent.persistent"></form-bool>
+  <form-bool label="Reset max rings on success" v-model="agent.reset_max_rings_fails"></form-bool>
   <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
@@ -20,6 +22,7 @@
 
 <script>
 import FormText from '../Widget/FormText.vue'
+import FormBool from '../Widget/FormBool.vue'
 import Groups from '../Widget/Agent/Groups.vue'
 import Skills from '../Widget/Skills.vue'
 import Lines from '../Widget/Lines.vue'
@@ -29,6 +32,7 @@ export default {
   name: 'admin-agent',
   components: {
     'form-text': FormText,
+    'form-bool': FormBool,
     groups: Groups,
     skills: Skills,
     lines: Lines,

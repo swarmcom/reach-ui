@@ -23,12 +23,19 @@ import AdminAgentGroup from './Admin/Agent/Group.vue'
 import AdminAgentGroups from './Admin/Agent/Groups.vue'
 import AdminRelease from './Admin/Release.vue'
 import AdminReleases from './Admin/Releases.vue'
+import AdminDisposition from './Admin/Disposition.vue'
+import AdminDispositions from './Admin/Dispositions.vue'
 import AdminLineIn from './Admin/LineIn.vue'
 import AdminLineIns from './Admin/LineIns.vue'
 import AdminLineOut from './Admin/LineOut.vue'
 import AdminLineOuts from './Admin/LineOuts.vue'
 import AdminClient from './Admin/Client.vue'
 import AdminClients from './Admin/Clients.vue'
+import AdminPrompt from './Admin/Prompt.vue'
+import AdminPrompts from './Admin/Prompts.vue'
+import AdminMOH from './Admin/MOH.vue'
+import AdminMOHs from './Admin/MOHs.vue'
+import AdminDialplan from './Admin/Dialplan.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -51,10 +58,14 @@ const router = new VueRouter({
       { path: 'queue_groups', component: AdminQueueGroups },
       { path: 'agent_groups', component: AdminAgentGroups },
       { path: 'releases', component: AdminReleases },
+      { path: 'dispositions', component: AdminDispositions },
       { path: 'clients', component: AdminClients },
       { path: 'line_ins', component: AdminLineIns },
       { path: 'line_outs', component: AdminLineOuts },
+      { path: 'prompts', component: AdminPrompts },
+      { path: 'mohs', component: AdminMOHs },
       { path: 'agent', component: AdminAgent },
+      { path: 'dialplan', component: AdminDialplan },
       { path: 'agent/:id', component: AdminAgent, props: true },
       { path: 'queue', component: AdminQueue },
       { path: 'queue/:id', component: AdminQueue, props: true },
@@ -64,6 +75,12 @@ const router = new VueRouter({
       { path: 'queue_group/:id', component: AdminQueueGroup, props: true },
       { path: 'release', component: AdminRelease },
       { path: 'release/:id', component: AdminRelease, props: true },
+      { path: 'disposition', component: AdminDisposition },
+      { path: 'disposition/:id', component: AdminDisposition, props: true },
+      { path: 'prompt', component: AdminPrompt },
+      { path: 'prompt/:id', component: AdminPrompt, props: true },
+      { path: 'moh', component: AdminMOH },
+      { path: 'moh/:id', component: AdminMOH, props: true },
       { path: 'client', component: AdminClient },
       { path: 'client/:id', component: AdminClient, props: true },
       { path: 'line_in', component: AdminLineIn },
