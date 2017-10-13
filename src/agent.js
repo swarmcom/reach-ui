@@ -66,7 +66,17 @@ export default class Agent extends WsProto {
     if (this.isAuth()) {
       this.handleAuth(this.vm.agent)
     } else {
-      this.call('auth', [Login, Password], (A) => this.handleAuth(A, Cb))
+      this.call('auth', [Login, Password, false], (A) => this.handleAuth(A, Cb))
+      this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
+      this.subscribe('agents')
+    }
+  }
+
+  takeover (Login, Password, Cb = (A) => A) {
+    if (this.isAuth()) {
+      this.handleAuth(this.vm.agent)
+    } else {
+      this.call('auth', [Login, Password, true], (A) => this.handleAuth(A, Cb))
       this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
       this.subscribe('agents')
     }

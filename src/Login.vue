@@ -1,15 +1,22 @@
 <template>
-<div class="form-signin">
-  <h2 class="form-signin-heading">Please sign in:</h2>
-  <label for="inputLogin" class="sr-only">Login</label>
-  <input v-model="login" type="text" id="inputLogin" class="form-control" placeholder="Login" required="true" autofocus="true">
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
-  <button @click="onSubmit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<div>
+  <div class="form-signin">
+    <h2 class="form-signin-heading">Please sign in:</h2>
+    <label for="inputLogin" class="sr-only">Login</label>
+    <input v-model="login" type="text" id="inputLogin" class="form-control" placeholder="Login" required="true" autofocus="true">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
+    <button @click="onSubmit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  </div>
+  <b-modal ref="takeover" hide-footer title="Agent is logged in">
+    <b-btn variant="outline-danger" @click="takeover">Take over</b-btn>
+    <b-btn variant="outline-success" @click="cancel">Cancel</b-btn>
+  </b-modal>
 </div>
 </template>
 
 <script>
+import {EventBus} from './event-bus.js'
 
 export default {
   data () {
@@ -19,10 +26,22 @@ export default {
     }
   },
   methods: {
+    cancel () {
+      this.$refs.takeover.hide()
+    },
+    takeover: function() {
+      this.$agent.takeover(this.login, this.password, (Re) => {
+        if (Re.error) {
+          this.$notify({ title: 'Take over:', text: Re.error, type: 'error' })
+        }
+      })
+    },
     onSubmit () {
       this.$agent.login(this.login, this.password, (Re) => {
-        if(Re.error) {
-          this.$notify({ title: 'Authentication:', text: Re.error, type: 'error' });
+        if (Re.error && Re.error == 'already_logged_in') {
+          this.$refs.takeover.show()
+        } else if (Re.error) {
+          this.$notify({ title: 'Authentication:', text: Re.error, type: 'error' })
         }
       })
     }
