@@ -6,6 +6,10 @@
   <form-select-bool label="Allow Voicemail" v-model="client.allow_voicemail"></form-select-bool>
   <form-select-bool label="Enable call recording" v-model="client.enable_call_recording"></form-select-bool>
   <prompts label="Voicemail prompt" v-model="client.voicemail_prompt_id"></prompts>
+  <form-select-bool label="Override Caller ID on Line In" v-model="client.override_clid_line_in"></form-select-bool>
+  <form-select-bool label="Override Caller ID on Line Out" v-model="client.override_clid_line_out"></form-select-bool>
+  <form-text label="Caller ID name" v-model="client.caller_id_name"></form-text>
+  <form-text label="Caller ID number" v-model="client.caller_id_number"></form-text> 
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
