@@ -2,11 +2,11 @@
 <div>
   <div class="row" style="margin-top:5px;">
     <div class="col-5">
-      <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-outline-secondary">
-        <icon name="stop" scale="5"></icon>
+      <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-outline-secondary agent-state-button">
+        <icon name="stop" scale="4"></icon>
       </button>
-      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-secondary"">
-          <icon name="play" scale="5"></icon>
+      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-secondary agent-state-button">
+          <icon name="play" scale="4"></icon>
       </button>
     </div>
     <div class="col-7">
@@ -80,7 +80,14 @@ export default {
   },
   methods: {
     available () { this.$agent.available() },
-    release () { this.$agent.release() },
+    release () {
+      if (this.a.release_id === 'undefined') {
+        this.$notify({ title: 'Notify:', text: 'Please select release reason', type: 'warning' });
+      }
+      else {
+        this.$agent.release(this.a.release_id)
+      }
+    },
     onTimer() {
       this.time_activity = Date.now() - this.a.activity_time
     },
