@@ -5,25 +5,34 @@
     <div class="for_group col-1">
       <button @click="del(dial.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
     </div>
+    <div class="form-group col-3">
+      <select class="custom-select" v-model="dial.header" v-on:change="onChange(dial)">
+        <option></option>
+        <option v-for="header in headers" :value="header" :selected="header == dial.header">{{ header }}</option>
+      </select>
+    </div>
     <div class="form-group col-5">
-      <input type="text" class="form-control" v-model="dial.match">
+      <input type="text" class="form-control" v-model="dial.match" placeholder="Regex" v-on:change="onChange(dial)">
     </div>
     <div class="form-group col">
-      <lines v-model="dial.line_in_id"></lines>
-    </div>
-    <div class="col">
-      Queue: {{ dial.line_in.queue.name }}, Client: {{ dial.line_in.client.name }}
+      <lines v-model="dial.line_in_id" v-on:input="onChange(dial)"></lines>
     </div>
   </div>
   <div class="form-row">
     <div class="form-group col-1">
       <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
     </div>
+    <div class="form-group col-3">
+      <select class="custom-select" v-model="header">
+        <option></option>
+        <option v-for="header in headers" :value="header">{{ header }}</option>
+      </select>
+    </div>
     <div class="form-group col-5">
-      <input type="text" class="form-control" v-model="k">
+      <input type="text" class="form-control" v-model="match" placeholder="Regex">
     </div>
     <div class="form-group col">
-      <lines v-model="v"></lines>
+      <lines v-model="line_id"></lines>
     </div>
   </div>
 </div>
@@ -39,8 +48,15 @@ export default {
   },
   data () {
     return {
-      k: undefined,
-      v: undefined,
+      headers: [
+        'Caller-Destination-Number',
+        'Caller-Caller-ID-Number',
+        'Caller-ANI',
+        'Caller-Username',
+      ],
+      match: undefined,
+      line_id: undefined,
+      header: undefined,
       dials: []
     }
   },
@@ -48,11 +64,15 @@ export default {
     query: async function () {
       this.dials = await this.$agent.p_mfa('ws_admin', 'get_dials')
     },
+    onChange (dial) {
+      this.$agent.p_mfa('ws_admin', 'update_dial', [dial.id, dial])
+    },
     add: async function() {
-      let dial = await this.$agent.p_mfa('ws_admin', 'create_dial', [{ match: this.k, line_in_id: this.v }])
+      let dial = await this.$agent.p_mfa('ws_admin', 'create_dial', [{ match: this.match, line_in_id: this.line_id, header: this.header }])
       this.dials.push(dial)
-      this.k = ''
-      this.v = ''
+      this.match = ''
+      this.line_id = ''
+      this.header = ''
     },
     del: async function (Key) {
       await this.$agent.p_mfa('ws_admin', 'delete_dial', [Key])

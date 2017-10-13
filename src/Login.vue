@@ -17,10 +17,15 @@
     </div>
     <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2" type="submit">Login</button>
   </div>
+  <b-modal ref="takeover" hide-footer title="Agent is logged in">
+    <b-btn variant="outline-danger" @click="takeover">Take over</b-btn>
+    <b-btn variant="outline-success" @click="cancel">Cancel</b-btn>
+  </b-modal>
 </div>
 </template>
 
 <script>
+import {EventBus} from './event-bus.js'
 
 export default {
   data () {
@@ -30,10 +35,22 @@ export default {
     }
   },
   methods: {
+    cancel () {
+      this.$refs.takeover.hide()
+    },
+    takeover: function() {
+      this.$agent.takeover(this.login, this.password, (Re) => {
+        if (Re.error) {
+          this.$notify({ title: 'Take over:', text: Re.error, type: 'error' })
+        }
+      })
+    },
     onSubmit () {
       this.$agent.login(this.login, this.password, (Re) => {
-        if(Re.error) {
-          this.$notify({ title: 'Authentication:', text: Re.error, type: 'error' });
+        if (Re.error && Re.error == 'already_logged_in') {
+          this.$refs.takeover.show()
+        } else if (Re.error) {
+          this.$notify({ title: 'Authentication:', text: Re.error, type: 'error' })
         }
       })
     }
