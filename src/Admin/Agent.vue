@@ -4,6 +4,7 @@
   <form-text label="Login" v-model="agent.login"></form-text>
   <form-text label="Password" v-model="agent.password"></form-text>
   <agent-groups label="Group" v-model="agent.group_id"></agent-groups>
+  <release-groups label="Release Group" v-model="agent.release_group_id"></release-groups>
   <lines label="Line Out" v-model="agent.line_id"></lines>
   <form-text label="Permissions" v-model="agent.permissions"></form-text>
   <form-text label="SIP URI" v-model="agent.uri"></form-text>

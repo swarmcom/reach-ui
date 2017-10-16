@@ -2,6 +2,7 @@
 <div class="form">
   <form-text id="name" label="Name" v-model="line_in.name"></form-text>
   <form-text id="description" label="Description" v-model="line_in.description"></form-text>
+  <disposition-groups label="Dispositions" v-model="line_in.disposition_group_id"></disposition-groups>
   <queues label="Queue" v-model="line_in.queue_id"></queues>
   <clients label="Client" v-model="line_in.client_id"></clients>
   <prompts label="Announce" v-model="line_in.announce_id"></prompts>
