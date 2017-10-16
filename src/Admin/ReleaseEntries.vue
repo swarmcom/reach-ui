@@ -39,8 +39,6 @@
 </template>
 
 <script>
-import Btable from '../Widget/Btable'
-
 export default {
   name: 'admin-release-entries',
   props: ['id'],
@@ -82,9 +80,6 @@ export default {
   },
   created () {
     this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>
