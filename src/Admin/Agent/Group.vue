@@ -1,6 +1,7 @@
 <template>
 <div class="form">
   <form-text label="Name" v-model="agent_group.name"></form-text>
+  <release-groups label="Release Group" v-model="agent_group.release_group_id"></release-groups>
   <form-text label="Permissions" v-model="agent_group.permissions"></form-text>
   <form-text label="Ring timeout" v-model="agent_group.ring_timeout"></form-text>
   <form-text label="Suspend time" v-model="agent_group.suspend_time"></form-text>

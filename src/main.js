@@ -53,6 +53,8 @@ import Prompts from './Widget/Prompts.vue'
 import Queues from './Widget/Queues.vue'
 import QueueGroups from './Widget/Queue/Groups.vue'
 import Clients from './Widget/Clients.vue'
+import DispositionGroups from './Widget/DispositionGroups.vue'
+import ReleaseGroups from './Widget/ReleaseGroups.vue'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
@@ -70,8 +72,10 @@ Vue.component('recipe', Recipe)
 Vue.component('mohs', MOHs)
 Vue.component('prompts', Prompts)
 Vue.component('clients', Clients)
-Vue.component('queues', Prompts)
+Vue.component('queues', Queues)
 Vue.component('queue-groups', QueueGroups)
+Vue.component('disposition-groups', DispositionGroups)
+Vue.component('release-groups', ReleaseGroups)
 
 Vue.use(VueRouter)
 Vue.use(AgentAPI)

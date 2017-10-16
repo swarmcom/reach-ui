@@ -1,6 +1,7 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="client.name"></form-text>
+  <disposition-groups label="Dispositions" v-model="client.disposition_group_id"></disposition-groups>
   <mohs label="Music on hold" v-model="client.moh_id"></mohs>
   <prompts label="Announce" v-model="client.announce_id"></prompts>
   <form-select-bool label="Allow Voicemail" v-model="client.allow_voicemail"></form-select-bool>
