@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.prompts = await this.$agent.p_mfa('ws_admin', 'get_prompts')
+      this.prompts = await this.$agent.p_mfa('ws_db_prompt', 'get')
     },
     add () {
       this.$router.push(`/admin/prompt/`)

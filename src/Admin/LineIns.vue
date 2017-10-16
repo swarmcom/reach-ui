@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.line_ins = await this.$agent.p_mfa('ws_admin', 'get_line_ins')
+      this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
     },
     add () {
       this.$router.push(`/admin/line_in/`)

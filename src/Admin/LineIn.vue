@@ -37,15 +37,15 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.line_in = await this.$agent.p_mfa('ws_admin', 'get_line_in', [this.id])
+        this.line_in = await this.$agent.p_mfa('ws_db_line_in', 'get', [this.id])
       }
     },
     onCommit: async function () {
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_line_in', [this.id, this.line_in])
+          await this.$agent.p_mfa('ws_db_line_in', 'update', [this.id, this.line_in])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_line_in', [this.line_in])
+          await this.$agent.p_mfa('ws_db_line_in', 'create', [this.line_in])
         }
         this.$router.push('/admin/line_ins')
       }
@@ -55,7 +55,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_line_in', [this.id])
+        await this.$agent.p_mfa('ws_db_line_in', 'delete', [this.id])
         this.$router.push('/admin/line_ins')
       }
     },

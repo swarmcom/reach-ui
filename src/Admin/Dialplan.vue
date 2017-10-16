@@ -62,20 +62,20 @@ export default {
   },
   methods: {
     query: async function () {
-      this.dials = await this.$agent.p_mfa('ws_admin', 'get_dials')
+      this.dials = await this.$agent.p_mfa('ws_db_dial', 'get')
     },
     onChange (dial) {
-      this.$agent.p_mfa('ws_admin', 'update_dial', [dial.id, dial])
+      this.$agent.p_mfa('ws_db_dial', 'update', [dial.id, dial])
     },
     add: async function() {
-      let dial = await this.$agent.p_mfa('ws_admin', 'create_dial', [{ match: this.match, line_in_id: this.line_id, header: this.header }])
+      let dial = await this.$agent.p_mfa('ws_db_dial', 'create', [{ match: this.match, line_in_id: this.line_id, header: this.header }])
       this.dials.push(dial)
       this.match = ''
       this.line_id = ''
       this.header = ''
     },
     del: async function (Key) {
-      await this.$agent.p_mfa('ws_admin', 'delete_dial', [Key])
+      await this.$agent.p_mfa('ws_db_dial', 'delete', [Key])
       let id = this.dials.findIndex(Obj => Obj.id === Key)
       if (id >= 0) {
         this.dials.splice(id, 1)

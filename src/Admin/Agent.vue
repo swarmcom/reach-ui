@@ -48,7 +48,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.agent = await this.$agent.p_mfa('ws_admin', 'get_agent', [this.id])
+        this.agent = await this.$agent.p_mfa('ws_db_agent', 'get', [this.id])
         this.skills = this.object2list(this.agent.skills)
       }
     },
@@ -56,9 +56,9 @@ export default {
       this.agent.skills = this.list2object(this.skills)
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_agent', [this.id, this.agent])
+          await this.$agent.p_mfa('ws_db_agent', 'update', [this.id, this.agent])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_agent', [this.agent])
+          await this.$agent.p_mfa('ws_db_agent', 'create', [this.agent])
         }
         this.$router.push('/admin/agents')
       }
@@ -68,7 +68,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_agent', [this.id])
+        await this.$agent.p_mfa('ws_db_agent', 'delete', [this.id])
         this.$router.push('/admin/agents')
       }
     },
