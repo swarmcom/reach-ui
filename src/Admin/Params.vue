@@ -1,6 +1,10 @@
 <template>
-<div>
-  <h3>System-wide parameters</h3>
+<div class="container">
+  <div class="row"  style="margin-bottom: 20px">
+    <div class="col">
+      <h3>System-wide parameters:</h3>
+    </div>
+  </div>
   <div v-for="param of params" class="form-row">
     <div class="for_group col-1">
       <button @click="del(param.key)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
