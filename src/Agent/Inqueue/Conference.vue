@@ -1,5 +1,5 @@
 <template>
-<div class="container" v-if="visible">
+<div v-if="visible">
 <h3>Conference:</h3>
 <div class="row" style="margin-top: 10px">
   <div class="col">
