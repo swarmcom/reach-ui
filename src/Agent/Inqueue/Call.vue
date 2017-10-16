@@ -29,6 +29,7 @@
 
   <div class="col">
     <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
+    <disposition v-bind:uuid="this.uuid"></disposition>
   </div>
 </div><!-- row -->
 
@@ -72,6 +73,7 @@ import ConferenceQueue from '../Widget/ConferenceQueue'
 import ConferenceUri from '../Widget/ConferenceUri'
 import Skills from '../Widget/Skills'
 import Common from '../../Admin/Common'
+import Disposition from '../Widget/Disposition'
 
 export default {
   components: {
@@ -81,7 +83,8 @@ export default {
     'conference-agent': ConferenceAgent,
     'conference-queue': ConferenceQueue,
     'conference-uri': ConferenceUri,
-    'skills': Skills
+    'skills': Skills,
+    'disposition': Disposition
   },
   props: {
     uuid: String

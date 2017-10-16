@@ -27,7 +27,7 @@
   <inqueue></inqueue>
   <b-row style="margin-top: 20px">
     <b-col cols="6">
-      <override></override>
+      <override v-if="this.$agent.is_idle()"></override>
     </b-col>
     <b-col cols="6">
       <dialer v-if="this.$agent.is_idle()"></dialer>
