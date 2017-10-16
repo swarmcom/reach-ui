@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.ringer = await this.$agent.p_call('get_ringer', [])
+      this.ringer = await this.$agent.p_mfa('ws_agent', 'get_ringer', [])
       this.visible = true
     },
     handleState ({ state }) {
@@ -32,7 +32,7 @@ export default {
       }
     },
     stop_ringer () {
-      this.$agent.p_call('stop_ringer', [])
+      this.$agent.p_mfa('ws_agent', 'stop_ringer', [])
     },
   },
   created () {

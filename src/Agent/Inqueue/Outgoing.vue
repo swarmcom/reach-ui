@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.outgoing = await this.$agent.p_call('get_outgoing', [])
+      this.outgoing = await this.$agent.p_mfa('ws_agent', 'get_outgoing', [])
       this.visible = true
     },
     hold () { this.$agent.hold() },
