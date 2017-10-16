@@ -14,16 +14,12 @@
 </template>
 
 <script>
-import FormText from '../../Widget/FormText.vue'
-import Skills from '../../Widget/Skills.vue'
-import Lines from '../../Widget/Lines.vue'
 import Common from '../Common'
 
 export default {
   name: 'admin-agent-group',
   props: ['id'],
   mixins: [Common],
-  components: { 'form-text': FormText, 'skills': Skills, 'lines': Lines },
   data () {
     return {
       agent_group: {},

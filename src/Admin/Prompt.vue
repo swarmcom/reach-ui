@@ -15,13 +15,11 @@
 </template>
 
 <script>
-import FormText from '../Widget/FormText.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-prompt',
   props: ['id'],
-  components: { 'form-text': FormText },
   mixins: [Common],
   data () {
     return {

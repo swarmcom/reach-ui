@@ -1,7 +1,7 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="queue.name"></form-text>
-  <groups id="group_id" label="Group" v-model="queue.group_id"></groups>
+  <queue-groups id="group_id" label="Group" v-model="queue.group_id"></queue-groups>
   <form-text id="hold_music" label="Music on hold" v-model="queue.hold_music"></form-text>
   <form-text id="weight" label="Weight" v-model="queue.weight"></form-text>
   <form-text id="aging_factor" label="Aging" v-model="queue.aging_factor"></form-text>
@@ -16,17 +16,11 @@
 </template>
 
 <script>
-import FormText from '../Widget/FormText.vue'
-import FormBool from '../Widget/FormBool.vue'
-import Skills from '../Widget/Skills.vue'
-import Recipe from '../Widget/Recipe.vue'
-import Groups from '../Widget/Queue/Groups.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-queue',
   props: ['id'],
-  components: { 'groups': Groups, 'form-text': FormText, 'form-bool': FormBool, 'skills': Skills, 'recipe': Recipe },
   mixins: [Common],
 
   data () {

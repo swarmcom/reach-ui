@@ -41,11 +41,38 @@ import AdminDialplan from './Admin/Dialplan.vue'
 
 import AdminParams from './Admin/Params.vue'
 
+import FormText from './Widget/FormText.vue'
+import FormBool from './Widget/FormBool.vue'
+import AgentGroups from './Widget/Agent/Groups.vue'
+import Skills from './Widget/Skills.vue'
+import Lines from './Widget/Lines.vue'
+import Recipe from './Widget/Recipe.vue'
+import MOHs from './Widget/MOHs.vue'
+import FormSelectBool from './Widget/FormSelectBool.vue'
+import Prompts from './Widget/Prompts.vue'
+import Queues from './Widget/Queues.vue'
+import QueueGroups from './Widget/Queue/Groups.vue'
+import Clients from './Widget/Clients.vue'
+
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 import Notifications from 'vue-notification'
 
 Vue.component('icon', Icon)
+
+Vue.component('form-text', FormText)
+Vue.component('form-bool', FormBool)
+Vue.component('form-select-bool', FormSelectBool)
+Vue.component('agent-groups', AgentGroups)
+Vue.component('skills', Skills)
+Vue.component('lines', Lines)
+Vue.component('recipe', Recipe)
+Vue.component('mohs', MOHs)
+Vue.component('prompts', Prompts)
+Vue.component('clients', Clients)
+Vue.component('queues', Prompts)
+Vue.component('queue-groups', QueueGroups)
+
 Vue.use(VueRouter)
 Vue.use(AgentAPI)
 Vue.use(Notifications)
