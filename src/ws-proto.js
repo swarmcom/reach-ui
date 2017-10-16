@@ -26,6 +26,10 @@ export default class WsProto {
     this.ws.onerror = Ev => this.onError(Ev)
   }
 
+  call (F, A = [], Cb = (A) => A) {
+    return this.mfa('ws_agent', F, A, Cb)
+  }
+
   p_mfa (M, F, A = []) {
     return new Promise((resolve, reject) => {
       this.mfa(M, F, A, (Re) => handleReply(Re, resolve, reject))
