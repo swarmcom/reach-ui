@@ -1,5 +1,5 @@
 <template>
-<div class="container" style="margin-top: 20px" v-if="visible">
+<div style="margin-top: 20px" v-if="visible">
 
 <div class="row"><div class="col"><h2>Call info:</h2> </div></div>
 
@@ -13,7 +13,7 @@
       <dt class="col-sm-3">To:</dt>
       <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
       <dt class="col-sm-3">Client:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.client.name }}</dd>
+      <dd class="col-sm-9">{{ this.inqueue.line_in.client.name }}</dd>
       <dt class="col-sm-3">State:</dt>
       <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
       <dt class="col-sm-3">Queue:</dt>

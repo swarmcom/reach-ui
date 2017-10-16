@@ -1,5 +1,5 @@
 <template>
-<div class="container" style="margin-top: 20px" v-if="visible">
+<div style="margin-top: 20px" v-if="visible">
 
   <div class="row"><div class="col"><h2>Outgoing info:</h2> </div></div>
 

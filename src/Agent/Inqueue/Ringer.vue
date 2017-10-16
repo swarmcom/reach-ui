@@ -1,15 +1,15 @@
 <template>
-  <div v-if="visible" class="container" style="margin-top: 20px">
-    <h3>Ringer:</h3>
-    <div class="row">
-      <div class="col">
-        Calling: {{ ringer.uri }} timeout: {{ ringer.timeout }} type: {{ ringer.type }}
-      </div>
-      <div class="col">
-        <b-button size="sm" variant="outline-danger" @click="stop_ringer">Cancel</b-button>
-      </div>
+<div v-if="visible" style="margin-top: 20px">
+  <h3>Ringer:</h3>
+  <div class="row">
+    <div class="col">
+      Calling: {{ ringer.uri }} timeout: {{ ringer.timeout }} type: {{ ringer.type }}
+    </div>
+    <div class="col">
+      <b-button size="sm" variant="outline-danger" @click="stop_ringer">Cancel</b-button>
     </div>
   </div>
+</div>
 </template>
 
 <script>
