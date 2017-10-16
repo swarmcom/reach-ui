@@ -29,6 +29,7 @@ export default class Agent extends WsProto {
         previous_state: 'released'
       }
     }),
+    Notification.requestPermission()
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
     EventBus.$on('agents_state', (S) => this.handleAgents(S))
   }
@@ -92,6 +93,14 @@ export default class Agent extends WsProto {
       this.vm.state = S.state
       this.autoLogout(S.state)
     }
+  }
+
+  showNotification(theBody, TheIcon, theTitle) {
+    let options = {
+      body: theBody,
+      icon: TheIcon
+    }
+    let n = new Notification(theTitle, options);
   }
 
   autoLogout(state) {
