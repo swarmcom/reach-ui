@@ -7,13 +7,16 @@
       <button @click="del(release.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
     </div>
     <div class="form-group col-4">
-      <input type="text" class="form-control" v-model="release.name" v-on:change="onChange(release)">
+      <input type="text" class="form-control"
+        :value="safe_value(release.name)" v-on:change="onChange(release, 'name', $event.target.value)">
     </div>
     <div class="form-group col-5">
-      <input type="text" class="form-control" v-model="release.description" v-on:change="onChange(release)">
+      <input type="text" class="form-control"
+        :value="safe_value(release.description)" v-on:change="onChange(release, 'description', $event.target.value)">
     </div>
     <div class="form-group col-2">
-      <input type="text" class="form-control" v-model="release.score" v-on:change="onChange(release)">
+      <input type="text" class="form-control"
+        :value="safe_value(release.score)" v-on:change="onChange(release, 'score', $event.target.value)">
     </div>
   </div>
 
@@ -30,8 +33,8 @@
     <div class="form-group col-2">
       <input type="text" class="form-control" v-model="score" placeholder="Score">
     </div>
-
   </div>
+
 </div>
 </template>
 
@@ -53,7 +56,8 @@ export default {
     query: async function () {
       this.releases = await this.$agent.p_mfa('ws_db_release', 'get', [this.id])
     },
-    onChange (release) {
+    onChange (release, field, value) {
+      release[field] = value
       this.$agent.p_mfa('ws_db_release', 'update', [release.id, release])
     },
     add: async function() {
@@ -71,6 +75,9 @@ export default {
       if (id >= 0) {
         this.releases.splice(id, 1)
       }
+    },
+    safe_value (Value) {
+      return Value === 'undefined' ? '' : Value
     }
   },
   created () {
