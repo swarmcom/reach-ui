@@ -29,6 +29,7 @@
   <div class="col-7">
     <h4>Skills editor:</h4>
     <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
+    <disposition v-bind:uuid="this.uuid"></disposition>
     <div class="row" style="margin-top:10px">
       <div class="col-6">
         <div v-if="this.$agent.can_transfer()" class="row">
@@ -65,6 +66,7 @@ import ConferenceQueue from '../Widget/ConferenceQueue'
 import ConferenceUri from '../Widget/ConferenceUri'
 import Skills from '../Widget/Skills'
 import Common from '../../Admin/Common'
+import Disposition from '../Widget/Disposition'
 
 export default {
   components: {
@@ -74,7 +76,8 @@ export default {
     'conference-agent': ConferenceAgent,
     'conference-queue': ConferenceQueue,
     'conference-uri': ConferenceUri,
-    'skills': Skills
+    'skills': Skills,
+    'disposition': Disposition
   },
   props: {
     uuid: String
