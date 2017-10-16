@@ -24,15 +24,15 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.disposition = await this.$agent.p_mfa('ws_admin', 'get_disposition', [this.id])
+        this.disposition = await this.$agent.p_mfa('ws_db_disposition', 'get', [this.id])
       }
     },
     onCommit: async function () {
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_disposition', [this.id, this.disposition])
+          await this.$agent.p_mfa('ws_db_disposition', 'update', [this.id, this.disposition])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_disposition', [this.disposition])
+          await this.$agent.p_mfa('ws_db_disposition', 'create', [this.disposition])
         }
         this.$router.push('/admin/dispositions')
       }
@@ -42,7 +42,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_disposition', [this.id])
+        await this.$agent.p_mfa('ws_db_disposition', 'delete', [this.id])
         this.$router.push('/admin/dispositions')
       }
     },

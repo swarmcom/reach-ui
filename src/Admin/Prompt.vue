@@ -33,15 +33,15 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.prompt = await this.$agent.p_mfa('ws_admin', 'get_prompt', [this.id])
+        this.prompt = await this.$agent.p_mfa('ws_db_prompt', 'get', [this.id])
       }
     },
     onCommit: async function () {
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_prompt', [this.id, this.prompt])
+          await this.$agent.p_mfa('ws_db_prompt', 'update', [this.id, this.prompt])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_prompt', [this.prompt])
+          await this.$agent.p_mfa('ws_db_prompt', 'create', [this.prompt])
         }
         this.$router.push('/admin/prompts')
       }
@@ -51,7 +51,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_prompt', [this.id])
+        await this.$agent.p_mfa('ws_db_prompt', 'delete', [this.id])
         this.$router.push('/admin/prompts')
       }
     },

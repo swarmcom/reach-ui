@@ -35,15 +35,15 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.client = await this.$agent.p_mfa('ws_admin', 'get_client', [this.id])
+        this.client = await this.$agent.p_mfa('ws_db_client', 'get', [this.id])
       }
     },
     onCommit: async function () {
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_client', [this.id, this.client])
+          await this.$agent.p_mfa('ws_db_client', 'update', [this.id, this.client])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_client', [this.client])
+          await this.$agent.p_mfa('ws_db_client', 'create', [this.client])
         }
         this.$router.push('/admin/clients')
       }
@@ -53,7 +53,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_client', [this.id])
+        await this.$agent.p_mfa('ws_db_client', 'delete', [this.id])
         this.$router.push('/admin/clients')
       }
     },

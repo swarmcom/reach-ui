@@ -39,7 +39,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.queue = await this.$agent.p_mfa('ws_admin', 'get_queue', [this.id])
+        this.queue = await this.$agent.p_mfa('ws_db_queue', 'get', [this.id])
         this.skills = this.object2list(this.queue.skills)
       }
     },
@@ -47,9 +47,9 @@ export default {
       this.queue.skills = this.list2object(this.skills)
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_queue', [this.id, this.queue])
+          await this.$agent.p_mfa('ws_db_queue', 'update', [this.id, this.queue])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_queue', [this.queue])
+          await this.$agent.p_mfa('ws_db_queue', 'create', [this.queue])
         }
         this.$router.push('/admin/queues')
       }
@@ -59,7 +59,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_queue', [this.id])
+        await this.$agent.p_mfa('ws_db_queue', 'delete', [this.id])
         this.$router.push('/admin/queues')
       }
     },

@@ -1,7 +1,6 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="release.name"></form-text>
-  <form-text id="score" label="Score" v-model="release.score"></form-text>
   <form-text id="description" label="Description" v-model="release.description"></form-text>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
@@ -25,15 +24,15 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.release = await this.$agent.p_mfa('ws_admin', 'get_release', [this.id])
+        this.release = await this.$agent.p_mfa('ws_db_release_group', 'get', [this.id])
       }
     },
     onCommit: async function () {
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_release', [this.id, this.release])
+          await this.$agent.p_mfa('ws_db_release_group', 'update', [this.id, this.release])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_release', [this.release])
+          await this.$agent.p_mfa('ws_db_release_group', 'create', [this.release])
         }
         this.$router.push('/admin/releases')
       }
@@ -43,7 +42,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_release', [this.id])
+        await this.$agent.p_mfa('ws_db_release_group', 'delete', [this.id])
         this.$router.push('/admin/releases')
       }
     },

@@ -23,7 +23,9 @@ import AdminAgentGroup from './Admin/Agent/Group.vue'
 import AdminAgentGroups from './Admin/Agent/Groups.vue'
 import AdminRelease from './Admin/Release.vue'
 import AdminReleases from './Admin/Releases.vue'
+import AdminReleaseEntries from './Admin/ReleaseEntries.vue'
 import AdminDisposition from './Admin/Disposition.vue'
+import AdminDispositionEntries from './Admin/DispositionEntries.vue'
 import AdminDispositions from './Admin/Dispositions.vue'
 import AdminLineIn from './Admin/LineIn.vue'
 import AdminLineIns from './Admin/LineIns.vue'
@@ -75,8 +77,10 @@ const router = new VueRouter({
       { path: 'queue_group/:id', component: AdminQueueGroup, props: true },
       { path: 'release', component: AdminRelease },
       { path: 'release/:id', component: AdminRelease, props: true },
+      { path: 'release/:id/entries', component: AdminReleaseEntries, props: true },
       { path: 'disposition', component: AdminDisposition },
       { path: 'disposition/:id', component: AdminDisposition, props: true },
+      { path: 'disposition/:id/entries', component: AdminDispositionEntries, props: true },
       { path: 'prompt', component: AdminPrompt },
       { path: 'prompt/:id', component: AdminPrompt, props: true },
       { path: 'moh', component: AdminMOH },

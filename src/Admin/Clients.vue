@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.clients = await this.$agent.p_mfa('ws_admin', 'get_clients')
+      this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
     },
     add () {
       this.$router.push(`/admin/client/`)
