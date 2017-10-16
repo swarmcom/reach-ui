@@ -14,14 +14,10 @@
 
 <script>
 import Common from './Common'
-import FormSelectBool from '../Widget/FormSelectBool.vue'
-import FormText from '../Widget/FormText.vue'
-import Clients from '../Widget/Clients.vue'
 
 export default {
   name: 'admin-line-out',
   props: ['id'],
-  components: { 'form-text': FormText, 'clients': Clients, 'form-select-bool': FormSelectBool },
   mixins: [Common],
   data () {
     return {

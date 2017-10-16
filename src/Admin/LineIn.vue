@@ -17,17 +17,11 @@
 </template>
 
 <script>
-import FormText from '../Widget/FormText.vue'
-import FormSelectBool from '../Widget/FormSelectBool.vue'
-import Queues from '../Widget/Queues.vue'
-import Clients from '../Widget/Clients.vue'
-import Prompts from '../Widget/Prompts.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-line-in',
   props: ['id'],
-  components: { 'form-select-bool': FormSelectBool, 'form-text': FormText, 'queues': Queues, 'clients': Clients, prompts: Prompts },
   mixins: [Common],
   data () {
     return {

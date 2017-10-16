@@ -8,13 +8,11 @@
 </template>
 
 <script>
-import FormText from '../Widget/FormText.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-release',
   props: ['id'],
-  components: { 'form-text': FormText },
   mixins: [Common],
   data () {
     return {

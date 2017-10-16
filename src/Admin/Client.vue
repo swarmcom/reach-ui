@@ -16,16 +16,11 @@
 </template>
 
 <script>
-import FormText from '../Widget/FormText.vue'
-import MOHs from '../Widget/MOHs.vue'
 import Common from './Common'
-import FormSelectBool from '../Widget/FormSelectBool.vue'
-import Prompts from '../Widget/Prompts.vue'
 
 export default {
   name: 'admin-client',
   props: ['id'],
-  components: { 'form-select-bool': FormSelectBool, 'form-text': FormText, mohs: MOHs, prompts: Prompts },
   mixins: [Common],
   data () {
     return {

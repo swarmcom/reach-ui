@@ -15,16 +15,12 @@
 </template>
 
 <script>
-import FormText from '../../Widget/FormText.vue'
-import Skills from '../../Widget/Skills.vue'
-import Recipe from '../../Widget/Recipe.vue'
 import Common from '../Common'
 
 export default {
   name: 'admin-queue-group',
   props: ['id'],
   mixins: [Common],
-  components: { 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
   data () {
     return {
       queue_group: {},

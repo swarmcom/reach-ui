@@ -13,15 +13,12 @@
 </template>
 
 <script>
-import FormText from '../../Widget/FormText.vue'
-import Skills from '../../Widget/Skills.vue'
 import Common from '../Common'
 
 export default {
   name: 'admin-agent-group',
   props: ['id'],
   mixins: [Common],
-  components: { 'form-text': FormText, 'skills': Skills },
   data () {
     return {
       agent_group: {},
