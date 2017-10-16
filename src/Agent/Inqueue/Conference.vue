@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.members = await this.$agent.p_call('conference_members', [])
+      this.members = await this.$agent.p_mfa('ws_agent', 'conference_members', [])
       this.visible = true
     },
     handleConf ({action, member_id, vars}) {
@@ -54,22 +54,22 @@ export default {
       }
     },
     kick (id) {
-      this.$agent.p_call('conference', ['kick', id])
+      this.$agent.p_mfa('ws_agent', 'conference', ['kick', id])
     },
     mute (id) {
-      this.$agent.p_call('conference', ['mute', id])
+      this.$agent.p_mfa('ws_agent', 'conference', ['mute', id])
     },
     deaf (id) {
-      this.$agent.p_call('conference', ['deaf', id])
+      this.$agent.p_mfa('ws_agent', 'conference', ['deaf', id])
     },
     unmute (id) {
-      this.$agent.p_call('conference', ['unmute', id])
+      this.$agent.p_mfa('ws_agent', 'conference', ['unmute', id])
     },
     undeaf (id) {
-      this.$agent.p_call('conference', ['undeaf', id])
+      this.$agent.p_mfa('ws_agent', 'conference', ['undeaf', id])
     },
     inqueue () {
-      this.$agent.p_call('conference', ['inqueue'])
+      this.$agent.p_mfa('ws_agent', 'conference', ['inqueue'])
     }
   },
   created () {

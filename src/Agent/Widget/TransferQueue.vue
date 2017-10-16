@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.queues = await this.$agent.p_call('get_transfer_queues')
+      this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
     },
     onUpdate (id) {
       this.$agent.transfer_to_queue(id)

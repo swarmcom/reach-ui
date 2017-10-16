@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.releases = await this.$agent.p_call('get_releases')
+      this.releases = await this.$agent.p_mfa('ws_agent', 'get_releases')
     },
     release (id) {
       this.$agent.release(id)

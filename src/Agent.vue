@@ -55,7 +55,7 @@ export default {
     available () { this.$agent.available() },
     answer () { this.$agent.answer() },
     hangup () { this.$agent.hangup() },
-    wrapup () { this.$agent.p_call('end_wrapup', []) },
+    wrapup () { this.$agent.p_mfa('ws_agent', 'end_wrapup') },
   },
   created () {
     this.a = this.$agent.getData()
