@@ -15,6 +15,8 @@
         <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
       </div>
     </div>
+    <input type="checkbox" id="checkbox" v-model="remember">
+    <label for="checkbox"> Remember me</label>
     <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2" type="submit">Login</button>
   </div>
   <b-modal ref="takeover" hide-footer title="Agent is logged in">
@@ -30,8 +32,10 @@ import {EventBus} from './event-bus.js'
 export default {
   data () {
     return {
-      login: 'agent2',
-      password: '1234'
+      login: '',
+      password: '',
+      remember: false,
+      storage_name: 'login_remember'
     }
   },
   methods: {
@@ -46,6 +50,7 @@ export default {
       })
     },
     onSubmit () {
+      this.saveDataStorage(this.storage_name)
       this.$agent.login(this.login, this.password, (Re) => {
         if (Re.error && Re.error == 'already_logged_in') {
           this.$refs.takeover.show()
@@ -53,7 +58,28 @@ export default {
           this.$notify({ title: 'Authentication:', text: Re.error, type: 'error' })
         }
       })
+    },
+    loadDataStorage(name) {
+      if(localStorage.getItem(name)) {
+        let dataStore = JSON.parse(localStorage.getItem(name));
+        this.remember = dataStore.remember
+        if (this.remember === true) {
+          this.login = dataStore.login
+          this.password = dataStore.password
+        }
+      }
+    },
+    saveDataStorage(name) {
+      let dataStore
+      if (this.remember)
+        dataStore = { "remember": this.remember, "login": this.login, "password": this.password }
+      else
+        dataStore = { "remember": this.remember, "login": '', "password": '' }
+      localStorage.setItem(this.storage_name, JSON.stringify(dataStore))
     }
+  },
+  created () {
+    this.loadDataStorage(this.storage_name)
   }
 }
 </script>
