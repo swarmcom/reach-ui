@@ -2,13 +2,13 @@
 <div class="container" style="margin-top:20px">
   <div class="row">
     <div class="col-4">
-      <h3>Disposition group:</h3>
+      <h3>Release group:</h3>
     </div>
   </div>
 
   <div class="form">
-    <form-text id="name" label="Name" v-model="disposition.name"></form-text>
-    <form-text id="description" label="Description" v-model="disposition.description"></form-text>
+    <form-text id="name" label="Name" v-model="release.name"></form-text>
+    <form-text id="description" label="Description" v-model="release.description"></form-text>
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
   </div>
@@ -16,31 +16,31 @@
 </template>
 
 <script>
-import Common from './Common'
+import Common from '../Common'
 
 export default {
-  name: 'admin-disposition',
+  name: 'admin-release-group',
   props: ['id'],
   mixins: [Common],
   data () {
     return {
-      disposition: {}
+      release: {}
     }
   },
   methods: {
     query: async function () {
       if (this.id) {
-        this.disposition = await this.$agent.p_mfa('ws_db_disposition_group', 'get', [this.id])
+        this.release = await this.$agent.p_mfa('ws_db_release_group', 'get', [this.id])
       }
     },
     onCommit: async function () {
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_db_disposition_group', 'update', [this.id, this.disposition])
+          await this.$agent.p_mfa('ws_db_release_group', 'update', [this.id, this.release])
         } else {
-          await this.$agent.p_mfa('ws_db_disposition_group', 'create', [this.disposition])
+          await this.$agent.p_mfa('ws_db_release_group', 'create', [this.release])
         }
-        this.$router.push('/admin/dispositions')
+        this.$router.push('/admin/releases')
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });
@@ -48,8 +48,8 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_db_disposition_group', 'delete', [this.id])
-        this.$router.push('/admin/dispositions')
+        await this.$agent.p_mfa('ws_db_release_group', 'delete', [this.id])
+        this.$router.push('/admin/releases')
       }
     },
   },

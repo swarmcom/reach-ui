@@ -19,44 +19,18 @@
 
 <script>
 import Common from './Common'
+import Obj from './Object'
 
 export default {
   name: 'admin-line-in',
   props: ['id'],
-  mixins: [Common],
+  mixins: [Common, Obj],
   data () {
     return {
-      line_in: {}
+      rec: {},
+      module: 'ws_db_line_in',
+      redirect: '/admin/line_ins'
     }
-  },
-  methods: {
-    query: async function () {
-      if (this.id) {
-        this.line_in = await this.$agent.p_mfa('ws_db_line_in', 'get', [this.id])
-      }
-    },
-    onCommit: async function () {
-      try {
-        if (this.id) {
-          await this.$agent.p_mfa('ws_db_line_in', 'update', [this.id, this.line_in])
-        } else {
-          await this.$agent.p_mfa('ws_db_line_in', 'create', [this.line_in])
-        }
-        this.$router.push('/admin/line_ins')
-      }
-      catch (error) {
-        this.$notify({ title: 'Data error:', text: error, type: 'error' });
-      }
-    },
-    onDelete: async function () {
-      if (this.id) {
-        await this.$agent.p_mfa('ws_db_line_in', 'delete', [this.id])
-        this.$router.push('/admin/line_ins')
-      }
-    },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

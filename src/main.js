@@ -21,11 +21,11 @@ import AdminQueueGroup from './Admin/Queue/Group.vue'
 import AdminQueueGroups from './Admin/Queue/Groups.vue'
 import AdminAgentGroup from './Admin/Agent/Group.vue'
 import AdminAgentGroups from './Admin/Agent/Groups.vue'
-import AdminRelease from './Admin/Release.vue'
+import AdminReleaseGroup from './Admin/Release/Group.vue'
 import AdminReleases from './Admin/Releases.vue'
-import AdminReleaseEntries from './Admin/ReleaseEntries.vue'
-import AdminDisposition from './Admin/Disposition.vue'
-import AdminDispositionEntries from './Admin/DispositionEntries.vue'
+import AdminReleaseEntries from './Admin/Release/Entries.vue'
+import AdminDispositionGroup from './Admin/Disposition/Group.vue'
+import AdminDispositionEntries from './Admin/Disposition/Entries.vue'
 import AdminDispositions from './Admin/Dispositions.vue'
 import AdminLineIn from './Admin/LineIn.vue'
 import AdminLineIns from './Admin/LineIns.vue'
@@ -106,11 +106,11 @@ const router = new VueRouter({
       { path: 'agent_group/:id', component: AdminAgentGroup, props: true },
       { path: 'queue_group', component: AdminQueueGroup },
       { path: 'queue_group/:id', component: AdminQueueGroup, props: true },
-      { path: 'release', component: AdminRelease },
-      { path: 'release/:id', component: AdminRelease, props: true },
+      { path: 'release', component: AdminReleaseGroup },
+      { path: 'release/:id', component: AdminReleaseGroup, props: true },
       { path: 'release/:id/entries', component: AdminReleaseEntries, props: true },
-      { path: 'disposition', component: AdminDisposition },
-      { path: 'disposition/:id', component: AdminDisposition, props: true },
+      { path: 'disposition', component: AdminDispositionGroup },
+      { path: 'disposition/:id', component: AdminDispositionGroup, props: true },
       { path: 'disposition/:id/entries', component: AdminDispositionEntries, props: true },
       { path: 'prompt', component: AdminPrompt },
       { path: 'prompt/:id', component: AdminPrompt, props: true },
