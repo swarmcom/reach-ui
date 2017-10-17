@@ -94,7 +94,7 @@ export default {
     },
     query: async function () {
       this.a = this.$agent.getData()
-      this.releases = await this.$agent.p_call('get_releases')
+      this.releases = await this.$agent.p_mfa('ws_agent', 'get_releases')
     },
   },
   beforeDestroy () {
