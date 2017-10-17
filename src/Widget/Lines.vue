@@ -24,7 +24,7 @@ export default {
       return Id == this.value
     },
     query: async function () {
-      this.lines = await this.$agent.p_mfa('ws_admin', 'get_line_outs')
+      this.lines = await this.$agent.p_mfa('ws_db_line_out', 'get')
     },
     onUpdate (value) {
       this.$emit('input', value)

@@ -21,9 +21,11 @@ import AdminQueueGroup from './Admin/Queue/Group.vue'
 import AdminQueueGroups from './Admin/Queue/Groups.vue'
 import AdminAgentGroup from './Admin/Agent/Group.vue'
 import AdminAgentGroups from './Admin/Agent/Groups.vue'
-import AdminRelease from './Admin/Release.vue'
+import AdminReleaseGroup from './Admin/Release/Group.vue'
 import AdminReleases from './Admin/Releases.vue'
-import AdminDisposition from './Admin/Disposition.vue'
+import AdminReleaseEntries from './Admin/Release/Entries.vue'
+import AdminDispositionGroup from './Admin/Disposition/Group.vue'
+import AdminDispositionEntries from './Admin/Disposition/Entries.vue'
 import AdminDispositions from './Admin/Dispositions.vue'
 import AdminLineIn from './Admin/LineIn.vue'
 import AdminLineIns from './Admin/LineIns.vue'
@@ -39,11 +41,42 @@ import AdminDialplan from './Admin/Dialplan.vue'
 
 import AdminParams from './Admin/Params.vue'
 
+import FormText from './Widget/FormText.vue'
+import FormBool from './Widget/FormBool.vue'
+import AgentGroups from './Widget/Agent/Groups.vue'
+import Skills from './Widget/Skills.vue'
+import Lines from './Widget/Lines.vue'
+import Recipe from './Widget/Recipe.vue'
+import MOHs from './Widget/MOHs.vue'
+import FormSelectBool from './Widget/FormSelectBool.vue'
+import Prompts from './Widget/Prompts.vue'
+import Queues from './Widget/Queues.vue'
+import QueueGroups from './Widget/Queue/Groups.vue'
+import Clients from './Widget/Clients.vue'
+import DispositionGroups from './Widget/DispositionGroups.vue'
+import ReleaseGroups from './Widget/ReleaseGroups.vue'
+
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 import Notifications from 'vue-notification'
 
 Vue.component('icon', Icon)
+
+Vue.component('form-text', FormText)
+Vue.component('form-bool', FormBool)
+Vue.component('form-select-bool', FormSelectBool)
+Vue.component('agent-groups', AgentGroups)
+Vue.component('skills', Skills)
+Vue.component('lines', Lines)
+Vue.component('recipe', Recipe)
+Vue.component('mohs', MOHs)
+Vue.component('prompts', Prompts)
+Vue.component('clients', Clients)
+Vue.component('queues', Queues)
+Vue.component('queue-groups', QueueGroups)
+Vue.component('disposition-groups', DispositionGroups)
+Vue.component('release-groups', ReleaseGroups)
+
 Vue.use(VueRouter)
 Vue.use(AgentAPI)
 Vue.use(Notifications)
@@ -73,10 +106,12 @@ const router = new VueRouter({
       { path: 'agent_group/:id', component: AdminAgentGroup, props: true },
       { path: 'queue_group', component: AdminQueueGroup },
       { path: 'queue_group/:id', component: AdminQueueGroup, props: true },
-      { path: 'release', component: AdminRelease },
-      { path: 'release/:id', component: AdminRelease, props: true },
-      { path: 'disposition', component: AdminDisposition },
-      { path: 'disposition/:id', component: AdminDisposition, props: true },
+      { path: 'release', component: AdminReleaseGroup },
+      { path: 'release/:id', component: AdminReleaseGroup, props: true },
+      { path: 'release/:id/entries', component: AdminReleaseEntries, props: true },
+      { path: 'disposition', component: AdminDispositionGroup },
+      { path: 'disposition/:id', component: AdminDispositionGroup, props: true },
+      { path: 'disposition/:id/entries', component: AdminDispositionEntries, props: true },
       { path: 'prompt', component: AdminPrompt },
       { path: 'prompt/:id', component: AdminPrompt, props: true },
       { path: 'moh', component: AdminMOH },

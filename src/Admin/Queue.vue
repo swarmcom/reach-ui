@@ -1,7 +1,7 @@
 <template>
 <div class="form">
   <form-text id="name" label="Name" v-model="queue.name"></form-text>
-  <groups id="group_id" label="Group" v-model="queue.group_id"></groups>
+  <queue-groups id="group_id" label="Group" v-model="queue.group_id"></queue-groups>
   <form-text id="hold_music" label="Music on hold" v-model="queue.hold_music"></form-text>
   <form-text id="weight" label="Weight" v-model="queue.weight"></form-text>
   <form-text id="aging_factor" label="Aging" v-model="queue.aging_factor"></form-text>
@@ -16,17 +16,11 @@
 </template>
 
 <script>
-import FormText from '../Widget/FormText.vue'
-import FormBool from '../Widget/FormBool.vue'
-import Skills from '../Widget/Skills.vue'
-import Recipe from '../Widget/Recipe.vue'
-import Groups from '../Widget/Queue/Groups.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-queue',
   props: ['id'],
-  components: { 'groups': Groups, 'form-text': FormText, 'form-bool': FormBool, 'skills': Skills, 'recipe': Recipe },
   mixins: [Common],
 
   data () {
@@ -39,7 +33,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.queue = await this.$agent.p_mfa('ws_admin', 'get_queue', [this.id])
+        this.queue = await this.$agent.p_mfa('ws_db_queue', 'get', [this.id])
         this.skills = this.object2list(this.queue.skills)
       }
     },
@@ -47,9 +41,9 @@ export default {
       this.queue.skills = this.list2object(this.skills)
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_queue', [this.id, this.queue])
+          await this.$agent.p_mfa('ws_db_queue', 'update', [this.id, this.queue])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_queue', [this.queue])
+          await this.$agent.p_mfa('ws_db_queue', 'create', [this.queue])
         }
         this.$router.push('/admin/queues')
       }
@@ -59,7 +53,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_queue', [this.id])
+        await this.$agent.p_mfa('ws_db_queue', 'delete', [this.id])
         this.$router.push('/admin/queues')
       }
     },

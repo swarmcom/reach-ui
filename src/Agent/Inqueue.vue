@@ -29,7 +29,7 @@ export default {
   methods: {
     handleState ({ state }) {
       console.log('inqueue state', state)
-      if (state.state == "available" || state.state == "release" || state.state == "wrapup") {
+      if (state.state == "available" || state.state == "release") {
         this.call_visible = false
         this.conf_visible = false
         this.ringer_visible = false
@@ -64,7 +64,7 @@ export default {
     },
   },
   created () {
-    this.$agent.p_call('request_state', [])
+    this.$agent.p_mfa('ws_agent', 'request_state', [])
     this.$bus.$on('agent_state', this.handleState)
   },
   beforeDestroy () {

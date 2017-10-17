@@ -12,7 +12,7 @@
           <b-row class="col-10">
             <b-col cols="8">
               <dialer v-if="this.$agent.is_idle()"></dialer>
-              <override></override>
+              <override v-if="this.$agent.is_idle()"></override>
             </b-col>
             <b-col cols="12">
               <inqueue></inqueue>
@@ -59,7 +59,7 @@ export default {
     unhold () { this.$agent.unhold() },
     answer () { this.$agent.answer() },
     hangup () { this.$agent.hangup() },
-    wrapup () { this.$agent.p_call('end_wrapup', []) }
+    wrapup () { this.$agent.p_mfa('ws_agent', 'end_wrapup') },
   },
   created () {
     this.a = this.$agent.getData()

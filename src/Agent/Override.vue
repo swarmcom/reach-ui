@@ -19,11 +19,11 @@ export default {
   },
   methods: {
     query: async function() {
-      this.uri = await this.$agent.p_call('override_uri', [])
+      this.uri = await this.$agent.p_mfa('ws_agent', 'override_uri')
       this.uri = this.uri == 'undefined'? '' : this.uri
     },
     override () {
-      this.$agent.p_call('override_uri', [this.uri])
+      this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
     }
   },
   created () {

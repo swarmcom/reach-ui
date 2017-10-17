@@ -1,5 +1,5 @@
 <template>
-<div class="container" style="margin-top: 20px" v-if="visible">
+<div style="margin-top: 20px" v-if="visible">
 
 <div class="row"><div class="col"><h2>Call info:</h2> </div></div>
 
@@ -13,7 +13,7 @@
       <dt class="col-sm-3">To:</dt>
       <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
       <dt class="col-sm-3">Client:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.client.name }}</dd>
+      <dd class="col-sm-9">{{ this.inqueue.line_in.client.name }}</dd>
       <dt class="col-sm-3">State:</dt>
       <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
       <dt class="col-sm-3">Queue:</dt>
@@ -29,6 +29,7 @@
   <div class="col-7">
     <h4>Skills editor:</h4>
     <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
+    <disposition v-bind:uuid="this.uuid"></disposition>
     <div class="row" style="margin-top:10px">
       <div class="col-6">
         <div v-if="this.$agent.can_transfer()" class="row">
@@ -65,6 +66,7 @@ import ConferenceQueue from '../Widget/ConferenceQueue'
 import ConferenceUri from '../Widget/ConferenceUri'
 import Skills from '../Widget/Skills'
 import Common from '../../Admin/Common'
+import Disposition from '../Widget/Disposition'
 
 export default {
   components: {
@@ -74,7 +76,8 @@ export default {
     'conference-agent': ConferenceAgent,
     'conference-queue': ConferenceQueue,
     'conference-uri': ConferenceUri,
-    'skills': Skills
+    'skills': Skills,
+    'disposition': Disposition
   },
   props: {
     uuid: String
@@ -91,9 +94,9 @@ export default {
   },
   methods: {
     query: async function () {
-      this.inqueue = await this.$agent.p_call('inqueue_state', ['inqueue_call', this.uuid])
-      this.call_info = await this.$agent.p_call('call_info', [this.uuid])
-      let skills = await this.$agent.p_call('skills', ['inqueue', this.uuid])
+      this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
+      this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
+      let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
       this.skills = this.object2list(skills)
       this.visible = true
     },
@@ -103,7 +106,7 @@ export default {
       }
     },
     update_skills () {
-      this.$agent.p_call('skills', ['inqueue', this.uuid, this.list2object(this.skills)])
+      this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2object(this.skills)])
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },

@@ -1,5 +1,5 @@
 <template>
-<div class="container" style="margin-top: 20px" v-if="visible">
+<div style="margin-top: 20px" v-if="visible">
 
 <div class="row"><div class="col"><h2>Spy call info:</h2> </div></div>
 
@@ -77,9 +77,9 @@ export default {
   },
   methods: {
     query: async function () {
-      this.inqueue = await this.$agent.p_call('inqueue_state', ['inqueue_call', this.uuid])
-      this.call_info = await this.$agent.p_call('call_info', [this.uuid])
-      let skills = await this.$agent.p_call('skills', ['inqueue', this.uuid])
+      this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
+      this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
+      let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
       this.skills = this.object2list(skills)
       this.visible = true
     },

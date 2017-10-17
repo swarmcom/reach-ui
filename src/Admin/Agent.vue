@@ -3,7 +3,8 @@
   <form-text label="Name" v-model="agent.name"></form-text>
   <form-text label="Login" v-model="agent.login"></form-text>
   <form-text label="Password" v-model="agent.password"></form-text>
-  <groups label="Group" v-model="agent.group_id"></groups>
+  <agent-groups label="Group" v-model="agent.group_id"></agent-groups>
+  <release-groups label="Release Group" v-model="agent.release_group_id"></release-groups>
   <lines label="Line Out" v-model="agent.line_id"></lines>
   <form-text label="Permissions" v-model="agent.permissions"></form-text>
   <form-text label="SIP URI" v-model="agent.uri"></form-text>
@@ -21,22 +22,10 @@
 </template>
 
 <script>
-import FormText from '../Widget/FormText.vue'
-import FormBool from '../Widget/FormBool.vue'
-import Groups from '../Widget/Agent/Groups.vue'
-import Skills from '../Widget/Skills.vue'
-import Lines from '../Widget/Lines.vue'
 import Common from './Common'
 
 export default {
   name: 'admin-agent',
-  components: {
-    'form-text': FormText,
-    'form-bool': FormBool,
-    groups: Groups,
-    skills: Skills,
-    lines: Lines,
-  },
   mixins: [Common],
   props: ['id'],
   data () {
@@ -48,7 +37,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.agent = await this.$agent.p_mfa('ws_admin', 'get_agent', [this.id])
+        this.agent = await this.$agent.p_mfa('ws_db_agent', 'get', [this.id])
         this.skills = this.object2list(this.agent.skills)
       }
     },
@@ -56,9 +45,9 @@ export default {
       this.agent.skills = this.list2object(this.skills)
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_agent', [this.id, this.agent])
+          await this.$agent.p_mfa('ws_db_agent', 'update', [this.id, this.agent])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_agent', [this.agent])
+          await this.$agent.p_mfa('ws_db_agent', 'create', [this.agent])
         }
         this.$router.push('/admin/agents')
       }
@@ -68,7 +57,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_agent', [this.id])
+        await this.$agent.p_mfa('ws_db_agent', 'delete', [this.id])
         this.$router.push('/admin/agents')
       }
     },

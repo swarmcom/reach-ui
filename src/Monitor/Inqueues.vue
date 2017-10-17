@@ -2,6 +2,9 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
+    <div class="row">
+      <div class="col"><h3>Inqueue requests</h3></div>
+    </div>
     <b-table style="margin-top:10px" striped hover responsive :items="inqueues" :fields="fields">
       <template slot="twe" scope="data">
         {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
@@ -60,7 +63,7 @@ export default {
       return info
     },
     query: async function() {
-      this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues', [])
+      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
       this.inqueues = await this.$agent.p_mfa('ws_admin', 'inqueues', ['all'])
       this.inqueues.forEach((inq) => {
         inq.time = Math.round(inq.time/1000)

@@ -24,7 +24,7 @@ export default {
       return Id == this.value
     },
     query: async function () {
-      this.queues = await this.$agent.p_mfa('ws_admin', 'get_queues')
+      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
     },
     onUpdate (value) {
       this.$emit('input', value)

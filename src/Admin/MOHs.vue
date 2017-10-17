@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.mohs = await this.$agent.p_mfa('ws_admin', 'get_mohs')
+      this.mohs = await this.$agent.p_mfa('ws_db_moh', 'get')
     },
     add () {
       this.$router.push(`/admin/moh/`)

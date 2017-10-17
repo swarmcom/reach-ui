@@ -15,16 +15,12 @@
 </template>
 
 <script>
-import FormText from '../../Widget/FormText.vue'
-import Skills from '../../Widget/Skills.vue'
-import Recipe from '../../Widget/Recipe.vue'
 import Common from '../Common'
 
 export default {
   name: 'admin-queue-group',
   props: ['id'],
   mixins: [Common],
-  components: { 'form-text': FormText, 'skills': Skills, 'recipe': Recipe },
   data () {
     return {
       queue_group: {},
@@ -35,7 +31,7 @@ export default {
   methods: {
     query: async function () {
       if (this.id) {
-        this.queue_group = await this.$agent.p_mfa('ws_admin', 'get_queue_group', [this.id])
+        this.queue_group = await this.$agent.p_mfa('ws_db_queue_group', 'get', [this.id])
         this.skills = this.object2list(this.queue_group.skills)
       }
     },
@@ -43,9 +39,9 @@ export default {
       this.queue_group.skills = this.list2object(this.skills)
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_queue_group', [this.id, this.queue_group])
+          await this.$agent.p_mfa('ws_db_queue_group', 'update', [this.id, this.queue_group])
         } else {
-          await this.$agent.p_mfa('ws_admin', 'create_queue_group', [this.queue_group])
+          await this.$agent.p_mfa('ws_db_queue_group', 'create', [this.queue_group])
         }
         this.$router.push('/admin/queue_groups')
       }
@@ -55,7 +51,7 @@ export default {
     },
     onDelete: async function () {
       if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_queue_group', [this.id])
+        await this.$agent.p_mfa('ws_db_queue_group', 'delete', [this.id])
         this.$router.push('/admin/queue_groups')
       }
     },

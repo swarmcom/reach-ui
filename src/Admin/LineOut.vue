@@ -1,9 +1,12 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="line_out.name"></form-text>
-  <form-text id="number" label="Number" v-model="line_out.number"></form-text>
-  <form-text id="description" label="Description" v-model="line_out.description"></form-text>
-  <clients label="Client" v-model="line_out.client_id"></clients>
+  <form-text label="Name" v-model="rec.name"></form-text>
+  <form-text label="Number" v-model="rec.number"></form-text>
+  <form-text label="Description" v-model="rec.description"></form-text>
+  <clients label="Client" v-model="rec.client_id"></clients>
+  <form-select-bool label="Override Caller ID" v-model="rec.override_clid"></form-select-bool>
+  <form-text label="Caller ID name" v-model="rec.caller_id_name"></form-text>
+  <form-text label="Caller ID number" v-model="rec.caller_id_number"></form-text> 
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
@@ -11,47 +14,18 @@
 
 <script>
 import Common from './Common'
-import FormText from '../Widget/FormText.vue'
-import Clients from '../Widget/Clients.vue'
+import Obj from './Object'
 
 export default {
   name: 'admin-line-out',
   props: ['id'],
-  components: { 'form-text': FormText, 'clients': Clients },
-  mixins: [Common],
+  mixins: [Common, Obj],
   data () {
     return {
-      line_out: {}
+      rec: {},
+      module: 'ws_db_line_out',
+      redirect: '/admin/line_outs'
     }
-  },
-  methods: {
-    query: async function () {
-      if (this.id) {
-        this.line_out = await this.$agent.p_mfa('ws_admin', 'get_line_out', [this.id])
-      }
-    },
-    onCommit: async function () {
-      try {
-        if (this.id) {
-          await this.$agent.p_mfa('ws_admin', 'update_line_out', [this.id, this.line_out])
-        } else {
-          await this.$agent.p_mfa('ws_admin', 'create_line_out', [this.line_out])
-        }
-        this.$router.push('/admin/line_outs')
-      }
-      catch (error) {
-        this.$notify({ title: 'Data error:', text: error, type: 'error' });
-      }
-    },
-    onDelete: async function () {
-      if (this.id) {
-        await this.$agent.p_mfa('ws_admin', 'delete_line_out', [this.id])
-        this.$router.push('/admin/line_outs')
-      }
-    },
-  },
-  created () {
-    this.query()
   }
 }
 </script>
