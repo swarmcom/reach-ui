@@ -1,7 +1,7 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="moh.name"></form-text>
-  <form-text id="description" label="Description" v-model="moh.description"></form-text>
+  <form-text id="name" label="Name" v-model="rec.name"></form-text>
+  <form-text id="description" label="Description" v-model="rec.description"></form-text>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
@@ -9,44 +9,18 @@
 
 <script>
 import Common from './Common'
+import Obj from './Object'
 
 export default {
-  name: 'admin-moh',
+  name: 'admin-mohs',
   props: ['id'],
-  mixins: [Common],
+  mixins: [Common, Obj],
   data () {
     return {
-      moh: {}
+      rec: {},
+      module: 'ws_db_moh',
+      redirect: '/admin/mohs'
     }
-  },
-  methods: {
-    query: async function () {
-      if (this.id) {
-        this.moh = await this.$agent.p_mfa('ws_db_moh', 'get', [this.id])
-      }
-    },
-    onCommit: async function () {
-      try {
-        if (this.id) {
-          await this.$agent.p_mfa('ws_db_moh', 'update', [this.id, this.moh])
-        } else {
-          await this.$agent.p_mfa('ws_db_moh', 'create', [this.moh])
-        }
-        this.$router.push('/admin/mohs')
-      }
-      catch (error) {
-        this.$notify({ title: 'Data error:', text: error, type: 'error' });
-      }
-    },
-    onDelete: async function () {
-      if (this.id) {
-        await this.$agent.p_mfa('ws_db_moh', 'delete', [this.id])
-        this.$router.push('/admin/mohs')
-      }
-    },
-  },
-  created () {
-    this.query()
   }
 }
 </script>
