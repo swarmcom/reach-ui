@@ -67,6 +67,16 @@ body {
   font-size: 15px;
   color: #8c8c8c;
 }
+.pin-nav {
+    position: fixed; /* Set the navbar to fixed position */
+    top: 56px; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    z-index: 5;
+    margin-bottom: 42px;
+}
+.pin-container {
+  margin-top: 52px;
+}
 .agent-state-text {
   font-size: 14px;
 }
