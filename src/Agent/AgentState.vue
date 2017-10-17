@@ -82,7 +82,8 @@ export default {
     available () { this.$agent.available() },
     release () {
       if (this.a.release_id === 'undefined') {
-        this.$notify({ title: 'Notify:', text: 'Please select release reason', type: 'warning' });
+        this.$notify({ title: 'Notify:', text: 'Please the select release reason', type: 'warning' })
+        this.$agent.showNotification('Please select the release reason', 'https://viewme.ezuce.com/media/themes/seevogh/favicon.png', 'Release Reason')
       }
       else {
         this.$agent.release(this.a.release_id)
