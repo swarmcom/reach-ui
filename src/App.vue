@@ -13,13 +13,19 @@
       </b-nav>
     </b-collapse>
   </b-navbar>
-  <b-nav v-if="auth" class="custom-b-nav" tabs>
+  <b-nav v-if="auth" class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
     <b-nav-item to="/admin/agents">ADMIN</b-nav-item>
     <b-nav-item to="/main">MAIN</b-nav-item>
     <b-nav-item to="/monitor">MONITOR </b-nav-item>
     <b-nav-item to="/reports">REPORTS</b-nav-item>
+    <button @click="onPin" class="btn ml-auto">
+      <icon label="No Pined">
+        <icon name="eyedropper" scale="1.0"></icon>
+        <icon v-if="!isPinned" style="color:red" name="ban" scale="1.0"></icon>
+      </icon>
+    </button>
   </b-nav>
-  <div class="container">
+  <div class="container" v-bind:class="{ 'pin-container': (isPinned && auth) }">
     <router-view></router-view>
   </div>
   <notifications position="bottom right" :speed="500" :duration="1000"/>
@@ -32,11 +38,13 @@ export default {
   data () {
     return {
       auth: false,
-      date: null
+      date: null,
+      isPinned: false
     }
   },
   methods: {
-    logout () { this.$agent.logout() }
+    logout () { this.$agent.logout() },
+    onPin () { this.isPinned = !this.isPinned }
   },
   created () {
     this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
