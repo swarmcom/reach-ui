@@ -14,7 +14,7 @@
   <form-text label="Max rings" v-model="agent.max_ring_fails"></form-text>
   <form-text label="Auto logout" v-model="agent.autologout"></form-text>
   <form-bool label="Persistent" v-model="agent.persistent"></form-bool>
-  <form-bool label="Reset max rings on success" v-model="agent.reset_max_rings_fails"></form-bool>
+  <form-bool label="Reset ring fails" v-model="agent.reset_max_rings_fails"></form-bool>
   <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
