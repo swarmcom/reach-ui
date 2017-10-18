@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     handleState ({ tag, info }) {
+      console.log(tag)
       if (tag === 'ws_login') {
         let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
         if (i >= 0) {
@@ -41,7 +42,8 @@ export default {
         }
       }
       else if (info.state === 'terminate') {
-        let i = this.agents.findIndex(E => E.login === info.login)
+        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+        console.log("i", i, "info", info)
         if (i >= 0) {
           this.agents.splice(i, 1)
         }
