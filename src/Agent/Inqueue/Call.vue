@@ -39,7 +39,7 @@
     <h4 v-if="this.$agent.is_oncall()">Actions:</h4>
     <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
     <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
-    <b-button @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
+    <b-button v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
   </div>
 
   <div class="col" v-if="this.$agent.can_transfer()">
