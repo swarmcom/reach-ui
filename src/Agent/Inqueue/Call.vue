@@ -35,10 +35,11 @@
 
 <div class="row" style="margin-top: 20px">
 
-  <div class="col-1">
-    <h4 v-if="this.$agent.is_oncall()">Hold:</h4>
+  <div class="col-2">
+    <h4 v-if="this.$agent.is_oncall()">Actions:</h4>
     <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
     <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
+    <b-button @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
   </div>
 
   <div class="col" v-if="this.$agent.can_transfer()">
@@ -117,6 +118,10 @@ export default {
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
+    record: async function () {
+      await this.$agent.p_mfa('ws_agent', 'record')
+      this.inqueue.keep_record = true
+    },
     end_wrapup () { this.$agent.end_wrapup() },
     transfer_to_agent (Agent) { this.$agent.transfer_to_agent(Agent) },
     transfer_to_queue (Queue) { this.$agent.transfer_to_queue(Queue) },
