@@ -76,13 +76,15 @@ export default {
     },
     update_condition (index, value) {
       let id = this.entries.findIndex(Obj => Obj.id === index)
-      this.entries[id].conditions = value
-      this.$agent.p_mfa('ws_db_recipe_entry', 'update', [id, this.entries[id]])
+      let entry = this.entries[id]
+      entry.conditions = value
+      this.$agent.p_mfa('ws_db_recipe_entry', 'update', [entry.id, entry])
     },
     update_action (index, value) {
       let id = this.entries.findIndex(Obj => Obj.id === index)
-      this.entries[id].actions = value
-      this.$agent.p_mfa('ws_db_recipe_entry', 'update', [id, this.entries[id]])
+      let entry = this.entries[id]
+      entry.actions = value
+      this.$agent.p_mfa('ws_db_recipe_entry', 'update', [entry.id, entry])
     },
     set_actions (value) {
       this.actions = value
