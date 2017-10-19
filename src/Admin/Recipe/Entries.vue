@@ -1,37 +1,39 @@
 <template>
 <div>
   <div class="row"><div class="col"><h3>Recipe entries:</h3></div></div>
+  <b-row style="margin-bottom: 20px">
+    <b-col>
+      <button @click="enable_edit()" class="btn btn-outline-primary">Show</button>
+      <button @click="hide_edit()" class="btn btn-outline-primary">Hide</button>
+    </b-col>
+  </b-row>
 
-  <div class="row" v-for="entry of entries" :key="entry.id" style="margin-bottom: 10px">
+  <div class="row" v-for="entry of entries" :key="entry.id">
     <div class="container">
       <b-row>
         <b-col cols=1>
           <button @click="del(entry.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
         </b-col>
-      </b-row>
-      <b-row style="margin-top: 10px">
-        <b-col>
-          <conditions :value="entry.conditions" @input="update_condition(entry.id, $event)"></conditions>
+        <b-col cols="6">
+          <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
         </b-col>
-        <b-col>
-          <actions :value="entry.actions" @input="update_action(entry.id, $event)"></actions>
+        <b-col cols="5">
+          <actions :value="entry.actions" :edit="edit" @input="update_action(entry.id, $event)"></actions>
         </b-col>
       </b-row>
     </div>
   </div>
 
-  <div class="row" style="margin-top: 25px">
+  <div class="row">
     <div class="container">
       <b-row>
         <b-col cols=1>
           <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
         </b-col>
-      </b-row>
-      <b-row style="margin-top: 10px">
-        <b-col>
+        <b-col cols="6">
           <conditions :value="conditions" @input="set_conditions($event)"></conditions>
         </b-col>
-        <b-col>
+        <b-col cols="5">
           <actions :value="actions" @input="set_actions($event)"></actions>
         </b-col>
       </b-row>
@@ -53,6 +55,7 @@ export default {
   },
   data () {
     return {
+      edit: false,
       conditions: [],
       actions: [],
       entries: []
@@ -64,6 +67,12 @@ export default {
     },
     set_conditions (value) {
       this.conditions = value
+    },
+    enable_edit (index) {
+      this.edit = true
+    },
+    hide_edit (index) {
+      this.edit = false
     },
     update_condition (index, value) {
       let id = this.entries.findIndex(Obj => Obj.id === index)
