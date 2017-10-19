@@ -3,7 +3,7 @@
   <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
     <div v-for="sk of value" class="form-row">
-      <div class="for_group col-1">
+      <div class="form-group col-1">
         <button @click="del(sk.key)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
       </div>
       <div class="form-group col-3">

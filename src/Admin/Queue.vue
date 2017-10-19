@@ -9,7 +9,6 @@
   <form-bool label="Wrap-up enabled" v-model="queue.wrapup_enabled"></form-bool>
   <form-text id="wrapup_timer" label="Wrap-up timer" v-model="queue.wrapup_timer"></form-text>
   <skills id="skills" label="Skills" v-model="skills"></skills>
-  <recipe id="recipe" label="Recipe" v-model="recipe"></recipe>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
