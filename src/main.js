@@ -38,6 +38,9 @@ import AdminPrompts from './Admin/Prompts.vue'
 import AdminMOH from './Admin/MOH.vue'
 import AdminMOHs from './Admin/MOHs.vue'
 import AdminDialplan from './Admin/Dialplan.vue'
+import AdminRecipe from './Admin/Recipe.vue'
+import AdminRecipeEntries from './Admin/Recipe/Entries.vue'
+import AdminRecipes from './Admin/Recipes.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -46,7 +49,6 @@ import FormBool from './Widget/FormBool.vue'
 import AgentGroups from './Widget/Agent/Groups.vue'
 import Skills from './Widget/Skills.vue'
 import Lines from './Widget/Lines.vue'
-import Recipe from './Widget/Recipe.vue'
 import MOHs from './Widget/MOHs.vue'
 import FormSelectBool from './Widget/FormSelectBool.vue'
 import Prompts from './Widget/Prompts.vue'
@@ -68,7 +70,6 @@ Vue.component('form-select-bool', FormSelectBool)
 Vue.component('agent-groups', AgentGroups)
 Vue.component('skills', Skills)
 Vue.component('lines', Lines)
-Vue.component('recipe', Recipe)
 Vue.component('mohs', MOHs)
 Vue.component('prompts', Prompts)
 Vue.component('clients', Clients)
@@ -97,6 +98,7 @@ const router = new VueRouter({
       { path: 'line_outs', component: AdminLineOuts },
       { path: 'prompts', component: AdminPrompts },
       { path: 'mohs', component: AdminMOHs },
+      { path: 'recipes', component: AdminRecipes },
       { path: 'agent', component: AdminAgent },
       { path: 'dialplan', component: AdminDialplan },
       { path: 'agent/:id', component: AdminAgent, props: true },
@@ -121,7 +123,10 @@ const router = new VueRouter({
       { path: 'line_in', component: AdminLineIn },
       { path: 'line_in/:id', component: AdminLineIn, props: true },
       { path: 'line_out', component: AdminLineOut },
-      { path: 'line_out/:id', component: AdminLineOut, props: true }
+      { path: 'line_out/:id', component: AdminLineOut, props: true },
+      { path: 'recipe', component: AdminRecipe },
+      { path: 'recipe/:id', component: AdminRecipe, props: true },
+      { path: 'recipe/:id/entries', component: AdminRecipeEntries, props: true },
     ] },
     { path: '/help', component: Help },
     { path: '/login', component: Login },
