@@ -42,17 +42,21 @@
 
 <script>
 import Hangup from './Action/Hangup'
+import Voicemail from './Action/Voicemail'
+import Announce from './Action/Announce'
 
 export default {
   name: 'admin-recipe-actions',
   props: ['value', 'edit'],
   components: {
-    hangup: Hangup,
+    hangup: Hangup, announce: Announce, voicemail: Voicemail
   },
   data () {
     return {
       components: [
         { name: 'Hangup', ref: 'hangup' },
+        { name: 'Announce', ref: 'announce' },
+        { name: 'Voicemail', ref: 'voicemail' },
       ],
       action: undefined,
       args: [],
