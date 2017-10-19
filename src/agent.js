@@ -13,12 +13,26 @@ function guess_ws () {
   return proto + window.location.hostname + port + "/reach/ws"
 }
 
+async function session_auth(agent) {
+  try {
+    let SessionKey = localStorage.getItem('session-key')
+    let Agent = await agent.p_mfa('ws_agent', 'auth', [SessionKey])
+    agent.vm.agent = Agent
+    localStorage.setItem('session-key', Agent.session_key)
+    EventBus.$emit('agent-auth', agent.isAuth())
+  }
+  catch (error) {
+  }
+  agent.vm.session_auth = true
+}
+
 export default class Agent extends WsProto {
 
   constructor () {
     super(cfg('reach_ws', guess_ws()))
     this.vm = new Vue({
       data: {
+        session_auth: false,
         agent: undefined,
         transfer_agents: [],
         state: undefined,
@@ -38,13 +52,21 @@ export default class Agent extends WsProto {
     this.handleAuth()
   }
 
+  onConnect () {
+    super.onConnect()
+    session_auth(this)
+  }
+
   // MONITOR API
   subscribe (Channel) { this.mfa('ws_admin', 'subscribe', [Channel]) }
   agents (Cb = (A) => A) { this.mfa('ws_admin', 'agents', ['all'], Cb) }
   inqueues (Cb = (A) => A) { this.mfa('ws_admin', 'inqueues', ['all'], Cb) }
 
   // AGENT API
-  logout () { this.call('stop', [], () => this.handleAuth()) }
+  logout () {
+    localStorage.removeItem('session-key')
+    this.call('stop', [], () => this.handleAuth())
+  }
   release (Id) { this.call('release', [Id]) }
   available () { this.call('available') }
   hangup () { this.call('hangup') }
@@ -109,6 +131,7 @@ export default class Agent extends WsProto {
   is_wrapup () { return this.vm && this.vm.state == 'wrapup' }
   is_hold () { return this.vm && this.vm.state == 'hold' }
   is_barge () { return this.vm && this.vm.state == 'barge' }
+  can_login () { return this.vm.session_auth }
   can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
   can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
@@ -117,6 +140,7 @@ export default class Agent extends WsProto {
   handleAuth (Re, Cb = (A) => A) {
     if (Re && Re.reply) {
       this.vm.agent = Re.reply
+      localStorage.setItem('session-key', Re.reply.session_key)
     } else {
       this.vm.agent = undefined
     }
