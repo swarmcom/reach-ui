@@ -1,7 +1,7 @@
 <template>
 <div>
   <div v-for="(action, index) of actions" class="form-row">
-    <div class="form-group col-1">
+    <div class="form-group col-2">
       <button @click="del(index)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
     </div>
     <b-col cols=5>
@@ -19,8 +19,8 @@
     </b-col>
   </div>
 
-  <div class="form-row">
-    <b-col cols=1>
+  <div class="form-row" v-if="edit" style="margin-bottom: 20px">
+    <b-col cols=2>
       <button @click="add" class="btn btn-outline-seactionary"><icon name="plus" scale="1"></icon></button>
     </b-col>
     <b-col cols=5>
@@ -45,7 +45,7 @@ import Hangup from './Action/Hangup'
 
 export default {
   name: 'admin-recipe-actions',
-  props: ['value'],
+  props: ['value', 'edit'],
   components: {
     hangup: Hangup,
   },

@@ -19,7 +19,7 @@
     </b-col>
   </b-form-row>
 
-  <div class="form-row">
+  <div class="form-row" v-if="edit">
     <b-col cols=1>
       <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
     </b-col>
@@ -48,7 +48,7 @@ import EligibleAgents from './Condition/EligibleAgents'
 
 export default {
   name: 'admin-recipe-conditions',
-  props: ['value'],
+  props: ['value', 'edit'],
   components: {
     ticks: Ticks,
     periodic: Periodic,
