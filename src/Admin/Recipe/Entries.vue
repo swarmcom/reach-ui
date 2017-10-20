@@ -8,37 +8,29 @@
     </b-col>
   </b-row>
 
-  <div class="row" v-for="entry of entries" :key="entry.id">
-    <div class="container">
-      <b-row>
-        <b-col cols=1>
-          <button @click="del(entry.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
-        </b-col>
-        <b-col cols="6">
-          <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
-        </b-col>
-        <b-col cols="5">
-          <actions :value="entry.actions" :edit="edit" @input="update_action(entry.id, $event)"></actions>
-        </b-col>
-      </b-row>
-    </div>
-  </div>
+  <b-row v-for="entry of entries" :key="entry.id">
+    <b-col cols=1>
+      <button @click="del(entry.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
+    </b-col>
+    <b-col cols="6">
+      <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
+    </b-col>
+    <b-col cols="5">
+      <actions :value="entry.actions" :edit="edit" @input="update_action(entry.id, $event)"></actions>
+    </b-col>
+  </b-row>
 
-  <div class="row">
-    <div class="container">
-      <b-row>
-        <b-col cols=1>
-          <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
-        </b-col>
-        <b-col cols="6">
-          <conditions :value="conditions" @input="set_conditions($event)"></conditions>
-        </b-col>
-        <b-col cols="5">
-          <actions :value="actions" @input="set_actions($event)"></actions>
-        </b-col>
-      </b-row>
-    </div>
-  </div>
+  <b-row>
+    <b-col cols=1>
+      <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+    </b-col>
+    <b-col cols="6">
+      <conditions :value="conditions" @input="set_conditions($event)"></conditions>
+    </b-col>
+    <b-col cols="5">
+      <actions :value="actions" @input="set_actions($event)"></actions>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
