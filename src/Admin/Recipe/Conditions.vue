@@ -9,7 +9,7 @@
         <b-form-input v-model="cond.name"></b-form-input>
         <b-input-group-button slot="left">
           <b-dropdown text="C" variant="success" left>
-            <b-dropdown-item v-for="comp of components" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
+            <b-dropdown-item v-for="comp of components" :key="comp.ref" @click="set_cond(index, comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
         </b-input-group-button>
       </b-input-group>
@@ -83,6 +83,7 @@ export default {
       this.commit()
     },
     set_cond(id, value) {
+      console.log("SET", id)
       this.conditions[id].name = value
       this.conditions[id].args = []
       this.commit()
