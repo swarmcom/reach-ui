@@ -53,6 +53,7 @@ import MOHs from './Widget/MOHs.vue'
 import FormSelectBool from './Widget/FormSelectBool.vue'
 import Prompts from './Widget/Prompts.vue'
 import Queues from './Widget/Queues.vue'
+import Recipes from './Widget/Recipes.vue'
 import QueueGroups from './Widget/Queue/Groups.vue'
 import Clients from './Widget/Clients.vue'
 import DispositionGroups from './Widget/DispositionGroups.vue'
@@ -77,6 +78,7 @@ Vue.component('queues', Queues)
 Vue.component('queue-groups', QueueGroups)
 Vue.component('disposition-groups', DispositionGroups)
 Vue.component('release-groups', ReleaseGroups)
+Vue.component('recipes', Recipes)
 
 Vue.use(VueRouter)
 Vue.use(AgentAPI)
