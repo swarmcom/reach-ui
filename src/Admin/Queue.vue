@@ -11,6 +11,7 @@
   <form-text label="Wrap-up timer" v-model="queue.wrapup_timer"></form-text>
   <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
+  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
 </template>
@@ -56,6 +57,9 @@ export default {
         await this.$agent.p_mfa('ws_db_queue', 'delete', [this.id])
         this.$router.push('/admin/queues')
       }
+    },
+    onCancel: async function () {
+      this.$router.push('/admin/queues')
     },
   },
   created () {
