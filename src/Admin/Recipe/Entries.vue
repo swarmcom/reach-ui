@@ -8,7 +8,7 @@
     </b-col>
   </b-row>
 
-  <b-row v-for="entry of entries" :key="entry.id">
+  <b-row v-for="entry of entries" :key="entry.id" style="margin-bottom: 10px">
     <b-col cols=1>
       <button @click="del(entry.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
     </b-col>
