@@ -10,6 +10,7 @@
     </div>
   </div>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
+  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
 </template>

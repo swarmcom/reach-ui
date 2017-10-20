@@ -28,6 +28,7 @@
     </div>
   </div>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
+  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
 </div>
 </template>
 
@@ -64,6 +65,9 @@ export default {
       let Params = this.list2object(this.params)
       await this.$agent.p_mfa('ws_admin', 'set_params', [Params])
       this.$notify({ title: 'Success:', text: 'Parameters updated.', type: 'success' });
+    },
+    onCancel: async function () {
+      this.$router.push('/admin/agents')
     },
   },
   created () {
