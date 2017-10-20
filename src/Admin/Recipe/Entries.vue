@@ -110,6 +110,7 @@ export default {
         conditions: this.conditions, actions: this.actions, description: this.description
       }])
       this.entries.push(recipe)
+      this.description = ''
       this.actions = []
       this.conditions = []
     },
