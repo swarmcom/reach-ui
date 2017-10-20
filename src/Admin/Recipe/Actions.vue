@@ -44,12 +44,17 @@
 import Hangup from './Action/Hangup'
 import Voicemail from './Action/Voicemail'
 import Announce from './Action/Announce'
+import Priority from './Action/Priority'
+import Prioritize from './Action/Prioritize'
+import Deprioritize from './Action/Deprioritize'
+import TransferToQueue from './Action/TransferToQueue'
 
 export default {
   name: 'admin-recipe-actions',
   props: ['value', 'edit'],
   components: {
-    hangup: Hangup, announce: Announce, voicemail: Voicemail
+    hangup: Hangup, announce: Announce, voicemail: Voicemail, priority: Priority, prioritize: Prioritize, deprioritize: Deprioritize,
+    transfer_to_queue: TransferToQueue,
   },
   data () {
     return {
@@ -57,6 +62,10 @@ export default {
         { name: 'Hangup', ref: 'hangup' },
         { name: 'Announce', ref: 'announce' },
         { name: 'Voicemail', ref: 'voicemail' },
+        { name: 'Priority', ref: 'priority' },
+        { name: 'Prioritize', ref: 'prioritize' },
+        { name: 'Deprioritize', ref: 'deprioritize' },
+        { name: 'TransferToQueue', ref: 'transfer_to_queue' },
       ],
       action: undefined,
       args: [],
