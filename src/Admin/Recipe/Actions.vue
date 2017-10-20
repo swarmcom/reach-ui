@@ -48,13 +48,14 @@ import Priority from './Action/Priority'
 import Prioritize from './Action/Prioritize'
 import Deprioritize from './Action/Deprioritize'
 import TransferToQueue from './Action/TransferToQueue'
+import TransferToOutgoing from './Action/TransferToOutgoing'
 
 export default {
   name: 'admin-recipe-actions',
   props: ['value', 'edit'],
   components: {
     hangup: Hangup, announce: Announce, voicemail: Voicemail, priority: Priority, prioritize: Prioritize, deprioritize: Deprioritize,
-    transfer_to_queue: TransferToQueue,
+    transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing
   },
   data () {
     return {
@@ -66,6 +67,7 @@ export default {
         { name: 'Prioritize', ref: 'prioritize' },
         { name: 'Deprioritize', ref: 'deprioritize' },
         { name: 'TransferToQueue', ref: 'transfer_to_queue' },
+        { name: 'TransferToOutgoing', ref: 'transfer_to_outgoing' },
       ],
       action: undefined,
       args: [],
