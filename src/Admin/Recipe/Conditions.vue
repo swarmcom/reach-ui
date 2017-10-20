@@ -1,9 +1,9 @@
 <template>
 <div class="container">
-  <b-form-row v-for="(cond, index) of conditions" :key="cond.name">
-    <div class="form-group col-1">
+  <b-form-row v-for="(cond, index) of conditions" :key="cond.name" style="margin-bottom: 5px">
+    <b-col cols=1>
       <button @click="del(index)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
-    </div>
+    </b-col>
     <b-col cols=5>
       <b-input-group>
         <b-form-input v-model="cond.name"></b-form-input>
