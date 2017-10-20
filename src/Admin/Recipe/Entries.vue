@@ -9,8 +9,16 @@
   </b-row>
 
   <b-row v-for="entry of entries" :key="entry.id" style="margin-bottom: 10px">
-    <b-col cols=1>
+    <b-col cols=2>
       <button @click="del(entry.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
+      &nbsp;
+      <button @click="up(entry.id)" class="btn btn-outline-success"><icon name="arrow-up" scale="1"></icon></button>
+      <button @click="down(entry.id)" class="btn btn-outline-primary"><icon name="arrow-down" scale="1"></icon></button>
+    </b-col>
+    <b-col cols=10 style="margin-bottom: 10px">
+      <b-form-input v-model="entry.description" @input="update_description(entry.id, $event)"></b-form-input>
+    </b-col>
+    <b-col cols=1>
     </b-col>
     <b-col cols="6">
       <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
@@ -23,6 +31,11 @@
   <b-row>
     <b-col cols=1>
       <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+    </b-col>
+    <b-col cols=11 style="margin-bottom: 10px">
+      <b-form-input v-model="description"></b-form-input>
+    </b-col>
+    <b-col cols=1>
     </b-col>
     <b-col cols="6">
       <conditions :value="conditions" @input="set_conditions($event)"></conditions>
@@ -48,6 +61,7 @@ export default {
   data () {
     return {
       edit: false,
+      description: '',
       conditions: [],
       actions: [],
       entries: []
@@ -66,6 +80,10 @@ export default {
     hide_edit (index) {
       this.edit = false
     },
+    up (index) {
+    },
+    down (index) {
+    },
     update_condition (index, value) {
       let id = this.entries.findIndex(Obj => Obj.id === index)
       let entry = this.entries[id]
@@ -78,12 +96,18 @@ export default {
       entry.actions = value
       this.$agent.p_mfa('ws_db_recipe_entry', 'update', [entry.id, entry])
     },
+    update_description (index, value) {
+      let id = this.entries.findIndex(Obj => Obj.id === index)
+      let entry = this.entries[id]
+      entry.description = value
+      this.$agent.p_mfa('ws_db_recipe_entry', 'update', [entry.id, entry])
+    },
     set_actions (value) {
       this.actions = value
     },
     add: async function() {
       let recipe = await this.$agent.p_mfa('ws_db_recipe_entry', 'create', [this.id, {
-        conditions: this.conditions, actions: this.actions
+        conditions: this.conditions, actions: this.actions, description: this.description
       }])
       this.entries.push(recipe)
       this.actions = []
