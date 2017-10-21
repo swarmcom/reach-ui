@@ -6,6 +6,8 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import VueCodeMirror from 'vue-codemirror'
+
 import AgentAPI from './agent-api-plugin.js'
 
 import Help from './Help.vue'
@@ -41,6 +43,8 @@ import AdminDialplan from './Admin/Dialplan.vue'
 import AdminRecipe from './Admin/Recipe.vue'
 import AdminRecipeEntries from './Admin/Recipe/Entries.vue'
 import AdminRecipes from './Admin/Recipes.vue'
+import AdminLua from './Admin/Lua.vue'
+import AdminLuas from './Admin/Luas.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -84,6 +88,7 @@ Vue.use(VueRouter)
 Vue.use(AgentAPI)
 Vue.use(Notifications)
 Vue.use(BootstrapVue)
+Vue.use(VueCodeMirror)
 
 const router = new VueRouter({
   routes: [
@@ -101,6 +106,7 @@ const router = new VueRouter({
       { path: 'prompts', component: AdminPrompts },
       { path: 'mohs', component: AdminMOHs },
       { path: 'recipes', component: AdminRecipes },
+      { path: 'luas', component: AdminLuas },
       { path: 'agent', component: AdminAgent },
       { path: 'dialplan', component: AdminDialplan },
       { path: 'agent/:id', component: AdminAgent, props: true },
@@ -126,6 +132,8 @@ const router = new VueRouter({
       { path: 'line_in/:id', component: AdminLineIn, props: true },
       { path: 'line_out', component: AdminLineOut },
       { path: 'line_out/:id', component: AdminLineOut, props: true },
+      { path: 'lua', component: AdminLua },
+      { path: 'lua/:id', component: AdminLua, props: true },
       { path: 'recipe', component: AdminRecipe },
       { path: 'recipe/:id', component: AdminRecipe, props: true },
       { path: 'recipe/:id/entries', component: AdminRecipeEntries, props: true },

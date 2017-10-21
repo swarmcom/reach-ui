@@ -18,6 +18,7 @@
   </li>
 
   <b-nav-item-dropdown text="Config">
+    <b-dropdown-item to="/admin/luas">Lua actions</b-dropdown-item>
     <b-dropdown-item to="/admin/releases">Releases</b-dropdown-item>
     <b-dropdown-item to="/admin/dispositions">Dispositions</b-dropdown-item>
   </b-nav-item-dropdown>
