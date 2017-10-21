@@ -18,12 +18,10 @@
     <b-col cols=10 style="margin-bottom: 10px">
       <b-form-input v-model="entry.description" @input="update_description(entry.id, $event)"></b-form-input>
     </b-col>
-    <b-col cols=1>
-    </b-col>
     <b-col cols="6">
       <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
     </b-col>
-    <b-col cols="5">
+    <b-col cols="6">
       <actions :value="entry.actions" :edit="edit" @input="update_action(entry.id, $event)"></actions>
     </b-col>
   </b-row>
@@ -35,12 +33,10 @@
     <b-col cols=11 style="margin-bottom: 10px">
       <b-form-input v-model="description"></b-form-input>
     </b-col>
-    <b-col cols=1>
-    </b-col>
     <b-col cols="6">
       <conditions :value="conditions" @input="set_conditions($event)"></conditions>
     </b-col>
-    <b-col cols="5">
+    <b-col cols="6">
       <actions :value="actions" @input="set_actions($event)"></actions>
     </b-col>
   </b-row>

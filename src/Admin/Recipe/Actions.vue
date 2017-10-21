@@ -1,7 +1,7 @@
 <template>
 <div>
   <div v-for="(action, index) of actions" class="form-row" style="margin-bottom: 5px">
-    <b-col cols="2">
+    <b-col cols=1>
       <button @click="del(index)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
     </b-col>
     <b-col cols=5>
@@ -20,7 +20,7 @@
   </div>
 
   <div class="form-row" v-if="edit" style="margin-bottom: 20px">
-    <b-col cols=2>
+    <b-col cols=1>
       <button @click="add" class="btn btn-outline-seactionary"><icon name="plus" scale="1"></icon></button>
     </b-col>
     <b-col cols=5>
@@ -44,6 +44,7 @@
 import Hangup from './Action/Hangup'
 import Voicemail from './Action/Voicemail'
 import Announce from './Action/Announce'
+import Lua from './Action/Lua'
 import Priority from './Action/Priority'
 import Prioritize from './Action/Prioritize'
 import Deprioritize from './Action/Deprioritize'
@@ -55,13 +56,14 @@ export default {
   props: ['value', 'edit'],
   components: {
     hangup: Hangup, announce: Announce, voicemail: Voicemail, priority: Priority, prioritize: Prioritize, deprioritize: Deprioritize,
-    transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing
+    transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing, lua: Lua
   },
   data () {
     return {
       components: [
         { name: 'Hangup', ref: 'hangup' },
         { name: 'Announce', ref: 'announce' },
+        { name: 'Lua script', ref: 'lua' },
         { name: 'Voicemail', ref: 'voicemail' },
         { name: 'Priority', ref: 'priority' },
         { name: 'Prioritize', ref: 'prioritize' },
