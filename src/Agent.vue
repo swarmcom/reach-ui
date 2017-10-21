@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-12 col-md-3">
         <agentState></agentState>
-        <agent-info></agent-info>
+        <agentInfo></agentInfo>
       </div>
       <div class="col-md-9 col-12">
         <div class="row">
@@ -70,7 +70,7 @@ export default {
     release: Release,
     toggleBar: ToggleBar,
     agentState: AgentState,
-    'agent-info': AgentInfo,
+    agentInfo: AgentInfo,
     override: Override
   },
 }

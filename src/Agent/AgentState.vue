@@ -2,12 +2,13 @@
 <div>
   <div class="row" style="margin-top:5px;">
     <div class="col-5">
-      <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-outline-secondary agent-state-button">
-        <icon name="stop" scale="4"></icon>
+      <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-my agent-state-button">
+        <icon name="stop" scale="3"></icon>
       </button>
-      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-secondary agent-state-button">
-          <icon name="play" scale="4"></icon>
+      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-my agent-state-button">
+          <icon name="play" scale="3"></icon>
       </button>
+      <release v-if="this.$agent.is_active()"></release>
     </div>
     <div class="col-7">
       <div v-if="a.state == 'available'" class="agent-state-available">
@@ -36,10 +37,7 @@
       </div>
     </div>
   </div>
-  <div class="row col">
-    <release v-if="this.$agent.is_active()"></release>
-  </div>
-  <div class="row"></div>
+  <div class="row" style="margin-top: 10px;"></div>
     <div class="row" v-if="a.state === 'release'">
       <div class="col-5 agent-state-text">Release reason:</div>
       <div class="col-7 agent-state-text"> {{release_reason}} </div>
@@ -61,12 +59,19 @@
       <div class="col-5 agent-state-text">Activity Time:</div>
       <div class="col-7 agent-state-text"> {{msToHms(time_activity) }} </div>
     </div>
+    <div class="row">
+      <div class="col-5 agent-state-text myPhone">My Phone:</div>
+      <div class="col-7 agent-state-text">
+        <myPhoneUri v-if="this.$agent.is_idle()"></myPhoneUri>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import Release from './Widget/Release'
 import moment from 'moment'
 import Common from '../Admin/Common'
+import MyPhoneUri from '../Agent/MyPhoneUri'
 export default {
   name: 'agent-state',
   mixins: [Common],
@@ -114,7 +119,8 @@ export default {
     }
   },
   components: {
-    release: Release
+    release: Release,
+    myPhoneUri: MyPhoneUri
   }
 }
 </script>
