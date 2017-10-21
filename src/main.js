@@ -60,6 +60,7 @@ import Queues from './Widget/Queues.vue'
 import Recipes from './Widget/Recipes.vue'
 import QueueGroups from './Widget/Queue/Groups.vue'
 import Clients from './Widget/Clients.vue'
+import Luas from './Widget/Luas.vue'
 import DispositionGroups from './Widget/DispositionGroups.vue'
 import ReleaseGroups from './Widget/ReleaseGroups.vue'
 
@@ -83,6 +84,7 @@ Vue.component('queue-groups', QueueGroups)
 Vue.component('disposition-groups', DispositionGroups)
 Vue.component('release-groups', ReleaseGroups)
 Vue.component('recipes', Recipes)
+Vue.component('luas', Luas)
 
 Vue.use(VueRouter)
 Vue.use(AgentAPI)
