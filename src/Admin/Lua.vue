@@ -27,7 +27,7 @@ require('codemirror/addon/search/searchcursor.js')
 require('codemirror/addon/search/match-highlighter.js')
 
 export default {
-  name: 'admin-prompt',
+  name: 'admin-lua',
   props: ['id'],
   mixins: [Common, Obj],
   data () {

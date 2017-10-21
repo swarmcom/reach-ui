@@ -1,7 +1,7 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="rec.name"></form-text>
-  <form-text id="description" label="Description" v-model="rec.description"></form-text>
+  <form-text label="Name" v-model="rec.name"></form-text>
+  <form-text label="Description" v-model="rec.description"></form-text>
   <div class="form-group row">
     <label class="col-3 col-form-label">Choose File</label>
     <div class="col-9">

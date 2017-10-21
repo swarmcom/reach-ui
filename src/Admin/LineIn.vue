@@ -1,7 +1,7 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="rec.name"></form-text>
-  <form-text id="description" label="Description" v-model="rec.description"></form-text>
+  <form-text label="Name" v-model="rec.name"></form-text>
+  <form-text label="Description" v-model="rec.description"></form-text>
   <disposition-groups label="Dispositions" v-model="rec.disposition_group_id"></disposition-groups>
   <queues label="Queue" v-model="rec.queue_id"></queues>
   <clients label="Client" v-model="rec.client_id"></clients>
