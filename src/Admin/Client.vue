@@ -1,6 +1,6 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="rec.name"></form-text>
+  <form-text label="Name" v-model="rec.name"></form-text>
   <disposition-groups label="Dispositions" v-model="rec.disposition_group_id"></disposition-groups>
   <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
   <prompts label="Announce" v-model="rec.announce_id"></prompts>
