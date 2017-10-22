@@ -5,30 +5,36 @@
       <h3>System-wide parameters:</h3>
     </div>
   </div>
-  <div v-for="param of params" class="form-row">
-    <div class="for_group col-1">
-      <button @click="del(param.key)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
+  <div v-for="param of params" class="form-row" style="margin-top: 5px">
+    <div class="col-1">
+      <button @click="del(param.key)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </div>
-    <div class="form-group col-3">
+    <div class="col-3">
       <input type="text" class="form-control" v-model="param.key">
     </div>
-    <div class="form-group col">
+    <div class="col">
       <input type="text" class="form-control" v-model="param.value">
     </div>
   </div>
-  <div class="form-row">
-    <div class="form-group col-1">
-      <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+
+  <div class="form-row" style="margin-top: 5px">
+    <div class="col-1">
+      <button @click="add" class="btn btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </div>
-    <div class="form-group col-3">
+    <div class="col-3">
       <input type="text" class="form-control" v-model="name">
     </div>
-    <div class="form-group col">
+    <div class="col">
       <input type="text" class="form-control" v-model="value">
     </div>
   </div>
-  <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+
+  <div class="row" style="margin-top: 20px">
+    <div class="col">
+      <button @click="onCommit" class="btn btn-primary">Commit</button>
+      <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+    </div>
+  </div>
 </div>
 </template>
 
