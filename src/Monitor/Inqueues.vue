@@ -25,6 +25,7 @@ import Btable from '../Widget/Btable'
 import ToggleBar from '../Widget/ToggleBar'
 export default {
   name: 'inqueues',
+  storageName: 'queueManager',
   widgetName: 'QUEUE MANAGER',
   data () {
     return {
@@ -100,6 +101,8 @@ export default {
     this.$agent.subscribe('inqueues')
     this.$bus.$on('inqueue_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
+    if (this.$agent.vm.storage_data.queueManagerCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.queueManagerCollapsed
   },
   beforeDestroy () {
     this.$bus.$off('inqueue_state', this.handleState)

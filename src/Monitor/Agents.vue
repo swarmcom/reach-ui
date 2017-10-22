@@ -21,6 +21,7 @@ import ToggleBar from '../Widget/ToggleBar'
 import Common from '../Admin/Common'
 export default {
   name: 'monitor-agents',
+  storageName: 'agentManager',
   widgetName: 'AGENT MANAGER',
   mixins: [Common],
   data () {
@@ -85,6 +86,8 @@ export default {
     this.$agent.subscribe('agents')
     this.$bus.$on('agents_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
+    if (this.$agent.vm.storage_data.agentManagerCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.agentManagerCollapsed
   },
   beforeDestroy () {
     this.$bus.$off('agents_state', this.handleState)

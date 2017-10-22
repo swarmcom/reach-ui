@@ -1,6 +1,6 @@
 <template>
 <div class="toggle-bar-custom">
-  <button type="button" class="btn btn-sm" @click="$parent.showCollapse = !$parent.showCollapse"
+  <button type="button" class="btn btn-sm" @click="showCollapse"
          :class="$parent.showCollapse ? 'collapsed' : null"
          aria-controls="collapse4"
          :aria-expanded="$parent.showCollapse ? 'true' : 'false'">
@@ -18,5 +18,14 @@ export default {
     return {
     }
   },
+  methods: {
+    showCollapse () {
+      this.$parent.showCollapse = !(this.$parent.showCollapse)
+      let key = this.$parent.$options.storageName+'Collapsed'
+
+      this.$agent.vm.storage_data[key] = this.$parent.showCollapse
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    }
+  }
 }
 </script>

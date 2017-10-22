@@ -35,6 +35,7 @@
 <script>
 import moment from 'moment'
 export default {
+  storageName: 'navBar',
   data () {
     return {
       auth: false,
@@ -44,12 +45,24 @@ export default {
   },
   methods: {
     logout () { this.$agent.logout() },
-    onPin () { this.isPinned = !this.isPinned }
+    onPin () {
+      this.isPinned = !this.isPinned
+      this.$agent.vm.storage_data[this.$options.storageName+'Pinned'] = this.isPinned
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    },
+    loadDataStorage(name) {
+      if(localStorage.getItem(name)) {
+        this.$agent.vm.storage_data = JSON.parse(localStorage.getItem(name));
+        if (this.$agent.vm.storage_data.navBarPinned != undefined)
+          this.isPinned = this.$agent.vm.storage_data.navBarPinned
+      }
+    }
   },
   created () {
     this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
     this.date = new Date()
     setInterval(() => this.date = new Date, 1000)
+    this.loadDataStorage("reach-ui")
   },
   filters: {
     filterDate: function (date) {

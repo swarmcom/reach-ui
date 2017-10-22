@@ -30,6 +30,7 @@
 import {EventBus} from './event-bus.js'
 
 export default {
+  storageName: 'login',
   data () {
     return {
       login: '',
@@ -50,7 +51,7 @@ export default {
       })
     },
     onSubmit () {
-      this.saveDataStorage(this.storage_name)
+      this.saveDataStorage()
       this.$agent.login(this.login, this.password, (Re) => {
         if (Re.error && Re.error == 'already_logged_in') {
           this.$refs.takeover.show()
@@ -59,27 +60,30 @@ export default {
         }
       })
     },
-    loadDataStorage(name) {
-      if(localStorage.getItem(name)) {
-        let dataStore = JSON.parse(localStorage.getItem(name));
-        this.remember = dataStore.remember
-        if (this.remember === true) {
-          this.login = dataStore.login
-          this.password = dataStore.password
-        }
-      }
+    loadDataStorage() {
+      if(this.$agent.vm.storage_data.loginLogin != undefined)
+        this.login = this.$agent.vm.storage_data.loginLogin
+      if(this.$agent.vm.storage_data.loginPassword != undefined)
+        this.password = this.$agent.vm.storage_data.loginPassword
+      if(this.$agent.vm.storage_data.loginRemember != undefined)
+        this.remember = this.$agent.vm.storage_data.loginRemember
     },
-    saveDataStorage(name) {
-      let dataStore
-      if (this.remember)
-        dataStore = { "remember": this.remember, "login": this.login, "password": this.password }
-      else
-        dataStore = { "remember": this.remember, "login": '', "password": '' }
-      localStorage.setItem(this.storage_name, JSON.stringify(dataStore))
+    saveDataStorage() {
+      if (this.remember) {
+        this.$agent.vm.storage_data[this.$options.storageName+'Login'] = this.login
+        this.$agent.vm.storage_data[this.$options.storageName+'Password'] = this.password
+        this.$agent.vm.storage_data[this.$options.storageName+'Remember'] = this.remember
+      }
+      else {
+        this.$agent.vm.storage_data[this.$options.storageName+'Login'] = ''
+        this.$agent.vm.storage_data[this.$options.storageName+'Password'] = ''
+        this.$agent.vm.storage_data[this.$options.storageName+'Remember'] = this.remember
+      }
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     }
   },
   created () {
-    this.loadDataStorage(this.storage_name)
+    this.loadDataStorage()
   }
 }
 </script>
