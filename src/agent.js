@@ -13,6 +13,12 @@ function guess_ws () {
   return proto + window.location.hostname + port + "/reach/ws"
 }
 
+function guess_http () {
+  let proto = window.location.protocol
+  let port = window.location.port ? ":" + window.location.port : ""
+  return proto + window.location.hostname + port + "/reach"
+}
+
 async function session_auth(agent) {
   try {
     let SessionKey = localStorage.getItem('session-key')
@@ -54,7 +60,7 @@ export default class Agent extends WsProto {
   }
 
   get_api () {
-    return cfg('reach_http', 'http://localhost:8937')
+    return cfg('reach_http', guess_http())
   }
 
   onDisconnect () {
