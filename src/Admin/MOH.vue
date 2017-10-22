@@ -45,12 +45,10 @@ export default {
       let xhr = new XMLHttpRequest()
       let fd = new FormData()
 
-      this.file = file
-      this.rec.file = file.name
-
       xhr.open("POST", `${this.$agent.get_api()}/upload/moh`, true)
       xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
+          this.rec.file = file.name
           this.rec.uuid = xhr.responseText
           this.disabled = false
         }
