@@ -76,9 +76,11 @@ export default {
     hide_edit (index) {
       this.edit = false
     },
-    up (index) {
+    up: async function (id) {
+      this.entries = await this.$agent.p_mfa('ws_db_recipe_entry', 'up', [id])
     },
-    down (index) {
+    down: async function (id) {
+      this.entries = await this.$agent.p_mfa('ws_db_recipe_entry', 'down', [id])
     },
     update_condition (index, value) {
       let id = this.entries.findIndex(Obj => Obj.id === index)
