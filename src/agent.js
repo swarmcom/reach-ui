@@ -53,6 +53,10 @@ export default class Agent extends WsProto {
     return this.vm
   }
 
+  get_api () {
+    return cfg('reach_http', 'http://localhost:8937')
+  }
+
   onDisconnect () {
     super.onDisconnect()
     this.handleAuth()

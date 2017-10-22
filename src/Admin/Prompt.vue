@@ -5,8 +5,7 @@
   <div class="form-group row">
     <label class="col-3 col-form-label">Choose File</label>
     <div class="col-9">
-      <b-form-file style="width: 100%" id="prompt-file" v-model="file" choose-label="Select" v-on:input="onFile"></b-form-file>
-      <div v-if="visible">Uploaded</div>
+      <b-form-file v-model="file" v-on:input="onFile" :placeholder="rec.file"></b-form-file>
     </div>
   </div>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
@@ -38,10 +37,9 @@ export default {
       let fd = new FormData()
 
       this.rec.file = file.name
-
       this.visible = false
 
-      xhr.open("POST", "http://localhost:8937/upload/prompt", true)
+      xhr.open("POST", `${this.$agent.get_api()}/upload/prompt`, true)
       xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
           this.rec.uuid = xhr.responseText

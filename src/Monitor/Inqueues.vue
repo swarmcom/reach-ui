@@ -5,8 +5,8 @@
     <div class="row">
       <div class="col"><h3>Inqueue requests</h3></div>
     </div>
-    <b-table style="margin-top:10px" striped hover responsive :items="inqueues" :fields="fields">
-      <template slot="twe" scope="data">
+    <b-table style="margin-top:10px" striped hover :items="inqueues" :fields="fields">
+      <template slot="twe" slot-scope="data">
         {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
       </template>
       <template slot="actions" scope="data">

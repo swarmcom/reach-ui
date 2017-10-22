@@ -5,8 +5,8 @@
     <div class="row">
       <div class="col"><h3>Logged in agents</h3></div>
     </div>
-    <b-table style="margin-top:10px" small striped hover responsive :items="computedAgents" :fields="fields">
-      <template slot="actions" scope="data">
+    <b-table style="margin-top:10px" small striped hover :items="computedAgents" :fields="fields">
+      <template slot="actions" slot-scope="data">
         <b-button size="sm" variant="primary" @click="release(data.item)">Release</b-button>
         <b-button size="sm" variant="danger" @click="kill(data.item)">Kill</b-button>
       </template>
