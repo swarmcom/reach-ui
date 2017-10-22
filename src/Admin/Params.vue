@@ -48,7 +48,7 @@ export default {
   methods: {
     query: async function () {
       let Params = await this.$agent.p_mfa('ws_admin', 'get_params')
-      this.params = this.object2list(Params)
+      this.params = this.object2list(Params).sort( (a,b) => a.key.localeCompare(b.key) )
     },
     add () {
       this.params.push({ key: this.name, value: this.value })
