@@ -14,9 +14,7 @@ function guess_ws () {
 }
 
 function guess_http () {
-  let proto = window.location.protocol
-  let port = window.location.port ? ":" + window.location.port : ""
-  return proto + window.location.hostname + port + "/reach"
+  return window.location.origin + "/reach"
 }
 
 async function session_auth(agent) {
