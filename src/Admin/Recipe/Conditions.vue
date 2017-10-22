@@ -2,7 +2,7 @@
 <div class="container">
   <b-form-row v-for="(cond, index) of conditions" :key="cond.name" style="margin-bottom: 5px">
     <b-col cols=1>
-      <button @click="del(index)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
+      <button @click="del(index)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </b-col>
     <b-col cols=5>
       <b-input-group>
@@ -21,7 +21,7 @@
 
   <div class="form-row" v-if="edit">
     <b-col cols=1>
-      <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </b-col>
     <b-col cols=5>
       <b-input-group>
