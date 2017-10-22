@@ -1,28 +1,31 @@
 <template>
 <div class="container">
-  <div v-for="sk of value" class="row">
-    <div class="for_group col-1">
+
+  <div v-for="sk of value" class="row" style="maring-top: 5px">
+    <div class="col-1">
       <button @click="del(sk.key)" class="btn btn-sm btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </div>
-    <div class="form-group col-3">
+    <div class="col-3">
       <input type="text" class="form-control form-control-sm" v-model="sk.key">
     </div>
-    <div class="form-group col">
+    <div class="col">
       <input type="text" class="form-control form-control-sm" v-model="sk.value">
     </div>
   </div>
-  <div class="row">
-    <div class="form-group col-1">
+
+  <div class="row" style="maring-top: 5px">
+    <div class="col-1">
       <button @click="add" class="btn btn-sm btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </div>
-    <div class="form-group col-3">
+    <div class="col-3">
       <input type="text" class="form-control form-control-sm" v-model="k">
     </div>
-    <div class="form-group col">
+    <div class="col">
       <input type="text" class="form-control form-control-sm" v-model="v">
     </div>
   </div>
-  <div class="row">
+
+  <div class="row" style="maring-top: 20px">
     <div class="col">
       <button @click="commit" class="btn btn-sm btn-primary float-right">Commit</button>
     </div>
