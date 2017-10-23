@@ -9,7 +9,7 @@
         <b-form-input v-model="action.name"></b-form-input>
         <b-input-group-button slot="left">
           <b-dropdown text="A" variant="primary" left>
-            <b-dropdown-item v-for="comp of components" :key="comp.ref" @click="set_action(index, comp.ref)">{{comp.name}}</b-dropdown-item>
+            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set_action(index, comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
         </b-input-group-button>
       </b-input-group>
@@ -28,7 +28,7 @@
         <b-form-input v-model="action"></b-form-input>
         <b-input-group-button slot="left">
           <b-dropdown text="A" variant="primary" left>
-            <b-dropdown-item v-for="comp of components" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
+            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
         </b-input-group-button>
       </b-input-group>
@@ -60,7 +60,7 @@ export default {
   },
   data () {
     return {
-      components: [
+      parts: [
         { name: 'Hangup', ref: 'hangup' },
         { name: 'Announce', ref: 'announce' },
         { name: 'Lua script', ref: 'lua' },

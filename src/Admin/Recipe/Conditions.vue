@@ -9,7 +9,7 @@
         <b-form-input v-model="cond.name"></b-form-input>
         <b-input-group-button slot="left">
           <b-dropdown text="C" variant="success" left>
-            <b-dropdown-item v-for="comp of components" :key="comp.ref" @click="set_cond(index, comp.ref)">{{comp.name}}</b-dropdown-item>
+            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set_cond(index, comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
         </b-input-group-button>
       </b-input-group>
@@ -28,7 +28,7 @@
         <b-form-input v-model="condition"></b-form-input>
         <b-input-group-button slot="left">
           <b-dropdown text="C" variant="success" left>
-            <b-dropdown-item v-for="comp of components" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
+            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
         </b-input-group-button>
       </b-input-group>
@@ -57,7 +57,7 @@ export default {
   },
   data () {
     return {
-      components: [
+      parts: [
         { name: 'Ticks', ref: 'ticks' },
         { name: 'Periodic', ref: 'periodic' },
         { name: 'Agents available', ref: 'available_agents' },
