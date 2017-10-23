@@ -27,7 +27,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_agent_group',
-      redirect: '/admin/agents'
+      redirect: '/admin/agent_groups'
     }
   },
 }
