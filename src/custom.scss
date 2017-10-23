@@ -78,7 +78,10 @@ body {
   margin-top: 52px;
 }
 .agent-state-text {
-  font-size: 14px;
+  font-size: 12px;
+}
+.agent-state-text.myPhone {
+  padding-top:5px;
 }
 .agent-state-available {
   background:#f7c180;
@@ -86,6 +89,7 @@ body {
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
+  height:100%;
 }
 .agent-state-released {
   background:#dbeffa;
@@ -93,6 +97,7 @@ body {
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
+  height:100%;
 }
 .agent-state-ringing {
   background:#28a745;
@@ -100,6 +105,7 @@ body {
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
+  height:100%;
 }
 .agent-state-oncall {
   background:#28a745;
@@ -107,6 +113,7 @@ body {
   padding-left:20px;
   width: $agent-state-width;
   font-size: $agent-state-font;
+  height:100%;
 }
 .agent-state-hold {
   background:#28a745;
@@ -114,6 +121,7 @@ body {
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
+  height:100%;
 }
 .agent-state-wrap-up {
   background:#28a745;
@@ -121,8 +129,9 @@ body {
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
+  height:100%;
 }
 .agent-state-button {
-  width: 95px;
-  height: 95px;
+  width: 82px;
+  height: 82px;
 }

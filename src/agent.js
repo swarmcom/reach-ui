@@ -26,7 +26,8 @@ export default class Agent extends WsProto {
         auto_logout_timer: undefined,
         activity_time: undefined,
         release_id: undefined,
-        previous_state: 'released'
+        previous_state: 'released',
+        storage_data: {}
       }
     }),
     Notification.requestPermission()

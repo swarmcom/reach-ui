@@ -54,12 +54,16 @@ import Skills from '../Widget/Skills.vue'
 import ToggleBar from '../Widget/ToggleBar'
 export default {
   widgetName: 'MY PROFILE',
-  name: 'agent-info',
+  storageName: 'agentInfo',
   data () {
     return {
       agent: this.$agent.vm.agent,
       showCollapse: true
     }
+  },
+  created () {
+    if (this.$agent.vm.storage_data.agentInfoCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.agentInfoCollapsed
   },
   components: {
     toggleBar: ToggleBar,

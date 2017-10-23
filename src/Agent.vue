@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-12 col-md-3">
         <agentState></agentState>
-        <agent-info></agent-info>
+        <agentInfo></agentInfo>
       </div>
       <div class="col-md-9 col-12">
         <div class="row">
@@ -48,6 +48,7 @@ import AgentInfo from './Agent/Info'
 
 export default {
   widgetName: 'SESSION MANAGER',
+  storageName: 'sessionManager',
   data () {
     return {
       showCollapse: true
@@ -63,6 +64,8 @@ export default {
   },
   created () {
     this.a = this.$agent.getData()
+    if (this.a.storage_data.sessionManagerCollapsed != undefined)
+      this.showCollapse = this.a.storage_data.sessionManagerCollapsed
   },
   components: {
     inqueue: Inqueue,
@@ -70,7 +73,7 @@ export default {
     release: Release,
     toggleBar: ToggleBar,
     agentState: AgentState,
-    'agent-info': AgentInfo,
+    agentInfo: AgentInfo,
     override: Override
   },
 }
