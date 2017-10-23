@@ -17,6 +17,10 @@ function guess_http () {
   return window.location.origin + "/reach"
 }
 
+function guess_rr () {
+  return window.location.origin + "/rr"
+}
+
 async function session_auth(agent) {
   try {
     let SessionKey = localStorage.getItem('session-key')
@@ -59,6 +63,10 @@ export default class Agent extends WsProto {
 
   get_api () {
     return cfg('reach_http', guess_http())
+  }
+
+  get_rr_uri () {
+    return cfg('reach_rr', guess_rr())
   }
 
   onDisconnect () {

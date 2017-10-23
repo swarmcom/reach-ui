@@ -29,12 +29,25 @@
     </div>
   </div>
 
-  <div class="row" style="margin-top: 20px">
-    <div class="col">
-      <button @click="onCommit" class="btn btn-primary">Commit</button>
-      <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-    </div>
-  </div>
+  <b-row style="margin-top: 20px">
+    <b-col>
+      <button @click="commit" class="btn btn-primary">Commit</button>
+      <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
+    </b-col>
+    <b-col cols=4>
+      <button @click="save" class="btn btn-success">Save</button>
+      <button @click="erase" class="btn btn-danger">Erase</button>
+      <button @click="apply" class="btn btn-warning">Apply</button>
+    </b-col>
+  </b-row>
+  <b-row style="margin-top: 20px">
+    <b-col>
+      <button @click="download" class="btn btn-success">Download</button>
+    </b-col>
+    <b-col>
+      <b-form-file v-model="config_file" v-on:input="upload" placeholder="Choose json config to upload..."></b-form-file>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
@@ -46,6 +59,7 @@ export default {
   mixins: [Common],
   data () {
     return {
+      config_file: undefined,
       params: [],
       name: '',
       value: ''
@@ -67,13 +81,52 @@ export default {
         this.params.splice(id, 1)
       }
     },
-    onCommit: async function () {
+    commit: async function () {
       let Params = this.list2object(this.params)
       await this.$agent.p_mfa('ws_admin', 'set_params', [Params])
       this.$notify({ title: 'Success:', text: 'Parameters updated.', type: 'success' });
     },
-    onCancel: async function () {
+    cancel: async function () {
       this.$router.push('/admin/agents')
+    },
+    save: async function () {
+      await this.$agent.p_mfa('ws_admin', 'config', ['save'])
+      this.$notify({ title: 'Success:', text: 'Configuration saved internally', type: 'success' })
+    },
+    erase: async function () {
+      await this.$agent.p_mfa('ws_admin', 'config', ['erase'])
+      this.$notify({ title: 'Success:', text: 'Configuration erased', type: 'success' })
+    },
+    apply: async function () {
+      await this.$agent.p_mfa('ws_admin', 'config', ['apply'])
+      this.$notify({ title: 'Success:', text: 'Configuration applied from internal save', type: 'success' })
+    },
+    upload: function (file) {
+      let xhr = new XMLHttpRequest()
+      let fd = new FormData()
+
+      xhr.open("POST", `${this.$agent.get_api()}/upload/config`, true)
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let UUID = xhr.responseText
+          this.$agent.mfa('ws_admin', 'config', ['upload', UUID], (re) => {
+            if (re.reply == 'ok') {
+              this.$notify({ title: 'Success:', text: 'Configuration applied', type: 'success' })
+            } else {
+              this.$notify({ title: 'Error:', text: 'Error applying config', type: 'error' })
+            }
+          })
+        }
+      }
+      fd.append('config', file)
+      xhr.send(fd)
+    },
+    download: async function () {
+      let UUID = await this.$agent.p_mfa('ws_admin', 'config', ['download'])
+      let link = document.createElement('a')
+      link.href = `${this.$agent.get_rr_uri()}/config/${UUID}.json`
+      link.download = "reach_db.json"
+      link.click()
     },
   },
   created () {
