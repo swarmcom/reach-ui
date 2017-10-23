@@ -56,14 +56,15 @@ export default {
   props: ['value', 'edit'],
   components: {
     hangup: Hangup, announce: Announce, voicemail: Voicemail, priority: Priority, prioritize: Prioritize, deprioritize: Deprioritize,
-    transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing, lua: Lua
+    transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing, lua_script: Lua, lua_job: Lua
   },
   data () {
     return {
       parts: [
         { name: 'Hangup', ref: 'hangup' },
         { name: 'Announce', ref: 'announce' },
-        { name: 'Lua script', ref: 'lua' },
+        { name: 'Lua script', ref: 'lua_script' },
+        { name: 'Lua job', ref: 'lua_job' },
         { name: 'Voicemail', ref: 'voicemail' },
         { name: 'Priority', ref: 'priority' },
         { name: 'Prioritize', ref: 'prioritize' },
