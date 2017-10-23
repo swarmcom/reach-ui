@@ -5,8 +5,9 @@
   <form-text label="Permissions" v-model="rec.permissions"></form-text>
   <form-text label="Ring timeout" v-model="rec.ring_timeout"></form-text>
   <form-text label="Suspend time" v-model="rec.suspend_time"></form-text>
-  <form-text label="Max rings" v-model="rec.max_ring_fails"></form-text>
   <form-text label="Auto logout" v-model="rec.autologout"></form-text>
+  <form-text label="Max rings" v-model="rec.max_ring_fails"></form-text>
+  <form-select-bool label="Reset failed rings on success" v-model="rec.reset_rings_fails"></form-select-bool>
   <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
