@@ -9,7 +9,7 @@
       <template slot="twe" slot-scope="data">
         {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
       </template>
-      <template slot="actions" scope="data">
+      <template slot="actions" slot-scope="data">
         <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
         <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
         <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
