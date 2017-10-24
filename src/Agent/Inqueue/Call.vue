@@ -30,7 +30,7 @@
     <h4>Skills editor:</h4>
     <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
     <disposition v-bind:uuid="this.uuid"></disposition>
-    <b-button @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
+    <b-button v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
     <div class="row" style="margin-top:10px">
       <div class="col-6">
         <div v-if="this.$agent.can_transfer()" class="row">
