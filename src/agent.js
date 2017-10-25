@@ -177,8 +177,10 @@ export default class Agent extends WsProto {
       if (info.state === 'release' && info.agent.login == this.vm.agent.login)
         this.vm.activity_time = new Date() - info.time
     }
-    this.vm.previous_state = info.state
-    this.vm.release_id = info.release_id
+    if(info.agent.login == this.vm.agent.login) {
+      this.vm.previous_state = info.state
+      this.vm.release_id = info.release_id
+    }
   }
 
   isAuth () { return this.vm.agent !== undefined }
