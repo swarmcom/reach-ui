@@ -25,9 +25,6 @@ export default {
         this.$router.push(this.redirect)
       }
     },
-    onCancel: async function () {
-      this.$router.push(this.redirect)
-    },
   },
   created () {
     this.query()

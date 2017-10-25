@@ -13,34 +13,12 @@ function guess_ws () {
   return proto + window.location.hostname + port + "/reach/ws"
 }
 
-function guess_http () {
-  return window.location.origin + "/reach"
-}
-
-function guess_rr () {
-  return window.location.origin + "/rr"
-}
-
-async function session_auth(agent) {
-  try {
-    let SessionKey = localStorage.getItem('session-key')
-    let Agent = await agent.p_mfa('ws_agent', 'auth', [SessionKey])
-    agent.vm.agent = Agent
-    localStorage.setItem('session-key', Agent.session_key)
-    EventBus.$emit('agent-auth', agent.isAuth())
-  }
-  catch (error) {
-  }
-  agent.vm.session_auth = true
-}
-
 export default class Agent extends WsProto {
 
   constructor () {
     super(cfg('reach_ws', guess_ws()))
     this.vm = new Vue({
       data: {
-        session_auth: false,
         agent: undefined,
         transfer_agents: [],
         state: undefined,
@@ -61,22 +39,9 @@ export default class Agent extends WsProto {
     return this.vm
   }
 
-  get_api () {
-    return cfg('reach_http', guess_http())
-  }
-
-  get_rr_uri () {
-    return cfg('reach_rr', guess_rr())
-  }
-
   onDisconnect () {
     super.onDisconnect()
     this.handleAuth()
-  }
-
-  onConnect () {
-    super.onConnect()
-    session_auth(this)
   }
 
   // MONITOR API
@@ -85,14 +50,8 @@ export default class Agent extends WsProto {
   inqueues (Cb = (A) => A) { this.mfa('ws_admin', 'inqueues', ['all'], Cb) }
 
   // AGENT API
-  logout () {
-    localStorage.removeItem('session-key')
-    this.call('stop', [], () => this.handleAuth())
-  }
-  release (Id) {
-    this.call('release', [Id])
-    this.vm.release_id = Id;
-  }
+  logout () { this.call('stop', [], () => this.handleAuth()) }
+  release (Id) { this.call('release', [Id]); this.vm.release_id = Id; }
   available () { this.call('available') }
   hangup () { this.call('hangup') }
   hold () { this.call('hold') }
@@ -191,7 +150,6 @@ export default class Agent extends WsProto {
   is_hold () { return this.vm && this.vm.state == 'hold' }
   is_onsession() { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   is_barge () { return this.vm && this.vm.state == 'barge' }
-  can_login () { return this.vm.session_auth }
   can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
   can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
@@ -200,7 +158,6 @@ export default class Agent extends WsProto {
   handleAuth (Re, Cb = (A) => A) {
     if (Re && Re.reply) {
       this.vm.agent = Re.reply
-      localStorage.setItem('session-key', Re.reply.session_key)
     } else {
       this.vm.agent = undefined
     }

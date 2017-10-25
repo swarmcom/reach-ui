@@ -12,7 +12,7 @@ export default {
       fields: {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
-        file: { label: 'File' }
+        description: { label: 'Description' }
       },
       mohs: []
     }

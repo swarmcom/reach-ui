@@ -21,7 +21,6 @@ export default class WsProto {
   connect () {
     console.log("connect:", this.uri)
     this.ws = new WebSocket(this.uri)
-    this.ws.onopen = Ev => this.onConnect(Ev)
     this.ws.onmessage = Ev => this.onMessage(Ev)
     this.ws.onclose = Ev => this.onClose(Ev)
     this.ws.onerror = Ev => this.onError(Ev)
@@ -56,10 +55,6 @@ export default class WsProto {
 
   ping () {
     this.ws.send('ping') // they don't have ping support in browser O_O
-  }
-
-  onConnect (Ev) {
-    console.log("WS OPEN")
   }
 
   onDisconnect () {

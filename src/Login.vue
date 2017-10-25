@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.$agent.can_login()">
+<div>
   <h6 style="margin-top:10px"><b>LOGIN</b></h6>
   <div class="form-signin">
     <h6 class="form-signin-heading">USERNAME AND PASSWORD</h6>

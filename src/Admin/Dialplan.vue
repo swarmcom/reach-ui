@@ -4,44 +4,44 @@
     <b-col><h3>Dialplan:</h3></b-col>
   </b-row>
 
-  <b-form-row v-for="dial of dials" :key="this.id" style="margin-top: 5px">
-    <b-col cols=1>
+  <b-form-row v-for="dial of dials" :key="this.id">
+    <b-form-group class="col-1">
       <button @click="del(dial.id)" class="btn btn-outline-danger">
         <icon class="align-middle" name="minus" scale="1"></icon>
       </button>
-    </b-col>
-    <b-col cols=3>
+    </b-form-group>
+    <b-form-group class="col-3">
       <select class="custom-select" v-model="dial.header" v-on:change="onChange(dial)">
         <option></option>
         <option v-for="header in headers" :value="header" :selected="header == dial.header">{{ header }}</option>
       </select>
-    </b-col>
-    <b-col cols=5>
+    </b-form-group>
+    <b-form-group class="col-5">
       <input type="text" class="form-control" v-model="dial.match" placeholder="Regex" v-on:change="onChange(dial)">
-    </b-col>
-    <b-col>
+    </b-form-group>
+    <b-form-group class="col">
       <lines v-model="dial.line_in_id" v-on:input="onChange(dial)"></lines>
-    </b-col>
+    </b-form-group>
   </b-form-row>
 
-  <b-form-row style="margin-top: 5px">
-    <b-col cols=1>
+  <b-form-row>
+    <b-form-group class="col-1">
       <button @click="add" class="btn btn-outline-secondary">
         <icon name="plus" scale="1" class="align-middle"></icon>
       </button>
-    </b-col>
-    <b-col cols=3>
+    </b-form-group>
+    <b-form-group class="col-3">
       <select class="custom-select" v-model="header">
         <option></option>
         <option v-for="header in headers" :value="header">{{ header }}</option>
       </select>
-    </b-col>
-    <b-col cols=5>
+    </b-form-group>
+    <b-form-group class="col-5">
       <input type="text" class="form-control" v-model="match" placeholder="Regex">
-    </b-col>
-    <b-col>
+    </b-form-group>
+    <b-form-group class="col">
       <lines v-model="line_id"></lines>
-    </b-col>
+    </b-form-group>
   </b-form-row>
 </b-container>
 </template>

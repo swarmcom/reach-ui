@@ -11,22 +11,18 @@
         <b-form-input v-model="filter" placeholder="Type to Filter" />
       </div>
     </div>
-    <b-row style="margin-top: 10px">
-      <b-col>
-        <b-table striped hover small
-          :current-page="currentPage"
-          :per-page="perPage"
-          :sort-by="sortBy"
-          :items="data"
-          :fields="fields"
-          :filter="filter"
-          :sortDesc="sortDesc"
-          @row-clicked="onClick"
-          @filtered="onFiltered"
-          @sort-changed="onSortingChanged">
-        </b-table>
-      </b-col>
-    </b-row>
+    <b-table style="margin-top:10px" striped hover small responsive
+      :current-page="currentPage"
+      :per-page="perPage"
+      :sort-by="sortBy"
+      :items="data"
+      :fields="fields"
+      :filter="filter"
+      :sortDesc="sortDesc"
+      @row-clicked="onClick"
+      @filtered="onFiltered"
+      @sort-changed="onSortingChanged">
+    </b-table>
     <b-pagination align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
   </div>
 </template>
