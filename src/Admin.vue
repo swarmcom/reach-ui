@@ -10,6 +10,7 @@
   <b-nav-item-dropdown text="Queues">
     <b-dropdown-item to="/admin/queues">Queues</b-dropdown-item>
     <b-dropdown-item to="/admin/queue_groups">Groups</b-dropdown-item>
+    <b-dropdown-item to="/admin/recipes">Recipes</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <li class="nav-item">
@@ -17,6 +18,7 @@
   </li>
 
   <b-nav-item-dropdown text="Config">
+    <b-dropdown-item to="/admin/luas">Lua actions</b-dropdown-item>
     <b-dropdown-item to="/admin/releases">Releases</b-dropdown-item>
     <b-dropdown-item to="/admin/dispositions">Dispositions</b-dropdown-item>
   </b-nav-item-dropdown>

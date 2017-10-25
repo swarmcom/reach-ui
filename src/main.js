@@ -6,6 +6,8 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import VueCodeMirror from 'vue-codemirror'
+
 import AgentAPI from './agent-api-plugin.js'
 
 import Reports from './Reports.vue'
@@ -38,6 +40,11 @@ import AdminPrompts from './Admin/Prompts.vue'
 import AdminMOH from './Admin/MOH.vue'
 import AdminMOHs from './Admin/MOHs.vue'
 import AdminDialplan from './Admin/Dialplan.vue'
+import AdminRecipe from './Admin/Recipe.vue'
+import AdminRecipeEntries from './Admin/Recipe/Entries.vue'
+import AdminRecipes from './Admin/Recipes.vue'
+import AdminLua from './Admin/Lua.vue'
+import AdminLuas from './Admin/Luas.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -46,13 +53,14 @@ import FormBool from './Widget/FormBool.vue'
 import AgentGroups from './Widget/Agent/Groups.vue'
 import Skills from './Widget/Skills.vue'
 import Lines from './Widget/Lines.vue'
-import Recipe from './Widget/Recipe.vue'
 import MOHs from './Widget/MOHs.vue'
 import FormSelectBool from './Widget/FormSelectBool.vue'
 import Prompts from './Widget/Prompts.vue'
 import Queues from './Widget/Queues.vue'
+import Recipes from './Widget/Recipes.vue'
 import QueueGroups from './Widget/Queue/Groups.vue'
 import Clients from './Widget/Clients.vue'
+import Luas from './Widget/Luas.vue'
 import DispositionGroups from './Widget/DispositionGroups.vue'
 import ReleaseGroups from './Widget/ReleaseGroups.vue'
 
@@ -68,7 +76,6 @@ Vue.component('form-select-bool', FormSelectBool)
 Vue.component('agent-groups', AgentGroups)
 Vue.component('skills', Skills)
 Vue.component('lines', Lines)
-Vue.component('recipe', Recipe)
 Vue.component('mohs', MOHs)
 Vue.component('prompts', Prompts)
 Vue.component('clients', Clients)
@@ -76,11 +83,14 @@ Vue.component('queues', Queues)
 Vue.component('queue-groups', QueueGroups)
 Vue.component('disposition-groups', DispositionGroups)
 Vue.component('release-groups', ReleaseGroups)
+Vue.component('recipes', Recipes)
+Vue.component('luas', Luas)
 
 Vue.use(VueRouter)
 Vue.use(AgentAPI)
 Vue.use(Notifications)
 Vue.use(BootstrapVue)
+Vue.use(VueCodeMirror)
 
 const router = new VueRouter({
   routes: [
@@ -97,6 +107,8 @@ const router = new VueRouter({
       { path: 'line_outs', component: AdminLineOuts },
       { path: 'prompts', component: AdminPrompts },
       { path: 'mohs', component: AdminMOHs },
+      { path: 'recipes', component: AdminRecipes },
+      { path: 'luas', component: AdminLuas },
       { path: 'agent', component: AdminAgent },
       { path: 'dialplan', component: AdminDialplan },
       { path: 'agent/:id', component: AdminAgent, props: true },
@@ -121,7 +133,12 @@ const router = new VueRouter({
       { path: 'line_in', component: AdminLineIn },
       { path: 'line_in/:id', component: AdminLineIn, props: true },
       { path: 'line_out', component: AdminLineOut },
-      { path: 'line_out/:id', component: AdminLineOut, props: true }
+      { path: 'line_out/:id', component: AdminLineOut, props: true },
+      { path: 'lua', component: AdminLua },
+      { path: 'lua/:id', component: AdminLua, props: true },
+      { path: 'recipe', component: AdminRecipe },
+      { path: 'recipe/:id', component: AdminRecipe, props: true },
+      { path: 'recipe/:id/entries', component: AdminRecipeEntries, props: true },
     ] },
     { path: '/reports', component: Reports },
     { path: '/login', component: Login },

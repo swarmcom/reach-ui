@@ -1,16 +1,17 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="queue.name"></form-text>
-  <queue-groups id="group_id" label="Group" v-model="queue.group_id"></queue-groups>
-  <form-text id="hold_music" label="Music on hold" v-model="queue.hold_music"></form-text>
-  <form-text id="weight" label="Weight" v-model="queue.weight"></form-text>
-  <form-text id="aging_factor" label="Aging" v-model="queue.aging_factor"></form-text>
-  <form-text id="auto_wrapup" label="Auto Wrap-up" v-model="queue.auto_wrapup"></form-text>
+  <form-text label="Name" v-model="queue.name"></form-text>
+  <queue-groups label="Group" v-model="queue.group_id"></queue-groups>
+  <recipes label="Recipe" v-model="queue.recipe_id"></recipes>
+  <mohs label="Music on hold" v-model="queue.moh_id"></mohs>
+  <form-text label="Weight" v-model="queue.weight"></form-text>
+  <form-text label="Aging" v-model="queue.aging_factor"></form-text>
+  <form-text label="Auto Wrap-up" v-model="queue.auto_wrapup"></form-text>
   <form-bool label="Wrap-up enabled" v-model="queue.wrapup_enabled"></form-bool>
-  <form-text id="wrapup_timer" label="Wrap-up timer" v-model="queue.wrapup_timer"></form-text>
-  <skills id="skills" label="Skills" v-model="skills"></skills>
-  <recipe id="recipe" label="Recipe" v-model="recipe"></recipe>
+  <form-text label="Wrap-up timer" v-model="queue.wrapup_timer"></form-text>
+  <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
+  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
 </template>
@@ -56,6 +57,9 @@ export default {
         await this.$agent.p_mfa('ws_db_queue', 'delete', [this.id])
         this.$router.push('/admin/queues')
       }
+    },
+    onCancel: async function () {
+      this.$router.push('/admin/queues')
     },
   },
   created () {
