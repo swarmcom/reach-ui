@@ -1,16 +1,16 @@
 <template>
 <div class="form">
-  <form-text id="name" label="Name" v-model="rec.name"></form-text>
-  <form-text id="description" label="Description" v-model="rec.description"></form-text>
+  <form-text label="Name" v-model="rec.name"></form-text>
+  <form-text label="Description" v-model="rec.description"></form-text>
   <div class="form-group row">
     <label class="col-3 col-form-label">Choose File</label>
     <div class="col-9">
-      <b-form-file style="width: 100%" id="prompt-file" v-model="file" choose-label="Select" v-on:input="onFile"></b-form-file>
-      <div v-if="visible">Uploaded</div>
+      <b-form-file v-model="file" v-on:input="onFile" :placeholder="rec.file"></b-form-file>
     </div>
   </div>
-  <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  <button @click="onCommit" :disabled="isDisabled()" class="btn btn-primary">Commit</button>
+  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+  <button @click="onDelete" v-if="rec.id" class="btn btn-danger float-right">Delete</button>
 </div>
 </template>
 
@@ -27,24 +27,30 @@ export default {
       rec: {},
       module: 'ws_db_prompt',
       redirect: '/admin/prompts',
-      visible: false,
+      disabled: true,
       file: undefined
     }
   },
   methods: {
+    isDisabled() {
+      if (this.rec.file == undefined) {
+        return this.disabled
+      } else {
+        return false
+      }
+    },
     onFile (file) {
+      this.disabled = true
+
       let xhr = new XMLHttpRequest()
       let fd = new FormData()
 
-      this.rec.file = file.name
-
-      this.visible = false
-
-      xhr.open("POST", "http://localhost:8937/upload/prompt", true)
+      xhr.open("POST", `${this.$agent.get_api()}/upload/prompt`, true)
       xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
+          this.rec.file = file.name
           this.rec.uuid = xhr.responseText
-          this.visible = true
+          this.disabled = false
         }
       }
       fd.append('prompt', file)

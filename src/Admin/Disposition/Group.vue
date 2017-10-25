@@ -7,54 +7,29 @@
   </div>
 
   <div class="form">
-    <form-text id="name" label="Name" v-model="disposition.name"></form-text>
-    <form-text id="description" label="Description" v-model="disposition.description"></form-text>
+    <form-text label="Name" v-model="rec.name"></form-text>
+    <form-text label="Description" v-model="rec.description"></form-text>
     <button @click="onCommit" class="btn btn-primary">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
     <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
   </div>
 </div>
 </template>
 
 <script>
+import Obj from '../Object'
 import Common from '../Common'
 
 export default {
   name: 'admin-disposition-group',
   props: ['id'],
-  mixins: [Common],
+  mixins: [Common, Obj],
   data () {
     return {
-      disposition: {}
+      rec: {},
+      module: 'ws_db_disposition_group',
+      redirect: '/admin/dispositions'
     }
   },
-  methods: {
-    query: async function () {
-      if (this.id) {
-        this.disposition = await this.$agent.p_mfa('ws_db_disposition_group', 'get', [this.id])
-      }
-    },
-    onCommit: async function () {
-      try {
-        if (this.id) {
-          await this.$agent.p_mfa('ws_db_disposition_group', 'update', [this.id, this.disposition])
-        } else {
-          await this.$agent.p_mfa('ws_db_disposition_group', 'create', [this.disposition])
-        }
-        this.$router.push('/admin/dispositions')
-      }
-      catch (error) {
-        this.$notify({ title: 'Data error:', text: error, type: 'error' });
-      }
-    },
-    onDelete: async function () {
-      if (this.id) {
-        await this.$agent.p_mfa('ws_db_disposition_group', 'delete', [this.id])
-        this.$router.push('/admin/dispositions')
-      }
-    },
-  },
-  created () {
-    this.query()
-  }
 }
 </script>

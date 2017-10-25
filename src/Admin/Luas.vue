@@ -1,31 +1,31 @@
 <template>
-<btable :fields="fields" :data="mohs" :add_button=true></btable>
+<btable :fields="fields" :data="luas" :add_button=true></btable>
 </template>
 
 <script>
 import Btable from '../Widget/Btable'
 
 export default {
-  name: 'admin-mohs',
+  name: 'admin-luas',
   data () {
     return {
       fields: {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
-        file: { label: 'File' }
+        description: { label: 'Description' }
       },
-      mohs: []
+      luas: []
     }
   },
   methods: {
     query: async function () {
-      this.mohs = await this.$agent.p_mfa('ws_db_moh', 'get')
+      this.luas = await this.$agent.p_mfa('ws_db_lua', 'get')
     },
     add () {
-      this.$router.push(`/admin/moh/`)
+      this.$router.push(`/admin/lua/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/moh/${data.id}`)
+      this.$router.push(`/admin/lua/${data.id}`)
     },
   },
   created () {
