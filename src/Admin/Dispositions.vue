@@ -9,8 +9,9 @@
     </div>
   </div>
 
-  <b-table style="margin-top:10px" striped hover small :items="dispositions" :fields="fields">
-    <template slot="actions" slot-scope="data">
+  <b-table style="margin-top:10px" striped hover responsive small
+      :items="dispositions" :fields="fields">
+    <template slot="actions" scope="data">
       <b-btn size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>
       <b-btn size="sm" variant="success" @click="entries(data.item)">Entries</b-btn>
     </template>

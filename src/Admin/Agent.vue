@@ -14,10 +14,9 @@
   <form-text label="Suspend time" v-model="agent.suspend_time"></form-text>
   <form-text label="Auto logout" v-model="agent.autologout"></form-text>
   <form-bool label="Persistent" v-model="agent.persistent"></form-bool>
-  <form-select-bool label="Reset failed rings on success" v-model="agent.reset_rings_fails"></form-select-bool>
+  <form-bool label="Reset max rings on success" v-model="agent.reset_max_rings_fails"></form-bool>
   <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
 </template>
@@ -61,9 +60,6 @@ export default {
         await this.$agent.p_mfa('ws_db_agent', 'delete', [this.id])
         this.$router.push('/admin/agents')
       }
-    },
-    onCancel: async function () {
-      this.$router.push('/admin/agents')
     },
   },
   created () {

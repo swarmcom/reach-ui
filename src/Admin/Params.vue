@@ -5,49 +5,29 @@
       <h3>System-wide parameters:</h3>
     </div>
   </div>
-  <div v-for="param of params" class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="del(param.key)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
+  <div v-for="param of params" class="form-row">
+    <div class="for_group col-1">
+      <button @click="del(param.key)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
     </div>
-    <div class="col-3">
+    <div class="form-group col-3">
       <input type="text" class="form-control" v-model="param.key">
     </div>
-    <div class="col">
+    <div class="form-group col">
       <input type="text" class="form-control" v-model="param.value">
     </div>
   </div>
-
-  <div class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="add" class="btn btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
+  <div class="form-row">
+    <div class="form-group col-1">
+      <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
     </div>
-    <div class="col-3">
+    <div class="form-group col-3">
       <input type="text" class="form-control" v-model="name">
     </div>
-    <div class="col">
+    <div class="form-group col">
       <input type="text" class="form-control" v-model="value">
     </div>
   </div>
-
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <button @click="commit" class="btn btn-primary">Commit</button>
-      <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
-    </b-col>
-    <b-col cols=4>
-      <button @click="save" class="btn btn-success">Save</button>
-      <button @click="erase" class="btn btn-danger">Erase</button>
-      <button @click="apply" class="btn btn-warning">Apply</button>
-    </b-col>
-  </b-row>
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <button @click="download" class="btn btn-success">Download</button>
-    </b-col>
-    <b-col>
-      <b-form-file v-model="config_file" v-on:input="upload" placeholder="Choose json config to upload..."></b-form-file>
-    </b-col>
-  </b-row>
+  <button @click="onCommit" class="btn btn-primary">Commit</button>
 </div>
 </template>
 
@@ -59,7 +39,6 @@ export default {
   mixins: [Common],
   data () {
     return {
-      config_file: undefined,
       params: [],
       name: '',
       value: ''
@@ -68,7 +47,7 @@ export default {
   methods: {
     query: async function () {
       let Params = await this.$agent.p_mfa('ws_admin', 'get_params')
-      this.params = this.object2list(Params).sort( (a,b) => a.key.localeCompare(b.key) )
+      this.params = this.object2list(Params)
     },
     add () {
       this.params.push({ key: this.name, value: this.value })
@@ -81,52 +60,10 @@ export default {
         this.params.splice(id, 1)
       }
     },
-    commit: async function () {
+    onCommit: async function () {
       let Params = this.list2object(this.params)
       await this.$agent.p_mfa('ws_admin', 'set_params', [Params])
       this.$notify({ title: 'Success:', text: 'Parameters updated.', type: 'success' });
-    },
-    cancel: async function () {
-      this.$router.push('/admin/agents')
-    },
-    save: async function () {
-      await this.$agent.p_mfa('ws_admin', 'config', ['save'])
-      this.$notify({ title: 'Success:', text: 'Configuration saved internally', type: 'success' })
-    },
-    erase: async function () {
-      await this.$agent.p_mfa('ws_admin', 'config', ['erase'])
-      this.$notify({ title: 'Success:', text: 'Configuration erased', type: 'success' })
-    },
-    apply: async function () {
-      await this.$agent.p_mfa('ws_admin', 'config', ['apply'])
-      this.$notify({ title: 'Success:', text: 'Configuration applied from internal save', type: 'success' })
-    },
-    upload: function (file) {
-      let xhr = new XMLHttpRequest()
-      let fd = new FormData()
-
-      xhr.open("POST", `${this.$agent.get_api()}/upload/config`, true)
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          let UUID = xhr.responseText
-          this.$agent.mfa('ws_admin', 'config', ['upload', UUID], (re) => {
-            if (re.reply == 'ok') {
-              this.$notify({ title: 'Success:', text: 'Configuration applied', type: 'success' })
-            } else {
-              this.$notify({ title: 'Error:', text: 'Error applying config', type: 'error' })
-            }
-          })
-        }
-      }
-      fd.append('config', file)
-      xhr.send(fd)
-    },
-    download: async function () {
-      let UUID = await this.$agent.p_mfa('ws_admin', 'config', ['download'])
-      let link = document.createElement('a')
-      link.href = `${this.$agent.get_rr_uri()}/config/${UUID}.json`
-      link.download = "reach_db.json"
-      link.click()
     },
   },
   created () {

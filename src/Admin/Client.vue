@@ -1,6 +1,6 @@
 <template>
 <div class="form">
-  <form-text label="Name" v-model="rec.name"></form-text>
+  <form-text id="name" label="Name" v-model="rec.name"></form-text>
   <disposition-groups label="Dispositions" v-model="rec.disposition_group_id"></disposition-groups>
   <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
   <prompts label="Announce" v-model="rec.announce_id"></prompts>
@@ -12,7 +12,6 @@
   <form-text label="Caller ID name" v-model="rec.caller_id_name"></form-text>
   <form-text label="Caller ID number" v-model="rec.caller_id_number"></form-text> 
   <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
   <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
 </div>
 </template>
