@@ -166,7 +166,7 @@ export default class Agent extends WsProto {
   handleAgents ({info}) {
     if (info.state === 'available') {
       this.vm.transfer_agents.push(info.agent)
-      if (this.vm.previous_state === 'release')
+      if (this.vm.previous_state === 'release' && info.agent.login == this.vm.agent.login)
         this.vm.activity_time = new Date() - info.time
     }
     else {
@@ -174,7 +174,7 @@ export default class Agent extends WsProto {
       if (i >= 0) {
         this.vm.transfer_agents.splice(i, 1)
       }
-      if (info.state === 'release')
+      if (info.state === 'release' && info.agent.login == this.vm.agent.login)
         this.vm.activity_time = new Date() - info.time
     }
     this.vm.previous_state = info.state
