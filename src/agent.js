@@ -82,6 +82,7 @@ export default class Agent extends WsProto {
   logout () {
     localStorage.removeItem('session-key')
     this.call('stop', [], () => this.handleAuth())
+    this.connect()
   }
   release (Id) { this.call('release', [Id]) }
   available () { this.call('available') }
