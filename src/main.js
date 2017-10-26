@@ -17,6 +17,7 @@ import Admin from './Admin.vue'
 import Monitor from './Monitor.vue'
 import AdminAgent from './Admin/Agent.vue'
 import AdminAgents from './Admin/Agents.vue'
+import AdminPersistentAgents from './Admin/Agent/Persistent.vue'
 import AdminQueue from './Admin/Queue.vue'
 import AdminQueues from './Admin/Queues.vue'
 import AdminQueueGroup from './Admin/Queue/Group.vue'
@@ -96,6 +97,7 @@ const router = new VueRouter({
   routes: [
     { path: '/admin', component: Admin, children: [
       { path: 'agents', component: AdminAgents },
+      { path: 'agent/persistent', component: AdminPersistentAgents },
       { path: 'queues', component: AdminQueues },
       { path: 'params', component: AdminParams },
       { path: 'queue_groups', component: AdminQueueGroups },

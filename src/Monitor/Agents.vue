@@ -43,7 +43,6 @@ export default {
       }
       else if (info.state === 'terminate') {
         let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        console.log("i", i, "info", info)
         if (i >= 0) {
           this.agents.splice(i, 1)
         }
