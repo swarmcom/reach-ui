@@ -5,6 +5,7 @@
   <b-nav-item-dropdown text="Agents">
     <b-dropdown-item to="/admin/agents">Agents</b-dropdown-item>
     <b-dropdown-item to="/admin/agent_groups">Groups</b-dropdown-item>
+    <b-dropdown-item to="/admin/agent/persistent">Persistent</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Queues">

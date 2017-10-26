@@ -1,11 +1,11 @@
 <template>
 <div style="margin-top: 20px" v-if="visible">
 
-<div class="row"><div class="col"><h2>Call info:</h2> </div></div>
+<div class="row"><div class="col"><h5>Call info:</h5> </div></div>
 
 <div class="row">
-  <div class="col-5">
-    <dl class="row">
+  <div class="col-10">
+    <dl class="row session-manager-info">
       <dt class="col-sm-3">From:</dt>
       <dd class="col-sm-9">
         "{{ this.call_info['Caller-Caller-ID-Name'] }}" &lt;{{ this.call_info['Caller-Caller-ID-Number'] }}&gt;
@@ -26,16 +26,17 @@
       <dd class="col-sm-9">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
     </dl>
   </div>
-  <div class="col-7">
-    <h4>Skills editor:</h4>
-    <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
-    <disposition v-bind:uuid="this.uuid"></disposition>
+  <div class="col-2">
     <b-button v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
     <div class="row" style="margin-top:10px">
       <div class="col-6">
         <div v-if="this.$agent.can_transfer()" class="row">
           <div class="col">
-            <h5>Transfer to:</h5>
+            <h6>Transfer to:</h6>
             <div class="form-inline">
               <transfer-agent></transfer-agent>&nbsp;
               <transfer-queue></transfer-queue>&nbsp;
@@ -45,7 +46,7 @@
         </div>
       </div>
       <div class="col-6" v-if="this.$agent.can_conference()">
-        <h5>Conference with:</h5>
+        <h6>Conference with:</h6>
         <div class="form-inline">
           <conference-agent></conference-agent>&nbsp;
           <conference-queue></conference-queue>&nbsp;
@@ -53,6 +54,18 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<!--<div class="row">
+  <div class="col-12">
+    <h4>Skills editor:</h4>
+    <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
+  </div>
+</div>-->
+<div class="row" style="margin-top:10px;">
+  <div class="col-12">
+    <h6>Disposition:</h6>
+      <disposition v-bind:uuid="this.uuid"></disposition>
   </div>
 </div>
 </div><!-- container -->
