@@ -2,15 +2,17 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <div class="row">
-      <div class="col"><h5>Agents Stats</h5></div>
+
+    <div class="row toggle-bar-custom">
+      <div class="title">Agent States</div>
     </div>
+
     <b-table style="margin-top:10px" small striped hover
       :items="computedAgentsStats"
       :fields="fieldsStats">
     </b-table>
-    <div class="row">
-      <div class="col"><h5>Logged in agents</h5></div>
+    <div class="row toggle-bar-custom">
+      <div class="title">Agents</div>
     </div>
     <b-table style="margin-top:10px" small striped hover
       :items="computedAgents"
