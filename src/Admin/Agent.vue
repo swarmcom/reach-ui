@@ -1,20 +1,20 @@
 <template>
 <div class="form">
-  <form-text label="Name" v-model="agent.name"></form-text>
-  <form-text label="Login" v-model="agent.login"></form-text>
-  <form-text label="Password" v-model="agent.password"></form-text>
-  <agent-groups label="Group" v-model="agent.group_id"></agent-groups>
-  <release-groups label="Release Group" v-model="agent.release_group_id"></release-groups>
-  <lines label="Line Out" v-model="agent.line_id"></lines>
-  <form-text label="Permissions" v-model="agent.permissions"></form-text>
-  <form-text label="SIP URI" v-model="agent.uri"></form-text>
-  <form-text label="Caller Id Number" v-model="agent.caller_id_number"></form-text>
-  <form-text label="Ring timeout" v-model="agent.ring_timeout"></form-text>
-  <form-text label="Suspend time" v-model="agent.suspend_time"></form-text>
-  <form-text label="Max rings" v-model="agent.max_ring_fails"></form-text>
-  <form-text label="Auto logout" v-model="agent.autologout"></form-text>
-  <form-bool label="Persistent" v-model="agent.persistent"></form-bool>
-  <form-select-bool label="Reset failed rings on success" v-model="agent.reset_rings_fails"></form-select-bool>
+  <form-text label="Name" v-model="rec.name"></form-text>
+  <form-text label="Login" v-model="rec.login"></form-text>
+  <form-text label="Password" v-model="rec.password"></form-text>
+  <agent-groups label="Group" v-model="rec.group_id"></agent-groups>
+  <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
+  <lines label="Line Out" v-model="rec.line_id"></lines>
+  <form-text label="Permissions" v-model="rec.permissions"></form-text>
+  <form-text label="SIP URI" v-model="rec.uri"></form-text>
+  <form-text label="Caller Id Number" v-model="rec.caller_id_number"></form-text>
+  <form-text label="Ring timeout" v-model="rec.ring_timeout"></form-text>
+  <form-text label="Suspend time" v-model="rec.suspend_time"></form-text>
+  <form-text label="Max missed calls (auto release)" v-model="rec.max_ring_fails"></form-text>
+  <form-select-bool label="Reset missed calls on success" v-model="rec.reset_rings_fails"></form-select-bool>
+  <form-text label="Auto logout" v-model="rec.autologout"></form-text>
+  <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
   <skills label="Skills" v-model="skills"></skills>
   <button @click="onCommit" class="btn btn-primary">Commit</button>
   <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
@@ -31,24 +31,24 @@ export default {
   props: ['id'],
   data () {
     return {
-      agent: {},
+      rec: {},
       skills: []
     }
   },
   methods: {
     query: async function () {
       if (this.id) {
-        this.agent = await this.$agent.p_mfa('ws_db_agent', 'get', [this.id])
-        this.skills = this.object2list(this.agent.skills)
+        this.rec = await this.$agent.p_mfa('ws_db_agent', 'get', [this.id])
+        this.skills = this.object2list(this.rec.skills)
       }
     },
     onCommit: async function () {
-      this.agent.skills = this.list2object(this.skills)
+      this.rec.skills = this.list2object(this.skills)
       try {
         if (this.id) {
-          await this.$agent.p_mfa('ws_db_agent', 'update', [this.id, this.agent])
+          await this.$agent.p_mfa('ws_db_agent', 'update', [this.id, this.rec])
         } else {
-          await this.$agent.p_mfa('ws_db_agent', 'create', [this.agent])
+          await this.$agent.p_mfa('ws_db_agent', 'create', [this.rec])
         }
         this.$router.push('/admin/agents')
       }
