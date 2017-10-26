@@ -12,8 +12,9 @@
       :sort-desc="sortDesc"
       @sort-changed="onSortingChanged">
       <template slot="actions" slot-scope="data">
-        <b-button size="sm" variant="primary" @click="release(data.item)">Release</b-button>
-        <b-button size="sm" variant="danger" @click="kill(data.item)">Kill</b-button>
+        <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
+        <b-button v-else size="sm" variant="primary" @click="release(data.item)">Release</b-button>
+        <b-button size="sm" variant="danger" @click="stop(data.item)">Kill</b-button>
       </template>
     </b-table>
   </b-collapse>
@@ -86,14 +87,17 @@ export default {
     release (agent) {
       this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])
     },
-    kill (agent) {
-      this.$agent.mfa('ws_supervisor', 'kill', [agent.agent_id])
-    },
     onSortingChanged (ctx){
       console.log("sorting dsfnaskjdh"+ctx.sortBy)
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
       this.$agent.vm.storage_data[this.$options.storageName+'SortDesc'] = ctx.sortDesc
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    },
+    available (agent) {
+      this.$agent.mfa('ws_supervisor', 'available', [agent.agent_id])
+    },
+    stop (agent) {
+      this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
     }
   },
   created () {
