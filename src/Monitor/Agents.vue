@@ -3,7 +3,14 @@
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
     <div class="row">
-      <div class="col"><h3>Logged in agents</h3></div>
+      <div class="col"><h5>Agents Stats</h5></div>
+    </div>
+    <b-table style="margin-top:10px" small striped hover
+      :items="computedAgentsStats"
+      :fields="fieldsStats">
+    </b-table>
+    <div class="row">
+      <div class="col"><h5>Logged in agents</h5></div>
     </div>
     <b-table style="margin-top:10px" small striped hover
       :items="computedAgents"
@@ -41,6 +48,14 @@ export default {
         agent_uri: { label: 'Agent Phone', sortable: true },
         timeComputed: { label: 'Time', sortable:true },
         actions: { label: 'Actions' }
+      },
+      fieldsStats: {
+        total_agents: { label: 'Total Agents', sortable: true },
+        released: { label: 'Released', sortable: true },
+        idle: { label: 'Idle', sortable: true },
+        ringing: { label: 'Ringing', sortable: true },
+        insession: { label: 'In Session', sortable: true },
+        wrapup: { label: 'Wrap-up', sortable: true }
       },
       agents: [],
       updater: '',
@@ -130,6 +145,33 @@ export default {
         key.agent_skills = (Object.keys(key.agent.skills)).toString()
         key.agent_uri = key.agent.uri
       } )
+      return agents;
+    },
+    computedAgentsStats () {
+      let agents = []
+      let object = { "total_agents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0}
+      object.total_agents = this.agents.length
+      this.agents.forEach( (key) => {
+        console.log(key.state)
+        switch (key.state){
+          case "release":
+            object.released++
+            break;
+          case "available":
+            object.idle++
+            break;
+          case "ringing":
+            object.ringing++
+            break;
+          case "oncall":
+            object.insession++
+            break;
+          case "wrapup":
+            object.wrapup++
+            break;
+        }
+      } )
+      agents.push(object)
       return agents;
     }
   }
