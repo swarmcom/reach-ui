@@ -1,5 +1,5 @@
 <template>
-<div class="form-group row">
+<div class="row" style="margin-top: 5px">
   <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
     <input class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)">
