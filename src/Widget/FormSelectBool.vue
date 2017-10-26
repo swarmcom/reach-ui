@@ -1,5 +1,5 @@
 <template>
-<div class="form-group row">
+<div class="row" style="margin-top: 5px">
   <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9 ">
     <b-form-select v-bind:value="computed_value" :options="options" v-on:input="onChange"></b-form-select>

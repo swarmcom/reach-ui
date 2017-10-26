@@ -1,5 +1,5 @@
 <template>
-<div class="form-group row">
+<div class="row" style="margin-top: 5px">
   <label class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
     <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">

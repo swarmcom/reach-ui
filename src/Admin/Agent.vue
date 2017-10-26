@@ -16,9 +16,11 @@
   <form-text label="Auto logout" v-model="rec.autologout"></form-text>
   <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
   <skills label="Skills" v-model="skills"></skills>
-  <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-  <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  <div style="margin-top:20px">
+    <button @click="onCommit" class="btn btn-primary">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+    <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  </div>
 </div>
 </template>
 
