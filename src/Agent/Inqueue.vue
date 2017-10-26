@@ -1,8 +1,8 @@
 <template>
 <div>
-  <call v-if="call_visible" :uuid="uuid"></call>
-  <outgoing v-if="outgoing_visible"></outgoing>
   <ringer v-if="ringer_visible"></ringer>
+  <outgoing v-if="outgoing_visible"></outgoing>
+  <call v-if="call_visible" :uuid="uuid"></call>
   <spy v-if="spy_visible" :uuid="uuid"></spy>
   <conference v-if="conf_visible"></conference>
 </div>

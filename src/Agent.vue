@@ -12,7 +12,7 @@
           <b-row class="col-10">
             <b-col cols="8">
               <dialer v-if="this.$agent.is_idle()"></dialer>
-              <override v-if="this.$agent.is_idle()"></override>
+              <!--<override v-if="this.$agent.is_idle()"></override>-->
             </b-col>
             <b-col cols="12">
               <inqueue></inqueue>
