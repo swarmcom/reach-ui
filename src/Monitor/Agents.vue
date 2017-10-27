@@ -21,6 +21,10 @@ export default {
       showCollapse: true
     }
   },
+  created () {
+    if (this.$agent.vm.storage_data.agentManagerCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.agentManagerCollapsed
+  },
   components: {
     toggleBar: ToggleBar,
     agentProfiles: AgentProfiles,

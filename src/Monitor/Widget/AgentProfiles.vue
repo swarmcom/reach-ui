@@ -26,7 +26,7 @@ import ToggleBar from '../../Widget/ToggleBar'
 import Common from '../../Admin/Common'
 export default {
   name: 'monitor-agents-profiles',
-  storageName: 'agentManagersStates',
+  storageName: 'agentManagerStates',
   widgetName: 'AGENT PROFILES',
   mixins: [Common],
   data () {
@@ -73,6 +73,8 @@ export default {
   created () {
     this.query()
     this.$bus.$on('agents_state', this.handleState)
+    if (this.$agent.vm.storage_data.agentManagerStatesCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.agentManagerStatesCollapsed
   },
   beforeDestroy () {
     this.$bus.$off('agents_state', this.handleState)

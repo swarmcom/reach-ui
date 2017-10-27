@@ -50,7 +50,7 @@ import ToggleBar from '../../Widget/ToggleBar'
 import Common from '../../Admin/Common'
 export default {
   name: 'monitor-agents-manager',
-  storageName: 'agentManagerMoniter',
+  storageName: 'agentManagerMonitor',
   widgetName: 'AGENTS',
   mixins: [Common],
   data () {
@@ -146,12 +146,12 @@ export default {
     this.$agent.subscribe('agents')
     this.$bus.$on('agents_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
-    if (this.$agent.vm.storage_data.agentManagerCollapsed != undefined)
-      this.showCollapse = this.$agent.vm.storage_data.agentManagerCollapsed
-    if (this.$agent.vm.storage_data.agentManagerSortBy != undefined)
-      this.sortBy = this.$agent.vm.storage_data.agentManagerSortBy
-    if (this.$agent.vm.storage_data.agentManagerSortDesc != undefined)
-      this.sortDesc = this.$agent.vm.storage_data.agentManagerSortDesc
+    if (this.$agent.vm.storage_data.agentManagerMonitorCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.agentManagerMonitorCollapsed
+    if (this.$agent.vm.storage_data.agentManagerMonitorSortBy != undefined)
+      this.sortBy = this.$agent.vm.storage_data.agentManagerMonitorSortBy
+    if (this.$agent.vm.storage_data.agentManagerMonitorSortDesc != undefined)
+      this.sortDesc = this.$agent.vm.storage_data.agentManagerMonitorSortDesc
   },
   beforeDestroy () {
     this.$bus.$off('agents_state', this.handleState)
