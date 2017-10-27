@@ -2,16 +2,7 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-
-    <div class="row toggle-bar-custom">
-      <div class="title">Agent States</div>
-    </div>
-
-    <b-table style="margin-top:10px" small striped hover
-      :items="computedAgentsStats"
-      :fields="fieldsStats">
-    </b-table>
-
+    <agentStates></agentStates>
     <div class="row toggle-bar-custom">
       <div class="title">Agents</div>
     </div>
@@ -62,6 +53,7 @@
 import Btable from '../Widget/Btable'
 import ToggleBar from '../Widget/ToggleBar'
 import Common from '../Admin/Common'
+import AgentStates from './Widget/AgentStates'
 export default {
   name: 'monitor-agents',
   storageName: 'agentManager',
@@ -140,9 +132,6 @@ export default {
         A.splice(i, 1, E)
       })
     },
-    onClick (data) {
-      this.$router.push(`/admin/agent/${data.agent_id}`)
-    },
     release (agent) {
       this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])
     },
@@ -176,7 +165,8 @@ export default {
   },
   components: {
     btable: Btable,
-    toggleBar: ToggleBar
+    toggleBar: ToggleBar,
+    agentStates: AgentStates
   },
   computed: {
     computedAgents () {
@@ -215,32 +205,6 @@ export default {
 
       } )
       return compAgents;
-    },
-    computedAgentsStats () {
-      let agents = []
-      let object = { "total_agents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0}
-      object.total_agents = this.agents.length
-      this.agents.forEach( (key) => {
-        switch (key.state){
-          case "release":
-            object.released++
-            break;
-          case "available":
-            object.idle++
-            break;
-          case "ringing":
-            object.ringing++
-            break;
-          case "oncall":
-            object.insession++
-            break;
-          case "wrapup":
-            object.wrapup++
-            break;
-        }
-      } )
-      agents.push(object)
-      return agents;
     }
   }
 }
