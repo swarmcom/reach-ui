@@ -53,6 +53,10 @@ export default {
   storageName: 'agentManagerMonitor',
   widgetName: 'AGENTS',
   mixins: [Common],
+  props: {
+    agents: Array,
+    groups: Array
+  },
   data () {
     return {
       fields: {
@@ -69,8 +73,6 @@ export default {
         insession: { label: 'In Session', sortable: false },
         wrapup: { label: 'Wrap-up', sortable: false }
       },
-      agents: [],
-      groups: [],
       clients: [],
       states: [
         {name: "Any State"},
@@ -91,34 +93,9 @@ export default {
     }
   },
   methods: {
-    handleState ({ tag, info }) {
-      if (tag === 'ws_login') {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1, info)
-        } else {
-          this.agents.push(info)
-        }
-      }
-      else if (info.state === 'terminate') {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1)
-        }
-      }
-      else {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1, info)
-        }
-      }
-    },
     query: async function() {
-      this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customers" })
-      this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
-      this.groups.unshift({ name:"Any Profile" })
     },
     onTimer () {
       this.agents.forEach((E, i, A) => {
@@ -143,8 +120,6 @@ export default {
   },
   created () {
     this.query()
-    this.$agent.subscribe('agents')
-    this.$bus.$on('agents_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
     if (this.$agent.vm.storage_data.agentManagerMonitorCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.agentManagerMonitorCollapsed
@@ -154,7 +129,6 @@ export default {
       this.sortDesc = this.$agent.vm.storage_data.agentManagerMonitorSortDesc
   },
   beforeDestroy () {
-    this.$bus.$off('agents_state', this.handleState)
     clearInterval(this.updater)
   },
   components: {

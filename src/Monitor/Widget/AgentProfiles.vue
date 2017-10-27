@@ -7,6 +7,9 @@
         <div class="row toggle-bar-custom">
           <div class="title">Profile Name</div>
         </div>
+        <b-form-select size="sm" v-model="selectedProfile" style="margin-top:10px">
+          <option v-for="group in this.groups" :value=group.name>{{group.name}}</option>
+        </b-form-select>
       </div>
       <div class="col-10">
         <div class="row toggle-bar-custom" style="margin-left:1px">
@@ -23,12 +26,14 @@
 </template>
 <script>
 import ToggleBar from '../../Widget/ToggleBar'
-import Common from '../../Admin/Common'
 export default {
   name: 'monitor-agents-profiles',
   storageName: 'agentManagerStates',
   widgetName: 'AGENT PROFILES',
-  mixins: [Common],
+  props: {
+    agents: Array,
+    groups: Array
+  },
   data () {
     return {
       fieldsStats: {
@@ -39,92 +44,31 @@ export default {
         insession: { label: 'In Session', sortable: false },
         wrapup: { label: 'Wrap-up', sortable: false }
       },
-      agents: [],
+      selectedProfile: 'Any Profile',
       showCollapse: true
     }
   },
-  methods: {
-    handleState ({ tag, info }) {
-      if (tag === 'ws_login') {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1, info)
-        } else {
-          this.agents.push(info)
-        }
-      }
-      else if (info.state === 'terminate') {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1)
-        }
-      }
-      else {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1, info)
-        }
-      }
-    },
-    query: async function() {
-      this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
-    }
-  },
   created () {
-    this.query()
-    this.$bus.$on('agents_state', this.handleState)
     if (this.$agent.vm.storage_data.agentManagerStatesCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.agentManagerStatesCollapsed
-  },
-  beforeDestroy () {
-    this.$bus.$off('agents_state', this.handleState)
   },
   components: {
     toggleBar: ToggleBar
   },
   computed: {
-    computedAgents () {
-      let agents = this.agents
-      let compAgents = []
-      agents.forEach( (key) => {
-        compAgents.push(key);
-        key._cellVariants = { agent_detail: 'primary', timeComputed: 'primary', state: 'primary', actions: 'primary' }
-        key.timeComputed = this.msToHms(Math.round(key.time).toString())
-        key.agent_name = key.agent.name
-        key.agent_login = key.agent.login
-        key.agent_phone = key.agent.uri
-        key.agent_skills = (Object.keys(key.agent.skills)).toString()
-
-        if(key.agent.line.client != undefined) {
-          key.agent_client = key.agent.line.client.name
-          if(this.selectedCustomer != key.agent.line.client.name && this.selectedCustomer != 'Any Customers'){
-            compAgents.pop(key) //object.splice(index, 1)
-            }
-        }
-        else if(this.selectedCustomer != 'Any Customers'){
-          compAgents.pop(key)
-        }
-
-        if(key.agent.group != undefined){
-          key.agent_group = key.agent.group.name
-          if(this.selectedProfile != key.agent.group.name && this.selectedProfile != 'Any Profile')
-            compAgents.pop(key)
-        }
-        else if(this.selectedProfile != 'Any Profile'){
-          compAgents.pop(key)
-        }
-
-        if(this.selectedState != key.state && this.selectedState != 'Any State')
-          compAgents.pop(key)
-
-      } )
-      return compAgents;
-    },
     computedAgentsStats () {
       let agents = []
       let object = { "total_agents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0}
-      object.total_agents = this.agents.length
+      //object.total_agents = this.agents.length
       this.agents.forEach( (key) => {
+        if(key.agent.group != undefined){
+          if(this.selectedProfile != key.agent.group.name && this.selectedProfile != 'Any Profile')
+            return
+        }
+        else if(this.selectedProfile != 'Any Profile'){
+          return
+        }
+        object.total_agents++
         switch (key.state){
           case "release":
             object.released++
