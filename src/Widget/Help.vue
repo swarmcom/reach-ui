@@ -66,5 +66,10 @@ Build the list of skills to associate with this user. Note that the user may als
 <style>
 .popover {
   max-width: 512px; /* Max Width of the popover (depending on the container!) */
+  background: #ffc;
 }
+.popover.bs-popover-right .arrow::after, .popover.bs-popover-auto[x-placement^="right"] .arrow::after {
+  border-right-color: #ffc;
+}
+
 </style>
