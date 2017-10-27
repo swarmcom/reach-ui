@@ -61,17 +61,12 @@ export default {
     return {
       fields: {
         agent_detail: { label: 'Agent Details' },
+        agent_occup: { label: 'Occup' },
+        agent_myCpt: { label: 'My CPT' },
+        agent_calls: { label: 'Calls' },
         timeComputed: { label: 'Time logged in', sortable:true },
         state: { label: 'State', sortable: true },
         actions: { label: 'Actions' }
-      },
-      fieldsStats: {
-        total_agents: { label: 'Total Agents', sortable: false },
-        released: { label: 'Released', sortable: false },
-        idle: { label: 'Idle', sortable: false },
-        ringing: { label: 'Ringing', sortable: false },
-        insession: { label: 'In Session', sortable: false },
-        wrapup: { label: 'Wrap-up', sortable: false }
       },
       clients: [],
       states: [
@@ -140,7 +135,7 @@ export default {
       let compAgents = []
       agents.forEach( (key) => {
         compAgents.push(key);
-        key._cellVariants = { agent_detail: 'primary', timeComputed: 'primary', state: 'primary', actions: 'primary' }
+        key._cellVariants = { agent_detail: 'primary', agent_occup: 'primary', agent_myCpt: 'primary', agent_calls: 'primary', timeComputed: 'primary', state: 'primary', actions: 'primary' }
         key.timeComputed = this.msToHms(Math.round(key.time).toString())
         key.agent_name = key.agent.name
         key.agent_login = key.agent.login
@@ -150,7 +145,7 @@ export default {
         if(key.agent.line.client != undefined) {
           key.agent_client = key.agent.line.client.name
           if(this.selectedCustomer != key.agent.line.client.name && this.selectedCustomer != 'Any Customers'){
-            compAgents.pop(key) //object.splice(index, 1)
+            compAgents.pop(key)
             }
         }
         else if(this.selectedCustomer != 'Any Customers'){

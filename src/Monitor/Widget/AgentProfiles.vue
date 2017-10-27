@@ -42,7 +42,10 @@ export default {
         idle: { label: 'Idle', sortable: false },
         ringing: { label: 'Ringing', sortable: false },
         insession: { label: 'In Session', sortable: false },
-        wrapup: { label: 'Wrap-up', sortable: false }
+        wrapup: { label: 'Wrap-up', sortable: false },
+        occup: { label: 'Occup', sortable: false },
+        cpt: { label: 'CPT', sortable: false },
+        calls: { label: 'Calls', sortable: false },
       },
       selectedProfile: 'Any Profile',
       showCollapse: true
@@ -59,7 +62,6 @@ export default {
     computedAgentsStats () {
       let agents = []
       let object = { "total_agents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0}
-      //object.total_agents = this.agents.length
       this.agents.forEach( (key) => {
         if(key.agent.group != undefined){
           if(this.selectedProfile != key.agent.group.name && this.selectedProfile != 'Any Profile')
