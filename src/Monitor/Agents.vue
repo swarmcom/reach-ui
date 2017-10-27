@@ -11,21 +11,49 @@
       :items="computedAgentsStats"
       :fields="fieldsStats">
     </b-table>
+
     <div class="row toggle-bar-custom">
       <div class="title">Agents</div>
     </div>
-    <b-table style="margin-top:10px" small striped hover
-      :items="computedAgents"
-      :fields="fields"
-      :sort-by="sortBy"
-      :sort-desc="sortDesc"
-      @sort-changed="onSortingChanged">
-      <template slot="actions" slot-scope="data">
-        <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
-        <b-button v-else size="sm" variant="primary" @click="release(data.item)">Release</b-button>
-        <b-button size="sm" variant="danger" @click="stop(data.item)">Kill</b-button>
-      </template>
-    </b-table>
+    <div class="row">
+      <div class="col-2">
+        <div class="row toggle-bar-custom">
+          <div class="title">Filter</div>
+        </div>
+        <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
+        <b-form-select size="sm" v-model="selectedProfile" style="margin-top:10px">
+          <option v-for="group in this.groups" :value=group.name>{{group.name}}</option>
+        </b-form-select>
+        <b-form-select size="sm" v-model="selectedCustomer" style="margin-top:10px">
+          <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
+        </b-form-select>
+        <b-form-select size="sm" v-model="selectedState" style="margin-top:10px">
+          <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
+        </b-form-select>
+      </div>
+      <div class="col-10">
+        <b-table style="margin-top:10px" small striped hover
+          :items="computedAgents"
+          :fields="fields"
+          :filter="filter"
+          :sort-by="sortBy"
+          :sort-desc="sortDesc"
+          @sort-changed="onSortingChanged">
+          <template slot="agent_detail" slot-scope="data">
+            <div class="agent-state-text">{{data.item.agent_name + ' ' + data.item.agent_login}}</div>
+            <div class="agent-state-text"><b>Profile: </b>{{data.item.agent_group}}</div>
+            <div class="agent-state-text"><b>Phone: </b>{{data.item.agent_phone}}</div>
+            <div class="agent-state-text"><b>Skills: </b>{{data.item.agent_skills}}</div>
+            <div class="agent-state-text"><b>Customer: </b>{{data.item.agent_client}}</div>
+          </template>
+          <template slot="actions" slot-scope="data">
+            <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
+            <b-button v-else size="sm" variant="primary" @click="release(data.item)">Release</b-button>
+            <b-button size="sm" variant="danger" @click="stop(data.item)">Kill</b-button>
+          </template>
+        </b-table>
+      </div>
+    </div>
   </b-collapse>
 </div>
 </template>
@@ -42,25 +70,35 @@ export default {
   data () {
     return {
       fields: {
-        agent_id: { label: 'Id', sortable: true },
-        agent_login: { label: 'Login', sortable: true },
-        agent_name: { label: 'Name', sortable: true },
+        agent_detail: { label: 'Agent Details' },
+        timeComputed: { label: 'Time logged in', sortable:true },
         state: { label: 'State', sortable: true },
-        agent_skills: { label: 'Skills', sortable: true },
-        agent_uri: { label: 'Agent Phone', sortable: true },
-        timeComputed: { label: 'Time', sortable:true },
         actions: { label: 'Actions' }
       },
       fieldsStats: {
-        total_agents: { label: 'Total Agents', sortable: true },
-        released: { label: 'Released', sortable: true },
-        idle: { label: 'Idle', sortable: true },
-        ringing: { label: 'Ringing', sortable: true },
-        insession: { label: 'In Session', sortable: true },
-        wrapup: { label: 'Wrap-up', sortable: true }
+        total_agents: { label: 'Total Agents', sortable: false },
+        released: { label: 'Released', sortable: false },
+        idle: { label: 'Idle', sortable: false },
+        ringing: { label: 'Ringing', sortable: false },
+        insession: { label: 'In Session', sortable: false },
+        wrapup: { label: 'Wrap-up', sortable: false }
       },
       agents: [],
+      groups: [],
+      clients: [],
+      states: [
+        {name: "Any State"},
+        {name: "release"},
+        {name: "available"},
+        {name: "ringing"},
+        {name: "oncall"},
+        {name: "wrapup"}
+      ],
+      selectedProfile: 'Any Profile',
+      selectedCustomer: 'Any Customers',
+      selectedState: 'Any State',
       updater: '',
+      filter: null,
       sortBy: 'agent_id',
       sortDesc: false,
       showCollapse: true
@@ -91,6 +129,10 @@ export default {
     },
     query: async function() {
       this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
+      this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
+      this.clients.unshift({ name:"Any Customers" })
+      this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
+      this.groups.unshift({ name:"Any Profile" })
     },
     onTimer () {
       this.agents.forEach((E, i, A) => {
@@ -105,7 +147,6 @@ export default {
       this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])
     },
     onSortingChanged (ctx){
-      console.log("sorting dsfnaskjdh"+ctx.sortBy)
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
       this.$agent.vm.storage_data[this.$options.storageName+'SortDesc'] = ctx.sortDesc
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
@@ -139,22 +180,47 @@ export default {
   },
   computed: {
     computedAgents () {
-      let agents = this.agents;
+      let agents = this.agents
+      let compAgents = []
       agents.forEach( (key) => {
+        compAgents.push(key);
+        key._cellVariants = { agent_detail: 'primary', timeComputed: 'primary', state: 'primary', actions: 'primary' }
         key.timeComputed = this.msToHms(Math.round(key.time).toString())
         key.agent_name = key.agent.name
         key.agent_login = key.agent.login
+        key.agent_phone = key.agent.uri
         key.agent_skills = (Object.keys(key.agent.skills)).toString()
-        key.agent_uri = key.agent.uri
+
+        if(key.agent.line.client != undefined) {
+          key.agent_client = key.agent.line.client.name
+          if(this.selectedCustomer != key.agent.line.client.name && this.selectedCustomer != 'Any Customers'){
+            compAgents.pop(key) //object.splice(index, 1)
+            }
+        }
+        else if(this.selectedCustomer != 'Any Customers'){
+          compAgents.pop(key)
+        }
+
+        if(key.agent.group != undefined){
+          key.agent_group = key.agent.group.name
+          if(this.selectedProfile != key.agent.group.name && this.selectedProfile != 'Any Profile')
+            compAgents.pop(key)
+        }
+        else if(this.selectedProfile != 'Any Profile'){
+          compAgents.pop(key)
+        }
+
+        if(this.selectedState != key.state && this.selectedState != 'Any State')
+          compAgents.pop(key)
+
       } )
-      return agents;
+      return compAgents;
     },
     computedAgentsStats () {
       let agents = []
       let object = { "total_agents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0}
       object.total_agents = this.agents.length
       this.agents.forEach( (key) => {
-        console.log(key.state)
         switch (key.state){
           case "release":
             object.released++
