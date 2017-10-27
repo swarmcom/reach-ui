@@ -1,10 +1,13 @@
 <template>
 <div class="form">
-  <form-text label="Name" v-model="rec.name"></form-text>
-  <form-text label="Description" v-model="rec.description"></form-text>
-  <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-  <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  <form-text label="Recipe Name" v-model="rec.name"></form-text>
+  <form-text label="Recipe Description" v-model="rec.description"></form-text>
+  <div style="margin-top:20px">
+    <button @click="onCommit" class="btn btn-primary">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+    <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  </div>
+  <help></help>
 </div>
 </template>
 

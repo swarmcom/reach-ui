@@ -1,6 +1,6 @@
 <template>
 <div class="row" style="margin-top: 5px">
-  <label class="col-3 col-form-label">{{ label }}</label>
+  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div class="col-7">
     <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
       <option></option>
