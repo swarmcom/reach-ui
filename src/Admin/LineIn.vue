@@ -3,6 +3,7 @@
   <form-text label="Line-In Name" v-model="rec.name"></form-text>
   <form-text label="Line-In Description" v-model="rec.description"></form-text>
   <disposition-groups label="Dispositions" v-model="rec.disposition_group_id"></disposition-groups>
+  <luas label="Lua script" v-model="rec.lua_id"></luas>
   <queues label="Queue" v-model="rec.queue_id"></queues>
   <clients label="Client" v-model="rec.client_id"></clients>
   <prompts label="Announce" v-model="rec.announce_id"></prompts>
