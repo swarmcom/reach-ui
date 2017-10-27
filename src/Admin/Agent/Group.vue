@@ -1,34 +1,74 @@
 <template>
 <div class="form">
-  <form-text label="Name" v-model="rec.name"></form-text>
+  <form-text label="Agent Group Name" v-model="rec.name"></form-text>
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
   <form-text label="Permissions" v-model="rec.permissions"></form-text>
-  <form-text label="Ring timeout" v-model="rec.ring_timeout"></form-text>
-  <form-text label="Suspend time" v-model="rec.suspend_time"></form-text>
-  <form-text label="Auto logout" v-model="rec.autologout"></form-text>
-  <form-text label="Max missed calls (auto release)" v-model="rec.max_ring_fails"></form-text>
-  <form-select-bool label="Reset missed calls on success" v-model="rec.reset_rings_fails"></form-select-bool>
+  <luas label="Integration Lua script" v-model="rec.lua_id"></luas>
+  <form-text label="Ring Timeout" v-model="rec.ring_timeout"></form-text>
+  <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>
+  <form-text label="Auto Logout" v-model="rec.autologout"></form-text>
+  <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-text>
+  <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
   <skills label="Skills" v-model="skills"></skills>
-  <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-  <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+
+  <div style="margin-top:20px">
+    <button @click="onCommit" class="btn btn-primary">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+    <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  </div>
+
+  <help></help>
 </div>
 </template>
 
 <script>
-import Obj from '../Object'
 import Common from '../Common'
 
 export default {
   name: 'admin-agent-group',
   props: ['id'],
-  mixins: [Common, Obj],
+  mixins: [Common],
   data () {
     return {
       rec: {},
       module: 'ws_db_agent_group',
-      redirect: '/admin/agent_groups'
+      redirect: '/admin/agent_groups',
+      skills: []
     }
   },
+  methods: {
+    query: async function () {
+      if (this.id) {
+        this.rec = await this.$agent.p_mfa('ws_db_agent_group', 'get', [this.id])
+        this.skills = this.object2list(this.rec.skills)
+      }
+    },
+    onCommit: async function () {
+      this.rec.skills = this.list2object(this.skills)
+      try {
+        if (this.id) {
+          await this.$agent.p_mfa('ws_db_agent_group', 'update', [this.id, this.rec])
+        } else {
+          await this.$agent.p_mfa('ws_db_agent_group', 'create', [this.rec])
+        }
+        this.$router.push('/admin/agents')
+      }
+      catch (error) {
+        this.$notify({ title: 'Data error:', text: error, type: 'error' });
+      }
+    },
+    onDelete: async function () {
+      if (this.id) {
+        await this.$agent.p_mfa('ws_db_agent_group', 'delete', [this.id])
+        this.$router.push('/admin/agents')
+      }
+    },
+    onCancel: async function () {
+      this.$router.push('/admin/agents')
+    },
+  },
+  created () {
+    this.query()
+  }
 }
 </script>

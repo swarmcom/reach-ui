@@ -1,16 +1,19 @@
 <template>
 <div class="form">
-  <form-text label="Name" v-model="rec.name"></form-text>
-  <form-text label="Description" v-model="rec.description"></form-text>
-  <div class="form-group row">
+  <form-text label="Prompt Name" v-model="rec.name"></form-text>
+  <form-text label="Prompt Description" v-model="rec.description"></form-text>
+  <div class="row">
     <label class="col-3 col-form-label">Choose File</label>
     <div class="col-9">
       <b-form-file v-model="file" v-on:input="onFile" :placeholder="rec.file"></b-form-file>
     </div>
   </div>
-  <button @click="onCommit" :disabled="isDisabled()" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-  <button @click="onDelete" v-if="rec.id" class="btn btn-danger float-right">Delete</button>
+  <div style="margin-top:20px">
+    <button @click="onCommit" :disabled="isDisabled()" class="btn btn-primary">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+    <button @click="onDelete" v-if="rec.id" class="btn btn-danger float-right">Delete</button>
+  </div>
+  <help></help>
 </div>
 </template>
 
