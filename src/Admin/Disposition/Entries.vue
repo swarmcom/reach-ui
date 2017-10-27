@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row" style="margin-bottom: 10px"><div class="col"><h3>Dispositions:</h3></div></div>
 
-  <div v-for="disposition of dispositions" class="form-row" style="maring-top: 5px">
+  <div v-for="disposition of dispositions" class="form-row" style="margin-top: 5px">
     <div class="col-1">
       <button @click="del(disposition.id)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </div>
@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div class="form-row" style="maring-top: 5px">
+  <div class="form-row" style="margin-top: 5px">
     <div class="col-1">
       <button @click="add" class="btn btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </div>

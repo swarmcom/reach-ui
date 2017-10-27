@@ -1,7 +1,7 @@
 <template>
 <div class="form">
-  <form-text label="Name" v-model="queue.name"></form-text>
-  <queue-groups label="Group" v-model="queue.group_id"></queue-groups>
+  <form-text label="Queue Name" v-model="queue.name"></form-text>
+  <queue-groups label="Queue Group" v-model="queue.group_id"></queue-groups>
   <recipes label="Recipe" v-model="queue.recipe_id"></recipes>
   <mohs label="Music on hold" v-model="queue.moh_id"></mohs>
   <form-text label="Weight" v-model="queue.weight"></form-text>
@@ -10,9 +10,12 @@
   <form-bool label="Wrap-up enabled" v-model="queue.wrapup_enabled"></form-bool>
   <form-text label="Wrap-up timer" v-model="queue.wrapup_timer"></form-text>
   <skills label="Skills" v-model="skills"></skills>
-  <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-  <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  <div style="margin-top:20px">
+    <button @click="onCommit" class="btn btn-primary">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+    <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  </div>
+  <help></help>
 </div>
 </template>
 

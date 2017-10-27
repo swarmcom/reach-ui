@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row" style="margin-bottom: 10px"><div class="col"><h3>Releases:</h3></div></div>
 
-  <div v-for="release of releases" class="form-row" style="maring-top: 5px">
+  <div v-for="release of releases" class="form-row" style="margin-top: 5px">
     <div class="col-1">
       <button @click="del(release.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
     </div>
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="form-row" style="maring-top: 5px">
+  <div class="form-row" style="margin-top: 5px">
     <div class="col-1">
       <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
     </div>

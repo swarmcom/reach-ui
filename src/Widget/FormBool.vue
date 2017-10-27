@@ -1,6 +1,6 @@
 <template>
 <div class="row" style="margin-top: 5px">
-  <label class="col-3 col-form-label">{{ label }}</label>
+  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9 ">
     <div class="form-check">
       <label class="form-check-label">

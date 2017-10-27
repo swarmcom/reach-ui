@@ -1,8 +1,8 @@
 <template>
 <div class="form">
-  <form-text label="Name" v-model="rec.name"></form-text>
-  <form-text label="Description" v-model="rec.description"></form-text>
-  <b-row style="margin-bottom: 20px">
+  <form-text label="Lua Name" v-model="rec.name"></form-text>
+  <form-text label="Lua Description" v-model="rec.description"></form-text>
+  <b-row>
     <b-col>
       <div class="codemirror" style="border: 1px solid #eee">
         <!-- codemirror -->
@@ -10,9 +10,12 @@
       </div>
     </b-col>
   </b-row>
-  <button @click="onCommit" class="btn btn-primary">Commit</button>
-  <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-  <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  <div style="margin-top: 20px">
+    <button @click="onCommit" class="btn btn-primary">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
+    <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+  </div>
+  <help></help>
 </div>
 </template>
 

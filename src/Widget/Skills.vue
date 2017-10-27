@@ -1,6 +1,6 @@
 <template>
 <div class="row">
-  <label class="col-3 col-form-label">{{ label }}</label>
+  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
     <div v-for="sk of value" class="form-row" style="margin-top: 5px">
       <div class="col-1">
