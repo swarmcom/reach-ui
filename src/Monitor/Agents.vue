@@ -2,7 +2,7 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <agentStates></agentStates>
+    <agentProfiles></agentProfiles>
     <div class="row toggle-bar-custom">
       <div class="title">Agents</div>
     </div>
@@ -53,7 +53,7 @@
 import Btable from '../Widget/Btable'
 import ToggleBar from '../Widget/ToggleBar'
 import Common from '../Admin/Common'
-import AgentStates from './Widget/AgentStates'
+import AgentProfiles from './Widget/AgentProfiles'
 export default {
   name: 'monitor-agents',
   storageName: 'agentManager',
@@ -166,7 +166,7 @@ export default {
   components: {
     btable: Btable,
     toggleBar: ToggleBar,
-    agentStates: AgentStates
+    agentProfiles: AgentProfiles
   },
   computed: {
     computedAgents () {

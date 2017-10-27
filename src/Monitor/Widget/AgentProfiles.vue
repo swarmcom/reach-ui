@@ -1,16 +1,23 @@
 <template>
 <div>
   <toggleBar></toggleBar>
-  <b-collapse v-model="showCollapse" id="collapseAgentManagerStates" class="mt-2">
-
-    <div class="row toggle-bar-custom">
-      <div class="title">Agent States</div>
+  <b-collapse v-model="showCollapse" id="collapseAgentManagerProfiles" class="mt-2">
+    <div class="row">
+      <div class="col-2">
+        <div class="row toggle-bar-custom">
+          <div class="title">Profile Name</div>
+        </div>
+      </div>
+      <div class="col-10">
+        <div class="row toggle-bar-custom" style="margin-left:1px">
+          <div class="title">Agent States</div>
+        </div>
+        <b-table style="margin-top:10px" small striped hover
+          :items="computedAgentsStats"
+          :fields="fieldsStats">
+        </b-table>
+      </div>
     </div>
-
-    <b-table style="margin-top:10px" small striped hover
-      :items="computedAgentsStats"
-      :fields="fieldsStats">
-    </b-table>
   </b-collapse>
 </div>
 </template>
@@ -18,9 +25,9 @@
 import ToggleBar from '../../Widget/ToggleBar'
 import Common from '../../Admin/Common'
 export default {
-  name: 'monitor-agents-states',
-  storageName: 'agentManagerStates',
-  widgetName: 'AGENT STATES',
+  name: 'monitor-agents-profiles',
+  storageName: 'agentManagersStates',
+  widgetName: 'AGENT PROFILES',
   mixins: [Common],
   data () {
     return {
