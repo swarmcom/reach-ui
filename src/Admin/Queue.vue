@@ -2,6 +2,7 @@
 <div class="form">
   <form-text label="Queue Name" v-model="queue.name"></form-text>
   <queue-groups label="Queue Group" v-model="queue.group_id"></queue-groups>
+  <luas label="Exit Lua script" v-model="rec.lua_id"></luas>
   <recipes label="Recipe" v-model="queue.recipe_id"></recipes>
   <mohs label="Music on hold" v-model="queue.moh_id"></mohs>
   <form-text label="Weight" v-model="queue.weight"></form-text>

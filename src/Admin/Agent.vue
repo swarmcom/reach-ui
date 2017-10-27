@@ -6,6 +6,7 @@
   <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
   <lines label="Line Out" v-model="rec.line_id"></lines>
+  <luas label="Integration Lua script" v-model="rec.lua_id"></luas>
   <form-text label="Permissions" v-model="rec.permissions"></form-text>
   <form-text label="Primary Phone" v-model="rec.uri"></form-text>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text>
