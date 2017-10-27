@@ -2472,8 +2472,8 @@ ieee754@^1.1.4:
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
 ignore@^3.3.3, ignore@^3.3.6:
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.6.tgz#b6f3196b38ed92f0c86e52f6f79b7fc4c8266c8d"
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
 
 import-local@^0.1.1:
   version "0.1.1"
@@ -2761,6 +2761,10 @@ isstream@~0.1.2:
 javascript-detect-element-resize@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/javascript-detect-element-resize/-/javascript-detect-element-resize-0.5.3.tgz#1a71cd51dfe565907f299012fe73a294104025de"
+
+jquery@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
 js-base64@^2.1.9:
   version "2.3.2"
@@ -3542,6 +3546,10 @@ pkg-dir@^2.0.0:
 pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
+
+popper.js@^1.12.3:
+  version "1.12.6"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.6.tgz#91e12a97b07815258b76915d64044e8ac053d426"
 
 portfinder@^1.0.13, portfinder@^1.0.9:
   version "1.0.13"
