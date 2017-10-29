@@ -10,6 +10,9 @@
     <template slot="client" slot-scope="data">
       {{ data.item.line_in.client.name }}
     </template>
+    <template slot="agent" slot-scope="data">
+      {{ maybe_name(data.item.agent) }}
+    </template>
   </b-table>
 </div>
 </template>
@@ -34,6 +37,7 @@ export default {
         time: { label: 'Time', formatter: format_ms },
         line_in: { label: 'Line In', sortable: true },
         client: { label: 'Client', sortable: true },
+        agent: { label: 'Agent', sortable: true }
       },
       events: []
     }
@@ -43,6 +47,13 @@ export default {
       let raw = await this.$agent.p_mfa('ws_stats', 'inqueue_events', [this.uuid])
       this.events = raw.map( (re) => re._source )
     },
+    maybe_name (item) {
+      if (typeof item === 'object') {
+        return item.name
+      } else {
+        return ''
+      }
+    }
   },
   created () {
     this.query()
