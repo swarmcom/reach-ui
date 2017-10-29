@@ -16,6 +16,7 @@
   <b-nav v-if="auth" class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
     <b-nav-item to="/admin/agents">ADMIN</b-nav-item>
     <b-nav-item to="/main">MAIN</b-nav-item>
+    <b-nav-item to="/stats">STATS </b-nav-item>
     <b-nav-item to="/monitor">MONITOR </b-nav-item>
     <b-nav-item to="/reports">REPORTS</b-nav-item>
     <button @click="onPin" class="btn ml-auto">
