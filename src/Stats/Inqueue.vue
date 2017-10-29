@@ -22,7 +22,7 @@
 
 <script>
 function format_ms(ms) {
-  if (ms > 0) {
+  if (Number.isInteger(ms)) {
     return (ms/1000).toFixed(1)
   } else {
     return ""
