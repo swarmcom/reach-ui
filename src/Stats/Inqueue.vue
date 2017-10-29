@@ -3,17 +3,17 @@
   <div class="row">
     <div class="col"><h3>Inqueue</h3></div>
   </div>
-  <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields">
-    <template slot="line_in" scope="data">
+  <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields" @row-clicked="click">
+    <template slot="line_in" slot-scope="data">
       {{ data.item.line_in.name }}
     </template>
-    <template slot="client" scope="data">
+    <template slot="client" slot-scope="data">
       {{ data.item.line_in.client.name }}
     </template>
-    <template slot="caller_id" scope="data">
+    <template slot="caller_id" slot-scope="data">
       "{{ data.item.vars['Caller-Caller-ID-Name'] }}" &lt;{{ data.item.vars['Caller-Caller-ID-Number'] }}&gt;
     </template>
-    <template slot="called_id" scope="data">
+    <template slot="called_id" slot-scope="data">
       {{ data.item.vars['Caller-Destination-Number'] }}
     </template>
   </b-table>
@@ -51,6 +51,9 @@ export default {
       let raw = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
       this.inqueues = raw.map( (re) => re._source )
     },
+    click ({uuid}) {
+      this.$router.push(`/stats/inqueue/${uuid}`)
+    }
   },
   created () {
     this.query()
