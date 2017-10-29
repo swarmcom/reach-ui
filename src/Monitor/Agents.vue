@@ -2,8 +2,8 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <agentProfiles :agents="agents" :groups="groups"></agentProfiles>
-    <agentMonitor :agents="agents" :groups="groups"></agentMonitor>
+    <agent-profiles :agents="agents" :groups="groups"></agent-profiles>
+    <agent-monitor :agents="agents" :groups="groups"></agent-monitor>
   </b-collapse>
 </div>
 </template>
@@ -64,8 +64,8 @@ export default {
   },
   components: {
     toggleBar: ToggleBar,
-    agentProfiles: AgentProfiles,
-    agentMonitor: AgentMonitor
+    'agent-profiles': AgentProfiles,
+    'agent-monitor': AgentMonitor
   }
 }
 </script>
