@@ -8,6 +8,9 @@
         <router-link class="nav-link" to="/admin/agents">Admin</router-link>
       </li>
       <li class="nav-item">
+        <router-link class="nav-link" to="/stats">Stats</router-link>
+      </li>
+      <li class="nav-item">
         <router-link class="nav-link" to="/monitor">Monitor</router-link>
       </li>
       <li class="nav-item">
