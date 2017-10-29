@@ -22,7 +22,11 @@
 
 <script>
 function format_ms(ms) {
-  return (ms/1000).toFixed(1)
+  if (ms > 0) {
+    return (ms/1000).toFixed(1)
+  } else {
+    return ""
+  }
 }
 
 export default {
