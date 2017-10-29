@@ -37,7 +37,7 @@ export default {
   data () {
     return {
       fieldsStats: {
-        total_agents: { label: 'Total Agents', sortable: false },
+        totalAgents: { label: 'Total Agents', sortable: false },
         released: { label: 'Released', sortable: false },
         idle: { label: 'Idle', sortable: false },
         ringing: { label: 'Ringing', sortable: false },
@@ -61,7 +61,7 @@ export default {
   computed: {
     computedAgentsStats () {
       let agents = []
-      let object = { "total_agents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0}
+      let object = { "totalAgents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0}
       this.agents.forEach( (key) => {
         if(key.agent.group != undefined){
           if(this.selectedProfile != key.agent.group.name && this.selectedProfile != 'Any Profile')
@@ -70,7 +70,7 @@ export default {
         else if(this.selectedProfile != 'Any Profile'){
           return
         }
-        object.total_agents++
+        object.totalAgents++
         switch (key.state){
           case "release":
             object.released++

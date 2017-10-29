@@ -26,12 +26,12 @@
           :sort-by="sortBy"
           :sort-desc="sortDesc"
           @sort-changed="onSortingChanged">
-          <template slot="agent_detail" slot-scope="data">
-            <div class="agent-state-text">{{data.item.agent_name + ' ' + data.item.agent_login}}</div>
-            <div class="agent-state-text"><b>Profile: </b>{{data.item.agent_group}}</div>
-            <div class="agent-state-text"><b>Phone: </b>{{data.item.agent_phone}}</div>
-            <div class="agent-state-text"><b>Skills: </b>{{data.item.agent_skills}}</div>
-            <div class="agent-state-text"><b>Customer: </b>{{data.item.agent_client}}</div>
+          <template slot="agentDetail" slot-scope="data">
+            <div class="agent-state-text">{{data.item.agentName + ' ' + data.item.agentLogin}}</div>
+            <div class="agent-state-text"><b>Profile: </b>{{data.item.agentGroup}}</div>
+            <div class="agent-state-text"><b>Phone: </b>{{data.item.agentPhone}}</div>
+            <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
+            <div class="agent-state-text"><b>Customer: </b>{{data.item.agentClient}}</div>
           </template>
           <template slot="actions" slot-scope="data">
             <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
@@ -60,10 +60,10 @@ export default {
   data () {
     return {
       fields: {
-        agent_detail: { label: 'Agent Details' },
-        agent_occup: { label: 'Occup' },
-        agent_myCpt: { label: 'My CPT' },
-        agent_calls: { label: 'Calls' },
+        agentDetail: { label: 'Agent Details' },
+        agentOccup: { label: 'Occup' },
+        agentMyCpt: { label: 'My CPT' },
+        agentCalls: { label: 'Calls' },
         timeComputed: { label: 'Time logged in', sortable:true },
         state: { label: 'State', sortable: true },
         actions: { label: 'Actions' }
@@ -135,15 +135,15 @@ export default {
       let compAgents = []
       agents.forEach( (key) => {
         compAgents.push(key);
-        key._cellVariants = { agent_detail: 'primary', agent_occup: 'primary', agent_myCpt: 'primary', agent_calls: 'primary', timeComputed: 'primary', state: 'primary', actions: 'primary' }
+        key._cellVariants = { agentDetail: 'primary', agentOccup: 'primary', agentMyCpt: 'primary', agentCalls: 'primary', timeComputed: 'primary', state: 'primary', actions: 'primary' }
         key.timeComputed = this.msToHms(Math.round(key.time).toString())
-        key.agent_name = key.agent.name
-        key.agent_login = key.agent.login
-        key.agent_phone = key.agent.uri
-        key.agent_skills = (Object.keys(key.agent.skills)).toString()
+        key.agentName = key.agent.name
+        key.agentLogin = key.agent.login
+        key.agentPhone = key.agent.uri
+        key.agentSkills = (Object.keys(key.agent.skills)).toString()
 
         if(key.agent.line.client != undefined) {
-          key.agent_client = key.agent.line.client.name
+          key.agentClient = key.agent.line.client.name
           if(this.selectedCustomer != key.agent.line.client.name && this.selectedCustomer != 'Any Customers'){
             compAgents.pop(key)
             }
@@ -153,7 +153,7 @@ export default {
         }
 
         if(key.agent.group != undefined){
-          key.agent_group = key.agent.group.name
+          key.agentGroup = key.agent.group.name
           if(this.selectedProfile != key.agent.group.name && this.selectedProfile != 'Any Profile')
             compAgents.pop(key)
         }
