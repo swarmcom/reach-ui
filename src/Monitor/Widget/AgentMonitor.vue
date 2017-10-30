@@ -1,7 +1,7 @@
 <template>
 <div>
   <toggleBar></toggleBar>
-  <b-collapse v-model="showCollapse" id="collapseAgentManagerProfiles" class="mt-2">
+  <b-collapse v-model="showCollapse" id="collapseAgentManagerAgents" class="mt-2">
     <div class="row">
       <div class="col-2">
         <div class="row toggle-bar-custom">
@@ -51,7 +51,7 @@ import Common from '../../Admin/Common'
 export default {
   name: 'monitor-agents-manager',
   storageName: 'agentManagerMonitor',
-  widgetName: 'AGENTS',
+  widgetName: 'Agents',
   mixins: [Common],
   props: {
     agents: Array,
