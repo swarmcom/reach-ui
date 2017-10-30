@@ -28,13 +28,19 @@
     <template slot="called_id" slot-scope="data">
       {{ data.item.vars['Caller-Destination-Number'] }}
     </template>
+    <template slot="player" slot-scope="data">
+      <player v-if="data.item.keep_record == false" :href="data.item.call_record_path"></player>
+    </template>
   </b-table>
 </div>
 </template>
 
 <script>
+import Player from './Player'
+
 export default {
   name: 'stats-inqueue',
+  components: { player: Player },
   data () {
     return {
       fields: {
@@ -47,6 +53,7 @@ export default {
         agent: { label: 'Agent', sortable: true },
         caller_id: { label: 'Caller ID' },
         called_id: { label: 'Called ID' },
+        player: { label: ' ' }
       },
       inqueues: []
     }
