@@ -48,6 +48,9 @@ import AdminRecipeEntries from './Admin/Recipe/Entries.vue'
 import AdminRecipes from './Admin/Recipes.vue'
 import AdminLua from './Admin/Lua.vue'
 import AdminLuas from './Admin/Luas.vue'
+import AdminRole from './Admin/Role.vue'
+import AdminRoles from './Admin/Roles.vue'
+import AdminPermissions from './Admin/Permissions.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -97,6 +100,15 @@ Vue.use(Notifications)
 Vue.use(BootstrapVue)
 Vue.use(VueCodeMirror)
 
+Vue.directive('access', {
+  bind (el, binding, vnode) {
+    let Permission = vnode.context.$agent.vm.agent.permissions
+    if (Permission != binding.arg) {
+      el.style.display = "none"
+    }
+  }
+})
+
 const router = new VueRouter({
   routes: [
     { path: '/admin', component: Admin, children: [
@@ -108,6 +120,7 @@ const router = new VueRouter({
       { path: 'agent_groups', component: AdminAgentGroups },
       { path: 'releases', component: AdminReleases },
       { path: 'dispositions', component: AdminDispositions },
+      { path: 'roles', component: AdminRoles },
       { path: 'clients', component: AdminClients },
       { path: 'line_ins', component: AdminLineIns },
       { path: 'line_outs', component: AdminLineOuts },
@@ -127,6 +140,9 @@ const router = new VueRouter({
       { path: 'release', component: AdminReleaseGroup },
       { path: 'release/:id', component: AdminReleaseGroup, props: true },
       { path: 'release/:id/entries', component: AdminReleaseEntries, props: true },
+      { path: 'role', component: AdminRole },
+      { path: 'role/:id', component: AdminRole, props: true },
+      { path: 'role/:id/permissions', component: AdminPermissions, props: true },
       { path: 'disposition', component: AdminDispositionGroup },
       { path: 'disposition/:id', component: AdminDispositionGroup, props: true },
       { path: 'disposition/:id/entries', component: AdminDispositionEntries, props: true },
