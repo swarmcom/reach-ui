@@ -69,6 +69,7 @@ import Clients from './Widget/Clients.vue'
 import Luas from './Widget/Luas.vue'
 import DispositionGroups from './Widget/DispositionGroups.vue'
 import ReleaseGroups from './Widget/ReleaseGroups.vue'
+import Roles from './Widget/Roles.vue'
 import AdminHelp from './Widget/Help'
 
 import 'vue-awesome/icons'
@@ -92,6 +93,7 @@ Vue.component('disposition-groups', DispositionGroups)
 Vue.component('release-groups', ReleaseGroups)
 Vue.component('recipes', Recipes)
 Vue.component('luas', Luas)
+Vue.component('roles', Roles)
 Vue.component('help', AdminHelp)
 
 Vue.use(VueRouter)
