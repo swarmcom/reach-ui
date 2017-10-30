@@ -2,7 +2,7 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <agent-profiles :agents="agents" :groups="groups"></agent-profiles>
+    <agent-profiles :agents="agents"></agent-profiles>
     <agent-monitor :agents="agents" :groups="groups"></agent-monitor>
   </b-collapse>
 </div>
