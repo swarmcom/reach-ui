@@ -2,10 +2,8 @@
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
-    <div class="row">
-      <div class="col"><h3>Inqueue requests</h3></div>
-    </div>
-    <b-table style="margin-top:10px" striped hover :items="inqueues" :fields="fields">
+    <inqueues-view :inqueues="inqueues"></inqueues-view>
+    <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields">
       <template slot="twe" slot-scope="data">
         {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
       </template>
@@ -21,20 +19,24 @@
 </template>
 
 <script>
-import Btable from '../Widget/Btable'
 import ToggleBar from '../Widget/ToggleBar'
+import Common from '../Admin/Common'
+import InqueuesView from './Widget/InqueuesView'
 export default {
   name: 'inqueues',
   storageName: 'queueManager',
   widgetName: 'QUEUE MANAGER',
+  mixins: [Common],
   data () {
     return {
       fields: {
         state: { label: 'State', sortable: true },
+        groupName: { label: 'Customer', sortable: true },
         record: { label: 'Type', sortable: true },
         queue: { label: 'Queue', sortable: true },
-        skills: { label: 'Skills' },
-        twe: { label: 'T.W.E.', sortable: true },
+        skillsReq: { label: 'Skills', sortable: true },
+        timeInQueue: { label: 'T in Queue', sortable: true },
+        //twe: { label: 'T in Queue', sortable: true },
         actions: { label: 'Actions' }
       },
       name: 'monitor/inqueues',
@@ -58,7 +60,7 @@ export default {
       }
     },
     enrich_queue (info) {
-      info.time = Math.round(info.time/1000)
+      info.time = this.msToHms(Math.round(info.time)) //Math.round(info.time/1000)
       info.effective = Math.round(info.effective_time.time/1000)
       info.queue = this.queue_name(info.queue_id)
       return info
@@ -67,15 +69,18 @@ export default {
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
       this.inqueues = await this.$agent.p_mfa('ws_admin', 'inqueues', ['all'])
       this.inqueues.forEach((inq) => {
-        inq.time = Math.round(inq.time/1000)
+        inq.time =  Math.round(inq.time/1000)
         inq.effective = Math.round(inq.effective_time.time/1000)
         inq.queue = this.queue_name(inq.queue_id)
+        inq.groupName = inq.group
+        inq.skillsReq = (Object.keys(inq.skills)).toString()
       })
     },
     onTimer () {
       this.inqueues.forEach((E, i, Arr) => { 
         E.time = E.time + 1
         E.effective = E.effective + 1
+        E.timeInQueue = this.msToHms((E.time*1000).toString())
         Arr.splice(i, 1, E)
       })
     },
@@ -109,8 +114,8 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    btable: Btable,
-    toggleBar: ToggleBar
+    toggleBar: ToggleBar,
+    'inqueues-view': InqueuesView
   }
 }
 </script>
