@@ -67,6 +67,17 @@ export default {
       let agents = []
       this.groups.forEach( (key) => {
         let object = { "totalAgents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0 }
+        object._cellVariants = {
+          totalAgents: 'primary',
+          released: 'primary',
+          idle: 'warning',
+          ringing: 'warning',
+          insession: 'success',
+          wrapup: 'warning',
+          occup: 'primary',
+          cpt: 'primary',
+          calls: 'primary'
+        }
         let selectedProfile = key.name
         this.agents.forEach( (key) => {
           if(key.agent.group != undefined && selectedProfile == key.agent.group.name) {

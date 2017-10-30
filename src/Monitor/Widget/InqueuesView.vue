@@ -87,6 +87,15 @@ export default {
           "abandonTime": '-',
           "abandoned": '-'
         }
+        object._cellVariants = {
+          ciq: 'warning',
+          speedAnswer: 'primary',
+          longestWait: 'primary',
+          connected: 'success',
+          completed: 'success',
+          abandonTime: 'primary',
+          abandoned: 'warning'
+        }
         this.inqueues.forEach( (key) => {
           if(key.queue != undefined && selectedQueue == key.queue) {
             object.ciq++
