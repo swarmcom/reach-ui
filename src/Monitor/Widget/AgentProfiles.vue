@@ -28,7 +28,7 @@ import ToggleBar from '../../Widget/ToggleBar'
 export default {
   name: 'monitor-agents-profiles',
   storageName: 'agentManagerStates',
-  widgetName: 'AGENT PROFILES',
+  widgetName: 'Agent Profiles',
   props: {
     agents: Array
   },

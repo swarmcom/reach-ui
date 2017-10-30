@@ -51,7 +51,7 @@ import Common from '../../Admin/Common'
 export default {
   name: 'monitor-agents-manager',
   storageName: 'agentManagerMonitor',
-  widgetName: 'AGENTS',
+  widgetName: 'Agents',
   mixins: [Common],
   props: {
     agents: Array,
