@@ -3,17 +3,7 @@
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
     <inqueues-view :inqueues="inqueues"></inqueues-view>
-    <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields">
-      <template slot="twe" slot-scope="data">
-        {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
-      </template>
-      <template slot="actions" slot-scope="data">
-        <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
-        <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
-        <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
-        <b-button size="sm" variant="danger" @click="hangup(data.item)">Hangup</b-button>
-      </template>
-    </b-table>
+    <inqueues-monitor :inqueues="inqueues"></inqueues-monitor>
   </b-collapse>
 </div>
 </template>
@@ -22,6 +12,7 @@
 import ToggleBar from '../Widget/ToggleBar'
 import Common from '../Admin/Common'
 import InqueuesView from './Widget/InqueuesView'
+import InqueuesMonitor from './Widget/InqueuesMonitor'
 export default {
   name: 'inqueues',
   storageName: 'queueManager',
@@ -29,16 +20,6 @@ export default {
   mixins: [Common],
   data () {
     return {
-      fields: {
-        state: { label: 'State', sortable: true },
-        groupName: { label: 'Customer', sortable: true },
-        record: { label: 'Type', sortable: true },
-        queue: { label: 'Queue', sortable: true },
-        skillsReq: { label: 'Skills', sortable: true },
-        timeInQueue: { label: 'T in Queue', sortable: true },
-        //twe: { label: 'T in Queue', sortable: true },
-        actions: { label: 'Actions' }
-      },
       name: 'monitor/inqueues',
       inqueues: [],
       queues: [],
@@ -87,18 +68,6 @@ export default {
     queue_name (Id) {
       let Queue = this.queues.find(I => I.id == Id)
       return Queue? Queue.name : ''
-    },
-    take ({record, uuid}) {
-      this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
-    },
-    takeover ({record, uuid}) {
-      this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
-    },
-    spy ({record, uuid}) {
-      this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
-    },
-    hangup ({record, uuid}) {
-      this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
     }
   },
   created () {
@@ -115,7 +84,8 @@ export default {
   },
   components: {
     toggleBar: ToggleBar,
-    'inqueues-view': InqueuesView
+    'inqueues-view': InqueuesView,
+    'inqueues-monitor': InqueuesMonitor
   }
 }
 </script>

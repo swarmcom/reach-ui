@@ -1,0 +1,134 @@
+<template>
+<div>
+  <toggleBar></toggleBar>
+  <b-collapse v-model="showCollapse" id="collapseQueueManagerCallView" class="mt-2">
+    <div class="row">
+      <div class="col-2">
+        <div class="row toggle-bar-custom">
+          <div class="title">Filter</div>
+        </div>
+        <b-form-select size="sm" v-model="selectedQueue" style="margin-top:10px">
+          <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
+        </b-form-select>
+        <b-form-select size="sm" v-model="selectedCustomer" style="margin-top:10px">
+          <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
+        </b-form-select>
+      </div>
+      <div class="col-10">
+        <b-table style="margin-top:10px" small striped hover
+          :items="computedInqueues"
+          :fields="fields"
+          :sort-by="sortBy"
+          :sort-desc="sortDesc"
+          @sort-changed="onSortingChanged">
+          <template slot="actions" slot-scope="data">
+            <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
+            <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
+            <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
+            <b-button size="sm" variant="danger" @click="hangup(data.item)">Hangup</b-button>
+          </template>
+        </b-table>
+      </div>
+    </div>
+  </b-collapse>
+</div>
+</template>
+
+<script>
+import ToggleBar from '../../Widget/ToggleBar'
+export default {
+  name: 'monitor-queues-manager',
+  storageName: 'queueManagerMonitor',
+  widgetName: 'Call View',
+  props: {
+    inqueues: Array
+  },
+  data () {
+    return {
+      fields: {
+        state: { label: 'State', sortable: true },
+        groupName: { label: 'Customer', sortable: true },
+        record: { label: 'Type', sortable: true },
+        queue: { label: 'Queue', sortable: true },
+        skillsReq: { label: 'Skills', sortable: true },
+        timeInQueue: { label: 'T in Queue', sortable: true },
+        //twe: { label: 'T in Queue', sortable: true },
+        actions: { label: 'Actions' }
+      },
+      clients: [],
+      queues: [],
+      selectedQueue: 'Any Queue',
+      selectedCustomer: 'Any Customers',
+      //selectedState: 'Any State',
+      sortBy: 'agent_id',
+      sortDesc: false,
+      showCollapse: true
+    }
+  },
+  methods: {
+    query: async function() {
+      this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
+      this.clients.unshift({ name:"Any Customers" })
+      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
+      this.queues.unshift({ name:"Any Queue" })
+    },
+    onSortingChanged (ctx){
+      this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
+      this.$agent.vm.storage_data[this.$options.storageName+'SortDesc'] = ctx.sortDesc
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    },
+    take ({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
+    },
+    takeover ({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
+    },
+    spy ({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
+    },
+    hangup ({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
+    }
+  },
+  created () {
+    this.query()
+    if (this.$agent.vm.storage_data.queueManagerMonitorCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.queueManagerMonitorCollapsed
+    if (this.$agent.vm.storage_data.queueManagerMonitorSortBy != undefined)
+      this.sortBy = this.$agent.vm.storage_data.queueManagerMonitorSortBy
+    if (this.$agent.vm.storage_data.queueManagerMonitorSortDesc != undefined)
+      this.sortDesc = this.$agent.vm.storage_data.queueManagerMonitorSortDesc
+  },
+  computed: {
+    computedInqueues () {
+      let inqueues = this.inqueues
+      let compInqueues = []
+      inqueues.forEach( (key) => {
+        compInqueues.push(key);
+
+        if(key.queue != undefined){
+          if(this.selectedQueue != key.queue && this.selectedQueue != 'Any Queue')
+            compInqueues.pop(key)
+        }
+        else if(this.selectedQueue != 'Any Queue'){
+          compInqueues.pop(key)
+        }
+
+        if(key.groupName != undefined) {
+          if(this.selectedCustomer != key.groupName && this.selectedCustomer != 'Any Customers'){
+            compInqueues.pop(key)
+          }
+        }
+        else if(this.selectedCustomer != 'Any Customers'){
+          compInqueues.pop(key)
+        }
+
+      } )
+      return compInqueues;
+    }
+  },
+  components: {
+    toggleBar: ToggleBar
+  }
+}
+</script>
