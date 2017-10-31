@@ -9,7 +9,7 @@
       </div>
       <div class="col-md-9 col-12">
         <div class="row">
-          <b-row class="col-10">
+          <b-row class="col-9">
             <b-col cols="8">
               <dialer v-if="this.$agent.is_idle()"></dialer>
               <!--<override v-if="this.$agent.is_idle()"></override>-->
@@ -18,17 +18,20 @@
               <inqueue></inqueue>
             </b-col>
           </b-row>
-          <div class="col-2 pull-right text-right">
-            <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-secondary">
+          <div class="col-3 pull-right text-right">
+            <div class="row">
+            <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.a.state_time )}}</div>
+            <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-secondary agent-hold-button">
               <icon name="pause" scale="2"></icon>
             </button>
-            <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success">
+            <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success agent-hold-button">
               <icon name="pause" scale="2"></icon>
             </button>
             <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-danger">
               <icon name="close" scale="2"></icon></button>
             <button v-if="this.$agent.is_wrapup()" @click="wrapup" class="btn btn-outline-danger">
               <icon name="close" scale="2"></icon></button>
+            </div>
           </div>
         </div>
       </div>
@@ -45,12 +48,14 @@ import Override from './Agent/Override'
 import Release from './Agent/Widget/Release'
 import AgentState from './Agent/AgentState'
 import AgentInfo from './Agent/Info'
-
+import Common from './Admin/Common'
 export default {
   widgetName: 'SESSION MANAGER',
   storageName: 'sessionManager',
+  mixins: [Common],
   data () {
     return {
+      updater: undefined,
       showCollapse: true
     }
   },
@@ -61,11 +66,19 @@ export default {
     answer () { this.$agent.answer() },
     hangup () { this.$agent.hangup() },
     wrapup () { this.$agent.p_mfa('ws_agent', 'end_wrapup') },
+    onTimer() {
+      this.a.state_time += 1000
+      console.log(this.timeState)
+    },
   },
   created () {
     this.a = this.$agent.getData()
+    this.updater = setInterval(this.onTimer, 1000)
     if (this.a.storage_data.sessionManagerCollapsed != undefined)
       this.showCollapse = this.a.storage_data.sessionManagerCollapsed
+  },
+  beforeDestroy () {
+    clearInterval(this.updater)
   },
   components: {
     inqueue: Inqueue,
