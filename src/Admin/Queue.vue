@@ -10,7 +10,7 @@
   <form-text label="Auto Wrap-up" v-model="rec.auto_wrapup"></form-text>
   <form-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled"></form-bool>
   <form-text label="Wrap-up timer" v-model="rec.wrapup_timer"></form-text>
-  <skills label="Skills" v-model="skills"></skills>
+  <skills label="Queue Skills" v-model="skills"></skills>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
