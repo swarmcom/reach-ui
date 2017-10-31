@@ -1,11 +1,15 @@
 <template>
-<div style="margin-top: 20px" v-if="visible">
+<div style="margin-top: 10px" v-if="visible">
 
-<div class="row"><div class="col"><h5>Call info:</h5> </div></div>
+<div class="row"><div class="col session-manager-text"><b>Incoming Call:</b> </div></div>
 
 <div class="row">
-  <div class="col-10">
-    <dl class="row session-manager-info">
+  <div class="col-12">
+    <dl class="row agent-state-text">
+      <dt class="col-sm-3">Queue:</dt>
+      <dd class="col-sm-9">{{ this.inqueue.queue.name }}</dd>
+      <dt class="col-sm-3">Wait time:</dt>
+      <dd class="col-sm-9">{{ msToHms(this.inqueue.time) }}</dd>
       <dt class="col-sm-3">From:</dt>
       <dd class="col-sm-9">
         "{{ this.call_info['Caller-Caller-ID-Name'] }}" &lt;{{ this.call_info['Caller-Caller-ID-Number'] }}&gt;
@@ -14,20 +18,21 @@
       <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
       <dt class="col-sm-3">Client:</dt>
       <dd class="col-sm-9">{{ this.inqueue.line_in.client.name }}</dd>
-      <dt class="col-sm-3">State:</dt>
+      <!--<dt class="col-sm-3">State:</dt>
       <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
-      <dt class="col-sm-3">Queue:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.queue.name }}</dd>
       <dt class="col-sm-3">Weight:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.effective_time.weight }}</dd>
-      <dt class="col-sm-3">Time:</dt>
-      <dd class="col-sm-9">{{ msToHms(this.inqueue.time) }}</dd>
+      <dd class="col-sm-9">{{ this.inqueue.effective_time.weight }}</dd>-->
       <dt class="col-sm-3">Transferers:</dt>
       <dd class="col-sm-9">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
     </dl>
   </div>
+</div>
+<div class="row agent-state-text">
   <div class="col-2">
-    <b-button v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
+    <disposition v-bind:uuid="this.uuid"></disposition>
+  </div>
+  <div class="col-2">
+    <b-button size="sm" v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
   </div>
 </div>
 <div class="row">
@@ -62,12 +67,6 @@
     <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
   </div>
 </div>-->
-<div class="row" style="margin-top:10px;">
-  <div class="col-12">
-    <h6>Disposition:</h6>
-      <disposition v-bind:uuid="this.uuid"></disposition>
-  </div>
-</div>
 </div><!-- container -->
 </template>
 
