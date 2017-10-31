@@ -6,6 +6,8 @@
     <div class="row">
       <div class="col-5 agent-state-text">Name:</div>
       <div class="col-7 agent-state-text"> {{agent.name}} </div>
+      <div class="col-5 agent-state-text">Role:</div>
+      <div class="col-7 agent-state-text"> {{agent.role.name || '&nbsp'}} </div>
     </div>
     <div class="row">
       <div class="col-5 agent-state-text">Login:</div>

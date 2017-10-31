@@ -1,5 +1,6 @@
 <template>
 <div>
+<<<<<<< HEAD
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle v-if="auth" target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand v-if="auth" to="/main">HOME</b-navbar-brand>
@@ -14,10 +15,10 @@
     </b-collapse>
   </b-navbar>
   <b-nav v-if="auth" class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item to="/admin/agents">ADMIN</b-nav-item>
+    <b-nav-item v-access:admin-ui to="/admin/agents">ADMIN</b-nav-item>
     <b-nav-item to="/main">MAIN</b-nav-item>
-    <b-nav-item to="/stats">STATS </b-nav-item>
-    <b-nav-item to="/monitor">MONITOR </b-nav-item>
+    <b-nav-item v-access:admin-ui to="/stats">STATS </b-nav-item>
+    <b-nav-item v-access:supervisor-ui to="/monitor">MONITOR </b-nav-item>
     <b-nav-item to="/reports">REPORTS</b-nav-item>
     <button @click="onPin" class="btn ml-auto">
       <icon label="No Pined">
