@@ -13,7 +13,7 @@ export default {
         id: { label: 'Id', sortable: true },
         login: { label: 'Login', sortable: true },
         name: { label: 'Name', sortable: true },
-        permissions: { label: 'Permissions', sortable: true },
+        role: { label: 'Role', sortable: true, formatter: (role) => role.name },
         group: { label: 'Group', sortable: true, formatter: (group) => group.name },
         uri: { label: 'Uri', sortable: true }
       },

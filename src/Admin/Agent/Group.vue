@@ -2,7 +2,7 @@
 <div class="form">
   <form-text label="Agent Group Name" v-model="rec.name"></form-text>
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
-  <form-text label="Permissions" v-model="rec.permissions"></form-text>
+  <roles label="Role" v-model="rec.role_id"></roles>
   <luas label="Integration Lua script" v-model="rec.lua_id"></luas>
   <form-text label="Ring Timeout" v-model="rec.ring_timeout"></form-text>
   <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>

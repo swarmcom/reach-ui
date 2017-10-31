@@ -15,6 +15,8 @@ import Login from './Login.vue'
 import Agent from './Agent.vue'
 import Admin from './Admin.vue'
 import Monitor from './Monitor.vue'
+import Stats from './Stats.vue'
+import StatsInqueueEvents from './Stats/Inqueue/Events'
 import AdminAgent from './Admin/Agent.vue'
 import AdminAgents from './Admin/Agents.vue'
 import AdminPersistentAgents from './Admin/Agent/Persistent.vue'
@@ -46,6 +48,9 @@ import AdminRecipeEntries from './Admin/Recipe/Entries.vue'
 import AdminRecipes from './Admin/Recipes.vue'
 import AdminLua from './Admin/Lua.vue'
 import AdminLuas from './Admin/Luas.vue'
+import AdminRole from './Admin/Role.vue'
+import AdminRoles from './Admin/Roles.vue'
+import AdminPermissions from './Admin/Permissions.vue'
 
 import AdminParams from './Admin/Params.vue'
 
@@ -64,6 +69,7 @@ import Clients from './Widget/Clients.vue'
 import Luas from './Widget/Luas.vue'
 import DispositionGroups from './Widget/DispositionGroups.vue'
 import ReleaseGroups from './Widget/ReleaseGroups.vue'
+import Roles from './Widget/Roles.vue'
 import AdminHelp from './Widget/Help'
 
 import 'vue-awesome/icons'
@@ -87,6 +93,7 @@ Vue.component('disposition-groups', DispositionGroups)
 Vue.component('release-groups', ReleaseGroups)
 Vue.component('recipes', Recipes)
 Vue.component('luas', Luas)
+Vue.component('roles', Roles)
 Vue.component('help', AdminHelp)
 
 Vue.use(VueRouter)
@@ -94,6 +101,16 @@ Vue.use(AgentAPI)
 Vue.use(Notifications)
 Vue.use(BootstrapVue)
 Vue.use(VueCodeMirror)
+
+Vue.directive('access', {
+  bind (el, binding, vnode) {
+    console.log(vnode.context.$agent.vm.agent)
+    let Rights = vnode.context.$agent.vm.agent.permissions
+    if (! Rights[binding.arg]) {
+      el.style.display = "none"
+    }
+  }
+})
 
 const router = new VueRouter({
   routes: [
@@ -106,6 +123,7 @@ const router = new VueRouter({
       { path: 'agent_groups', component: AdminAgentGroups },
       { path: 'releases', component: AdminReleases },
       { path: 'dispositions', component: AdminDispositions },
+      { path: 'roles', component: AdminRoles },
       { path: 'clients', component: AdminClients },
       { path: 'line_ins', component: AdminLineIns },
       { path: 'line_outs', component: AdminLineOuts },
@@ -125,6 +143,9 @@ const router = new VueRouter({
       { path: 'release', component: AdminReleaseGroup },
       { path: 'release/:id', component: AdminReleaseGroup, props: true },
       { path: 'release/:id/entries', component: AdminReleaseEntries, props: true },
+      { path: 'role', component: AdminRole },
+      { path: 'role/:id', component: AdminRole, props: true },
+      { path: 'role/:id/permissions', component: AdminPermissions, props: true },
       { path: 'disposition', component: AdminDispositionGroup },
       { path: 'disposition/:id', component: AdminDispositionGroup, props: true },
       { path: 'disposition/:id/entries', component: AdminDispositionEntries, props: true },
@@ -147,6 +168,8 @@ const router = new VueRouter({
     { path: '/reports', component: Reports },
     { path: '/login', component: Login },
     { path: '/monitor', component: Monitor },
+    { path: '/stats', component: Stats },
+    { path: '/stats/inqueue/:uuid', component: StatsInqueueEvents, props: true },
     { path: '/main', component: Agent }
   ]
 })
