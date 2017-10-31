@@ -107,6 +107,14 @@ body {
   font-size: $agent-state-font;
   height:100%;
 }
+.agent-state-outgoing {
+  background:#28a745;
+  padding-top:15px;
+  padding-left:18px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
+  height:100%;
+}
 .agent-state-oncall {
   background:#28a745;
   padding-top:5px;

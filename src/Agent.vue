@@ -21,10 +21,10 @@
           <div class="col-3 pull-right text-right">
             <div class="row">
             <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.a.state_time )}}</div>
-            <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-secondary agent-hold-button">
+            <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-secondary">
               <icon name="pause" scale="2"></icon>
             </button>
-            <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success agent-hold-button">
+            <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success">
               <icon name="pause" scale="2"></icon>
             </button>
             <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-danger">
