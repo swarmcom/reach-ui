@@ -1,7 +1,7 @@
 <template>
-<b-form-group v-if="this.$agent.can_call()" label="Call a number:">
+<b-form-group v-if="this.$agent.can_call()" label="Outbound Call">
   <b-input-group>
-    <b-form-input v-model="number" type="text"></b-form-input>
+    <b-form-input v-model="number" type="text" placeholder="enter a number..."></b-form-input>
     <b-input-group-button>
       <b-btn @click="onClick" variant="outline-success"><icon name="phone" scale="1.5"></icon></b-btn>
     </b-input-group-button>

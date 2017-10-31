@@ -1,9 +1,11 @@
 <template>
-<div v-if="visible" style="margin-top: 20px">
-  <h3>Ringer:</h3>
-  <div class="row">
-    <div class="col">
-      Calling: {{ ringer.uri }} timeout: {{ ringer.timeout }} type: {{ ringer.type }}
+<div v-if="visible" style="margin-top: 10px">
+  <div class="session-manager-text"><b>Ringer:</b></div>
+  <div class="row agent-state-text">
+    <div class="col-12">
+       <b>Calling:</b> {{ ringer.uri }}
+       <b>timeout:</b> {{ ringer.timeout }}
+       <b>type:</b> {{ ringer.type }}
     </div>
     <div class="col">
       <b-button size="sm" variant="outline-danger" @click="stop_ringer">Cancel</b-button>

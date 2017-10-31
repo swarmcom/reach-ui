@@ -10,6 +10,9 @@
         <b-form-select size="sm" v-model="selectedQueue" style="margin-top:10px">
           <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
         </b-form-select>
+        <b-form-select size="sm" v-model="selectedLine" style="margin-top:10px">
+          <option v-for="line in this.lines" :value=line.name>{{line.name}}</option>
+        </b-form-select>
         <b-form-select size="sm" v-model="selectedCustomer" style="margin-top:10px">
           <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
         </b-form-select>
@@ -47,19 +50,21 @@ export default {
     return {
       fields: {
         state: { label: 'State', sortable: true },
-        groupName: { label: 'Customer', sortable: true },
         record: { label: 'Type', sortable: true },
+        customer: { label: 'Customer', sortable: true },
+        line: { label: 'Line', sortable: true },
         queue: { label: 'Queue', sortable: true },
-        skillsReq: { label: 'Skills', sortable: true },
+        skillsReq: { label: 'Skills Req', sortable: true },
         timeInQueue: { label: 'T in Queue', sortable: true },
         //twe: { label: 'T in Queue', sortable: true },
         actions: { label: 'Actions' }
       },
       clients: [],
       queues: [],
+      lines: [],
       selectedQueue: 'Any Queue',
       selectedCustomer: 'Any Customers',
-      //selectedState: 'Any State',
+      selectedLine: 'Any Lines',
       sortBy: 'agent_id',
       sortDesc: false,
       showCollapse: true
@@ -71,6 +76,8 @@ export default {
       this.clients.unshift({ name:"Any Customers" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
       this.queues.unshift({ name:"Any Queue" })
+      this.lines = await this.$agent.p_mfa('ws_db_line_in', 'get')
+      this.lines.unshift({ name:"Any Lines" })
     },
     onSortingChanged (ctx){
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
@@ -114,8 +121,17 @@ export default {
           compInqueues.pop(key)
         }
 
-        if(key.groupName != undefined) {
-          if(this.selectedCustomer != key.groupName && this.selectedCustomer != 'Any Customers'){
+        if(key.line != undefined) {
+          if(this.selectedLine != key.line && this.selectedLine != 'Any Lines'){
+            compInqueues.pop(key)
+          }
+        }
+        else if(this.selectedLine != 'Any Lines'){
+          compInqueues.pop(key)
+        }
+
+        if(key.customer != undefined) {
+          if(this.selectedCustomer != key.customer && this.selectedCustomer != 'Any Customers'){
             compInqueues.pop(key)
           }
         }

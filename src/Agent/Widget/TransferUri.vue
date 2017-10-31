@@ -1,5 +1,5 @@
 <template>
-<input v-model="uri" v-on:keyup.enter="onEnter" type="text" placeholder="Enter number" autofocus="true">
+  <b-form-input size="sm" variant="outline-secondary" v-model="uri" v-on:keyup.enter="onEnter" type="text" placeholder="Enter number" autofocus="true"></b-form-input>
 </template>
 
 <script>
