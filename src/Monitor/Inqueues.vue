@@ -44,6 +44,9 @@ export default {
       info.time = this.msToHms(Math.round(info.time)) //Math.round(info.time/1000)
       info.effective = Math.round(info.effective_time.time/1000)
       info.queue = this.queue_name(info.queue_id)
+      info.skillsReq = (Object.keys(info.skills)).toString()
+      info.customer = info.line_in.client.name
+      info.line = info.line_in.name
       return info
     },
     query: async function() {
@@ -53,7 +56,8 @@ export default {
         inq.time =  Math.round(inq.time/1000)
         inq.effective = Math.round(inq.effective_time.time/1000)
         inq.queue = this.queue_name(inq.queue_id)
-        inq.groupName = inq.group
+        //inq.customer = inq.line_in.client.name
+        //inq.line = inq.line_in.name
         inq.skillsReq = (Object.keys(inq.skills)).toString()
       })
     },
