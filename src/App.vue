@@ -1,6 +1,5 @@
 <template>
 <div>
-<<<<<<< HEAD
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle v-if="auth" target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand v-if="auth" to="/main">HOME</b-navbar-brand>
