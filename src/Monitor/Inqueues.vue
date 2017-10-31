@@ -41,7 +41,7 @@ export default {
       }
     },
     enrich_queue (info) {
-      info.time = this.msToHms(Math.round(info.time)) //Math.round(info.time/1000)
+      info.time = Math.round(info.time/1000)
       info.effective = Math.round(info.effective_time.time/1000)
       info.queue = this.queue_name(info.queue_id)
       info.skillsReq = (Object.keys(info.skills)).toString()

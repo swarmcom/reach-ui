@@ -50,9 +50,9 @@ export default {
     return {
       fields: {
         state: { label: 'State', sortable: true },
+        record: { label: 'Type', sortable: true },
         customer: { label: 'Customer', sortable: true },
         line: { label: 'Line', sortable: true },
-        record: { label: 'Type', sortable: true },
         queue: { label: 'Queue', sortable: true },
         skillsReq: { label: 'Skills Req', sortable: true },
         timeInQueue: { label: 'T in Queue', sortable: true },
