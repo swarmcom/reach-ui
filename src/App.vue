@@ -4,13 +4,13 @@
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li v-access:admin-ui class="nav-item">
         <router-link class="nav-link" to="/admin/agents">Admin</router-link>
       </li>
-      <li class="nav-item">
+      <li v-access:admin-ui class="nav-item">
         <router-link class="nav-link" to="/stats">Stats</router-link>
       </li>
-      <li class="nav-item">
+      <li v-access:supervisor-ui class="nav-item">
         <router-link class="nav-link" to="/monitor">Monitor</router-link>
       </li>
       <li class="nav-item">

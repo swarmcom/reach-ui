@@ -10,8 +10,8 @@
         <dd class="col-sm-9">{{ agent.login }}</dd>
         <dt class="col-sm-3">Group:</dt>
         <dd class="col-sm-9">{{ agent.group.name || '&nbsp' }}</dd>
-        <dt class="col-sm-3">Permissions:</dt>
-        <dd class="col-sm-9">{{ agent.permissions }}</dd>
+        <dt class="col-sm-3">Role:</dt>
+        <dd class="col-sm-9">{{ agent.role.name || '&nbsp' }}</dd>
       </dl>
     </div>
     <div class="col-5">
