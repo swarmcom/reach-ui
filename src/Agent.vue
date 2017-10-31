@@ -68,7 +68,6 @@ export default {
     wrapup () { this.$agent.p_mfa('ws_agent', 'end_wrapup') },
     onTimer() {
       this.a.state_time += 1000
-      console.log(this.timeState)
     },
   },
   created () {
