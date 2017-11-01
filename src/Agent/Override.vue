@@ -3,10 +3,11 @@
   <b-input-group>
     <b-form-input v-model="uri" type="text"></b-form-input>
     <b-input-group-button>
-      <b-dropdown text="Contacts" right>
+      <b-dropdown text="Contacts" variant="outline-secondary" right>
         <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
       </b-dropdown>
-      <b-btn @click="override" variant="outline-primary">Set</b-btn>
+      <b-btn @click="test" variant="success">Test</b-btn>
+      <b-btn @click="override" variant="primary">Set</b-btn>
     </b-input-group-button>
   </b-input-group>
 </b-form-group>
@@ -30,6 +31,9 @@ export default {
       this.uri = uri
       let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
       this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+    },
+    test () {
+      this.$agent.p_mfa('ws_agent', 'test_uri', [this.uri])
     },
     override: async function() {
       let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
