@@ -4,14 +4,16 @@
   <div class="row">
     <div class="col-5">
       <dl class="row">
-        <dt class="col-sm-3">Name:</dt>
-        <dd class="col-sm-9">{{ agent.name }}</dd>
-        <dt class="col-sm-3">Login:</dt>
-        <dd class="col-sm-9">{{ agent.login }}</dd>
-        <dt class="col-sm-3">Group:</dt>
-        <dd class="col-sm-9">{{ agent.group.name || '&nbsp' }}</dd>
-        <dt class="col-sm-3">Role:</dt>
-        <dd class="col-sm-9">{{ agent.role.name || '&nbsp' }}</dd>
+        <dt class="col-sm-4">Name:</dt>
+        <dd class="col-sm-8">{{ agent.name }}</dd>
+        <dt class="col-sm-4">Login:</dt>
+        <dd class="col-sm-8">{{ agent.login }}</dd>
+        <dt class="col-sm-4">Group:</dt>
+        <dd class="col-sm-8">{{ agent.group.name || '&nbsp' }}</dd>
+        <dt class="col-sm-4">Role:</dt>
+        <dd class="col-sm-8">{{ agent.role.name || '&nbsp' }}</dd>
+        <dt class="col-sm-4">SIP Contact:</dt>
+        <dd class="col-sm-8">{{ agent.uri }}</dd>
       </dl>
     </div>
     <div class="col-5">
