@@ -120,4 +120,12 @@ Name of the Queue Group being configured
   border-right-color: #ffc;
 }
 
+.popover.bs-popover-top .arrow::after, .popover.bs-popover-auto[x-placement^="top"] .arrow::after {
+  border-top-color: #ffc;
+}
+
+.popover.bs-popover-bottom .arrow::after, .popover.bs-popover-auto[x-placement^="bottom"] .arrow::after {
+  border-bottom-color: #ffc;
+}
+
 </style>
