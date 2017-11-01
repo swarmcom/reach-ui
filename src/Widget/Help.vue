@@ -24,7 +24,7 @@ Select from the drop down which release group will be available to this user. A 
 Select the permission profile that this user will be a part of. If no permission profile is selected here, the permissions for this agent will be determined by the permission profile set on the user group that this user is assigned to. The permission profile is a set of permissions configured by the administrator and given a specific permission profile name. These permissions include what a user will see, what functions they can perform and what features they can use.
   </b-popover>
 
-  <b-popover target="Primary Phone" triggers="hover">
+  <b-popover target="Primary SIP Contact" triggers="hover">
 This is the default SIP end point or phone number that the user will have calls directed to them on. So, when a user is logged into the system and servicing calls this SIP endpoint or phone number will be used as the default to send call to for this user. A user can have more than one phone number or sip uri associated with them and if they have the permission to do so, they can change the phone to be rang after logging into the system. They may have the privilege of entering a free form phone number or sip uri to use, if given the permission to do so. Note that the system will send calls destined for a user to the gateway specified in the fs_outgoing_gateway configuration parameter under the 'Param' menu item of the administration UI.
   </b-popover>
 

@@ -8,7 +8,8 @@
   <lines label="Line Out" v-model="rec.line_id"></lines>
   <luas label="Integration Lua script" v-model="rec.lua_id"></luas>
   <roles label="Role" v-model="rec.role_id"></roles>
-  <form-text label="Primary Phone" v-model="rec.uri"></form-text>
+  <form-text label="Primary SIP Contact" v-model="rec.uri"></form-text>
+  <uris label="SIP Contacts" v-model="rec.uris"></uris>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text>
   <form-text label="Ring Timeout" v-model="rec.ring_timeout"></form-text>
   <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>
@@ -28,10 +29,12 @@
 
 <script>
 import Common from './Common'
+import URIs from '../Widget/URIs'
 
 export default {
   name: 'admin-agent',
   mixins: [Common],
+  components: { uris: URIs },
   props: ['id'],
   data () {
     return {

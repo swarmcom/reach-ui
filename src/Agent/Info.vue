@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentInfo" class="mt-2">
@@ -6,6 +7,8 @@
     <div class="row">
       <div class="col-5 agent-state-text">Name:</div>
       <div class="col-7 agent-state-text"> {{agent.name}} </div>
+      <div class="col-5 agent-state-text">SIP Contact:</div>
+      <div class="col-7 agent-state-text"> {{agent.uri}} </div>
       <div class="col-5 agent-state-text">Role:</div>
       <div class="col-7 agent-state-text"> {{agent.role.name || '&nbsp'}} </div>
     </div>
