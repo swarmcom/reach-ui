@@ -33,7 +33,8 @@ export default {
     return {
       fields: {
         ts: { label: 'Ts', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
-        state: { label: 'State' },
+        state_from: { label: 'From' },
+        state: { label: 'To' },
         time: { label: 'Time', formatter: format_ms },
         line_in: { label: 'Line In', sortable: true },
         client: { label: 'Client', sortable: true },

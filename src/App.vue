@@ -48,10 +48,6 @@ export default {
 </script>
 
 <style>
-body {
-  padding-top: 70px;
-  overflow-y:scroll;
-}
 #navbars > span {
   color: white;
 }
