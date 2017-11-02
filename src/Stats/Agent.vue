@@ -19,7 +19,6 @@
     <template slot="agent_login" slot-scope="data">
       {{ data.item.agent.login }}
     </template>
-
   </b-table>
 </div>
 </template>

@@ -25,7 +25,7 @@ function format_ms(ms) {
 
 export default {
   name: 'stats-agent-events',
-  props: ['agent_id'],
+  props: ['uuid'],
   data () {
     return {
       fields: {
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     query: async function() {
-      let raw = await this.$agent.p_mfa('ws_stats', 'agent_events', [this.agent_id])
+      let raw = await this.$agent.p_mfa('ws_stats', 'agent_events', [this.uuid])
       this.events = raw.map( (re) => re._source )
     },
     maybe_name (item) {

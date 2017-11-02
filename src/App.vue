@@ -78,9 +78,5 @@ export default {
 
 <style lang="scss">
   @import "custom.scss";
-
-  body {
-    overflow-y:scroll;
-  }
 </style>
 

@@ -173,7 +173,7 @@ const router = new VueRouter({
     { path: '/stats/inqueue', component: StatsInqueue },
     { path: '/stats/agent', component: StatsAgent },
     { path: '/stats/inqueue/:uuid', component: StatsInqueueEvents, props: true },
-    { path: '/stats/agent/:agent_id', component: StatsAgentEvents, props: true },
+    { path: '/stats/agent/:uuid', component: StatsAgentEvents, props: true },
     { path: '/main', component: Agent }
   ]
 })
