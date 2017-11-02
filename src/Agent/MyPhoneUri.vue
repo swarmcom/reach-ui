@@ -12,7 +12,7 @@
       </b-dropdown>
       <b-btn size="sm" style="margin-top:5px" @click="test" variant="outline-secondary">Test</b-btn>
     </div>
-  </div>
+  </divM>
 </template>
 
 <script>
