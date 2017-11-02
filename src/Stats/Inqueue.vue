@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inqueue</h3></div>
+    <div class="col"><h3>Inqueues sessions</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields" @row-clicked="click">
     <template slot="state_inqueue" slot-scope="data">

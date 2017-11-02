@@ -4,18 +4,24 @@
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
+
       <li v-access:admin-ui class="nav-item">
         <router-link class="nav-link" to="/admin/agents">Admin</router-link>
       </li>
-      <li v-access:admin-ui class="nav-item">
-        <router-link class="nav-link" to="/stats">Stats</router-link>
-      </li>
+    
+      <b-nav-item-dropdown text="Sessions">
+        <b-dropdown-item to="/stats/inqueue">Inqueues</b-dropdown-item>
+        <b-dropdown-item to="/stats/agent">Agents</b-dropdown-item>
+      </b-nav-item-dropdown>
+
       <li v-access:supervisor-ui class="nav-item">
         <router-link class="nav-link" to="/monitor">Monitor</router-link>
       </li>
+
       <li class="nav-item">
         <router-link class="nav-link" to="/help">Help</router-link>
       </li>
+
     </ul>
     <span class="navbar-text" v-if="auth">{{ this.$agent.vm.agent.login }}</span>
     </li>
@@ -44,6 +50,7 @@ export default {
 <style>
 body {
   padding-top: 70px;
+  overflow-y:scroll;
 }
 #navbars > span {
   color: white;

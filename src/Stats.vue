@@ -1,7 +1,5 @@
 <template>
-<div>
-  <inqueue></inqueue>
-</div>
+<inqueue></inqueue>
 </template>
 
 <script>
