@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
 <div>
   <toggleBar></toggleBar>
   <b-collapse v-model="showCollapse" id="collapseAgentInfo" class="mt-2">
