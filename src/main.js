@@ -15,8 +15,10 @@ import Login from './Login.vue'
 import Agent from './Agent.vue'
 import Admin from './Admin.vue'
 import Monitor from './Monitor.vue'
-import Stats from './Stats.vue'
+import StatsAgent from './Stats/Agent.vue'
+import StatsInqueue from './Stats/Inqueue.vue'
 import StatsInqueueEvents from './Stats/Inqueue/Events'
+import StatsAgentEvents from './Stats/Agent/Events'
 import AdminAgent from './Admin/Agent.vue'
 import AdminAgents from './Admin/Agents.vue'
 import AdminPersistentAgents from './Admin/Agent/Persistent.vue'
@@ -168,8 +170,10 @@ const router = new VueRouter({
     { path: '/reports', component: Reports },
     { path: '/login', component: Login },
     { path: '/monitor', component: Monitor },
-    { path: '/stats', component: Stats },
+    { path: '/stats/inqueue', component: StatsInqueue },
+    { path: '/stats/agent', component: StatsAgent },
     { path: '/stats/inqueue/:uuid', component: StatsInqueueEvents, props: true },
+    { path: '/stats/agent/:agent_id', component: StatsAgentEvents, props: true },
     { path: '/main', component: Agent }
   ]
 })
