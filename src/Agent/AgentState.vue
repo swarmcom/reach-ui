@@ -61,7 +61,7 @@
     </div>
     <div class="row">
       <div class="col-5 agent-state-text">Activity Time:</div>
-      <div class="col-7 agent-state-text"> {{msToHms(time_activity) }} </div>
+      <div class="col-7 agent-state-text"> {{msToHms(this.time_activity) }} </div>
     </div>
     <div class="row">
       <div class="col-5 agent-state-text myPhone">My Phone:</div>
@@ -101,16 +101,32 @@ export default {
     onTimer() {
       this.time_activity = Date.now() - this.a.activity_time
     },
+    getState (S) {
+      if(S.tag == 'request' && (S.state.state == 'release' || S.state.state == 'available')){
+        this.a.activity_time = new Date() - S.state.time
+      }
+      else if(S.tag == 'change') {
+        if( (S.state.state == 'release') && (S.state.state_from == 'available') ) {
+          this.a.activity_time = new Date()
+        }
+        else if( (S.state.state == 'available') && (S.state.state_from == 'release') ){
+          this.a.activity_time = new Date()
+        }
+      }
+    },
     query: async function () {
       this.a = this.$agent.getData()
       this.releases = await this.$agent.p_mfa('ws_agent', 'get_releases')
     },
   },
   beforeDestroy () {
-    clearInterval(this.updater)
+    clearInterval(this.updater),
+    this.$bus.$off('agent_state', this.getState)
   },
   created () {
     this.query()
+    this.$agent.p_mfa('ws_agent', 'request_state', [])
+    this.$bus.$on('agent_state', this.getState)
     this.updater = setInterval(this.onTimer, 1000)
   },
   computed: {

@@ -48,7 +48,6 @@ export default class Agent extends WsProto {
         auto_logout_timer: undefined,
         activity_time: undefined,
         release_id: undefined,
-        previous_state: 'released',
         storage_data: {}
       }
     }),
@@ -134,14 +133,6 @@ export default class Agent extends WsProto {
     if (S && this.vm.agent && this.vm.agent.id === S.agent_id) {
       this.vm.hangup_state = S.hangup_state
       this.vm.state = S.state
-      if (S.state === 'available') {
-        if (this.vm.previous_state === 'release')
-          this.vm.activity_time = new Date() - S.time
-      }
-      else if (S.state === 'release') {
-          this.vm.activity_time = new Date() - S.time
-      }
-      this.vm.previous_state = S.state
       this.vm.release_id = S.release_id
       this.autoLogout(S.state)
     }
