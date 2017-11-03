@@ -2,15 +2,15 @@
 <div class="form">
   <form-text label="Queue Name" v-model="rec.name"></form-text>
   <queue-groups label="Queue Group" v-model="rec.group_id"></queue-groups>
-  <luas label="Exit Lua script" v-model="rec.lua_id"></luas>
+  <luas label="Exit Lua script" v-model="rec.lua_id" :effective="eff.lua_id"></luas>
   <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
-  <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
-  <form-text label="Weight" v-model="rec.weight"></form-text>
-  <form-text label="Aging" v-model="rec.aging_factor"></form-text>
-  <form-text label="Auto Wrap-up" v-model="rec.auto_wrapup"></form-text>
-  <form-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled"></form-bool>
-  <form-text label="Wrap-up timer" v-model="rec.wrapup_timer"></form-text>
-  <skills label="Queue Skills" v-model="skills"></skills>
+  <mohs label="Music on hold" v-model="rec.moh_id" :effective="eff.moh_id"></mohs>
+  <form-text label="Weight" v-model="rec.weight" :effective="eff.weight"></form-text>
+  <form-text label="Aging" v-model="rec.aging_factor" :effective="eff.aging_factor"></form-text>
+  <form-text label="Auto Wrap-up" v-model="rec.auto_wrapup" :effective="eff.auto_wrapup"></form-text>
+  <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled" :effective="eff.wrapup_enabled"></form-select-bool>
+  <form-text label="Wrap-up timer" v-model="rec.wrapup_timer" :effective="eff.wrapup_timer"></form-text>
+  <skills label="Queue Skills" v-model="skills" :effective="eff.skills"></skills>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
@@ -32,6 +32,8 @@ export default {
     return {
       rec: {},
       skills: [],
+      effective_skills: [],
+      eff: {},
       recipe: []
     }
   },
@@ -40,6 +42,8 @@ export default {
       if (this.id) {
         this.rec = await this.$agent.p_mfa('ws_db_queue', 'get', [this.id])
         this.skills = this.object2list(this.rec.skills)
+        this.eff = await this.$agent.p_mfa('ws_db_queue', 'inherited', [this.id])
+        this.effective_skills = this.object2list(this.eff.skills)
       }
     },
     onCommit: async function () {
