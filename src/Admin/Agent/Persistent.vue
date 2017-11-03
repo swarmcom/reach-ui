@@ -51,7 +51,6 @@ export default {
       let re = await this.$agent.p_mfa('ws_admin', 'start', [agent.id])
     },
     handleState ({ tag, info }) {
-      console.log(tag, info)
       if (info.state === 'terminate') {
         let i = this.agents.findIndex(E => E.id === info.agent_id)
         if (i >= 0) {

@@ -65,9 +65,9 @@
     </div>
     <div class="row">
       <div class="col-5 agent-state-text myPhone">My Phone:</div>
-      <div class="col-7 agent-state-text">
-        <myPhoneUri v-if="this.$agent.is_idle()"></myPhoneUri>
-      </div>
+    </div>
+    <div class="row">
+    <myPhoneUri v-if="this.$agent.is_idle()"></myPhoneUri>
     </div>
   </div>
 </template>

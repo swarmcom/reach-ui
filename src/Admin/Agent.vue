@@ -1,6 +1,6 @@
 <template>
 <div class="form">
-  <form-text label="Agent name" v-model="rec.name"></form-text>
+  <form-text label="Agent Name" v-model="rec.name"></form-text>
   <form-text label="Login" v-model="rec.login"></form-text>
   <form-text label="Password" v-model="rec.password"></form-text>
   <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
@@ -8,7 +8,8 @@
   <lines label="Line Out" v-model="rec.line_id"></lines>
   <luas label="Integration Lua script" v-model="rec.lua_id"></luas>
   <roles label="Role" v-model="rec.role_id"></roles>
-  <form-text label="Primary Phone" v-model="rec.uri"></form-text>
+  <form-text label="Primary SIP Contact" v-model="rec.uri"></form-text>
+  <uris label="SIP Contacts" v-model="rec.uris"></uris>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text>
   <form-text label="Ring Timeout" v-model="rec.ring_timeout"></form-text>
   <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>
@@ -16,7 +17,7 @@
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
   <form-text label="Auto Logout" v-model="rec.autologout"></form-text>
   <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
-  <skills label="Skills" v-model="skills"></skills>
+  <skills label="Agent Skills" v-model="skills"></skills>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
@@ -28,10 +29,12 @@
 
 <script>
 import Common from './Common'
+import URIs from '../Widget/URIs'
 
 export default {
   name: 'admin-agent',
   mixins: [Common],
+  components: { uris: URIs },
   props: ['id'],
   data () {
     return {

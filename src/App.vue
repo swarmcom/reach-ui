@@ -16,7 +16,10 @@
   <b-nav v-if="auth" class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
     <b-nav-item v-access:admin-ui to="/admin/agents">ADMIN</b-nav-item>
     <b-nav-item to="/main">MAIN</b-nav-item>
-    <b-nav-item v-access:admin-ui to="/stats">STATS </b-nav-item>
+    <b-nav-item-dropdown text="Sessions">
+      <b-dropdown-item to="/stats/inqueue">Inqueues</b-dropdown-item>
+      <b-dropdown-item to="/stats/agent">Agents</b-dropdown-item>
+    </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/monitor">MONITOR </b-nav-item>
     <b-nav-item to="/reports">REPORTS</b-nav-item>
     <button @click="onPin" class="btn ml-auto">

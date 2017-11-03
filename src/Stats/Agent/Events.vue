@@ -1,17 +1,14 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inqueue Events</h3></div>
+    <div class="col"><h3>Agent Events</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="events" :fields="fields">
-    <template slot="line_in" slot-scope="data">
-      {{ data.item.line_in.name }}
+    <template slot="agent_id" slot-scope="data">
+      {{ data.item.agent.id }}
     </template>
-    <template slot="client" slot-scope="data">
-      {{ data.item.line_in.client.name }}
-    </template>
-    <template slot="agent" slot-scope="data">
-      {{ maybe_name(data.item.agent) }}
+    <template slot="agent_name" slot-scope="data">
+      {{ data.item.agent.name }}
     </template>
   </b-table>
 </div>
@@ -27,7 +24,7 @@ function format_ms(ms) {
 }
 
 export default {
-  name: 'stats-inqueue-events',
+  name: 'stats-agent-events',
   props: ['uuid'],
   data () {
     return {
@@ -36,16 +33,15 @@ export default {
         state_from: { label: 'From' },
         state: { label: 'To' },
         time: { label: 'Time', formatter: format_ms },
-        line_in: { label: 'Line In', sortable: true },
-        client: { label: 'Client', sortable: true },
-        agent: { label: 'Agent', sortable: true }
+        agent_id: { label: 'Id', sortable: true },
+        agent_name: { label: 'Agent', sortable: true }
       },
       events: []
     }
   },
   methods: {
     query: async function() {
-      let raw = await this.$agent.p_mfa('ws_stats', 'inqueue_events', [this.uuid])
+      let raw = await this.$agent.p_mfa('ws_stats', 'agent_events', [this.uuid])
       this.events = raw.map( (re) => re._source )
     },
     maybe_name (item) {

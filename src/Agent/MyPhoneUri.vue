@@ -1,10 +1,16 @@
 <template>
-  <b-input-group size="sm">
-    <b-form-input size="sm" variant="outline-secondary" v-model="uri" type="text"></b-form-input>
-    <b-input-group-button>
-      <b-btn @click="override" variant="outline-secondary">Set</b-btn>
-    </b-input-group-button>
-  </b-input-group>
+  <div class="col-12">
+    <b-input-group>
+      <b-form-input variant="outline" size="sm" v-model="uri" type="text"></b-form-input>
+      <b-input-group-button size="sm">
+        <b-btn size="sm" @click="override" variant="outline-secondary">Set</b-btn>
+        <b-dropdown size="sm" text="Contacts" variant="outline-secondary" right>
+          <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
+        </b-dropdown>
+        <b-btn size="sm" @click="test" variant="outline-secondary">Test</b-btn>
+      </b-input-group-button>
+    </b-input-group>
+  </div>
 </template>
 
 <script>
@@ -20,9 +26,19 @@ export default {
       this.uri = await this.$agent.p_mfa('ws_agent', 'override_uri')
       this.uri = this.uri == 'undefined' ? '' : this.uri
     },
-    override () {
+    set: async function(uri) {
+      this.uri = uri
+      let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
+      this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+    },
+    test () {
+      this.$agent.p_mfa('ws_agent', 'test_uri', [this.uri])
+    },
+    override: async function() {
       if (!!this.uri) {
-        this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
+        let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
+        this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+        //this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
       }
     }
   },
