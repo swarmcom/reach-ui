@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 10px" v-if="visible">
+<div style="margin-top: 10px" v-if="visible && !this.$agent.is_wrapup()">
 
 <div class="row"><div class="col session-manager-text"><b>Incoming Call:</b> </div></div>
 
