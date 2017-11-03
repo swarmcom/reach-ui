@@ -47,7 +47,6 @@ export default class Agent extends WsProto {
         hangup_state: undefined,
         auto_logout_timer: undefined,
         activity_time: undefined,
-        state_time: undefined,
         release_id: undefined,
         previous_state: 'released',
         storage_data: {}
@@ -144,7 +143,6 @@ export default class Agent extends WsProto {
       }
       this.vm.previous_state = S.state
       this.vm.release_id = S.release_id
-      this.vm.state_time = S.time
       this.autoLogout(S.state)
     }
   }
