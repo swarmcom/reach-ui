@@ -140,8 +140,13 @@ body {
   height:100%;
 }
 .agent-state-button {
-  width: 82px;
+  min-width: 82px;
+  max-width: 82px;
   height: 82px;
+}
+.agent-release-dropdown {
+  min-width: 82px;
+  max-width: 82px;
 }
 .state-time {
   margin-right:5px;

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row" style="margin-top:5px;">
-    <div class="col-5">
+    <div class="col-5 btn-group-vertical">
       <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-my agent-state-button">
         <icon name="stop" scale="3"></icon>
       </button>
