@@ -45,7 +45,12 @@ import Ticks from './Condition/Ticks'
 import Periodic from './Condition/Periodic'
 import AvailableAgents from './Condition/AvailableAgents'
 import EligibleAgents from './Condition/EligibleAgents'
-
+import CallsInQueue from './Condition/CallsInQueue'
+import PositionInQueue from './Condition/PositionInQueue'
+import Client from './Condition/Client'
+import Hour from './Condition/Hour'
+import DayOfWeek from './Condition/DayOfWeek'
+import MediaType from './Condition/MediaType'
 export default {
   name: 'admin-recipe-conditions',
   props: ['value', 'edit'],
@@ -53,7 +58,13 @@ export default {
     ticks: Ticks,
     periodic: Periodic,
     available_agents: AvailableAgents,
-    eligible_agents: EligibleAgents
+    eligible_agents: EligibleAgents,
+    calls_in_queue: CallsInQueue,
+    position_in_queue: PositionInQueue,
+    client: Client,
+    hour: Hour,
+    day_of_week: DayOfWeek,
+    media_type: MediaType,
   },
   data () {
     return {
@@ -62,6 +73,12 @@ export default {
         { name: 'Periodic', ref: 'periodic' },
         { name: 'Agents available', ref: 'available_agents' },
         { name: 'Agents eligible', ref: 'eligible_agents' },
+        { name: 'Calls in queue', ref: 'calls_in_queue' },
+        { name: 'Position in queue', ref: 'position_in_queue' },
+        { name: 'Client', ref: 'client' },
+        { name: 'Hour', ref: 'hour' },
+        { name: 'Day Of Week', ref: 'day_of_week' },
+        { name: 'Media Type', ref: 'media_type' },
       ],
       condition: undefined,
       args: [],
