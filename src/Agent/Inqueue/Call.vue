@@ -35,11 +35,11 @@
     <b-button size="sm" v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
   </div>
 </div>
-<div class="col-12">
+<div v-if="!this.$agent.is_conference()" class="col-12">
   <transfer-conference></transfer-conference>
 </div>
 
-<div class="row" style="margin-top: 10px">
+<div v-if="!this.$agent.is_conference()" class="row" style="margin-top: 10px">
   <div class="col-12">
     <div class="row"><div class="col session-manager-text"><b>Skills Editor:</b> </div></div>
     <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
