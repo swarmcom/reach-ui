@@ -25,10 +25,12 @@
           :sort-desc="sortDesc"
           @sort-changed="onSortingChanged">
           <template slot="actions" slot-scope="data">
-            <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
-            <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
-            <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
-            <b-button size="sm" variant="danger" @click="hangup(data.item)">Hangup</b-button>
+          <b-input-group-button size="sm">
+            <b-button size="sm" variant="outline-secondary" @click="take(data.item)">Take</b-button>
+            <b-button size="sm" variant="outline-secondary" @click="takeover(data.item)">Takeover</b-button>
+            <b-button size="sm" variant="outline-secondary" @click="spy(data.item)">Spy</b-button>
+            <b-button size="sm" variant="outline-secondary" @click="hangup(data.item)">Hangup</b-button>
+          </b-input-group-button size="sm">
           </template>
         </b-table>
       </div>

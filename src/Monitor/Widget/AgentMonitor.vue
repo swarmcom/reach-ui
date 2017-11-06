@@ -34,9 +34,11 @@
             <div class="agent-state-text"><b>Customer: </b>{{data.item.agentClient}}</div>
           </template>
           <template slot="actions" slot-scope="data">
-            <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
-            <b-button v-else size="sm" variant="primary" @click="release(data.item)">Release</b-button>
-            <b-button size="sm" variant="danger" @click="stop(data.item)">Kill</b-button>
+            <b-input-group-button size="sm">
+              <b-button v-if="data.item.state == 'release'" size="sm" variant="outline-primary" @click="available(data.item)">Available</b-button>
+              <b-button v-else size="sm" variant="outline-primary" @click="release(data.item)">Release</b-button>
+              <b-button size="sm" variant="outline-primary" @click="stop(data.item)">Kill</b-button>
+            </b-input-group-button>
           </template>
         </b-table>
       </div>
