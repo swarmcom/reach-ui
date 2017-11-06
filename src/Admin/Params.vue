@@ -126,7 +126,11 @@ export default {
       let link = document.createElement('a')
       link.href = `${this.$agent.get_rr_uri()}/config/${UUID}.json`
       link.download = "reach_db.json"
-      link.click()
+      link.target="_blank"
+
+      let clickEvent = document.createEvent("MouseEvent");
+      clickEvent.initEvent("click", true, true);
+      link.dispatchEvent(clickEvent);
     },
   },
   created () {
