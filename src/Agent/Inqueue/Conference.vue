@@ -29,6 +29,10 @@
     <b-button v-if="v.Hear == 'true'" size="sm" variant="outline-primary" @click="deaf(k)">Deaf</b-button>
     <b-button v-else size="sm" variant="outline-warning" @click="undeaf(k)">Undeaf</b-button>
   </div>
+  <div class="col-1">
+    <b-button v-if="v.Hold == 'true'" size="sm" variant="outline-primary" @click="unhold(k)">Unhold</b-button>
+    <b-button v-else size="sm" variant="outline-warning" @click="hold(k)">Hold</b-button>
+  </div>
 </div>
 </div>
 </template>
@@ -67,6 +71,12 @@ export default {
     },
     undeaf (id) {
       this.$agent.p_mfa('ws_agent', 'conference', ['undeaf', id])
+    },
+    hold (id) {
+      this.$agent.p_mfa('ws_agent', 'conference', ['hold', id])
+    },
+    unhold (id) {
+      this.$agent.p_mfa('ws_agent', 'conference', ['unhold', id])
     },
     inqueue () {
       this.$agent.p_mfa('ws_agent', 'conference', ['inqueue'])
