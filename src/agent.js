@@ -34,6 +34,10 @@ async function session_auth(agent) {
   agent.vm.session_auth = true
 }
 
+async function update_agent(agent) {
+  agent.vm.agent = await agent.p_mfa('ws_agent', 'get', [])
+}
+
 export default class Agent extends WsProto {
 
   constructor () {
@@ -52,6 +56,7 @@ export default class Agent extends WsProto {
       }
     }),
     Notification.requestPermission()
+    EventBus.$on('agent_update', () => update_agent(this))
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
     EventBus.$on('agents_state', (S) => this.handleAgents(S))
   }
