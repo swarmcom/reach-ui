@@ -1,5 +1,5 @@
 <template>
-<b-dropdown size="sm" text="Release" variant="outline-secondary">
+<b-dropdown size="sm" class="agent-release-dropdown" text="Release" variant="outline-secondary">
   <b-dropdown-item v-for="r in releases" :key="r.id" @click="release(r.id)">{{ r.name }}</b-dropdown-item>
 </b-dropdown>
 </template>

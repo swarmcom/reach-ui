@@ -34,6 +34,10 @@ async function session_auth(agent) {
   agent.vm.session_auth = true
 }
 
+async function update_agent(agent) {
+  agent.vm.agent = await agent.p_mfa('ws_agent', 'get', [])
+}
+
 export default class Agent extends WsProto {
 
   constructor () {
@@ -47,13 +51,12 @@ export default class Agent extends WsProto {
         hangup_state: undefined,
         auto_logout_timer: undefined,
         activity_time: undefined,
-        state_time: undefined,
         release_id: undefined,
-        previous_state: 'released',
         storage_data: {}
       }
     }),
     Notification.requestPermission()
+    EventBus.$on('agent_update', () => update_agent(this))
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
     EventBus.$on('agents_state', (S) => this.handleAgents(S))
   }
@@ -135,16 +138,7 @@ export default class Agent extends WsProto {
     if (S && this.vm.agent && this.vm.agent.id === S.agent_id) {
       this.vm.hangup_state = S.hangup_state
       this.vm.state = S.state
-      if (S.state === 'available') {
-        if (this.vm.previous_state === 'release')
-          this.vm.activity_time = new Date() - S.time
-      }
-      else if (S.state === 'release') {
-          this.vm.activity_time = new Date() - S.time
-      }
-      this.vm.previous_state = S.state
       this.vm.release_id = S.release_id
-      this.vm.state_time = S.time
       this.autoLogout(S.state)
     }
   }

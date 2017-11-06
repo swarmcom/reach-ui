@@ -1,16 +1,32 @@
 <template>
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9 ">
+  <div v-if="effective" class="col-5">
+    <b-form-select v-bind:value="computed_value" :options="options" v-on:input="onChange"></b-form-select>
+  </div>
+  <div v-if="effective" class="col-4">
+    <b-form-select v-bind:value="computed_effective" :options="options" disabled></b-form-select>
+  </div>
+  <div v-else class="col-9">
     <b-form-select v-bind:value="computed_value" :options="options" v-on:input="onChange"></b-form-select>
   </div>
 </div>
 </template>
 
 <script>
+function verbose(value) {
+  if (value === true) {
+    return 'True'
+  } else if (value === false) {
+    return 'False'
+  } else {
+    return 'Not set'
+  }
+}
+
 export default {
   name: 'form-bool-drop',
-  props: ['label', 'value'],
+  props: ['label', 'value', 'effective'],
   data () {
     return {
       options: ['Not set', 'True', 'False']
@@ -18,13 +34,10 @@ export default {
   },
   computed: {
     computed_value () {
-      if (this.value === true) {
-        return 'True'
-      } else if (this.value === false) {
-        return 'False'
-      } else {
-        return 'Not set'
-      }
+      return verbose(this.value)
+    },
+    computed_effective () {
+      return verbose(this.effective)
     }
   },
   methods: {
