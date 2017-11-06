@@ -30,8 +30,8 @@
     <b-button v-else size="sm" variant="outline-warning" @click="undeaf(k)">Undeaf</b-button>
   </div>
   <div class="col-1">
-    <b-button v-if="v.Hold == 'true'" size="sm" variant="outline-primary" @click="unhold(k)">Unhold</b-button>
-    <b-button v-else size="sm" variant="outline-warning" @click="hold(k)">Hold</b-button>
+    <b-button v-if="v.Hold" size="sm" variant="outline-warning" @click="unhold(k)">Unhold</b-button>
+    <b-button v-else size="sm" variant="outline-primary" @click="hold(k)">Hold</b-button>
   </div>
 </div>
 </div>
