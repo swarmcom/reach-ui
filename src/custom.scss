@@ -19,6 +19,7 @@ body {
 }
 /* custom navbar to fit old UI */
 .navbar-custom {
+  z-index: 10;
   min-height: 56px;
   background: $background; /* Old browsers */
   background: -moz-linear-gradient(top,  $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* FF3.6+ */
