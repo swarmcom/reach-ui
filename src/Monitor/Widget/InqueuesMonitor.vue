@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerCallView" class="mt-2">
     <div class="row">
       <div class="col-2">
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import ToggleBar from '../../Widget/ToggleBar'
 export default {
   name: 'monitor-queues-manager',
   storageName: 'queueManagerMonitor',
@@ -144,9 +143,6 @@ export default {
       } )
       return compInqueues;
     }
-  },
-  components: {
-    toggleBar: ToggleBar
   }
 }
 </script>

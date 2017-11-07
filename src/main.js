@@ -73,6 +73,7 @@ import DispositionGroups from './Widget/DispositionGroups.vue'
 import ReleaseGroups from './Widget/ReleaseGroups.vue'
 import Roles from './Widget/Roles.vue'
 import AdminHelp from './Widget/Help'
+import ToggleBar from './Widget/ToggleBar.vue'
 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
@@ -96,6 +97,7 @@ Vue.component('release-groups', ReleaseGroups)
 Vue.component('recipes', Recipes)
 Vue.component('luas', Luas)
 Vue.component('roles', Roles)
+Vue.component('toggle-bar', ToggleBar)
 Vue.component('help', AdminHelp)
 
 Vue.use(VueRouter)

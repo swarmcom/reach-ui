@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'toggleBar',
+  name: 'toggle-bar',
   data () {
     return {
     }

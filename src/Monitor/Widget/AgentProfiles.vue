@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManagerProfiles" class="mt-2">
     <div class="row">
       <div class="col-2">
@@ -24,7 +24,6 @@
 </div>
 </template>
 <script>
-import ToggleBar from '../../Widget/ToggleBar'
 export default {
   name: 'monitor-agents-profiles',
   storageName: 'agentManagerStates',
@@ -58,9 +57,6 @@ export default {
     this.query()
     if (this.$agent.vm.storage_data.agentManagerStatesCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.agentManagerStatesCollapsed
-  },
-  components: {
-    toggleBar: ToggleBar
   },
   computed: {
     computedAgentsStats () {

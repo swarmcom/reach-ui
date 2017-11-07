@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerView" class="mt-2">
     <div class="row">
       <div class="col-2">
@@ -35,7 +35,6 @@
 </div>
 </template>
 <script>
-import ToggleBar from '../../Widget/ToggleBar'
 export default {
   name: 'monitor-queues-view',
   storageName: 'queueManagerView',
@@ -69,9 +68,6 @@ export default {
     this.query()
     if (this.$agent.vm.storage_data.queueManagerViewCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.queueManagerViewCollapsed
-  },
-  components: {
-    toggleBar: ToggleBar
   },
   computed: {
     computedStats () {

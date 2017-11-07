@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentInfo" class="mt-2">
     <div class="row agent-state-text"><b>Agent:</b></div>
     <div class="row">
@@ -46,7 +46,6 @@
 
 <script>
 import Skills from '../Widget/Skills.vue'
-import ToggleBar from '../Widget/ToggleBar'
 export default {
   widgetName: 'MY PROFILE',
   storageName: 'agentInfo',
@@ -59,9 +58,6 @@ export default {
   created () {
     if (this.$agent.vm.storage_data.agentInfoCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.agentInfoCollapsed
-  },
-  components: {
-    toggleBar: ToggleBar,
   }
 }
 </script>

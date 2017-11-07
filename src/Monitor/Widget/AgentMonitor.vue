@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManagerAgents" class="mt-2">
     <div class="row">
       <div class="col-2">
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import ToggleBar from '../../Widget/ToggleBar'
 import Common from '../../Admin/Common'
 export default {
   name: 'monitor-agents-manager',
@@ -127,9 +126,6 @@ export default {
   },
   beforeDestroy () {
     clearInterval(this.updater)
-  },
-  components: {
-    toggleBar: ToggleBar
   },
   computed: {
     computedAgents () {

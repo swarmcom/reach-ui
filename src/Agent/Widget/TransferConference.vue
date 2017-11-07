@@ -1,6 +1,6 @@
 <template>
 <div v-if="this.$agent.can_transfer()">
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseTransferConference" class="mt-2">
     <div class="row">
       <div class="col-12">
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import ToggleBar from '../..//Widget/ToggleBar'
 import Common from '../../Admin/Common'
 import TransferAgent from './TransferAgent'
 import TransferQueue from './TransferQueue'
@@ -66,7 +65,6 @@ export default {
     clearInterval(this.updater)
   },*/
   components: {
-    toggleBar: ToggleBar,
     'transfer-agent': TransferAgent,
     'transfer-queue': TransferQueue,
     'transfer-uri': TransferUri,

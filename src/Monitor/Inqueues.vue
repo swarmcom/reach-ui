@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
     <inqueues-view :inqueues="inqueues"></inqueues-view>
     <inqueues-monitor :inqueues="inqueues"></inqueues-monitor>
@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import ToggleBar from '../Widget/ToggleBar'
 import Common from '../Admin/Common'
 import InqueuesView from './Widget/InqueuesView'
 import InqueuesMonitor from './Widget/InqueuesMonitor'
@@ -87,7 +86,6 @@ export default {
     clearInterval(this.updater)
   },
   components: {
-    toggleBar: ToggleBar,
     'inqueues-view': InqueuesView,
     'inqueues-monitor': InqueuesMonitor
   }

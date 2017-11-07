@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2">
     <div class="row">
       <div class="col-12 col-md-3">
@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import ToggleBar from './Widget/ToggleBar'
 import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
 import Override from './Agent/Override'
@@ -106,7 +105,6 @@ export default {
     inqueue: Inqueue,
     dialer: Dialer,
     release: Release,
-    toggleBar: ToggleBar,
     'agent-state': AgentState,
     'agent-info': AgentInfo,
     override: Override,
