@@ -41,15 +41,6 @@
         <template slot="called_id" slot-scope="data">
           {{ data.item.vars['Caller-Destination-Number'] }}
         </template>
-        <template slot="state_inqueue" slot-scope="data">
-          {{ format_ms(data.item.states.inqueue) }}
-        </template>
-        <template slot="state_agent" slot-scope="data">
-          {{ format_ms(data.item.states.agent) }}
-        </template>
-        <template slot="state_oncall" slot-scope="data">
-          {{ format_ms(data.item.states.oncall) }}
-        </template>
       </b-table>
     </div>
   </div>
@@ -58,7 +49,7 @@
 </template>
 
 <script>
-import Player from '../Stats/Player'
+import Player from './Player'
 import 'bootstrap/dist/css/bootstrap.css';
 import datePicker from 'vue-bootstrap-datetimepicker';
 import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
@@ -73,16 +64,13 @@ export default {
   data () {
     return {
       fields: {
-        player: { label: ' ' },
+        player: { label: 'Audio Controls' },
         ts: { label: 'Date / Start Time', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
         client: { label: 'Customer', sortable: true },
         line_in: { label: 'Line In', sortable: true },
         agent: { label: 'Agent', sortable: true },
         caller_id: { label: 'Caller ID' },
-        called_id: { label: 'Called ID' },
-        state_inqueue: { label: 'Inqueue' },
-        state_agent: { label: 'Agent' },
-        state_oncall: { label: 'Oncall' }
+        called_id: { label: 'Called ID' }
       },
       inqueues: [],
       clients: [],
@@ -110,8 +98,6 @@ export default {
       this.line_ins.unshift({ name:"Any Line" })
       let raw = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
       this.inqueues = raw.map( (re) => re._source )
-      console.log(this.inqueues[0].line_in)
-      console.log(this.inqueues[0].vars)
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
