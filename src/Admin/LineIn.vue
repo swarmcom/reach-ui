@@ -3,7 +3,9 @@
   <form-text label="Line-In Name" v-model="rec.name"></form-text>
   <form-text label="Line-In Description" v-model="rec.description"></form-text>
   <disposition-groups label="Dispositions" v-model="rec.disposition_group_id" :effective="eff.disposition_group_id"></disposition-groups>
-  <luas label="Lua script" v-model="rec.lua_id" :effective="eff.lua_id"></luas>
+  <luas label="Entry Lua Script" v-model="rec.entry_lua_id" :effective="eff.entry_lua_id"></luas>
+  <luas label="Exit Lua Script" v-model="rec.exit_lua_id" :effective="eff.exit_lua_id"></luas>
+  <luas label="Agent Lua Script" v-model="rec.uri_lua_id" :effective="eff.uri_lua_id"></luas>
   <queues label="Queue" v-model="rec.queue_id"></queues>
   <clients label="Client" v-model="rec.client_id"></clients>
   <prompts label="Welcome Message" v-model="rec.announce_id" :effective="eff.announce_id"></prompts>
