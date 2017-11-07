@@ -4,8 +4,8 @@
   <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2">
     <div class="row">
       <div class="col-12 col-md-3">
-        <agentState></agentState>
-        <agentInfo></agentInfo>
+        <agent-state></agent-state>
+        <agent-info></agent-info>
       </div>
       <div class="col-md-9 col-12">
         <div class="row">
@@ -107,8 +107,8 @@ export default {
     dialer: Dialer,
     release: Release,
     toggleBar: ToggleBar,
-    agentState: AgentState,
-    agentInfo: AgentInfo,
+    'agent-state': AgentState,
+    'agent-info': AgentInfo,
     override: Override,
     'wrap-timer': Wrap
   },
