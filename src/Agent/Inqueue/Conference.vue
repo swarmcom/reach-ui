@@ -1,39 +1,39 @@
 <template>
 <div v-if="visible">
-<h3>Conference:</h3>
-<div class="row" style="margin-top: 10px">
-  <div class="col">
-    <b-button size="sm" variant="outline-success" @click="kick('all')">Kick All</b-button>
-    <b-button size="sm" variant="outline-success" @click="mute('all')">Mute All</b-button>
-    <b-button size="sm" variant="outline-success" @click="unmute('all')">Unmute All</b-button>
-    <b-button size="sm" variant="outline-success" @click="deaf('all')">Deaf All</b-button>
-    <b-button size="sm" variant="outline-success" @click="undeaf('all')">Undeaf All</b-button>
+  <div class="row" style="margin-top: 10px">
+    <div class="col session-manager-text"><b>Conference:</b> </div>
   </div>
-  <div class="col">
-    <b-button size="sm" variant="outline-warning" @click="inqueue()">Add Inqueue</b-button>
+  <div class="row col-12">
+    <b-input-group-button>
+      <b-button size="sm" variant="outline-secondary" @click="kick('all')">Kick All</b-button>
+      <b-button size="sm" variant="outline-secondary" @click="mute('all')">Mute All</b-button>
+      <b-button size="sm" variant="outline-secondary" @click="unmute('all')">Unmute All</b-button>
+      <b-button size="sm" variant="outline-secondary" @click="deaf('all')">Deaf All</b-button>
+      <b-button size="sm" variant="outline-secondary" @click="undeaf('all')">Undeaf All</b-button>
+      <b-button size="sm" variant="outline-warning" @click="inqueue()">Add Inqueue</b-button>
+    </b-input-group-button>
   </div>
-</div>
-<div class="row" style="margin-top: 10px" v-for="(v,k) in members">
-  <div class="col">
-    "{{v['Caller-Caller-ID-Name']}}" &lt;{{v['Caller-Caller-ID-Number']}}&gt;
-    <b-badge v-if="v.Floor =='true'" variant="danger">Floor</b-badge>
+  <div class="row" style="margin-top: 10px">
+    <div class="col-12 session-manager-text" style="margin-top:5px"><b>In Conference with:</b> </div>
   </div>
-  <div class="col-1">
-    <b-button size="sm" variant="outline-primary" @click="kick(k)">Kick</b-button>
+  <div class="row" style="margin-top: 5px" v-for="(v,k) in members">
+    <div class="col-5 agent-state-text">
+      <b>Caller ID Name: </b> {{v['Caller-Caller-ID-Name']}}<br>
+      <b>Caller ID Number: </b>{{v['Caller-Caller-ID-Number']}}
+      <b-badge v-if="v.Floor =='true'" variant="danger">Floor</b-badge>
+    </div>
+    <div class="col-7">
+    <b-input-group-button>
+      <b-button size="sm" variant="outline-secondary" @click="kick(k)">Kick</b-button>
+      <b-button v-if="v.Speak == 'true'" size="sm" variant="outline-secondary" @click="mute(k)">Mute</b-button>
+      <b-button v-else size="sm" variant="outline-warning" @click="unmute(k)">Unmute</b-button>
+      <b-button v-if="v.Hear == 'true'" size="sm" variant="outline-secondary" @click="deaf(k)">Deaf</b-button>
+      <b-button v-else size="sm" variant="outline-warning" @click="undeaf(k)">Undeaf</b-button>
+      <b-button v-if="v.Hold" size="sm" variant="outline-warning" @click="unhold(k)">Unhold</b-button>
+      <b-button v-else size="sm" variant="outline-secondary" @click="hold(k)">Hold</b-button>
+    </b-input-group-button>
+    </div>
   </div>
-  <div class="col-1">
-    <b-button v-if="v.Speak == 'true'" size="sm" variant="outline-primary" @click="mute(k)">Mute</b-button>
-    <b-button v-else size="sm" variant="outline-warning" @click="unmute(k)">Unmute</b-button>
-  </div>
-  <div class="col-1">
-    <b-button v-if="v.Hear == 'true'" size="sm" variant="outline-primary" @click="deaf(k)">Deaf</b-button>
-    <b-button v-else size="sm" variant="outline-warning" @click="undeaf(k)">Undeaf</b-button>
-  </div>
-  <div class="col-1">
-    <b-button v-if="v.Hold" size="sm" variant="outline-warning" @click="unhold(k)">Unhold</b-button>
-    <b-button v-else size="sm" variant="outline-primary" @click="hold(k)">Hold</b-button>
-  </div>
-</div>
 </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-bind:style="{ color: activeColor}">
   {{msToHms(computedTime())}}
 </div>
 </template>
@@ -15,6 +15,7 @@ export default {
   mixins: [Common],
   data () {
     return {
+      activeColor: '',
     }
   },
   methods: {
@@ -24,8 +25,10 @@ export default {
         time = this.state_time
         if(this.state_time < (this.inqueue.queue.wrapup_timer*1000))
           time = (this.inqueue.queue.wrapup_timer*1000) - this.state_time
-        else
+        else {
           time = (this.state_time - (this.inqueue.queue.wrapup_timer*1000))
+          this.activeColor = 'red';
+        }
       }
       return time
     }

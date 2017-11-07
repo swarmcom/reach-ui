@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
     <agent-profiles :agents="agents"></agent-profiles>
     <agent-monitor :agents="agents" :groups="groups"></agent-monitor>
@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import ToggleBar from '../Widget/ToggleBar'
 import AgentProfiles from './Widget/AgentProfiles'
 import AgentMonitor from './Widget/AgentMonitor'
 export default {
@@ -63,7 +62,6 @@ export default {
     this.$bus.$off('agents_state', this.handleState)
   },
   components: {
-    toggleBar: ToggleBar,
     'agent-profiles': AgentProfiles,
     'agent-monitor': AgentMonitor
   }

@@ -67,7 +67,7 @@
       <div class="col-5 agent-state-text myPhone">My Phone:</div>
     </div>
     <div class="row">
-    <myPhoneUri v-if="this.$agent.is_idle()"></myPhoneUri>
+    <my-phone-uri v-if="this.$agent.is_idle()"></my-phone-uri>
     </div>
   </div>
 </template>
@@ -140,7 +140,7 @@ export default {
   },
   components: {
     release: Release,
-    myPhoneUri: MyPhoneUri
+    'my-phone-uri': MyPhoneUri
   }
 }
 </script>

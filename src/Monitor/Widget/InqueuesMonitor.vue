@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggleBar></toggleBar>
+  <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerCallView" class="mt-2">
     <div class="row">
       <div class="col-2">
@@ -25,10 +25,12 @@
           :sort-desc="sortDesc"
           @sort-changed="onSortingChanged">
           <template slot="actions" slot-scope="data">
-            <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
-            <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
-            <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
-            <b-button size="sm" variant="danger" @click="hangup(data.item)">Hangup</b-button>
+          <b-input-group-button size="sm">
+            <b-button size="sm" variant="outline-secondary" @click="take(data.item)">Take</b-button>
+            <b-button size="sm" variant="outline-secondary" @click="takeover(data.item)">Takeover</b-button>
+            <b-button size="sm" variant="outline-secondary" @click="spy(data.item)">Spy</b-button>
+            <b-button size="sm" variant="outline-secondary" @click="hangup(data.item)">Hangup</b-button>
+          </b-input-group-button size="sm">
           </template>
         </b-table>
       </div>
@@ -38,7 +40,6 @@
 </template>
 
 <script>
-import ToggleBar from '../../Widget/ToggleBar'
 export default {
   name: 'monitor-queues-manager',
   storageName: 'queueManagerMonitor',
@@ -142,9 +143,6 @@ export default {
       } )
       return compInqueues;
     }
-  },
-  components: {
-    toggleBar: ToggleBar
   }
 }
 </script>

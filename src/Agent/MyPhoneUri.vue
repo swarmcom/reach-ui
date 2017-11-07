@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'myPhoneUri',
+  name: 'my-phone-uri',
   data () {
     return {
       uri: ''
