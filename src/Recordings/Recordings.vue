@@ -36,10 +36,11 @@
           {{ maybe_name(data.item.agent) }}
         </template>
         <template slot="caller_id" slot-scope="data">
-          "{{ data.item.vars['Caller-Caller-ID-Name'] }}" &lt;{{ data.item.vars['Caller-Caller-ID-Number'] }}&gt;
+          <div class="agent-state-text"><b>Name: </b>{{data.item.vars['Caller-Caller-ID-Name']}}</div>
+          <div class="agent-state-text"><b>Number: </b>{{data.item.vars['Caller-Caller-ID-Number']}}</div>
         </template>
         <template slot="called_id" slot-scope="data">
-          {{ data.item.vars['Caller-Destination-Number'] }}
+          <div class="agent-state-text"><b>Number: </b>{{data.item.vars['Caller-Destination-Number']}}</div>
         </template>
       </b-table>
     </div>
