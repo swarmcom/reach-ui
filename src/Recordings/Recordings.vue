@@ -22,7 +22,13 @@
       </b-form-select>
     </div>
     <div class="col-10">
-      <b-table style="margin-top:10px" small :items="computedRecordings" :fields="fields" :filter="filter">
+      <b-table style="margin-top:10px" small
+        :items="computedRecordings"
+        :fields="fields"
+        :filter="filter"
+        :sort-by="sortBy"
+        :sort-desc="sortDesc"
+        @sort-changed="onSortingChanged">
         <template slot="player" slot-scope="data">
           <player v-if="data.item.keep_record == true" :href="data.item.call_record_path"></player>
         </template>
@@ -85,6 +91,8 @@ export default {
       },
       selectedCustomer: 'Any Customer',
       selectedLine: 'Any Line',
+      sortBy: 'ts',
+      sortDesc: false,
       showCollapse: true
     }
   },
@@ -115,10 +123,21 @@ export default {
       } else {
         return ''
       }
+    },
+    onSortingChanged (ctx){
+      this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
+      this.$agent.vm.storage_data[this.$options.storageName+'SortDesc'] = ctx.sortDesc
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     }
   },
   created () {
     this.query()
+    if (this.$agent.vm.storage_data.callRecordingsCollapsed != undefined)
+      this.showCollapse = this.$agent.vm.storage_data.callRecordingsCollapsed
+    if (this.$agent.vm.storage_data.callRecordingsSortBy != undefined)
+      this.sortBy = this.$agent.vm.storage_data.callRecordingsSortBy
+    if (this.$agent.vm.storage_data.callRecordingsSortDesc != undefined)
+      this.sortDesc = this.$agent.vm.storage_data.callRecordingsSortDesc
   },
   computed: {
     computedRecordings () {
