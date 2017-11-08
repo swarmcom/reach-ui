@@ -91,8 +91,10 @@ export default {
   methods: {
     query: async function() {
       this.startDate = new Date()
+      this.startDate.setHours(0,0,0,0)
       this.startDate.setDate(this.startDate.getDate() - 1)
       this.endDate = new Date()
+      this.endDate.setHours(23,59,59,999)
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customer" })
       this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
@@ -127,7 +129,9 @@ export default {
 
         let actDate = new Date(key.ts)
         let startDate =new Date(this.startDate)
+        startDate.setHours(0,0,0,0)
         let endDate =new Date(this.endDate)
+        endDate.setHours(23,59,59,9999)
 
         if(actDate.getTime() > endDate.getTime() || actDate.getTime() < startDate.getTime() )
           compRecordings.pop(key)
