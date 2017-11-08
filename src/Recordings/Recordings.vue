@@ -22,9 +22,9 @@
       </b-form-select>
     </div>
     <div class="col-10">
-      <b-table style="margin-top:10px" small striped hover :items="computedRecordings" :fields="fields" :filter="filter">
+      <b-table style="margin-top:10px" small :items="computedRecordings" :fields="fields" :filter="filter">
         <template slot="player" slot-scope="data">
-          <player v-if="data.item.keep_record == false" :href="data.item.call_record_path"></player>
+          <player v-if="data.item.keep_record == true" :href="data.item.call_record_path"></player>
         </template>
         <template slot="line_in" slot-scope="data">
           {{ data.item.line_in.name }}
