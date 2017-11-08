@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="row">
-    <vue-slider style="margin-left:5px; margin-top:5px" class="col-12" v-model="value" v-bind="optionsSlider"></vue-slider>
+    <vue-slider @drag-end="onDrag" style="margin-left:5px; margin-top:5px" class="col-12" v-model="value" v-bind="optionsSlider"></vue-slider>
   </div>
 </div>
 </template>
@@ -52,10 +52,10 @@ export default {
         min: 0,
         max: 0,
         interval: 1,
-        disabled: true,
+        disabled: false,
         show: true,
         realTime: false,
-        tooltip: "always",
+        tooltip: "hover",
         clickable: false,
         tooltipDir: "right",
         piecewise: false,
@@ -85,6 +85,13 @@ export default {
     },
     onTimer () {
       this.value++;
+    },
+    onDrag () {
+      this.player.seek(this.value);
+      if(this.player.playing()){
+        clearInterval(this.updater)
+        this.updater = setInterval(this.onTimer, 1000)
+      }
     },
     isStop () {
       clearInterval(this.updater)

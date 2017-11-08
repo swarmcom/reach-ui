@@ -30,7 +30,7 @@
         :sort-desc="sortDesc"
         @sort-changed="onSortingChanged">
         <template slot="player" slot-scope="data">
-          <player v-if="data.item.keep_record == true" :href="data.item.call_record_path"></player>
+          <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
         </template>
         <template slot="line_in" slot-scope="data">
           {{ data.item.line_in.name }}
