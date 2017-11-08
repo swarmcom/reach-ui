@@ -29,7 +29,7 @@
       {{ data.item.vars['Caller-Destination-Number'] }}
     </template>
     <template slot="player" slot-scope="data">
-      <player v-if="data.item.keep_record == false" :href="data.item.call_record_path"></player>
+      <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
     </template>
   </b-table>
 </div>
