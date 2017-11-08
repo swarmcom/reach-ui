@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     handleState ({ state }) {
-      console.log('inqueue state', state)
       if (state.state == "available" || state.state == "release" || state.state == "suspended") {
         this.call_visible = false
         this.conf_visible = false

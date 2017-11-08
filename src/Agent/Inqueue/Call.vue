@@ -3,6 +3,10 @@
 
 <div class="row"><div class="col session-manager-text"><b>Incoming Call:</b> </div></div>
 
+<b-row v-if="lua_result">
+  <b-col>{{lua_result}}</b-col>
+</b-row>
+
 <div class="row">
   <div class="col-12">
     <dl class="row agent-state-text">
@@ -69,6 +73,7 @@ export default {
       inqueue: {},
       call_info: {},
       skills: {},
+      lua_result: false,
       updater: undefined
     }
   },
@@ -76,6 +81,8 @@ export default {
     query: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
       this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
+      let lua_re = await this.$agent.p_mfa('ws_agent', 'get_lua_result', [this.uuid])
+      this.handleInqueueLua(lua_re)
       let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
       this.skills = this.object2list(skills)
       this.visible = true
@@ -91,13 +98,28 @@ export default {
     record: async function () {
       await this.$agent.p_mfa('ws_agent', 'record')
       this.inqueue.keep_record = true
+    },
+    preHandleInqueueLua (Re) {
+      this.handleInqueueLua(Re.value)
+    },
+    handleInqueueLua (Re) {
+      if (typeof(Re) == 'object') {
+        let [Type, Value] = Re
+        if (Type == "embed") {
+          this.lua_result = Value
+        } else if (Type == "window") {
+          window.open(Value, "Reach")
+        }
+      }
     }
   },
   created () {
+    this.$bus.$on('inqueue_lua', this.preHandleInqueueLua)
     this.query()
     this.updater = setInterval(this.onTimer, 1000)
   },
   beforeDestroy () {
+    this.$bus.$off('inqueue_lua', this.preHandleInqueueLua)
     clearInterval(this.updater)
   },
 }
