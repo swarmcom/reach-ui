@@ -21,6 +21,7 @@
       <b-dropdown-item to="/stats/agent">Agents</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/monitor">MONITOR </b-nav-item>
+    <b-nav-item v-access:supervisor-ui to="/recordings">RECORDINGS </b-nav-item>
     <b-nav-item to="/reports">REPORTS</b-nav-item>
     <button @click="onPin" class="btn ml-auto">
       <icon label="No Pined">
