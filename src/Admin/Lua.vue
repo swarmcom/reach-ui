@@ -2,7 +2,7 @@
 <div class="form">
   <form-text label="Lua Name" v-model="rec.name"></form-text>
   <form-text label="Lua Description" v-model="rec.description"></form-text>
-  <b-row>
+  <b-row style="margin-top: 5px">
     <b-col>
       <div class="codemirror" style="border: 1px solid #eee">
         <!-- codemirror -->
