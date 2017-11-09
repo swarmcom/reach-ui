@@ -2,7 +2,7 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div v-if="effective" class="col-5">
-    <select class="custom-select" style="width: 100%" :value="value" @change="onUpdate($event.target.value)">
+    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="lua in luas" :value="lua.id" :selected="isActive(lua.id)">{{ lua.name }}</option>
     </select>
@@ -14,7 +14,7 @@
     </select>
   </div>
   <div v-else class="col-9">
-    <select class="custom-select" style="width: 100%" :value="value" @change="onUpdate($event.target.value)">
+    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="lua in luas" :value="lua.id" :selected="isActive(lua.id)">{{ lua.name }}</option>
     </select>
@@ -34,6 +34,9 @@ export default {
   methods: {
     isActive(Id) {
       return Id == this.value
+    },
+    isDisabled() {
+      return this.luas.length == 0
     },
     isEffective(Id) {
       return Id == this.effective

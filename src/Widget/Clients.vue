@@ -1,8 +1,8 @@
 <template>
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-7">
-    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
+  <div class="col-9">
+    <select class="custom-select" :value="value" style="width: 100%" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="client in clients" :value="client.id" :selected="isActive(client.id)">{{ client.name }}</option>
     </select>
@@ -22,6 +22,9 @@ export default {
   methods: {
     isActive(Id) {
       return Id == this.value
+    },
+    isDisabled() {
+      return this.clients.length == 0
     },
     query: async function () {
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
