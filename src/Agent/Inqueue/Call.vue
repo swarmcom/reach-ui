@@ -109,7 +109,7 @@ export default {
     query: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
       this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
-      let lua_re = await this.$agent.p_mfa('ws_agent', 'get_lua_result', [this.uuid])
+      let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
       this.handleInqueueLua(lua_re)
       let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
       this.skills = this.object2list(skills)
