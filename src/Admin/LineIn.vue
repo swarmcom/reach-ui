@@ -11,6 +11,7 @@
   <prompts label="Welcome Message" v-model="rec.announce_id" :effective="eff.announce_id"></prompts>
   <form-select-bool label="Allow Voicemail" v-model="rec.allow_voicemail"></form-select-bool>
   <form-select-bool label="Enable call recording" v-model="rec.enable_call_recording" :effective="eff.enable_call_recording"></form-select-bool>
+  <form-select-bool label="Answer on Agent pickup" v-model="rec.answer_on_agent"></form-select-bool>
   <prompts label="Voicemail Prompt" v-model="rec.voicemail_prompt_id" :effective="eff.voicemail_prompt_id"></prompts>
   <form-select-bool label="Override Caller ID" v-model="rec.override_clid" :effective="eff.override_clid"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name" :effective="eff.caller_id_name"></form-text>

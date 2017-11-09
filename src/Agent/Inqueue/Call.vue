@@ -102,7 +102,8 @@ export default {
       call_info: {},
       skills: {},
       lua_result: false,
-      updater: undefined
+      updater: undefined,
+      notification: undefined
     }
   },
   methods: {
@@ -114,6 +115,7 @@ export default {
       let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
       this.skills = this.object2list(skills)
       this.visible = true
+      this.show_notification()
     },
     onTimer() {
       if (this.inqueue.time) {
@@ -148,16 +150,41 @@ export default {
           window.open(Value, "Reach")
         }
       }
+    },
+    show_notification () {
+      if (!("Notification" in window)) {
+        return
+      } else if (Notification.permission === "granted") {
+        let body = `Number: ${this.call_info['Caller-Destination-Number']}\nClient: ${this.inqueue.line_in.client.name}\nQueue: ${this.inqueue.queue.name}`
+        this.notification = new Notification("Incoming call", {body: body})
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission()
+      }
+    },
+    handleState ({state}) {
+      this.inqueue.state = state.state
     }
   },
   created () {
+    this.$bus.$on('agent_state', this.handleState)
     this.$bus.$on('inqueue_lua', this.preHandleInqueueLua)
     this.query()
     this.updater = setInterval(this.onTimer, 1000)
   },
   beforeDestroy () {
+    if (this.notification) {
+      this.notification.close()
+    }
+    this.$bus.$off('agent_state', this.handleState)
     this.$bus.$off('inqueue_lua', this.preHandleInqueueLua)
     clearInterval(this.updater)
+  },
+  watch: {
+    'inqueue.state' (New, Old) {
+      if (New == 'oncall' && this.notification) {
+        this.notification.close()
+      }
+    }
   },
 }
 </script>
