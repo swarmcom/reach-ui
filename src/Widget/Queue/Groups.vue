@@ -1,8 +1,8 @@
 <template>
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-7">
-    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
+  <div class="col-9">
+    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="group in groups" :value="group.id" :selected="isActive(group.id)">{{ group.name }}</option>
     </select>
@@ -20,6 +20,9 @@ export default {
     }
   },
   methods: {
+    isDisabled() {
+      return this.groups.length == 0
+    },
     isActive(Id) {
       return Id == this.value
     },

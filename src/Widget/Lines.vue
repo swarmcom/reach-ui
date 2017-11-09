@@ -2,7 +2,7 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
-    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
+    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="line in lines" :value="line.id" :selected="isActive(line.id)">{{ line.name }}</option>
     </select>
@@ -22,6 +22,9 @@ export default {
   methods: {
     isActive(Id) {
       return Id == this.value
+    },
+    isDisabled() {
+      return this.lines.length == 0
     },
     query: async function () {
       this.lines = await this.$agent.p_mfa('ws_db_line_out', 'get')
