@@ -33,6 +33,45 @@
             <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
             <div class="agent-state-text"><b>Customer: </b>{{data.item.agentClient}}</div>
           </template>
+          <template slot="state" slot-scope="data">
+            <div v-if="data.item.state == 'available'">
+              <icon  name="circle-o" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'release'">
+              <icon name="stop" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'ringing'">
+              <icon  name="wifi" scale="2" style="transform: rotate(270deg);"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'outgoing'">
+              <icon  name="wifi" scale="2" style="transform: rotate(90deg);"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'oncall'">
+              <icon  name="phone" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'conference'">
+              <icon  name="phone" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'inconference'">
+              <icon  name="phone" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'hold'">
+              <icon  name="pause" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div v-if="data.item.state == 'wrapup'">
+              <icon  name="pause" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
+            <div class="agent-state-text">{{msToHms(Math.round(data.item.time).toString())}}</div>
+          </template>
           <template slot="actions" slot-scope="data">
             <b-input-group-button size="sm">
               <b-button v-if="data.item.state == 'release'" size="sm" variant="outline-primary" @click="available(data.item)">Available</b-button>
@@ -75,7 +114,11 @@ export default {
         {name: "release"},
         {name: "available"},
         {name: "ringing"},
+        {name: "outgoing"},
         {name: "oncall"},
+        {name: "conference"},
+        {name: "inconference"},
+        {name: "hold"},
         {name: "wrapup"}
       ],
       selectedProfile: 'Any Profile',
@@ -133,8 +176,30 @@ export default {
       let compAgents = []
       agents.forEach( (key) => {
         compAgents.push(key);
-        key._cellVariants = { agentDetail: 'primary', agentOccup: 'primary', agentMyCpt: 'primary', agentCalls: 'primary', timeComputed: 'primary', state: 'primary', actions: 'primary' }
-        key.timeComputed = this.msToHms(Math.round(key.time).toString())
+        key._cellVariants = { agentDetail: 'primary', agentOccup: 'primary', agentMyCpt: 'primary', agentCalls: 'primary', timeComputed: 'primary', actions: 'primary' }
+        switch(key.state) {
+          case "release": {
+            key._cellVariants.state = "primary"
+            break
+          }
+          case "ringing":
+          case "outgoing":
+          case "oncall":
+          case "conference":
+          case "inconference":
+          case "hold" :
+          {
+            key._cellVariants.state = "success"
+            break
+          }
+          case "available":
+          case "wrapup": {
+            key._cellVariants.state = "warning"
+            break
+          }
+          default: key._cellVariants.state = "primary"
+        }
+        /*key.timeComputed = this.msToHms(Math.round(key.time).toString())*/
         key.agentName = key.agent.name
         key.agentLogin = key.agent.login
         key.agentPhone = key.agent.uri
