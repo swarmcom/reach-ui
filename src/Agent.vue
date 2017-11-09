@@ -24,15 +24,16 @@
     </div>
   </div>
   <agent-info></agent-info>
-  <inqueue></inqueue>
   <b-row style="margin-top: 20px">
     <b-col cols="6">
-      <override v-if="this.$agent.is_idle()"></override>
+      <agent-skills></agent-skills>
     </b-col>
     <b-col cols="6">
+      <override v-if="this.$agent.is_idle()"></override>
       <dialer v-if="this.$agent.is_idle()"></dialer>
     </b-col>
   </b-row>
+  <inqueue></inqueue>
 </div>
 </template>
 
@@ -42,6 +43,7 @@ import Dialer from './Agent/Dialer'
 import Override from './Agent/Override'
 import Release from './Agent/Widget/Release'
 import AgentInfo from './Agent/Info'
+import AgentSkills from './Agent/Skills'
 
 export default {
   data () {
@@ -65,7 +67,8 @@ export default {
     dialer: Dialer,
     release: Release,
     'agent-info': AgentInfo,
-    override: Override
+    override: Override,
+    'agent-skills': AgentSkills
   },
 }
 </script>

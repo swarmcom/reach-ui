@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import Skills from '../Widget/Skills.vue'
-
 export default {
   name: 'agent-info',
   data () {
