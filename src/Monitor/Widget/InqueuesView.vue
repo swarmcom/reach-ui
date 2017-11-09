@@ -15,7 +15,7 @@
           <div class="row toggle-bar-custom" style="margin-left:1px">
             <div class="title">Calls in Queue</div>
           </div>
-          <b-table style="margin-top:10px" small striped hover
+          <b-table style="margin-top:10px" small striped bordered hover
             :items="computedStats"
             :fields="fieldCIQ">
           </b-table>
@@ -24,7 +24,7 @@
           <div class="row toggle-bar-custom" style="margin-left:1px">
             <div class="title">Queue Statistics</div>
           </div>
-          <b-table style="margin-top:10px" small striped hover
+          <b-table style="margin-top:10px" small striped bordered hover
             :items="computedStats"
             :fields="fieldsStats">
           </b-table>
