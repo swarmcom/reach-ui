@@ -62,6 +62,10 @@
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
+            <div v-if="data.item.state == 'test'">
+              <icon  name="phone" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+            </div>
             <div v-if="data.item.state == 'hold'">
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
@@ -187,7 +191,8 @@ export default {
           case "oncall":
           case "conference":
           case "inconference":
-          case "hold" :
+          case "hold":
+          case "test":
           {
             key._cellVariants.state = "success"
             break
