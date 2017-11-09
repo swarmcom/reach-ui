@@ -5,11 +5,15 @@
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
 
+      <li class="nav-item">
+        <router-link class="nav-link" to="/profile">Profile</router-link>
+      </li>
+
       <li v-access:admin-ui class="nav-item">
         <router-link class="nav-link" to="/admin/agents">Admin</router-link>
       </li>
-    
-      <b-nav-item-dropdown text="Sessions">
+
+      <b-nav-item-dropdown v-access:supervisor-ui text="Sessions">
         <b-dropdown-item to="/stats/inqueue">Inqueues</b-dropdown-item>
         <b-dropdown-item to="/stats/agent">Agents</b-dropdown-item>
       </b-nav-item-dropdown>

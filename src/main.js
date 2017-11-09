@@ -13,6 +13,7 @@ import AgentAPI from './agent-api-plugin.js'
 import Help from './Help.vue'
 import Login from './Login.vue'
 import Agent from './Agent.vue'
+import Profile from './Profile.vue'
 import Admin from './Admin.vue'
 import Monitor from './Monitor.vue'
 import StatsAgent from './Stats/Agent.vue'
@@ -170,6 +171,7 @@ const router = new VueRouter({
     { path: '/help', component: Help },
     { path: '/login', component: Login },
     { path: '/monitor', component: Monitor },
+    { path: '/profile', component: Profile },
     { path: '/stats/inqueue', component: StatsInqueue },
     { path: '/stats/agent', component: StatsAgent },
     { path: '/stats/inqueue/:uuid', component: StatsInqueueEvents, props: true },
