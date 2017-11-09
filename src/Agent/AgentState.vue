@@ -27,6 +27,10 @@
         <icon  name="wifi" scale="4" style="transform: rotate(90deg);"></icon>
         <div>{{a.state}}</div>
       </div>
+      <div v-if="a.state == 'test'" class="agent-state-oncall">
+        <icon  name="phone" scale="4"></icon>
+        <div>{{a.state}}</div>
+      </div>
       <div v-if="this.$agent.is_onsession()" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
         <div>{{a.state}}</div>

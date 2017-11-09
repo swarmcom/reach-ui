@@ -14,7 +14,7 @@
         <div class="row toggle-bar-custom" style="margin-left:1px">
           <div class="title">Agent States</div>
         </div>
-        <b-table style="margin-top:10px" small striped hover
+        <b-table style="margin-top:10px" small striped bordered hover
           :items="computedAgentsStats"
           :fields="fieldsStats">
         </b-table>

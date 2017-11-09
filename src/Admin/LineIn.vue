@@ -11,10 +11,12 @@
   <prompts label="Welcome Message" v-model="rec.announce_id" :effective="eff.announce_id"></prompts>
   <form-select-bool label="Allow Voicemail" v-model="rec.allow_voicemail"></form-select-bool>
   <form-select-bool label="Enable call recording" v-model="rec.enable_call_recording" :effective="eff.enable_call_recording"></form-select-bool>
+  <form-select-bool label="Answer on Agent pickup" v-model="rec.answer_on_agent"></form-select-bool>
   <prompts label="Voicemail Prompt" v-model="rec.voicemail_prompt_id" :effective="eff.voicemail_prompt_id"></prompts>
   <form-select-bool label="Override Caller ID" v-model="rec.override_clid" :effective="eff.override_clid"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name" :effective="eff.caller_id_name"></form-text>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number" :effective="eff.caller_id_number"></form-text>
+  <skills label="Line-In Skills" v-model="skills" :effective="effective_skills"></skills>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
@@ -36,6 +38,8 @@ export default {
     return {
       rec: {},
       eff: {},
+      skills: [],
+      effective_skills: [],
       module: 'ws_db_line_in',
       redirect: '/admin/line_ins'
     }
@@ -45,8 +49,24 @@ export default {
       if (this.id) {
         this.rec = await this.$agent.p_mfa(this.module, 'get', [this.id])
         this.eff = await this.$agent.p_mfa(this.module, 'inherited', [this.id])
+        this.skills = this.object2list(this.rec.skills)
+        this.effective_skills = this.object2list(this.eff.skills)
       }
-    }
+    },
+    onCommit: async function () {
+      this.rec.skills = this.list2object(this.skills)
+      try {
+        if (this.id) {
+          await this.$agent.p_mfa(this.module, 'update', [this.id, this.rec])
+        } else {
+          await this.$agent.p_mfa(this.module, 'create', [this.rec])
+        }
+        this.$router.push(this.redirect)
+      }
+      catch (error) {
+        this.$notify({ title: 'Data error:', text: error, type: 'error' });
+      }
+    },
   }
 }
 </script>

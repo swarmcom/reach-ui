@@ -1,15 +1,23 @@
 <template>
   <div class="col-12">
-    <b-input-group>
-      <b-form-input variant="outline" size="sm" v-model="uri" type="text"></b-form-input>
-      <b-input-group-button size="sm">
-        <b-btn size="sm" @click="override" variant="outline-secondary">Set</b-btn>
-        <b-dropdown size="sm" text="Contacts" variant="outline-secondary" right>
-          <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
-        </b-dropdown>
-        <b-btn size="sm" @click="test" variant="outline-secondary">Test</b-btn>
-      </b-input-group-button>
-    </b-input-group>
+    <b-row>
+      <b-col>
+        <b-button-group style="width:100%">
+          <b-btn size="sm" style="width:50%" @click="override" variant="outline-secondary">Set</b-btn>
+          <b-btn size="sm" style="width:50%" @click="test" variant="outline-secondary">Test</b-btn>
+        </b-button-group>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-input-group size="sm">
+          <b-form-input variant="outline" size="sm" v-model="uri" type="text"></b-form-input>
+          <b-dropdown size="sm" text="Contacts" variant="outline-secondary">
+            <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
+          </b-dropdown>
+        </b-input-group>
+      </b-col>
+    </b-row>
   </div>
 </template>
 

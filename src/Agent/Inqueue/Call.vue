@@ -3,6 +3,10 @@
 
 <div class="row"><div class="col session-manager-text"><b>Incoming Call:</b> </div></div>
 
+<b-row v-if="lua_result">
+  <b-col>{{lua_result}}</b-col>
+</b-row>
+
 <div class="row">
   <div class="col-12">
     <dl class="row agent-state-text">
@@ -69,16 +73,21 @@ export default {
       inqueue: {},
       call_info: {},
       skills: {},
-      updater: undefined
+      lua_result: false,
+      updater: undefined,
+      notification: undefined
     }
   },
   methods: {
     query: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
       this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
+      let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
+      this.handleInqueueLua(lua_re)
       let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
       this.skills = this.object2list(skills)
       this.visible = true
+      this.show_notification()
     },
     onTimer() {
       if (this.inqueue.time) {
@@ -91,14 +100,54 @@ export default {
     record: async function () {
       await this.$agent.p_mfa('ws_agent', 'record')
       this.inqueue.keep_record = true
+    },
+    preHandleInqueueLua (Re) {
+      this.handleInqueueLua(Re.value)
+    },
+    handleInqueueLua (Re) {
+      if (typeof(Re) == 'object') {
+        let [Type, Value] = Re
+        if (Type == "embed") {
+          this.lua_result = Value
+        } else if (Type == "window") {
+          window.open(Value, "Reach")
+        }
+      }
+    },
+    show_notification () {
+      if (!("Notification" in window)) {
+        return
+      } else if (Notification.permission === "granted") {
+        let body = `Number: ${this.call_info['Caller-Destination-Number']}\nClient: ${this.inqueue.line_in.client.name}\nQueue: ${this.inqueue.queue.name}`
+        this.notification = new Notification("Incoming call", {body: body})
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission()
+      }
+    },
+    handleState ({state}) {
+      this.inqueue.state = state.state
     }
   },
   created () {
+    this.$bus.$on('agent_state', this.handleState)
+    this.$bus.$on('inqueue_lua', this.preHandleInqueueLua)
     this.query()
     this.updater = setInterval(this.onTimer, 1000)
   },
   beforeDestroy () {
+    if (this.notification) {
+      this.notification.close()
+    }
+    this.$bus.$off('agent_state', this.handleState)
+    this.$bus.$off('inqueue_lua', this.preHandleInqueueLua)
     clearInterval(this.updater)
+  },
+  watch: {
+    'inqueue.state' (New, Old) {
+      if (New == 'oncall' && this.notification) {
+        this.notification.close()
+      }
+    }
   },
 }
 </script>

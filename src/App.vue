@@ -4,13 +4,13 @@
     <b-nav-toggle v-if="auth" target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand v-if="auth" to="/main">HOME</b-navbar-brand>
     <b-collapse v-if="auth" is-nav id="nav_collapse">
-      <b-nav is-nav-bar>
+      <b-navbar-nav>
         <b-nav-item @click="logout">LOGOUT</b-nav-item>
-      </b-nav>
+      </b-navbar-nav>
       <!-- Right aligned nav items -->
-      <b-nav is-nav-bar class="ml-auto">
+      <b-navbar-nav class="ml-auto">
         <span class="navbar-text">{{ date | filterDate }}</span>
-      </b-nav>
+      </b-navbar-nav>
     </b-collapse>
   </b-navbar>
   <b-nav v-if="auth" class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>

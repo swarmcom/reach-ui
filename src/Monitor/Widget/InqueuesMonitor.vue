@@ -18,7 +18,7 @@
         </b-form-select>
       </div>
       <div class="col-10">
-        <b-table style="margin-top:10px" small striped hover
+        <b-table style="margin-top:10px" small striped bordered hover
           :items="computedInqueues"
           :fields="fields"
           :sort-by="sortBy"
