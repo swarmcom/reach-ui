@@ -33,6 +33,11 @@
       <dialer v-if="this.$agent.is_idle()"></dialer>
     </b-col>
   </b-row>
+  <b-row style="margin-top: 20px">
+    <b-col cols="6">
+      <agent-count></agent-count>
+    </b-col>
+  </b-row>
   <inqueue></inqueue>
 </div>
 </template>
@@ -44,6 +49,7 @@ import Override from './Agent/Override'
 import Release from './Agent/Widget/Release'
 import AgentInfo from './Agent/Info'
 import AgentSkills from './Agent/Skills'
+import AgentCount from './Agent/Count'
 
 export default {
   data () {
@@ -68,7 +74,8 @@ export default {
     release: Release,
     'agent-info': AgentInfo,
     override: Override,
-    'agent-skills': AgentSkills
+    'agent-skills': AgentSkills,
+    'agent-count': AgentCount
   },
 }
 </script>
