@@ -8,7 +8,7 @@
         <div class="title">Filter</div>
       </div>
       <b-input-group size="sm" style="margin-top:10px">
-        <b-btn id="search" size="sm" variant="outline-secondary"
+        <b-btn id="search" size="sm" variant="primary"
                   v-b-popover.hover.top="'Click to see how to search'">
         ?
         </b-btn>
@@ -39,6 +39,8 @@
       <b-form-select size="sm" v-model="selectedCustomer">
         <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
       </b-form-select>
+      <div class="agent-state-text" style="margin-top:10px">Reload recordings:</div>
+      <b-btn size="sm" style="width:100%" variant="primary" @click="reload">Reload</b-btn>
     </div>
     <div class="col-10">
       <b-table style="margin-top:10px" small
@@ -48,12 +50,12 @@
         :sort-by="sortBy"
         :sort-desc="sortDesc"
         @sort-changed="onSortingChanged">
-        <template slot="player" slot-scope="data">
+        <template  slot="player" slot-scope="data">
           <b-form-checkbox v-if="data.item.keep_record" v-model="data.item._showDetails" plain></b-form-checkbox>
         </template>
         <template slot="row-details" slot-scope="data">
           <b-card>
-            <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
+            <player :href="data.item.call_record_path"></player>
           </b-card>
         </template>
         <template slot="line_in" slot-scope="data">
@@ -170,6 +172,10 @@ export default {
       else {
         return names = queue.name
       }
+    },
+    reload: async function() {
+      let raw = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
+      this.recordings = raw.map( (re) => re._source )
     },
     onSortingChanged (ctx){
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
