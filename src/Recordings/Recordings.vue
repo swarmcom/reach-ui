@@ -49,7 +49,12 @@
         :sort-desc="sortDesc"
         @sort-changed="onSortingChanged">
         <template slot="player" slot-scope="data">
-          <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
+          <b-form-checkbox v-if="data.item.keep_record" v-model="data.item._showDetails" plain></b-form-checkbox>
+        </template>
+        <template slot="row-details" slot-scope="data">
+          <b-card>
+            <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
+          </b-card>
         </template>
         <template slot="line_in" slot-scope="data">
           {{ maybe_name(data.item.line_in) }}
@@ -96,7 +101,7 @@ export default {
   data () {
     return {
       fields: {
-        player: { label: 'Audio Controls' },
+        player: { label: 'Show Recordings', _showRecordings: false },
         ts: { label: 'Date / Start Time', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
         client: { label: 'Customer', sortable: true },
         queue: { label: 'Queue', sortable: true },
