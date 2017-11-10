@@ -19,9 +19,16 @@ export default {
     query: async function () {
       this.states = await this.$agent.p_mfa('ws_stats', 'agents_states', [])
     },
+    handleUpdate (ev) {
+      this.states = ev.states
+    }
   },
   created () {
+    this.$bus.$on('stats_agents_states', this.handleUpdate)
     this.query()
   },
+  beforeDestroy () {
+    this.$bus.$off('stats_agents_states', this.handleUpdate)
+  }
 }
 </script>
