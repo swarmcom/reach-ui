@@ -27,6 +27,10 @@
       <date-picker size="sm" v-model="startDate" :config="config"></date-picker>
       <div class="agent-state-text" style="margin-top:10px">End Date:</div>
       <date-picker size="sm" v-model="endDate" :config="config"></date-picker>
+      <div class="agent-state-text" style="margin-top:10px">Queue:</div>
+      <b-form-select size="sm" v-model="selectedQueue">
+        <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
+      </b-form-select>
       <div class="agent-state-text" style="margin-top:10px">Line:</div>
       <b-form-select size="sm" v-model="selectedLine">
         <option v-for="line in this.line_ins" :value=line.name>{{line.name}}</option>
@@ -48,10 +52,16 @@
           <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
         </template>
         <template slot="line_in" slot-scope="data">
-          {{ data.item.line_in.name }}
+          {{ maybe_name(data.item.line_in) }}
         </template>
         <template slot="client" slot-scope="data">
-          {{ data.item.line_in.client.name }}
+          {{ maybe_name(data.item.line_in.client) }}
+        </template>
+        <template slot="queue" slot-scope="data">
+          {{ maybe_name(data.item.queue) }}
+        </template>
+        <template slot="queue_names" slot-scope="data">
+          {{ getQueueNames(data.item.queues, data.item.queue) }}
         </template>
         <template slot="agent" slot-scope="data">
           {{ maybe_name(data.item.agent) }}
@@ -89,13 +99,15 @@ export default {
         player: { label: 'Audio Controls' },
         ts: { label: 'Date / Start Time', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
         client: { label: 'Customer', sortable: true },
+        queue: { label: 'Queue', sortable: true },
         line_in: { label: 'Line In', sortable: true },
         agent: { label: 'Agent', sortable: true },
         caller_id: { label: 'Caller ID' },
         called_id: { label: 'Called ID' }
       },
-      inqueues: [],
+      recordings: [],
       clients: [],
+      queues: [],
       line_ins: [],
       filter: null,
       startDate: '',
@@ -105,6 +117,7 @@ export default {
         useCurrent: false
       },
       selectedCustomer: 'Any Customer',
+      selectedQueue: 'Any Queue',
       selectedLine: 'Any Line',
       sortBy: 'ts',
       sortDesc: false,
@@ -122,8 +135,10 @@ export default {
       this.clients.unshift({ name:"Any Customer" })
       this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
       this.line_ins.unshift({ name:"Any Line" })
+      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
+      this.queues.unshift({ name:"Any Queue" })
       let raw = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
-      this.inqueues = raw.map( (re) => re._source )
+      this.recordings = raw.map( (re) => re._source )
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -137,6 +152,18 @@ export default {
         return item.name
       } else {
         return ''
+      }
+    },
+    getQueueNames (queues, queue) {
+      let names = ''
+      if (queues != undefined) {
+        queues.forEach( (queue) => {
+          names = names + queue + ' '
+        } )
+        return names;
+      }
+      else {
+        return names = queue.name
       }
     },
     onSortingChanged (ctx){
@@ -156,9 +183,9 @@ export default {
   },
   computed: {
     computedRecordings () {
-      let agents = this.inqueues
+      let recordings = this.recordings
       let compRecordings = []
-      agents.forEach( (key) => {
+      recordings.forEach( (key) => {
         compRecordings.push(key);
 
         let actDate = new Date(key.ts)
@@ -176,6 +203,15 @@ export default {
           }
         }
         else if(this.selectedCustomer != 'Any Customer'){
+          compRecordings.pop(key)
+        }
+
+        if(key.queue != undefined) {
+          if(this.selectedQueue != key.queue.name && this.selectedQueue != 'Any Queue'){
+            compRecordings.pop(key)
+          }
+        }
+        else if(this.selectedQueue != 'Any Queue'){
           compRecordings.pop(key)
         }
 
