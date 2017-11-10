@@ -1,28 +1,29 @@
 <template>
 <div>
   <div class="row">
-    <div v-if="!isError()" class="col-2 pointer" @click.stop="play" >
+    <div v-if="!isError()" class="col-1 pointer" @click.stop="play" >
       <icon name="play" scale="1" class="align-middle"></icon>
     </div>
-      <div v-if="!isError()" class="col-2 pointer" @click.pause="pause" style="margin-right:5px">
+      <div v-if="!isError()" class="col-1 pointer" @click.pause="pause" style="margin-right:5px">
         <icon name="pause" scale="1" class="align-middle"></icon>
       </div>
-      <div v-if="!isError()" class="col-2 pointer" @click.stop="stop">
+      <div v-if="!isError()" class="col-1 pointer" @click.stop="stop">
         <icon name="stop" scale="1" class="align-middle"></icon>
       </div>
-    <div v-if="isError()" class="col-2 pointer">
+    <div v-if="isError()" class="col-1 pointer">
       <icon name="exclamation-circle" scale="1" class="align-middle"></icon>
     </div>
-    <div v-if="!isError()" class="col-4 agent-state-text">
+    <div v-if="!isError()" class="col-8 agent-state-text">
       <div class="row col-12">
-        {{state}}
+        <b>status: </b>{{state}}
       </div>
       <div class="row col-12">
-        {{msToHms(Math.round(1000*player.duration()).toString())}}
+        <b>duration:</b>{{msToHms(Math.round(1000*player.duration()).toString())}}
+      </div>
+      <div class="row col-12">
+        <b>playing time:</b>{{msToHms(Math.round(1000*value).toString())}}
       </div>
     </div>
-  </div>
-  <div class="row">
     <vue-slider @drag-end="onDrag" style="margin-left:5px; margin-top:5px" class="col-12" v-model="value" v-bind="optionsSlider"></vue-slider>
   </div>
 </div>

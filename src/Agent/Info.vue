@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import Skills from '../Widget/Skills.vue'
 export default {
   widgetName: 'MY PROFILE',
   storageName: 'agentInfo',
