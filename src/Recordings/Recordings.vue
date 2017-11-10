@@ -7,7 +7,22 @@
       <div class="row toggle-bar-custom">
         <div class="title">Filter</div>
       </div>
-      <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
+      <b-input-group size="sm" style="margin-top:10px">
+        <b-btn id="search" size="sm" variant="outline-secondary"
+                  v-b-popover.hover.top="'Click to see how to search'">
+        ?
+        </b-btn>
+        <b-popover target="search"
+            title="Search Help"
+            triggers="click"
+            placement="top"
+            content="You can search for any agent, queue, line, agent called id number,
+                     agent caller id name or agent caller id number by typing characters to the keyboard.">
+        </b-popover>
+        <b-form-input v-model="filter" placeholder="Search ..."/>
+        </b-form-input>
+      </b-input-group>
+      </b-input-group>
       <div class="agent-state-text" style="margin-top:10px">Start Date:</div>
       <date-picker size="sm" v-model="startDate" :config="config"></date-picker>
       <div class="agent-state-text" style="margin-top:10px">End Date:</div>
