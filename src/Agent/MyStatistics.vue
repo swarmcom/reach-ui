@@ -38,32 +38,32 @@ export default {
   data () {
     return {
       statistics: [{
-                    _cellVariants: {
-                      ciq: 'warning',
-                      agents: 'success',
-                      //statesCounts: 'danger',
-                      myCpt: 'primary',
-                      teamCpt: 'primary',
-                      occup: 'primary',
-                      asa: 'primary',
-                      longest: 'primary'
-                    },
-                    ciq: 0,
-                    agents: 0,
-                    statesCounts: {
-                      release: 0,
-                      available: 0,
-                      ringing: 0,
-                      oncall: 0,
-                      wrapup: 0
-                    },
-                    myCpt: 0,
-                    teamCpt: 0,
-                    occup: 0,
-                    asa: 0,
-                    longest: 0
-                    }
-                  ],
+        _cellVariants: {
+          ciq: 'warning',
+          agents: 'success',
+          //statesCounts: 'danger',
+          myCpt: 'primary',
+          teamCpt: 'primary',
+          occup: 'primary',
+          asa: 'primary',
+          longest: 'primary'
+        },
+        ciq: 0,
+        agents: 0,
+        statesCounts: {
+          release: 0,
+          available: 0,
+          ringing: 0,
+          oncall: 0,
+          wrapup: 0
+        },
+        myCpt: 0,
+        teamCpt: 0,
+        occup: 0,
+        asa: 0,
+        longest: 0
+        }
+      ],
       fields: {
         ciq: { label: 'CIQ' },
         agents: { label: 'Agents' },
