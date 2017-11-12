@@ -34,8 +34,11 @@
     </b-col>
   </b-row>
   <b-row style="margin-top: 20px">
-    <b-col cols="6">
+    <b-col cols="4">
       <agent-count></agent-count>
+    </b-col>
+    <b-col cols="8">
+      <agent-stats></agent-stats>
     </b-col>
   </b-row>
   <inqueue></inqueue>
@@ -50,6 +53,7 @@ import Release from './Agent/Widget/Release'
 import AgentInfo from './Agent/Info'
 import AgentSkills from './Agent/Skills'
 import AgentCount from './Agent/Count'
+import AgentStats from './Agent/Stats'
 
 export default {
   data () {
@@ -75,7 +79,8 @@ export default {
     'agent-info': AgentInfo,
     override: Override,
     'agent-skills': AgentSkills,
-    'agent-count': AgentCount
+    'agent-count': AgentCount,
+    'agent-stats': AgentStats
   },
 }
 </script>
