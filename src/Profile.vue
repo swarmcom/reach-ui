@@ -52,14 +52,14 @@ export default {
       this.rec.skills = this.list2object(this.skills)
       try {
         await this.$agent.p_mfa('ws_agent', 'update', [this.rec])
-        this.$router.push('/')
+        this.$router.push('/main')
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });
       }
     },
     onCancel: async function () {
-      this.$router.push('/')
+      this.$router.push('/main')
     },
   },
   created () {
