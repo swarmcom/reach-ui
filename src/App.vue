@@ -34,7 +34,20 @@
 <div class="container">
   <router-view></router-view>
 </div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row  justify-content-center">
+      <span class="text-muted">
+        &copy; 2017 eZuce
+        UI: <a href="https://github.com/swarmcom/reach-ui/commit/$REF_UI">$REF_UI</a>
+        Backend: <a href="https://github.com/ezuce/reach3/commit/$REF_BACKEND">$REF_BACKEND</a></span>
+    </div>
+  </div>
+</footer>
+
 <notifications position="bottom right" :speed="500" :duration="1000"/>
+
 </div>
 </template>
 
@@ -54,5 +67,17 @@ export default {
 <style>
 #navbars > span {
   color: white;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: #f5f5f5;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
 }
 </style>
