@@ -24,11 +24,11 @@ export default {
     }
   },
   created () {
-    this.$bus.$on('stats_agents_states', this.handleUpdate)
+    this.$bus.$on('agent_group_state', this.handleUpdate)
     this.query()
   },
   beforeDestroy () {
-    this.$bus.$off('stats_agents_states', this.handleUpdate)
+    this.$bus.$off('agent_group_state', this.handleUpdate)
   }
 }
 </script>
