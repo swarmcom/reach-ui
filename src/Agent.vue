@@ -23,7 +23,6 @@
       </div>
     </div>
   </div>
-  <agent-info></agent-info>
   <b-row style="margin-top: 20px">
     <b-col cols="6">
       <agent-skills></agent-skills>
@@ -50,7 +49,6 @@ import Inqueue from './Agent/Inqueue'
 import Dialer from './Agent/Dialer'
 import Override from './Agent/Override'
 import Release from './Agent/Widget/Release'
-import AgentInfo from './Agent/Info'
 import AgentSkills from './Agent/Skills'
 import AgentCount from './Agent/Count'
 import AgentStats from './Agent/Stats'
@@ -76,7 +74,6 @@ export default {
     inqueue: Inqueue,
     dialer: Dialer,
     release: Release,
-    'agent-info': AgentInfo,
     override: Override,
     'agent-skills': AgentSkills,
     'agent-count': AgentCount,
