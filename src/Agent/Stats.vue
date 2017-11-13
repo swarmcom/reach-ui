@@ -47,7 +47,7 @@ export default {
   name: 'agent-stats',
   data () {
     return {
-      periods: [ "15m", "30m", "1h", "1w", "1m"],
+      periods: [ "15m", "30m", "1h", "1w", "1M", "1m/h", "1m/d", "1m/w", "1m/M"],
       period: "15m",
       stats: {
         cpt: {},
