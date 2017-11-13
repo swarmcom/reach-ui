@@ -37,7 +37,7 @@
 
 <footer class="footer">
   <div class="container">
-    <div class="row  justify-content-center">
+    <div class="row justify-content-center">
       <small>
         &copy; 2017 eZuce
         UI: <a :href="ref_ui_uri()">{{ ref_ui }}</a>
