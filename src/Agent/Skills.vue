@@ -1,7 +1,8 @@
 <template>
 <div>
-  <h3>Skills:</h3>
-  <skills v-model="skills" v-on:input="commit()"></skills>
+  <b-form-group label="Agent effective skills:">
+    <skills v-model="skills" v-on:input="commit()"></skills>
+  </b-form-group>
 </div>
 </template>
 
