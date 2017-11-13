@@ -5,6 +5,5 @@ window.config = {
 }
 
 window.version = {
-	ui: 'REF_UI',
-	backend: 'REF_BACKEND'
+	ui: 'REF_UI'
 }

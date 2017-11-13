@@ -41,7 +41,6 @@
       <span class="text-muted">
         &copy; 2017 eZuce
         UI: <a :href="ref_ui_uri()">{{ ref_ui }}</a>
-        Backend: <a :href="ref_backend_uri()">{{ ref_backend }}</a>
       </span>
     </div>
   </div>
@@ -72,7 +71,6 @@ export default {
   },
   created () {
     this.ref_ui = window.version.ui
-    this.ref_backend = window.version.backend
     this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
   }
 }
