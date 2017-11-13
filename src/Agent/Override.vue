@@ -3,7 +3,7 @@
   <b-input-group>
     <b-form-input v-model="uri" type="text"></b-form-input>
     <b-input-group-button>
-      <b-dropdown text="Contacts" variant="outline-secondary" right>
+      <b-dropdown text="Contacts" variant="outline-secondary" :disabled="isDisabled()" right>
         <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
       </b-dropdown>
       <b-btn @click="test" variant="success">Test</b-btn>
@@ -26,6 +26,9 @@ export default {
     query: async function() {
       this.uri = await this.$agent.p_mfa('ws_agent', 'override_uri')
       this.uri = this.uri == 'undefined'? '' : this.uri
+    },
+    isDisabled () {
+      return this.$agent.vm.agent.uris.length == 0
     },
     set: async function(uri) {
       this.uri = uri
