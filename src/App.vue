@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle v-if="auth" target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand v-if="auth" to="/main">HOME</b-navbar-brand>
@@ -34,6 +34,18 @@
   <div class="container" v-bind:class="{ 'pin-container': (isPinned && auth) }">
     <router-view></router-view>
   </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row  justify-content-center">
+        <small>
+          &copy; 2017 eZuce
+          UI: <a :href="ref_ui_uri()">{{ ref_ui }}</a>
+        </small>
+      </div>
+    </div>
+  </footer>
+
   <notifications position="bottom right" :speed="500" :duration="1000"/>
 </div>
 </template>
@@ -44,12 +56,16 @@ export default {
   storageName: 'navBar',
   data () {
     return {
+      ref_ui: 'HEAD',
       auth: false,
       date: null,
       isPinned: false
     }
   },
   methods: {
+    ref_ui_uri () {
+      return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
+    },
     logout () { this.$agent.logout() },
     onPin () {
       this.isPinned = !this.isPinned
@@ -65,6 +81,7 @@ export default {
     }
   },
   created () {
+    this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui
     this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
     this.date = new Date()
     setInterval(() => this.date = new Date, 1000)

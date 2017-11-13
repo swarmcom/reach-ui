@@ -3,3 +3,8 @@ window.config = {
 	reach_http: "http://localhost:8937",
 	reach_rr: "http://rr.ezuce:9090"
 }
+
+window.version = {
+	ui: '$REF_UI',
+	backend: '$REF_BACKEND'
+}
