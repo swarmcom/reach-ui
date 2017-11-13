@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueTransferDom from 'vue-transfer-dom'
 import App from './App.vue'
 
 import BootstrapVue from 'bootstrap-vue'
@@ -104,6 +105,7 @@ Vue.use(AgentAPI)
 Vue.use(Notifications)
 Vue.use(BootstrapVue)
 Vue.use(VueCodeMirror)
+Vue.use(VueTransferDom)
 
 Vue.directive('access', {
   bind (el, binding, vnode) {

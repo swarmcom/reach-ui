@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="min-height: 100%; padding-top: 70px; padding-bottom: 60px">
 <nav v-if="auth" class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
@@ -38,10 +38,10 @@
 <footer class="footer">
   <div class="container">
     <div class="row  justify-content-center">
-      <span class="text-muted">
+      <small>
         &copy; 2017 eZuce
         UI: <a :href="ref_ui_uri()">{{ ref_ui }}</a>
-      </span>
+      </small>
     </div>
   </div>
 </footer>
@@ -55,8 +55,7 @@
 export default {
   data () {
     return {
-      ref_ui: '',
-      ref_backend: '',
+      ref_ui: 'HEAD',
       auth: false
     }
   },
@@ -64,13 +63,9 @@ export default {
     ref_ui_uri () {
       return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
     },
-    ref_backend_uri () {
-      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
-    }
-
   },
   created () {
-    this.ref_ui = window.version.ui
+    this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui
     this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
   }
 }
@@ -84,8 +79,8 @@ export default {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 30px;
+  line-height: 30px;
   background-color: #f5f5f5;
 }
 .footer > .container {
