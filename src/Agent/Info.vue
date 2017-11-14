@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 20px">
+<div>
   <h3>Agent:</h3>
   <div class="row">
     <div class="col-5">

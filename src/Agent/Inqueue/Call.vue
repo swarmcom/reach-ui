@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 20px" v-if="visible">
+<div v-if="visible">
 
 <b-row v-if="lua_result" style="margin-bottom: 20px">
   <b-col>{{lua_result}}</b-col>
