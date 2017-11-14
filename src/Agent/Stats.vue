@@ -8,10 +8,10 @@
       </select>
     </b-col>
   </b-row>
-  <b-row style="margin-top: 10px">
+  <b-row>
     <b-col>
       <table class="table table-striped table-sm">
-        <caption>Call metrics</caption>
+        <caption>Calls metrics</caption>
         <thead>
           <tr>
             <td></td>
@@ -40,7 +40,7 @@
     </b-col>
     <b-col>
       <table class="table table-striped table-sm">
-        <caption>Agent metrics</caption>
+        <caption>Agents metrics</caption>
         <thead class="thead-dark">
           <tr>
             <td></td>

@@ -1,7 +1,5 @@
 <template>
-<div>
-CIQ: {{ ciq.ciq }}
-</div>
+<h3 class="text-muted">CIQ: {{ ciq.ciq }}</h3>
 </template>
 
 <script>

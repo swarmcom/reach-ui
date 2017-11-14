@@ -12,6 +12,9 @@
       </div>
     </div>
     <div class="col">
+      <agent-ciq></agent-ciq>
+    </div>
+    <div class="col">
       <div class="row justify-content-end">
         <release v-if="a.hangup_state == 'available'">Release</release>
         <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-success">Available</button>
@@ -34,8 +37,6 @@
   </b-row>
   <b-row style="margin-top: 20px">
     <b-col cols="4">
-      <h3>Online:</h3>
-      <agent-ciq></agent-ciq>
       <agent-count></agent-count>
     </b-col>
     <b-col cols="8">
