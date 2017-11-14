@@ -34,6 +34,8 @@
   </b-row>
   <b-row style="margin-top: 20px">
     <b-col cols="4">
+      <h3>Online:</h3>
+      <agent-ciq></agent-ciq>
       <agent-count></agent-count>
     </b-col>
     <b-col cols="8">
@@ -52,6 +54,7 @@ import Release from './Agent/Widget/Release'
 import AgentSkills from './Agent/Skills'
 import AgentCount from './Agent/Count'
 import AgentStats from './Agent/Stats'
+import AgentCIQ from './Agent/CIQ'
 
 export default {
   data () {
@@ -77,7 +80,8 @@ export default {
     override: Override,
     'agent-skills': AgentSkills,
     'agent-count': AgentCount,
-    'agent-stats': AgentStats
+    'agent-stats': AgentStats,
+    'agent-ciq': AgentCIQ
   },
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
 <div>
-  <h3>Online agents:</h3>
   <b-row v-for="(count, state) in states" :key="state">
     <b-col>{{state}}:</b-col><b-col>{{count}}</b-col>
   </b-row>
