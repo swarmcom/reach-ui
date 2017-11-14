@@ -77,7 +77,11 @@ export default {
       this.group_stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
     },
     percent (value) {
-      return `${(value*100).toFixed(2)}%`
+      if (value > 0) {
+        return `${(value*100).toFixed(2)}%`
+      } else {
+        return "0%"
+      }
     },
     isActive (value) {
       return value == this.period
