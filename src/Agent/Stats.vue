@@ -10,39 +10,62 @@
   </b-row>
   <b-row style="margin-top: 10px">
     <b-col>
-      <b-row>
-        <b-col>Longest:</b-col>
-        <b-col>{{ time(stats.cpt.longest) }}</b-col>
-        <b-col>{{ time(group_stats.cpt.longest) }} </b-col>
-      </b-row>
-      <b-row>
-        <b-col>CPT:</b-col>
-        <b-col>{{ time(stats.cpt.cpt) }}</b-col>
-        <b-col>{{ time(group_stats.cpt.cpt) }} </b-col>
-      </b-row>
-      <b-row>
-        <b-col>ASA:</b-col>
-        <b-col>{{ time(stats.cpt.asa) }}</b-col>
-        <b-col>{{ time(stats.cpt.asa) }}</b-col>
-      </b-row>
+      <table class="table table-striped table-sm">
+        <caption>Call metrics</caption>
+        <thead>
+          <tr>
+            <td></td>
+            <td>My</td>
+            <td>Group</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Longest</td>
+            <td>{{ time(stats.cpt.longest) }}</td>
+            <td>{{ time(group_stats.cpt.longest) }}</td>
+          </tr>
+          <tr>
+            <td>CPT</td>
+            <td>{{ time(stats.cpt.cpt) }}</td>
+            <td>{{ time(group_stats.cpt.cpt) }}</td>
+          </tr>
+          <tr>
+            <td>ASA</td>
+            <td>{{ time(stats.cpt.asa) }}</td>
+            <td>{{ time(group_stats.cpt.asa) }}</td>
+          </tr>
+        </tbody>
+      </table>
     </b-col>
-    <b-col cols=2></b-col>
     <b-col>
-      <b-row>
-        <b-col>Occupancy:</b-col>
-        <b-col class="text-right">{{ percent(stats.occupancy.ratio.oncall) }}</b-col>
-        <b-col class="text-right">{{ percent(group_stats.occupancy.ratio.oncall) }}</b-col>
-      </b-row>
-      <b-row>
-        <b-col>Available:</b-col>
-        <b-col class="text-right">{{ percent(stats.occupancy.ratio.available) }}</b-col>
-        <b-col class="text-right">{{ percent(group_stats.occupancy.ratio.available) }}</b-col>
-      </b-row>
-      <b-row>
-        <b-col>Release:</b-col>
-        <b-col class="text-right">{{ percent(stats.occupancy.ratio.release) }}</b-col>
-        <b-col class="text-right">{{ percent(group_stats.occupancy.ratio.release) }}</b-col>
-      </b-row>
+      <table class="table table-striped table-sm">
+        <caption>Agent metrics</caption>
+        <thead class="thead-dark">
+          <tr>
+            <td></td>
+            <td class="text-right">My</td>
+            <td class="text-right">Group</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Occupancy</td>
+            <td class="text-right">{{ percent(stats.occupancy.ratio.oncall) }}</td>
+            <td class="text-right">{{ percent(group_stats.occupancy.ratio.oncall) }}</td>
+          </tr>
+          <tr>
+            <td>Available</td>
+            <td class="text-right">{{ percent(stats.occupancy.ratio.available) }}</td>
+            <td class="text-right">{{ percent(group_stats.occupancy.ratio.available) }}</td>
+          </tr>
+          <tr>
+            <td>Release</td>
+            <td class="text-right">{{ percent(stats.occupancy.ratio.release) }}</td>
+            <td class="text-right">{{ percent(group_stats.occupancy.ratio.release) }}</td>
+          </tr>
+        </tbody>
+      </table>
     </b-col>
   </b-row>
 </div>
@@ -72,9 +95,9 @@ export default {
   methods: {
     query: async function () {
       this.stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period])
+      this.group_stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
     },
     group_query: async function () {
-      this.group_stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
     },
     percent (value) {
       if (value > 0) {
@@ -100,18 +123,13 @@ export default {
     handleUpdate () {
       this.query()
     },
-    handleGroupUpdate () {
-      this.group_query()
-    }
   },
   created () {
-    this.$bus.$on('agent_group_state', this.handleGroupUpdate)
     this.$bus.$on('agent_stats', this.handleUpdate)
     this.query()
     this.group_query()
   },
   beforeDestroy () {
-    this.$bus.$off('agent_group_state', this.handleGroupUpdate)
     this.$bus.$off('agent_stats', this.handleUpdate)
   }
 }
