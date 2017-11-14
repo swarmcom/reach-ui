@@ -107,7 +107,7 @@ export default {
   methods: {
     query () {
       this.states_query()
-      //this.stats_query()
+      this.stats_query()
       this.group_query()
       this.ciq_query()
     },
@@ -127,13 +127,7 @@ export default {
     },
     stats_query: async function () {
       let stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period.value])
-      this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
-      this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
-      this.statistics[0].occup.ringing = this.percent(stats.occupancy.ratio.ringing)
-      this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
-      this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.release)
-      this.statistics[0].asa = this.time(stats.cpt.asa)
-      this.statistics[0].longest = this.time(stats.cpt.longest)
+      this.statistics[0].myCpt = this.time(stats.cpt.cpt)
     },
     group_query: async function () {
       let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period.value])
@@ -145,8 +139,12 @@ export default {
       this.statistics[0].asa = this.time(stats.cpt.asa)
       this.statistics[0].longest = this.time(stats.cpt.longest)
     },
+    handleUpdateMyStats (ev) {
+      this.stats_query()
+    },
     handleUpdateStatesStats (ev) {
       this.states_query()
+      this.stats_query()
       this.group_query()
     },
     handleCiq (ev) {
@@ -172,12 +170,13 @@ export default {
     set_period (value) {
       this.period.value = value
       this.group_query()
+      this.stats_query()
     }
   },
   created () {
     this.$bus.$on('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$on('inqueue_state', this.handleCiq)
-    //this.$bus.$on('agent_stats', this.handleUpdateStats)
+    this.$bus.$on('agent_stats', this.handleUpdateMyStats)
     this.query()
     if (this.$agent.vm.storage_data.myStatisticsCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.myStatisticsCollapsed
@@ -185,7 +184,7 @@ export default {
   beforeDestroy () {
     this.$bus.$off('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$off('inqueue_state', this.handleCiq)
-    //this.$bus.$off('agent_stats', this.handleUpdateStats)
+    this.$bus.$off('agent_stats', this.handleUpdateMyStats)
   }
 }
 </script>
