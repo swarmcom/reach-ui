@@ -104,8 +104,13 @@ export default {
     }
   },
   methods: {
-    query: async function () {
-      let stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period.value])
+    query () {
+      this.states_query()
+      this.stats_query()
+      //this.group_query()
+      this.ciq_query()
+    },
+    states_query: async function() {
       let statesCounts = await this.$agent.p_mfa('ws_stats', 'agents_states', [])
       let totalAgents = 0
       let states = statesCounts
@@ -114,6 +119,24 @@ export default {
       })
       this.statistics[0].statesCounts = states
       this.statistics[0].agents = totalAgents
+    },
+    ciq_query: async function () {
+      let ciq = await this.$agent.p_mfa('ws_stats', 'ciq', [])
+      this.statistics[0].ciq = ciq.ciq
+    },
+    stats_query: async function () {
+      let stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period.value])
+      this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
+      console.log("dsfas:"+stats.occupancy.ratio)
+      console.log(stats.occupancy.ratio)
+      this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
+      this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
+      this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.available)
+      this.statistics[0].asa = this.time(stats.cpt.asa)
+      this.statistics[0].longest = this.time(stats.cpt.longest)
+    },
+    group_query: async function () {
+      let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
       this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
       this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
       this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
@@ -122,25 +145,23 @@ export default {
       this.statistics[0].longest = this.time(stats.cpt.longest)
     },
     handleUpdateStates (ev) {
-      let totalAgents = 0
-      let states = ev.states
-      Object.keys(ev.states).forEach(function(key,index) {
-        totalAgents += ev.states[key]
-      })
-      this.statistics[0].agents = totalAgents
-      this.statistics[0].statesCounts = states
+      this.states_query()
+    },
+    handleCiq (ev) {
+      this.ciq_query()
     },
     handleUpdateStats: async function () {
-      let stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period.value])
-      this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
-      this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
-      this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
-      this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.available)
-      this.statistics[0].asa = this.time(stats.cpt.asa)
-      this.statistics[0].longest = this.time(stats.cpt.longest)
+      this.stats_query()
+    },
+    handleGroupUpdate () {
+      this.group_query()
     },
     percent (value) {
-      return `${(value*100).toFixed(2)}%`
+      if (value > 0) {
+        return `${(value*100).toFixed(2)}%`
+      } else {
+        return "0%"
+      }
     },
     time (value) {
       if (value > 0) {
@@ -151,19 +172,23 @@ export default {
     },
     set_period (value) {
       this.period.value = value
-      this.query()
+      this.stats_query()
     }
   },
   created () {
-    this.$bus.$on('stats_agents_states', this.handleUpdateStates)
+    //this.$bus.$on('agent_group_state', this.handleGroupUpdate)
+    this.$bus.$on('agent_group_state', this.handleUpdateStates)
+    this.$bus.$on('inqueue_state', this.handleCiq)
     this.$bus.$on('agent_stats', this.handleUpdateStats)
     this.query()
     if (this.$agent.vm.storage_data.myStatisticsCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.myStatisticsCollapsed
   },
   beforeDestroy () {
-   this.$bus.$off('stats_agents_states', this.handleUpdateStates)
-   this.$bus.$off('agent_stats', this.handleUpdateStats)
+    //this.$bus.$off('agent_group_state', this.handleGroupUpdate)
+    this.$bus.$off('agent_group_state', this.handleUpdateStates)
+    this.$bus.$off('inqueue_state', this.handleCiq)
+    this.$bus.$off('agent_stats', this.handleUpdateStats)
   }
 }
 </script>
