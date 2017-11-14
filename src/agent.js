@@ -94,10 +94,12 @@ export default class Agent extends WsProto {
     this.call('stop', [], () => this.handleAuth())
     this.connect()
   }
+
   release (Id) {
     this.call('release', [Id])
     this.vm.release_id = Id;
   }
+  default_release () { this.call('release', []) }
   available () { this.call('available') }
   hangup () { this.call('hangup') }
   hold () { this.call('hold') }

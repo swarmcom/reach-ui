@@ -9,6 +9,18 @@ $agent-state-font: 13px;
 body {
   padding-top: 56px;
 }
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  background-color: #f5f5f5;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
 /* custom login form to fit old UI*/
 .form-signin {
   padding: 25px;
