@@ -85,7 +85,7 @@ export default {
       periods: [
         { value:"15m", name:"Last 15 minutes"},
         { value:"30m", name:"Last 30 minutes"},
-        { value:"1h/h", name:"Last Hour"},
+        { value:"60m", name:"Last Hour"},
         { value:"1d/d", name:"Today" },
         { value:"1w/w", name:"This Week" },
         { value:"1M/M", name:"This Month" }
