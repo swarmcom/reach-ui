@@ -107,8 +107,8 @@ export default {
   methods: {
     query () {
       this.states_query()
-      this.stats_query()
-      //this.group_query()
+      //this.stats_query()
+      this.group_query()
       this.ciq_query()
     },
     states_query: async function() {
@@ -136,7 +136,7 @@ export default {
       this.statistics[0].longest = this.time(stats.cpt.longest)
     },
     group_query: async function () {
-      let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
+      let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period.value])
       this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
       this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
       this.statistics[0].occup.ringing = this.percent(stats.occupancy.ratio.ringing)
@@ -145,17 +145,15 @@ export default {
       this.statistics[0].asa = this.time(stats.cpt.asa)
       this.statistics[0].longest = this.time(stats.cpt.longest)
     },
-    handleUpdateStates (ev) {
+    handleUpdateStatesStats (ev) {
       this.states_query()
+      this.group_query()
     },
     handleCiq (ev) {
       this.ciq_query()
     },
     handleUpdateStats: async function () {
       this.stats_query()
-    },
-    handleGroupUpdate () {
-      this.group_query()
     },
     percent (value) {
       if (value > 0) {
@@ -173,23 +171,21 @@ export default {
     },
     set_period (value) {
       this.period.value = value
-      this.stats_query()
+      this.group_query()
     }
   },
   created () {
-    //this.$bus.$on('agent_group_state', this.handleGroupUpdate)
-    this.$bus.$on('agent_group_state', this.handleUpdateStates)
+    this.$bus.$on('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$on('inqueue_state', this.handleCiq)
-    this.$bus.$on('agent_stats', this.handleUpdateStats)
+    //this.$bus.$on('agent_stats', this.handleUpdateStats)
     this.query()
     if (this.$agent.vm.storage_data.myStatisticsCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.myStatisticsCollapsed
   },
   beforeDestroy () {
-    //this.$bus.$off('agent_group_state', this.handleGroupUpdate)
-    this.$bus.$off('agent_group_state', this.handleUpdateStates)
+    this.$bus.$off('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$off('inqueue_state', this.handleCiq)
-    this.$bus.$off('agent_stats', this.handleUpdateStats)
+    //this.$bus.$off('agent_stats', this.handleUpdateStats)
   }
 }
 </script>
