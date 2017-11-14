@@ -15,7 +15,6 @@ export default {
       this.ciq = await this.$agent.p_mfa('ws_stats', 'ciq', [])
     },
     handleUpdate (ev) {
-      console.log("EVENT")
       this.query()
     }
   },

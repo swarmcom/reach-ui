@@ -6,13 +6,13 @@
       <button type="button" disabled class="btn btn-outline-secondary">{{a.hangup_state}}</button>
     </div>
     <div class="col">
+      <agent-ciq></agent-ciq>
+    </div>
+    <div class="col">
       <div class="row justify-content-end">
         <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-warning">Hangup</button>
         <button v-if="this.$agent.is_wrapup()" @click="wrapup" class="btn btn-outline-warning">Wrap up</button>
       </div>
-    </div>
-    <div class="col">
-      <agent-ciq></agent-ciq>
     </div>
     <div class="col">
       <div class="row justify-content-end">
