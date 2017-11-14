@@ -34,6 +34,7 @@
           </template>
           <template slot="occup" slot-scope="data">
             <div class="session-state-text"><b>oncall: </b>{{data.item.occup.oncall}}</div>
+            <div class="session-state-text"><b>ringing: </b>{{data.item.occup.ringing}}</div>
             <div class="session-state-text"><b>available: </b>{{data.item.occup.available}}</div>
             <div class="session-state-text"><b>release: </b>{{data.item.occup.release}}</div>
           </template>
@@ -127,11 +128,10 @@ export default {
     stats_query: async function () {
       let stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period.value])
       this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
-      console.log("dsfas:"+stats.occupancy.ratio)
-      console.log(stats.occupancy.ratio)
       this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
+      this.statistics[0].occup.ringing = this.percent(stats.occupancy.ratio.ringing)
       this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
-      this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.available)
+      this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.release)
       this.statistics[0].asa = this.time(stats.cpt.asa)
       this.statistics[0].longest = this.time(stats.cpt.longest)
     },
@@ -139,8 +139,9 @@ export default {
       let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
       this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
       this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
+      this.statistics[0].occup.ringing = this.percent(stats.occupancy.ratio.ringing)
       this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
-      this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.available)
+      this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.release)
       this.statistics[0].asa = this.time(stats.cpt.asa)
       this.statistics[0].longest = this.time(stats.cpt.longest)
     },
