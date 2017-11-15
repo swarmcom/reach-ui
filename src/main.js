@@ -53,6 +53,9 @@ import AdminLua from './Admin/Lua.vue'
 import AdminLuas from './Admin/Luas.vue'
 import AdminRole from './Admin/Role.vue'
 import AdminRoles from './Admin/Roles.vue'
+import AdminTagGroups from './Admin/Tag/Groups.vue'
+import AdminTagGroup from './Admin/Tag/Group.vue'
+import AdminTags from './Admin/Tags.vue'
 import AdminPermissions from './Admin/Permissions.vue'
 
 import AdminParams from './Admin/Params.vue'
@@ -134,6 +137,7 @@ const router = new VueRouter({
       { path: 'mohs', component: AdminMOHs },
       { path: 'recipes', component: AdminRecipes },
       { path: 'luas', component: AdminLuas },
+      { path: 'tag_groups', component: AdminTagGroups },
       { path: 'agent', component: AdminAgent },
       { path: 'dialplan', component: AdminDialplan },
       { path: 'agent/:id', component: AdminAgent, props: true },
@@ -149,6 +153,9 @@ const router = new VueRouter({
       { path: 'role', component: AdminRole },
       { path: 'role/:id', component: AdminRole, props: true },
       { path: 'role/:id/permissions', component: AdminPermissions, props: true },
+      { path: 'tag_group', component: AdminTagGroup },
+      { path: 'tag_group/:id', component: AdminTagGroup, props: true },
+      { path: 'tag_group/:id/entries', component: AdminTags, props: true },
       { path: 'disposition', component: AdminDispositionGroup },
       { path: 'disposition/:id', component: AdminDispositionGroup, props: true },
       { path: 'disposition/:id/entries', component: AdminDispositionEntries, props: true },
