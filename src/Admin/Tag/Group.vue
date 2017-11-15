@@ -2,7 +2,7 @@
 <div class="container" style="margin-top:20px">
   <div class="row">
     <div class="col-4">
-      <h3>Release group:</h3>
+      <h3>Tag group:</h3>
     </div>
   </div>
 
@@ -23,14 +23,14 @@ import Obj from '../Object'
 import Common from '../Common'
 
 export default {
-  name: 'admin-release-group',
+  name: 'admin-tag-group',
   props: ['id'],
   mixins: [Common, Obj],
   data () {
     return {
       rec: {},
-      module: 'ws_db_release_group',
-      redirect: '/admin/releases'
+      module: 'ws_db_tag_group',
+      redirect: '/admin/tag_groups'
     }
   },
 }
