@@ -40,7 +40,8 @@
     <div class="row justify-content-center">
       <small>
         &copy; 2017 eZuce
-        UI: <a :href="ref_ui_uri()">{{ ref_ui }}</a>
+        UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
+        Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
       </small>
     </div>
   </div>
@@ -56,6 +57,7 @@ export default {
   data () {
     return {
       ref_ui: 'HEAD',
+      ref_backend: 'HEAD',
       auth: false
     }
   },
@@ -63,10 +65,18 @@ export default {
     ref_ui_uri () {
       return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
     },
+    ref_backend_uri () {
+      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
+    },
+    handleAuth: async function (Auth) {
+      this.auth = Auth
+      let backend = await this.$agent.p_mfa('ws_misc', 'version', [])
+      this.ref_backend = backend.version
+    }
   },
-  created () {
+  created: async function() {
     this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui
-    this.$bus.$on('agent-auth', (Auth) => this.auth = Auth)
+    this.$bus.$on('agent-auth', this.handleAuth)
   }
 }
 </script>
