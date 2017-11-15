@@ -2,8 +2,8 @@
 <div>
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-  <div class="row">
-    <div class="col-2">
+  <b-row>
+    <b-col cols="2">
       <div class="row toggle-bar-custom">
         <div class="title">Filter</div>
       </div>
@@ -39,16 +39,20 @@
       <b-form-select size="sm" v-model="selectedCustomer">
         <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
       </b-form-select>
-      <div class="agent-state-text" style="margin-top:10px">Reload recordings:</div>
-      <b-btn size="sm" style="width:100%" variant="primary" @click="reload">Reload</b-btn>
-    </div>
-    <div class="col-10">
+    </b-col>
+    <b-col cols="10">
+      <b-col cols="2" class="float-right">
+      <b-form-select size="sm" :options="pageOptions" v-model="perPage" @input="onSelectChange"/>
+      </b-col>
       <b-table style="margin-top:10px" small
         :items="computedRecordings"
         :fields="fields"
         :filter="filter"
+        :current-page="currentPage"
+        :per-page="perPage"
         :sort-by="sortBy"
         :sort-desc="sortDesc"
+        @filtered="onFiltered"
         @sort-changed="onSortingChanged">
         <template  slot="player" slot-scope="data">
           <b-form-checkbox v-if="data.item.keep_record" v-model="data.item._showDetails" plain></b-form-checkbox>
@@ -81,8 +85,10 @@
           <div class="agent-state-text"><b>Number: </b>{{data.item.vars['Caller-Destination-Number']}}</div>
         </template>
       </b-table>
-    </div>
-  </div>
+      <b-pagination size="sm" align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
+      <b-btn size="sm" style="width:80px" variant="primary" @click="reload">Refresh</b-btn>
+    </b-col>
+  </b-row>
   </b-collapse>
 </div>
 </template>
@@ -117,6 +123,13 @@ export default {
       queues: [],
       line_ins: [],
       filter: null,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [
+        {text:'All', value:0},
+        {text:5,value:5},{text:10,value:10},{text:15,value:15}, {text:20,value:20}, {text:25,value:25}, {text:30,value:30}
+      ],
+      totalRows: 0,
       startDate: '',
       endDate: '',
       config: {
@@ -181,7 +194,16 @@ export default {
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
       this.$agent.vm.storage_data[this.$options.storageName+'SortDesc'] = ctx.sortDesc
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-    }
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
+    onSelectChange (value) {
+      this.$agent.vm.storage_data[this.$options.storageName+'PerPage'] = value
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    },
   },
   created () {
     this.query()
@@ -191,6 +213,8 @@ export default {
       this.sortBy = this.$agent.vm.storage_data.callRecordingsSortBy
     if (this.$agent.vm.storage_data.callRecordingsSortDesc != undefined)
       this.sortDesc = this.$agent.vm.storage_data.callRecordingsSortDesc
+    if (this.$agent.vm.storage_data.callRecordingsPerPage != undefined)
+      this.perPage = this.$agent.vm.storage_data.callRecordingsPerPage
   },
   computed: {
     computedRecordings () {
@@ -238,6 +262,7 @@ export default {
         compRecordings.push(key);
 
       } )
+      this.totalRows = compRecordings.length
       return compRecordings;
     }
   }
