@@ -197,43 +197,45 @@ export default {
       let recordings = this.recordings
       let compRecordings = []
       recordings.forEach( (key) => {
-        compRecordings.push(key);
-
         let actDate = new Date(key.ts)
         let startDate =new Date(this.startDate)
         startDate.setHours(0,0,0,0)
         let endDate =new Date(this.endDate)
         endDate.setHours(23,59,59,9999)
 
+        if(!key.keep_record)
+          return
+
         if(actDate.getTime() > endDate.getTime() || actDate.getTime() < startDate.getTime() )
-          compRecordings.pop(key)
+          return
 
         if(key.line_in.client != undefined) {
           if(this.selectedCustomer != key.line_in.client.name && this.selectedCustomer != 'Any Customer'){
-            compRecordings.pop(key)
+            return
           }
         }
         else if(this.selectedCustomer != 'Any Customer'){
-          compRecordings.pop(key)
+          return
         }
 
         if(key.queue != undefined) {
           if(this.selectedQueue != key.queue.name && this.selectedQueue != 'Any Queue'){
-            compRecordings.pop(key)
+            return
           }
         }
         else if(this.selectedQueue != 'Any Queue'){
-          compRecordings.pop(key)
+          return
         }
 
         if(key.line_in != undefined) {
           if(this.selectedLine != key.line_in.name && this.selectedLine != 'Any Line'){
-            compRecordings.pop(key)
+            return
           }
         }
         else if(this.selectedLine != 'Any Line'){
-          compRecordings.pop(key)
+          return
         }
+        compRecordings.push(key);
 
       } )
       return compRecordings;
