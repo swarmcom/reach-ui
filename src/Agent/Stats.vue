@@ -22,18 +22,18 @@
         <tbody>
           <tr>
             <td>Longest</td>
-            <td>{{ time(stats.cpt.longest) }}</td>
-            <td>{{ time(group_stats.cpt.longest) }}</td>
+            <td>{{ time(stats.cpt.max.oncall) }}</td>
+            <td>{{ time(group_stats.cpt.max.oncall) }}</td>
           </tr>
           <tr>
             <td>CPT</td>
-            <td>{{ time(stats.cpt.cpt) }}</td>
-            <td>{{ time(group_stats.cpt.cpt) }}</td>
+            <td>{{ time(stats.cpt.avg.oncall) }}</td>
+            <td>{{ time(group_stats.cpt.avg.oncall) }}</td>
           </tr>
           <tr>
             <td>ASA</td>
-            <td>{{ time(stats.cpt.asa) }}</td>
-            <td>{{ time(group_stats.cpt.asa) }}</td>
+            <td>{{ time(stats.cpt.avg.answer) }}</td>
+            <td>{{ time(group_stats.cpt.avg.answer) }}</td>
           </tr>
         </tbody>
       </table>
@@ -79,13 +79,19 @@ export default {
       periods: [ "15m", "30m", "1h", "1w", "1m"],
       period: "15m",
       stats: {
-        cpt: {},
+        cpt: {
+          avg: {},
+          max: {}
+        },
         occupancy: {
           ratio: {}
         }
       },
       group_stats: {
-        cpt: {},
+        cpt: {
+          avg: {},
+          max: {}
+        },
         occupancy: {
           ratio: {}
         }
