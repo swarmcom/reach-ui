@@ -44,8 +44,7 @@ export default {
   },
   methods: {
     query: async function() {
-      let raw = await this.$agent.p_mfa('ws_stats', 'agent', [])
-      this.agents = raw.map( (re) => re._source )
+      this.agents = await this.$agent.p_mfa('ws_stats', 'agent', [])
     },
     click ({uuid}) {
       this.$router.push(`/stats/agent/${uuid}`)

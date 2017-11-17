@@ -45,8 +45,7 @@ export default {
   },
   methods: {
     query: async function() {
-      let raw = await this.$agent.p_mfa('ws_stats', 'inqueue_events', [this.uuid])
-      this.events = raw.map( (re) => re._source )
+      this.events = await this.$agent.p_mfa('ws_stats', 'inqueue_events', [this.uuid])
     },
     maybe_name (item) {
       if (typeof item === 'object') {

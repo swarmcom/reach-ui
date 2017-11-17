@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inqueues sessions</h3></div>
+    <div class="col"><h3>Inqueues</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields" @row-clicked="click">
     <template slot="state_inqueue" slot-scope="data">
@@ -60,8 +60,7 @@ export default {
   },
   methods: {
     query: async function() {
-      let raw = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
-      this.inqueues = raw.map( (re) => re._source )
+      this.inqueues = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
     },
     click ({uuid}) {
       this.$router.push(`/stats/inqueue/${uuid}`)
