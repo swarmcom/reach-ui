@@ -23,9 +23,11 @@ export default {
   },
   created () {
     this.query()
+    this.$bus.$on('agent_skills', this.handleUpdate)
     this.$bus.$on('inqueue_state', this.handleUpdate)
   },
   beforeDestroy () {
+    this.$bus.$off('agent_skills', this.handleUpdate)
     this.$bus.$off('inqueue_state', this.handleUpdate)
   }
 }
