@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="row">
-    <div class="col">
+    <div class="col-3">
       <button type="button" disabled class="btn btn-outline-primary">{{a.state}}</button>
       <button type="button" disabled class="btn btn-outline-secondary">{{a.hangup_state}}</button>
     </div>

@@ -131,11 +131,13 @@ export default {
     },
   },
   created () {
+    this.$bus.$on('agent_skills', this.handleUpdate)
     this.$bus.$on('agent_stats', this.handleUpdate)
     this.query()
     this.group_query()
   },
   beforeDestroy () {
+    this.$bus.$off('agent_skills', this.handleUpdate)
     this.$bus.$off('agent_stats', this.handleUpdate)
   }
 }
