@@ -37,7 +37,7 @@ export default {
       })
     },
     handleState ({state}) {
-      if (state.record == 'inqueue_conf') {
+      if (state && state.record == 'inqueue_conf') {
         this.query()
       }
     },
