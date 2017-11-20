@@ -22,7 +22,6 @@ import Common from '../Admin/Common'
 export default {
   name: 'my-statistics-skills',
   components: {
-    'skills': Skills,
      Multiselect
   },
   mixins: [Common],
