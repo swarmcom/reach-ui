@@ -18,7 +18,6 @@
 
 <script>
 import Multiselect from 'vue-multiselect'
-import Skills from './Widget/Skills'
 import Common from '../Admin/Common'
 export default {
   name: 'my-statistics-skills',
