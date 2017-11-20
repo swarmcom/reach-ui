@@ -5,6 +5,7 @@
   <call v-if="call_visible" :uuid="uuid"></call>
   <spy v-if="spy_visible" :uuid="uuid"></spy>
   <conference v-if="conf_visible"></conference>
+  <conf-request></conf-request>
 </div>
 </template>
 
@@ -14,6 +15,7 @@ import Conference from './Inqueue/Conference'
 import Outgoing from './Inqueue/Outgoing'
 import Ringer from './Inqueue/Ringer'
 import Spy from './Inqueue/Spy'
+import InqueueConf from './Inqueue/Conf'
 
 export default {
   data () {
@@ -74,7 +76,8 @@ export default {
     conference: Conference,
     outgoing: Outgoing,
     ringer: Ringer,
-    spy: Spy
+    spy: Spy,
+    'conf-request': InqueueConf
   },
 }
 </script>

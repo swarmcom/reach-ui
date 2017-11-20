@@ -19,6 +19,9 @@
     <template slot="agent_login" slot-scope="data">
       {{ data.item.agent.login }}
     </template>
+    <template slot="agent_peer" slot-scope="data">
+      {{ data.item.peer }}
+    </template>
   </b-table>
 </div>
 </template>
@@ -37,15 +40,15 @@ export default {
         state_available: { label: 'Available' },
         state_oncall: { label: 'Oncall' },
         agent_name: { label: 'Name', sortable: true },
-        agent_login: { label: 'Login', sortable: true }
+        agent_login: { label: 'Login', sortable: true },
+        agent_peer: { label: 'Peer IP', sortable: true },
       },
       agents: []
     }
   },
   methods: {
     query: async function() {
-      let raw = await this.$agent.p_mfa('ws_stats', 'agent', [])
-      this.agents = raw.map( (re) => re._source )
+      this.agents = await this.$agent.p_mfa('ws_stats', 'agent', [])
     },
     click ({uuid}) {
       this.$router.push(`/stats/agent/${uuid}`)
