@@ -13,6 +13,10 @@
         <router-link class="nav-link" to="/admin/agents">Admin</router-link>
       </li>
 
+      <b-nav-item-dropdown v-access:supervisor-ui text="Reports">
+        <b-dropdown-item to="/report/agents/states">Agents states</b-dropdown-item>
+      </b-nav-item-dropdown>
+
       <b-nav-item-dropdown v-access:supervisor-ui text="Sessions">
         <b-dropdown-item to="/stats/inqueue">Inqueues</b-dropdown-item>
         <b-dropdown-item to="/stats/agent">Agents</b-dropdown-item>

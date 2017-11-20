@@ -78,9 +78,14 @@ import ReleaseGroups from './Widget/ReleaseGroups.vue'
 import Roles from './Widget/Roles.vue'
 import AdminHelp from './Widget/Help'
 
+import ReportAgentsStates from './Report/Agents/States'
+
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon.vue'
 import Notifications from 'vue-notification'
+
+
+
 
 Vue.component('icon', Icon)
 
@@ -183,6 +188,7 @@ const router = new VueRouter({
     { path: '/stats/agent', component: StatsAgent },
     { path: '/stats/inqueue/:uuid', component: StatsInqueueEvents, props: true },
     { path: '/stats/agent/:uuid', component: StatsAgentEvents, props: true },
+    { path: '/report/agents/states', component: ReportAgentsStates },
     { path: '/', component: Agent }
   ]
 })
