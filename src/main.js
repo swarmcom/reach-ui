@@ -200,9 +200,13 @@ function guard (agent, to, from, next) {
 
 function handleAuth (R, Auth) {
   if (Auth) {
-    R.replace('/')
+    if (R.initial_path == '/login') {
+      R.$router.replace('/')
+    } else {
+      R.$router.replace(R.initial_path)
+    }
   } else {
-    R.replace('/login')
+    R.$router.replace('/login')
   }
 }
 
@@ -214,8 +218,9 @@ const app = new Vue({
   created () {
     this.$router.beforeEach((to, from, next) => guard(this.$agent, to, from, next))
     if (!this.$agent.isAuth()) {
+      this.initial_path = this.$router.currentRoute.path
       this.$router.replace('/login')
     }
-    this.$bus.$on('agent-auth', Auth => handleAuth(this.$router, Auth))
+    this.$bus.$on('agent-auth', (Auth) => handleAuth(this, Auth))
   }
 })
