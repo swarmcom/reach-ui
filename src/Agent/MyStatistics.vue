@@ -85,10 +85,10 @@ export default {
       periods: [
         { value:"15m", name:"Last 15 minutes"},
         { value:"30m", name:"Last 30 minutes"},
-        { value:"60m", name:"Last Hour"},
-        { value:"1d/d", name:"Today" },
-        { value:"1w/w", name:"This Week" },
-        { value:"1M/M", name:"This Month" }
+        { value:"1h", name:"Last Hour"},
+        { value:"1d", name:"Today" },
+        { value:"1w", name:"This Week" },
+        { value:"1m", name:"This Month" }
       ],
       period: { value: "15m", name: "Last 15 minutes"},
       fields: {
@@ -127,20 +127,27 @@ export default {
     },
     stats_query: async function () {
       let stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period.value])
-      this.statistics[0].myCpt = this.time(stats.cpt.cpt)
+      this.statistics[0].myCpt = this.time(stats.cpt.avg.oncall)
     },
     group_query: async function () {
       let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period.value])
-      this.statistics[0].teamCpt = this.time(stats.cpt.cpt)
+      this.statistics[0].teamCpt = this.time(stats.cpt.avg.oncall)
       this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
       this.statistics[0].occup.ringing = this.percent(stats.occupancy.ratio.ringing)
       this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
       this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.release)
-      this.statistics[0].asa = this.time(stats.cpt.asa)
-      this.statistics[0].longest = this.time(stats.cpt.longest)
+      this.statistics[0].asa = this.time(stats.cpt.avg.answer)
+      this.statistics[0].longest = this.time(stats.cpt.max.oncall)
+    },
+    handleUpdateSkills (ev) {
+      this.states_query()
+      this.stats_query()
+      this.group_query()
+      this.ciq_query()
     },
     handleUpdateMyStats (ev) {
       this.stats_query()
+      this.group_query()
     },
     handleUpdateStatesStats (ev) {
       this.states_query()
@@ -177,6 +184,7 @@ export default {
     this.$bus.$on('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$on('inqueue_state', this.handleCiq)
     this.$bus.$on('agent_stats', this.handleUpdateMyStats)
+    this.$bus.$on('agent_skills', this.handleUpdateSkills)
     this.query()
     if (this.$agent.vm.storage_data.myStatisticsCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.myStatisticsCollapsed
@@ -185,6 +193,7 @@ export default {
     this.$bus.$off('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$off('inqueue_state', this.handleCiq)
     this.$bus.$off('agent_stats', this.handleUpdateMyStats)
+    this.$bus.$off('agent_skills', this.handleUpdateSkills)
   }
 }
 </script>

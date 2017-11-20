@@ -157,8 +157,7 @@ export default {
       this.line_ins.unshift({ name:"Any Line" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
       this.queues.unshift({ name:"Any Queue" })
-      let raw = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
-      this.recordings = raw.map( (re) => re._source )
+      this.recordings = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -187,8 +186,7 @@ export default {
       }
     },
     reload: async function() {
-      let raw = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
-      this.recordings = raw.map( (re) => re._source )
+      this.recordings = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
     },
     onSortingChanged (ctx){
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
