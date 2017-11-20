@@ -4,11 +4,12 @@
   <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2">
     <b-row>
       <b-col cols="2">
-        <b-form-select size="sm" v-model="period.value" @change="set_period">
+        <b-form-select v-model="period.value" @change="set_period">
           <option v-for="period in periods" :value="period.value">{{period.name}}</option>
         </b-form-select>
       </b-col>
-      <div class="agent-state-text"><b>Profile: </b>{{ this.$agent.vm.agent.group.name }}</div>
+      <my-statistics-skills></my-statistics-skills>
+      <div style="margin-left:10px" class="agent-state-text"><b>Profile: </b>{{ this.$agent.vm.agent.group.name }}</div>
     </b-row>
     <b-row>
       <b-col>
@@ -46,9 +47,13 @@
 </template>
 
 <script>
+import MyStatisticsSkills from './MyStatisticsSkills'
 export default {
   widgetName: 'MY STATISTICS',
   storageName: 'myStatistics',
+  components: {
+    'my-statistics-skills': MyStatisticsSkills,
+  },
   data () {
     return {
       statistics: [{
