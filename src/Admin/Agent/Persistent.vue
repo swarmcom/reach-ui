@@ -6,12 +6,12 @@
   <b-table style="margin-top:10px" small striped hover :items="agents" :fields="fields">
     <template slot="actions" slot-scope="data">
       <div v-if="data.item.runtime.state">
-        <b-button v-if="data.item.runtime.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
-        <b-button v-else size="sm" variant="primary" @click="release(data.item)">Release</b-button>
-        <b-button size="sm" variant="danger" @click="stop(data.item)">Stop</b-button>
+        <b-button class="pointer" v-if="data.item.runtime.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
+        <b-button class="pointer" v-else size="sm" variant="primary" @click="release(data.item)">Release</b-button>
+        <b-button class="pointer" size="sm" variant="danger" @click="stop(data.item)">Stop</b-button>
       </div>
       <div v-else>
-        <b-button size="sm" variant="success" @click="start(data.item)">Start</b-button>
+        <b-button class="pointer" size="sm" variant="success" @click="start(data.item)">Start</b-button>
       </div>
     </template>
   </b-table>

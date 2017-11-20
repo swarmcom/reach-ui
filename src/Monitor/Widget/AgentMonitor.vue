@@ -78,9 +78,9 @@
           </template>
           <template slot="actions" slot-scope="data">
             <b-input-group-button size="sm">
-              <b-button v-if="data.item.state == 'release'" size="sm" variant="outline-primary" @click="available(data.item)">Available</b-button>
-              <b-button v-else size="sm" variant="outline-primary" @click="release(data.item)">Release</b-button>
-              <b-button size="sm" variant="outline-primary" @click="stop(data.item)">Kill</b-button>
+              <b-button class="pointer" v-if="data.item.state == 'release'" size="sm" variant="outline-primary" @click="available(data.item)">Available</b-button>
+              <b-button class="pointer" v-else size="sm" variant="outline-primary" @click="release(data.item)">Release</b-button>
+              <b-button class="pointer" size="sm" variant="outline-primary" @click="stop(data.item)">Kill</b-button>
             </b-input-group-button>
           </template>
         </b-table>

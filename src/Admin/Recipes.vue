@@ -5,14 +5,14 @@
       <h3>Recipes:</h3>
     </div>
     <div class="col">
-      <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-success pointer"><icon name="plus" scale="1"></icon></button>
     </div>
   </div>
 
   <b-table style="margin-top:10px" striped hover small :items="recipes" :fields="fields">
     <template slot="actions" slot-scope="data">
-      <b-btn size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>
-      <b-btn size="sm" variant="success" @click="entries(data.item)">Entries</b-btn>
+      <b-btn class="pointer" size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>
+      <b-btn class="pointer" size="sm" variant="success" @click="entries(data.item)">Entries</b-btn>
     </template>
   </b-table>
 </div>

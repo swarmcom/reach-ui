@@ -38,13 +38,13 @@
   </div>
 
   <div class="col-2">
-    <button @click="hangup()" class="btn btn-outline-danger">Hangup</button>
+    <button @click="hangup()" class="btn btn-outline-danger pointer">Hangup</button>
   </div>
   <div class="col-2">
-    <button @click="takeover()" class="btn btn-outline-warning">Takeover</button>
+    <button @click="takeover()" class="btn btn-outline-warning pointer">Takeover</button>
   </div>
   <div class="col-2">
-    <button @click="cancel()" class="btn btn-outline-primary">Cancel Spy</button>
+    <button @click="cancel()" class="btn btn-outline-primary pointer">Cancel Spy</button>
   </div>
 
 </div>

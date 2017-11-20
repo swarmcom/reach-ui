@@ -36,7 +36,7 @@
     <disposition v-bind:uuid="this.uuid"></disposition>
   </div>
   <div class="col-2">
-    <b-button size="sm" v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
+    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
   </div>
 </div>
 <div v-if="!this.$agent.is_conference()" class="col-12">

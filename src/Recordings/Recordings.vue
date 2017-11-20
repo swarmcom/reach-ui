@@ -8,7 +8,7 @@
         <div class="title">Filter</div>
       </div>
       <b-input-group size="sm" style="margin-top:10px">
-        <b-btn id="search" size="sm" variant="primary"
+        <b-btn class="pointer" id="search" size="sm" variant="primary"
                   v-b-popover.hover.top="'Click to see how to search'">
         ?
         </b-btn>
@@ -86,7 +86,7 @@
         </template>
       </b-table>
       <b-pagination size="sm" align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
-      <b-btn size="sm" style="width:80px" variant="primary" @click="reload">Refresh</b-btn>
+      <b-btn class="pointer" size="sm" style="width:80px" variant="primary" @click="reload">Refresh</b-btn>
     </b-col>
   </b-row>
   </b-collapse>

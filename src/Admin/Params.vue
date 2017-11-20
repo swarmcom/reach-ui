@@ -7,7 +7,7 @@
   </div>
   <div v-for="param of params" class="form-row" style="margin-top: 5px">
     <div class="col-1">
-      <button @click="del(param.key)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
+      <button @click="del(param.key)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </div>
     <div class="col-3">
       <input type="text" class="form-control" v-model="param.key">
@@ -19,7 +19,7 @@
 
   <div class="form-row" style="margin-top: 5px">
     <div class="col-1">
-      <button @click="add" class="btn btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </div>
     <div class="col-3">
       <input type="text" class="form-control" v-model="name">
@@ -31,18 +31,18 @@
 
   <b-row style="margin-top: 20px">
     <b-col>
-      <button @click="commit" class="btn btn-primary">Commit</button>
-      <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
+      <button @click="commit" class="btn btn-primary pointer">Commit</button>
+      <button @click="cancel" class="btn btn-outline-primary pointer">Cancel</button>
     </b-col>
     <b-col cols=4>
-      <button @click="save" class="btn btn-success">Save</button>
-      <button @click="erase" class="btn btn-danger">Erase</button>
-      <button @click="apply" class="btn btn-warning">Apply</button>
+      <button @click="save" class="btn btn-success pointer">Save</button>
+      <button @click="erase" class="btn btn-danger pointer">Erase</button>
+      <button @click="apply" class="btn btn-warning pointer">Apply</button>
     </b-col>
   </b-row>
   <b-row style="margin-top: 20px">
     <b-col>
-      <button @click="download" class="btn btn-success">Download</button>
+      <button @click="download" class="btn btn-success pointer">Download</button>
     </b-col>
     <b-col>
       <b-form-file v-model="config_file" v-on:input="upload" placeholder="Choose json config to upload..."></b-form-file>

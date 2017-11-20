@@ -2,7 +2,7 @@
 <div>
   <div v-for="(action, index) of actions" class="form-row" style="margin-bottom: 5px">
     <b-col cols=1>
-      <button @click="del(index)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
+      <button @click="del(index)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </b-col>
     <b-col cols=5>
       <b-input-group>
@@ -21,7 +21,7 @@
 
   <div class="form-row" v-if="edit" style="margin-bottom: 20px">
     <b-col cols=1>
-      <button @click="add" class="btn btn-outline-seactionary"><icon class="align-middle" name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-seactionary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </b-col>
     <b-col cols=5>
       <b-input-group>

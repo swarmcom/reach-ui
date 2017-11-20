@@ -4,7 +4,7 @@
 
   <div v-for="tag of tags" class="form-row" style="margin-top: 5px">
     <div class="col-1">
-      <button @click="del(tag.id)" class="btn btn-outline-danger"><icon name="minus" scale="1"></icon></button>
+      <button @click="del(tag.id)" class="btn btn-outline-danger pointer"><icon name="minus" scale="1"></icon></button>
     </div>
     <div class="col-3">
       <input type="text" class="form-control"
@@ -22,7 +22,7 @@
 
   <div class="form-row" style="margin-top: 5px">
     <div class="col-1">
-      <button @click="add" class="btn btn-outline-secondary"><icon name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-secondary pointer"><icon name="plus" scale="1"></icon></button>
     </div>
     <div class="col-3">
       <input type="text" class="form-control" v-model="name" placeholder="Name">

@@ -14,9 +14,9 @@
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text> 
   <skills label="Client Skills" v-model="skills"></skills>
   <div style="margin-top: 20px">
-    <button @click="onCommit" class="btn btn-primary">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
+    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
   </div>
   <help></help>
 </div>

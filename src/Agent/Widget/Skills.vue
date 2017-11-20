@@ -27,7 +27,7 @@
 
   <div class="row" style="margin-top: 10px">
     <div class="col">
-      <button @click="commit" class="btn btn-sm btn-primary float-right">Commit</button>
+      <button @click="commit" class="btn btn-sm btn-primary float-right pointer">Commit</button>
     </div>
   </div>
 </div>
