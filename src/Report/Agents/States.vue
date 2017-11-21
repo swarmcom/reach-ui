@@ -25,7 +25,11 @@ export default {
     },
     query: async function() {
       this.data = await this.$agent.p_mfa('ws_report', 'agents_states', [])
-      this.data.datasets.forEach( (X) => { X.borderColor = this.random_color(); X.fill = false })
+      this.data.datasets.forEach( (X) => {
+        X.borderColor = this.random_color();
+        X.fill = false
+        X.steppedLine = true
+      })
       this.chart = new Chart("report", {
         type: 'line',
         data: this.data,
@@ -38,11 +42,6 @@ export default {
               }
             }]
           },
-          elements: {
-            line: {
-                tension: 0, // disables bezier curves
-            }
-          }
         }
       })
     },
