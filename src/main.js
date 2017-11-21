@@ -197,11 +197,12 @@ const router = new VueRouter({
   ]
 })
 
-function guard (agent, to, from, next) {
+function guard (self, to, from, next) {
   if (to.path === '/login') {
     return next()
   }
-  if (agent.isAuth()) {
+  if (self.$agent.isAuth()) {
+    self.initial_path = to.path
     next()
   } else {
     next('/login')
@@ -226,7 +227,7 @@ const app = new Vue({
   template: '<App/>',
   components: { App },
   created () {
-    this.$router.beforeEach((to, from, next) => guard(this.$agent, to, from, next))
+    this.$router.beforeEach((to, from, next) => guard(this, to, from, next))
     if (!this.$agent.isAuth()) {
       this.initial_path = this.$router.currentRoute.path
       this.$router.replace('/login')
