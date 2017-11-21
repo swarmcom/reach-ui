@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import SessionManager from './Agent/SessionManager.vue'
-import MyStatistics from './Agent/MyStatistics.vue'
+import SessionManager from '@/Agent/SessionManager.vue'
+import MyStatistics from '@/Agent/MyStatistics.vue'
 export default {
   data () {
     return {

@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import Common from '../Admin/Common'
-import InqueuesView from './Widget/InqueuesView'
-import InqueuesMonitor from './Widget/InqueuesMonitor'
+import Common from '@/Admin/Common'
+import InqueuesView from '@/Monitor/Widget/InqueuesView'
+import InqueuesMonitor from '@/Monitor/Widget/InqueuesMonitor'
 export default {
   name: 'inqueues',
   storageName: 'queueManager',

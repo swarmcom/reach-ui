@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import LineIns from '../Widget/LineIns.vue'
+import LineIns from '@/Widget/LineIns'
 
 export default {
   name: 'admin-dials',

@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import Conditions from './Conditions'
-import Actions from './Actions'
+import Conditions from '@/Admin/Recipe/Conditions'
+import Actions from '@/Admin/Recipe/Actions'
 
 export default {
   name: 'admin-recipe-entries',

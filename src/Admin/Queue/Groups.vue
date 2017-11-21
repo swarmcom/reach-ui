@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import Common from '../Common'
-import Btable from '../../Widget/Btable'
+import Common from '@/Admin/Common'
+import Btable from '@/Widget/Btable'
 
 export default {
   name: 'admin-queue-groups',

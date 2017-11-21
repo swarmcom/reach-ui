@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import WsProto from './ws-proto.js'
-import {EventBus} from './event-bus.js'
+import WsProto from '@/ws-proto.js'
+import {EventBus} from '@/event-bus.js'
 import config from 'config'
 
 function cfg(key, default_value) {

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import AgentProfiles from './Widget/AgentProfiles'
-import AgentMonitor from './Widget/AgentMonitor'
+import AgentProfiles from '@/Monitor/Widget/AgentProfiles'
+import AgentMonitor from '@/Monitor/Widget/AgentMonitor'
 export default {
   name: 'monitor-agents',
   storageName: 'agentManager',

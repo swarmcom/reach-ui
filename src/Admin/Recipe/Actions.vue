@@ -41,15 +41,15 @@
 </template>
 
 <script>
-import Hangup from './Action/Hangup'
-import Voicemail from './Action/Voicemail'
-import Announce from './Action/Announce'
-import Lua from './Action/Lua'
-import Priority from './Action/Priority'
-import Prioritize from './Action/Prioritize'
-import Deprioritize from './Action/Deprioritize'
-import TransferToQueue from './Action/TransferToQueue'
-import TransferToOutgoing from './Action/TransferToOutgoing'
+import Hangup from '@/Admin/Recipe/Action/Hangup'
+import Voicemail from '@/Admin/Recipe/Action/Voicemail'
+import Announce from '@/Admin/Recipe/Action/Announce'
+import Lua from '@/Admin/Recipe/Action/Lua'
+import Priority from '@/Admin/Recipe/Action/Priority'
+import Prioritize from '@/Admin/Recipe/Action/Prioritize'
+import Deprioritize from '@/Admin/Recipe/Action/Deprioritize'
+import TransferToQueue from '@/Admin/Recipe/Action/TransferToQueue'
+import TransferToOutgoing from '@/Admin/Recipe/Action/TransferToOutgoing'
 
 export default {
   name: 'admin-recipe-actions',

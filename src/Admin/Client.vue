@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import Obj from './Object'
-import Common from './Common'
+import Obj from '@/Admin/Object'
+import Common from '@/Admin/Common'
 
 export default {
   name: 'admin-client',

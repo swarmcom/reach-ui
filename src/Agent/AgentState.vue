@@ -76,10 +76,10 @@
   </div>
 </template>
 <script>
-import Release from './Widget/Release'
+import Release from '@/Agent/Widget/Release'
 import moment from 'moment'
-import Common from '../Admin/Common'
-import MyPhoneUri from '../Agent/MyPhoneUri'
+import Common from '@/Admin/Common'
+import MyPhoneUri from '@/Agent/MyPhoneUri'
 export default {
   name: 'agent-state',
   mixins: [Common],

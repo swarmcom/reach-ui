@@ -1,5 +1,5 @@
-import AgentWs from './agent.js'
-import {EventBus} from './event-bus.js'
+import AgentWs from '@/agent.js'
+import {EventBus} from '@/event-bus.js'
 
 export default {
   install: function(Vue) {

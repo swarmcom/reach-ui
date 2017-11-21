@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import Skills from '../Widget/Skills'
-import Common from '../../Admin/Common'
-import Disposition from '../Widget/Disposition'
-import TransferConference from '../Widget/TransferConference'
+import Skills from '@/Agent/Widget/Skills'
+import Common from '@/Admin/Common'
+import Disposition from '@/Agent/Widget/Disposition'
+import TransferConference from '@/Agent/Widget/TransferConference'
 export default {
   components: {
     'transfer-conference': TransferConference,
