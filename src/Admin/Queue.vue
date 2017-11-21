@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Common from './Common'
+import Common from '@/Admin/Common'
 
 export default {
   name: 'admin-queue',

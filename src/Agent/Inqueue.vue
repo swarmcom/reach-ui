@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import Call from './Inqueue/Call'
-import Conference from './Inqueue/Conference'
-import Outgoing from './Inqueue/Outgoing'
-import Ringer from './Inqueue/Ringer'
-import Spy from './Inqueue/Spy'
-import InqueueConf from './Inqueue/Conf'
+import Call from '@/Agent/Inqueue/Call'
+import Conference from '@/Agent/Inqueue/Conference'
+import Outgoing from '@/Agent/Inqueue/Outgoing'
+import Ringer from '@/Agent/Inqueue/Ringer'
+import Spy from '@/Agent/Inqueue/Spy'
+import InqueueConf from '@/Agent/Inqueue/Conf'
 
 export default {
   data () {

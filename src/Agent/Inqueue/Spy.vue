@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import Common from '../../Admin/Common'
-import Skills from '../Widget/Skills'
+import Common from '@/Admin/Common'
+import Skills from '@/Agent/Widget/Skills'
 
 export default {
   mixins: [Common],

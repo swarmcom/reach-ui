@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Common from './Common'
-import Obj from './Object'
+import Common from '@/Admin/Common'
+import Obj from '@/Admin/Object'
 
 require('codemirror/addon/selection/active-line.js')
 require('codemirror/addon/scroll/annotatescrollbar.js')

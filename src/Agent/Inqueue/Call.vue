@@ -70,15 +70,15 @@
 </template>
 
 <script>
-import TransferAgent from '../Widget/TransferAgent'
-import TransferQueue from '../Widget/TransferQueue'
-import TransferUri from '../Widget/TransferUri'
-import ConferenceAgent from '../Widget/ConferenceAgent'
-import ConferenceQueue from '../Widget/ConferenceQueue'
-import ConferenceUri from '../Widget/ConferenceUri'
-import Skills from '../Widget/Skills'
-import Common from '../../Admin/Common'
-import Disposition from '../Widget/Disposition'
+import TransferAgent from '@/Agent/Widget/TransferAgent'
+import TransferQueue from '@/Agent/Widget/TransferQueue'
+import TransferUri from '@/Agent/Widget/TransferUri'
+import ConferenceAgent from '@/Agent/Widget/ConferenceAgent'
+import ConferenceQueue from '@/Agent/Widget/ConferenceQueue'
+import ConferenceUri from '@/Agent/Widget/ConferenceUri'
+import Skills from '@/Agent/Widget/Skills'
+import Common from '@/Admin/Common'
+import Disposition from '@/Agent/Widget/Disposition'
 
 export default {
   components: {

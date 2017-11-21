@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import Common from './Common'
-import Obj from './Object'
+import Common from '@/Admin/Common'
+import Obj from '@/Admin/Object'
 
 export default {
   name: 'admin-mohs',

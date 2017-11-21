@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import Skills from './Widget/Skills'
-import Common from '../Admin/Common'
+import Skills from '@//Widget/Skills'
+import Common from '@/Admin/Common'
 
 export default {
   name: 'agent-skills',

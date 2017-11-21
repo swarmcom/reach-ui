@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import SkillsList from './SkillsList'
+import SkillsList from '@/Widget/SkillsList'
 
 export default {
   name: 'skills',

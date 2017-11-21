@@ -48,14 +48,14 @@
 </template>
 
 <script>
-import Inqueue from './Agent/Inqueue'
-import Dialer from './Agent/Dialer'
-import Override from './Agent/Override'
-import Release from './Agent/Widget/Release'
-import AgentSkills from './Agent/Skills'
-import AgentCount from './Agent/Count'
-import AgentStats from './Agent/Stats'
-import AgentCIQ from './Agent/CIQ'
+import Inqueue from '@/Agent/Inqueue'
+import Dialer from '@/Agent/Dialer'
+import Override from '@/Agent/Override'
+import Release from '@/Agent/Widget/Release'
+import AgentSkills from '@/Agent/Skills'
+import AgentCount from '@/Agent/Count'
+import AgentStats from '@/Agent/Stats'
+import AgentCIQ from '@/Agent/CIQ'
 
 export default {
   data () {

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Btable from '../Widget/Btable'
+import Btable from '@/Widget/Btable'
 
 export default {
   name: 'inqueues',

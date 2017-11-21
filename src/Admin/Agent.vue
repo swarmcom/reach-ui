@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import Common from './Common'
-import URIs from '../Widget/URIs'
-import FormTextEffective from '../Widget/FormTextEffective'
+import Common from '@/Admin/Common'
+import URIs from '@/Widget/URIs'
+import FormTextEffective from '@/Widget/FormTextEffective'
 
 export default {
   name: 'admin-agent',

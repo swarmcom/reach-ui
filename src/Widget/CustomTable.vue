@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Common from '../Admin/Common'
+import Common from '@/Admin/Common'
 export default {
   name: 'custom-table',
   mixins: [Common],
