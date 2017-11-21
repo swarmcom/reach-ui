@@ -24,7 +24,7 @@
     <b-nav-item v-access:supervisor-ui to="/monitor">MONITOR </b-nav-item>
     <b-nav-item v-access:supervisor-ui to="/recordings">RECORDINGS </b-nav-item>
     <b-nav-item to="/reports">REPORTS</b-nav-item>
-    <button @click="onPin" class="btn ml-auto">
+    <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
         <icon name="eyedropper" scale="1.0"></icon>
         <icon v-if="!isPinned" style="color:red" name="ban" scale="1.0"></icon>

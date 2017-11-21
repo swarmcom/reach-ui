@@ -6,8 +6,8 @@
       <b-dropdown text="Contacts" variant="outline-secondary" :disabled="isDisabled()" right>
         <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
       </b-dropdown>
-      <b-btn @click="test" variant="success">Test</b-btn>
-      <b-btn @click="override" variant="primary">Set</b-btn>
+      <b-btn class="pointer" @click="test" variant="success">Test</b-btn>
+      <b-btn class="pointer" @click="override" variant="primary">Set</b-btn>
     </b-input-group-button>
   </b-input-group>
 </b-form-group>

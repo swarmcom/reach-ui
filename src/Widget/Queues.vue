@@ -2,7 +2,7 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
-    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
+    <select class="custom-select pointer" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
       <option></option>
       <option v-for="queue in queues" :value="queue.id" :selected="isActive(queue.id)">{{ queue.name }}</option>
     </select>

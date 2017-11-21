@@ -4,7 +4,7 @@
 
   <div v-for="disposition of dispositions" class="form-row" style="margin-top: 5px">
     <div class="col-1">
-      <button @click="del(disposition.id)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
+      <button @click="del(disposition.id)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </div>
     <div class="col-4">
       <input type="text" class="form-control"
@@ -18,7 +18,7 @@
 
   <div class="form-row" style="margin-top: 5px">
     <div class="col-1">
-      <button @click="add" class="btn btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </div>
     <div class="col-4">
       <input type="text" class="form-control" v-model="name" placeholder="Name">

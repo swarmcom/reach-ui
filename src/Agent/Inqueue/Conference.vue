@@ -5,12 +5,12 @@
   </div>
   <div class="row col-12">
     <b-input-group-button>
-      <b-button size="sm" variant="outline-secondary" @click="kick('all')">Kick All</b-button>
-      <b-button size="sm" variant="outline-secondary" @click="mute('all')">Mute All</b-button>
-      <b-button size="sm" variant="outline-secondary" @click="unmute('all')">Unmute All</b-button>
-      <b-button size="sm" variant="outline-secondary" @click="deaf('all')">Deaf All</b-button>
-      <b-button size="sm" variant="outline-secondary" @click="undeaf('all')">Undeaf All</b-button>
-      <b-button size="sm" variant="outline-warning" @click="inqueue()">Add Inqueue</b-button>
+      <b-button class="pointer" size="sm" variant="outline-secondary" @click="kick('all')">Kick All</b-button>
+      <b-button class="pointer" size="sm" variant="outline-secondary" @click="mute('all')">Mute All</b-button>
+      <b-button class="pointer" size="sm" variant="outline-secondary" @click="unmute('all')">Unmute All</b-button>
+      <b-button class="pointer" size="sm" variant="outline-secondary" @click="deaf('all')">Deaf All</b-button>
+      <b-button class="pointer" size="sm" variant="outline-secondary" @click="undeaf('all')">Undeaf All</b-button>
+      <b-button class="pointer" size="sm" variant="outline-warning" @click="inqueue()">Add Inqueue</b-button>
     </b-input-group-button>
   </div>
   <div class="row" style="margin-top: 10px">
@@ -24,13 +24,13 @@
     </div>
     <div class="col-7">
     <b-input-group-button>
-      <b-button size="sm" variant="outline-secondary" @click="kick(k)">Kick</b-button>
-      <b-button v-if="v.Speak == 'true'" size="sm" variant="outline-secondary" @click="mute(k)">Mute</b-button>
-      <b-button v-else size="sm" variant="outline-warning" @click="unmute(k)">Unmute</b-button>
-      <b-button v-if="v.Hear == 'true'" size="sm" variant="outline-secondary" @click="deaf(k)">Deaf</b-button>
-      <b-button v-else size="sm" variant="outline-warning" @click="undeaf(k)">Undeaf</b-button>
-      <b-button v-if="v.Hold" size="sm" variant="outline-warning" @click="unhold(k)">Unhold</b-button>
-      <b-button v-else size="sm" variant="outline-secondary" @click="hold(k)">Hold</b-button>
+      <b-button class="pointer" size="sm" variant="outline-secondary" @click="kick(k)">Kick</b-button>
+      <b-button class="pointer" v-if="v.Speak == 'true'" size="sm" variant="outline-secondary" @click="mute(k)">Mute</b-button>
+      <b-button class="pointer" v-else size="sm" variant="outline-warning" @click="unmute(k)">Unmute</b-button>
+      <b-button class="pointer" v-if="v.Hear == 'true'" size="sm" variant="outline-secondary" @click="deaf(k)">Deaf</b-button>
+      <b-button class="pointer" v-else size="sm" variant="outline-warning" @click="undeaf(k)">Undeaf</b-button>
+      <b-button class="pointer" v-if="v.Hold" size="sm" variant="outline-warning" @click="unhold(k)">Unhold</b-button>
+      <b-button class="pointer" v-else size="sm" variant="outline-secondary" @click="hold(k)">Hold</b-button>
     </b-input-group-button>
     </div>
   </div>

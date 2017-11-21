@@ -17,11 +17,11 @@
     </div>
     <input type="checkbox" id="checkbox" v-model="remember">
     <label for="checkbox"> Remember me</label>
-    <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2" type="submit">Login</button>
+    <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2 pointer" type="submit">Login</button>
   </div>
   <b-modal ref="takeover" hide-footer title="Agent is logged in">
-    <b-btn variant="outline-danger" @click="takeover">Take over</b-btn>
-    <b-btn variant="outline-success" @click="cancel">Cancel</b-btn>
+    <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
+    <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
   </b-modal>
 </div>
 </template>

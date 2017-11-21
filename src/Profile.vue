@@ -17,8 +17,8 @@
   <form-text label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
   <skills label="Agent Skills" v-model="skills" :effective="effective_skills"></skills>
   <div style="margin-top:20px">
-    <button @click="onCommit" class="btn btn-primary">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary  float-right">Cancel</button>
+    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary  float-right pointer">Cancel</button>
   </div>
   <help></help>
 </div>

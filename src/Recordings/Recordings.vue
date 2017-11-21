@@ -8,7 +8,7 @@
         <div class="title">Filter</div>
       </div>
       <b-input-group size="sm" style="margin-top:10px">
-        <b-btn id="search" size="sm" variant="primary"
+        <b-btn class="pointer" id="search" size="sm" variant="primary"
                   v-b-popover.hover.top="'Click to see how to search'">
         ?
         </b-btn>
@@ -19,24 +19,24 @@
             content="You can search for any agent, queue, line, agent called id number,
                      agent caller id name or agent caller id number by typing characters to the keyboard.">
         </b-popover>
-        <b-form-input v-model="filter" placeholder="Search ..."/>
+        <b-form-input style="cursor: text" v-model="filter" placeholder="Search ..."/>
         </b-form-input>
       </b-input-group>
       </b-input-group>
       <div class="agent-state-text" style="margin-top:10px">Start Date:</div>
-      <date-picker size="sm" v-model="startDate" :config="config"></date-picker>
+      <date-picker class="pointer" size="sm" v-model="startDate" :config="config"></date-picker>
       <div class="agent-state-text" style="margin-top:10px">End Date:</div>
-      <date-picker size="sm" v-model="endDate" :config="config"></date-picker>
+      <date-picker class="pointer" size="sm" v-model="endDate" :config="config"></date-picker>
       <div class="agent-state-text" style="margin-top:10px">Queue:</div>
-      <b-form-select size="sm" v-model="selectedQueue">
+      <b-form-select class="pointer" size="sm" v-model="selectedQueue">
         <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
       </b-form-select>
       <div class="agent-state-text" style="margin-top:10px">Line:</div>
-      <b-form-select size="sm" v-model="selectedLine">
+      <b-form-select class="pointer" size="sm" v-model="selectedLine">
         <option v-for="line in this.line_ins" :value=line.name>{{line.name}}</option>
       </b-form-select>
       <div class="agent-state-text" style="margin-top:10px">Customer:</div>
-      <b-form-select size="sm" v-model="selectedCustomer">
+      <b-form-select class="pointer" size="sm" v-model="selectedCustomer">
         <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
       </b-form-select>
     </b-col>
@@ -86,7 +86,7 @@
         </template>
       </b-table>
       <b-pagination size="sm" align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
-      <b-btn size="sm" style="width:80px" variant="primary" @click="reload">Refresh</b-btn>
+      <b-btn class="pointer" size="sm" style="width:80px" variant="primary" @click="reload">Refresh</b-btn>
     </b-col>
   </b-row>
   </b-collapse>

@@ -3,17 +3,17 @@
   <div class="row"><div class="col"><h3>Recipe entries:</h3></div></div>
   <b-row style="margin-bottom: 20px">
     <b-col>
-      <button @click="enable_edit()" class="btn btn-outline-primary">Show</button>
-      <button @click="hide_edit()" class="btn btn-outline-primary">Hide</button>
+      <button @click="enable_edit()" class="btn btn-outline-primary pointer">Show</button>
+      <button @click="hide_edit()" class="btn btn-outline-primary pointer">Hide</button>
     </b-col>
   </b-row>
 
   <b-row v-for="entry of entries" :key="entry.id" style="margin-bottom: 10px">
     <b-col cols=2>
-      <button @click="del(entry.id)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
+      <button @click="del(entry.id)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
       &nbsp;
-      <button @click="up(entry.id)" class="btn btn-outline-success"><icon class="align-middle" name="arrow-up" scale="1"></icon></button>
-      <button @click="down(entry.id)" class="btn btn-outline-primary"><icon class="align-middle" name="arrow-down" scale="1"></icon></button>
+      <button @click="up(entry.id)" class="btn btn-outline-success pointer"><icon class="align-middle" name="arrow-up" scale="1"></icon></button>
+      <button @click="down(entry.id)" class="btn btn-outline-primary pointer"><icon class="align-middle" name="arrow-down" scale="1"></icon></button>
     </b-col>
     <b-col cols=10 style="margin-bottom: 10px">
       <b-form-input v-model="entry.description" @input="update_description(entry.id, $event)"></b-form-input>
@@ -28,7 +28,7 @@
 
   <b-row>
     <b-col cols=1>
-      <button @click="add" class="btn btn-outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </b-col>
     <b-col cols=11 style="margin-bottom: 10px">
       <b-form-input v-model="description"></b-form-input>

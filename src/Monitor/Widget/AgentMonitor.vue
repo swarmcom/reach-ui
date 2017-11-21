@@ -8,13 +8,13 @@
           <div class="title">Filter</div>
         </div>
         <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
-        <b-form-select size="sm" v-model="selectedProfile" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
           <option v-for="group in this.groups" :value=group.name>{{group.name}}</option>
         </b-form-select>
-        <b-form-select size="sm" v-model="selectedCustomer" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
           <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
         </b-form-select>
-        <b-form-select size="sm" v-model="selectedState" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
           <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
       </div>
@@ -78,9 +78,9 @@
           </template>
           <template slot="actions" slot-scope="data">
             <b-input-group-button size="sm">
-              <b-button v-if="data.item.state == 'release'" size="sm" variant="outline-primary" @click="available(data.item)">Available</b-button>
-              <b-button v-else size="sm" variant="outline-primary" @click="release(data.item)">Release</b-button>
-              <b-button size="sm" variant="outline-primary" @click="stop(data.item)">Kill</b-button>
+              <b-button class="pointer" v-if="data.item.state == 'release'" size="sm" variant="outline-primary" @click="available(data.item)">Available</b-button>
+              <b-button class="pointer" v-else size="sm" variant="outline-primary" @click="release(data.item)">Release</b-button>
+              <b-button class="pointer" size="sm" variant="outline-primary" @click="stop(data.item)">Kill</b-button>
             </b-input-group-button>
           </template>
         </b-table>

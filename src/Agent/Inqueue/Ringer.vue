@@ -8,7 +8,7 @@
        <b>type:</b> {{ ringer.type }}
     </div>
     <div class="col">
-      <b-button size="sm" variant="outline-danger" @click="stop_ringer">Cancel</b-button>
+      <b-button size="sm" class="pointer" variant="outline-danger" @click="stop_ringer">Cancel</b-button>
     </div>
   </div>
 </div>

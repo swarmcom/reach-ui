@@ -9,9 +9,9 @@
   <div class="form">
     <form-text label="Name" v-model="rec.name"></form-text>
     <form-text label="Description" v-model="rec.description"></form-text>
-    <button @click="onCommit" class="btn btn-primary">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
+    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
   </div>
 </div>
 </template>

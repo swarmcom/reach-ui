@@ -6,12 +6,12 @@
 
   <b-form-row v-for="dial of dials" :key="this.id" style="margin-top: 5px">
     <b-col cols=1>
-      <button @click="del(dial.id)" class="btn btn-outline-danger">
+      <button @click="del(dial.id)" class="btn btn-outline-danger pointer">
         <icon class="align-middle" name="minus" scale="1"></icon>
       </button>
     </b-col>
     <b-col cols=3>
-      <select class="custom-select" v-model="dial.header" v-on:change="onChange(dial)">
+      <select class="custom-select pointer" v-model="dial.header" v-on:change="onChange(dial)">
         <option></option>
         <option v-for="header in headers" :value="header" :selected="header == dial.header">{{ header }}</option>
       </select>
@@ -26,12 +26,12 @@
 
   <b-form-row style="margin-top: 5px">
     <b-col cols=1>
-      <button @click="add" class="btn btn-outline-secondary">
+      <button @click="add" class="btn btn-outline-secondary pointer">
         <icon name="plus" scale="1" class="align-middle"></icon>
       </button>
     </b-col>
     <b-col cols=3>
-      <select class="custom-select" v-model="header">
+      <select class="custom-select pointer" v-model="header">
         <option></option>
         <option v-for="header in headers" :value="header">{{ header }}</option>
       </select>

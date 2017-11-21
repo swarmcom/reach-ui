@@ -7,13 +7,13 @@
         <div class="row toggle-bar-custom">
           <div class="title">Filter</div>
         </div>
-        <b-form-select size="sm" v-model="selectedQueue" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
           <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
         </b-form-select>
-        <b-form-select size="sm" v-model="selectedLine" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedLine" style="margin-top:10px">
           <option v-for="line in this.lines" :value=line.name>{{line.name}}</option>
         </b-form-select>
-        <b-form-select size="sm" v-model="selectedCustomer" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
           <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
         </b-form-select>
       </div>

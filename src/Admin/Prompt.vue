@@ -9,10 +9,10 @@
     </div>
   </div>
   <div style="margin-top:20px">
-    <button @click="onCommit" :disabled="isDisabled()" class="btn btn-primary">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-    <button @click="onRecord" class="btn btn-outline-warning">Record</button>
-    <button @click="onDelete" v-if="rec.id" class="btn btn-danger float-right">Delete</button>
+    <button @click="onCommit" :disabled="isDisabled()" class="btn btn-primary pointer">Commit</button>
+    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
+    <button @click="onRecord" class="btn btn-outline-warning pointer">Record</button>
+    <button @click="onDelete" v-if="rec.id" class="btn btn-danger float-right pointer">Delete</button>
   </div>
   <help></help>
 </div>

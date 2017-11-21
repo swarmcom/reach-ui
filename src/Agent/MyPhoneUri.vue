@@ -3,8 +3,8 @@
     <b-row>
       <b-col>
         <b-button-group style="width:100%">
-          <b-btn size="sm" style="width:50%" @click="override" variant="outline-secondary">Set</b-btn>
-          <b-btn size="sm" style="width:50%" @click="test" variant="outline-secondary">Test</b-btn>
+          <b-btn size="sm" class="pointer" style="width:50%" @click="override" variant="outline-secondary">Set</b-btn>
+          <b-btn size="sm" class="pointer" style="width:50%" @click="test" variant="outline-secondary">Test</b-btn>
         </b-button-group>
       </b-col>
     </b-row>

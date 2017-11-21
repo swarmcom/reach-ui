@@ -22,15 +22,15 @@
             <div class="row">
             <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
             <wrap-timer  v-if="this.wrapVisible" :inqueue="inqueue" :state_time="state_time" class="state-time"></wrap-timer>
-            <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-secondary">
+            <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-secondary pointer">
               <icon name="pause" scale="2"></icon>
             </button>
-            <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success">
+            <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-success pointer">
               <icon name="pause" scale="2"></icon>
             </button>
-            <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-danger">
+            <button v-if="this.$agent.can_hangup()" @click="hangup" class="btn btn-outline-danger pointer">
               <icon name="close" scale="2"></icon></button>
-            <button v-if="this.$agent.is_wrapup()" @click="wrapup" class="btn btn-outline-danger">
+            <button v-if="this.$agent.is_wrapup()" @click="wrapup" class="btn btn-outline-danger pointer">
               <icon name="close" scale="2"></icon></button>
             </div>
           </div>

@@ -14,8 +14,8 @@
   <!--<div class="row" style="margin-top: 20px">
     <div class="col-1">
       <h4>Hold:</h4>
-      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
-      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
+      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info pointer">UnHold</button>
+      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info pointer">Hold</button>
     </div>
   </div>-->
 
