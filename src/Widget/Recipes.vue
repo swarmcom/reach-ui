@@ -2,7 +2,7 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div class="col-9">
-    <select class="custom-select" style="width: 100%" :value="value" @change="onUpdate($event.target.value)" :disabled="isDisabled()">
+    <select class="custom-select pointer" style="width: 100%" :value="value" @change="onUpdate($event.target.value)" :disabled="isDisabled()">
       <option></option>
       <option v-for="recipe in recipes" :value="recipe.id" :selected="isActive(recipe.id)">{{ recipe.name }}</option>
     </select>

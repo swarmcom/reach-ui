@@ -1,5 +1,5 @@
 <template>
-<select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
+<select class="custom-select pointer" :value="value" @change="onUpdate($event.target.value)">
   <option></option>
   <option v-for="line in lines" :value="line.id" :selected="isActive(line.id)">{{ line.name }}</option>
 </select>

@@ -11,7 +11,7 @@
       </button>
     </b-col>
     <b-col cols=3>
-      <select class="custom-select" v-model="dial.header" v-on:change="onChange(dial)">
+      <select class="custom-select pointer" v-model="dial.header" v-on:change="onChange(dial)">
         <option></option>
         <option v-for="header in headers" :value="header" :selected="header == dial.header">{{ header }}</option>
       </select>
@@ -31,7 +31,7 @@
       </button>
     </b-col>
     <b-col cols=3>
-      <select class="custom-select" v-model="header">
+      <select class="custom-select pointer" v-model="header">
         <option></option>
         <option v-for="header in headers" :value="header">{{ header }}</option>
       </select>

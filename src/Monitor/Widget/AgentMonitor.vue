@@ -8,13 +8,13 @@
           <div class="title">Filter</div>
         </div>
         <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
-        <b-form-select size="sm" v-model="selectedProfile" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
           <option v-for="group in this.groups" :value=group.name>{{group.name}}</option>
         </b-form-select>
-        <b-form-select size="sm" v-model="selectedCustomer" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
           <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
         </b-form-select>
-        <b-form-select size="sm" v-model="selectedState" style="margin-top:10px">
+        <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
           <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
       </div>

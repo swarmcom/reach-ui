@@ -4,7 +4,7 @@
   <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2">
     <b-row>
       <b-col cols="2">
-        <b-form-select size="sm" v-model="period.value" @change="set_period">
+        <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period">
           <option v-for="period in periods" :value="period.value">{{period.name}}</option>
         </b-form-select>
       </b-col>
