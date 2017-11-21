@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Skills from '@//Widget/Skills'
+import Skills from '@/Agent/Widget/Skills'
 import Common from '@/Admin/Common'
 
 export default {
