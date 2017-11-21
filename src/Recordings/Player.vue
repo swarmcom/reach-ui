@@ -32,7 +32,7 @@
 <script>
 import { Howl } from 'howler'
 import vueSlider from 'vue-slider-component'
-import Common from '../Admin/Common'
+import Common from '@/Admin/Common'
 export default {
   name: 'recordings-player',
   props: ['href'],

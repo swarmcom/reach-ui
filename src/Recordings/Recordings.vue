@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import Player from './Player'
+import Player from '@/Recordings/Player'
 import 'bootstrap/dist/css/bootstrap.css';
 import datePicker from 'vue-bootstrap-datetimepicker';
 import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';

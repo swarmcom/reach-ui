@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import Inqueue from './Inqueue'
-import Dialer from './Dialer'
-import Override from './Override'
-import Release from './Widget/Release'
-import AgentState from './AgentState'
-import AgentInfo from './Info'
-import Common from '../Admin/Common'
-import Wrap from './Widget/Wrap'
+import Inqueue from '@/Agent/Inqueue'
+import Dialer from '@/Agent/Dialer'
+import Override from '@/Agent/Override'
+import Release from '@/Agent/Widget/Release'
+import AgentState from '@/Agent/AgentState'
+import AgentInfo from '@/Agent/Info'
+import Common from '@/Admin/Common'
+import Wrap from '@/Agent/Widget/Wrap'
 export default {
   widgetName: 'SESSION MANAGER',
   storageName: 'sessionManager',
