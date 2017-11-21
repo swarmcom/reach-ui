@@ -38,7 +38,6 @@ Vue.use(VueCodeMirror)
 
 Vue.directive('access', {
   bind (el, binding, vnode) {
-    console.log(vnode.context.$agent.vm.agent)
     let Rights = vnode.context.$agent.vm.agent.permissions
     if (! Rights[binding.arg]) {
       el.style.display = "none"
