@@ -1,5 +1,8 @@
 <template>
 <div>
+  <b-row>
+    <b-col><h2>Agents states man-hours</h2></b-col>
+  </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
       <datepicker v-model="date_start" placeholder="Start date" :highlighted="highlighted" bootstrapStyling></datepicker>
