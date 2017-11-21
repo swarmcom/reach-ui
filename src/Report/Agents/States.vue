@@ -16,26 +16,29 @@ export default {
   data () {
     return {
       chart: undefined,
-      data: {},
+      re: {},
+      palette: [
+        '#781c81', '#d92120', '#4d1f82', '#e34d28', '#403e95', '#e77830', '#4063b0', '#4684c2', '#e39a36',
+        '#519cb8', '#62ac9a', '#77b77b', '#90bc62', '#abbe51', '#c3ba45', '#d7af3d'
+      ],
+      palette_id: 0
     }
   },
   methods: {
-    random_color() {
-      var r = Math.floor(Math.random() * 255);
-      var g = Math.floor(Math.random() * 255);
-      var b = Math.floor(Math.random() * 255);
-      return `rgba(${r},${g},${b},0.7)`
+    color(self) {
+      self.palette_id = (self.palette_id+1) % self.palette.length
+      return self.palette[self.palette_id]
     },
     query: async function() {
-      this.data = await this.$agent.p_mfa('ws_report', 'agents_states', [])
-      this.data.datasets.forEach( (X) => {
-        X.borderColor = this.random_color();
+      this.re = await this.$agent.p_mfa('ws_report', 'agents_states', [])
+      this.re.datasets.forEach( (X) => {
+        X.borderColor = this.color(this);
         X.fill = false
         X.steppedLine = true
       })
       this.chart = new Chart("report", {
         type: 'line',
-        data: this.data,
+        data: this.re,
         options: {
           scales: {
             xAxes: [{
