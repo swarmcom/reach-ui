@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import Agents from './Monitor/Agents.vue'
-import Inqueues from './Monitor/Inqueues.vue'
+import Agents from '@/Monitor/Agents'
+import Inqueues from '@/Monitor/Inqueues'
 
 export default {
   data () {

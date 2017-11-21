@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Prompts from '../../../Widget/Prompts'
+import Prompts from '@/Widget/Prompts'
 
 export default {
   name: 'admin-recipe-action-announce',

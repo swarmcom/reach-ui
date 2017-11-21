@@ -1,4 +1,4 @@
-import {EventBus} from './event-bus.js'
+import {EventBus} from '@/event-bus.js'
 
 function handleReply (Re, resolve, reject) {
   if (Re && Re.reply) {

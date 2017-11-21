@@ -17,6 +17,7 @@ import DispositionGroups from '@/Widget/DispositionGroups'
 import ReleaseGroups from '@/Widget/ReleaseGroups'
 import Roles from '@/Widget/Roles'
 import AdminHelp from '@/Widget/Help'
+import ToggleBar from '@/Widget/ToggleBar.vue'
 
 Vue.component('form-text', FormText)
 Vue.component('form-bool', FormBool)
@@ -35,4 +36,4 @@ Vue.component('recipes', Recipes)
 Vue.component('luas', Luas)
 Vue.component('roles', Roles)
 Vue.component('help', AdminHelp)
-
+Vue.component('toggle-bar', ToggleBar)
