@@ -17,10 +17,7 @@ export default {
     return {
       chart: undefined,
       re: {},
-      palette: [
-        '#781c81', '#d92120', '#4d1f82', '#e34d28', '#403e95', '#e77830', '#4063b0', '#4684c2', '#e39a36',
-        '#519cb8', '#62ac9a', '#77b77b', '#90bc62', '#abbe51', '#c3ba45', '#d7af3d'
-      ],
+      palette: ['#7fc97f', '#beaed4', '#fdc086', '#ffff99', '#386cb0', '#f0027f', '#bf5b17', '#666666'],
       palette_id: 0
     }
   },
@@ -46,6 +43,9 @@ export default {
               time: {
                 parser: (X) => new moment(X, "X")
               }
+            }],
+            yAxes: [{
+              stacked: false,
             }]
           },
         }
