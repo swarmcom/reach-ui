@@ -1,5 +1,8 @@
 <template>
 <div>
+  <b-row>
+    <b-col></b-col>
+  </b-row>
   <canvas id="report"></canvas>
 </div>
 </template>
