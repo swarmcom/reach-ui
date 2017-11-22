@@ -1,5 +1,9 @@
+import AgentsStates from '@/Report/Agents/States'
+import AgentsUnique from '@/Report/Agents/Unique'
+import AgentsAvg from '@/Report/Agents/Avg'
+
 export default [
-  { path: 'agents/states', component: () => System.import('@/Report/Agents/States') },
-  { path: 'agents/unique', component: () => System.import('@/Report/Agents/Unique') },
-  { path: 'agents/avg', component: () => System.import('@/Report/Agents/Avg') },
+  { path: 'agents/states', component: AgentsStates },
+  { path: 'agents/unique', component: AgentsUnique },
+  { path: 'agents/avg', component: AgentsAvg }
 ]
