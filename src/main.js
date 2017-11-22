@@ -13,7 +13,7 @@ import Notifications from 'vue-notification'
 
 import AgentAPI from '@/agent-api-plugin'
 
-import Recordings from '@/Recordings/Recordings'
+import Recordings from '@/Recordings'
 import Login from '@/Login'
 import Agent from '@/Agent'
 import Profile from '@/Profile'
