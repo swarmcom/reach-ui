@@ -1,6 +1,6 @@
 <template>
 <div class="toggle-bar-custom">
-  <button type="button" class="btn btn-sm" @click="showCollapse"
+  <button type="button" class="btn btn-sm pointer" @click="showCollapse"
          :class="$parent.showCollapse ? 'collapsed' : null"
          aria-controls="collapse4"
          :aria-expanded="$parent.showCollapse ? 'true' : 'false'">
