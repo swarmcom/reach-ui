@@ -99,7 +99,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import datePicker from 'vue-bootstrap-datetimepicker';
 import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
 export default {
-  name: 'recordings',
+  name: 'records',
   storageName: 'callRecordings',
   widgetName: 'CALL RECORDINGS',
   components: {
@@ -109,7 +109,7 @@ export default {
   data () {
     return {
       fields: {
-        player: { label: 'Show Recordings', _showRecordings: false },
+        player: { label: 'Show Recordings', _showDetails: false },
         ts: { label: 'Date / Start Time', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
         client: { label: 'Customer', sortable: true },
         queue: { label: 'Queue', sortable: true },
