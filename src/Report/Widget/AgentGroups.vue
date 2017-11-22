@@ -23,7 +23,6 @@ export default {
   },
   watch: {
     value (value, old) {
-      console.log("VALUE", value)
       this.selected = value
       return value
     },
