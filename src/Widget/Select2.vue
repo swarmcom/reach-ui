@@ -48,6 +48,10 @@ export default {
       })
   },
   watch: {
+    value (value) {
+      $(this.$el).val(value).trigger('change')
+      return value
+    },
     options (options) {
       $(this.$el).empty()
         .select2(this.get_params(options))
