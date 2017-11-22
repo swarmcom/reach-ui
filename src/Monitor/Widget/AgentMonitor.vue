@@ -2,11 +2,11 @@
 <div>
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManagerAgents" class="mt-2">
-    <div class="row">
-      <div class="col-2">
-        <div class="row toggle-bar-custom">
+    <b-row>
+      <b-col cols="2">
+        <b-row class="toggle-bar-custom">
           <div class="title">Filter</div>
-        </div>
+        </b-row>
         <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
         <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
           <option v-for="group in this.groups" :value=group.name>{{group.name}}</option>
@@ -17,9 +17,9 @@
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
           <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
-      </div>
-      <div class="col-10">
-        <b-table style="margin-top:10px" small striped bordered hover
+      </b-col>
+      <b-col cols="10">
+        <b-table style="margin-top:10px" small bordered
           :items="computedAgents"
           :fields="fields"
           :filter="filter"
@@ -27,11 +27,34 @@
           :sort-desc="sortDesc"
           @sort-changed="onSortingChanged">
           <template slot="agentDetail" slot-scope="data">
-            <div class="agent-state-text">{{data.item.agentName + ' ' + data.item.agentLogin}}</div>
-            <div class="agent-state-text"><b>Profile: </b>{{data.item.agentGroup}}</div>
-            <div class="agent-state-text"><b>Phone: </b>{{data.item.agentPhone}}</div>
-            <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
-            <div class="agent-state-text"><b>Customer: </b>{{data.item.agentClient}}</div>
+            <b-row>
+              <b-col cols="1">
+                <button type="button" class="btn btn-sm pointer" v-if="data.item._showDetails" @click="data.item._showDetails = false">
+                  <icon name="minus" scale="0.5"></icon>
+                </button>
+                <button type="button" class="btn btn-sm pointer" v-if="!data.item._showDetails" @click="data.item._showDetails = true">
+                    <icon name="plus" scale="0.5"></icon>
+                </button>
+              </b-col>
+              <b-col>
+                <div class="agent-state-text"><b>{{data.item.agentName+' '}}</b> {{data.item.agentLogin}}</div>
+                <div class="agent-state-text"><b>Profile: </b>{{data.item.agentGroup}}</div>
+                <div class="agent-state-text"><b>Phone: </b>{{data.item.agentPhone}}</div>
+                <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
+                <div class="agent-state-text"><b>Customer: </b>{{data.item.agentClient}}</div>
+              </b-col>
+            </b-row>
+          </template>
+          <template slot="row-details" slot-scope="data">
+            <b-row class="text-center">
+            <b-col>
+            <b-dropdown size="sm" class="agent-release-dropdown" text="Select Action" variant="outline-secondary">
+              <b-dropdown-item v-if="data.item.state == 'release'" @click="available(data.item)">Available</b-dropdown-item>
+              <b-dropdown-item v-else @click="release(data.item)">Release</b-dropdown-item>
+              <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
+            </b-dropdown>
+            </b-col>
+            </b-row>
           </template>
           <template slot="state" slot-scope="data">
             <div v-if="data.item.state == 'available'">
@@ -76,16 +99,9 @@
             </div>
             <div class="agent-state-text">{{msToHms(Math.round(data.item.time).toString())}}</div>
           </template>
-          <template slot="actions" slot-scope="data">
-            <b-input-group-button size="sm">
-              <b-button class="pointer" v-if="data.item.state == 'release'" size="sm" variant="outline-primary" @click="available(data.item)">Available</b-button>
-              <b-button class="pointer" v-else size="sm" variant="outline-primary" @click="release(data.item)">Release</b-button>
-              <b-button class="pointer" size="sm" variant="outline-primary" @click="stop(data.item)">Kill</b-button>
-            </b-input-group-button>
-          </template>
         </b-table>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </b-collapse>
 </div>
 </template>
@@ -109,8 +125,7 @@ export default {
         agentMyCpt: { label: 'My CPT' },
         agentCalls: { label: 'Calls' },
         timeComputed: { label: 'Time logged in', sortable:true },
-        state: { label: 'State', sortable: true },
-        actions: { label: 'Actions' }
+        state: { label: 'State', sortable: true }
       },
       clients: [],
       states: [
@@ -180,7 +195,8 @@ export default {
       let compAgents = []
       agents.forEach( (key) => {
         compAgents.push(key);
-        key._cellVariants = { agentDetail: 'primary', agentOccup: 'primary', agentMyCpt: 'primary', agentCalls: 'primary', timeComputed: 'primary', actions: 'primary' }
+        //key._cellVariants = { agentDetail: 'secondary', agentOccup: 'secondary', agentMyCpt: 'secondary', agentCalls: 'secondary', timeComputed: 'secondary' }
+        key._cellVariants = {}
         switch(key.state) {
           case "release": {
             key._cellVariants.state = "primary"
