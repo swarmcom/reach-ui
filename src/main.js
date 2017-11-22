@@ -5,7 +5,6 @@ import App from '@/App'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'select2/dist/css/select2.css'
 
 import VueCodeMirror from 'vue-codemirror'
 import 'vue-awesome/icons'
