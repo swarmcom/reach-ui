@@ -13,8 +13,9 @@
     <b-col>
       <select2 :options="groups" v-model="groups_selected"></select2>
     </b-col>
-    <b-col cols=1>
+    <b-col cols=2>
       <button @click="filter" class="btn btn-outline-primary">Apply</button>
+      <button @click="reset" class="btn btn-outline-success float-right">Reset</button>
     </b-col>
   </b-row>
   <canvas id="report"></canvas>
@@ -49,6 +50,12 @@ export default {
     color (self) {
       self.palette_id = (self.palette_id+1) % self.palette.length
       return self.palette[self.palette_id]
+    },
+    reset () {
+      this.date_start = undefined,
+      this.date_end = undefined,
+      this.groups_selected = [],
+      this.query()
     },
     filter () {
       this.query()
