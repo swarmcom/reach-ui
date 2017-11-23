@@ -24,7 +24,10 @@
     <b-nav-item v-access:supervisor-ui to="/monitor">MONITOR </b-nav-item>
     <b-nav-item v-access:supervisor-ui to="/recordings">RECORDINGS </b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui text="REPORTS">
-      <b-dropdown-item to="/report/agents/states">Agents states</b-dropdown-item>
+      <b-dropdown-item to="/report/agents/states">Agents man-hours</b-dropdown-item>
+      <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
+      <b-dropdown-item to="/report/agents/avg">Agents averages</b-dropdown-item>
+      <b-dropdown-item to="/report/measures/avg">Measures averages</b-dropdown-item>
     </b-nav-item-dropdown>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">

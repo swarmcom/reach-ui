@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-row>
-    <b-col><h2>Agents states man-hours</h2></b-col>
+    <b-col><h2>Agents states averages</h2></b-col>
   </b-row>
   <widget-query v-model="query_params" style="margin-bottom: 10px"></widget-query>
   <widget-chart v-model="report"></widget-chart>
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     query: async function(params) {
-      this.report = await this.$agent.p_mfa('ws_report', 'agents_states', [params])
+      this.report = await this.$agent.p_mfa('ws_report', 'agents_avg', [params])
     }
   },
   created () {

@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-row>
-    <b-col><h2>Agents states man-hours</h2></b-col>
+    <b-col><h2>Measures</h2></b-col>
   </b-row>
   <widget-query v-model="query_params" style="margin-bottom: 10px"></widget-query>
   <widget-chart v-model="report"></widget-chart>
@@ -10,13 +10,13 @@
 
 <script>
 import Chart from '@/Report/Widget/Chart'
-import Query from '@/Report/Widget/Query'
+import QueryRange from '@/Report/Widget/QueryRange'
 
 export default {
   name: 'report-agents-states',
   components: {
     'widget-chart': Chart,
-    'widget-query': Query
+    'widget-query': QueryRange
   },
   data () {
     return {
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     query: async function(params) {
-      this.report = await this.$agent.p_mfa('ws_report', 'agents_states', [params])
+      this.report = await this.$agent.p_mfa('ws_report', 'measures_avg', [params])
     }
   },
   created () {
