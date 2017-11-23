@@ -52,7 +52,9 @@ export default class Agent extends WsProto {
         auto_logout_timer: undefined,
         activity_time: undefined,
         release_id: undefined,
-        storage_data: {}
+        storage_data: {},
+        isActiveAM: false,
+        isActiveQM: false
       }
     }),
     Notification.requestPermission()

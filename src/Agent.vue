@@ -6,6 +6,12 @@
   <b-row>
     <b-col><my-statistics></my-statistics></b-col>
   </b-row>
+  <b-row>
+    <b-col><agents v-bind:class="{ deactiveAM: !$agent.vm.isActiveAM }"></agents></b-col>
+  </b-row>
+  <b-row>
+    <b-col><inqueues v-bind:class="{ deactiveQM: !$agent.vm.isActiveQM }"></inqueues></b-col>
+  </b-row>
 </div>
 
 </template>
@@ -13,6 +19,8 @@
 <script>
 import SessionManager from '@/Agent/SessionManager.vue'
 import MyStatistics from '@/Agent/MyStatistics.vue'
+import Agents from '@/Monitor/Agents'
+import Inqueues from '@/Monitor/Inqueues'
 export default {
   data () {
     return {
@@ -20,7 +28,9 @@ export default {
   },
   components: {
     'session-manager': SessionManager,
-    'my-statistics': MyStatistics
+    'my-statistics': MyStatistics,
+    'agents': Agents,
+    'inqueues': Inqueues
   }
 }
 </script>
