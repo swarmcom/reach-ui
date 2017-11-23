@@ -54,7 +54,8 @@ const router = new VueRouter({
     { path: '/recordings', component: Recordings },
     { path: '/profile', component: Profile },
     { path: '/report', component: Report, children: ReportRoutes },
-    { path: '/main', component: Agent }
+    { path: '/main', component: Agent },
+    { path: '/', redirect: 'main' }
   ]
 })
 
