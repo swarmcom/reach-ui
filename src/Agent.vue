@@ -7,10 +7,10 @@
     <b-col><my-statistics></my-statistics></b-col>
   </b-row>
   <b-row>
-    <b-col><agents v-bind:class="{ deactiveAM: !this.$agent.vm.isActiveAM }"></agents></b-col>
+    <b-col><agents v-bind:class="{ deactiveAM: !$agent.vm.isActiveAM }"></agents></b-col>
   </b-row>
   <b-row>
-    <b-col><inqueues v-bind:class="{ deactiveQM: !this.$agent.vm.isActiveQM }"></inqueues></b-col>
+    <b-col><inqueues v-bind:class="{ deactiveQM: !$agent.vm.isActiveQM }"></inqueues></b-col>
   </b-row>
 </div>
 

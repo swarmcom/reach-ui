@@ -18,8 +18,8 @@
     <b-nav-item to="/main">MAIN</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
       <b-dropdown-item v-if="!$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = true">Add Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="!$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = true">Add Queue Manager</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = false">Remove Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-if="!$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = true">Add Queue Manager</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = false">Remove Queue Manager</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/profile">PROFILE</b-nav-item>
