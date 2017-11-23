@@ -2,24 +2,33 @@
 <div>
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManagerProfiles" class="mt-2">
-    <div class="row">
-      <div class="col-2">
-        <div class="row toggle-bar-custom">
+    <b-row>
+      <b-col cols="2">
+        <b-row class="toggle-bar-custom">
           <div class="title">Profile Name</div>
-        </div>
+        </b-row>
         <br></br>
         <label v-for="profileName in this.groups" :id=profileName.name class="col-12" style="height:27px; border-bottom: solid 1px;">{{ profileName.name }}</label>
-      </div>
-      <div class="col-10">
-        <div class="row toggle-bar-custom" style="margin-left:1px">
+      </b-col>
+      <b-col cols="7">
+        <b-row class="toggle-bar-custom" style="margin-left:1px">
           <div class="title">Agent States</div>
-        </div>
+        </b-row>
+        <b-table style="margin-top:10px" small striped bordered hover
+          :items="computedAgentsStats"
+          :fields="fieldsStates">
+        </b-table>
+      </b-col>
+      <b-col cols="3">
+        <b-form-select style="margin-top:8px" class="pointer" size="sm" v-model="period.value" @change="set_period">
+          <option v-for="period in periods" :value="period.value">{{period.name}}</option>
+        </b-form-select>
         <b-table style="margin-top:10px" small striped bordered hover
           :items="computedAgentsStats"
           :fields="fieldsStats">
         </b-table>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </b-collapse>
 </div>
 </template>
@@ -33,24 +42,38 @@ export default {
   },
   data () {
     return {
-      fieldsStats: {
+      fieldsStates: {
         totalAgents: { label: 'Total Agents', sortable: false },
         released: { label: 'Released', sortable: false },
         idle: { label: 'Idle', sortable: false },
         ringing: { label: 'Ringing', sortable: false },
         insession: { label: 'In Session', sortable: false },
-        wrapup: { label: 'Wrap-up', sortable: false },
+        wrapup: { label: 'Wrap-up', sortable: false }
+      },
+      fieldsStats: {
         occup: { label: 'Occup', sortable: false },
         cpt: { label: 'CPT', sortable: false },
-        calls: { label: 'Calls', sortable: false },
+        calls: { label: 'Calls', sortable: false }
       },
       groups: [],
+      periods: [
+        { value:"15m", name:"Last 15 minutes"},
+        { value:"30m", name:"Last 30 minutes"},
+        { value:"1h", name:"Last Hour"},
+        { value:"1d", name:"Today" },
+        { value:"1w", name:"This Week" },
+        { value:"1m", name:"This Month" }
+      ],
+      period: { value: "15m", name: "Last 15 minutes"},
       showCollapse: true,
     }
   },
   methods: {
     query: async function() {
       this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
+    },
+    set_period (value) {
+      this.period.value = value
     }
   },
   created () {
@@ -62,7 +85,17 @@ export default {
     computedAgentsStats () {
       let agents = []
       this.groups.forEach( (key) => {
-        let object = { "totalAgents":0, "released": 0, "idle": 0, "ringing": 0, "insession": 0, "wrapup": 0 }
+        let object = {
+          "totalAgents":0,
+          "released": 0,
+          "idle": 0,
+          "ringing": 0,
+          "insession": 0,
+          "wrapup": 0,
+          "occup": "-",
+          "cpt": "-",
+          "calls": "-"
+        }
         object._cellVariants = {
           totalAgents: 'primary',
           released: 'primary',
