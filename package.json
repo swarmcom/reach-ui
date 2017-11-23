@@ -21,6 +21,7 @@
     "moment": "^2.19.2",
     "popper.js": "^1.12.3",
     "select2": "^4.0.6-rc.1",
+    "select2-bootstrap-theme": "^0.1.0-beta.10",
     "vue": "^2.5.2",
     "vue-awesome": "^2.3.3",
     "vue-bootstrap-datetimepicker": "^4.1.0",
