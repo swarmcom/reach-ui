@@ -42,7 +42,9 @@
   </li>
 
 </ul>
-<router-view style="margin-top: 20px"></router-view>
+<transition name="reach" mode="out-in">
+  <router-view style="margin-top: 20px"></router-view>
+</transition>
 </div>
 </template>
 
@@ -53,3 +55,6 @@ export default {
   }
 }
 </script>
+
+<style>
+</style>
