@@ -4,7 +4,10 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    build: ['./src/main.js'],
+    build: [
+      'babel-polyfill',
+      './src/main.js'
+    ],
     vendor: [
       "vue",
       "jquery",
