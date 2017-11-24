@@ -1,11 +1,12 @@
 <template>
-  <autocomplete :query="query" v-model="group"></autocomplete>
+<autocomplete :query="query" v-model="group" :placeholder="placeholder"></autocomplete>
 </template>
 
 <script>
 import Autocomplete from '@/Widget/Autocomplete'
 export default {
   name: 'widget-autocomplete-agent-group',
+  props: ['placeholder'],
   data () {
     return {
       group: undefined

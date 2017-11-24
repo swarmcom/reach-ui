@@ -1,10 +1,10 @@
 <template>
-<div>
-  <input type="text" class="reference form-control" v-model="text" @keydown="keydown">
+<span>
+  <input type="text" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
   <div class="popper dropdown-menu">
     <button class="dropdown-item" v-for="(opt, i) in options" :key="opt.id" :class="{active: isActive(i)}">{{opt.name}}</button>
   </div>
-</div>
+</span>
 </template>
 
 <script>
@@ -13,7 +13,8 @@ import Popper from 'popper.js'
 
 export default {
   props: {
-    query: { type: 'function', required: true }
+    query: { type: Function, required: true },
+    placeholder: { type: String }
   },
   data () {
     return {
@@ -47,7 +48,6 @@ export default {
       if (!this.visible) {
         if (ev.key == 'ArrowDown') {
           this.async_query(this.text)
-          this.show()
         }
         return
       }
@@ -63,7 +63,7 @@ export default {
         case 'Enter':
           ev.preventDefault()
           this.hide()
-          this.text = this.options[this.index].name
+          this.text = ''
           this.$emit('input', this.options[this.index])
           break
         case 'Escape':
@@ -79,13 +79,16 @@ export default {
     this.ref = new Popper(this.reference, this.popper, { 'placement': 'bottom-start' })
   },
   watch: {
-    options (value) {
+    options (value, old) {
+      if (value.length !== old.length) {
+        this.index = 0
+      }
       this.ref.update()
       this.show()
       return value
     },
     text (value) {
-      if (this.visible) {
+      if (this.visible || value.length > 2) {
         this.async_query(value)
       }
       return value
