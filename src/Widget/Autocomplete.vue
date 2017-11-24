@@ -13,7 +13,7 @@ import Popper from 'popper.js'
 
 export default {
   props: {
-    query: { required: true }
+    query: { type: 'function', required: true }
   },
   data () {
     return {
