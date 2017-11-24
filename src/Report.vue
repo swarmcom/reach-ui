@@ -1,5 +1,7 @@
 <template>
-<router-view style="margin-top: 20px"></router-view>
+<transition name="reach" mode="out-in">
+  <router-view></router-view>
+</transition>
 </template>
 
 <script>

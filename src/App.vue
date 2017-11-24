@@ -39,7 +39,9 @@
   </div>
 </nav>
 <div class="container">
-  <router-view></router-view>
+  <transition name="reach" mode="out-in">
+    <router-view></router-view>
+  </transition>
 </div>
 
 <footer class="footer">
