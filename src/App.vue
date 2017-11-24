@@ -88,20 +88,7 @@ export default {
 }
 </script>
 
-<style>
-#navbars > span {
-  color: white;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 30px;
-  line-height: 30px;
-  background-color: #f5f5f5;
-}
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
+<style lang="scss">
+@import "./custom-bootstrap.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 </style>
