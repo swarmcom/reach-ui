@@ -1,11 +1,12 @@
 <template>
-  <autocomplete :query="query" v-model="agent"></autocomplete>
+<autocomplete :query="query" v-model="agent" :placeholder="placeholder"></autocomplete>
 </template>
 
 <script>
 import Autocomplete from '@/Widget/Autocomplete'
 export default {
   name: 'widget-autocomplete-agent',
+  props: ['placeholder'],
   data () {
     return {
       agent: undefined
