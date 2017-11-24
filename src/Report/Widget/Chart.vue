@@ -6,7 +6,6 @@
 import Chart from 'chart.js'
 import moment from 'moment'
 import Datepicker from 'vuejs-datepicker'
-import Select2 from '@/Widget/Select2'
 
 export default {
   name: 'report-widget-chart',
