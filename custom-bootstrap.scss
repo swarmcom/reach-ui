@@ -1,0 +1,23 @@
+// Override / set color variables
+$dark-blue:         #004C70;
+$light-blue:        #0093D1;
+$red:               #F2635F;
+$yellow:            #F4D00C;
+$orange:            #E0A025;
+
+$primary:     $dark-blue;
+$secondary:   lighten($primary, 25);
+$success:     $light-blue;
+$info:        $yellow;
+$warning:     $orange;
+$danger:      $red;
+
+// Override info button color
+$btn-info-color:    darken($info, 25);
+
+// Override info alert background color
+$state-info-bg:     lighten($info, 45);
+
+// Set global options
+$enable-shadows:    true;
+$enable-gradients:  true;

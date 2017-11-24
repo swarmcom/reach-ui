@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import App from '@/App'
 
 import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/scss/bootstrap.scss'
+import '../custom-bootstrap.scss'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import VueCodeMirror from 'vue-codemirror'
