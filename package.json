@@ -13,7 +13,6 @@
     "bootstrap-vue": "^1.2.0",
     "chart.js": "^2.7.1",
     "howler": "^2.0.5",
-    "http-server": "^0.10.0",
     "jquery": "^3.2.1",
     "moment": "^2.19.2",
     "popper.js": "^1.12.3",
