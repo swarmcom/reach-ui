@@ -1,16 +1,16 @@
 <template>
 <div class="form-inline">
-<autocomplete-agent v-model="agent" placeholder="Agent..."></autocomplete-agent>
+<autocomplete v-model="agent" :query="query" placeholder="Agent..."></autocomplete>
 <button class="btn btn-outline-secondary" style="margin-left: 10px" v-for="agent in selected" @click="remove(agent)">{{agent.name}}</button>
 </div>
 </template>
 
 <script>
-import AutocompleteAgent from '@/Widget/Autocomplete/Agent'
+import Autocomplete from '@/Widget/Autocomplete'
 
 export default {
   name: 'report-widget-agents',
-  components: {AutocompleteAgent},
+  components: {Autocomplete},
   props: ['value'],
   data () {
     return {
@@ -19,6 +19,9 @@ export default {
     }
   },
   methods: {
+    query (text) {
+      return this.$agent.p_mfa("ws_db_agent", "suggest", [text])
+    },
     remove (agent) {
       let index = this.selected.findIndex(el => el.id === agent.id)
       if (index >= 0) {

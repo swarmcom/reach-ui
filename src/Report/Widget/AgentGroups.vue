@@ -1,16 +1,16 @@
 <template>
 <div class="form-inline">
-<autocomplete-agent-group v-model="group" placeholder="Agent group..."></autocomplete-agent-group>
+<autocomplete v-model="group" :query="query" placeholder="Agent group..."></autocomplete>
 <button class="btn btn-outline-secondary" style="margin-left: 10px" v-for="group in selected" @click="remove(group)">{{group.name}}</button>
 </div>
 </template>
 
 <script>
-import AutocompleteAgentGroup from '@/Widget/Autocomplete/AgentGroup'
+import Autocomplete from '@/Widget/Autocomplete'
 
 export default {
   name: 'report-widget-agent-groups',
-  components: {AutocompleteAgentGroup},
+  components: {Autocomplete},
   props: ['value'],
   data () {
     return {
@@ -19,6 +19,9 @@ export default {
     }
   },
   methods: {
+    query (text) {
+      return this.$agent.p_mfa("ws_db_agent_group", "suggest", [text])
+    },
     remove (group) {
       let index = this.selected.findIndex(el => el.id === group.id)
       if (index >= 0) {
