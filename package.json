@@ -17,7 +17,6 @@
     "howler": "^2.0.5",
     "http-server": "^0.10.0",
     "jquery": "^3.2.1",
-    "jslint": "^0.11.0",
     "moment": "^2.19.2",
     "popper.js": "^1.12.3",
     "select2": "^4.0.6-rc.1",
@@ -32,6 +31,7 @@
     "vuejs-datepicker": "^0.9.20"
   },
   "devDependencies": {
+    "autoprefixer": "^7.1.6",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-env": "^1.6.1",
@@ -47,7 +47,9 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "file-loader": "^0.9.0",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.0.8",
+    "precss": "^2.0.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "vue-icons": "^2.0.0",

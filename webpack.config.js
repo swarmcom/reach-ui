@@ -16,11 +16,19 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.vue$/, loader: 'vue-loader', options: { loaders: {} } },
+      { test: /\.vue$/, loader: 'vue-loader', options: { loaders: {
+        'scss': 'vue-style-loader!css-loader!sass-loader',
+        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+      } } },
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.(png|jpg|gif|svg)$/, loader: 'file-loader', options: { name: '[name].[ext]?[hash]' } },
       { test: /\.css$/, use: [ { loader: "style-loader" }, { loader: "css-loader" } ] },
-      { test: /\.scss$/, use: [ { loader: "sasss-loader" }, { loader: "sass-loader" } ] },
+      { test: /\.scss$/, use: [
+        { loader: "style-loader" },
+        { loader: "css-loader" },
+        { loader: "postcss-loader", options: { plugins: function() { return [require('precss'), require('autoprefixer')] } } },
+        { loader: "sass-loader" }
+      ] }
     ]
   },
   resolve: {
@@ -33,7 +41,15 @@ module.exports = {
   devServer: { historyApiFallback: true, noInfo: true  },
   performance: { hints: false },
   devtool: '#eval-source-map',
-  plugins: [new CopyWebpackPlugin([{from: 'src/config.js', to: 'config.js'}])]
+  plugins: [
+    new CopyWebpackPlugin([{from: 'src/config.js', to: 'config.js'}]),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default']
+    })
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
