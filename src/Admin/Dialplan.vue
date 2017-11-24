@@ -4,7 +4,7 @@
     <b-col><h3>Dialplan:</h3></b-col>
   </b-row>
 
-  <b-form-row v-for="dial of dials" :key="this.id" style="margin-top: 5px">
+  <b-form-row v-for="dial of dials" :key="dial.id" style="margin-top: 5px">
     <b-col cols=1>
       <button @click="del(dial.id)" class="btn btn-outline-danger">
         <icon class="align-middle" name="minus" scale="1"></icon>
