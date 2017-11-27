@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
+  <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentInfo" class="mt-2">
     <div class="row agent-state-text"><b>Agent:</b></div>
     <div class="row">
@@ -25,7 +25,11 @@
     </div>
     <div class="row">
       <div class="col-5 agent-state-text">Permissions:</div>
-      <div class="col-7 agent-state-text"> {{ agent.permissions }} </div>
+      <div class="col-7 agent-state-text">
+        <div class="row col" v-for="(v, k) in agent.permissions">
+          {{k}}
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="col-5 agent-state-text">Persistent:</div>
