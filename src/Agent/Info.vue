@@ -35,10 +35,13 @@
       <div class="col-5 agent-state-text">Profile:</div>
       <div class="col-7 agent-state-text"> {{ agent.group.name }} </div>
     </div>
-    <div class="row col-5 agent-state-text">Skills:</div>
-    <div class="row" v-for="(v, k) in agent.skills">
-      <dd class="col-5 agent-state-text"></dd>
-      <dd class="col-7 agent-state-text">{{ k }}</dd>
+    <div class="row">
+      <div class="col-5 agent-state-text">Skills:</div>
+      <div class="col-7 agent-state-text">
+        <div class="row col" v-for="(v, k) in agent.skills">
+          {{k}}
+        </div>
+      </div>
     </div>
   </b-collapse>
 </div>
