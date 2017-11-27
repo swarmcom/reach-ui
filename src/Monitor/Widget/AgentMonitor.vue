@@ -194,7 +194,6 @@ export default {
       let agents = this.agents
       let compAgents = []
       agents.forEach( (key) => {
-        compAgents.push(key);
         //key._cellVariants = { agentDetail: 'secondary', agentOccup: 'secondary', agentMyCpt: 'secondary', agentCalls: 'secondary', timeComputed: 'secondary' }
         key._cellVariants = {}
         switch(key.state) {
@@ -228,26 +227,23 @@ export default {
 
         if(key.agent.line.client != undefined) {
           key.agentClient = key.agent.line.client.name
-          if(this.selectedCustomer != key.agent.line.client.name && this.selectedCustomer != 'Any Customers'){
-            compAgents.pop(key)
-            }
+          if(this.selectedCustomer != key.agent.line.client.name && this.selectedCustomer != 'Any Customers')
+            return
         }
-        else if(this.selectedCustomer != 'Any Customers'){
-          compAgents.pop(key)
-        }
+        else if(this.selectedCustomer != 'Any Customers')
+          return
 
         if(key.agent.group != undefined){
           key.agentGroup = key.agent.group.name
           if(this.selectedProfile != key.agent.group.name && this.selectedProfile != 'Any Profile')
-            compAgents.pop(key)
+            return
         }
-        else if(this.selectedProfile != 'Any Profile'){
-          compAgents.pop(key)
-        }
-
+        else if(this.selectedProfile != 'Any Profile')
+          return
         if(this.selectedState != key.state && this.selectedState != 'Any State')
-          compAgents.pop(key)
+          return
 
+        compAgents.push(key);
       } )
       return compAgents;
     }

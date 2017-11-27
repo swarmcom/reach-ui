@@ -7,6 +7,7 @@
         <div class="row toggle-bar-custom">
           <div class="title">Filter</div>
         </div>
+        <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
         <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
           <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
         </b-form-select>
@@ -18,19 +19,36 @@
         </b-form-select>
       </div>
       <div class="col-10">
-        <b-table style="margin-top:10px" small striped bordered hover
+        <b-table style="margin-top:10px" small bordered
           :items="computedInqueues"
           :fields="fields"
+          :filter="filter"
           :sort-by="sortBy"
           :sort-desc="sortDesc"
           @sort-changed="onSortingChanged">
           <template slot="actions" slot-scope="data">
-          <b-input-group-button size="sm">
-            <b-button size="sm" variant="outline-secondary" @click="take(data.item)">Take</b-button>
-            <b-button size="sm" variant="outline-secondary" @click="takeover(data.item)">Takeover</b-button>
-            <b-button size="sm" variant="outline-secondary" @click="spy(data.item)">Spy</b-button>
-            <b-button size="sm" variant="outline-secondary" @click="hangup(data.item)">Hangup</b-button>
-          </b-input-group-button size="sm">
+            <b-row>
+              <b-col>
+                <button type="button" class="btn btn-sm pointer" v-if="data.item._showDetails" @click="data.item._showDetails = false">
+                  <icon name="minus" scale="0.5"></icon>
+                </button>
+                <button type="button" class="btn btn-sm pointer" v-if="!data.item._showDetails" @click="data.item._showDetails = true">
+                    <icon name="plus" scale="0.5"></icon>
+                </button>
+              </b-col>
+            </b-row>
+          </template>
+          <template slot="row-details" slot-scope="data">
+            <b-row class="text-center">
+            <b-col>
+            <b-dropdown size="sm" class="agent-release-dropdown" text="Select Action" variant="outline-secondary">
+              <b-dropdown-item @click="take(data.item)">Take</b-dropdown-item>
+              <b-dropdown-item @click="takeover(data.item)">Takeover</b-dropdown-item>
+              <b-dropdown-item @click="spy(data.item)">Spy</b-dropdown-item>
+              <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
+            </b-dropdown>
+            </b-col>
+            </b-row>
           </template>
         </b-table>
       </div>
@@ -50,15 +68,14 @@ export default {
   data () {
     return {
       fields: {
+        actions: { label: 'Actions' },
         state: { label: 'State', sortable: true },
         record: { label: 'Type', sortable: true },
         customer: { label: 'Customer', sortable: true },
         line: { label: 'Line', sortable: true },
         queue: { label: 'Queue', sortable: true },
         skillsReq: { label: 'Skills Req', sortable: true },
-        timeInQueue: { label: 'T in Queue', sortable: true },
-        //twe: { label: 'T in Queue', sortable: true },
-        actions: { label: 'Actions' }
+        timeInQueue: { label: 'T in Queue', sortable: true }
       },
       clients: [],
       queues: [],
@@ -66,6 +83,7 @@ export default {
       selectedQueue: 'Any Queue',
       selectedCustomer: 'Any Customers',
       selectedLine: 'Any Lines',
+      filter: null,
       sortBy: 'agent_id',
       sortDesc: false,
       showCollapse: true
@@ -112,34 +130,28 @@ export default {
       let inqueues = this.inqueues
       let compInqueues = []
       inqueues.forEach( (key) => {
-        compInqueues.push(key);
-
         if(key.queue != undefined){
           if(this.selectedQueue != key.queue && this.selectedQueue != 'Any Queue')
-            compInqueues.pop(key)
+            return
         }
-        else if(this.selectedQueue != 'Any Queue'){
-          compInqueues.pop(key)
-        }
+        else if(this.selectedQueue != 'Any Queue')
+          return
 
         if(key.line != undefined) {
-          if(this.selectedLine != key.line && this.selectedLine != 'Any Lines'){
-            compInqueues.pop(key)
-          }
+          if(this.selectedLine != key.line && this.selectedLine != 'Any Lines')
+            return
         }
-        else if(this.selectedLine != 'Any Lines'){
-          compInqueues.pop(key)
-        }
+        else if(this.selectedLine != 'Any Lines')
+          return
 
         if(key.customer != undefined) {
-          if(this.selectedCustomer != key.customer && this.selectedCustomer != 'Any Customers'){
-            compInqueues.pop(key)
-          }
+          if(this.selectedCustomer != key.customer && this.selectedCustomer != 'Any Customers')
+            return
         }
-        else if(this.selectedCustomer != 'Any Customers'){
-          compInqueues.pop(key)
-        }
+        else if(this.selectedCustomer != 'Any Customers')
+          return
 
+        compInqueues.push(key);
       } )
       return compInqueues;
     }
