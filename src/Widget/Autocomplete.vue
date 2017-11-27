@@ -1,9 +1,16 @@
 <template>
 <span>
-  <input type="text" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
+  <div class="input-group">
+    <input id="autocomplete" type="text" @focusout="focusout" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
+    <span class="input-group-btn">
+      <button class="btn btn-secondary" type="button" @click="switch_state">
+        <icon class="align-middle" name="caret-down" scale="1"></icon>
+      </button>
+    </span>
+  </div>
   <div class="popper dropdown-menu">
     <button class="dropdown-item"
-      v-for="(opt, i) in options" :key="opt.id" @click="select(i)" :class="{active: isActive(i)}">{{opt.name}}</button>
+      v-for="(opt, i) in options" :key="opt.id" @click="ev => select(i, ev)" :class="{active: isActive(i)}">{{opt.name}}</button>
   </div>
 </span>
 </template>
@@ -45,10 +52,21 @@ export default {
       this.visible = false
       this.popper.hide()
     },
+    focusout() {
+      setTimeout(() => this.hide(), 200)
+    },
     select(i) {
       this.hide()
       this.text = ''
       this.$emit('input', this.options[i])
+    },
+    switch_state () {
+      if (this.visible) {
+        this.hide()
+      } else {
+        $("#autocomplete", this.$el).focus()
+        this.async_query(this.text)
+      }
     },
     keydown (ev) {
       if (!this.visible) {
@@ -102,3 +120,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+input:focus {
+  box-shadow: none;
+}
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+</style>
