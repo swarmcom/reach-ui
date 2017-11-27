@@ -7,8 +7,10 @@
         <b-row class="toggle-bar-custom">
           <div class="title">Queue Name</div>
         </b-row>
-        <br></br>
-        <label v-for="queueName in this.queues" :id=queueName.name class="col-12" style="height:27px; border-bottom: solid 1px;">{{ queueName.name }}</label>
+        <b-table style="margin-top:10px" small bordered hover
+          :items="computedStats"
+          :fields="fieldNames">
+        </b-table>
       </b-col>
       <b-col cols="10">
         <b-row>
@@ -56,6 +58,9 @@ export default {
       fieldCIQ: {
         ciq: { label: "CIQ"}
       },
+      fieldNames: {
+        name: { label: 'Name', sortable: false },
+      },
       fieldsStats: {
         speedAnswer: { label: 'Speed Answer' },
         longestWait: { label: 'Longest Wait' },
@@ -96,6 +101,7 @@ export default {
       this.queues.forEach( (key) => {
         let selectedQueue = key.name
         let object = {
+          "name": key.name,
           "ciq":0,
           "speedAnswer": '-',
           "longestWait": '-',

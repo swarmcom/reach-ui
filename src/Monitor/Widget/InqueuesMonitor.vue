@@ -127,7 +127,7 @@ export default {
   },
   computed: {
     computedInqueues () {
-      let inqueues = this.inqueues
+      let inqueues = this.inqueues.slice(0)
       let compInqueues = []
       inqueues.forEach( (key) => {
         if(key.queue != undefined){
