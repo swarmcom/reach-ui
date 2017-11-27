@@ -16,6 +16,7 @@
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails" :effective="eff.reset_rings_fails"></form-select-bool>
   <form-text label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
   <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
+  <tag-group label="Tags Group" v-model="rec.tag_group_id" :effective="eff.tag_group_id"></tag-group>
   <skills label="Agent Skills" v-model="skills" :effective="effective_skills"></skills>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
