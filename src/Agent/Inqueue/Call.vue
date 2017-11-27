@@ -39,7 +39,7 @@
     <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
   </div>
 </div>
-<div v-if="!this.$agent.is_conference()" class="col-12">
+<div v-if="this.$agent.can_conference()" class="col-12">
   <transfer-conference></transfer-conference>
 </div>
 
