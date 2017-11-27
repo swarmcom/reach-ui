@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
+  <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerView" class="mt-2">
     <b-row>
       <b-col cols="2">
