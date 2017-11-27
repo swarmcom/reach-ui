@@ -21,6 +21,12 @@ body {
   padding-right: 15px;
   padding-left: 15px;
 }
+.reach-enter-active, .fade-leave-active {
+transition: opacity .2s
+}
+.reach-enter, .fade-leave-to {
+  opacity: 0
+}
 /* custom login form to fit old UI*/
 .form-signin {
   padding: 25px;

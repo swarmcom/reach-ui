@@ -2,7 +2,8 @@
 <span>
   <input type="text" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
   <div class="popper dropdown-menu">
-    <button class="dropdown-item" v-for="(opt, i) in options" :key="opt.id" :class="{active: isActive(i)}">{{opt.name}}</button>
+    <button class="dropdown-item"
+      v-for="(opt, i) in options" :key="opt.id" @click="select(i)" :class="{active: isActive(i)}">{{opt.name}}</button>
   </div>
 </span>
 </template>
@@ -43,6 +44,11 @@ export default {
     hide() {
       this.visible = false
       this.popper.hide()
+    },
+    select(i) {
+      this.hide()
+      this.text = ''
+      this.$emit('input', this.options[i])
     },
     keydown (ev) {
       if (!this.visible) {

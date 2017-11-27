@@ -12,7 +12,7 @@ export default {
       fields: {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
-        permissions: { label: 'Permissions', sortable: true },
+        role: { label: 'Role', sortable: true, formatter: (role) => role.name },
         ring_timeout: { label: 'Ring Timeout', sortable: true },
         max_ring_fails: { label: 'Max Ring Fails', sortable: true }
       },

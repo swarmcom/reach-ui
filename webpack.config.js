@@ -4,7 +4,23 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    build: ['babel-polyfill', './src/main.js']
+    build: [
+      'babel-polyfill',
+      './src/main.js'
+    ],
+    vendor: [
+      "vue",
+      "jquery",
+      "bootstrap",
+      "bootstrap-vue",
+      "vue-codemirror",
+      "vue-awesome",
+      "vue-notification",
+      "vue-router",
+      "vuejs-datepicker",
+      "popper.js",
+      "chart.js"
+    ]
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -42,7 +58,9 @@ module.exports = {
   performance: { hints: false },
   devtool: '#eval-source-map',
   plugins: [
-    new CopyWebpackPlugin([{from: 'src/config.js', to: 'config.js'}]),
+    new CopyWebpackPlugin([{
+      from: 'src/config.js', to: 'config.js'
+    }]),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -65,6 +83,10 @@ if (process.env.NODE_ENV === 'production') {
       sourceMap: true,
       compress: { warnings: false }
     }),
-    new webpack.LoaderOptionsPlugin({ minimize: true })
+    new webpack.LoaderOptionsPlugin({ minimize: true }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor",
+      minChunks: Infinity
+    })
   ])
 }

@@ -43,7 +43,9 @@
     </button>
   </b-nav>
   <div class="container" v-bind:class="{ 'pin-container': (isPinned && auth) }">
-    <router-view></router-view>
+    <transition name="reach" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 
   <footer class="footer">
