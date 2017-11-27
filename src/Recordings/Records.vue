@@ -216,7 +216,7 @@ export default {
   },
   computed: {
     computedRecordings () {
-      let recordings = this.recordings
+      let recordings = this.recordings.slice(0)
       let compRecordings = []
       recordings.forEach( (key) => {
         let actDate = new Date(key.ts)

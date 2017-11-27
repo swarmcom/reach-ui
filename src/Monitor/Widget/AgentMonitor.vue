@@ -191,7 +191,7 @@ export default {
   },
   computed: {
     computedAgents () {
-      let agents = this.agents
+      let agents = this.agents.slice(0)
       let compAgents = []
       agents.forEach( (key) => {
         //key._cellVariants = { agentDetail: 'secondary', agentOccup: 'secondary', agentMyCpt: 'secondary', agentCalls: 'secondary', timeComputed: 'secondary' }
