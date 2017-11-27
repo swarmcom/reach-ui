@@ -31,9 +31,9 @@
 <script>
 import AgentGroupsStats from '@/Monitor/Widget/AgentGroupsStats'
 export default {
-  name: 'monitor-agents-profiles',
+  name: 'monitor-agents-groups',
   storageName: 'agentManagerStates',
-  widgetName: 'Agent Profiles',
+  widgetName: 'Agent Groups',
   props: {
     agents: Array
   },
