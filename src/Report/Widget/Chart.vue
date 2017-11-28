@@ -43,6 +43,16 @@ export default {
               stacked: false,
             }]
           },
+          tooltips: {
+            callbacks: {
+              label (item, dat) {
+                return parseFloat(item.yLabel).toFixed(2)
+              },
+              title ([item], data) {
+                return new moment(item.xLabel, "X").format("LLL")
+              }
+            }
+          }
         }
       })
     },

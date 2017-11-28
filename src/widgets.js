@@ -16,6 +16,7 @@ import Luas from '@/Widget/Luas'
 import DispositionGroups from '@/Widget/DispositionGroups'
 import ReleaseGroups from '@/Widget/ReleaseGroups'
 import Roles from '@/Widget/Roles'
+import TagGroups from '@/Widget/TagGroups'
 import AdminHelp from '@/Widget/Help'
 import ToggleBar from '@/Widget/ToggleBar.vue'
 
@@ -37,3 +38,4 @@ Vue.component('luas', Luas)
 Vue.component('roles', Roles)
 Vue.component('help', AdminHelp)
 Vue.component('toggle-bar', ToggleBar)
+Vue.component('tag-group', TagGroups)
