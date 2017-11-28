@@ -44,6 +44,7 @@ export default {
     },
     show() {
       if (this.options.length > 0) {
+        this.ref = new Popper(this.reference, this.popper, { 'placement': 'bottom-start' })
         this.visible = true
         this.popper.show()
       }
@@ -51,6 +52,7 @@ export default {
     hide() {
       this.visible = false
       this.popper.hide()
+      this.ref.destroy()
     },
     focusout() {
       setTimeout(() => this.hide(), 200)
@@ -100,14 +102,12 @@ export default {
   mounted () {
     this.reference = $('.reference', this.$el)
     this.popper = $('.popper', this.$el)
-    this.ref = new Popper(this.reference, this.popper, { 'placement': 'bottom-start' })
   },
   watch: {
     options (value, old) {
       if (value.length !== old.length) {
         this.index = 0
       }
-      this.ref.update()
       this.show()
       return value
     },
