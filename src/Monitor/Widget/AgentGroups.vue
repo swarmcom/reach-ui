@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
+  <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManagerProfiles" class="mt-2">
     <b-row>
       <b-col cols="2">
@@ -31,9 +31,9 @@
 <script>
 import AgentGroupsStats from '@/Monitor/Widget/AgentGroupsStats'
 export default {
-  name: 'monitor-agents-profiles',
+  name: 'monitor-agents-groups',
   storageName: 'agentManagerStates',
-  widgetName: 'Agent Profiles',
+  widgetName: 'Agent Groups',
   props: {
     agents: Array
   },

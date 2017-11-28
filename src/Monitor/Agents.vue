@@ -2,14 +2,14 @@
 <div>
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
-    <agent-profiles :agents="agents"></agent-profiles>
+    <agent-groups :agents="agents"></agent-groups>
     <agent-monitor :agents="agents" :groups="groups"></agent-monitor>
   </b-collapse>
 </div>
 </template>
 
 <script>
-import AgentProfiles from '@/Monitor/Widget/AgentProfiles'
+import AgentGroups from '@/Monitor/Widget/AgentGroups'
 import AgentMonitor from '@/Monitor/Widget/AgentMonitor'
 export default {
   name: 'monitor-agents',
@@ -62,7 +62,7 @@ export default {
     this.$bus.$off('agents_state', this.handleState)
   },
   components: {
-    'agent-profiles': AgentProfiles,
+    'agent-groups': AgentGroups,
     'agent-monitor': AgentMonitor
   }
 }

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
+  <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerCallView" class="mt-2">
     <div class="row">
       <div class="col-2">
@@ -16,6 +16,9 @@
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
           <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
+        </b-form-select>
+        <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
+          <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
       </div>
       <div class="col-10">
@@ -80,9 +83,15 @@ export default {
       clients: [],
       queues: [],
       lines: [],
+      states: [
+        {name: "Any State"},
+        {name: "oncall"},
+        {name: "inqueue"}
+      ],
       selectedQueue: 'Any Queue',
       selectedCustomer: 'Any Customers',
       selectedLine: 'Any Lines',
+      selectedState: 'Any State',
       filter: null,
       sortBy: 'agent_id',
       sortDesc: false,
@@ -149,6 +158,9 @@ export default {
             return
         }
         else if(this.selectedCustomer != 'Any Customers')
+          return
+
+        if(this.selectedState != key.state && this.selectedState != 'Any State')
           return
 
         compInqueues.push(key);
