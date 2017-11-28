@@ -5,14 +5,14 @@
     <div class="row">
       <div class="col-12 col-md-3">
         <agent-state></agent-state>
-        <agent-info></agent-info>
+        <my-profile></my-profile>
+        <current-session></current-session>
       </div>
       <div class="col-md-9 col-12">
         <div class="row">
           <b-row class="col-9">
             <b-col cols="8">
               <dialer v-if="this.$agent.is_idle()"></dialer>
-              <!--<override v-if="this.$agent.is_idle()"></override>-->
             </b-col>
             <b-col cols="12">
               <inqueue></inqueue>
@@ -44,10 +44,10 @@
 <script>
 import Inqueue from '@/Agent/Inqueue'
 import Dialer from '@/Agent/Dialer'
-import Override from '@/Agent/Override'
 import Release from '@/Agent/Widget/Release'
 import AgentState from '@/Agent/AgentState'
-import AgentInfo from '@/Agent/Info'
+import MyProfile from '@/Agent/MyProfile'
+import CurrentSession from '@/Agent/CurrentSession'
 import Common from '@/Admin/Common'
 import Wrap from '@/Agent/Widget/Wrap'
 export default {
@@ -106,8 +106,8 @@ export default {
     dialer: Dialer,
     release: Release,
     'agent-state': AgentState,
-    'agent-info': AgentInfo,
-    override: Override,
+    'current-session': CurrentSession,
+    'my-profile': MyProfile,
     'wrap-timer': Wrap
   },
 }
