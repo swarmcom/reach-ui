@@ -8,7 +8,7 @@
         </b-button-group>
       </b-col>
     </b-row>
-    <b-row>
+    <b-row style="margin-top:2px">
       <b-col>
         <b-input-group size="sm">
           <b-form-input variant="outline" size="sm" v-model="uri" type="text"></b-form-input>
