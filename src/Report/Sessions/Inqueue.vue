@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import Player from '@/Stats/Player'
+import Player from '@/Report/Player'
 
 export default {
   name: 'stats-inqueue',

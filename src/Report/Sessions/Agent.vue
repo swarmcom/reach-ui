@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import Player from '@/Stats/Player'
+import Player from '@/Report/Player'
 
 export default {
-  name: 'stats-agent',
+  name: 'report-sessions-agent',
   components: { player: Player },
   data () {
     return {

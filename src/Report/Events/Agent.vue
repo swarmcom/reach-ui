@@ -24,7 +24,7 @@ function format_ms(ms) {
 }
 
 export default {
-  name: 'stats-agent-events',
+  name: 'report-events-agent',
   props: ['uuid'],
   data () {
     return {
