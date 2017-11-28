@@ -14,6 +14,6 @@ export default [
   { path: 'measures/avg', component: MeasuresAvg },
   { path: 'sessions/inqueue', component: InqueueSessions },
   { path: 'sessions/agent', component: AgentSessions },
-  { path: 'events/inqueue', component: InqueueEvents },
-  { path: 'events/agent', component: AgentEvents },
+  { path: 'events/inqueue/:uuid', component: InqueueEvents, props: true },
+  { path: 'events/agent/:uuid', component: AgentEvents, props: true },
 ]

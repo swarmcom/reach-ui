@@ -3,7 +3,8 @@
   <div class="row">
     <div class="col"><h3>Agents sessions</h3></div>
   </div>
-  <b-table style="margin-top:10px" small striped hover :items="agents" :fields="fields" @row-clicked="click">
+  <widget-query v-model="query_params"></widget-query>
+  <b-table style="margin-top: 20px" small striped hover :items="agents" :fields="fields" @row-clicked="click">
     <template slot="state_release" slot-scope="data">
       {{ format_ms(data.item.states.release) }}
     </template>
@@ -28,12 +29,14 @@
 
 <script>
 import Player from '@/Report/Player'
+import Query from '@/Report/Widget/Query'
 
 export default {
   name: 'report-sessions-agent',
-  components: { player: Player },
+  components: { player: Player, 'widget-query': Query },
   data () {
     return {
+      query_params: {},
       fields: {
         ts: { label: 'Ts', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
         state_release: { label: 'Release' },
@@ -47,11 +50,11 @@ export default {
     }
   },
   methods: {
-    query: async function() {
-      this.agents = await this.$agent.p_mfa('ws_stats', 'agent', [])
+    query: async function(params) {
+      this.agents = await this.$agent.p_mfa('ws_report', 'agents_sessions', [params])
     },
     click ({uuid}) {
-      this.$router.push(`/stats/agent/${uuid}`)
+      this.$router.push(`/report/events/agent/${uuid}`)
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -62,8 +65,14 @@ export default {
     }
   },
   created () {
-    this.query()
+    this.query(this.query_params)
   },
+  watch: {
+    query_params (value) {
+      this.query(value)
+      return value
+    }
+  }
 }
 </script>
 

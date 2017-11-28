@@ -1,9 +1,10 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inqueues</h3></div>
+    <div class="col"><h3>Calls sessions</h3></div>
   </div>
-  <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields" @row-clicked="click">
+  <widget-query v-model="query_params"></widget-query>
+  <b-table style="margin-top: 20px" small striped hover :items="inqueues" :fields="fields" @row-clicked="click">
     <template slot="state_inqueue" slot-scope="data">
       {{ format_ms(data.item.states.inqueue) }}
     </template>
@@ -37,12 +38,14 @@
 
 <script>
 import Player from '@/Report/Player'
+import Query from '@/Report/Widget/Query'
 
 export default {
   name: 'stats-inqueue',
-  components: { player: Player },
+  components: { player: Player, 'widget-query': Query },
   data () {
     return {
+      query_params: {},
       fields: {
         ts: { label: 'Ts', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
         state_inqueue: { label: 'Inqueue' },
@@ -59,11 +62,11 @@ export default {
     }
   },
   methods: {
-    query: async function() {
-      this.inqueues = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
+    query: async function(params) {
+      this.inqueues = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
     },
     click ({uuid}) {
-      this.$router.push(`/stats/inqueue/${uuid}`)
+      this.$router.push(`/report/events/inqueue/${uuid}`)
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -81,8 +84,14 @@ export default {
     }
   },
   created () {
-    this.query()
+    this.query(this.query_params)
   },
+  watch: {
+    query_params (value) {
+      this.query(value)
+      return value
+    }
+  }
 }
 </script>
 
