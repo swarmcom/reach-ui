@@ -27,7 +27,7 @@ function format_ms(ms) {
 }
 
 export default {
-  name: 'stats-inqueue-events',
+  name: 'report-events-inqueue',
   props: ['uuid'],
   data () {
     return {

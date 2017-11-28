@@ -18,11 +18,8 @@
         <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
         <b-dropdown-item to="/report/agents/avg">Agents averages</b-dropdown-item>
         <b-dropdown-item to="/report/measures/avg">Measures averages</b-dropdown-item>
-      </b-nav-item-dropdown>
-
-      <b-nav-item-dropdown v-access:supervisor-ui text="Sessions">
-        <b-dropdown-item to="/stats/inqueue">Inqueues</b-dropdown-item>
-        <b-dropdown-item to="/stats/agent">Agents</b-dropdown-item>
+        <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
+        <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
       </b-nav-item-dropdown>
 
       <li v-access:supervisor-ui class="nav-item">

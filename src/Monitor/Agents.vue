@@ -25,6 +25,7 @@ export default {
         agent_name: { label: 'Name', sortable: true },
         state: { label: 'State', sortable: true },
         timeComputed: { label: 'Time', sortable:true },
+        ws_peer: { label: 'Peer', sortable:true },
         actions: { label: 'Actions' }
       },
       agents: [],

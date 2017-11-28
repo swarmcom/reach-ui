@@ -20,10 +20,8 @@ import Agent from '@/Agent'
 import Profile from '@/Profile'
 import Admin from '@/Admin'
 import Monitor from '@/Monitor'
-import Stats from '@/Stats'
 import Report from '@/Report'
 
-import StatsRoutes from '@/routes/stats'
 import AdminRoutes from '@/routes/admin'
 import ReportRoutes from '@/routes/report'
 
@@ -49,7 +47,6 @@ Vue.directive('access', {
 const router = new VueRouter({
   routes: [
     { path: '/admin', component: Admin, children: AdminRoutes },
-    { path: '/stats', component: Stats, children: StatsRoutes },
     { path: '/help', component: Help },
     { path: '/login', component: Login },
     { path: '/monitor', component: Monitor },
