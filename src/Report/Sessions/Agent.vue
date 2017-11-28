@@ -30,6 +30,7 @@
 <script>
 import Player from '@/Report/Player'
 import Query from '@/Report/Widget/Query'
+import moment from 'moment'
 
 export default {
   name: 'report-sessions-agent',
@@ -38,13 +39,13 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts: { label: 'Ts', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
-        state_release: { label: 'Release' },
-        state_available: { label: 'Available' },
-        state_oncall: { label: 'Oncall' },
-        agent_name: { label: 'Name', sortable: true },
-        agent_login: { label: 'Login', sortable: true },
-        agent_peer: { label: 'Peer IP', sortable: true },
+        ts: { label: 'Ts', sortable: true, formatter: ts => new moment(ts).format("YYYY-MM-DD HH:MM:SS") },
+        state_release: { label: 'Release', tdClass: 'text-right' },
+        state_available: { label: 'Available', tdClass: 'text-right' },
+        state_oncall: { label: 'Oncall', tdClass: 'text-right' },
+        agent_name: { label: 'Name', sortable: true, tdClass: 'text-right' },
+        agent_login: { label: 'Login', sortable: true, tdClass: 'text-right' },
+        agent_peer: { label: 'Peer IP', sortable: true, tdClass: 'text-right' },
       },
       agents: []
     }
