@@ -11,6 +11,7 @@ import VueCodeMirror from 'vue-codemirror'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import Notifications from 'vue-notification'
+import AsyncComputed from 'vue-async-computed'
 
 import AgentAPI from '@/agent-api-plugin'
 
@@ -34,6 +35,7 @@ Vue.use(AgentAPI)
 Vue.use(Notifications)
 Vue.use(BootstrapVue)
 Vue.use(VueCodeMirror)
+Vue.use(AsyncComputed)
 
 Vue.directive('access', {
   bind (el, binding, vnode) {

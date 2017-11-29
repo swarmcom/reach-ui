@@ -17,6 +17,9 @@
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
           <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
+        <b-form-select class="pointer" size="sm" v-model="period.value" style="margin-top:10px">
+          <option v-for="period in periods" :value="period.value">{{period.name}}</option>
+        </b-form-select>
       </b-col>
       <b-col cols="10">
         <b-table style="margin-top:10px" small bordered
@@ -140,6 +143,15 @@ export default {
         {name: "hold"},
         {name: "wrapup"}
       ],
+      periods: [
+        { value:{ last: '15m' }, name:"Last 15 minutes"},
+        { value:{ last: '30m' }, name:"Last 30 minutes"},
+        { value:{ last: '1h' }, name:"Last Hour"},
+        { value:{ last: '1d' }, name:"Today" },
+        { value:{ last: '1w' }, name:"This Week" },
+        { value:{ last: '1M' }, name:"This Month" }
+      ],
+      period: { value: { last: '15m' }, name: "Last 15 minutes"},
       selectedProfile: 'Any Profile',
       selectedCustomer: 'Any Customers',
       selectedState: 'Any State',
@@ -174,6 +186,20 @@ export default {
     },
     stop (agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
+    },
+    percent (value) {
+      if (value > 0) {
+        return `${(value*100).toFixed(2)}%`
+      } else {
+        return "0%"
+      }
+    },
+    time (value) {
+      if (value > 0) {
+        return `${(value/1000).toFixed(1)}s`
+      } else {
+        return "0s"
+      }
     }
   },
   created () {
@@ -189,9 +215,10 @@ export default {
   beforeDestroy () {
     clearInterval(this.updater)
   },
-  computed: {
-    computedAgents () {
+  asyncComputed: {
+    async computedAgents () {
       let agents = this.agents.slice(0)
+      let stats = await this.$agent.p_mfa('ws_stats', 'agents', [this.period.value])
       let compAgents = []
       agents.forEach( (key) => {
         //key._cellVariants = { agentDetail: 'secondary', agentOccup: 'secondary', agentMyCpt: 'secondary', agentCalls: 'secondary', timeComputed: 'secondary' }
@@ -224,6 +251,16 @@ export default {
         key.agentLogin = key.agent.login
         key.agentPhone = key.agent.uri
         key.agentSkills = (Object.keys(key.agent.skills)).toString()
+
+        let i = stats.findIndex(E => E.agent_id === key.agent_id)
+        if(Object.keys(stats[i].occupancy).length > 0)
+          key.agentOccup = this.percent(stats[i].occupancy.states.ratio.oncall)
+        else
+          key.agentOccup = '0%'
+        if(Object.keys(stats[i].cpt).length > 0)
+          key.agentMyCpt = this.time(stats[i].cpt.avg.oncall)
+        else
+          key.agentMyCpt = '0s'
 
         if(key.agent.line.client != undefined) {
           key.agentClient = key.agent.line.client.name

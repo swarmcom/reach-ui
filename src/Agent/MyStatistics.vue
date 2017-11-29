@@ -88,7 +88,7 @@ export default {
         { value:"1h", name:"Last Hour"},
         { value:"1d", name:"Today" },
         { value:"1w", name:"This Week" },
-        { value:"1m", name:"This Month" }
+        { value:"1M", name:"This Month" }
       ],
       period: { value: "15m", name: "Last 15 minutes"},
       fields: {
