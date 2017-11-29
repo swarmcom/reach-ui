@@ -5,29 +5,35 @@
   </div>
   <widget-query v-model="query_params"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" @row-clicked="click">
+    <template slot="state_total" slot-scope="data">
+      {{ format_ms(data.item.states.total) }}
+    </template>
     <template slot="state_inqueue" slot-scope="data">
-      {{ format_ms(data.item.states.inqueue) }}
+      {{ format_ms(data.item.states.states.inqueue) }}
     </template>
     <template slot="state_agent" slot-scope="data">
-      {{ format_ms(data.item.states.agent) }}
+      {{ format_ms(data.item.states.states.agent) }}
     </template>
     <template slot="state_oncall" slot-scope="data">
-      {{ format_ms(data.item.states.oncall) }}
+      {{ format_ms(data.item.states.states.oncall) }}
     </template>
     <template slot="line_in" slot-scope="data">
-      {{ data.item.line_in.name }}
+      {{ maybe_name(data.item.line_in) }}
     </template>
     <template slot="client" slot-scope="data">
-      {{ data.item.line_in.client.name }}
+      {{ maybe_name(data.item.client) }}
     </template>
     <template slot="agent" slot-scope="data">
       {{ maybe_name(data.item.agent) }}
     </template>
-    <template slot="caller_id" slot-scope="data">
-      "{{ data.item.vars['Caller-Caller-ID-Name'] }}" &lt;{{ data.item.vars['Caller-Caller-ID-Number'] }}&gt;
+    <template slot="caller_ip" slot-scope="data">
+      {{ data.item.caller_ip }}
     </template>
-    <template slot="called_id" slot-scope="data">
-      {{ data.item.vars['Caller-Destination-Number'] }}
+    <template slot="caller" slot-scope="data">
+      {{ data.item.caller }}
+    </template>
+    <template slot="calling" slot-scope="data">
+      {{ data.item.calling }}
     </template>
     <template slot="player" slot-scope="data">
       <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
@@ -53,15 +59,17 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts: { label: 'Ts', sortable: true, formatter: ts => new moment(ts).format("YYYY-MM-DD HH:MM:SS") },
+        ts: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        state_total: { label: 'Total', tdClass: 'text-right' },
         state_inqueue: { label: 'Inqueue', tdClass: 'text-right' },
         state_agent: { label: 'Agent', tdClass: 'text-right' },
         state_oncall: { label: 'Oncall', tdClass: 'text-right' },
         line_in: { label: 'Line In', tdClass: 'text-right' },
         client: { label: 'Client', tdClass: 'text-right' },
         agent: { label: 'Agent', tdClass: 'text-right' },
-        caller_id: { label: 'Caller ID', tdClass: 'text-right' },
-        called_id: { label: 'Called ID',tdClass: 'text-right' },
+        caller_ip: { label: 'IP', tdClass: 'text-right' },
+        caller: { label: 'Caller', tdClass: 'text-right' },
+        calling: { label: 'Calling',tdClass: 'text-right' },
         player: { label: ' ', tdClass: 'text-right' }
       },
       sessions: []
