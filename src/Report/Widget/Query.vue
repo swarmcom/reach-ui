@@ -17,9 +17,11 @@
     <b-col cols=3>
       <widget-date v-model="date_end" placeholder="End date"></widget-date>
     </b-col>
-    <b-col cols=3>
+    <b-col cols=1>
       <button @click="apply" class="btn btn-outline-primary">Apply</button>
-      <button @click="reset" class="btn btn-outline-success float-right">Reset</button>
+    </b-col>
+    <b-col cols=1>
+      <button @click="reset" class="btn btn-outline-success">Reset</button>
     </b-col>
   </b-row>
 </b-container>

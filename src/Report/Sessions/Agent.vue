@@ -1,10 +1,10 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col"><h3>Agents sessions</h3></div>
-  </div>
+  <b-row>
+    <b-col><h3>Agents sessions</h3></b-col>
+  </b-row>
   <widget-query v-model="query_params"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="agents" :fields="fields" @row-clicked="click">
+  <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" @row-clicked="click">
     <template slot="state_release" slot-scope="data">
       {{ format_ms(data.item.states.release) }}
     </template>
@@ -24,6 +24,11 @@
       {{ data.item.peer }}
     </template>
   </b-table>
+  <b-row>
+    <b-col>
+      <b-button variant="outline-primary" class="float-right" @click="more">More</b-button>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
@@ -39,20 +44,20 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts: { label: 'Ts', sortable: true, formatter: ts => new moment(ts).format("YYYY-MM-DD HH:MM:SS") },
+        ts: { label: 'Ts', formatter: ts => new moment(ts).format("YYYY-MM-DD HH:MM:SS") },
         state_release: { label: 'Release', tdClass: 'text-right' },
         state_available: { label: 'Available', tdClass: 'text-right' },
         state_oncall: { label: 'Oncall', tdClass: 'text-right' },
-        agent_name: { label: 'Name', sortable: true, tdClass: 'text-right' },
-        agent_login: { label: 'Login', sortable: true, tdClass: 'text-right' },
-        agent_peer: { label: 'Peer IP', sortable: true, tdClass: 'text-right' },
+        agent_name: { label: 'Name', tdClass: 'text-right' },
+        agent_login: { label: 'Login', tdClass: 'text-right' },
+        agent_peer: { label: 'Peer IP', tdClass: 'text-right' },
       },
-      agents: []
+      sessions: []
     }
   },
   methods: {
     query: async function(params) {
-      this.agents = await this.$agent.p_mfa('ws_report', 'agents_sessions', [params])
+      this.sessions = await this.$agent.p_mfa('ws_report', 'agents_sessions', [params])
     },
     click ({uuid}) {
       this.$router.push(`/report/events/agent/${uuid}`)
@@ -63,6 +68,13 @@ export default {
       } else {
         return ""
       }
+    },
+    more: async function() {
+      let params = this.query_params
+      let session = this.sessions[this.sessions.length - 1]
+      params.date_end = parseInt(session.ts/1000)
+      let more = await this.$agent.p_mfa('ws_report', 'agents_sessions', [params])
+      this.sessions = this.sessions.concat(more)
     }
   },
   created () {
