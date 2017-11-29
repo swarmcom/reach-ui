@@ -44,7 +44,7 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts: { label: 'Ts', formatter: ts => new moment(ts).format("YYYY-MM-DD HH:MM:SS") },
+        ts: { label: 'Ts', formatter: ts => new moment(ts).format("YYYY-MM-DD HH:mm:ss") },
         state_release: { label: 'Release', tdClass: 'text-right' },
         state_available: { label: 'Available', tdClass: 'text-right' },
         state_oncall: { label: 'Oncall', tdClass: 'text-right' },
