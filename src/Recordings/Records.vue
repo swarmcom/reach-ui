@@ -141,7 +141,8 @@ export default {
       selectedLine: 'Any Line',
       sortBy: 'ts',
       sortDesc: false,
-      showCollapse: true
+      showCollapse: true,
+      params: {}
     }
   },
   methods: {
@@ -157,7 +158,7 @@ export default {
       this.line_ins.unshift({ name:"Any Line" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
       this.queues.unshift({ name:"Any Queue" })
-      this.recordings = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
+      this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -186,7 +187,7 @@ export default {
       }
     },
     reload: async function() {
-      this.recordings = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
+      this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
     },
     onSortingChanged (ctx){
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
