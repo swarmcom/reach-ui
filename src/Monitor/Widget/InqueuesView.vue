@@ -5,7 +5,7 @@
     <b-row>
       <b-col cols="2">
         <b-row class="toggle-bar-custom">
-          <div class="title">Queue Name</div>
+          <div class="titlenocollapse">Queue Name</div>
         </b-row>
         <b-table style="margin-top:10px" small bordered hover
           :items="computedStats"
@@ -16,7 +16,7 @@
         <b-row>
           <b-col cols="2">
             <b-row class="toggle-bar-custom" style="margin-left:1px">
-              <div class="title">Calls in Queue</div>
+              <div class="titlenocollapse">Calls in Queue</div>
             </b-row>
             <b-table style="margin-top:10px" small striped bordered hover
               :items="computedStats"
@@ -26,7 +26,7 @@
           <b-col cols="10">
             <b-row class="toggle-bar-custom" style="margin-left:1px">
               <b-col cols="9">
-              <div class="title">Queue Statistics</div>
+              <div class="titlenocollapse">Queue Statistics</div>
               </b-col>
               <b-col cols="3">
               <b-form-select style="height:28px" class="pointer" size="sm" v-model="period.value" @change="set_period">

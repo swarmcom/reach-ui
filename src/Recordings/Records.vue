@@ -5,7 +5,7 @@
   <b-row>
     <b-col cols="2">
       <div class="row toggle-bar-custom">
-        <div class="title">Filter</div>
+        <div class="titlenocollapse">Filter</div>
       </div>
       <b-input-group size="sm" style="margin-top:10px">
         <b-btn class="pointer" id="search" size="sm" variant="primary"

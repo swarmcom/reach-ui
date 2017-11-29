@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-2">
         <div class="row toggle-bar-custom">
-          <div class="title">Filter</div>
+          <div class="titlenocollapse">Filter</div>
         </div>
         <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
         <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
