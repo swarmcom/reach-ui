@@ -11,7 +11,7 @@
     <b-row style="margin-top:2px">
       <b-col>
         <b-input-group size="sm">
-          <b-form-input variant="outline" size="sm" v-model="uri" type="text"></b-form-input>
+          <b-form-input class="customInput" variant="outline" size="sm" v-model="uri" type="text"></b-form-input>
           <b-dropdown size="sm" text="Contacts" variant="outline-secondary" :disabled="this.$agent.vm.agent.uris.length == 0">
             <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
           </b-dropdown>

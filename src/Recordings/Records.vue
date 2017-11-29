@@ -19,7 +19,7 @@
             content="You can search for any agent, queue, line, agent called id number,
                      agent caller id name or agent caller id number by typing characters to the keyboard.">
         </b-popover>
-        <b-form-input style="cursor: text" v-model="filter" placeholder="Search ..."/>
+        <b-form-input class="customInput" style="cursor: text" v-model="filter" placeholder="Search ..."/>
         </b-form-input>
       </b-input-group>
       </b-input-group>

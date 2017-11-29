@@ -7,7 +7,7 @@
         <div class="row toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </div>
-        <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
+        <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
         <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
           <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
         </b-form-select>

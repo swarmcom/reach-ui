@@ -7,7 +7,7 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </b-row>
-        <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
+        <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
         <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
           <option v-for="group in this.groups" :value=group.name>{{group.name}}</option>
         </b-form-select>
