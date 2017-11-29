@@ -9,6 +9,13 @@
   <div class="form">
     <form-text id="name" label="Name" v-model="rec.name"></form-text>
     <form-text id="description" label="Description" v-model="rec.description"></form-text>
+    <div class="row" style="margin-top: 5px">
+      <label class="col-3 col-form-label">Tags</label>
+      <div class="col-9">
+        <tags v-model="tags"></tags>
+      </div>
+    </div>
+
     <div style="margin-top:20px">
       <button @click="onCommit" class="btn btn-primary">Commit</button>
       <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
@@ -21,17 +28,32 @@
 <script>
 import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
+import Tags from '@/Widget/Tags'
 
 export default {
   name: 'admin-tag-group',
+  components: { Tags },
   props: ['id'],
   mixins: [Common, Obj],
   data () {
     return {
+      tags: [],
       rec: {},
       module: 'ws_db_tag_group',
       redirect: '/admin/tag_groups'
     }
   },
+  watch: {
+    tags (value) {
+      this.rec.tags = value
+      return value
+    },
+    rec (value) {
+      if (Array.isArray(value.tags)) {
+        this.tags = value.tags
+      }
+      return value
+    }
+  }
 }
 </script>
