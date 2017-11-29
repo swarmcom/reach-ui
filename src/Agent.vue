@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-bind:class="classObject">
   <b-row>
     <b-col><session-manager></session-manager></b-col>
   </b-row>
@@ -24,6 +24,15 @@ import Inqueues from '@/Monitor/Inqueues'
 export default {
   data () {
     return {
+    }
+  },
+  computed: {
+    classObject: function () {
+      this.$agent.vm.storage_data["narrowScreenMain"] = this.$agent.vm.isNarrowLayout.main
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+      return {
+        container: this.$agent.vm.isNarrowLayout.main
+      }
     }
   },
   components: {
