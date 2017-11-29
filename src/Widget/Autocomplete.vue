@@ -10,7 +10,7 @@
   </div>
   <div class="popper dropdown-menu">
     <button class="dropdown-item"
-      v-for="(opt, i) in options" :key="opt.id" @click="ev => select(i, ev)" :class="{active: isActive(i)}">{{opt.name}}</button>
+      v-for="(opt, i) in options" :key="i" @click="ev => select(i, ev)" :class="{active: isActive(i)}">{{ to_name(opt) }}</button>
   </div>
 </span>
 </template>
@@ -22,7 +22,9 @@ import Popper from 'popper.js'
 export default {
   props: {
     query: { type: Function, required: true },
-    placeholder: { type: String }
+    to_name: { type: Function, default: ob => ob.name },
+    new: { type: Boolean, default: false },
+    placeholder: { type: String },
   },
   data () {
     return {
@@ -71,6 +73,10 @@ export default {
       if (!this.visible) {
         if (ev.key == 'ArrowDown') {
           this.async_query(this.text)
+        }
+        if (this.new && ev.key == 'Enter') {
+          this.$emit('input', this.text)
+          this.text = ''
         }
         return
       }
