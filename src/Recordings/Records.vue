@@ -5,7 +5,7 @@
   <b-row>
     <b-col cols="2">
       <div class="row toggle-bar-custom">
-        <div class="title">Filter</div>
+        <div class="titlenocollapse">Filter</div>
       </div>
       <b-input-group size="sm" style="margin-top:10px">
         <b-btn class="pointer" id="search" size="sm" variant="primary"
@@ -19,7 +19,7 @@
             content="You can search for any agent, queue, line, agent called id number,
                      agent caller id name or agent caller id number by typing characters to the keyboard.">
         </b-popover>
-        <b-form-input style="cursor: text" v-model="filter" placeholder="Search ..."/>
+        <b-form-input class="customInput" style="cursor: text" v-model="filter" placeholder="Search ..."/>
         </b-form-input>
       </b-input-group>
       </b-input-group>
@@ -141,7 +141,8 @@ export default {
       selectedLine: 'Any Line',
       sortBy: 'ts',
       sortDesc: false,
-      showCollapse: true
+      showCollapse: true,
+      params: {}
     }
   },
   methods: {
@@ -157,7 +158,7 @@ export default {
       this.line_ins.unshift({ name:"Any Line" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
       this.queues.unshift({ name:"Any Queue" })
-      this.recordings = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
+      this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -186,7 +187,7 @@ export default {
       }
     },
     reload: async function() {
-      this.recordings = await this.$agent.p_mfa('ws_stats', 'inqueue', [])
+      this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
     },
     onSortingChanged (ctx){
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy

@@ -54,7 +54,8 @@ export default class Agent extends WsProto {
         release_id: undefined,
         storage_data: {},
         isActiveAM: false,
-        isActiveQM: false
+        isActiveQM: false,
+        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true }
       }
     }),
     Notification.requestPermission()

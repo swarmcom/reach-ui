@@ -5,9 +5,9 @@
     <div class="row">
       <div class="col-2">
         <div class="row toggle-bar-custom">
-          <div class="title">Filter</div>
+          <div class="titlenocollapse">Filter</div>
         </div>
-        <b-form-input size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
+        <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
         <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
           <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
         </b-form-select>
@@ -160,12 +160,16 @@ export default {
         else if(this.selectedCustomer != 'Any Customers')
           return
 
-        if(this.selectedState != key.state && this.selectedState != 'Any State')
+        if(this.selectedState == 'inqueue' && key.state == 'agent') {
+          compInqueues.push(key)
+          return
+        }
+        else if(this.selectedState != key.state && this.selectedState != 'Any State')
           return
 
-        compInqueues.push(key);
+        compInqueues.push(key)
       } )
-      return compInqueues;
+      return compInqueues
     }
   }
 }

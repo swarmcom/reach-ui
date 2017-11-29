@@ -15,16 +15,44 @@
   </b-navbar>
   <b-nav v-if="auth" class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
     <b-nav-item v-access:admin-ui to="/admin/agents">ADMIN</b-nav-item>
-    <b-nav-item to="/main">MAIN</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
-      <b-dropdown-item v-if="!$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = true">Add Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = false">Remove Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="!$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = true">Add Queue Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = false">Remove Queue Manager</b-dropdown-item>
+      <b-dropdown-header>Options for Admin tab</b-dropdown-header>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.admin" @click="$agent.vm.isNarrowLayout.admin = true">Switch to Narrow layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.admin" @click="$agent.vm.isNarrowLayout.admin = false">Switch to Wide layout</b-dropdown-item>
+    </b-nav-item-dropdown>
+    <b-nav-item to="/main">MAIN</b-nav-item>
+    <b-nav-item-dropdown>
+      <b-dropdown-header>Options for Main tab</b-dropdown-header>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = true">Switch to Narrow layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = false">Switch to Wide layout</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = true">Add Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = false">Remove Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = true">Add Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = false">Remove Queue Manager</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/profile">PROFILE</b-nav-item>
+    <b-nav-item-dropdown v-access:supervisor-ui>
+      <b-dropdown-header>Options for Profile tab</b-dropdown-header>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.profile" @click="$agent.vm.isNarrowLayout.profile = true">Switch to Narrow layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.profile" @click="$agent.vm.isNarrowLayout.profile = false">Switch to Wide layout</b-dropdown-item>
+    </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/monitor">MONITOR </b-nav-item>
+    <b-nav-item-dropdown v-access:supervisor-ui>
+      <b-dropdown-header>Options for Monitor tab</b-dropdown-header>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = true">Switch to Narrow layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = false">Switch to Wide layout</b-dropdown-item>
+    </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/recordings">RECORDINGS </b-nav-item>
+    <b-nav-item-dropdown v-access:supervisor-ui>
+      <b-dropdown-header>Options for Recordings tab</b-dropdown-header>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = true">Switch to Narrow layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = false">Switch to Wide layout</b-dropdown-item>
+    </b-nav-item-dropdown>
     <b-nav-item-dropdown v-access:supervisor-ui text="REPORTS">
       <b-dropdown-item to="/report/agents/states">Agents man-hours</b-dropdown-item>
       <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
@@ -40,7 +68,7 @@
       </icon>
     </button>
   </b-nav><!--container-fluid-->
-  <div class="container" v-bind:class="{ 'pin-container': (isPinned && auth) }">
+  <div class="container-fluid" v-bind:class="{ 'pin-container': (isPinned && auth) }">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>

@@ -5,7 +5,7 @@
     <b-row>
       <b-col cols="2">
         <b-row class="toggle-bar-custom">
-          <div class="title">Profile Name</div>
+          <div class="titlenocollapse">Profile Name</div>
         </b-row>
         <b-table style="margin-top:10px" small bordered hover
           :items="groups"
@@ -14,7 +14,7 @@
       </b-col>
       <b-col cols="7">
         <b-row class="toggle-bar-custom" style="margin-left:1px">
-          <div class="title">Agent States</div>
+          <div class="titlenocollapse">Agent States</div>
         </b-row>
         <b-table style="margin-top:10px" small striped bordered hover
           :items="computedAgentsStats"
