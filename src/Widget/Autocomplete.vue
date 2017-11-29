@@ -1,9 +1,9 @@
 <template>
 <span>
   <div class="input-group">
-    <input id="autocomplete" type="text" @focusout="focusout" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
+    <input id="autocomplete" type="text" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
     <span class="input-group-btn">
-      <button class="btn btn-secondary" type="button" @click="switch_state">
+      <button class="btn btn-secondary" type="button" @click="display">
         <icon class="align-middle" name="caret-down" scale="1"></icon>
       </button>
     </span>
@@ -50,22 +50,19 @@ export default {
       }
     },
     hide() {
-      this.visible = false
-      this.popper.hide()
-      this.ref.destroy()
-    },
-    focusout() {
-      setTimeout(() => this.hide(), 200)
+      if (this.visible) {
+        this.visible = false
+        this.popper.hide()
+        this.ref.destroy()
+      }
     },
     select(i) {
       this.hide()
       this.text = ''
       this.$emit('input', this.options[i])
     },
-    switch_state () {
-      if (this.visible) {
-        this.hide()
-      } else {
+    display () {
+      if (!this.visible) {
         $("#autocomplete", this.$el).focus()
         this.async_query(this.text)
       }
@@ -97,11 +94,22 @@ export default {
           this.hide()
           break
       }
+    },
+    clickListener (e) {
+      if (! this.$el.contains(e.target)) { // outside
+        if (this.visible) {
+          this.hide()
+        }
+      }
     }
   },
   mounted () {
     this.reference = $('.reference', this.$el)
     this.popper = $('.popper', this.$el)
+    window.addEventListener('click', this.clickListener)
+  },
+  beforeDestroy () {
+    window.removeEventListener('click', this.clickListener)
   },
   watch: {
     options (value, old) {
