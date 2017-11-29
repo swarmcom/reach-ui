@@ -160,12 +160,16 @@ export default {
         else if(this.selectedCustomer != 'Any Customers')
           return
 
-        if(this.selectedState != key.state && this.selectedState != 'Any State')
+        if(this.selectedState == 'inqueue' && key.state == 'agent') {
+          compInqueues.push(key)
+          return
+        }
+        else if(this.selectedState != key.state && this.selectedState != 'Any State')
           return
 
-        compInqueues.push(key);
+        compInqueues.push(key)
       } )
-      return compInqueues;
+      return compInqueues
     }
   }
 }
