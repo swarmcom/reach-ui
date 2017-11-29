@@ -4,7 +4,7 @@
     <div class="col"><h3>Calls sessions</h3></div>
   </div>
   <widget-query v-model="query_params"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="inqueues" :fields="fields" @row-clicked="click">
+  <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" @row-clicked="click">
     <template slot="state_inqueue" slot-scope="data">
       {{ format_ms(data.item.states.inqueue) }}
     </template>
@@ -33,12 +33,18 @@
       <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
     </template>
   </b-table>
+  <b-row>
+    <b-col>
+      <b-button variant="outline-primary" class="float-right" @click="more">More</b-button>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
 <script>
 import Player from '@/Report/Player'
 import Query from '@/Report/Widget/Query'
+import moment from 'moment'
 
 export default {
   name: 'stats-inqueue',
@@ -47,23 +53,23 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts: { label: 'Ts', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
-        state_inqueue: { label: 'Inqueue' },
-        state_agent: { label: 'Agent' },
-        state_oncall: { label: 'Oncall' },
-        line_in: { label: 'Line In', sortable: true },
-        client: { label: 'Client', sortable: true },
-        agent: { label: 'Agent', sortable: true },
-        caller_id: { label: 'Caller ID' },
-        called_id: { label: 'Called ID' },
-        player: { label: ' ' }
+        ts: { label: 'Ts', sortable: true, formatter: ts => new moment(ts).format("YYYY-MM-DD HH:MM:SS") },
+        state_inqueue: { label: 'Inqueue', tdClass: 'text-right' },
+        state_agent: { label: 'Agent', tdClass: 'text-right' },
+        state_oncall: { label: 'Oncall', tdClass: 'text-right' },
+        line_in: { label: 'Line In', tdClass: 'text-right' },
+        client: { label: 'Client', tdClass: 'text-right' },
+        agent: { label: 'Agent', tdClass: 'text-right' },
+        caller_id: { label: 'Caller ID', tdClass: 'text-right' },
+        called_id: { label: 'Called ID',tdClass: 'text-right' },
+        player: { label: ' ', tdClass: 'text-right' }
       },
-      inqueues: []
+      sessions: []
     }
   },
   methods: {
     query: async function(params) {
-      this.inqueues = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
+      this.sessions = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
     },
     click ({uuid}) {
       this.$router.push(`/report/events/inqueue/${uuid}`)
@@ -81,6 +87,13 @@ export default {
       } else {
         return ''
       }
+    },
+    more: async function() {
+      let params = this.query_params
+      let session = this.sessions[this.sessions.length - 1]
+      params.date_end = parseInt(session.ts/1000)
+      let more = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
+      this.sessions = this.sessions.concat(more)
     }
   },
   created () {
