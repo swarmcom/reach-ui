@@ -15,6 +15,30 @@
         <b-table style="margin-top:10px" small bordered
           :items="statistics"
           :fields="fields">
+          <template slot="HEAD_ciq" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
+          <template slot="HEAD_agents" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
+          <template slot="HEAD_statesCounts" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
+          <template slot="HEAD_myCpt" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
+          <template slot="HEAD_teamCpt" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
+          <template slot="HEAD_occup" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
+          <template slot="HEAD_asa" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
+          <template slot="HEAD_longest" scope="data">
+            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          </template>
           <template slot="statesCounts" slot-scope="data">
             <div style="background-color: #dbeffa">
               <b-progress-bar variant="primary" :value=data.item.statesCounts.release :max="data.item.agents" show-progress><div class="agent-state-text" style="min-width:100%; color:black">Released</div></b-progress-bar>
@@ -32,12 +56,30 @@
               <b-progress-bar variant="warning" :value="data.item.statesCounts.wrapup" :max="data.item.agents" show-progress><div class="agent-state-text" style="min-width:100%; color:black">Wrapup</div></b-progress-bar>
             </div>
           </template>
+          <template slot="ciq" slot-scope="data">
+            <div style="text-align:center;">{{data.item.ciq}}</div>
+          </template>
+          <template slot="agents" slot-scope="data">
+            <div style="text-align:center;">{{data.item.agents}}</div>
+          </template>
+          <template slot="myCpt" slot-scope="data">
+            <div style="text-align:center;">{{data.item.myCpt}}</div>
+          </template>
+          <template slot="teamCpt" slot-scope="data">
+            <div style="text-align:center;">{{data.item.teamCpt}}</div>
+          </template>
           <template slot="occup" slot-scope="data">
-            {{data.item.occup.available}}
+            <div style="text-align:center;">{{data.item.occup.available}}</div>
             <!--<div class="session-state-text"><b>oncall: </b>{{data.item.occup.oncall}}</div>
             <div class="session-state-text"><b>ringing: </b>{{data.item.occup.ringing}}</div>
             <div class="session-state-text"><b>available: </b>{{data.item.occup.available}}</div>
             <div class="session-state-text"><b>release: </b>{{data.item.occup.release}}</div>-->
+          </template>
+          <template slot="asa" slot-scope="data">
+            <div style="text-align:center;">{{data.item.asa}}</div>
+          </template>
+          <template slot="longest" slot-scope="data">
+            <div style="text-align:center;">{{data.item.longest}}</div>
           </template>
         </b-table>
       </b-col>
@@ -93,14 +135,14 @@ export default {
       ],
       period: { value: "15m", name: "Last 15 minutes"},
       fields: {
-        ciq: { label: 'CIQ' },
-        agents: { label: 'Agents' },
-        statesCounts: { label: 'States'},
-        myCpt: { label: 'My CPT' },
-        teamCpt: { label: 'Team CPT' },
-        occup: { label: 'Occup' },
-        asa: { label: 'ASA' },
-        longest: { label: 'Longest' }
+        ciq: { label: 'CIQ', variant: 'warning' },
+        agents: { label: 'Agents', variant: 'success' },
+        statesCounts: { label: 'States' },
+        myCpt: { label: 'My CPT', variant: 'primary' },
+        teamCpt: { label: 'Team CPT', variant: 'primary' },
+        occup: { label: 'Occup', variant: 'primary' },
+        asa: { label: 'ASA', variant: 'primary' },
+        longest: { label: 'Longest', variant: 'primary' }
       },
       showCollapse: true,
     }
