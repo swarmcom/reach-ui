@@ -25,7 +25,7 @@ export default {
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
       return {
         container: this.$agent.vm.isNarrowLayout.monitor,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.admin
+        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.monitor
       }
     }
   },
