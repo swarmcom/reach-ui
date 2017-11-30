@@ -7,7 +7,7 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Queue Name</div>
         </b-row>
-        <b-table style="margin-top:10px" small bordered hover
+        <b-table style="margin-top:10px"  small responsive hover
           :items="computedStats"
           :fields="fieldNames">
         </b-table>
