@@ -15,29 +15,29 @@
         <b-table style="margin-top:10px" small bordered
           :items="statistics"
           :fields="fields">
-          <template slot="HEAD_ciq" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_ciq" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
-          <template slot="HEAD_agents" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_agents" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
-          <template slot="HEAD_statesCounts" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_statesCounts" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
-          <template slot="HEAD_myCpt" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_myCpt" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
-          <template slot="HEAD_teamCpt" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_teamCpt" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
-          <template slot="HEAD_occup" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_occup" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
-          <template slot="HEAD_asa" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_asa" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
-          <template slot="HEAD_longest" scope="data">
-            <div style="text-align:center; font-weight: normal; color:#969696">{{data.label}}</div>
+          <template slot="HEAD_longest" slot-scope="data">
+            <div class="table-header-text-center">{{data.label}}</div>
           </template>
           <template slot="statesCounts" slot-scope="data">
             <div style="background-color: #dbeffa">
