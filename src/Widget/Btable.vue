@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col">
-        <button v-if="add_button" @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+        <button v-if="add_button" @click="add" class="btn btn-outline-success"><icon class="align-middle" name="plus" scale="1"></icon></button>
       </div>
       <div class="col-md-2 float-right">
         <b-form-select :options="pageOptions" v-model="perPage" @input="onSelectChange" />

@@ -5,7 +5,7 @@
       <h3>Disposition groups:</h3>
     </div>
     <div class="col">
-      <button @click="add" class="btn btn-outline-success"><icon name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-success"><icon name="plus" class="align-middle" scale="1"></icon></button>
     </div>
   </div>
 
