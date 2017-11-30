@@ -1,16 +1,16 @@
 <template>
 <span>
   <div class="input-group">
-    <input id="autocomplete" type="text" @focusout="focusout" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
+    <input id="autocomplete" type="text" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
     <span class="input-group-btn">
-      <button class="btn btn-secondary" type="button" @click="switch_state">
+      <button class="btn btn-secondary" type="button" @click="display">
         <icon class="align-middle" name="caret-down" scale="1"></icon>
       </button>
     </span>
   </div>
   <div class="popper dropdown-menu">
     <button class="dropdown-item"
-      v-for="(opt, i) in options" :key="opt.id" @click="ev => select(i, ev)" :class="{active: isActive(i)}">{{opt.name}}</button>
+      v-for="(opt, i) in options" :key="i" @click="ev => select(i, ev)" :class="{active: isActive(i)}">{{ to_name(opt) }}</button>
   </div>
 </span>
 </template>
@@ -22,7 +22,9 @@ import Popper from 'popper.js'
 export default {
   props: {
     query: { type: Function, required: true },
-    placeholder: { type: String }
+    to_name: { type: Function, default: ob => ob.name },
+    new: { type: Boolean, default: false },
+    placeholder: { type: String },
   },
   data () {
     return {
@@ -44,26 +46,25 @@ export default {
     },
     show() {
       if (this.options.length > 0) {
+        this.ref = new Popper(this.reference, this.popper, { 'placement': 'bottom-start' })
         this.visible = true
         this.popper.show()
       }
     },
     hide() {
-      this.visible = false
-      this.popper.hide()
-    },
-    focusout() {
-      setTimeout(() => this.hide(), 200)
+      if (this.visible) {
+        this.visible = false
+        this.popper.hide()
+        this.ref.destroy()
+      }
     },
     select(i) {
       this.hide()
       this.text = ''
       this.$emit('input', this.options[i])
     },
-    switch_state () {
-      if (this.visible) {
-        this.hide()
-      } else {
+    display () {
+      if (!this.visible) {
         $("#autocomplete", this.$el).focus()
         this.async_query(this.text)
       }
@@ -72,6 +73,10 @@ export default {
       if (!this.visible) {
         if (ev.key == 'ArrowDown') {
           this.async_query(this.text)
+        }
+        if (this.new && ev.key == 'Enter') {
+          this.$emit('input', this.text)
+          this.text = ''
         }
         return
       }
@@ -95,19 +100,28 @@ export default {
           this.hide()
           break
       }
+    },
+    clickListener (e) {
+      if (! this.$el.contains(e.target)) { // outside
+        if (this.visible) {
+          this.hide()
+        }
+      }
     }
   },
   mounted () {
     this.reference = $('.reference', this.$el)
     this.popper = $('.popper', this.$el)
-    this.ref = new Popper(this.reference, this.popper, { 'placement': 'bottom-start' })
+    window.addEventListener('click', this.clickListener)
+  },
+  beforeDestroy () {
+    window.removeEventListener('click', this.clickListener)
   },
   watch: {
     options (value, old) {
       if (value.length !== old.length) {
         this.index = 0
       }
-      this.ref.update()
       this.show()
       return value
     },

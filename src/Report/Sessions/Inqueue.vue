@@ -4,41 +4,53 @@
     <div class="col"><h3>Calls sessions</h3></div>
   </div>
   <widget-query v-model="query_params"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="inqueues" :fields="fields" @row-clicked="click">
+  <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" @row-clicked="click">
+    <template slot="state_total" slot-scope="data">
+      {{ format_ms(data.item.states.total) }}
+    </template>
     <template slot="state_inqueue" slot-scope="data">
-      {{ format_ms(data.item.states.inqueue) }}
+      {{ format_ms(data.item.states.states.inqueue) }}
     </template>
     <template slot="state_agent" slot-scope="data">
-      {{ format_ms(data.item.states.agent) }}
+      {{ format_ms(data.item.states.states.agent) }}
     </template>
     <template slot="state_oncall" slot-scope="data">
-      {{ format_ms(data.item.states.oncall) }}
+      {{ format_ms(data.item.states.states.oncall) }}
     </template>
     <template slot="line_in" slot-scope="data">
-      {{ data.item.line_in.name }}
+      {{ maybe_name(data.item.line_in) }}
     </template>
     <template slot="client" slot-scope="data">
-      {{ data.item.line_in.client.name }}
+      {{ maybe_name(data.item.client) }}
     </template>
     <template slot="agent" slot-scope="data">
       {{ maybe_name(data.item.agent) }}
     </template>
-    <template slot="caller_id" slot-scope="data">
-      "{{ data.item.vars['Caller-Caller-ID-Name'] }}" &lt;{{ data.item.vars['Caller-Caller-ID-Number'] }}&gt;
+    <template slot="caller_ip" slot-scope="data">
+      {{ data.item.caller_ip }}
     </template>
-    <template slot="called_id" slot-scope="data">
-      {{ data.item.vars['Caller-Destination-Number'] }}
+    <template slot="caller" slot-scope="data">
+      {{ data.item.caller }}
+    </template>
+    <template slot="calling" slot-scope="data">
+      {{ data.item.calling }}
     </template>
     <template slot="player" slot-scope="data">
       <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
     </template>
   </b-table>
+  <b-row>
+    <b-col>
+      <b-button variant="outline-primary" class="float-right" @click="more">More</b-button>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
 <script>
 import Player from '@/Report/Player'
 import Query from '@/Report/Widget/Query'
+import moment from 'moment'
 
 export default {
   name: 'stats-inqueue',
@@ -47,23 +59,25 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts: { label: 'Ts', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
-        state_inqueue: { label: 'Inqueue' },
-        state_agent: { label: 'Agent' },
-        state_oncall: { label: 'Oncall' },
-        line_in: { label: 'Line In', sortable: true },
-        client: { label: 'Client', sortable: true },
-        agent: { label: 'Agent', sortable: true },
-        caller_id: { label: 'Caller ID' },
-        called_id: { label: 'Called ID' },
-        player: { label: ' ' }
+        ts: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        state_total: { label: 'Total', tdClass: 'text-right' },
+        state_inqueue: { label: 'Inqueue', tdClass: 'text-right' },
+        state_agent: { label: 'Agent', tdClass: 'text-right' },
+        state_oncall: { label: 'Oncall', tdClass: 'text-right' },
+        line_in: { label: 'Line In', tdClass: 'text-right' },
+        client: { label: 'Client', tdClass: 'text-right' },
+        agent: { label: 'Agent', tdClass: 'text-right' },
+        caller_ip: { label: 'IP', tdClass: 'text-right' },
+        caller: { label: 'Caller', tdClass: 'text-right' },
+        calling: { label: 'Calling',tdClass: 'text-right' },
+        player: { label: ' ', tdClass: 'text-right' }
       },
-      inqueues: []
+      sessions: []
     }
   },
   methods: {
     query: async function(params) {
-      this.inqueues = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
+      this.sessions = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
     },
     click ({uuid}) {
       this.$router.push(`/report/events/inqueue/${uuid}`)
@@ -81,6 +95,13 @@ export default {
       } else {
         return ''
       }
+    },
+    more: async function() {
+      let params = this.query_params
+      let session = this.sessions[this.sessions.length - 1]
+      params.date_end = parseInt(session.ts/1000)
+      let more = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
+      this.sessions = this.sessions.concat(more)
     }
   },
   created () {

@@ -5,7 +5,7 @@
       <h3>Recipes:</h3>
     </div>
     <div class="col">
-      <button @click="add" class="btn btn-outline-success pointer"><icon name="plus" scale="1"></icon></button>
+      <button @click="add" class="btn btn-outline-success pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </div>
   </div>
 

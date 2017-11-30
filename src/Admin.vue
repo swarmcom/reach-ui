@@ -21,6 +21,7 @@
   <b-nav-item-dropdown text="Config">
     <b-dropdown-item to="/admin/luas">Lua actions</b-dropdown-item>
     <b-dropdown-item to="/admin/tag_groups">Tag groups</b-dropdown-item>
+    <b-dropdown-item to="/admin/tags">Tags</b-dropdown-item>
     <b-dropdown-item to="/admin/roles">Roles</b-dropdown-item>
     <b-dropdown-item to="/admin/releases">Releases</b-dropdown-item>
     <b-dropdown-item to="/admin/dispositions">Dispositions</b-dropdown-item>

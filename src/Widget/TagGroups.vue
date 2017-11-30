@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'widget-tag-group',
+  name: 'widget-tag-groups',
   props: ['label', 'value', 'effective'],
   data () {
     return {
