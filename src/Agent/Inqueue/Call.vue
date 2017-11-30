@@ -5,66 +5,84 @@
   <b-col>{{lua_result}}</b-col>
 </b-row>
 
-<div class="row"><div class="col"><h2>Call info:</h2> </div></div>
+<b-row><b-col><h2>Call info:</h2></b-col></b-row>
 
-<div class="row">
-  <div class="col">
-    <dl class="row">
-      <dt class="col-sm-3">From:</dt>
-      <dd class="col-sm-9">
-        "{{ this.call_info['Caller-Caller-ID-Name'] }}" &lt;{{ this.call_info['Caller-Caller-ID-Number'] }}&gt;
-      </dd>
-      <dt class="col-sm-3">To:</dt>
-      <dd class="col-sm-9">{{ this.call_info['Caller-Destination-Number'] }}</dd>
-      <dt class="col-sm-3">Client:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.line_in.client.name }}</dd>
-      <dt class="col-sm-3">State:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
-      <dt class="col-sm-3">Queue:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.queue.name }}</dd>
-      <dt class="col-sm-3">Weight:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.effective_time.weight }}</dd>
-      <dt class="col-sm-3">Time:</dt>
-      <dd class="col-sm-9">{{ Math.round(this.inqueue.time/1000) }}</dd>
-      <dt class="col-sm-3">Transferers:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
-    </dl>
-  </div>
+<b-row>
+  <b-col cols=2>
+    <b-button variant="outline-danger" size="sm">
+      {{ this.inqueue.state }}:
+      {{ Math.round(this.inqueue.time/1000) }}
+    </b-button>
+    <b-button variant="outline-warning" size="sm">
+      {{ this.inqueue.effective_time.weight }}
+    </b-button>
+  </b-col>
+  <b-col>
+    <b-button variant="outline-dark" size="sm">
+      "{{ this.call_info['Caller-Caller-ID-Name'] }}" &lt;{{ this.call_info['Caller-Caller-ID-Number'] }}&gt;
+    </b-button>
+    <icon name="long-arrow-right" class="align-middle" scale=1></icon>
+    <b-button variant="outline-dark" size="sm">
+      {{ this.call_info['Caller-Destination-Number'] }}
+    </b-button>
+    <icon name="long-arrow-right" class="align-middle" scale=1></icon>
+    <b-button variant="outline-dark" size="sm">
+      {{ this.inqueue.line_in.name }}
+    </b-button>
+    <icon name="long-arrow-right" class="align-middle" scale=1></icon>
+    <b-button variant="outline-dark" size="sm">
+      {{ this.inqueue.line_in.client.name }}
+    </b-button>
+    <icon name="long-arrow-right" class="align-middle" scale=1></icon>
+    <b-button variant="outline-dark" size="sm">
+      {{ this.inqueue.queue.name }}
+    </b-button>
+    <icon name="long-arrow-right" class="align-middle" scale=1></icon>
+    <b-button variant="outline-dark" size="sm">
+      {{ this.inqueue.agent.name }}
+    </b-button>
+  </b-col>
+</b-row>
 
-  <div class="col">
-    <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
-    <disposition v-bind:uuid="this.uuid"></disposition>
-  </div>
-</div><!-- row -->
+<b-row style="margin-top: 10px">
+  <b-col>
+    {{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}
+  </b-col>
+</b-row>
 
-<div class="row" style="margin-top: 20px">
+<b-row style="margin-top: 10px">
+  <b-col>
+    <tags v-model="skills" v-on:input="update_skills()" placeholder="Call effective tags..."></tags>
+  </b-col>
+</b-row>
 
-  <div class="col-2">
+<b-row style="margin-top: 20px">
+  <b-col>
     <h4 v-if="this.$agent.is_oncall()">Actions:</h4>
     <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
     <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
     <b-button v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
-  </div>
+    <disposition v-bind:uuid="this.uuid"></disposition>
+  </b-col>
 
-  <div class="col" v-if="this.$agent.can_transfer()">
+  <b-col v-if="this.$agent.can_transfer()">
     <h4>Transfer to:</h4>
     <div class="form-inline">
       <transfer-agent></transfer-agent>&nbsp;
       <transfer-queue></transfer-queue>&nbsp;
       <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
     </div>
-  </div>
+  </b-col>
 
-  <div class="col" v-if="this.$agent.can_conference()">
+  <b-col v-if="this.$agent.can_conference()">
     <h4>Conference with:</h4>
     <div class="form-inline">
       <conference-agent></conference-agent>&nbsp;
       <conference-queue></conference-queue>&nbsp;
       <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
     </div>
-  </div>
-
-</div>
+  </b-col>
+</b-row>
 
 </div><!-- container -->
 </template>
@@ -76,9 +94,9 @@ import TransferUri from '@/Agent/Widget/TransferUri'
 import ConferenceAgent from '@/Agent/Widget/ConferenceAgent'
 import ConferenceQueue from '@/Agent/Widget/ConferenceQueue'
 import ConferenceUri from '@/Agent/Widget/ConferenceUri'
-import Skills from '@/Agent/Widget/Skills'
 import Common from '@/Admin/Common'
 import Disposition from '@/Agent/Widget/Disposition'
+import Tags from '@/Widget/Tags'
 
 export default {
   components: {
@@ -88,7 +106,7 @@ export default {
     'conference-agent': ConferenceAgent,
     'conference-queue': ConferenceQueue,
     'conference-uri': ConferenceUri,
-    'skills': Skills,
+    'tags': Tags,
     'disposition': Disposition
   },
   props: {
@@ -113,7 +131,7 @@ export default {
       let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
       this.handleInqueueLua(lua_re)
       let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
-      this.skills = this.object2list(skills)
+      this.skills = this.skills2list(skills)
       this.visible = true
       this.show_notification()
     },
@@ -123,7 +141,7 @@ export default {
       }
     },
     update_skills () {
-      this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2object(this.skills)])
+      this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2skills(this.skills)])
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
