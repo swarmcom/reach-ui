@@ -33,7 +33,7 @@
             </div>
           </template>
           <template slot="occup" slot-scope="data">
-            {{data.item.occup.available}}
+            <div style="text-align:center;">{{data.item.occup.available}}</div>
             <!--<div class="session-state-text"><b>oncall: </b>{{data.item.occup.oncall}}</div>
             <div class="session-state-text"><b>ringing: </b>{{data.item.occup.ringing}}</div>
             <div class="session-state-text"><b>available: </b>{{data.item.occup.available}}</div>
@@ -93,14 +93,14 @@ export default {
       ],
       period: { value: "15m", name: "Last 15 minutes"},
       fields: {
-        ciq: { label: 'CIQ' },
-        agents: { label: 'Agents' },
-        statesCounts: { label: 'States'},
-        myCpt: { label: 'My CPT' },
-        teamCpt: { label: 'Team CPT' },
-        occup: { label: 'Occup' },
-        asa: { label: 'ASA' },
-        longest: { label: 'Longest' }
+        ciq: { label: 'CIQ', variant: 'warning', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        agents: { label: 'Agents', variant: 'success', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        statesCounts: { label: 'States', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        myCpt: { label: 'My CPT', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        teamCpt: { label: 'Team CPT', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        occup: { label: 'Occup', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        asa: { label: 'ASA', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        longest: { label: 'Longest', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       showCollapse: true,
     }
