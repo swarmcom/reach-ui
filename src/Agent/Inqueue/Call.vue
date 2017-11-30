@@ -62,7 +62,7 @@
     <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
     <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
     <b-button v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
-    <disposition v-bind:uuid="this.uuid"></disposition>
+    <disposition v-bind:uuid="this.uuid" :active="inqueue.disposition_id" v-on:input="update_disposition"></disposition>
   </b-col>
 
   <b-col v-if="this.$agent.can_transfer()">
@@ -181,6 +181,9 @@ export default {
     },
     handleState ({state}) {
       this.inqueue.state = state.state
+    },
+    update_disposition (id) {
+      this.inqueue.disposition_id = id
     }
   },
   created () {
