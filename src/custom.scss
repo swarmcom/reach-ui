@@ -80,9 +80,15 @@ transition: opacity .2s
   border-bottom: 1px solid #b4b4b4;
   border-radius: 4px;
 }
-.toggle-bar-custom .title{
+.toggle-bar-custom .title {
   margin-left: 10px;
   padding-top: 5px;
+  font-size: 15px;
+  color: #8c8c8c;
+}
+.toggle-bar-custom .titlenocollapse {
+  margin-left: 10px;
+  padding-top: 3px;
   font-size: 15px;
   color: #8c8c8c;
 }
