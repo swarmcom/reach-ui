@@ -5,14 +5,17 @@
   </b-row>
   <widget-query v-model="query_params"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" @row-clicked="click">
+    <template slot="state_total" slot-scope="data">
+      {{ format_ms(data.item.states.total) }}
+    </template>
     <template slot="state_release" slot-scope="data">
-      {{ format_ms(data.item.states.release) }}
+      {{ format_ms(data.item.states.states.release) }}
     </template>
     <template slot="state_available" slot-scope="data">
-      {{ format_ms(data.item.states.available) }}
+      {{ format_ms(data.item.states.states.available) }}
     </template>
     <template slot="state_oncall" slot-scope="data">
-      {{ format_ms(data.item.states.oncall) }}
+      {{ format_ms(data.item.states.states.oncall) }}
     </template>
     <template slot="agent_name" slot-scope="data">
       {{ data.item.agent.name }}
@@ -45,6 +48,7 @@ export default {
       query_params: {},
       fields: {
         ts: { label: 'Ts', formatter: ts => new moment(ts).format("YYYY-MM-DD HH:mm:ss") },
+        state_total: { label: 'Total', tdClass: 'text-right' },
         state_release: { label: 'Release', tdClass: 'text-right' },
         state_available: { label: 'Available', tdClass: 'text-right' },
         state_oncall: { label: 'Oncall', tdClass: 'text-right' },
