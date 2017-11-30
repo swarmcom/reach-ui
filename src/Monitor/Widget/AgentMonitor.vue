@@ -17,6 +17,9 @@
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
           <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
+        <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period" style="margin-top:10px">
+          <option v-for="period in periods" :value="period.value">{{period.name}}</option>
+        </b-form-select>
       </b-col>
       <b-col cols="10">
         <b-table style="margin-top:10px" small bordered
@@ -140,6 +143,16 @@ export default {
         {name: "hold"},
         {name: "wrapup"}
       ],
+      periods: [
+        { value:{ last: '15m' }, name:"Last 15 minutes"},
+        { value:{ last: '30m' }, name:"Last 30 minutes"},
+        { value:{ last: '1h' }, name:"Last Hour"},
+        { value:{ last: '1d' }, name:"Today" },
+        { value:{ last: '1w' }, name:"This Week" },
+        { value:{ last: '1M' }, name:"This Month" }
+      ],
+      stats: [],
+      period: { value: { last: '15m' }, name: "Last 15 minutes"},
       selectedProfile: 'Any Profile',
       selectedCustomer: 'Any Customers',
       selectedState: 'Any State',
@@ -151,9 +164,16 @@ export default {
     }
   },
   methods: {
+    handleState ({ tag, info }) {
+      if(tag == "change")
+        this.updateStats()
+    },
     query: async function() {
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customers" })
+    },
+    updateStats: async function() {
+      this.stats = await this.$agent.p_mfa('ws_stats', 'agents', [this.period.value])
     },
     onTimer () {
       this.agents.forEach((E, i, A) => {
@@ -174,10 +194,30 @@ export default {
     },
     stop (agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
+    },
+    set_period (value) {
+      this.period.value = value
+      this.updateStats()
+    },
+    percent (value) {
+      if (value > 0) {
+        return `${(value*100).toFixed(2)}%`
+      } else {
+        return "0%"
+      }
+    },
+    time (value) {
+      if (value > 0) {
+        return `${(value/1000).toFixed(1)}s`
+      } else {
+        return "0s"
+      }
     }
   },
   created () {
     this.query()
+    this.updateStats()
+    this.$bus.$on('agents_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
     if (this.$agent.vm.storage_data.agentManagerMonitorCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.agentManagerMonitorCollapsed
@@ -188,6 +228,7 @@ export default {
   },
   beforeDestroy () {
     clearInterval(this.updater)
+    this.$bus.$off('agents_state', this.handleState)
   },
   computed: {
     computedAgents () {
@@ -224,6 +265,18 @@ export default {
         key.agentLogin = key.agent.login
         key.agentPhone = key.agent.uri
         key.agentSkills = (Object.keys(key.agent.skills)).toString()
+
+        let i = this.stats.findIndex(E => E.agent_id === key.agent_id)
+        if(i >= 0) {
+          if(Object.keys(this.stats[i].occupancy).length > 0 && this.stats[i].occupancy.states.ratio.oncall > 0)
+            key.agentOccup = this.percent(this.stats[i].occupancy.states.ratio.oncall)
+          else
+            key.agentOccup = '0%'
+          if(Object.keys(this.stats[i].cpt).length > 0 && this.stats[i].cpt.avg.oncall > 0)
+            key.agentMyCpt = this.time(this.stats[i].cpt.avg.oncall)
+          else
+            key.agentMyCpt = '0s'
+        }
 
         if(key.agent.line.client != undefined) {
           key.agentClient = key.agent.line.client.name

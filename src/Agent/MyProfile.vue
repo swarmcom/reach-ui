@@ -7,51 +7,49 @@
         <b-img src='src/assets/default_agent.png' style="width:100%" alt="avatar image" />
       </b-col>
       <b-col cols="8" class="agent-state-text">
-        <b>{{agent.agent.name}}</b>
+        <b-row>{{agent.name}}</b-row>
+        <b-row>{{agent.login}}</b-row>
+        <b-row>{{agent.group.name}}</b-row>
       </b-col>
     </b-row>
-    <!--<b-row>
-      <b-col class="agent-state-text">
-        <div v-if="agent.state=='available'">
+      <br>
+      <b-row>
+        <b-col cols="5" class="agent-state-text">SIP Contact:</b-col>
+        <b-col cols="7" class="agent-state-text"> {{agent.uri}} </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="5" class="agent-state-text">Role:</b-col>
+        <b-col cols="7" class="agent-state-text"> {{agent.role.name || '&nbsp'}} </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="5" class="agent-state-text">Caller Id:</b-col>
+        <b-col cols="7" class="agent-state-text"> {{ agent.caller_id_number || '&nbsp' }} </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="5" class="agent-state-text">Caller Uri:</b-col>
+        <b-col cols="7" class="agent-state-text"> {{ agent.uri || '&nbsp' }} </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="5" class="agent-state-text">Permissions:</b-col>
+        <b-col cols="7" class="agent-state-text">
           <b-row>
-            <b-col style="text-align: right">
-            available
-            </b-col>
-            <b-col  style="text-align: left">
-            <icon name="circle-o" ></icon>
-            </b-col>
+            <b-col cols="12" v-for="(v, k, index) in agent.permissions" key="index">{{k}}</b-col>
           </b-row>
-        </div>
-        <div v-if="agent.state=='release'">
-          released
-          <icon name="stop"></icon>
-        </div>
-        <div v-if="agent.state=='ringing'">
-          ringing
-          <icon name="wifi" scale="1" style="transform: rotate(270deg)"></icon>
-        </div>
-        <div v-if="agent.state=='outgoing'">
-          outgoing
-          <icon name="wifi" scale="1" style="transform: rotate(90deg)"></icon>
-        </div>
-        <div v-if="agent.state=='test'">
-          test
-          <icon name="phone" scale="1"></icon>
-        </div>
-        <div v-if="this.$agent.is_onsession()">
-          on call
-          <icon name="phone" scale="1"></icon>
-        </div>
-        <div v-if="this.$agent.is_hold()">
-          on hold
-          <icon name="pause" scale="1"></icon>
-        </div>
-        <div v-if="this.$agent.is_wrapup()">
-          wrap up
-          <icon name="pause" scale="1"></icon>
-        </div>
-      </b-col>
-    </b-row>-->
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="5" class="agent-state-text">Persistent:</b-col>
+        <b-col cols="7" class="agent-state-text"> {{ agent.persistent  }} </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="5" class="agent-state-text">Skills:</b-col>
+        <b-col cols="7" class="agent-state-text">
+          <b-row>
+            <b-col cols="12" v-for="(v, k, index) in agent.skills" key="index">{{k}}</b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+    </b-row>
   </b-collapse>
 </div>
 </template>
@@ -62,7 +60,7 @@ export default {
   storageName: 'myProfile',
   data () {
     return {
-      agent: this.$agent.vm,
+      agent: this.$agent.vm.agent,
       showCollapse: true
     }
   },

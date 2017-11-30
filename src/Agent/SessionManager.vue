@@ -6,7 +6,6 @@
       <div class="col-12 col-md-3">
         <agent-state></agent-state>
         <my-profile></my-profile>
-        <current-session></current-session>
       </div>
       <div class="col-md-9 col-12">
         <div class="row">
@@ -47,7 +46,6 @@ import Dialer from '@/Agent/Dialer'
 import Release from '@/Agent/Widget/Release'
 import AgentState from '@/Agent/AgentState'
 import MyProfile from '@/Agent/MyProfile'
-import CurrentSession from '@/Agent/CurrentSession'
 import Common from '@/Admin/Common'
 import Wrap from '@/Agent/Widget/Wrap'
 export default {
@@ -106,7 +104,6 @@ export default {
     dialer: Dialer,
     release: Release,
     'agent-state': AgentState,
-    'current-session': CurrentSession,
     'my-profile': MyProfile,
     'wrap-timer': Wrap
   },

@@ -823,8 +823,8 @@ boom@5.x.x:
     hoek "4.x.x"
 
 bootstrap-vue@^1.0.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-1.2.0.tgz#137aa803e7d910a0b63a7cc3816d7d180c3f7575"
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/bootstrap-vue/-/bootstrap-vue-1.3.0.tgz#48545238035644aed1652b905f925ef1c82ec314"
   dependencies:
     lodash.startcase "^4.4.0"
     opencollective "^1.0.3"
@@ -997,12 +997,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000772"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000772.tgz#51aae891768286eade4a3d8319ea76d6a01b512b"
+  version "1.0.30000775"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000775.tgz#04bccdd0214edf25b97f61a096609f7ad6904333"
 
 caniuse-lite@^1.0.30000748, caniuse-lite@^1.0.30000770:
-  version "1.0.30000772"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000772.tgz#78129622cabfed7af1ff38b64ab680a6a0865420"
+  version "1.0.30000775"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000775.tgz#74d27feddc47f3c84cfbcb130c3092a35ebc2de2"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -1199,8 +1199,8 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
     delayed-stream "~1.0.0"
 
 commander@^2.9.0:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.1.tgz#468635c4168d06145b9323356d1da84d14ac4a7a"
+  version "2.12.2"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -1861,7 +1861,7 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-express@^4.13.3:
+express@^4.16.2:
   version "4.16.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
   dependencies:
@@ -2494,8 +2494,8 @@ internal-ip@1.2.0:
     meow "^3.3.0"
 
 interpret@^1.0.0:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.4.tgz#820cdd588b868ffb191a809506d6c9c8f212b1b0"
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
 
 invariant@^2.2.2:
   version "2.2.2"
@@ -3062,8 +3062,8 @@ miller-rabin@^4.0.0:
     brorand "^1.0.1"
 
 "mime-db@>= 1.30.0 < 2":
-  version "1.31.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.31.0.tgz#a49cd8f3ebf3ed1a482b60561d9105ad40ca74cb"
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.32.0.tgz#485b3848b01a3cda5f968b4882c0771e58e09414"
 
 mime-db@~1.30.0:
   version "1.30.0"
@@ -3079,7 +3079,7 @@ mime@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.4.1.tgz#121f9ebc49e3766f311a76e1fa1c8003c4b03aa6"
 
-mime@^1.4.1:
+mime@^1.5.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
 
@@ -3129,8 +3129,8 @@ moment-timezone@^0.4.0:
     moment ">= 2.6.0"
 
 "moment@>= 2.6.0", moment@^2.10, moment@^2.19.2:
-  version "2.19.2"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
+  version "2.19.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
 
 moment@~2.18.0:
   version "2.18.1"
@@ -5172,8 +5172,8 @@ vue-router@^3.0.1:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
 
 vue-slider-component@^2.4.5:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-2.4.5.tgz#412395a94cd6a8958b5462a4b604cf2393a46d9b"
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-2.4.6.tgz#d3149572d3cb26f7d3602b81cd5af91a84462ef0"
 
 vue-style-loader@^3.0.0:
   version "3.0.3"
@@ -5183,8 +5183,8 @@ vue-style-loader@^3.0.0:
     loader-utils "^1.0.2"
 
 vue-template-compiler@^2.5.2:
-  version "2.5.8"
-  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.8.tgz#826ae77e1d5faa7fa5fca554f33872dde38de674"
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.9.tgz#7fabc73c8d3d12d32340cd86c5fc33e00e86d686"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -5194,12 +5194,12 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
 
 vue@^2.5.2:
-  version "2.5.8"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.8.tgz#f855c1c27255184a82225f4bef225473e8faf15b"
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.9.tgz#b2380cd040915dca69881dafd121d760952e65f7"
 
 vuejs-datepicker@^0.9.20:
-  version "0.9.20"
-  resolved "https://registry.yarnpkg.com/vuejs-datepicker/-/vuejs-datepicker-0.9.20.tgz#88ae3db157fea7509541b10e26fdb66f9118e79c"
+  version "0.9.21"
+  resolved "https://registry.yarnpkg.com/vuejs-datepicker/-/vuejs-datepicker-0.9.21.tgz#35a9197c1692da22844d40e80d7f46c0737bf9a0"
 
 watchpack@^1.4.0:
   version "1.4.0"
@@ -5216,18 +5216,18 @@ wbuf@^1.1.0, wbuf@^1.7.2:
     minimalistic-assert "^1.0.0"
 
 webpack-dev-middleware@^1.11.0:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-1.12.1.tgz#338be3ca930973be1c2ce07d84d275e997e1a25a"
+  version "1.12.2"
+  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-1.12.2.tgz#f8fc1120ce3b4fc5680ceecb43d777966b21105e"
   dependencies:
     memory-fs "~0.4.1"
-    mime "^1.4.1"
+    mime "^1.5.0"
     path-is-absolute "^1.0.0"
     range-parser "^1.0.3"
     time-stamp "^2.0.0"
 
 webpack-dev-server@^2.9.3:
-  version "2.9.4"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.4.tgz#7883e61759c6a4b33e9b19ec4037bd4ab61428d1"
+  version "2.9.5"
+  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-2.9.5.tgz#79336fba0087a66ae491f4869f6545775b18daa8"
   dependencies:
     ansi-html "0.0.7"
     array-includes "^3.0.3"
@@ -5237,7 +5237,7 @@ webpack-dev-server@^2.9.3:
     connect-history-api-fallback "^1.3.0"
     debug "^3.1.0"
     del "^3.0.0"
-    express "^4.13.3"
+    express "^4.16.2"
     html-entities "^1.2.0"
     http-proxy-middleware "~0.17.4"
     import-local "^0.1.1"

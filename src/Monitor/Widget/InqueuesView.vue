@@ -24,12 +24,14 @@
             </b-table>
           </b-col>
           <b-col cols="10">
-            <b-row class="toggle-bar-custom" style="margin-left:1px">
+            <b-row>
               <b-col cols="9">
-              <div class="titlenocollapse">Queue Statistics</div>
+                <b-row class="toggle-bar-custom" style="margin-left:1px">
+                  <div class="titlenocollapse">Queue Statistics</div>
+                </b-row>
               </b-col>
               <b-col cols="3">
-              <b-form-select style="height:28px" class="pointer" size="sm" v-model="period.value" @change="set_period">
+              <b-form-select style="margin-top:8px" class="pointer" size="sm" v-model="period.value" @change="set_period">
                 <option v-for="period in periods" :value="period.value">{{period.name}}</option>
               </b-form-select>
               </b-col>
