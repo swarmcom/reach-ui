@@ -20,7 +20,8 @@ export default {
       this.$agent.vm.storage_data["narrowScreenRecordings"] = this.$agent.vm.isNarrowLayout.recordings
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
       return {
-        container: this.$agent.vm.isNarrowLayout.recordings
+        container: this.$agent.vm.isNarrowLayout.recordings,
+        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.recordings
       }
     }
   },

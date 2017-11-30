@@ -199,7 +199,7 @@ export default class Agent extends WsProto {
   is_conference () { return this.vm && ( this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_login () { return this.vm.session_auth }
   can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
-  can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'outgoing' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
+  can_hangup () { return this.vm && ( this.vm.state == 'hold' || this.vm.state == 'oncall' || this.vm.state == 'outgoing' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
 
