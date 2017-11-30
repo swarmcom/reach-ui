@@ -58,18 +58,18 @@ export default {
   data () {
     return {
       fieldCIQ: {
-        ciq: { label: "CIQ"}
+        ciq: { label: "CIQ", variant: 'warning', thClass:"table-header-text-center", tdClass:"table-body-text-center"}
       },
       fieldNames: {
-        name: { label: 'Name', sortable: false },
+        name: { label: 'Name', sortable: false, thClass:"table-header-text-center" },
       },
       fieldsStats: {
-        speedAnswer: { label: 'Speed Answer' },
-        longestWait: { label: 'Longest Wait' },
-        connected: { label: 'Connected' },
-        completed: { label: 'Completed' },
-        abandonTime: { label: 'Abandon Time' },
-        abandoned: { label: 'Abandoned' }
+        speedAnswer: { label: 'Speed Answer', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        longestWait: { label: 'Longest Wait', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        connected: { label: 'Connected', variant: 'success', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        completed: { label: 'Completed', variant: 'success', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        abandonTime: { label: 'Abandon Time', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        abandoned: { label: 'Abandoned', variant: 'warning', thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       queues: [],
       periods: [
@@ -111,15 +111,6 @@ export default {
           "completed": '-',
           "abandonTime": '-',
           "abandoned": '-'
-        }
-        object._cellVariants = {
-          ciq: 'warning',
-          speedAnswer: 'primary',
-          longestWait: 'primary',
-          connected: 'success',
-          completed: 'success',
-          abandonTime: 'primary',
-          abandoned: 'warning'
         }
         this.inqueues.forEach( (key) => {
           if(key.queue != undefined && selectedQueue == key.queue) {

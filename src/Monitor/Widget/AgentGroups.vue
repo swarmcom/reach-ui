@@ -7,7 +7,7 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Profile Name</div>
         </b-row>
-        <b-table style="margin-top:10px" small bordered hover
+        <b-table style="margin-top:10px" small responsive hover
           :items="groups"
           :fields="fieldNames">
         </b-table>
@@ -40,15 +40,15 @@ export default {
   data () {
     return {
       fieldsStates: {
-        totalAgents: { label: 'Total Agents', sortable: false },
-        released: { label: 'Released', sortable: false },
-        idle: { label: 'Idle', sortable: false },
-        ringing: { label: 'Ringing', sortable: false },
-        insession: { label: 'In Session', sortable: false },
-        wrapup: { label: 'Wrap-up', sortable: false }
+        totalAgents: { label: 'Total Agents', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        released: { label: 'Released', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        idle: { label: 'Idle', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        ringing: { label: 'Ringing', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        insession: { label: 'In Session', sortable: false, variant: "success", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        wrapup: { label: 'Wrap-up', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       fieldNames: {
-        name: { label: 'Name', sortable: false },
+        name: { label: 'Name', sortable: false, thClass:"table-header-text-center" },
       },
       groups: [],
       showCollapse: true,
@@ -75,14 +75,6 @@ export default {
           "ringing": 0,
           "insession": 0,
           "wrapup": 0
-        }
-        object._cellVariants = {
-          totalAgents: 'primary',
-          released: 'primary',
-          idle: 'warning',
-          ringing: 'warning',
-          insession: 'success',
-          wrapup: 'warning'
         }
         let selectedProfile = key.id
         this.agents.forEach( (key) => {

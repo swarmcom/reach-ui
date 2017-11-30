@@ -25,9 +25,9 @@ export default {
   data () {
     return {
       fieldsStats: {
-        occupancy: { label: 'Occup', sortable: false },
-        cpt: { label: 'CPT', sortable: false },
-        calls: { label: 'Calls', sortable: false }
+        occupancy: { label: 'Occup', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        cpt: { label: 'CPT', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        calls: { label: 'Calls', variant: "primary", sortable: false, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       periods: [
         { value:"15m", name:"Last 15 minutes"},
@@ -51,7 +51,6 @@ export default {
       this.stats = []
       for (let key of this.groups) {
         let stats = await this.$agent.p_mfa('ws_stats', 'stats', [{ agent_group_id: key.id }, val])
-        stats._cellVariants = { occupancy: 'primary', cpt: 'primary', calls:'primary' }
         this.stats.push(stats)
         i++
       }
