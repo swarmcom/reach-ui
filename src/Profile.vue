@@ -69,7 +69,8 @@ export default {
       this.$agent.vm.storage_data["narrowScreenProfile"] = this.$agent.vm.isNarrowLayout.profile
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
       return {
-        container: this.$agent.vm.isNarrowLayout.profile
+        container: this.$agent.vm.isNarrowLayout.profile,
+        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.admin
       }
     }
   },
