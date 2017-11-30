@@ -71,14 +71,14 @@ export default {
   data () {
     return {
       fields: {
-        actions: { label: 'Actions' },
-        state: { label: 'State', sortable: true },
-        record: { label: 'Type', sortable: true },
-        customer: { label: 'Customer', sortable: true },
-        line: { label: 'Line', sortable: true },
-        queue: { label: 'Queue', sortable: true },
-        skillsReq: { label: 'Skills Req', sortable: true },
-        timeInQueue: { label: 'T in Queue', sortable: true }
+        actions: { label: 'Actions', thClass:"table-header-text-center" },
+        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        record: { label: 'Type', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        customer: { label: 'Customer', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        line: { label: 'Line', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        queue: { label: 'Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        skillsReq: { label: 'Skills Req', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        timeInQueue: { label: 'T in Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       clients: [],
       queues: [],

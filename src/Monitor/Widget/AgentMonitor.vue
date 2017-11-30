@@ -123,12 +123,12 @@ export default {
   data () {
     return {
       fields: {
-        agentDetail: { label: 'Agent Details' },
-        agentOccup: { label: 'Occup' },
-        agentMyCpt: { label: 'My CPT' },
-        agentCalls: { label: 'Calls' },
-        timeComputed: { label: 'Time logged in', sortable:true },
-        state: { label: 'State', sortable: true }
+        agentDetail: { label: 'Agent Details', thClass:"table-header-text-center" },
+        agentOccup: { label: 'Occup', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        agentMyCpt: { label: 'My CPT', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        agentCalls: { label: 'Calls', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        timeComputed: { label: 'Time logged in', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       clients: [],
       states: [
