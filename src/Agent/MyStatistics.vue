@@ -33,10 +33,11 @@
             </div>
           </template>
           <template slot="occup" slot-scope="data">
-            <div class="session-state-text"><b>oncall: </b>{{data.item.occup.oncall}}</div>
+            {{data.item.occup.available}}
+            <!--<div class="session-state-text"><b>oncall: </b>{{data.item.occup.oncall}}</div>
             <div class="session-state-text"><b>ringing: </b>{{data.item.occup.ringing}}</div>
             <div class="session-state-text"><b>available: </b>{{data.item.occup.available}}</div>
-            <div class="session-state-text"><b>release: </b>{{data.item.occup.release}}</div>
+            <div class="session-state-text"><b>release: </b>{{data.item.occup.release}}</div>-->
           </template>
         </b-table>
       </b-col>
