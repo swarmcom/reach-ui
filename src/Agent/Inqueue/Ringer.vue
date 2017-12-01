@@ -3,9 +3,7 @@
   <div class="session-manager-text"><b>Ringer:</b></div>
   <div class="row agent-state-text">
     <div class="col-12">
-       <b>Calling:</b> {{ ringer.uri }}
-       <b>timeout:</b> {{ ringer.timeout }}
-       <b>type:</b> {{ ringer.type }}
+      Ringing {{ ringer.uri }} for {{ ringer.timeout }} seconds
     </div>
     <div class="col">
       <b-button size="sm" class="pointer" variant="outline-danger" @click="stop_ringer">Cancel</b-button>
