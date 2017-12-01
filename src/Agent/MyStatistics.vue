@@ -95,7 +95,7 @@ export default {
       fields: {
         ciq: { label: 'CIQ', variant: 'warning', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         agents: { label: 'Agents', variant: 'success', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        statesCounts: { label: 'States', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        statesCounts: { label: 'States', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         myCpt: { label: 'My CPT', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         teamCpt: { label: 'Team CPT', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         occup: { label: 'Occup', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },

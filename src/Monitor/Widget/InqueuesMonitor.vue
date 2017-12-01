@@ -30,27 +30,15 @@
           :sort-desc="sortDesc"
           @sort-changed="onSortingChanged">
           <template slot="actions" slot-scope="data">
-            <b-row>
-              <b-col>
-                <button type="button" class="btn btn-sm pointer" v-if="data.item._showDetails" @click="data.item._showDetails = false">
-                  <icon name="minus" scale="0.5"></icon>
-                </button>
-                <button type="button" class="btn btn-sm pointer" v-if="!data.item._showDetails" @click="data.item._showDetails = true">
-                    <icon name="plus" scale="0.5"></icon>
-                </button>
-              </b-col>
-            </b-row>
-          </template>
-          <template slot="row-details" slot-scope="data">
             <b-row class="text-center">
-            <b-col>
-            <b-dropdown size="sm" class="agent-release-dropdown" text="Select Action" variant="outline-secondary">
-              <b-dropdown-item @click="take(data.item)">Take</b-dropdown-item>
-              <b-dropdown-item @click="takeover(data.item)">Takeover</b-dropdown-item>
-              <b-dropdown-item @click="spy(data.item)">Spy</b-dropdown-item>
-              <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
-            </b-dropdown>
-            </b-col>
+              <b-col>
+                <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
+                  <b-dropdown-item @click="take(data.item)">Take</b-dropdown-item>
+                  <b-dropdown-item @click="takeover(data.item)">Takeover</b-dropdown-item>
+                  <b-dropdown-item @click="spy(data.item)">Spy</b-dropdown-item>
+                  <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
+                </b-dropdown>
+              </b-col>
             </b-row>
           </template>
         </b-table>
