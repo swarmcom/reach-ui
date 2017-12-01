@@ -1,17 +1,14 @@
 <template>
-<div>
-  <b-form-group label="Agent effective skills:">
-    <skills v-model="skills" v-on:input="commit()"></skills>
-  </b-form-group>
-</div>
+  <tags v-model="skills" v-on:input="commit()" placeholder="Agent effective tags..."></tags>
 </template>
 
 <script>
 import Skills from '@/Agent/Widget/Skills'
 import Common from '@/Admin/Common'
+import Tags from '@/Widget/Tags'
 export default {
   name: 'agent-skills',
-  components: { 'skills': Skills },
+  components: { 'tags': Tags },
   mixins: [Common],
   data () {
     return {
@@ -21,10 +18,10 @@ export default {
   methods: {
     query: async function () {
       let skills = await this.$agent.p_mfa('ws_agent', 'skills', [])
-      this.skills = this.object2list(skills)
+      this.skills = this.skills2list(skills)
     },
     commit () {
-      this.$agent.p_mfa('ws_agent', 'skills', [this.list2object(this.skills)])
+      this.$agent.p_mfa('ws_agent', 'skills', [this.list2skills(this.skills)])
     }
   },
   created () {
