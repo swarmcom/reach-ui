@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 function format_ms(ms) {
   if (Number.isInteger(ms)) {
     return (ms/1000).toFixed(1)
@@ -29,7 +31,7 @@ export default {
   data () {
     return {
       fields: {
-        ts: { label: 'Ts', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
+        ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
         state_from: { label: 'From' },
         state: { label: 'To' },
         time: { label: 'Time', formatter: format_ms },

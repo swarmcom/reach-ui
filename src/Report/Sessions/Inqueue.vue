@@ -59,7 +59,7 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
         state_total: { label: 'Total', tdClass: 'text-right' },
         state_inqueue: { label: 'Inqueue', tdClass: 'text-right' },
         state_agent: { label: 'Agent', tdClass: 'text-right' },
