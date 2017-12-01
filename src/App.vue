@@ -29,10 +29,10 @@
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = false">Switch to Wide layout</b-dropdown-item>
       <b-dropdown-item v-if="!$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(true)">Add My Statistics</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(false)">Remove My Statistics</b-dropdown-item>
-      <b-dropdown-item v-if="!$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="!$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/profile">PROFILE</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
