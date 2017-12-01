@@ -53,15 +53,35 @@ export default class Agent extends WsProto {
         activity_time: undefined,
         release_id: undefined,
         storage_data: {},
-        isActiveAM: false,
-        isActiveQM: false,
+        layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
         isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true }
       }
     }),
+    this.loadDataStorage("reach-ui")
     Notification.requestPermission()
     EventBus.$on('agent_update', () => update_agent(this))
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
     EventBus.$on('agents_state', (S) => this.handleAgents(S))
+  }
+
+  loadDataStorage(name) {
+    if(localStorage.getItem(name)) {
+      this.vm.storage_data = JSON.parse(localStorage.getItem(name));
+      if (this.vm.storage_data.narrowScreenMain != undefined)
+        this.vm.isNarrowLayout.main = this.vm.storage_data.narrowScreenMain
+      if (this.vm.storage_data.narrowScreenAdmin != undefined)
+        this.vm.isNarrowLayout.admin = this.vm.storage_data.narrowScreenAdmin
+      if (this.vm.storage_data.narrowScreenProfile != undefined)
+        this.vm.isNarrowLayout.profile = this.vm.storage_data.narrowScreenProfile
+      if (this.vm.storage_data.narrowScreenMonitor != undefined)
+        this.vm.isNarrowLayout.monitor = this.vm.storage_data.narrowScreenMonitor
+      if (this.vm.storage_data.narrowScreenRecordings != undefined)
+        this.vm.isNarrowLayout.recordings = this.vm.storage_data.narrowScreenRecordings
+      if (this.vm.storage_data.isActiveAM != undefined)
+        this.vm.layoutSM.isActiveAM = this.vm.storage_data.isActiveAM
+      if (this.vm.storage_data.isActiveMS != undefined)
+        this.vm.layoutSM.isActiveMS = this.vm.storage_data.isActiveMS
+    }
   }
 
   getData () {

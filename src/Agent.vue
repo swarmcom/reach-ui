@@ -4,13 +4,13 @@
     <b-col><session-manager></session-manager></b-col>
   </b-row>
   <b-row>
-    <b-col><my-statistics></my-statistics></b-col>
+    <b-col><my-statistics v-bind:class="{ deactivate: !$agent.vm.layoutSM.isActiveMS }""></my-statistics></b-col>
   </b-row>
   <b-row>
-    <b-col><agents v-bind:class="{ deactiveAM: !$agent.vm.isActiveAM }"></agents></b-col>
+    <b-col><agents v-bind:class="{ deactivate: !$agent.vm.layoutSM.isActiveAM }"></agents></b-col>
   </b-row>
   <b-row>
-    <b-col><inqueues v-bind:class="{ deactiveQM: !$agent.vm.isActiveQM }"></inqueues></b-col>
+    <b-col><inqueues v-bind:class="{ deactivate: !$agent.vm.layoutSM.isActiveQM }"></inqueues></b-col>
   </b-row>
 </div>
 

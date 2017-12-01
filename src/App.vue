@@ -27,10 +27,12 @@
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = false">Switch to Wide layout</b-dropdown-item>
-      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = true">Add Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.isActiveAM" @click="$agent.vm.isActiveAM = false">Remove Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = true">Add Queue Manager</b-dropdown-item>
-      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.isActiveQM" @click="$agent.vm.isActiveQM = false">Remove Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-if="!$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(true)">Add My Statistics</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(false)">Remove My Statistics</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="!$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-access:supervisor-ui v-if="$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:supervisor-ui to="/profile">PROFILE</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
@@ -121,12 +123,20 @@ export default {
      let backend = await this.$agent.p_mfa('ws_misc', 'version', [])
      this.ref_backend = backend.version
     },
-    loadDataStorage(name) {
-      if(localStorage.getItem(name)) {
-        this.$agent.vm.storage_data = JSON.parse(localStorage.getItem(name));
-        if (this.$agent.vm.storage_data.navBarPinned != undefined)
-          this.isPinned = this.$agent.vm.storage_data.navBarPinned
-      }
+    onWidgetMSChange( state) {
+      this.$agent.vm.layoutSM.isActiveMS = state
+      this.$agent.vm.storage_data.isActiveMS = state
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    },
+    onWidgetAMChange( state) {
+      this.$agent.vm.layoutSM.isActiveAM = state
+      this.$agent.vm.storage_data.isActiveAM = state
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    },
+    onWidgetQMChange( state) {
+      this.$agent.vm.layoutSM.isActiveQM = state
+      this.$agent.vm.storage_data.isActiveQM = state
+      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     }
   },
   created: async function() {
@@ -134,7 +144,8 @@ export default {
     this.$bus.$on('agent-auth', this.handleAuth)
     this.date = new Date()
     setInterval(() => this.date = new Date, 1000)
-    this.loadDataStorage("reach-ui")
+    if (this.$agent.vm.storage_data.navBarPinned != undefined)
+      this.isPinned = this.$agent.vm.storage_data.navBarPinned
   },
   filters: {
     filterDate: function (date) {
