@@ -32,10 +32,10 @@
           <template slot="agentDetail" slot-scope="data">
             <b-row>
               <b-col cols="1">
-                <button type="button" class="btn btn-sm pointer" v-if="data.item._showDetails" @click="data.item._showDetails = false">
+                <button type="button" class="btn btn-sm pointer" v-if="data.item._showDetails" @click="data.toggleDetails">
                   <icon name="minus" scale="0.5"></icon>
                 </button>
-                <button type="button" class="btn btn-sm pointer" v-if="!data.item._showDetails" @click="data.item._showDetails = true">
+                <button type="button" class="btn btn-sm pointer" v-if="!data.item._showDetails" @click="data.toggleDetails">
                     <icon name="plus" scale="0.5"></icon>
                 </button>
               </b-col>
