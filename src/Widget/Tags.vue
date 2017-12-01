@@ -1,6 +1,6 @@
 <template>
 <div class="form-inline">
-  <autocomplete v-model="tag" :query="query" :to_name="to_name" :new="true" placeholder="Tag..."></autocomplete>
+  <autocomplete v-model="tag" :query="query" :to_name="to_name" :new="true" :placeholder="placeholder"></autocomplete>
   <button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="tag in selected" @click="remove(tag)">{{tag}}</button>
 </div>
 </template>
@@ -10,7 +10,7 @@ import Autocomplete from '@/Widget/Autocomplete'
 
 export default {
   components: { Autocomplete },
-  props: ["value"],
+  props: ["value", "placeholder"],
   data () {
     return {
       tag: undefined,
@@ -49,6 +49,9 @@ export default {
     },
     value (value) {
       this.selected = value
+    },
+    created () {
+      this.selected = this.value
     }
   },
 }

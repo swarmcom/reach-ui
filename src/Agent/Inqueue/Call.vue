@@ -46,7 +46,7 @@
 <div v-if="!this.$agent.is_conference()" class="row" style="margin-top: 10px">
   <div class="col-12">
     <div class="row"><div class="col session-manager-text"><b>Skills Editor:</b> </div></div>
-    <skills label="Skills" v-on:input="update_skills()" v-model="skills"></skills>
+    <tags v-model="skills" v-on:input="update_skills()" placeholder="Call effective tags..."></tags>
   </div>
 </div>
 </div><!-- container -->
@@ -54,13 +54,14 @@
 
 <script>
 import Skills from '@/Agent/Widget/Skills'
+import Tags from '@/Widget/Tags'
 import Common from '@/Admin/Common'
 import Disposition from '@/Agent/Widget/Disposition'
 import TransferConference from '@/Agent/Widget/TransferConference'
 export default {
   components: {
     'transfer-conference': TransferConference,
-    'skills': Skills,
+    'tags': Tags,
     'disposition': Disposition
   },
   props: {
@@ -95,7 +96,7 @@ export default {
       }
     },
     update_skills () {
-      this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2object(this.skills)])
+      this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2skills(this.skills)])
     },
     record: async function () {
       await this.$agent.p_mfa('ws_agent', 'record')
