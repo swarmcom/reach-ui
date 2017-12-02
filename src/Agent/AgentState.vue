@@ -2,10 +2,10 @@
 <div>
   <div class="row" style="margin-top:5px;">
     <div class="col-5 btn-group-vertical">
-      <button v-if="a.hangup_state == 'available'" @click="release" class="btn btn-my agent-state-button pointer buttons-border">
+      <button v-if="a.hangup_state == 'available'" @click="release" class="btn agent-state-button pointer buttons-border">
         <icon name="stop" scale="3"></icon>
       </button>
-      <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-my agent-state-button pointer buttons-border">
+      <button v-if="a.hangup_state == 'release'" @click="available" class="btn agent-state-button pointer buttons-border">
           <icon name="play" scale="3"></icon>
       </button>
       <release v-if="this.$agent.is_active()"></release>

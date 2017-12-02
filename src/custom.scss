@@ -5,6 +5,7 @@ $backgroundColor2: rgba(33,134,169,1);
 $backgroundColor3: rgba(13,119,153,1);
 $agent-state-width: 90px;
 $agent-state-font: 13px;
+$agent-state-icon-color: #505050;
 
 body {
   padding-top: 56px;
@@ -110,6 +111,7 @@ transition: opacity .2s
 }
 .agent-state-available {
   background:#f7c180;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -118,6 +120,7 @@ transition: opacity .2s
 }
 .agent-state-released {
   background:#dbeffa;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -126,6 +129,7 @@ transition: opacity .2s
 }
 .agent-state-ringing {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:15px;
   padding-left:18px;
   width: $agent-state-width;
@@ -134,6 +138,7 @@ transition: opacity .2s
 }
 .agent-state-outgoing {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:15px;
   padding-left:18px;
   width: $agent-state-width;
@@ -142,6 +147,7 @@ transition: opacity .2s
 }
 .agent-state-oncall {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:20px;
   width: $agent-state-width;
@@ -150,6 +156,7 @@ transition: opacity .2s
 }
 .agent-state-hold {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -158,6 +165,7 @@ transition: opacity .2s
 }
 .agent-state-wrap-up {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -165,6 +173,7 @@ transition: opacity .2s
   height:100%;
 }
 .agent-state-button {
+  color: $agent-state-icon-color;
   min-width: 82px;
   max-width: 82px;
   height: 82px;
@@ -181,6 +190,7 @@ transition: opacity .2s
   line-height:55px;
   font-weight: bold;
   height:55px;
+  width: 90px;
   background:#dbeffa;
   text-align: center;
 }
