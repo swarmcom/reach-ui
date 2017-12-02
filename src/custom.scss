@@ -109,6 +109,9 @@ transition: opacity .2s
 .agent-state-text.myPhone {
   padding-top:5px;
 }
+.agent-state-color {
+  color: $agent-state-icon-color;
+}
 .agent-state-available {
   background:#f7c180;
   color: $agent-state-icon-color;
