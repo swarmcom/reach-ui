@@ -8,7 +8,7 @@
     :fields="fieldsStats">
     <template slot="occupancy" slot-scope="data">
       <div class="session-state-text">
-        {{data.item.occupancy.oncall ? `${(data.item.occupancy.ratio.oncall*100).toFixed(2)}%` : "0%"}}
+        {{data.item.occupancy.ratio.oncall ? `${(data.item.occupancy.ratio.oncall*100).toFixed(2)}%` : "0%"}}
       </div>
     </template>
     <template slot="cpt" slot-scope="data">
