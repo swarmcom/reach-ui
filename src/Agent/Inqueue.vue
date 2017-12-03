@@ -1,11 +1,23 @@
 <template>
 <div>
-  <ringer v-if="ringer_visible"></ringer>
-  <outgoing v-if="outgoing_visible"></outgoing>
-  <call v-if="call_visible" :uuid="uuid"></call>
-  <spy v-if="spy_visible" :uuid="uuid"></spy>
-  <conference v-if="conf_visible"></conference>
-  <conf-request></conf-request>
+  <b-row>
+    <b-col cols="9">
+      <outgoing v-if="outgoing_visible"></outgoing>
+      <call v-if="call_visible" :uuid="uuid"></call>
+      <spy v-if="spy_visible" :uuid="uuid"></spy>
+    </b-col>
+    <b-col cols="3">
+      <phone-actions :uuid="uuid"></phone-actions>
+    </b-col>
+  </b-row>
+  <b-row>
+    <b-col cols="12">
+      <ringer v-if="ringer_visible"></ringer>
+      <transfer-conference v-if="this.$agent.can_conference()"></transfer-conference>
+      <conference v-if="conf_visible"></conference>
+      <conf-request></conf-request>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
@@ -16,7 +28,8 @@ import Outgoing from '@/Agent/Inqueue/Outgoing'
 import Ringer from '@/Agent/Inqueue/Ringer'
 import Spy from '@/Agent/Inqueue/Spy'
 import InqueueConf from '@/Agent/Inqueue/Conf'
-
+import PhoneActions from '@/Agent/Inqueue/PhoneActions'
+import TransferConference from '@/Agent/Widget/TransferConference'
 export default {
   data () {
     return {
@@ -77,7 +90,9 @@ export default {
     outgoing: Outgoing,
     ringer: Ringer,
     spy: Spy,
-    'conf-request': InqueueConf
+    'conf-request': InqueueConf,
+    'phone-actions': PhoneActions,
+    'transfer-conference': TransferConference,
   },
 }
 </script>

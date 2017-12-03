@@ -117,6 +117,9 @@ export default {
         else if( (S.state.state == 'available') && (S.state.state_from == 'release') ){
           this.a.activity_time = new Date()
         }
+        else if( (S.state.state_from == 'ringing') ){
+          this.a.wait_time = S.state.time
+        }
       }
     },
     query: async function () {

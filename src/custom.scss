@@ -186,7 +186,7 @@ transition: opacity .2s
   max-width: 82px;
 }
 .state-time {
-  margin-right:3px;
+  margin-right:2px;
   padding-left:5px;
   padding-right:5px;
   font-size:20px;
@@ -226,4 +226,20 @@ transition: opacity .2s
   border-style: solid !important;
   border-width: 1px !important;
   border-color:silver !important;
+}
+.call-phone-center {
+  text-align: center;
+  background: #dbeffa;
+}
+.call-hand-center {
+  margin-top:10px;
+  text-align: center;
+  border: 1px solid silver;
+}
+.call-action-button {
+  color:#505050 !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color:silver !important;
+  cursor: pointer;
 }
