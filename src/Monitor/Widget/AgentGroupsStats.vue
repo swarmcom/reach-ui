@@ -58,10 +58,20 @@ export default {
     set_period (value) {
       this.period.value = value
       this.updateStats(this.period.value)
+    },
+    handleState ({ tag, info }) {
+      console.log(tag)
+      if (tag === 'change') {
+        this.updateStats(this.period.value)
+      }
     }
   },
   created () {
     this.query()
+    this.$bus.$on('agents_state', this.handleState)
+  },
+  beforeDestroy () {
+    this.$bus.$off('agents_state', this.handleState)
   },
 }
 </script>
