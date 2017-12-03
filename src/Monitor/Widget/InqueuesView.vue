@@ -7,9 +7,32 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Queue Name</div>
         </b-row>
-        <b-table style="margin-top:10px"  small responsive hover
+        <b-table style="margin-top:10px" small responsive hover
           :items="computedStats"
           :fields="fieldNames">
+          <template slot="name" slot-scope="data">
+            <b-row>
+              <b-col cols="1" v-if="(data.item.details.length > 0)">
+                <div v-if="!data.item.seeDetails" class="pointer" @click="showDetails(data)">
+                  <icon name="plus" scale="0.5"></icon>
+                </div>
+                <div v-if="data.item.seeDetails" class="pointer" @click="showDetails(data)">
+                  <icon name="minus" scale="0.5"></icon>
+                </div>
+              </b-col>
+              <b-col>
+                <div >{{data.item.name}}</div>
+              </b-col>
+            </b-row>
+            <b-row v-if="data.item.seeDetails && data.item.details.length > 0">
+              <b-col cols="6"><div class="agent-state-text"><b>Line</b></div></b-col>
+              <b-col cols="6"><div class="agent-state-text"><b>Customer</b></div></b-col>
+            </b-row>
+            <b-row v-if="data.item.seeDetails && data.item.details.length > 0" v-for="(v, k) in data.item.details" key="k">
+              <b-col cols="6"><div class="agent-state-text">{{v.line}}</div></b-col>
+              <b-col cols="6"><div class="agent-state-text">{{v.customer}}</div></b-col>
+            </b-row>
+          </template>
         </b-table>
       </b-col>
       <b-col cols="10">
@@ -87,9 +110,13 @@ export default {
   methods: {
     query: async function() {
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
+      this.queues.seeDetails = false
     },
     set_period (value) {
       this.period.value = value
+    },
+    showDetails(value){
+      this.queues[value.index].seeDetails = !this.queues[value.index].seeDetails
     }
   },
   created () {
@@ -99,12 +126,16 @@ export default {
   },
   computed: {
     computedStats () {
+      let queues = this.queues.slice(0)
+      let inqueues = this.inqueues.slice(0)
       let stats = []
-      this.queues.forEach( (key) => {
+      queues.forEach( (key) => {
         let selectedQueue = key.name
         let object = {
+          "seeDetails": key.seeDetails,
+          "details": [],
           "name": key.name,
-          "ciq":0,
+          "ciq": 0,
           "speedAnswer": '-',
           "longestWait": '-',
           "connected": 0,
@@ -112,11 +143,12 @@ export default {
           "abandonTime": '-',
           "abandoned": '-'
         }
-        this.inqueues.forEach( (key) => {
+        inqueues.forEach( (key) => {
           if(key.queue != undefined && selectedQueue == key.queue) {
+            object.details.push({ customer: key.customer, line: key.line })
             object.ciq++
             if(key.state == 'oncall')
-            object.connected++
+              object.connected++
           }
         } )
         stats.push(object)

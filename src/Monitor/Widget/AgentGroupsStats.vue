@@ -60,7 +60,6 @@ export default {
       this.updateStats(this.period.value)
     },
     handleState ({ tag, info }) {
-      console.log(tag)
       if (tag === 'change') {
         this.updateStats(this.period.value)
       }
