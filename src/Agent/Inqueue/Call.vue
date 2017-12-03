@@ -115,7 +115,7 @@ export default {
     show_notification () {
       if (!("Notification" in window)) {
         return
-      } else if (Notification.permission === "granted" && this.call_info.line_in) {
+      } else if (Notification.permission === "granted" && this.inqueue.line_in) {
         let body = `Number: ${this.call_info['Caller-Destination-Number']}\nClient: ${this.inqueue.line_in.client.name}\nQueue: ${this.inqueue.queue.name}`
         this.notification = new Notification("Incoming call", {body: body})
       } else if (Notification.permission !== 'denied') {
