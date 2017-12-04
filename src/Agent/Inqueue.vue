@@ -51,16 +51,18 @@ export default {
         this.spy_visible = false
         this.uuid = undefined
       } else {
-        if (state.inqueue.inqueue_call) {
+        console.log("XXX", state.inqueue)
+        if (state.inqueue.record == 'inqueue_call') {
+          console.log("VISIBLE", state.inqueue.uuid)
           this.call_visible = true
-          this.uuid = state.inqueue.inqueue_call
+          this.uuid = state.inqueue.uuid
         }
-        if (state.inqueue.outgoing) {
+        if (state.inqueue.record == 'outgoing') {
           this.outgoing_visible = true
         }
-        if (state.inqueue.spy) {
+        if (state.inqueue.record == 'spy') {
           this.spy_visible = true
-          this.uuid = state.inqueue.spy
+          this.uuid = state.inqueue.uuid
         }
         if (state.state == 'ringing') {
           this.ringer_visible = true
