@@ -38,7 +38,6 @@ export default {
         this.spy_visible = false
         this.uuid = undefined
       } else {
-        console.log("XXX", state.inqueue)
         if (state.inqueue.record == 'inqueue_call') {
           console.log("VISIBLE", state.inqueue.uuid)
           this.call_visible = true
