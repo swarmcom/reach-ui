@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     handleState ({ tag, info }) {
-      console.log(tag)
       if (tag === 'ws_login') {
         let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
         if (i >= 0) {
