@@ -1,29 +1,26 @@
 <template>
 <div style="margin-top: 10px" v-if="visible">
-
-  <div class="row"><div class="col session-manager-text"><b>Outbound Call:</b> </div></div>
-  <div class="row agent-state-text">
-    <div class="col">
-      <dl class="row">
-        <dt class="col-sm-3">To:</dt>
-        <dd class="col-sm-9">{{ this.outgoing.target }}</dd>
+  <b-row>
+    <b-col cols="2">
+      <div class="call-phone-center"><icon style="color:#838383" name="mobile" scale="4"></icon></div>
+      <div class="call-hand-center"><icon style="color:#838383" name="handshake-o" scale="4"></icon></div>
+    </b-col>
+    <b-col cols="10">
+      <dl class="row agent-state-text">
+        <dt class="col-sm-12 session-manager-text">Outbound Call:</dt>
+        <dd class="col-sm-4">To:</dt>
+        <dd class="col-sm-8">{{ this.outgoing.target }}</dd>
+        <dd v-if="!this.$agent.is_ringing()" class="col-sm-4">Wait Time:</dt>
+        <dd v-if="!this.$agent.is_ringing()" class="col-sm-8">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
       </dl>
-    </div>
-  </div><!-- row -->
-
-  <!--<div class="row" style="margin-top: 20px">
-    <div class="col-1">
-      <h4>Hold:</h4>
-      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info pointer">UnHold</button>
-      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info pointer">Hold</button>
-    </div>
-  </div>-->
-
+    </b-col>
+  </b-row>
 </div><!-- container -->
 </template>
-
 <script>
+import Common from '@/Admin/Common'
 export default {
+  mixins: [Common],
   data () {
     return {
       visible: false,

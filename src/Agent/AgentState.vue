@@ -120,6 +120,9 @@ export default {
         else if( (S.state.state_from == 'ringing') ){
           this.a.wait_time = S.state.time
         }
+        else if( (S.state.state_from == 'outgoing') ){
+          this.a.wait_time = this.a.wait_time + S.state.time
+        }
       }
     },
     query: async function () {
