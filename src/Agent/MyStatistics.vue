@@ -33,7 +33,7 @@
             </div>
           </template>
           <template slot="occup" slot-scope="data">
-            <div style="text-align:center;">{{data.item.occup.available}}</div>
+            <div style="text-align:center;">{{data.item.occup.oncall}}</div>
             <!--<div class="session-state-text"><b>oncall: </b>{{data.item.occup.oncall}}</div>
             <div class="session-state-text"><b>ringing: </b>{{data.item.occup.ringing}}</div>
             <div class="session-state-text"><b>available: </b>{{data.item.occup.available}}</div>

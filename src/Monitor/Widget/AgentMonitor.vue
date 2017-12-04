@@ -60,43 +60,43 @@
             </b-row>
           </template>
           <template slot="state" slot-scope="data">
-            <div v-if="data.item.state == 'available'">
+            <div v-if="data.item.state == 'available'" class='agent-state-color'>
               <icon  name="circle-o" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'release'">
+            <div v-if="data.item.state == 'release'" class='agent-state-color'>
               <icon name="stop" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'ringing'">
+            <div v-if="data.item.state == 'ringing'" class='agent-state-color'>
               <icon  name="wifi" scale="2" style="transform: rotate(270deg);"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'outgoing'">
+            <div v-if="data.item.state == 'outgoing'" class='agent-state-color'>
               <icon  name="wifi" scale="2" style="transform: rotate(90deg);"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'oncall'">
+            <div v-if="data.item.state == 'oncall'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'conference'">
+            <div v-if="data.item.state == 'conference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'inconference'">
+            <div v-if="data.item.state == 'inconference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'test'">
+            <div v-if="data.item.state == 'test'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'hold'">
+            <div v-if="data.item.state == 'hold'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div v-if="data.item.state == 'wrapup'">
+            <div v-if="data.item.state == 'wrapup'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>

@@ -8,7 +8,7 @@
     :fields="fieldsStats">
     <template slot="occupancy" slot-scope="data">
       <div class="session-state-text">
-        {{data.item.occupancy.oncall ? `${(data.item.occupancy.ratio.oncall*100).toFixed(2)}%` : "0%"}}
+        {{data.item.occupancy.ratio.oncall ? `${(data.item.occupancy.ratio.oncall*100).toFixed(2)}%` : "0%"}}
       </div>
     </template>
     <template slot="cpt" slot-scope="data">
@@ -58,10 +58,19 @@ export default {
     set_period (value) {
       this.period.value = value
       this.updateStats(this.period.value)
+    },
+    handleState ({ tag, info }) {
+      if (tag === 'change') {
+        this.updateStats(this.period.value)
+      }
     }
   },
   created () {
     this.query()
+    this.$bus.$on('agents_state', this.handleState)
+  },
+  beforeDestroy () {
+    this.$bus.$off('agents_state', this.handleState)
   },
 }
 </script>

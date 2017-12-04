@@ -8,10 +8,7 @@
 import Common from '../../Admin/Common'
 export default {
   name: 'wrap-up',
-  props: {
-    inqueue: Object,
-    state_time: Number
-  },
+  props: ['inqueue', 'state_time'],
   mixins: [Common],
   data () {
     return {
@@ -21,7 +18,7 @@ export default {
   methods: {
     computedTime() {
       let time = 0
-      if(this.inqueue.queue != undefined){
+      if(this.inqueue != undefined && this.inqueue.queue != undefined){
         time = this.state_time
         if(this.state_time < (this.inqueue.queue.wrapup_timer*1000))
           time = (this.inqueue.queue.wrapup_timer*1000) - this.state_time

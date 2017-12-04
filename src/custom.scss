@@ -5,6 +5,7 @@ $backgroundColor2: rgba(33,134,169,1);
 $backgroundColor3: rgba(13,119,153,1);
 $agent-state-width: 90px;
 $agent-state-font: 13px;
+$agent-state-icon-color: #505050;
 
 body {
   padding-top: 56px;
@@ -108,8 +109,12 @@ transition: opacity .2s
 .agent-state-text.myPhone {
   padding-top:5px;
 }
+.agent-state-color {
+  color: $agent-state-icon-color;
+}
 .agent-state-available {
   background:#f7c180;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -118,6 +123,7 @@ transition: opacity .2s
 }
 .agent-state-released {
   background:#dbeffa;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -126,6 +132,7 @@ transition: opacity .2s
 }
 .agent-state-ringing {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:15px;
   padding-left:18px;
   width: $agent-state-width;
@@ -134,6 +141,7 @@ transition: opacity .2s
 }
 .agent-state-outgoing {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:15px;
   padding-left:18px;
   width: $agent-state-width;
@@ -142,6 +150,7 @@ transition: opacity .2s
 }
 .agent-state-oncall {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:20px;
   width: $agent-state-width;
@@ -150,6 +159,7 @@ transition: opacity .2s
 }
 .agent-state-hold {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -158,6 +168,7 @@ transition: opacity .2s
 }
 .agent-state-wrap-up {
   background:#d4fcbb;
+  color: $agent-state-icon-color;
   padding-top:5px;
   padding-left:18px;
   width: $agent-state-width;
@@ -165,6 +176,7 @@ transition: opacity .2s
   height:100%;
 }
 .agent-state-button {
+  color: $agent-state-icon-color;
   min-width: 82px;
   max-width: 82px;
   height: 82px;
@@ -174,13 +186,14 @@ transition: opacity .2s
   max-width: 82px;
 }
 .state-time {
-  margin-right:3px;
+  margin-right:2px;
   padding-left:5px;
   padding-right:5px;
   font-size:20px;
   line-height:55px;
   font-weight: bold;
   height:55px;
+  width: 90px;
   background:#dbeffa;
   text-align: center;
 }
@@ -213,4 +226,20 @@ transition: opacity .2s
   border-style: solid !important;
   border-width: 1px !important;
   border-color:silver !important;
+}
+.call-phone-center {
+  text-align: center;
+  background: #dbeffa;
+}
+.call-hand-center {
+  margin-top:10px;
+  text-align: center;
+  border: 1px solid silver;
+}
+.call-action-button {
+  color:#505050 !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color:silver !important;
+  cursor: pointer;
 }

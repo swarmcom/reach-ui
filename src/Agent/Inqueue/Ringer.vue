@@ -2,10 +2,8 @@
 <div v-if="visible" style="margin-top: 10px">
   <div class="session-manager-text"><b>Ringer:</b></div>
   <div class="row agent-state-text">
-    <div class="col-12">
-      Ringing {{ ringer.uri }} for {{ ringer.timeout }} seconds
-    </div>
     <div class="col">
+      Ringing <b>{{ ringer.uri }}</b> for <b>{{ ringer.timeout }}</b> seconds
       <b-button size="sm" class="pointer" variant="outline-danger" @click="stop_ringer">Cancel</b-button>
     </div>
   </div>
