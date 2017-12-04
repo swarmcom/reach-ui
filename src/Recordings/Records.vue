@@ -39,12 +39,16 @@
       <b-form-select class="pointer" size="sm" v-model="selectedCustomer">
         <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
       </b-form-select>
+      <div class="agent-state-text" style="margin-top:10px">Skills:</div>
+      <b-form-select class="pointer" size="sm" v-model="selectedSkill">
+        <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
+      </b-form-select>
     </b-col>
     <b-col cols="10">
       <b-col cols="2" class="float-right">
       <b-form-select size="sm" :options="pageOptions" v-model="perPage" @input="onSelectChange"/>
       </b-col>
-      <b-table style="margin-top:10px" small
+      <b-table style="margin-top:10px" small responsive hover
         :items="computedRecordings"
         :fields="fields"
         :filter="filter"
@@ -66,7 +70,7 @@
           {{ maybe_name(data.item.line_in) }}
         </template>
         <template slot="client" slot-scope="data">
-          {{ maybe_name(data.item.line_in.client) }}
+          {{ maybe_name(data.item.client) }}
         </template>
         <template slot="queue" slot-scope="data">
           {{ maybe_name(data.item.queue) }}
@@ -77,12 +81,16 @@
         <template slot="agent" slot-scope="data">
           {{ maybe_name(data.item.agent) }}
         </template>
-        <template slot="caller_id" slot-scope="data">
-          <div class="agent-state-text"><b>Name: </b>{{data.item.vars['Caller-Caller-ID-Name']}}</div>
-          <div class="agent-state-text"><b>Number: </b>{{data.item.vars['Caller-Caller-ID-Number']}}</div>
+        <template slot="agent" slot-scope="data">
+          {{ maybe_name(data.item.agent) }}
         </template>
-        <template slot="called_id" slot-scope="data">
-          <div class="agent-state-text"><b>Number: </b>{{data.item.vars['Caller-Destination-Number']}}</div>
+        <template slot="skills" slot-scope="data">
+          <b-col cols="12" v-for="(v, k, index) in data.item.skills" key="index">{{k}}</b-col>
+        </template>
+        <template slot="caller" slot-scope="data">
+          <div class="agent-state-text"><b>Caller Name: </b>{{data.item.caller}}</div>
+          <div class="agent-state-text"><b>Caller IP: </b>{{data.item.caller_ip}}</div>
+          <div class="agent-state-text"><b>Calling: </b>{{data.item.calling}}</div>
         </template>
       </b-table>
       <b-pagination size="sm" align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
@@ -95,9 +103,10 @@
 
 <script>
 import Player from '@/Recordings/Player'
-import 'bootstrap/dist/css/bootstrap.css';
-import datePicker from 'vue-bootstrap-datetimepicker';
-import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
+//import 'bootstrap/dist/css/bootstrap.css'
+import datePicker from 'vue-bootstrap-datetimepicker'
+import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+import moment from 'moment'
 export default {
   name: 'records',
   storageName: 'callRecordings',
@@ -109,19 +118,20 @@ export default {
   data () {
     return {
       fields: {
-        player: { label: 'Show Recordings', _showDetails: false },
-        ts: { label: 'Date / Start Time', sortable: true, formatter: (ts) => (new Date(ts)).toLocaleString() },
-        client: { label: 'Customer', sortable: true },
-        queue: { label: 'Queue', sortable: true },
-        line_in: { label: 'Line In', sortable: true },
-        agent: { label: 'Agent', sortable: true },
-        caller_id: { label: 'Caller ID' },
-        called_id: { label: 'Called ID' }
+        player: { label: 'Show Recordings', _showDetails: false, thClass:"table-header-text-center" },
+        ts_ms: { label: 'Date / Start Time', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center", formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        client: { label: 'Customer', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        queue: { label: 'Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        line_in: { label: 'Line In', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center"},
+        agent: { label: 'Agent', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        skills: { label: 'Skills', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        caller: { label: 'Recording', thClass:"table-header-text-center" },
       },
       recordings: [],
       clients: [],
       queues: [],
       line_ins: [],
+      tags: [],
       filter: null,
       currentPage: 1,
       perPage: 5,
@@ -139,6 +149,7 @@ export default {
       selectedCustomer: 'Any Customer',
       selectedQueue: 'Any Queue',
       selectedLine: 'Any Line',
+      selectedSkill: 'Any Skill',
       sortBy: 'ts',
       sortDesc: false,
       showCollapse: true,
@@ -158,6 +169,10 @@ export default {
       this.line_ins.unshift({ name:"Any Line" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
       this.queues.unshift({ name:"Any Queue" })
+      this.tags = await this.$agent.p_mfa('ws_db_tag', 'get')
+      this.tags.unshift("Any Skill")
+      this.params.date_start = parseInt(this.startDate.getTime()/1000)
+      this.params.date_end = parseInt(this.endDate.getTime()/1000)
       this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
     },
     format_ms (ms) {
@@ -187,6 +202,12 @@ export default {
       }
     },
     reload: async function() {
+      let startDate = new Date(this.startDate)
+      startDate.setHours(0,0,0,0)
+      let endDate =new Date(this.endDate)
+      endDate.setHours(23,59,59,9999)
+      this.params.date_start = parseInt(startDate.getTime()/1000)
+      this.params.date_end = parseInt(endDate.getTime()/1000)
       this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
     },
     onSortingChanged (ctx){
@@ -220,44 +241,42 @@ export default {
       let recordings = this.recordings.slice(0)
       let compRecordings = []
       recordings.forEach( (key) => {
-        let actDate = new Date(key.ts)
-        let startDate =new Date(this.startDate)
+        let actDate = new Date(key.ts_ms)
+        let startDate = new Date(this.startDate)
         startDate.setHours(0,0,0,0)
         let endDate =new Date(this.endDate)
         endDate.setHours(23,59,59,9999)
-
         if(!key.keep_record)
           return
 
         if(actDate.getTime() > endDate.getTime() || actDate.getTime() < startDate.getTime() )
           return
 
-        if(key.line_in.client != undefined) {
-          if(this.selectedCustomer != key.line_in.client.name && this.selectedCustomer != 'Any Customer'){
+        if(key.client != undefined && this.selectedCustomer != 'Any Customer') {
+          if(this.selectedCustomer != key.client.name && this.selectedCustomer != 'Any Customer'){
             return
           }
         }
-        else if(this.selectedCustomer != 'Any Customer'){
-          return
-        }
 
-        if(key.queue != undefined) {
+        if(key.queue != undefined && this.selectedQueue != 'Any Queue') {
           if(this.selectedQueue != key.queue.name && this.selectedQueue != 'Any Queue'){
             return
           }
         }
-        else if(this.selectedQueue != 'Any Queue'){
-          return
-        }
 
-        if(key.line_in != undefined) {
+        if(key.line_in != undefined && this.selectedLine != 'Any Line') {
           if(this.selectedLine != key.line_in.name && this.selectedLine != 'Any Line'){
             return
           }
         }
-        else if(this.selectedLine != 'Any Line'){
-          return
+
+        if(key.skills != undefined && this.selectedSkill != 'Any Skill') {
+          let skills = Object.keys(key.skills)
+          if(!skills.includes(this.selectedSkill)){
+            return
+          }
         }
+
         compRecordings.push(key);
 
       } )
