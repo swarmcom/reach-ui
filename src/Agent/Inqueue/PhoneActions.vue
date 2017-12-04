@@ -17,8 +17,7 @@
   <b-row style="margin-top:5px;" >
     <b-col cols="12">
     <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" :active="disposition_id" v-on:input="update_disposition"></disposition>
-    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="this.inqueue.keep_record">Record</b-button>
-
+    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="!this.inqueue.keep_record">Record</b-button>
     </b-col>
   </b-row>
   <b-row style="margin-top:5px;">
@@ -63,7 +62,7 @@ export default {
     },
     record: async function () {
       await this.$agent.p_mfa('ws_agent', 'record')
-      this.inqueue.keep_record = true
+      this.inqueue.keep_record = false
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -75,8 +74,7 @@ export default {
         this.state_time = S.state.time
       else
         this.state_time = 0
-
-      if (S.state.inqueue.inqueue_call)
+      if (S.state.inqueue.record == 'inqueue_call')
         this.query()
 
       if (S.state.state == 'oncall')
