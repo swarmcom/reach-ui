@@ -48,7 +48,7 @@
       <b-col cols="2" class="float-right">
       <b-form-select size="sm" :options="pageOptions" v-model="perPage" @input="onSelectChange"/>
       </b-col>
-      <b-table style="margin-top:10px" small responsive hover
+      <b-table style="margin-top:10px" small hover
         :items="computedRecordings"
         :fields="fields"
         :filter="filter"
