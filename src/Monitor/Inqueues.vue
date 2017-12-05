@@ -7,10 +7,17 @@
     <template slot="twe" slot-scope="data">
       {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
     </template>
+    <template slot="skills" slot-scope="data">
+      {{data.item.skills}}
+    </template>
     <template slot="actions" slot-scope="data">
-      <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
-      <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
-      <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
+      <template v-if="data.item.state == 'oncall'">
+        <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
+        <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
+      </template>
+      <template v-if="data.item.state == 'inqueue' || data.item.state == 'agent'">
+        <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
+      </template>
       <b-button size="sm" variant="danger" @click="hangup(data.item)">Hangup</b-button>
     </template>
   </b-table>

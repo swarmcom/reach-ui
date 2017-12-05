@@ -1,5 +1,5 @@
 <template>
-<div v-if="visible">
+<div v-if="visible" style="margin-top: 20px">
   <h3>Ringer:</h3>
   <div class="row">
     <div class="col">
