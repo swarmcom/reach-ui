@@ -36,9 +36,9 @@
             <b-row class="text-center">
               <b-col>
                 <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                  <b-dropdown-item @click="take(data.item)">Take</b-dropdown-item>
-                  <b-dropdown-item @click="takeover(data.item)">Takeover</b-dropdown-item>
-                  <b-dropdown-item @click="spy(data.item)">Spy</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state == 'inqueue' || data.item.state == 'agent'" @click="take(data.item)">Take</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state == 'oncall'" @click="takeover(data.item)">Takeover</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state == 'oncall'" @click="spy(data.item)">Spy</b-dropdown-item>
                   <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
                 </b-dropdown>
               </b-col>
