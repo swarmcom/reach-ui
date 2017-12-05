@@ -20,6 +20,9 @@
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
           <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
+        <b-form-select class="pointer" size="sm" v-model="selectedSkill" style="margin-top:10px">
+          <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
+        </b-form-select>
       </div>
       <div class="col-10">
         <b-table style="margin-top:10px" small bordered
@@ -71,6 +74,7 @@ export default {
       clients: [],
       queues: [],
       lines: [],
+      tags: [],
       states: [
         {name: "Any State"},
         {name: "oncall"},
@@ -80,6 +84,7 @@ export default {
       selectedCustomer: 'Any Customers',
       selectedLine: 'Any Lines',
       selectedState: 'Any State',
+      selectedSkill: 'Any Skill',
       filter: null,
       sortBy: 'agent_id',
       sortDesc: false,
@@ -94,6 +99,8 @@ export default {
       this.queues.unshift({ name:"Any Queue" })
       this.lines = await this.$agent.p_mfa('ws_db_line_in', 'get')
       this.lines.unshift({ name:"Any Lines" })
+      this.tags = await this.$agent.p_mfa('ws_db_tag', 'get')
+      this.tags.unshift("Any Skill")
     },
     onSortingChanged (ctx){
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
@@ -154,6 +161,13 @@ export default {
         }
         else if(this.selectedState != key.state && this.selectedState != 'Any State')
           return
+
+        if(key.skillsReq != undefined && this.selectedSkill != 'Any Skill') {
+          let skills = key.skillsReq.split(",")
+          if(!skills.includes(this.selectedSkill)){
+            return
+          }
+        }
 
         compInqueues.push(key)
       } )
