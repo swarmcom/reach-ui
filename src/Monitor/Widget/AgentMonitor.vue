@@ -59,12 +59,12 @@
                 <b-dropdown-item v-else @click="release(data.item)">Release</b-dropdown-item>
                 <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
               </b-dropdown>
-              <b-dropdown v-if="data.item.state == 'barge'" size="sm" text="Mode" variant="outline-secondary">
+              <!--<b-dropdown v-if="data.item.state == 'barge'" size="sm" text="Mode" variant="outline-secondary">
                 <b-dropdown-item v-for="mode in modes" :key="mode" @click="setMode(mode)">{{ mode }}</b-dropdown-item>
               </b-dropdown>
               <b-button v-if="data.item.state == 'barge'" size="sm" variant="outline-secondary" class="pointer" @click="cancelSpy()">
                 Cancel Spy
-              </b-button>
+              </b-button>-->
             </b-col>
 
             </b-row>
