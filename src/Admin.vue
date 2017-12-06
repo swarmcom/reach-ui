@@ -23,7 +23,7 @@
     <b-dropdown-item to="/admin/tag_groups">Skill groups</b-dropdown-item>
     <b-dropdown-item to="/admin/tags">Skills</b-dropdown-item>
     <b-dropdown-item to="/admin/roles">Roles</b-dropdown-item>
-    <b-dropdown-item to="/admin/releases">Releases</b-dropdown-item>
+    <b-dropdown-item to="/admin/releases">Release Types</b-dropdown-item>
     <b-dropdown-item to="/admin/dispositions">Dispositions</b-dropdown-item>
   </b-nav-item-dropdown>
 
