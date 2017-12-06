@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import SkillsList from '@/Widget/SkillsList'
-
 export default {
   name: 'form-tags',
   props: ['label', 'value', 'effective', 'placeholder'],
