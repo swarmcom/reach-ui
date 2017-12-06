@@ -132,6 +132,9 @@
               <b-col cols="12">
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Destination-Number']}}</div>
               </b-col>
+              <b-col cols="12">
+                <div class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
+              </b-col>
             </b-row>
             <b-row v-if="data.item.state=='release'">
               <b-col cols="12">
