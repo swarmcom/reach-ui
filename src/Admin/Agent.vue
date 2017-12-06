@@ -17,7 +17,9 @@
   <form-text label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
   <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
   <tag-group label="Skills Group" v-model="rec.tag_group_id" :effective="eff.tag_group_id"></tag-group>
+  <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
   <form-tags label="Agent Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
+
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>

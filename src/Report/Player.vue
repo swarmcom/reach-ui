@@ -38,7 +38,6 @@ export default {
   },
   created () {
     let ref = this.$agent.get_rr_uri() + this.href
-    console.log("ref", ref)
     this.player = new Howl({
       src: [ ref ],
       onplay: () => this.state = 'play',

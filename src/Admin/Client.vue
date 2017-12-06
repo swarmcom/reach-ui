@@ -12,12 +12,14 @@
   <form-select-bool label="Override Caller ID on Line Out" v-model="rec.override_clid_line_out"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name"></form-text>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text> 
+  <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
   <form-tags label="Client Skills" placeholder="Skill..." v-model="skills"></form-tags>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
     <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
   </div>
+
   <help></help>
 </div>
 </template>
