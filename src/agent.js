@@ -24,12 +24,15 @@ function guess_rr () {
 async function session_auth(agent) {
   try {
     let SessionKey = localStorage.getItem('session-key')
-    let Agent = await agent.p_mfa('ws_agent', 'auth', [SessionKey])
-    agent.vm.agent = Agent
-    localStorage.setItem('session-key', Agent.session_key)
-    EventBus.$emit('agent-auth', agent.isAuth())
+    if (SessionKey) {
+      let Agent = await agent.p_mfa('ws_agent', 'auth', [SessionKey])
+      agent.vm.agent = Agent
+      localStorage.setItem('session-key', Agent.session_key)
+      EventBus.$emit('agent-auth', agent.isAuth())
+    }
   }
   catch (error) {
+    console.log("failed to login with session keyy", error)
   }
   agent.vm.session_auth = true
 }
