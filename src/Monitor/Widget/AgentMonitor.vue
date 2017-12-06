@@ -54,12 +54,19 @@
           <template slot="row-details" slot-scope="data">
             <b-row class="text-center">
             <b-col>
-            <b-dropdown size="sm" class="agent-release-dropdown" text="Select Action" variant="outline-secondary">
-              <b-dropdown-item v-if="data.item.state == 'release'" @click="available(data.item)">Available</b-dropdown-item>
-              <b-dropdown-item v-else @click="release(data.item)">Release</b-dropdown-item>
-              <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
-            </b-dropdown>
+              <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
+                <b-dropdown-item v-if="data.item.state == 'release'" @click="available(data.item)">Available</b-dropdown-item>
+                <b-dropdown-item v-else @click="release(data.item)">Release</b-dropdown-item>
+                <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
+              </b-dropdown>
+              <b-dropdown v-if="data.item.state == 'barge'" size="sm" text="Mode" variant="outline-secondary">
+                <b-dropdown-item v-for="mode in modes" :key="mode" @click="setMode(mode)">{{ mode }}</b-dropdown-item>
+              </b-dropdown>
+              <b-button v-if="data.item.state == 'barge'" size="sm" variant="outline-secondary" class="pointer" @click="cancelSpy()">
+                Cancel Spy
+              </b-button>
             </b-col>
+
             </b-row>
           </template>
           <template slot="state" slot-scope="data">
@@ -107,6 +114,11 @@
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
+            <div v-if="data.item.state == 'barge'" class='agent-state-color'>
+              <icon  name="phone" scale="2"></icon>
+              <div class="agent-state-text">{{data.item.state}}</div>
+              <icon name="handshake-o" scale="2"></icon>
+            </div>
           </template>
           <template slot="media" slot-scope="data">
             <b-row>
@@ -117,15 +129,15 @@
                 <div class="agent-state-text" style="margin-top: 10px;">{{msToHms(Math.round(data.item.time).toString())}}</div>
               </b-col>
             </b-row>
-            <b-row v-if="data.item.state=='oncall' || data.item.state=='ringing' || data.item.state=='hold'">
+            <b-row v-if="data.item.state=='oncall' || data.item.state=='ringing' || data.item.state=='hold' || data.item.state=='barge'">
               <b-col cols="12">
                 <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
               </b-col>
               <b-col cols="12">
-                <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Name']}}</div>
+                <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
               </b-col>
               <b-col cols="12">
-                <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
+                <div class="agent-state-text">{{data.item.call_vars['Caller-Caller-ID-Number']}}</div>
               </b-col>
               <b-col cols="12">
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Destination-Number']}}</div>
@@ -174,6 +186,7 @@ export default {
         {name: "ringing"},
         {name: "outgoing"},
         {name: "oncall"},
+        {name: "barge"},
         {name: "conference"},
         {name: "inconference"},
         {name: "hold"},
@@ -187,6 +200,7 @@ export default {
         { value:{ last: '1w' }, name:"This Week" },
         { value:{ last: '1M' }, name:"This Month" }
       ],
+      modes: ['spy', 'barge', 'agent', 'caller'],
       stats: [],
       tags: [],
       period: { value: { last: '15m' }, name: "Last 15 minutes"},
@@ -234,6 +248,12 @@ export default {
     },
     stop (agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
+    },
+    cancelSpy () {
+      this.$agent.mfa('ws_supervisor', 'cancel', [])
+    },
+    setMode (mode) {
+      this.$agent.mfa('ws_supervisor', 'set_barge_mode', [mode])
     },
     set_period (value) {
       this.period.value = value
@@ -299,6 +319,11 @@ export default {
           case "wrapup": {
             key._cellVariants.state = "warning"
             key._cellVariants.media = "warning"
+            break
+          }
+          case "barge": {
+            key._cellVariants.state = "danger"
+            key._cellVariants.media = "danger"
             break
           }
           default: {

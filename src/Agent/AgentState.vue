@@ -31,6 +31,10 @@
         <icon  name="phone" scale="4"></icon>
         <div>{{a.state}}</div>
       </div>
+      <div v-if="a.state == 'barge'" class="agent-state-oncall">
+        <icon  name="phone" scale="4"></icon>
+        <div>{{a.state}}</div>
+      </div>
       <div v-if="this.$agent.is_onsession()" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
         <div>{{a.state}}</div>
