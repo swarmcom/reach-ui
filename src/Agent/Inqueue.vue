@@ -52,7 +52,6 @@ export default {
         this.uuid = undefined
       } else {
         if (state.inqueue.record == 'inqueue_call') {
-          console.log("VISIBLE", state.inqueue.uuid)
           this.call_visible = true
           this.uuid = state.inqueue.uuid
         }

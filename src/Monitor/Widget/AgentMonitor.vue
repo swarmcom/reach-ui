@@ -17,6 +17,9 @@
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
           <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
         </b-form-select>
+        <b-form-select class="pointer" size="sm" v-model="selectedSkill" style="margin-top:10px">
+          <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
+        </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period" style="margin-top:10px">
           <option v-for="period in periods" :value="period.value">{{period.name}}</option>
         </b-form-select>
@@ -152,10 +155,12 @@ export default {
         { value:{ last: '1M' }, name:"This Month" }
       ],
       stats: [],
+      tags: [],
       period: { value: { last: '15m' }, name: "Last 15 minutes"},
       selectedProfile: 'Any Profile',
       selectedCustomer: 'Any Customers',
       selectedState: 'Any State',
+      selectedSkill: 'Any Skill',
       updater: '',
       filter: null,
       sortBy: 'agent_id',
@@ -171,6 +176,8 @@ export default {
     query: async function() {
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customers" })
+      this.tags = await this.$agent.p_mfa('ws_db_tag', 'get')
+      this.tags.unshift("Any Skill")
     },
     updateStats: async function() {
       this.stats = await this.$agent.p_mfa('ws_stats', 'agents', [this.period.value])
@@ -295,6 +302,13 @@ export default {
           return
         if(this.selectedState != key.state && this.selectedState != 'Any State')
           return
+
+        if(key.agentSkills != undefined && this.selectedSkill != 'Any Skill') {
+          let skills = key.agentSkills.split(",")
+          if(!skills.includes(this.selectedSkill)){
+            return
+          }
+        }
 
         compAgents.push(key);
       } )
