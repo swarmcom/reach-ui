@@ -8,7 +8,7 @@
   <form-text label="Auto Logout" v-model="rec.autologout"></form-text>
   <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-text>
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
-  <tag-group label="Tags Group" v-model="rec.tag_group_id"></tag-group>
+  <tag-group label="Skills Group" v-model="rec.tag_group_id"></tag-group>
   <skills label="Skills" v-model="skills"></skills>
 
   <div style="margin-top:20px">
