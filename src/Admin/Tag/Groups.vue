@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <h3>Tag groups:</h3>
+      <h3>Skill groups:</h3>
     </div>
     <div class="col">
       <button @click="add" class="btn btn-outline-success"><icon class="align-middle" name="plus" scale="1"></icon></button>

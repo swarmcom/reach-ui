@@ -2,7 +2,7 @@
 <div class="container">
   <b-row>
     <b-col>
-      <h3>All tags</h3>
+      <h3>All skills</h3>
     </b-col>
   </b-row>
   <b-row>
