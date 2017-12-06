@@ -1,7 +1,7 @@
 <template>
 <div class="form">
   <form-text label="Client Name" v-model="rec.name"></form-text>
-  <disposition-groups label="Dispositions" v-model="rec.disposition_group_id"></disposition-groups>
+  <disposition-groups label="Disposition Group" v-model="rec.disposition_group_id"></disposition-groups>
   <luas label="Lua script" v-model="rec.lua_id"></luas>
   <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
   <prompts label="Announce" v-model="rec.announce_id"></prompts>

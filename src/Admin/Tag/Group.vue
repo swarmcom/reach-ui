@@ -2,7 +2,7 @@
 <div class="container" style="margin-top:20px">
   <div class="row">
     <div class="col-4">
-      <h3>Tag group:</h3>
+      <h3>Skill group:</h3>
     </div>
   </div>
 
@@ -10,7 +10,7 @@
     <form-text id="name" label="Name" v-model="rec.name"></form-text>
     <form-text id="description" label="Description" v-model="rec.description"></form-text>
     <div class="row" style="margin-top: 5px">
-      <label class="col-3 col-form-label">Tags</label>
+      <label class="col-3 col-form-label">Skills</label>
       <div class="col-9">
         <tags v-model="tags"></tags>
       </div>
