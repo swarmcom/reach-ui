@@ -14,6 +14,8 @@
       <icon name="close" scale="2"></icon></button>
     <button v-if="this.$agent.is_wrapup()" @click="wrapup" style="margin-left:2px" class="btn call-action-button">
       <icon name="close" scale="2"></icon></button>
+    <button v-if="this.$agent.vm.state == 'barge'" @click="hangup" style="margin-left:2px" class="btn call-action-button">
+      <icon name="close" scale="2"></icon></button>
   </b-row>
   <b-row style="margin-top:5px;" >
     <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" :active="disposition_id" v-on:input="update_disposition"></disposition>
