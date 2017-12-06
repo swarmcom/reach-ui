@@ -82,14 +82,17 @@
             <div v-if="data.item.state == 'oncall'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
+              <icon name="handshake-o" scale="2"></icon>
             </div>
             <div v-if="data.item.state == 'conference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
+              <icon name="handshake-o" scale="2"></icon>
             </div>
             <div v-if="data.item.state == 'inconference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
+              <icon name="handshake-o" scale="2"></icon>
             </div>
             <div v-if="data.item.state == 'test'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
@@ -98,12 +101,41 @@
             <div v-if="data.item.state == 'hold'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
+              <icon name="handshake-o" scale="2"></icon>
             </div>
             <div v-if="data.item.state == 'wrapup'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
             </div>
-            <div class="agent-state-text">{{msToHms(Math.round(data.item.time).toString())}}</div>
+          </template>
+          <template slot="media" slot-scope="data">
+            <b-row>
+              <b-col cols="1" v-if="data.item.state=='oncall' || data.item.state=='ringing' || data.item.state=='hold'">
+                <icon name="mobile" scale="2" class='agent-state-color'></icon>
+              </b-col>
+              <b-col>
+                <div class="agent-state-text" style="margin-top: 10px;">{{msToHms(Math.round(data.item.time).toString())}}</div>
+              </b-col>
+            </b-row>
+            <b-row v-if="data.item.state=='oncall' || data.item.state=='ringing' || data.item.state=='hold'">
+              <b-col cols="12">
+                <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+              </b-col>
+              <b-col cols="12">
+                <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Name']}}</div>
+              </b-col>
+              <b-col cols="12">
+                <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
+              </b-col>
+              <b-col cols="12">
+                <div class="agent-state-text">{{data.item.call_vars['Caller-Destination-Number']}}</div>
+              </b-col>
+            </b-row>
+            <b-row v-if="data.item.state=='release'">
+              <b-col cols="12">
+                <div class="agent-state-text">{{data.item.release.name ? data.item.release.name : 'default'}}</div>
+              </b-col>
+            </b-row>
           </template>
         </b-table>
       </b-col>
@@ -131,7 +163,8 @@ export default {
         agentMyCpt: { label: 'My CPT', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         agentCalls: { label: 'Calls', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         timeComputed: { label: 'Time logged in', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
+        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        media: { label: 'Media', sortable: false, thClass:"table-header-text-center" }
       },
       clients: [],
       states: [
@@ -247,6 +280,7 @@ export default {
         switch(key.state) {
           case "release": {
             key._cellVariants.state = "primary"
+            key._cellVariants.media = "primary"
             break
           }
           case "ringing":
@@ -258,14 +292,19 @@ export default {
           case "test":
           {
             key._cellVariants.state = "success"
+            key._cellVariants.media = "success"
             break
           }
           case "available":
           case "wrapup": {
             key._cellVariants.state = "warning"
+            key._cellVariants.media = "warning"
             break
           }
-          default: key._cellVariants.state = "primary"
+          default: {
+            key._cellVariants.state = "primary"
+            key._cellVariants.media = "primary"
+          }
         }
         /*key.timeComputed = this.msToHms(Math.round(key.time).toString())*/
         key.agentName = key.agent.name
