@@ -9,7 +9,7 @@
   <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-text>
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
   <tag-group label="Skills Group" v-model="rec.tag_group_id"></tag-group>
-  <skills label="Skills" v-model="skills"></skills>
+  <form-tags placeholder="Skill..." label="Skills" v-model="skills"></form-tags>
 
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
@@ -40,11 +40,11 @@ export default {
     query: async function () {
       if (this.id) {
         this.rec = await this.$agent.p_mfa('ws_db_agent_group', 'get', [this.id])
-        this.skills = this.object2list(this.rec.skills)
+        this.skills = this.skills2list(this.rec.skills)
       }
     },
     onCommit: async function () {
-      this.rec.skills = this.list2object(this.skills)
+      this.rec.skills = this.list2skills(this.skills)
       try {
         if (this.id) {
           await this.$agent.p_mfa('ws_db_agent_group', 'update', [this.id, this.rec])

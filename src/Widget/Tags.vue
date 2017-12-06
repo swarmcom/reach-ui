@@ -1,7 +1,7 @@
 <template>
 <div class="form-inline">
-  <autocomplete v-model="tag" :query="query" :to_name="to_name" :new="true" :placeholder="placeholder"></autocomplete>
-  <button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="tag in selected" @click="remove(tag)">{{tag}}</button>
+  <autocomplete v-if="! disabled" v-model="tag" :query="query" :to_name="to_name" :new="true" :placeholder="placeholder"></autocomplete>
+  <button class="btn btn-sm btn-outline-primary" :disabled="disabled" style="margin-left: 10px" v-for="tag in selected" @click="remove(tag)">{{tag}}</button>
 </div>
 </template>
 
@@ -10,7 +10,7 @@ import Autocomplete from '@/Widget/Autocomplete'
 
 export default {
   components: { Autocomplete },
-  props: ["value", "placeholder"],
+  props: ["value", "placeholder", "disabled"],
   data () {
     return {
       tag: undefined,

@@ -18,6 +18,8 @@ import ReleaseGroups from '@/Widget/ReleaseGroups'
 import Roles from '@/Widget/Roles'
 import TagGroups from '@/Widget/TagGroups'
 import AdminHelp from '@/Widget/Help'
+import Tags from '@/Widget/Tags'
+import FormTags from '@/Widget/Form/Tags'
 
 Vue.component('form-text', FormText)
 Vue.component('form-bool', FormBool)
@@ -37,4 +39,5 @@ Vue.component('luas', Luas)
 Vue.component('roles', Roles)
 Vue.component('help', AdminHelp)
 Vue.component('tag-group', TagGroups)
-
+Vue.component('tags', Tags)
+Vue.component('form-tags', FormTags)

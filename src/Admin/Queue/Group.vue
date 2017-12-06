@@ -8,7 +8,7 @@
   <form-text label="Wrap-up enabled" v-model="rec.wrapup_enabled"></form-text>
   <form-text label="Wrap-up timer" v-model="rec.wrapup_timer"></form-text>
   <form-text label="Auto wrap-up" v-model="rec.auto_wrapup"></form-text>
-  <skills label="Skills" v-model="skills"></skills>
+  <form-tags label="Skills" placeholder="Skill..." v-model="skills"></form-tags>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
@@ -37,11 +37,11 @@ export default {
     query: async function () {
       if (this.id) {
         this.rec = await this.$agent.p_mfa('ws_db_queue_group', 'get', [this.id])
-        this.skills = this.object2list(this.rec.skills)
+        this.skills = this.skills2list(this.rec.skills)
       }
     },
     onCommit: async function () {
-      this.rec.skills = this.list2object(this.skills)
+      this.rec.skills = this.list2skills(this.skills)
       try {
         if (this.id) {
           await this.$agent.p_mfa('ws_db_queue_group', 'update', [this.id, this.rec])

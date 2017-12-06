@@ -28,11 +28,9 @@
 <script>
 import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
-import Tags from '@/Widget/Tags'
 
 export default {
   name: 'admin-tag-group',
-  components: { Tags },
   props: ['id'],
   mixins: [Common, Obj],
   data () {

@@ -16,7 +16,7 @@
   <form-select-bool label="Override Caller ID" v-model="rec.override_clid" :effective="eff.override_clid"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name" :effective="eff.caller_id_name"></form-text>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number" :effective="eff.caller_id_number"></form-text>
-  <skills label="Line-In Skills" v-model="skills" :effective="effective_skills"></skills>
+  <form-tags placeholder="Skill..." label="Line-In Skills" v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
@@ -49,12 +49,12 @@ export default {
       if (this.id) {
         this.rec = await this.$agent.p_mfa(this.module, 'get', [this.id])
         this.eff = await this.$agent.p_mfa(this.module, 'inherited', [this.id])
-        this.skills = this.object2list(this.rec.skills)
-        this.effective_skills = this.object2list(this.eff.skills)
+        this.skills = this.skills2list(this.rec.skills)
+        this.effective_skills = this.skills2list(this.eff.skills)
       }
     },
     onCommit: async function () {
-      this.rec.skills = this.list2object(this.skills)
+      this.rec.skills = this.list2skills(this.skills)
       try {
         if (this.id) {
           await this.$agent.p_mfa(this.module, 'update', [this.id, this.rec])
