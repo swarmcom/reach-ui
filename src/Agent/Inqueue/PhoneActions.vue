@@ -1,28 +1,25 @@
 <template>
 <div>
-  <b-row >
-      <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
-      <wrap-timer  v-if="this.wrap_visible" v-bind:inqueue="this.wrap" :state_time="state_time" class="state-time"></wrap-timer>
-      <button v-if="this.$agent.is_hold()" @click="unhold" class="btn call-action-button">
-        <icon name="pause" scale="2"></icon>
-      </button>
-      <button v-if="this.$agent.is_oncall()" @click="hold" class="btn call-action-button">
-        <icon name="pause" scale="2"></icon>
-      </button>
-      <button v-if="this.$agent.can_hangup()" @click="hangup" style="margin-left:2px" class="btn call-action-button">
-        <icon name="close" scale="2"></icon></button>
-      <button v-if="this.$agent.is_wrapup()" @click="wrapup" style="margin-left:2px" class="btn call-action-button">
-        <icon name="close" scale="2"></icon></button>
+  <b-row>
+    <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
+    <wrap-timer  v-if="this.wrap_visible" v-bind:inqueue="this.wrap" :state_time="state_time" class="state-time"></wrap-timer>
+    <button v-if="this.$agent.is_hold()" @click="unhold" class="btn call-action-button">
+      <icon name="pause" scale="2"></icon>
+    </button>
+    <button v-if="this.$agent.is_oncall()" @click="hold" class="btn call-action-button">
+      <icon name="pause" scale="2"></icon>
+    </button>
+
+    <button v-if="this.$agent.can_hangup()" @click="hangup" style="margin-left:2px" class="btn call-action-button">
+      <icon name="close" scale="2"></icon></button>
+    <button v-if="this.$agent.is_wrapup()" @click="wrapup" style="margin-left:2px" class="btn call-action-button">
+      <icon name="close" scale="2"></icon></button>
   </b-row>
   <b-row style="margin-top:5px;" >
-    <b-col cols="12">
     <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" :active="disposition_id" v-on:input="update_disposition"></disposition>
-    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="!this.inqueue.keep_record">Record</b-button>
-    </b-col>
   </b-row>
-  <b-row style="margin-top:5px;">
-    <b-col cols="12" >
-    </b-col>
+  <b-row style="margin-top:5px;" >
+    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="!this.inqueue.keep_record">Record</b-button>
   </b-row>
 </div>
 </template>
