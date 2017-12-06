@@ -136,7 +136,7 @@
               <b-col cols="12">
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
               </b-col>
-              <b-col cols="12">
+              <b-col cols="12" v-if="data.item.state=='barge'">
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Caller-ID-Number']}}</div>
               </b-col>
               <b-col cols="12">
