@@ -20,6 +20,12 @@
       <dd v-if="!this.$agent.is_ringing()" class="col-sm-4">Wait Time:</dt>
       <dd v-if="!this.$agent.is_ringing()" class="col-sm-8">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
       <dt class="col-sm-12 session-manager-text">Skills:</dt>
+      <dd class="col-sm-4">Requested skills:</dt>
+      <dd class="col-sm-8">
+        <b-row>
+          <b-col cols="12" v-for="(v, k, index) in this.inqueue.queue.skills" key="index">{{k}}</b-col>
+        </b-row>
+      </dd>
       <dd class="col-sm-4">Matched Skills:</dt>
       <dd class="col-sm-8">
         <b-row>
