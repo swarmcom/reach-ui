@@ -24,7 +24,7 @@
     <b-dropdown-item to="/admin/tags">Skills</b-dropdown-item>
     <b-dropdown-item to="/admin/roles">Roles</b-dropdown-item>
     <b-dropdown-item to="/admin/releases">Release Types</b-dropdown-item>
-    <b-dropdown-item to="/admin/dispositions">Dispositions</b-dropdown-item>
+    <b-dropdown-item to="/admin/dispositions">Disposition Groups</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Sounds">
