@@ -32,16 +32,24 @@
           :sort-by="sortBy"
           :sort-desc="sortDesc"
           @sort-changed="onSortingChanged">
+          <template slot="actions" slot-scope="data">
+            <b-row class="text-center">
+              <b-col>
+                <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
+                  <b-dropdown-item v-if="data.item.state == 'release'" @click="available(data.item)">Available</b-dropdown-item>
+                  <b-dropdown-item v-else @click="release(data.item)">Release</b-dropdown-item>
+                  <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state == 'oncall' && $agent.vm.state != 'oncall' && $agent.vm.state != 'barge'" @click="takeover(data.item)">Take Over</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state == 'oncall' && $agent.vm.state != 'oncall' && $agent.vm.state != 'barge'" @click="spy(data.item)">Monitor</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state == 'barge' && data.item.agent.id == $agent.vm.agent.id"  @click="cancelSpy()">Stop Monitor</b-dropdown-item>
+                  <b-dropdown-header v-if="data.item.state == 'barge' && data.item.agent.id == $agent.vm.agent.id">Monitor actions</b-dropdown-header>
+                  <b-dropdown-item v-if="data.item.state == 'barge' && data.item.agent.id == $agent.vm.agent.id" v-for="mode in modes" :key="mode.value" @click="setMode(mode.value)">{{ mode.name }}</b-dropdown-item>
+                </b-dropdown>
+              </b-col>
+            </b-row>
+          </template>
           <template slot="agentDetail" slot-scope="data">
             <b-row>
-              <b-col cols="1">
-                <button type="button" class="btn btn-sm pointer" v-if="data.item._showDetails" @click="data.toggleDetails">
-                  <icon name="minus" scale="0.5"></icon>
-                </button>
-                <button type="button" class="btn btn-sm pointer" v-if="!data.item._showDetails" @click="data.toggleDetails">
-                    <icon name="plus" scale="0.5"></icon>
-                </button>
-              </b-col>
               <b-col>
                 <div class="agent-state-text"><b>{{data.item.agentName+' '}}</b> {{data.item.agentLogin}}</div>
                 <div class="agent-state-text"><b>Profile: </b>{{data.item.agentGroup}}</div>
@@ -49,24 +57,6 @@
                 <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
                 <div class="agent-state-text"><b>Customer: </b>{{data.item.agentClient}}</div>
               </b-col>
-            </b-row>
-          </template>
-          <template slot="row-details" slot-scope="data">
-            <b-row class="text-center">
-            <b-col>
-              <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                <b-dropdown-item v-if="data.item.state == 'release'" @click="available(data.item)">Available</b-dropdown-item>
-                <b-dropdown-item v-else @click="release(data.item)">Release</b-dropdown-item>
-                <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
-              </b-dropdown>
-              <!--<b-dropdown v-if="data.item.state == 'barge'" size="sm" text="Mode" variant="outline-secondary">
-                <b-dropdown-item v-for="mode in modes" :key="mode" @click="setMode(mode)">{{ mode }}</b-dropdown-item>
-              </b-dropdown>
-              <b-button v-if="data.item.state == 'barge'" size="sm" variant="outline-secondary" class="pointer" @click="cancelSpy()">
-                Cancel Spy
-              </b-button>-->
-            </b-col>
-
             </b-row>
           </template>
           <template slot="state" slot-scope="data">
@@ -129,7 +119,7 @@
                 <div class="agent-state-text" style="margin-top: 10px;">{{msToHms(Math.round(data.item.time).toString())}}</div>
               </b-col>
             </b-row>
-            <b-row v-if="data.item.state=='oncall' || data.item.state=='ringing' || data.item.state=='hold' || data.item.state=='barge'">
+            <b-row v-if="data.item.call_vars != undefined">
               <b-col cols="12">
                 <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
               </b-col>
@@ -170,6 +160,7 @@ export default {
   data () {
     return {
       fields: {
+        actions: { label: 'Actions', thClass:"table-header-text-center" },
         agentDetail: { label: 'Agent Details', thClass:"table-header-text-center" },
         agentOccup: { label: 'Occup', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         agentMyCpt: { label: 'My CPT', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
@@ -200,7 +191,12 @@ export default {
         { value:{ last: '1w' }, name:"This Week" },
         { value:{ last: '1M' }, name:"This Month" }
       ],
-      modes: ['spy', 'barge', 'agent', 'caller'],
+      modes: [
+        { value: 'spy', name: 'Spy' },
+        { value: 'barge', name: 'Barge' },
+        { value: 'agent', name: 'Whisper Agent' },
+        { value: 'caller', name: 'Whisper Caller' }
+      ],
       stats: [],
       tags: [],
       period: { value: { last: '15m' }, name: "Last 15 minutes"},
@@ -248,6 +244,12 @@ export default {
     },
     stop (agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
+    },
+    takeover ({inqueue}) {
+      this.$agent.mfa('ws_supervisor', 'takeover', [inqueue.record, inqueue.uuid])
+    },
+    spy ({inqueue}) {
+      this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.uuid])
     },
     cancelSpy () {
       this.$agent.mfa('ws_supervisor', 'cancel', [])
