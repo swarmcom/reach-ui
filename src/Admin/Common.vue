@@ -12,6 +12,14 @@ export default {
     defined (V) {
       return V == "undefined" ? '' : V
     },
+    skills2list (Obj) {
+      return Object.keys(Obj).map( key => key )
+    },
+    list2skills (List) {
+      let Re = {}
+      List.forEach(Key => Re[Key] = true)
+      return Re
+    },
     msToHms: function (d) {
       let duration = Number(d)
 
