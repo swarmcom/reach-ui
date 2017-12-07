@@ -79,17 +79,26 @@
             <div v-if="data.item.state == 'oncall'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="data.item.inqueue.line_in.client.avatar != 'undefined'" :src="$agent.get_rr_uri()+'/avatar/'+data.item.inqueue.line_in.client.avatar" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
             <div v-if="data.item.state == 'conference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="data.item.inqueue.line_in.client.avatar != 'undefined'" :src="$agent.get_rr_uri()+'/avatar/'+data.item.inqueue.line_in.client.avatar" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
             <div v-if="data.item.state == 'inconference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="data.item.inqueue.line_in.client.avatar != 'undefined'" :src="$agent.get_rr_uri()+'/avatar/'+data.item.inqueue.line_in.client.avatar" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
             <div v-if="data.item.state == 'test'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
@@ -98,7 +107,10 @@
             <div v-if="data.item.state == 'hold'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="data.item.inqueue.line_in.client.avatar != 'undefined'" :src="$agent.get_rr_uri()+'/avatar/'+data.item.inqueue.line_in.client.avatar" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
             <div v-if="data.item.state == 'wrapup'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
@@ -107,7 +119,10 @@
             <div v-if="data.item.state == 'barge'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="data.item.inqueue.line_in.client.avatar != 'undefined'" :src="$agent.get_rr_uri()+'/avatar/'+data.item.inqueue.line_in.client.avatar" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
           </template>
           <template slot="media" slot-scope="data">
