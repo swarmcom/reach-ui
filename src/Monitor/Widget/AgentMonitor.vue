@@ -107,7 +107,7 @@
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
               <b-col>
-                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.avatar)" style="width:32px;"/>
+                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
                 <icon v-else name="handshake-o" scale="2"></icon>
               </b-col>
             </div>
@@ -119,7 +119,7 @@
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
               <b-col>
-                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.avatar)" style="width:32px;"/>
+                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
                 <icon v-else name="handshake-o" scale="2"></icon>
               </b-col>
             </div>
