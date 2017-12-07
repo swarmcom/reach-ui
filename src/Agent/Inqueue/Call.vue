@@ -10,43 +10,53 @@
 <b-row>
   <b-col cols="2">
     <div class="call-phone-center"><icon style="color:#838383" name="mobile" scale="4"></icon></div>
-    <div class="call-hand-center"><icon style="color:#838383" name="handshake-o" scale="4"></icon></div>
   </b-col>
-  <b-col cols="10">
+  <b-col cols="5">
     <dl class="row agent-state-text">
       <dt class="col-sm-12 session-manager-text">Incoming Call:</dt>
-      <dd class="col-sm-4">Queue:</dt>
-      <dd class="col-sm-8">{{ this.inqueue.queue.name }}</dd>
-      <dd v-if="!this.$agent.is_ringing()" class="col-sm-4">Wait Time:</dt>
-      <dd v-if="!this.$agent.is_ringing()" class="col-sm-8">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
-      <dt class="col-sm-12 session-manager-text">Skills:</dt>
-      <dd class="col-sm-4">Requested skills:</dt>
-      <dd class="col-sm-8">
-        <b-row>
-          <b-col cols="12" v-for="(v, k, index) in this.inqueue.queue.skills" key="index">{{k}}</b-col>
-        </b-row>
-      </dd>
-      <dd class="col-sm-4">Matched Skills:</dt>
-      <dd class="col-sm-8">
-        <b-row>
-          <b-col cols="12" v-for="(v, k, index) in this.inqueue.skills" key="index">{{k}}</b-col>
-        </b-row>
-      </dd>
-      <dt class="col-sm-12 session-manager-text">Customer Service:</dt>
-      <dd class="col-sm-4">From:</dt>
-      <dd class="col-sm-8">
-        "{{ this.call_info['Caller-Caller-ID-Name'] }}" &lt;{{ this.call_info['Caller-Caller-ID-Number'] }}&gt;
-      </dd>
-      <dd class="col-sm-4">To:</dt>
-      <dd class="col-sm-8">{{ this.call_info['Caller-Destination-Number'] }}</dd>
-      <dd class="col-sm-4">Client:</dt>
-      <dd class="col-sm-8">{{ this.inqueue.line_in.client.name }}</dd>
+      <dd class="col-sm-5">Queue:</dt>
+      <dd class="col-sm-7">{{ this.inqueue.queue.name }}</dd>
+      <dd v-if="!this.$agent.is_ringing()" class="col-sm-5">Wait Time:</dt>
+      <dd v-if="!this.$agent.is_ringing()" class="col-sm-7">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
+
       <!--<dt class="col-sm-3">State:</dt>
       <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
       <dt class="col-sm-3">Weight:</dt>
       <dd class="col-sm-9">{{ this.inqueue.effective_time.time }}</dd>-->
-      <dd class="col-sm-4">Transferers:</dt>
-      <dd class="col-sm-8">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
+
+    </dl>
+  </b-col>
+  <b-col cols="5">
+    <dl class="row agent-state-text">
+      <dt class="col-sm-12 session-manager-text">Skills:</dt>
+      <dd class="col-sm-6">Requested skills:</dt>
+      <dd class="col-sm-6">
+        <b-row>
+          <b-col cols="12" v-for="(v, k, index) in this.inqueue.queue.skills" key="index">{{k}}</b-col>
+        </b-row>
+      </dd>
+      <dd class="col-sm-6">Matched Skills:</dt>
+      <dd class="col-sm-6">
+        <b-row>
+          <b-col cols="12" v-for="(v, k, index) in this.inqueue.skills" key="index">{{k}}</b-col>
+        </b-row>
+      </dd>
+      <dd class="col-sm-6">Transferers:</dt>
+      <dd class="col-sm-6">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
+    </dl>
+  </b-col>
+</b-row>
+<b-row>
+  <b-col cols="2">
+    <div class="call-hand-center">
+      <b-img v-if="this.inqueue.line_in.client.avatar != 'undefined'" :src="$agent.get_rr_uri()+'/avatar/'+this.inqueue.line_in.client.avatar" style="width:64px;"/>
+      <icon v-else style="color:#838383" name="handshake-o" scale="4"></icon>
+    </div>
+  </b-col>
+  <b-col cols="5">
+    <dl class="row agent-state-text">
+      <dt class="col-sm-12 session-manager-text">{{ this.inqueue.line_in.client.name }}</dt>
+      <dd class="col-sm-12">{{ this.call_info['Caller-Caller-ID-Name'] + ' ' + this.call_info['Caller-Caller-ID-Number'] }} </dd>
     </dl>
   </b-col>
 </b-row>
@@ -89,7 +99,7 @@ export default {
       let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
       this.handleInqueueLua(lua_re)
       let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
-      this.skills = this.object2list(skills)
+      this.skills = this.skills2list(skills)
       this.visible = true
       this.show_notification()
     },
