@@ -19,6 +19,9 @@ import Roles from '@/Widget/Roles'
 import TagGroups from '@/Widget/TagGroups'
 import AdminHelp from '@/Widget/Help'
 import ToggleBar from '@/Widget/ToggleBar.vue'
+import Tags from '@/Widget/Tags'
+import FormTags from '@/Widget/Form/Tags'
+import FormFile from '@/Widget/Form/File'
 
 Vue.component('form-text', FormText)
 Vue.component('form-bool', FormBool)
@@ -39,3 +42,6 @@ Vue.component('roles', Roles)
 Vue.component('help', AdminHelp)
 Vue.component('toggle-bar', ToggleBar)
 Vue.component('tag-group', TagGroups)
+Vue.component('tags', Tags)
+Vue.component('form-tags', FormTags)
+Vue.component('form-file', FormFile)

@@ -17,7 +17,9 @@
   <form-text label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
   <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
   <tag-group label="Skills Group" v-model="rec.tag_group_id" :effective="eff.tag_group_id"></tag-group>
-  <skills label="Agent Skills" v-model="skills" :effective="effective_skills"></skills>
+  <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
+  <form-tags label="Agent Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
+
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
@@ -50,12 +52,12 @@ export default {
       if (this.id) {
         this.rec = await this.$agent.p_mfa('ws_db_agent', 'get', [this.id])
         this.eff = await this.$agent.p_mfa('ws_db_agent', 'effective', [this.id])
-        this.skills = this.object2list(this.rec.skills)
-        this.effective_skills = this.object2list(this.eff.skills)
+        this.skills = this.skills2list(this.rec.skills)
+        this.effective_skills = this.skills2list(this.eff.skills)
       }
     },
     onCommit: async function () {
-      this.rec.skills = this.list2object(this.skills)
+      this.rec.skills = this.list2skills(this.skills)
       try {
         if (this.id) {
           await this.$agent.p_mfa('ws_db_agent', 'update', [this.id, this.rec])

@@ -12,12 +12,14 @@
   <form-select-bool label="Override Caller ID on Line Out" v-model="rec.override_clid_line_out"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name"></form-text>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text> 
-  <skills label="Client Skills" v-model="skills"></skills>
+  <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
+  <form-tags label="Client Skills" placeholder="Skill..." v-model="skills"></form-tags>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
     <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
   </div>
+
   <help></help>
 </div>
 </template>
@@ -42,11 +44,11 @@ export default {
     query: async function () {
       if (this.id) {
         this.rec = await this.$agent.p_mfa(this.module, 'get', [this.id])
-        this.skills = this.object2list(this.rec.skills)
+        this.skills = this.skills2list(this.rec.skills)
       }
     },
     onCommit: async function () {
-      this.rec.skills = this.list2object(this.skills)
+      this.rec.skills = this.list2skills(this.skills)
       try {
         if (this.id) {
           await this.$agent.p_mfa(this.module, 'update', [this.id, this.rec])
