@@ -71,6 +71,10 @@
             <div v-if="data.item.state == 'ringing'" class='agent-state-color'>
               <icon  name="wifi" scale="2" style="transform: rotate(270deg);"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
+              <b-col>
+                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
             <div v-if="data.item.state == 'outgoing'" class='agent-state-color'>
               <icon  name="wifi" scale="2" style="transform: rotate(90deg);"></icon>
@@ -79,12 +83,16 @@
             <div v-if="data.item.state == 'oncall'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
             <div v-if="data.item.state == 'conference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+              <icon v-else name="handshake-o" scale="2"></icon>
             </div>
             <div v-if="data.item.state == 'inconference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
@@ -98,7 +106,10 @@
             <div v-if="data.item.state == 'hold'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
             <div v-if="data.item.state == 'wrapup'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
@@ -107,7 +118,10 @@
             <div v-if="data.item.state == 'barge'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
               <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-col>
+                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
             </div>
           </template>
           <template slot="media" slot-scope="data">
@@ -133,7 +147,7 @@
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Destination-Number']}}</div>
               </b-col>
               <b-col cols="12">
-                <div v-if="data.item.inqueue.line_in != undefined" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
+                <div v-if="existAvatar(data.item.inqueue)" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
               </b-col>
             </b-row>
             <b-row v-if="data.item.state=='release'">
@@ -263,6 +277,14 @@ export default {
     set_period (value) {
       this.period.value = value
       this.updateStats()
+    },
+    existAvatar(data){
+      if (data.line_in != undefined &&
+          data.line_in.client != undefined &&
+          data.line_in.client.avatar != 'undefined')
+        return true
+      else
+        return false
     },
     percent (value) {
       if (value > 0) {

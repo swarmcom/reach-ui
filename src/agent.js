@@ -99,6 +99,10 @@ export default class Agent extends WsProto {
     return cfg('reach_rr', guess_rr())
   }
 
+  avatar_uri (avatar) {
+    return this.get_rr_uri()+'/avatar/'+avatar
+  }
+
   onDisconnect () {
     super.onDisconnect()
     this.handleAuth()

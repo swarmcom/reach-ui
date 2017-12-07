@@ -4,7 +4,8 @@
   <b-collapse v-model="showCollapse" id="collapseAgentInfo" class="mt-2">
     <b-row>
       <b-col cols="4">
-        <b-img src='src/assets/default_agent.png' style="width:100%" alt="avatar image" />
+        <b-img v-if="agent.avatar != 'undefined'" :src="this.$agent.avatar_uri(agent.avatar)" style="width:64px;"/>
+        <b-img v-else src='src/assets/default_agent.png' style="width:100%" alt="avatar image" />
       </b-col>
       <b-col cols="8" class="agent-state-text">
         <b-row>{{agent.name}}</b-row>
