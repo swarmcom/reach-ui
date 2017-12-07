@@ -18,12 +18,6 @@
       <dd class="col-sm-7">{{ this.inqueue.queue.name }}</dd>
       <dd v-if="!this.$agent.is_ringing()" class="col-sm-5">Wait Time:</dt>
       <dd v-if="!this.$agent.is_ringing()" class="col-sm-7">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
-
-      <!--<dt class="col-sm-3">State:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.state }}</dd>
-      <dt class="col-sm-3">Weight:</dt>
-      <dd class="col-sm-9">{{ this.inqueue.effective_time.time }}</dd>-->
-
     </dl>
   </b-col>
   <b-col cols="5">
