@@ -15,7 +15,8 @@
   <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails" :effective="eff.max_ring_fails"></form-text>
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails" :effective="eff.reset_rings_fails"></form-select-bool>
   <form-text label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
-  <skills label="Agent Skills" v-model="skills" :effective="effective_skills"></skills>
+  <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
+  <form-tags label="Agent Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary  float-right">Cancel</button>
@@ -45,11 +46,11 @@ export default {
     query: async function () {
       this.rec = await this.$agent.p_mfa('ws_agent', 'get', [])
       this.eff = await this.$agent.p_mfa('ws_agent', 'effective', [])
-      this.skills = this.object2list(this.rec.skills)
-      this.effective_skills = this.object2list(this.eff.skills)
+      this.skills = this.skills2list(this.rec.skills)
+      this.effective_skills = this.skills2list(this.eff.skills)
     },
     onCommit: async function () {
-      this.rec.skills = this.list2object(this.skills)
+      this.rec.skills = this.list2skills(this.skills)
       try {
         await this.$agent.p_mfa('ws_agent', 'update', [this.rec])
         this.$router.push('/')
