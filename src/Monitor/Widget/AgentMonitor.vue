@@ -55,7 +55,6 @@
                 <div class="agent-state-text"><b>Profile: </b>{{data.item.agentGroup}}</div>
                 <div class="agent-state-text"><b>Phone: </b>{{data.item.agentPhone}}</div>
                 <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
-                <div class="agent-state-text"><b>Customer: </b>{{data.item.agentClient}}</div>
               </b-col>
             </b-row>
           </template>
@@ -376,9 +375,9 @@ export default {
             key.agentMyCpt = '0s'
         }
 
-        if(key.agent.line.client != undefined) {
-          key.agentClient = key.agent.line.client.name
-          if(this.selectedCustomer != key.agent.line.client.name && this.selectedCustomer != 'Any Customers')
+        if(key.inqueue.line_in != undefined && key.inqueue.line_in.client != undefined) {
+          key.agentClient = key.inqueue.line_in.client.name
+          if(this.selectedCustomer != key.inqueue.line_in.client.name && this.selectedCustomer != 'Any Customers')
             return
         }
         else if(this.selectedCustomer != 'Any Customers')
