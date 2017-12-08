@@ -2,75 +2,110 @@
 <div v-if="this.$agent.can_transfer()">
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseTransferConference" class="mt-2">
-    <div class="row">
-      <div class="col-12">
-        <div v-if="this.$agent.can_transfer()" class="row">
-          <div class="col">
-            <h6>Transfer to:</h6>
-            <div class="form-inline">
-              <transfer-agent></transfer-agent>&nbsp;
-              <transfer-queue></transfer-queue>&nbsp;
-              <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12" v-if="this.$agent.can_conference()">
-          <h6>Conference with:</h6>
-          <div class="form-inline">
-            <conference-agent></conference-agent>&nbsp;
-            <conference-queue></conference-queue>&nbsp;
-            <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
-          </div>
-        </div>
-    </div>
+    <b-row>
+      <b-col cols="3">
+        <b-form-select size="sm" v-model="selected">
+        <option :value="null">Transfer / Conference</option>
+        <option :value="'queue'">Queue...</option>
+        <option :value="'agent'">Agent...</option>
+        <option v-if="this.$agent.can_call() :value="'number'">Number...</option>
+        </b-form-select>
+        <b-form-input class="customInput" v-if="selected=='agent'" size="sm" v-model="filter" placeholder="Search..." />
+      </b-col>
+      <b-col cols="3" v-if="(selected=='queue' || selected=='number')">
+        <b-form-select v-if="selected=='queue'" size="sm" v-model="selectedQueue">
+          <option :value="null">Select Queue...</option>
+          <option v-for="queue in queues" :key="queue.id" :value="queue.id">{{queue.name}}</option>
+        </b-form-select>
+        <b-form-input class="customInput" v-if="selected=='number'" size="sm" v-model="selectedNumber" type="text">
+        </b-form-input>
+      </b-col>
+      <b-col cols="9" v-if="selected=='agent'">
+        <b-table small bordered
+          @row-clicked="onSelectAgent"
+          :items="computedAgents"
+          :fields="fieldsAgents"
+          :filter="filter">
+        </b-table>
+        <div>Selected Agent: <strong>{{ selectedAgent }}</strong></div>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <button size="sm" class="btn call-action-button" @click="conference()" style="margin-left:2px; float:right">Conference</button>
+        <button class="btn call-action-button" style=" float:right">Transfer</button>
+      </b-col>
+    </b-row>
   </b-collapse>
 </div>
 </template>
 
 <script>
 import Common from '../../Admin/Common'
-import TransferAgent from './TransferAgent'
-import TransferQueue from './TransferQueue'
-import TransferUri from './TransferUri'
-import ConferenceAgent from './ConferenceAgent'
-import ConferenceQueue from './ConferenceQueue'
-import ConferenceUri from './ConferenceUri'
 export default {
   widgetName: 'Transfer / Conference',
   storageName: 'smtransferConference',
   mixins: [Common],
   data () {
     return {
-      showCollapse: true
+      showCollapse: true,
+      selected: null,
+      fieldsAgents: {
+        id: { label: 'Id', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        name: { label: 'Name', thClass:"table-header-text-center", tdClass:"table-body-text-center" }
+      },
+      selectedQueue: null,
+      selectedAgent: null,
+      selectedNumber: null,
+      filter: null,
+      queues: [],
     }
   },
   methods: {
-    transfer_to_agent (Agent) { this.$agent.transfer_to_agent(Agent) },
-    transfer_to_queue (Queue) { this.$agent.transfer_to_queue(Queue) },
-    transfer_to_uri (Uri) { this.$agent.transfer_to_uri(Uri) },
-    conference_to_agent (Agent) { this.$agent.conference_to_agent(Agent) },
-    conference_to_queue (Queue) { this.$agent.conference_to_queue(Queue) },
-    conference_to_uri (Uri) { this.$agent.conference_to_uri(Uri) },
+    query: async function () {
+      this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
+    },
+    conference () {
+      if (this.selected === 'queue' && this.selectedQueue != 'null') {
+        this.$agent.conference_to_queue(this.selectedQueue)
+      }
+      else if (this.selected === 'agent' && this.selectedAgent != 'null') {
+        this.$agent.conference_to_agent(this.selectedAgent)
+      }
+      else if (this.selected === 'number' && this.selectedNumber != 'null') {
+        this.$agent.conference_to_agent(this.selectedNumber)
+      }
+    },
+    transfer () {
+      if (this.selected === 'queue' && this.selectedQueue != 'null') {
+        this.$agent.transfer_to_queue(this.selectedQueue)
+      }
+      else if (this.selected === 'agent' && this.selectedAgent != 'null') {
+        this.$agent.transfer_to_agent(this.selectedAgent)
+      }
+      else if (this.selected === 'number' && this.selectedNumber != 'null') {
+        this.$agent.transfer_to_agent(this.selectedNumber)
+      }
+    },
+    onSelectAgent (data) {
+      this.selectedAgent = data.id
+    },
+  },
+  computed: {
+    computedAgents () {
+      let agents = this.$agent.vm.transfer_agents.slice(0)
+      agents.forEach( (key) => {
+        key._rowVariant = 'primary'
+      })
+      return agents
+    }
   },
   created () {
     this.a = this.$agent.getData()
-    /*this.updater = setInterval(this.onTimer, 1000)*/
+    this.query()
     if (this.a.storage_data.smtransferConferenceCollapsed != undefined)
       this.showCollapse = this.a.storage_data.smtransferConferenceCollapsed
-  },
-  /*beforeDestroy () {
-    clearInterval(this.updater)
-  },*/
-  components: {
-    'transfer-agent': TransferAgent,
-    'transfer-queue': TransferQueue,
-    'transfer-uri': TransferUri,
-    'conference-agent': ConferenceAgent,
-    'conference-queue': ConferenceQueue,
-    'conference-uri': ConferenceUri,
-  },
+  }
 }
 </script>
