@@ -28,15 +28,17 @@ export default {
   },
   methods: {
     handleState ({info}) {
-      let i = this.inqueues.findIndex(E => E.uuid === info.uuid)
-      if (i >= 0) {
-        if (info.state === 'terminate') {
-          this.inqueues.splice(i, 1)
+      if( info != undefined) {
+        let i = this.inqueues.findIndex(E => E.uuid === info.uuid)
+        if (i >= 0) {
+          if (info.state === 'terminate') {
+            this.inqueues.splice(i, 1)
+          } else {
+            this.inqueues.splice(i, 1, this.enrich_queue(info))
+          }
         } else {
-          this.inqueues.splice(i, 1, this.enrich_queue(info))
+          this.inqueues.push(this.enrich_queue(info))
         }
-      } else {
-        this.inqueues.push(this.enrich_queue(info))
       }
     },
     enrich_queue (info) {

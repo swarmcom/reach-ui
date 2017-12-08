@@ -23,25 +23,27 @@ export default {
     }
   },
   methods: {
-    handleState ({ tag, info }) {
-      if (tag === 'ws_login') {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1, info)
-        } else {
-          this.agents.push(info)
+    handleState ( {tag, info} ) {
+      if(info != 'undefined' ) {
+        if (tag === 'ws_login') {
+          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+          if (i >= 0) {
+            this.agents.splice(i, 1, info)
+          } else {
+            this.agents.push(info)
+          }
         }
-      }
-      else if (info.state === 'terminate') {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1)
+        else if (info.state === 'terminate') {
+          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+          if (i >= 0) {
+            this.agents.splice(i, 1)
+          }
         }
-      }
-      else {
-        let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-        if (i >= 0) {
-          this.agents.splice(i, 1, info)
+        else {
+          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+          if (i >= 0) {
+            this.agents.splice(i, 1, info)
+          }
         }
       }
     },
