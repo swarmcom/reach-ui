@@ -5,7 +5,7 @@
     <b-row>
       <b-col cols="2">
         <b-row class="toggle-bar-custom">
-          <div class="titlenocollapse">Profile Name</div>
+          <div class="titlenocollapse">Groups</div>
         </b-row>
         <b-table style="margin-top:10px" small responsive hover
           :items="groups"

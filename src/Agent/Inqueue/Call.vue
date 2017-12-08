@@ -54,6 +54,11 @@
     </dl>
   </b-col>
 </b-row>
+<b-row style="margin-top:5px;" >
+  <b-col>
+    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="!this.inqueue.keep_record">Record</b-button>
+  </b-col>
+</b-row>
 <!--<div v-if="!this.$agent.is_conference()" class="row" style="margin-top: 10px">
   <div class="col-12">
     <div class="row"><div class="col session-manager-text"><b>Skills Editor:</b> </div></div>
