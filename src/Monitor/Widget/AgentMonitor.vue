@@ -61,66 +61,161 @@
           <template slot="state" slot-scope="data">
             <div v-if="data.item.state == 'available'" class='agent-state-color'>
               <icon  name="circle-o" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'release'" class='agent-state-color'>
               <icon name="stop" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'ringing'" class='agent-state-color'>
               <icon  name="wifi" scale="2" style="transform: rotate(270deg);"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
-              <b-col>
-                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
-                <icon v-else name="handshake-o" scale="2"></icon>
-              </b-col>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                  <icon v-else name="handshake-o" scale="2"></icon>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'outgoing'" class='agent-state-color'>
               <icon  name="wifi" scale="2" style="transform: rotate(90deg);"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'oncall'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
-              <b-col>
-                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
-                <icon v-else name="handshake-o" scale="2"></icon>
-              </b-col>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                  <icon v-else name="handshake-o" scale="2"></icon>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'conference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
-              <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
-              <icon v-else name="handshake-o" scale="2"></icon>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                  <icon v-else name="handshake-o" scale="2"></icon>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'inconference'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
-              <icon name="handshake-o" scale="2"></icon>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <icon name="handshake-o" scale="2"></icon>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'test'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'hold'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
-              <b-col>
-                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
-                <icon v-else name="handshake-o" scale="2"></icon>
-              </b-col>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                  <icon v-else name="handshake-o" scale="2"></icon>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'wrapup'" class='agent-state-color'>
               <icon  name="pause" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
             </div>
             <div v-if="data.item.state == 'barge'" class='agent-state-color'>
               <icon  name="phone" scale="2"></icon>
-              <div class="agent-state-text">{{data.item.state}}</div>
-              <b-col>
-                <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
-                <icon v-else name="handshake-o" scale="2"></icon>
-              </b-col>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">{{data.item.state}}</div>
+                </b-col>
+              </b-row>
+              <b-row v-if="data.item.call_vars != undefined">
+                <b-col cols="12">
+                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"/>
+                  <icon v-else name="handshake-o" scale="2"></icon>
+                </b-col>
+              </b-row>
             </div>
           </template>
           <template slot="media" slot-scope="data">
@@ -132,21 +227,24 @@
                 <div class="agent-state-text" style="margin-top: 10px;">{{msToHms(Math.round(data.item.time).toString())}}</div>
               </b-col>
             </b-row>
-            <b-row v-if="data.item.call_vars != undefined">
+            <b-row>
               <b-col cols="12">
-                <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                <div v-if="existAvatar(data.item.inqueue)" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
               </b-col>
+            </b-row>
+            <b-row v-if="data.item.call_vars != undefined">
               <b-col cols="12">
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
               </b-col>
+            </b-row>
+            <b-row v-if="data.item.call_vars != undefined">
               <b-col cols="12" v-if="data.item.state=='barge'">
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Caller-ID-Number']}}</div>
               </b-col>
+            </b-row>
+            <b-row v-if="data.item.call_vars != undefined">
               <b-col cols="12">
                 <div class="agent-state-text">{{data.item.call_vars['Caller-Destination-Number']}}</div>
-              </b-col>
-              <b-col cols="12">
-                <div v-if="existAvatar(data.item.inqueue)" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
               </b-col>
             </b-row>
             <b-row v-if="data.item.state=='release'">
