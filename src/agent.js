@@ -203,10 +203,13 @@ export default class Agent extends WsProto {
 
   handleAgents ({info}) {
     if (info.state === 'available') {
-      this.vm.transfer_agents.push(info.agent)
+      let i = this.vm.transfer_agents.findIndex(E => E.id === info.agent.id)
+      if (i < 0) {
+        this.vm.transfer_agents.push(info.agent)
+      }
     }
     else {
-      let i = this.vm.transfer_agents.findIndex(E => E.login === info.agent.login)
+      let i = this.vm.transfer_agents.findIndex(E => E.id === info.agent.id)
       if (i >= 0) {
         this.vm.transfer_agents.splice(i, 1)
       }
