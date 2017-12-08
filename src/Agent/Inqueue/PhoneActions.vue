@@ -20,9 +20,6 @@
   <b-row style="margin-top:5px;" >
     <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" :active="disposition_id" v-on:input="update_disposition"></disposition>
   </b-row>
-  <b-row style="margin-top:5px;" >
-    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="!this.inqueue.keep_record">Record</b-button>
-  </b-row>
 </div>
 </template>
 
@@ -40,16 +37,12 @@ export default {
     return {
       updater: undefined,
       state_time: 0,
-      inqueue: undefined,
       wrap_visible: false,
       wrap: undefined,
       disposition_id: undefined
     }
   },
   methods: {
-    query: async function () {
-      this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
-    },
     queryWrap: async function () {
       this.wrap = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
@@ -58,10 +51,6 @@ export default {
     },
     update_disposition (id) {
       this.disposition_id = id
-    },
-    record: async function () {
-      await this.$agent.p_mfa('ws_agent', 'record')
-      this.inqueue.keep_record = false
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -73,8 +62,6 @@ export default {
         this.state_time = S.state.time
       else
         this.state_time = 0
-      if (S.state.inqueue.record == 'inqueue_call')
-        this.query()
 
       if (S.state.state == 'oncall')
         this.queryWrap()
