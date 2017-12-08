@@ -1,7 +1,7 @@
 <template>
 <b-row style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <b-col v-if="defined()">
+  <b-col cols="2" v-if="defined()">
     <b-img :src="filePath()" fluid/>
   </b-col>
   <b-col>
