@@ -419,8 +419,7 @@ export default {
       let agents = this.agents.slice(0)
       let compAgents = []
       agents.forEach( (key) => {
-        //key._cellVariants = { agentDetail: 'secondary', agentOccup: 'secondary', agentMyCpt: 'secondary', agentCalls: 'secondary', timeComputed: 'secondary' }
-        key._cellVariants = {}
+        key._cellVariants = { actions: 'success', agentDetail: 'primary', agentOccup: 'primary', agentMyCpt: 'primary', agentCalls: 'primary', timeComputed: 'primary' }
         switch(key.state) {
           case "release": {
             key._cellVariants.state = "primary"
