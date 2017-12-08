@@ -18,7 +18,7 @@
       <icon name="close" scale="2"></icon></button>
   </b-row>
   <b-row style="margin-top:5px;" >
-    <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" :active="disposition_id" v-on:input="update_disposition"></disposition>
+    <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid"></disposition>
   </b-row>
 </div>
 </template>
@@ -26,7 +26,7 @@
 <script>
 import Common from '@/Admin/Common'
 import Wrap from '@/Agent/Widget/Wrap'
-import Disposition from '@/Agent/Widget/Disposition'
+import DispositionSelect from '@/Agent/Widget/DispositionSelect'
 
 export default {
   mixins: [Common],
@@ -38,8 +38,7 @@ export default {
       updater: undefined,
       state_time: 0,
       wrap_visible: false,
-      wrap: undefined,
-      disposition_id: undefined
+      wrap: undefined
     }
   },
   methods: {
@@ -48,9 +47,6 @@ export default {
     },
     onTimer() {
       this.state_time += 1000
-    },
-    update_disposition (id) {
-      this.disposition_id = id
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -83,7 +79,7 @@ export default {
   },
   components: {
     'wrap-timer': Wrap,
-    'disposition': Disposition,
+    'disposition': DispositionSelect,
   },
 }
 </script>
