@@ -16,7 +16,8 @@
       <button @click="down(entry.id)" class="btn btn-outline-primary pointer"><icon class="align-middle" name="arrow-down" scale="1"></icon></button>
     </b-col>
     <b-col cols=10 style="margin-bottom: 10px">
-      <b-form-input v-model="entry.description" @input="update_description(entry.id, $event)"></b-form-input>
+      <input class="form-control" placeholder="Recipe step description"
+        type="text" :value="safe_value(entry.description)" v-on:input="update_description(entry.id, $event)">
     </b-col>
     <b-col cols="6">
       <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
@@ -31,7 +32,7 @@
       <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
     </b-col>
     <b-col cols=11 style="margin-bottom: 10px">
-      <b-form-input v-model="description"></b-form-input>
+      <b-form-input v-model="description" placeholder="Recipe step description"></b-form-input>
     </b-col>
     <b-col cols="6">
       <conditions :value="conditions" @input="set_conditions($event)"></conditions>
@@ -64,6 +65,9 @@ export default {
     }
   },
   methods: {
+    safe_value (value) {
+      return value === 'undefined' ? '' : value
+    },
     query: async function () {
       this.entries = await this.$agent.p_mfa('ws_db_recipe_entry', 'get', [this.id])
     },
