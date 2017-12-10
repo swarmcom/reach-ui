@@ -32,7 +32,7 @@ async function session_auth(agent) {
     }
   }
   catch (error) {
-    console.log("failed to login with session keyy", error)
+    console.log("failed to login with session key", error)
   }
   agent.vm.session_auth = true
 }
