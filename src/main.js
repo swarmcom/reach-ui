@@ -21,9 +21,11 @@ import Profile from '@/Profile'
 import Admin from '@/Admin'
 import Monitor from '@/Monitor'
 import Report from '@/Report'
+import Kam from '@/Kam'
 
 import AdminRoutes from '@/routes/admin'
 import ReportRoutes from '@/routes/report'
+import KamRoutes from '@/routes/kam'
 
 import '@/widgets'
 
@@ -52,6 +54,7 @@ const router = new VueRouter({
     { path: '/monitor', component: Monitor },
     { path: '/profile', component: Profile },
     { path: '/report', component: Report, children: ReportRoutes },
+    { path: '/kam', component: Kam, children: KamRoutes },
     { path: '/', component: Agent }
   ]
 })

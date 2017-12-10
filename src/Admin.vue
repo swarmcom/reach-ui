@@ -38,6 +38,11 @@
     <b-dropdown-item to="/admin/line_outs">Lines Out</b-dropdown-item>
   </b-nav-item-dropdown>
 
+  <b-nav-item-dropdown text="Proxy">
+    <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
+    <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
+  </b-nav-item-dropdown>
+
   <li class="nav-item">
     <router-link class="nav-link" to="/admin/params">Params</router-link>
   </li>
