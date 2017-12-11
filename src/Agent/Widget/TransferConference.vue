@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.$agent.can_conference()">
+<div v-if="this.$agent.is_oncall()">
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseTransferConference" class="mt-2">
     <b-row>
