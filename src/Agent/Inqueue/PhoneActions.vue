@@ -3,7 +3,7 @@
   <b-row>
     <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
     <wrap-timer  v-if="this.wrap_visible" v-bind:inqueue="this.wrap" :state_time="state_time" class="state-time"></wrap-timer>
-    <button v-if="this.$agent.is_hold()" @click="unhold" class="btn call-action-button">
+    <button v-if="this.$agent.is_hold()" style="background:#FFEDA4" @click="unhold" class="btn call-action-button">
       <icon style="padding-top:5px" name="pause" scale="2"></icon>
     </button>
     <button v-if="this.$agent.is_oncall()" @click="hold" class="btn call-action-button">
