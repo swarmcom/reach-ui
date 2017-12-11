@@ -63,7 +63,7 @@
               <icon  name="circle-o" scale="2"></icon>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Available</div>
                 </b-col>
               </b-row>
             </div>
@@ -71,7 +71,7 @@
               <icon name="stop" scale="2"></icon>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Release</div>
                 </b-col>
               </b-row>
             </div>
@@ -84,7 +84,7 @@
               </b-row>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Ringing</div>
                 </b-col>
               </b-row>
               <b-row v-if="data.item.call_vars != undefined">
@@ -103,7 +103,7 @@
               </b-row>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Outgoing</div>
                 </b-col>
               </b-row>
             </div>
@@ -116,7 +116,7 @@
               </b-row>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">On Call</div>
                 </b-col>
               </b-row>
               <b-row v-if="data.item.call_vars != undefined">
@@ -135,7 +135,7 @@
               </b-row>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Conference</div>
                 </b-col>
               </b-row>
               <b-row v-if="data.item.call_vars != undefined">
@@ -154,7 +154,7 @@
               </b-row>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">In Conference</div>
                 </b-col>
               </b-row>
               <b-row v-if="data.item.call_vars != undefined">
@@ -167,7 +167,7 @@
               <icon  name="phone" scale="2"></icon>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Test</div>
                 </b-col>
               </b-row>
             </div>
@@ -180,7 +180,7 @@
               </b-row>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Hold</div>
                 </b-col>
               </b-row>
               <b-row v-if="data.item.call_vars != undefined">
@@ -194,7 +194,7 @@
               <icon  name="pause" scale="2"></icon>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Wrap Up</div>
                 </b-col>
               </b-row>
             </div>
@@ -207,7 +207,7 @@
               </b-row>
               <b-row>
                 <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.state}}</div>
+                  <div class="agent-state-text">Barge</div>
                 </b-col>
               </b-row>
               <b-row v-if="data.item.call_vars != undefined">
@@ -229,7 +229,7 @@
             </b-row>
             <b-row>
               <b-col cols="12">
-                <div v-if="existAvatar(data.item.inqueue)" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
+                <div v-if="existClient(data.item.inqueue)" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
               </b-col>
             </b-row>
             <b-row v-if="data.item.call_vars != undefined">
@@ -379,6 +379,13 @@ export default {
       if (data.line_in != undefined &&
           data.line_in.client != undefined &&
           data.line_in.client.avatar != 'undefined')
+        return true
+      else
+        return false
+    },
+    existClient(data){
+      if (data.line_in != undefined &&
+          data.line_in.client != undefined )
         return true
       else
         return false
