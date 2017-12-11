@@ -115,7 +115,7 @@ transition: opacity .2s
 .agent-state-available {
   background:#f7c180;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:11px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -124,7 +124,7 @@ transition: opacity .2s
 .agent-state-released {
   background:#dbeffa;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:12px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -133,7 +133,7 @@ transition: opacity .2s
 .agent-state-ringing {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:15px;
+  padding-top:18px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -142,7 +142,7 @@ transition: opacity .2s
 .agent-state-outgoing {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:15px;
+  padding-top:18px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -151,7 +151,7 @@ transition: opacity .2s
 .agent-state-oncall {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:11px;
   padding-left:20px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -160,7 +160,7 @@ transition: opacity .2s
 .agent-state-hold {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:12px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -169,7 +169,7 @@ transition: opacity .2s
 .agent-state-wrap-up {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:11px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
