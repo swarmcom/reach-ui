@@ -57,8 +57,8 @@ export default {
         inq.time =  Math.round(inq.time/1000)
         inq.effective = Math.round(inq.effective_time.time/1000)
         inq.queue = this.queue_name(inq.queue_id)
-        //inq.customer = inq.line_in.client.name
-        //inq.line = inq.line_in.name
+        inq.customer = inq.line_in.client.name
+        inq.line = inq.line_in.name
         inq.skillsReq = (Object.keys(inq.skills)).toString()
       })
     },
