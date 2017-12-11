@@ -69,7 +69,7 @@ export default {
         line: { label: 'Line', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         queue: { label: 'Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         skillsReq: { label: 'Skills Req', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        timeInQueue: { label: 'T in Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
+        timeInQueue: { label: 'T in State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       clients: [],
       queues: [],
