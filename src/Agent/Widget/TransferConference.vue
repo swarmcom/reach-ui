@@ -74,7 +74,7 @@ export default {
         this.$agent.conference_to_agent(this.selectedAgent)
       }
       else if (this.selected === 'number' && this.selectedNumber != 'null') {
-        this.$agent.conference_to_agent(this.selectedNumber)
+        this.$agent.conference_to_uri(this.selectedNumber)
       }
     },
     transfer () {
@@ -85,7 +85,7 @@ export default {
         this.$agent.transfer_to_agent(this.selectedAgent)
       }
       else if (this.selected === 'number' && this.selectedNumber != 'null') {
-        this.$agent.transfer_to_agent(this.selectedNumber)
+        this.$agent.transfer_to_uri(this.selectedNumber)
       }
     },
     onSelectAgent (data) {
