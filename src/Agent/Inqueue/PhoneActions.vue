@@ -18,7 +18,11 @@
       <icon name="close" scale="2"></icon></button>
   </b-row>
   <b-row style="margin-top:5px;" >
-    <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid"></disposition>
+    <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" style="width:100%"></disposition>
+  </b-row>
+  <br><br>
+  <b-row style="margin-top:5px; float:right;" >
+    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="this.inqueue.keep_record">Record</b-button>
   </b-row>
 </div>
 </template>
@@ -37,16 +41,24 @@ export default {
     return {
       updater: undefined,
       state_time: 0,
+      inqueue: undefined,
       wrap_visible: false,
       wrap: undefined
     }
   },
   methods: {
+    query: async function () {
+      this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
+    },
     queryWrap: async function () {
       this.wrap = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
     onTimer() {
       this.state_time += 1000
+    },
+    record: async function () {
+      await this.$agent.p_mfa('ws_agent', 'record')
+      this.inqueue.keep_record = true
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -61,6 +73,9 @@ export default {
 
       if (S.state.state == 'oncall')
         this.queryWrap()
+
+      if (S.state.inqueue.record == 'inqueue_call')
+        this.query()
 
       if (S.state.state == 'wrapup')
         this.wrap_visible = true

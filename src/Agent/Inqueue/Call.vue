@@ -1,8 +1,5 @@
 <template>
 <div style="margin-top: 10px" v-if="visible && !this.$agent.is_wrapup()">
-
-<!--<div class="row"><div class="col session-manager-text"><b>Incoming Call:</b> </div></div>-->
-
 <b-row v-if="lua_result">
   <b-col>{{lua_result}}</b-col>
 </b-row>
@@ -52,11 +49,6 @@
       <dt class="col-sm-12 session-manager-text">{{ this.inqueue.line_in.client.name }}</dt>
       <dd class="col-sm-12">{{ this.call_info['Caller-Caller-ID-Name'] + ' ' + this.call_info['Caller-Caller-ID-Number'] }} </dd>
     </dl>
-  </b-col>
-</b-row>
-<b-row style="margin-top:5px;" >
-  <b-col>
-    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="!this.inqueue.keep_record">Record</b-button>
   </b-col>
 </b-row>
 <!--<div v-if="!this.$agent.is_conference()" class="row" style="margin-top: 10px">
@@ -109,10 +101,6 @@ export default {
     },
     update_skills () {
       this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2skills(this.skills)])
-    },
-    record: async function () {
-      await this.$agent.p_mfa('ws_agent', 'record')
-      this.inqueue.keep_record = true
     },
     preHandleInqueueLua (Re) {
       this.handleInqueueLua(Re.value)
