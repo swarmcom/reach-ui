@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.$agent.can_transfer()">
+<div v-if="this.$agent.can_conference()">
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseTransferConference" class="mt-2">
     <b-row>
@@ -32,8 +32,8 @@
     </b-row>
     <b-row>
       <b-col>
-        <button size="sm" class="btn call-action-button" @click="conference()" style="margin-left:2px; float:right">Conference</button>
-        <button class="btn call-action-button" style=" float:right">Transfer</button>
+        <button v-if="this.$agent.can_conference()" size="sm" class="btn call-action-button" @click="conference()" style="margin-left:2px; float:right">Conference</button>
+        <button v-if="this.$agent.can_transfer()" class="btn call-action-button" style=" float:right">Transfer</button>
       </b-col>
     </b-row>
   </b-collapse>
