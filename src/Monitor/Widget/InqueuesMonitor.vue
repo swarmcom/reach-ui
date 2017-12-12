@@ -25,7 +25,7 @@
         </b-form-select>
       </div>
       <div class="col-10">
-        <b-table style="margin-top:10px" small bordered
+        <b-table style="margin-top:10px" small bordered hover
           :items="computedInqueues"
           :fields="fields"
           :filter="filter"
@@ -161,6 +161,7 @@ export default {
       let inqueues = this.inqueues.slice(0)
       let compInqueues = []
       inqueues.forEach( (key) => {
+        key._cellVariants = { actions: 'success', media: 'primary', state: 'primary', line: 'primary', queue: 'primary', skillsReq: 'primary', timeInQueue: 'primary' }
         if(key.queue != undefined){
           if(this.selectedQueue != key.queue && this.selectedQueue != 'Any Queue')
             return

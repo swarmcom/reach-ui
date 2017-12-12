@@ -25,7 +25,7 @@
         </b-form-select>
       </b-col>
       <b-col cols="10">
-        <b-table style="margin-top:10px" small bordered
+        <b-table style="margin-top:10px" small bordered hover
           :items="computedAgents"
           :fields="fields"
           :filter="filter"
