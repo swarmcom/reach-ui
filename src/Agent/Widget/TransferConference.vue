@@ -4,20 +4,20 @@
   <b-collapse v-model="showCollapse" id="collapseTransferConference" class="mt-2">
     <b-row>
       <b-col cols="3">
-        <b-form-select size="sm" v-model="selected">
+        <b-form-select v-model="selected">
         <option :value="null">Transfer / Conference</option>
         <option :value="'queue'">Queue...</option>
         <option :value="'agent'">Agent...</option>
         <option v-if="this.$agent.can_call() :value="'number'">Number...</option>
         </b-form-select>
-        <b-form-input class="customInput" v-if="selected=='agent'" size="sm" v-model="filter" placeholder="Search..." />
+        <b-form-input class="customInput" v-if="selected=='agent'" v-model="filter" placeholder="Search..." />
       </b-col>
       <b-col cols="3" v-if="(selected=='queue' || selected=='number')">
-        <b-form-select v-if="selected=='queue'" size="sm" v-model="selectedQueue">
+        <b-form-select v-if="selected=='queue'" v-model="selectedQueue">
           <option :value="null">Select Queue...</option>
           <option v-for="queue in queues" :key="queue.id" :value="queue.id">{{queue.name}}</option>
         </b-form-select>
-        <b-form-input class="customInput" v-if="selected=='number'" size="sm" v-model="selectedNumber" type="text">
+        <b-form-input class="customInput" v-if="selected=='number'" v-model="selectedNumber" type="text">
         </b-form-input>
       </b-col>
       <b-col cols="9" v-if="selected=='agent'">
@@ -31,9 +31,14 @@
       </b-col>
     </b-row>
     <b-row>
+    <b-col cols="9" order="3" style="margin-top:5px" v-if="selected=='queue' && selectedQueue">
+      <queue-skills v-if="uuid!=undefined" :uuid="uuid""></queue-skills>
+    </b-col>
+    </b-row>
+    <b-row style="margin-top:10px">
       <b-col>
-        <button v-if="this.$agent.can_conference()" size="sm" class="btn call-action-button" @click="conference()" style="margin-left:2px; float:right">Conference</button>
-        <button v-if="this.$agent.can_transfer()" class="btn call-action-button" style=" float:right">Transfer</button>
+        <button v-if="this.$agent.can_conference()" class="btn call-action-button" @click="conference()" style="margin-left:5px; float:right">Conference</button>
+        <button v-if="this.$agent.can_transfer()" class="btn call-action-button" @click="transfer()" style=" float:right">Transfer</button>
       </b-col>
     </b-row>
   </b-collapse>
@@ -42,10 +47,17 @@
 
 <script>
 import Common from '../../Admin/Common'
+import QueueSkills from '@/Agent/Inqueue/Skills'
 export default {
   widgetName: 'Transfer / Conference',
   storageName: 'smtransferConference',
+  components: {
+    'queue-skills': QueueSkills,
+  },
   mixins: [Common],
+  props: {
+    uuid: String
+  },
   data () {
     return {
       showCollapse: true,
