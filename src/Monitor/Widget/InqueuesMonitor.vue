@@ -18,14 +18,14 @@
           <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
-          <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
+          <option v-for="state in this.states" :value=state.value>{{state.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedSkill" style="margin-top:10px">
           <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
         </b-form-select>
       </div>
       <div class="col-10">
-        <b-table style="margin-top:10px" small bordered
+        <b-table style="margin-top:10px" small bordered hover
           :items="computedInqueues"
           :fields="fields"
           :filter="filter"
@@ -41,6 +41,33 @@
                   <b-dropdown-item v-if="data.item.state == 'oncall'" @click="spy(data.item)">Spy</b-dropdown-item>
                   <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
                 </b-dropdown>
+              </b-col>
+            </b-row>
+          </template>
+          <template slot="media" slot-scope="data">
+            <b-row>
+              <b-col cols="1" v-if="data.item.record == 'inqueue_call'">
+                <icon name="mobile" scale="2" class='agent-state-color'></icon>
+              </b-col>
+              <b-col cols="1">
+                <b-img v-if="data.item.customer.avatar != 'undefined'" :src="$agent.avatar_uri(data.item.customer.avatar)" style="width:32px;"/>
+                <icon v-else name="handshake-o" scale="2"></icon>
+              </b-col>
+              <b-col>
+                {{data.item.customer.name}}
+              </b-col>
+            </b-row>
+          </template>
+          <template slot="state" slot-scope="data">
+            <b-row>
+              <b-col v-if="data.item.state == 'inqueue'">
+                In Queue
+              </b-col>
+              <b-col v-if="data.item.state == 'oncall'">
+                Connected
+              </b-col>
+              <b-col v-if="data.item.state == 'agent'">
+                Ringing
               </b-col>
             </b-row>
           </template>
@@ -63,22 +90,22 @@ export default {
     return {
       fields: {
         actions: { label: 'Actions', thClass:"table-header-text-center" },
+        media: { label: 'Media / Customer', thClass:"table-header-text-center", tdClass:"table-body-text-center"},
         state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        record: { label: 'Type', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        customer: { label: 'Customer', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         line: { label: 'Line', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         queue: { label: 'Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         skillsReq: { label: 'Skills Req', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        timeInQueue: { label: 'T in Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
+        timeInQueue: { label: 'T in State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       clients: [],
       queues: [],
       lines: [],
       tags: [],
       states: [
-        {name: "Any State"},
-        {name: "oncall"},
-        {name: "inqueue"}
+        {name: "Any State", value: "Any State"},
+        {name: "Connected", value: "oncall"},
+        {name: "In Queue", value: "inqueue"},
+        {name: "Ringing", value: "agent"}
       ],
       selectedQueue: 'Any Queue',
       selectedCustomer: 'Any Customers',
@@ -134,6 +161,7 @@ export default {
       let inqueues = this.inqueues.slice(0)
       let compInqueues = []
       inqueues.forEach( (key) => {
+        key._cellVariants = { actions: 'success', media: 'primary', state: 'primary', line: 'primary', queue: 'primary', skillsReq: 'primary', timeInQueue: 'primary' }
         if(key.queue != undefined){
           if(this.selectedQueue != key.queue && this.selectedQueue != 'Any Queue')
             return
@@ -148,18 +176,14 @@ export default {
         else if(this.selectedLine != 'Any Lines')
           return
 
-        if(key.customer != undefined) {
-          if(this.selectedCustomer != key.customer && this.selectedCustomer != 'Any Customers')
+        if(key.customer.name != undefined) {
+          if(this.selectedCustomer != key.customer.name && this.selectedCustomer != 'Any Customers')
             return
         }
         else if(this.selectedCustomer != 'Any Customers')
           return
 
-        if(this.selectedState == 'inqueue' && key.state == 'agent') {
-          compInqueues.push(key)
-          return
-        }
-        else if(this.selectedState != key.state && this.selectedState != 'Any State')
+        if(this.selectedState != key.state && this.selectedState != 'Any State')
           return
 
         if(key.skillsReq != undefined && this.selectedSkill != 'Any Skill') {

@@ -13,7 +13,7 @@
   <b-row>
     <b-col cols="12">
       <ringer v-if="ringer_visible"></ringer>
-      <transfer-conference v-if="this.$agent.can_conference()"></transfer-conference>
+      <transfer-conference :uuid="uuid" v-if="this.$agent.can_conference()"></transfer-conference>
       <conference v-if="conf_visible"></conference>
       <conf-request></conf-request>
     </b-col>

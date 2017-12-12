@@ -13,15 +13,15 @@
     <div class="col-7">
       <div v-if="a.state == 'available'" class="agent-state-available">
         <icon  name="circle-o" scale="4"></icon>
-        <div>{{a.state}}</div>
+        <div>Available</div>
       </div>
       <div v-if="a.state == 'release'" class="agent-state-released">
         <icon name="stop" scale="4"></icon>
-        <div>released</div>
+        <div>Released</div>
       </div>
       <div v-if="a.state == 'ringing'" class="agent-state-ringing">
         <icon  name="wifi" scale="4" style="transform: rotate(270deg);"></icon>
-        <div>{{a.state}}</div>
+        <div>Ringing</div>
       </div>
       <div v-if="a.state == 'outgoing'" class="agent-state-outgoing">
         <icon  name="wifi" scale="4" style="transform: rotate(90deg);"></icon>
@@ -29,23 +29,23 @@
       </div>
       <div v-if="a.state == 'test'" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
-        <div>{{a.state}}</div>
+        <div>Test</div>
       </div>
       <div v-if="a.state == 'barge'" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
-        <div>{{a.state}}</div>
+        <div>Barge</div>
       </div>
       <div v-if="this.$agent.is_onsession()" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
-        <div>{{a.state}}</div>
+        <div>On Call</div>
       </div>
       <div v-if="this.$agent.is_hold()" class="agent-state-hold">
         <icon  name="pause" scale="4"></icon>
-        <div>{{a.state}}</div>
+        <div>Hold</div>
       </div>
       <div v-if="this.$agent.is_wrapup()" class="agent-state-wrap-up">
         <icon  name="pause" scale="4"></icon>
-        <div>{{a.state}}</div>
+        <div>Wrap Up</div>
       </div>
     </div>
   </div>

@@ -103,6 +103,9 @@ transition: opacity .2s
 .pin-container {
   margin-top: 52px;
 }
+.session-manager-text {
+  font-size: 14px;
+}
 .agent-state-text {
   font-size: 12px;
 }
@@ -115,7 +118,7 @@ transition: opacity .2s
 .agent-state-available {
   background:#f7c180;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:11px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -124,7 +127,7 @@ transition: opacity .2s
 .agent-state-released {
   background:#dbeffa;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:12px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -133,7 +136,7 @@ transition: opacity .2s
 .agent-state-ringing {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:15px;
+  padding-top:18px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -142,7 +145,7 @@ transition: opacity .2s
 .agent-state-outgoing {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:15px;
+  padding-top:18px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -151,7 +154,7 @@ transition: opacity .2s
 .agent-state-oncall {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:11px;
   padding-left:20px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -160,7 +163,7 @@ transition: opacity .2s
 .agent-state-hold {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:12px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -169,7 +172,7 @@ transition: opacity .2s
 .agent-state-wrap-up {
   background:#d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:5px;
+  padding-top:11px;
   padding-left:18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
@@ -193,7 +196,7 @@ transition: opacity .2s
   line-height:55px;
   font-weight: bold;
   height:55px;
-  width: 80px;
+  width: 90px;
   background:#dbeffa;
   text-align: center;
 }
@@ -235,6 +238,7 @@ transition: opacity .2s
   text-align: center;
 }
 .call-action-button {
+  padding-top: 15px;
   color:#505050 !important;
   border-style: solid !important;
   border-width: 1px !important;

@@ -14,6 +14,7 @@
     <b-row style="margin-top: 10px">
       <b-col>
         <b-table striped hover small
+          tbody-tr-class="pointer"
           :current-page="currentPage"
           :per-page="perPage"
           :sort-by="sortBy"
@@ -94,9 +95,3 @@ export default {
   },
 }
 </script>
-
-<style>
-  table tbody tr {
-    cursor: pointer;
-  }
-</style>

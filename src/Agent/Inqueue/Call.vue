@@ -1,8 +1,5 @@
 <template>
 <div style="margin-top: 10px" v-if="visible && !this.$agent.is_wrapup()">
-
-<!--<div class="row"><div class="col session-manager-text"><b>Incoming Call:</b> </div></div>-->
-
 <b-row v-if="lua_result">
   <b-col>{{lua_result}}</b-col>
 </b-row>
@@ -54,22 +51,10 @@
     </dl>
   </b-col>
 </b-row>
-<b-row style="margin-top:5px;" >
-  <b-col>
-    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="!this.inqueue.keep_record">Record</b-button>
-  </b-col>
-</b-row>
-<!--<div v-if="!this.$agent.is_conference()" class="row" style="margin-top: 10px">
-  <div class="col-12">
-    <div class="row"><div class="col session-manager-text"><b>Skills Editor:</b> </div></div>
-    <tags v-model="skills" v-on:input="update_skills()" placeholder="Call effective tags..."></tags>
-  </div>
-</div>-->
 </div><!-- container -->
 </template>
 
 <script>
-import Skills from '@/Agent/Widget/Skills'
 import Tags from '@/Widget/Tags'
 import Common from '@/Admin/Common'
 export default {
@@ -85,7 +70,6 @@ export default {
       visible: false,
       inqueue: {},
       call_info: {},
-      skills: {},
       lua_result: false,
       updater: undefined,
       notification: undefined
@@ -97,10 +81,11 @@ export default {
       this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
       let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
       this.handleInqueueLua(lua_re)
-      let skills = await this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid])
-      this.skills = this.skills2list(skills)
       this.visible = true
       this.show_notification()
+    },
+    queryCall: async function () {
+      this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
     onTimer() {
       if (this.inqueue.time) {
@@ -109,10 +94,6 @@ export default {
     },
     update_skills () {
       this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2skills(this.skills)])
-    },
-    record: async function () {
-      await this.$agent.p_mfa('ws_agent', 'record')
-      this.inqueue.keep_record = true
     },
     preHandleInqueueLua (Re) {
       this.handleInqueueLua(Re.value)
@@ -139,6 +120,8 @@ export default {
     },
     handleState ({state}) {
       this.inqueue.state = state.state
+      if (state.state == 'conference')
+        this.queryCall()
     }
   },
   created () {

@@ -46,7 +46,7 @@ export default {
       info.effective = Math.round(info.effective_time.time/1000)
       info.queue = this.queue_name(info.queue_id)
       info.skillsReq = (Object.keys(info.skills)).toString()
-      info.customer = info.line_in.client.name
+      info.customer = info.line_in.client
       info.line = info.line_in.name
       return info
     },
@@ -57,8 +57,8 @@ export default {
         inq.time =  Math.round(inq.time/1000)
         inq.effective = Math.round(inq.effective_time.time/1000)
         inq.queue = this.queue_name(inq.queue_id)
-        //inq.customer = inq.line_in.client.name
-        //inq.line = inq.line_in.name
+        inq.customer = inq.line_in.client
+        inq.line = inq.line_in.name
         inq.skillsReq = (Object.keys(inq.skills)).toString()
       })
     },

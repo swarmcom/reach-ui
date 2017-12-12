@@ -3,7 +3,7 @@
   <div class="row" style="margin-top: 10px">
     <div class="col session-manager-text"><b>Conference:</b> </div>
   </div>
-  <div class="row col-12">
+  <div class="row col-12" style="margin-top:5px">
     <b-input-group-button>
       <b-button class="pointer" size="sm" variant="outline-secondary" @click="kick('all')">Kick All</b-button>
       <b-button class="pointer" size="sm" variant="outline-secondary" @click="mute('all')">Mute All</b-button>
