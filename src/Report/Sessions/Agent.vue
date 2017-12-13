@@ -4,7 +4,7 @@
     <b-col><h3>Agents sessions</h3></b-col>
   </b-row>
   <widget-query v-model="query_params"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" @row-clicked="click">
+  <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
       {{ format_ms(data.item.states.total) }}
     </template>
@@ -92,9 +92,3 @@ export default {
   }
 }
 </script>
-
-<style>
-tbody tr {
-  cursor: pointer;
-}
-</style>
