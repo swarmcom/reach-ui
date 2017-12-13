@@ -30,7 +30,7 @@
             </b-row>
             <b-row v-if="data.item.seeDetails && data.item.details.length > 0" v-for="(v, k) in data.item.details" key="k">
               <b-col cols="6"><div class="agent-state-text">{{v.line}}</div></b-col>
-              <b-col cols="6"><div class="agent-state-text">{{v.customer}}</div></b-col>
+              <b-col cols="6"><div class="agent-state-text">{{v.customer.name}}</div></b-col>
             </b-row>
           </template>
         </b-table>
