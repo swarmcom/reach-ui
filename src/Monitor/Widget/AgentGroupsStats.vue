@@ -13,15 +13,17 @@
     </template>
     <template slot="cpt" slot-scope="data">
       <div class="session-state-text">
-        {{data.item.cpt.avg.oncall ? `${(data.item.cpt.avg.oncall/1000).toFixed(1)}s` : "0s"}}
+        {{data.item.cpt.avg.oncall ? msToMs(data.item.cpt.avg.oncall) : "--"}}
       </div>
     </template>
   </b-table>
 </div>
 </template>
 <script>
+import Common from '@/Admin/Common'
 export default {
   name: 'monitor-agents-groups-stats',
+  mixins: [Common],
   data () {
     return {
       fieldsStats: {

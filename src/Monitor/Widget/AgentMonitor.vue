@@ -489,9 +489,9 @@ export default {
           else
             key.agentOccup = '0%'
           if(Object.keys(this.stats[i].cpt).length > 0 && this.stats[i].cpt.avg.oncall > 0)
-            key.agentMyCpt = this.time(this.stats[i].cpt.avg.oncall)
+            key.agentMyCpt = this.msToMs(this.stats[i].cpt.avg.oncall)
           else
-            key.agentMyCpt = '0s'
+            key.agentMyCpt = '--'
         }
 
         if(key.inqueue.line_in != undefined && key.inqueue.line_in.client != undefined) {
