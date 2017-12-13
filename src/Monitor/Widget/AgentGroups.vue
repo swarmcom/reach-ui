@@ -19,6 +19,20 @@
         <b-table style="margin-top:10px" small striped bordered hover
           :items="computedAgentsStats"
           :fields="fieldsStates">
+          <template slot="ringing" slot-scope="data">
+            <b-row class="text-center">
+              <b-col>
+                {{data.item.ringing.inbound + ' / ' + data.item.ringing.outbound}}
+              </b-col>
+            </b-row>
+          </template>
+          <template slot="insession" slot-scope="data">
+            <b-row class="text-center">
+              <b-col>
+                {{data.item.insession.inbound + ' / ' + data.item.insession.outbound}}
+              </b-col>
+            </b-row>
+          </template>
         </b-table>
       </b-col>
       <b-col cols="3">
@@ -43,9 +57,9 @@ export default {
         totalAgents: { label: 'Total Agents', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         released: { label: 'Released', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         idle: { label: 'Idle', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        ringing: { label: 'Ringing', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        ringing: { label: 'Ringing In/Out', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         outgoing: { label: 'Outgoing', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        insession: { label: 'In Session', sortable: false, variant: "success", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        insession: { label: 'In Session In/Out', sortable: false, variant: "success", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         wrapup: { label: 'Wrap-up', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       fieldNames: {
@@ -73,9 +87,9 @@ export default {
           "totalAgents":0,
           "released": 0,
           "idle": 0,
-          "ringing": 0,
+          "ringing": { inbound: 0, outbound: 0 },
           "outgoing": 0,
-          "insession": 0,
+          "insession": { inbound: 0, outbound: 0 },
           "wrapup": 0
         }
         let selectedProfile = key.id
@@ -90,13 +104,20 @@ export default {
                 object.idle++
                 break;
               case "ringing":
-                object.ringing++
+                if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'inbound')
+                  object.ringing.inbound++
+                else if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'outbound')
+                  object.ringing.outbound++
                 break;
               case "outgoing":
                 object.outgoing++
                 break;
               case "oncall":
-                object.insession++
+                if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'inbound')
+                  object.insession.inbound++
+                else if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'outbound')
+                  object.insession.outbound++
+
                 break;
               case "wrapup":
                 object.wrapup++
