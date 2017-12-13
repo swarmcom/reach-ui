@@ -176,7 +176,10 @@ export default {
       }
     },
     time (value) {
-      return this.msToMs(value)
+      if(value > 0)
+        return this.msToMs(value)
+      else
+        return "--"
     },
     set_period (value) {
       this.period.value = value
