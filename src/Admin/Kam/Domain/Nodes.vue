@@ -7,9 +7,10 @@
       <button @click="del(node.id)" class="btn btn-outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </div>
     <b-col cols=2>
-      <select class="custom-select" v-model="node.type"  style="width: 100%" v-on:change="onChange(node, 'type', $event.target.value)">
+      <select class="custom-select" v-model="node.type" style="width: 100%" v-on:change="onChange(node, 'type', $event.target.value)">
         <option value="proxy">Proxy</option>
         <option value="media">Media</option>
+        <option value="gateway">Gateway</option>
       </select>
     </b-col>
     <div class="col-3">
@@ -20,7 +21,6 @@
       <input type="text" class="form-control"
         :value="safe_value(node.ip)" v-on:change="onChange(node, 'ip', $event.target.value)">
     </div>
-
   </div>
 
   <div class="form-row" style="margin-top: 5px">
@@ -31,6 +31,7 @@
       <select class="custom-select" v-model="type" style="width: 100%">
         <option value="proxy">Proxy</option>
         <option value="media">Media</option>
+        <option value="gateway">Gateway</option>
       </select>
     </b-col>
     <div class="col-3">
