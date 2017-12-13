@@ -39,8 +39,8 @@
                   <b-dropdown-item v-if="data.item.state == 'release'" @click="available(data.item)">Available</b-dropdown-item>
                   <b-dropdown-item v-else @click="release(data.item)">Release</b-dropdown-item>
                   <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
-                  <b-dropdown-item v-if="data.item.state == 'oncall' && $agent.vm.state != 'oncall' && $agent.vm.state != 'barge'" @click="takeover(data.item)">Take Over</b-dropdown-item>
-                  <b-dropdown-item v-if="data.item.state == 'oncall' && $agent.vm.state != 'oncall' && $agent.vm.state != 'barge'" @click="spy(data.item)">Monitor</b-dropdown-item>
+                  <b-dropdown-item v-if="allowTakeOver(data.item.state)" @click="takeover(data.item)">Take Over</b-dropdown-item>
+                  <b-dropdown-item v-if="allowSpy(data.item.state)" @click="spy(data.item)">Monitor</b-dropdown-item>
                   <b-dropdown-item v-if="data.item.state == 'barge' && data.item.agent.id == $agent.vm.agent.id"  @click="cancelSpy()">Stop Monitor</b-dropdown-item>
                   <b-dropdown-header v-if="data.item.state == 'barge' && data.item.agent.id == $agent.vm.agent.id">Monitor actions</b-dropdown-header>
                   <b-dropdown-item v-if="data.item.state == 'barge' && data.item.agent.id == $agent.vm.agent.id" v-for="mode in modes" :key="mode.value" @click="setMode(mode.value)">{{ mode.name }}</b-dropdown-item>
@@ -361,6 +361,21 @@ export default {
     },
     takeover ({inqueue}) {
       this.$agent.mfa('ws_supervisor', 'takeover', [inqueue.record, inqueue.uuid])
+    },
+    allowSpy (state) {
+      if((state == 'oncall' || state == 'conference') &&
+        (!this.$agent.is_onsession() && !this.$agent.is_barge())) {
+        return true
+      }
+      else
+        return false
+    },
+    allowTakeOver (state) {
+      if((state == 'oncall') && (!this.$agent.is_onsession() && !this.$agent.is_barge())) {
+        return true
+      }
+      else
+        return false
     },
     spy ({inqueue}) {
       this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.uuid])
