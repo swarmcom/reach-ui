@@ -8,7 +8,8 @@
           <option v-for="period in periods" :value="period.value">{{period.name}}</option>
         </b-form-select>
       </b-col>
-      <div class="agent-state-text"><b>Profile: </b>{{ this.$agent.vm.agent.group.name }}</div>
+      <b-col cols="9" class="agent-state-text"><b>Profile: </b>{{ this.$agent.vm.agent.group.name }}</b-col>
+      <b-col cols="1"><b-btn size="sm" class="pointer" @click="refresh" variant="outline-secondary">Refresh</b-btn></b-col>
     </b-row>
     <b-row>
       <b-col>
@@ -47,9 +48,11 @@
 </template>
 
 <script>
+import Common from '@/Admin/Common'
 export default {
   widgetName: 'MY STATISTICS',
   storageName: 'myStatistics',
+  mixins: [Common],
   data () {
     return {
       statistics: [{
@@ -129,16 +132,16 @@ export default {
     stats_query: async function () {
       let stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period.value])
       this.statistics[0].myCpt = this.time(stats.cpt.avg.oncall)
-    },
-    group_query: async function () {
-      let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period.value])
-      this.statistics[0].teamCpt = this.time(stats.cpt.avg.oncall)
       this.statistics[0].occup.oncall = this.percent(stats.occupancy.ratio.oncall)
       this.statistics[0].occup.ringing = this.percent(stats.occupancy.ratio.ringing)
       this.statistics[0].occup.available = this.percent(stats.occupancy.ratio.available)
       this.statistics[0].occup.release = this.percent(stats.occupancy.ratio.release)
       this.statistics[0].asa = this.time(stats.cpt.avg.answer)
       this.statistics[0].longest = this.time(stats.cpt.max.oncall)
+    },
+    group_query: async function () {
+      let stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period.value])
+      this.statistics[0].teamCpt = this.time(stats.cpt.avg.oncall)
     },
     handleUpdateSkills (ev) {
       this.states_query()
@@ -161,6 +164,10 @@ export default {
     handleUpdateStats: async function () {
       this.stats_query()
     },
+    refresh () {
+      this.stats_query()
+      this.group_query()
+    },
     percent (value) {
       if (value > 0) {
         return `${(value*100).toFixed(2)}%`
@@ -169,11 +176,10 @@ export default {
       }
     },
     time (value) {
-      if (value > 0) {
-        return `${(value/1000).toFixed(1)}s`
-      } else {
-        return "0s"
-      }
+      if(value > 0)
+        return this.msToMs(value)
+      else
+        return "--"
     },
     set_period (value) {
       this.period.value = value
@@ -185,7 +191,7 @@ export default {
     this.$bus.$on('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$on('inqueue_state', this.handleCiq)
     this.$bus.$on('agent_stats', this.handleUpdateMyStats)
-    this.$bus.$on('agent_skills', this.handleUpdateSkills)
+    //this.$bus.$on('agent_skills', this.handleUpdateSkills)
     this.query()
     if (this.$agent.vm.storage_data.myStatisticsCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.myStatisticsCollapsed
@@ -194,7 +200,7 @@ export default {
     this.$bus.$off('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$off('inqueue_state', this.handleCiq)
     this.$bus.$off('agent_stats', this.handleUpdateMyStats)
-    this.$bus.$off('agent_skills', this.handleUpdateSkills)
+    //this.$bus.$off('agent_skills', this.handleUpdateSkills)
   }
 }
 </script>
