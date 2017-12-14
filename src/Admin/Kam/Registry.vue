@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Btable from '@/Widget/Btable'
+import moment from 'moment'
 
 export default {
   name: 'admin-domains',
@@ -27,7 +27,7 @@ export default {
         domain: { label: 'Domain' },
         registrar: { label: 'Registrar' },
         address: { label: 'Address' },
-        ts: { label: 'Ts' }
+        ts: { label: 'Ts', formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") }
       },
       registry: []
     }
