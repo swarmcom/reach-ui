@@ -40,6 +40,9 @@ export default {
       let mDisplay = m > 0 ? (m <= 9 ? "0"+m : m) + ":" : "00:"
       let sDisplay = s > 0 ? (s <= 9 ? "0"+s : s) : "00"
       return mDisplay + sDisplay
+    },
+    isDefined (V) {
+      return V == undefined ? '' : V
     }
   }
 }

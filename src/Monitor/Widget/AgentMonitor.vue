@@ -234,17 +234,12 @@
             </b-row>
             <b-row v-if="data.item.call_vars != undefined">
               <b-col cols="12">
-                <div class="agent-state-text">{{data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
+                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
               </b-col>
             </b-row>
             <b-row v-if="data.item.call_vars != undefined">
               <b-col cols="12" v-if="data.item.state=='barge'">
-                <div class="agent-state-text">{{data.item.call_vars['Caller-Caller-ID-Number']}}</div>
-              </b-col>
-            </b-row>
-            <b-row v-if="data.item.call_vars != undefined">
-              <b-col cols="12">
-                <div class="agent-state-text">{{data.item.call_vars['Caller-Destination-Number']}}</div>
+                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + data.item.call_vars['Caller-Caller-ID-Number']}}</div>
               </b-col>
             </b-row>
             <b-row v-if="data.item.state=='release'">
