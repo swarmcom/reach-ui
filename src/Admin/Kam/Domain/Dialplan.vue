@@ -1,13 +1,13 @@
 <template>
 <b-container>
   <b-row style="margin-bottom: 10px">
-    <b-col><h3>Dialplan:</h3></b-col>
+    <b-col><h3>Domain dialplan:</h3></b-col>
   </b-row>
 
   <div v-for="entry of entries" :key="entry.id" style="margin-top: 5px">
-    <entry :value="entry" v-on:change="change" v-on:up="up" v-on:down="down" v-on:del="del"></entry>
+    <entry :id="id" :value="entry" v-on:change="change" v-on:up="up" v-on:down="down" v-on:del="del"></entry>
   </div>
-  <entry v-model="entry" style="margin-top: 5px" v-on:add="add"></entry>
+  <entry :id="id" :value="entry" style="margin-top: 5px" v-on:change="change_entry" v-on:add="add"></entry>
 </b-container>
 </template>
 
@@ -30,6 +30,9 @@ export default {
     },
     change: async function (entry) {
       this.$agent.p_mfa('ws_kam_dialplan_in', 'update', [entry.id, entry])
+    },
+    change_entry (entry) {
+      this.entry = entry
     },
     up: async function (id) {
       this.entries = await this.$agent.p_mfa('ws_kam_dialplan_in', 'up', [id+""])
