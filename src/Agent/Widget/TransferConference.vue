@@ -22,6 +22,7 @@
       </b-col>
       <b-col cols="9" v-if="selected=='agent'">
         <b-table small bordered
+          tbody-tr-class="pointer"
           @row-clicked="onSelectAgent"
           :items="computedAgents"
           :fields="fieldsAgents"
