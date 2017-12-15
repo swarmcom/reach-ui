@@ -51,7 +51,6 @@ export default {
         if(tag == 'change') {
           let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
           if (i >= 0) {
-            console.log(this.agents[i].time)
             this.agents[i].date = new Date()
           }
         }
