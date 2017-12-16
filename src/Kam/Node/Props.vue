@@ -38,6 +38,12 @@
     </b-col>
   </b-row>
 
+  <b-row style="margin-top:20px" v-if="rec.type=='proxy'">
+    <b-col>
+      <button @click="proxy_stats" class="btn btn-secondary">Stats</button>
+    </b-col>
+  </b-row>
+
   <b-row style="margin-top:20px">
     <b-col>
       <pre>{{ result }}</pre>
@@ -87,6 +93,9 @@ export default {
     },
     node_status: async function () {
       this.result = await this.$agent.p_mfa('ws_admin', 'node_status', [this.id])
+    },
+    proxy_stats: async function () {
+      this.result = await this.$agent.p_mfa('ws_admin', 'proxy_stats', [this.id])
     }
   },
 }
