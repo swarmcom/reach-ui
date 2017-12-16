@@ -21,13 +21,30 @@
         </div>
       </template>
     </template>
+
     <div style="margin-top:20px">
       <button @click="onCommit" class="btn btn-primary">Commit</button>
       <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
       <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
     </div>
-
   </div>
+
+  <b-row style="margin-top:20px" v-if="rec.type=='media'">
+    <b-col>
+      <button @click="sofia_reload" class="btn btn-danger">SIP Restart</button>
+      <button @click="sofia_rescan" class="btn btn-primary">SIP Reload</button>
+      <button @click="sofia_status" class="btn btn-secondary">Sofia Status</button>
+      <button @click="node_status" class="btn btn-secondary">Node Status</button>
+    </b-col>
+  </b-row>
+
+  <b-row style="margin-top:20px">
+    <b-col>
+      <pre>{{ result }}</pre>
+    </b-col>
+  </b-row>
+
+
 </div>
 </template>
 
@@ -45,7 +62,8 @@ export default {
     return {
       rec: {},
       module: 'ws_kam_node',
-      redirect: '/kam/nodes'
+      redirect: '/kam/nodes',
+      result: ''
     }
   },
   methods: {
@@ -57,6 +75,18 @@ export default {
         this.rec.props = {}
       }
       this.rec.props[k] = v
+    },
+    sofia_reload: async function () {
+      this.result = await this.$agent.p_mfa('ws_admin', 'sofia_reload', [this.id])
+    },
+    sofia_rescan: async function () {
+      this.result = await this.$agent.p_mfa('ws_admin', 'sofia_rescan', [this.id])
+    },
+    sofia_status: async function () {
+      this.result = await this.$agent.p_mfa('ws_admin', 'sofia_status', [this.id])
+    },
+    node_status: async function () {
+      this.result = await this.$agent.p_mfa('ws_admin', 'node_status', [this.id])
     }
   },
 }
