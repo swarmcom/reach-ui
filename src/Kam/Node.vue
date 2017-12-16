@@ -1,9 +1,14 @@
 <template>
 <div class="form-row">
-  <b-col cols=1>
-    <button v-if="isEntry()" @click="del(entry.id)" class="btn btn-outline-danger">
-      <icon class="align-middle" name="minus" scale="1"></icon>
-    </button>
+  <b-col cols=2>
+    <template v-if="isEntry()">
+      <button @click="del(entry.id)" class="btn btn-outline-danger">
+        <icon class="align-middle" name="minus" scale="1"></icon>
+      </button>
+      <button @click="edit(entry.id)" class="btn btn-outline-primary">
+        <icon class="align-middle" name="gear" scale="1"></icon>
+      </button>
+    </template>
     <button v-else @click="add" class="btn btn-outline-secondary">
       <icon class="align-middle" name="plus" scale="1"></icon>
     </button>
@@ -26,23 +31,16 @@
 
   <b-col v-if="isGateway(entry.type)">
     <input type="text" class="form-control"
-      :value="safe_value(entry.ip)" v-on:change="change('ip', $event.target.value)">
-  </b-col>
-
-  <b-col v-if="entry.type=='media'">
-    <node type="proxy" :domain="this.id" :value="entry.args" v-on:input="change('args', arguments[0])"></node>
+      :value="safe_value(entry.address)" v-on:change="change('address', $event.target.value)">
   </b-col>
 
 </div>
 </template>
 
 <script>
-import Node from '@/Admin/Kam/Domain/Dialplan/Node'
-
 export default {
-  name: 'admin-domain-node',
-  props: ['id', 'value'],
-  components: { Node },
+  name: 'admin-node',
+  props: ['value'],
   data () {
     return {
       entry: {},
@@ -65,6 +63,9 @@ export default {
     add () {
       this.$emit('add', this.entry)
       this.entry = {}
+    },
+    edit (id) {
+      this.$emit('edit', id)
     },
     del (id) {
       this.$emit('del', id)

@@ -12,7 +12,6 @@
   <b-table style="margin-top:10px" striped hover small :items="domains" :fields="fields">
     <template slot="actions" slot-scope="data">
       <b-btn size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>
-      <b-btn size="sm" variant="success" @click="nodes(data.item)">Nodes</b-btn>
       <b-btn size="sm" variant="secondary" @click="dialplan(data.item)">Dialplan</b-btn>
     </template>
   </b-table>
@@ -20,8 +19,6 @@
 </template>
 
 <script>
-import Btable from '@/Widget/Btable'
-
 export default {
   name: 'admin-domains',
   data () {
@@ -53,9 +50,6 @@ export default {
   },
   created () {
     this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

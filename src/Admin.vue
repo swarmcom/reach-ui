@@ -25,8 +25,6 @@
     <b-dropdown-item to="/admin/roles">Roles</b-dropdown-item>
     <b-dropdown-item to="/admin/releases">Release Types</b-dropdown-item>
     <b-dropdown-item to="/admin/dispositions">Disposition Groups</b-dropdown-item>
-    <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
-    <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Sounds">

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Entry from '@/Admin/Kam/Domain/Dialplan/Entry'
+import Entry from '@/Kam/Domain/Dialplan/Entry'
 
 export default {
   name: 'admin-domain-dialplan',

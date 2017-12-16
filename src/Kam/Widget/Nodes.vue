@@ -7,8 +7,8 @@
 
 <script>
 export default {
-  name: 'widget-domain-node',
-  props: ['domain', 'value', 'type'],
+  name: 'widget-node',
+  props: ['value', 'type'],
   data () {
     return {
       entries: []
@@ -23,9 +23,9 @@ export default {
     },
     query: async function () {
       if (this.type) {
-        this.entries = await this.$agent.p_mfa('ws_kam_domain_node', 'by_domain', [this.domain, this.type])
+        this.entries = await this.$agent.p_mfa('ws_kam_node', 'by_type', [this.type])
       } else {
-        this.entries = await this.$agent.p_mfa('ws_kam_domain_node', 'by_domain', [this.domain])
+        this.entries = await this.$agent.p_mfa('ws_kam_node', 'get', [])
       }
     },
     change (value) {

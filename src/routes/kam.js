@@ -1,21 +1,19 @@
-import Domains from '@/Admin/Kam/Domains'
-import Domain from '@/Admin/Kam/Domain'
-import DomainNodes from '@/Admin/Kam/Domain/Nodes'
-import DomainDialplan from '@/Admin/Kam/Domain/Dialplan'
+import Domains from '@/Kam/Domains'
+import Domain from '@/Kam/Domain'
+import DomainDialplan from '@/Kam/Domain/Dialplan'
 
-import Registry from '@/Admin/Kam/Registry'
+import Registry from '@/Kam/Registry'
 
-import Nodes from '@/Admin/Kam/Nodes'
-import Node from '@/Admin/Kam/Node'
+import Nodes from '@/Kam/Nodes'
+import NodeProps from '@/Kam/Node/Props'
 
 export default [
   { path: 'domains', component: Domains },
   { path: 'nodes', component: Nodes },
   { path: 'domain', component: Domain },
   { path: 'domain/:id', component: Domain, props: true },
-  { path: 'domain/:id/nodes', component: DomainNodes, props: true },
   { path: 'domain/:id/dialplan', component: DomainDialplan, props: true },
   { path: 'node', component: Domain },
-  { path: 'node/:id', component: Domain, props: true },
+  { path: 'node/:id', component: NodeProps, props: true },
   { path: 'registry', component: Registry }
 ]
