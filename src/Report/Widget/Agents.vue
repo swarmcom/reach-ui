@@ -1,7 +1,7 @@
 <template>
 <div class="form-inline">
 <autocomplete v-model="agent" :query="query" placeholder="Agent..."></autocomplete>
-<button class="btn btn-outline-secondary" style="margin-left: 10px" v-for="agent in selected" @click="remove(agent)">{{agent.name}}</button>
+<button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="agent in selected" @click="remove(agent)">{{agent.name}}</button>
 </div>
 </template>
 
