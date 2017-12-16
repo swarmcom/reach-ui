@@ -21,12 +21,7 @@
     </b-col>
 
     <b-col>
-      <select v-model="entry.source" class="custom-select" style="width: 100%" v-on:change="change('source', $event.target.value)">
-        <option value="agents">Agents</option>
-        <option value="media">Media</option>
-        <option value="world">World</option>
-        <option value="gateway">Gateway</option>
-      </select>
+      <nodes :value="entry.source" v-on:input="change('source', arguments[0])"></nodes>
     </b-col>
 
     <b-col>
@@ -42,18 +37,18 @@
     </b-col>
 
     <b-col>
-      <node v-if="entry.action=='pass'" :domain="this.id" :value="entry.target" v-on:input="change('target', arguments[0])"></node>
+      <nodes v-if="entry.action=='pass'" :domain="this.id" :value="entry.target" v-on:input="change('target', arguments[0])"></nodes>
     </b-col>
 
   </b-form-row>
 </template>
 
 <script>
-import Node from '@/Admin/Kam/Domain/Dialplan/Node'
+import Nodes from '@/Kam/Widget/Nodes'
 
 export default {
   name: 'admin-domain-dialplan-entry',
-  components: { Node },
+  components: { Nodes },
   props: ['id', 'value'],
   data () {
     return {

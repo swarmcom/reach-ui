@@ -22,6 +22,12 @@
         <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
       </b-nav-item-dropdown>
 
+      <b-nav-item-dropdown v-access:supervisor-ui text="Instance">
+        <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
+        <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
+        <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
+      </b-nav-item-dropdown>
+
       <li v-access:supervisor-ui class="nav-item">
         <router-link class="nav-link" to="/monitor">Monitor</router-link>
       </li>
