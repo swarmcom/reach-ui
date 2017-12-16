@@ -1,7 +1,7 @@
 <template>
 <div class="form-inline">
-<autocomplete-agent-group v-model="group" placeholder="Agent group..."></autocomplete-agent-group>
-<button class="btn btn-outline-secondary" style="margin-left: 10px" v-for="group in selected" @click="remove(group)">{{group.name}}</button>
+<autocomplete v-model="group" :query="query" placeholder="Agent group..."></autocomplete>
+<button class="btn btn-sm btn-outline-primary pointer" style="margin-left: 10px" v-for="group in selected" @click="remove(group)">{{group.name}}</button>
 </div>
 </template>
 
