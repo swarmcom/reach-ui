@@ -4,15 +4,12 @@
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
-
       <li class="nav-item">
         <router-link class="nav-link" to="/profile">Profile</router-link>
       </li>
-
       <li v-access:admin-ui class="nav-item">
         <router-link class="nav-link" to="/admin/agents">Admin</router-link>
       </li>
-
       <b-nav-item-dropdown v-access:supervisor-ui text="Reports">
         <b-dropdown-item to="/report/agents/states">Agents man-hours</b-dropdown-item>
         <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
@@ -21,24 +18,20 @@
         <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
         <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
       </b-nav-item-dropdown>
-
       <b-nav-item-dropdown v-access:supervisor-ui text="Instance">
         <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
         <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
         <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
       </b-nav-item-dropdown>
-
       <li v-access:supervisor-ui class="nav-item">
         <router-link class="nav-link" to="/monitor">Monitor</router-link>
       </li>
-
       <li class="nav-item">
         <router-link class="nav-link" to="/help">Help</router-link>
       </li>
-
     </ul>
-    <span class="navbar-text" v-if="auth">{{ this.$agent.vm.agent.login }}</span>
-    </li>
+    <span v-if="auth" class="navbar-text" style="margin-right: 20px">{{ this.$agent.vm.agent.login }}</span>
+    <button v-if="auth" @click="logout" class="btn btn-outline-danger">Logout</button>
   </div>
 </nav>
 <div class="container">
@@ -84,7 +77,8 @@ export default {
       this.auth = Auth
       let backend = await this.$agent.p_mfa('ws_misc', 'version', [])
       this.ref_backend = backend.version
-    }
+    },
+    logout () { this.$agent.logout() }
   },
   created: async function() {
     this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui

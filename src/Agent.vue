@@ -20,11 +20,6 @@
         <button v-if="a.hangup_state == 'release'" @click="available" class="btn btn-outline-success">Available</button>
       </div>
     </div>
-    <div class="col">
-      <div class="row justify-content-end">
-        <button @click="logout" class="btn btn-outline-danger">Logout</button>
-      </div>
-    </div>
   </div>
   <b-row style="margin-top: 20px">
     <b-col cols="6">
@@ -65,7 +60,6 @@ export default {
     }
   },
   methods: {
-    logout () { this.$agent.logout() },
     available () { this.$agent.available() },
     answer () { this.$agent.answer() },
     hangup () { this.$agent.hangup() },
