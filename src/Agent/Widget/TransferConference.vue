@@ -8,7 +8,7 @@
         <option :value="null">Transfer / Conference</option>
         <option :value="'queue'">Queue...</option>
         <option :value="'agent'">Agent...</option>
-        <option v-if="this.$agent.can_call() :value="'number'">Number...</option>
+        <option v-if="this.$agent.can_call()" :value="'number'">Number...</option>
         </b-form-select>
         <b-form-input class="customInput" v-if="selected=='agent'" v-model="filter" placeholder="Search..." />
       </b-col>
@@ -68,9 +68,9 @@ export default {
         state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         name: { label: 'Name', thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
-      selectedQueue: null,
-      selectedAgent: null,
-      selectedNumber: null,
+      selectedQueue: 'null',
+      selectedAgent: 'null',
+      selectedNumber: 'null',
       filter: null,
       queues: [],
     }

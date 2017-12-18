@@ -336,7 +336,7 @@ export default {
     },
     onTimer () {
       this.agents.forEach((E, i, A) => {
-        E.time = E.time + 1000
+        E.time = new Date() - E.date
         A.splice(i, 1, E)
       })
     },

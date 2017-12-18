@@ -42,7 +42,7 @@ export default {
       }
     },
     enrich_queue (info) {
-      info.time = Math.round(info.time/1000)
+      info.date = new Date()
       info.effective = Math.round(info.effective_time.time/1000)
       info.queue = this.queue_name(info.queue_id)
       info.skillsReq = (Object.keys(info.skills)).toString()
@@ -54,7 +54,7 @@ export default {
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
       this.inqueues = await this.$agent.p_mfa('ws_admin', 'inqueues', ['all'])
       this.inqueues.forEach((inq) => {
-        inq.time =  Math.round(inq.time/1000)
+        inq.date = new Date() - inq.time
         inq.effective = Math.round(inq.effective_time.time/1000)
         inq.queue = this.queue_name(inq.queue_id)
         inq.customer = inq.line_in.client
@@ -63,10 +63,9 @@ export default {
       })
     },
     onTimer () {
-      this.inqueues.forEach((E, i, Arr) => { 
-        E.time = E.time + 1
+      this.inqueues.forEach((E, i, Arr) => {
         E.effective = E.effective + 1
-        E.timeInQueue = this.msToHms((E.time*1000).toString())
+        E.timeInQueue = this.msToHms((new Date() - E.date).toString())
         Arr.splice(i, 1, E)
       })
     },

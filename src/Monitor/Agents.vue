@@ -29,8 +29,10 @@ export default {
           let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
           if (i >= 0) {
             this.agents.splice(i, 1, info)
+            this.agents[i].date = new Date() - this.agents[i].time
           } else {
             this.agents.push(info)
+            this.agents[i].date = new Date() - this.agents[i].time
           }
         }
         else if (info.state === 'terminate') {
@@ -45,10 +47,20 @@ export default {
             this.agents.splice(i, 1, info)
           }
         }
+
+        if(tag == 'change') {
+          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+          if (i >= 0) {
+            this.agents[i].date = new Date()
+          }
+        }
       }
     },
     query: async function() {
       this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
+      this.agents.forEach((agent) => {
+        agent.date = new Date() - agent.time
+      })
       this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
       this.groups.unshift({ name:"Any Profile" })
     }

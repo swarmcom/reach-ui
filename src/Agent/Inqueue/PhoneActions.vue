@@ -41,6 +41,7 @@ export default {
     return {
       updater: undefined,
       state_time: 0,
+      state_date: 0,
       inqueue: undefined,
       wrap_visible: false,
       wrap: undefined
@@ -54,7 +55,7 @@ export default {
       this.wrap = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
     onTimer() {
-      this.state_time += 1000
+      this.state_time = new Date() - this.state_date
     },
     record: async function () {
       await this.$agent.p_mfa('ws_agent', 'record')
@@ -66,11 +67,14 @@ export default {
     hangup () { this.$agent.hangup() },
     wrapup () { this.$agent.p_mfa('ws_agent', 'end_wrapup') },
     getState (S) {
-      if(S.tag == 'request')
+      if(S.tag == 'request') {
         this.state_time = S.state.time
-      else
+        this.state_date = new Date() - S.state.time
+      }
+      else {
         this.state_time = 0
-
+        this.state_date = new Date()
+      }
       if (S.state.state == 'oncall')
         this.queryWrap()
 
