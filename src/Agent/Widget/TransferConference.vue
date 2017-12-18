@@ -68,9 +68,9 @@ export default {
         state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         name: { label: 'Name', thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
-      selectedQueue: null,
-      selectedAgent: null,
-      selectedNumber: null,
+      selectedQueue: 'null',
+      selectedAgent: 'null',
+      selectedNumber: 'null',
       filter: null,
       queues: [],
     }
