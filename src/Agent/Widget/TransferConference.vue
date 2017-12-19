@@ -4,7 +4,7 @@
   <b-collapse v-model="showCollapse" id="collapseTransferConference" class="mt-2">
     <b-row>
       <b-col cols="4">
-        <b-form-select v-model="selected">
+        <b-form-select class="pointer" v-model="selected">
         <option :value="null">Transfer / Conference</option>
         <option :value="'queue'">Queue...</option>
         <option :value="'agent'">Agent...</option>
@@ -13,7 +13,7 @@
         <b-form-input class="customInput" v-if="selected==='agent'" v-model="filter" placeholder="Search..." />
       </b-col>
       <b-col cols="4" v-if="(selected==='queue' || selected==='number')">
-        <b-form-select v-if="selected==='queue'" v-model="selectedQueue">
+        <b-form-select class="pointer" v-if="selected==='queue'" v-model="selectedQueue">
           <option :value="null">Select Queue...</option>
           <option v-for="queue in queues" :key="queue.id" :value="queue.id">{{queue.name}}</option>
         </b-form-select>
@@ -69,7 +69,7 @@ export default {
       },
       selectedQueue: 'null',
       selectedAgent: 'null',
-      selectedNumber: 'null',
+      selectedNumber: '',
       filter: null,
       queues: [],
     }
@@ -96,7 +96,7 @@ export default {
       else if (this.selected === 'agent' && this.selectedAgent !== 'null') {
         this.$agent.transfer_to_agent(this.selectedAgent)
       }
-      else if (this.selected === 'number' && this.selectedNumber !== 'null') {
+      else if (this.selected === 'number' && this.selectedNumber !== '') {
         this.$agent.transfer_to_uri(this.selectedNumber)
       }
     },
@@ -105,7 +105,7 @@ export default {
     },
     can_conference() {
       if (this.$agent.can_conference() && (this.selectedAgent !== 'null' || this.selectedQueue !== 'null' ||
-          this.selectedNumber != 'null')) {
+          this.selectedNumber !== '')) {
         return true
       }
       else
@@ -113,7 +113,7 @@ export default {
     },
     can_transfer() {
       if (this.$agent.can_transfer() && (this.selectedAgent !== 'null' || this.selectedQueue !== 'null' ||
-        this.selectedNumber != 'null')) {
+        this.selectedNumber !== '')) {
         return true
       }
       else
@@ -135,7 +135,7 @@ export default {
     selected: function(val) {
       this.selectedAgent = 'null'
       this.selectedQueue = 'null'
-      this.selectedNumber = 'null'
+      this.selectedNumber = ''
     }
   },
   created () {
