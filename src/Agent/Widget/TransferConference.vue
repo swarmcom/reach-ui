@@ -37,8 +37,8 @@
     </b-row>
     <b-row style="margin-top:10px">
       <b-col>
-        <button v-if="this.$agent.can_conference()" class="btn call-action-button" @click="conference()" style="margin-left:5px; float:right">Conference</button>
-        <button v-if="this.$agent.can_transfer()" class="btn call-action-button" @click="transfer()" style=" float:right">Transfer</button>
+        <button v-if="this.can_conference()" class="btn call-action-button" @click="conference()" style="margin-left:5px; float:right">Conference</button>
+        <button v-if="this.can_transfer()" class="btn call-action-button" @click="transfer()" style=" float:right">Transfer</button>
       </b-col>
     </b-row>
   </b-collapse>
@@ -103,6 +103,22 @@ export default {
     onSelectAgent (data) {
       this.selectedAgent === data.id ? this.selectedAgent = 'null' : this.selectedAgent = data.id
     },
+    can_conference() {
+      if (this.$agent.can_conference() && (this.selectedAgent !== 'null' || this.selectedQueue !== 'null' ||
+          this.selectedNumber != 'null')) {
+        return true
+      }
+      else
+        return false
+    },
+    can_transfer() {
+      if (this.$agent.can_transfer() && (this.selectedAgent !== 'null' || this.selectedQueue !== 'null' ||
+        this.selectedNumber != 'null')) {
+        return true
+      }
+      else
+        return false
+    }
   },
   computed: {
     computedAgents () {
