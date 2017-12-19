@@ -17,7 +17,7 @@
     </b-col>
     <b-col cols=10 style="margin-bottom: 10px">
       <input class="form-control" placeholder="Recipe step description"
-        type="text" :value="safe_value(entry.description)" v-on:input="update_description(entry.id, $event)">
+        type="text" :value="safe_value(entry.description)" v-on:input="update_description(entry.id, $event.target.value)">
     </b-col>
     <b-col cols="6">
       <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
