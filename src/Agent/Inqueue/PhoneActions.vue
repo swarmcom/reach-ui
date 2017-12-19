@@ -21,8 +21,9 @@
     <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" style="width:100%"></disposition>
   </b-row>
   <br><br>
-  <b-row style="margin-top:5px; float:right;" >
-    <b-button size="sm" class="pointer" v-if="this.$agent.is_oncall() && this.inqueue!=undefined" @click="record" variant="outline-danger" :disabled="this.inqueue.keep_record">Record</b-button>
+  <b-row style="margin-top:5px; float:right;" v-if="$agent.is_oncall() && inqueue!=undefined">
+    <b-button style="width:85px" size="sm" class="pointer" v-if="!inqueue.keep_record" @click="record" variant="outline-danger">Record</b-button>
+    <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="inqueue.keep_record">Recording</b-button>
   </b-row>
 </div>
 </template>
