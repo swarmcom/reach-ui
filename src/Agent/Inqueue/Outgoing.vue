@@ -8,9 +8,9 @@
     <b-col cols="10">
       <dl class="row agent-state-text">
         <dt class="col-sm-12 session-manager-text">Outbound Call:</dt>
-        <dd class="col-sm-4">To:</dt>
+        <dd class="col-sm-4">To:</dd>
         <dd class="col-sm-8">{{ this.outgoing.target }}</dd>
-        <dd v-if="!this.$agent.is_ringing()" class="col-sm-4">Wait Time:</dt>
+        <dd v-if="!this.$agent.is_ringing()" class="col-sm-4">Wait Time:</dd>
         <dd v-if="!this.$agent.is_ringing()" class="col-sm-8">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
       </dl>
     </b-col>

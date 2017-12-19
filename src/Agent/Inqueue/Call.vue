@@ -11,28 +11,28 @@
   <b-col cols="5">
     <dl class="row agent-state-text">
       <dt class="col-sm-12 session-manager-text">Incoming Call:</dt>
-      <dd class="col-sm-5">Queue:</dt>
+      <dd class="col-sm-5">Queue:</dd>
       <dd class="col-sm-7">{{ this.inqueue.queue.name }}</dd>
-      <dd v-if="!this.$agent.is_ringing()" class="col-sm-5">Wait Time:</dt>
+      <dd v-if="!this.$agent.is_ringing()" class="col-sm-5">Wait Time:</dd>
       <dd v-if="!this.$agent.is_ringing()" class="col-sm-7">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
     </dl>
   </b-col>
   <b-col cols="5">
     <dl class="row agent-state-text">
       <dt class="col-sm-12 session-manager-text">Skills:</dt>
-      <dd class="col-sm-6">Requested skills:</dt>
+      <dd class="col-sm-6">Requested skills:</dd>
       <dd class="col-sm-6">
         <b-row>
           <b-col cols="12" v-for="(v, k, index) in this.inqueue.queue.skills" key="index">{{k}}</b-col>
         </b-row>
       </dd>
-      <dd class="col-sm-6">Matched Skills:</dt>
+      <dd class="col-sm-6">Matched Skills:</dd>
       <dd class="col-sm-6">
         <b-row>
           <b-col cols="12" v-for="(v, k, index) in this.inqueue.skills" key="index">{{k}}</b-col>
         </b-row>
       </dd>
-      <dd class="col-sm-6">Transferers:</dt>
+      <dt class="col-sm-6">Transferers:</dt>
       <dd class="col-sm-6">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
     </dl>
   </b-col>
@@ -120,7 +120,7 @@ export default {
     },
     handleState ({state}) {
       this.inqueue.state = state.state
-      if (state.state == 'conference')
+      if (state.state === 'conference')
         this.queryCall()
     }
   },
