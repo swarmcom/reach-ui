@@ -2,13 +2,13 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div v-if="effective" class="col-5">
-    <b-form-select v-bind:value="computed_value" :options="options" v-on:input="onChange"></b-form-select>
+    <b-form-select :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
   </div>
   <div v-if="effective" class="col-4">
-    <b-form-select v-bind:value="computed_effective" :options="options" disabled></b-form-select>
+    <b-form-select :value="computed_effective" :options="options" disabled></b-form-select>
   </div>
   <div v-else class="col-9">
-    <b-form-select v-bind:value="computed_value" :options="options" v-on:input="onChange"></b-form-select>
+    <b-form-select :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
   </div>
 </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   methods: {
     onChange (V) {
       if (V == 'Not set') {
-        this.$emit('input', 'undefined')
+        this.$emit('input', undefined)
       } else if (V == 'True') {
         this.$emit('input', true)
       } else if (V == 'False') {
