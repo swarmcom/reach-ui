@@ -34,7 +34,7 @@
       <b-col cols="5" class="agent-state-text">Permissions:</b-col>
       <b-col cols="7" class="agent-state-text">
         <b-row>
-          <b-col cols="12" v-if="agent.permissions.length > 0" v-for="(v, k, index) in agent.permissions" key="index">{{k}} {{index}}</b-col>
+          <b-col cols="12" v-for="(v, k, index) in agent.permissions" :key="index">{{k}}</b-col>
         </b-row>
       </b-col>
     </b-row>
@@ -46,7 +46,7 @@
       <b-col cols="5" class="agent-state-text">Skills:</b-col>
       <b-col cols="7" class="agent-state-text">
         <b-row>
-          <b-col cols="12" v-for="(v, k, index) in agent.skills" key="index">{{k}}</b-col>
+          <b-col cols="12" v-for="(v, k, index) in agent.skills" :key="index">{{k}}</b-col>
         </b-row>
       </b-col>
     </b-row>
