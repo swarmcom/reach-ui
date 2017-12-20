@@ -41,7 +41,7 @@
       </div>
       <div v-if="this.$agent.is_hold()" class="agent-state-hold">
         <icon  name="pause" scale="4"></icon>
-        <div>Hold</div>
+        <div style="margin-left:13px;">Hold</div>
       </div>
       <div v-if="this.$agent.is_wrapup()" class="agent-state-wrap-up">
         <icon  name="pause" scale="4"></icon>
