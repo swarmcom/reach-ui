@@ -13,43 +13,42 @@
         <b-row>{{agent.group.name}}</b-row>
       </b-col>
     </b-row>
-      <br>
-      <b-row>
-        <b-col cols="5" class="agent-state-text">SIP Contact:</b-col>
-        <b-col cols="7" class="agent-state-text"> {{agent.uri}} </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="5" class="agent-state-text">Role:</b-col>
-        <b-col cols="7" class="agent-state-text"> {{agent.role.name || '&nbsp'}} </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="5" class="agent-state-text">Caller Id:</b-col>
-        <b-col cols="7" class="agent-state-text"> {{ agent.caller_id_number || '&nbsp' }} </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="5" class="agent-state-text">Caller Uri:</b-col>
-        <b-col cols="7" class="agent-state-text"> {{ agent.uri || '&nbsp' }} </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="5" class="agent-state-text">Permissions:</b-col>
-        <b-col cols="7" class="agent-state-text">
-          <b-row>
-            <b-col cols="12" v-for="(v, k, index) in agent.permissions" key="index">{{k}}</b-col>
-          </b-row>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="5" class="agent-state-text">Persistent:</b-col>
-        <b-col cols="7" class="agent-state-text"> {{ agent.persistent  }} </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="5" class="agent-state-text">Skills:</b-col>
-        <b-col cols="7" class="agent-state-text">
-          <b-row>
-            <b-col cols="12" v-for="(v, k, index) in agent.skills" key="index">{{k}}</b-col>
-          </b-row>
-        </b-col>
-      </b-row>
+    <br>
+    <b-row>
+      <b-col cols="5" class="agent-state-text">SIP Contact:</b-col>
+      <b-col cols="7" class="agent-state-text"> {{agent.uri}} </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="5" class="agent-state-text">Role:</b-col>
+      <b-col cols="7" class="agent-state-text"> {{agent.role.name || '&nbsp'}} </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="5" class="agent-state-text">Caller Id:</b-col>
+      <b-col cols="7" class="agent-state-text"> {{ agent.caller_id_number || '&nbsp' }} </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="5" class="agent-state-text">Caller Uri:</b-col>
+      <b-col cols="7" class="agent-state-text"> {{ agent.uri || '&nbsp' }} </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="5" class="agent-state-text">Permissions:</b-col>
+      <b-col cols="7" class="agent-state-text">
+        <b-row>
+          <b-col cols="12" v-if="agent.permissions.length > 0" v-for="(v, k, index) in agent.permissions" key="index">{{k}} {{index}}</b-col>
+        </b-row>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="5" class="agent-state-text">Persistent:</b-col>
+      <b-col cols="7" class="agent-state-text"> {{ agent.persistent  }} </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="5" class="agent-state-text">Skills:</b-col>
+      <b-col cols="7" class="agent-state-text">
+        <b-row>
+          <b-col cols="12" v-for="(v, k, index) in agent.skills" key="index">{{k}}</b-col>
+        </b-row>
+      </b-col>
     </b-row>
   </b-collapse>
 </div>
