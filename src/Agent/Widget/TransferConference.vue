@@ -28,6 +28,7 @@
           :fields="fieldsAgents"
           :filter="filter">
         </b-table>
+        <div v-if="!allowTransConf" style="color:#F2635F" class="agent-state-text">Transfer or Conference only to the available agent is allowed</div>
       </b-col>
     </b-row>
     <b-row>
@@ -61,6 +62,7 @@ export default {
   data () {
     return {
       showCollapse: true,
+      allowTransConf: true,
       selected: null,
       fieldsAgents: {
         name: { label: 'Name', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
@@ -101,7 +103,13 @@ export default {
       }
     },
     onSelectAgent (data) {
-      this.selectedAgent === data.id ? this.selectedAgent = 'null' : this.selectedAgent = data.id
+      if (data.state === 'available') {
+        this.selectedAgent === data.id ? this.selectedAgent = 'null' : this.selectedAgent = data.id
+        this.allowTransConf = true
+      }
+      else {
+        this.allowTransConf = false
+      }
     },
     can_conference() {
       if (this.$agent.can_conference() && (this.selectedAgent !== 'null' || this.selectedQueue !== 'null' ||
@@ -125,8 +133,12 @@ export default {
       let agents = this.$agent.vm.transfer_agents.slice(0)
       agents.forEach( (key) => {
         key._rowVariant = 'primary'
-        if (key.id === this.selectedAgent)
-          key._rowVariant = 'warning'
+        if (key.id === this.selectedAgent) {
+          if (key.state === 'available')
+            key._rowVariant = 'warning'
+          else
+            this.selectedAgent = 'null'
+        }
       })
       return agents
     }
