@@ -176,7 +176,7 @@ export default {
         else if(this.selectedLine != 'Any Lines')
           return
 
-        if(key.customer.name != undefined) {
+        if(key.customer != undefined) {
           if(this.selectedCustomer != key.customer.name && this.selectedCustomer != 'Any Customers')
             return
         }

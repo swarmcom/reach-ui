@@ -16,12 +16,10 @@
             title="Search Help"
             triggers="click"
             placement="top"
-            content="You can search for any agent, queue, line, agent called id number,
-                     agent caller id name or agent caller id number by typing characters to the keyboard.">
+            content="You can search for any customer, agent, queue, line, skills, agent call id number,
+                     caller id number, called number or by typing characters to the keyboard.">
         </b-popover>
         <b-form-input class="customInput" style="cursor: text" v-model="filter" placeholder="Search ..."/>
-        </b-form-input>
-      </b-input-group>
       </b-input-group>
       <div class="agent-state-text" style="margin-top:10px">Start Date:</div>
       <date-picker class="pointer" size="sm" v-model="startDate" :config="config"></date-picker>
@@ -88,9 +86,10 @@
           <b-col cols="12" v-for="(v, k, index) in data.item.skills" key="index">{{k}}</b-col>
         </template>
         <template slot="caller" slot-scope="data">
-          <div class="agent-state-text"><b>Caller Name: </b>{{data.item.caller}}</div>
-          <div class="agent-state-text"><b>Caller IP: </b>{{data.item.caller_ip}}</div>
-          <div class="agent-state-text"><b>Calling: </b>{{data.item.calling}}</div>
+          <div class="agent-state-text"><b>Call ID: </b>{{data.item.uuid}}</div>
+          <div class="agent-state-text"><b>Caller ID: </b>{{data.item.caller}}</div>
+          <div class="agent-state-text"><b>From System: </b>{{data.item.caller_ip}}</div>
+          <div class="agent-state-text"><b>Called Number: </b>{{data.item.calling}}</div>
         </template>
       </b-table>
       <b-pagination size="sm" align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />

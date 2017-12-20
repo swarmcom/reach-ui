@@ -1,5 +1,5 @@
 <template>
-  <tags v-model="skills" v-on:input="commit()" placeholder="Call effective tags..."></tags>
+  <tags v-model="skills" v-on:input="commit()" placeholder="Add Skills"></tags>
 </template>
 
 <script>

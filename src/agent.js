@@ -202,18 +202,14 @@ export default class Agent extends WsProto {
   }
 
   handleAgents ({info}) {
-    if (info.state === 'available') {
-      let i = this.vm.transfer_agents.findIndex(E => E.id === info.agent.id)
-      if (i < 0) {
-        info.agent.state = info.state
+    if (info.agent.id === this.vm.agent.id) return
+    let i = this.vm.transfer_agents.findIndex(E => E.id === info.agent.id)
+    info.agent.state = info.state
+    if (i >= 0)
+      this.vm.transfer_agents.splice(i, 1)
+
+    if(info.state !== 'terminate' && info.state !== 'grace') {
         this.vm.transfer_agents.push(info.agent)
-      }
-    }
-    else {
-      let i = this.vm.transfer_agents.findIndex(E => E.id === info.agent.id)
-      if (i >= 0) {
-        this.vm.transfer_agents.splice(i, 1)
-      }
     }
   }
 
@@ -231,7 +227,7 @@ export default class Agent extends WsProto {
   can_login () { return this.vm.session_auth }
   can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
   can_hangup () { return this.vm && ( this.vm.state == 'hold' || this.vm.state == 'oncall' || this.vm.state == 'outgoing' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
-  can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'hold' ) }
+  can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
 
   handleAuth (Re, Cb = (A) => A) {

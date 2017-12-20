@@ -15,13 +15,13 @@
     </div>
     <div v-if="!isError()" class="col-8 agent-state-text">
       <div class="row col-12">
-        <b>status: </b>{{state}}
+        <b>status:</b>{{'&nbsp'+state}}
       </div>
       <div class="row col-12">
-        <b>duration:</b>{{msToHms(Math.round(1000*player.duration()).toString())}}
+        <b>duration: </b>{{'&nbsp'+msToHms(Math.round(1000*player.duration()).toString())}}
       </div>
       <div class="row col-12">
-        <b>playing time:</b>{{msToHms(Math.round(1000*value).toString())}}
+        <b>playing time:</b>{{'&nbsp'+msToHms(Math.round(1000*value).toString())}}
       </div>
     </div>
     <vue-slider @drag-end="onDrag" style="margin-left:5px; margin-top:5px" class="col-12" v-model="value" v-bind="optionsSlider"></vue-slider>
