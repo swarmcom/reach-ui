@@ -4,7 +4,7 @@
   <b-collapse v-model="showCollapse" id="collapseAgentInfo" class="mt-2">
     <b-row>
       <b-col cols="4">
-        <b-img v-if="agent.avatar != 'undefined'" :src="this.$agent.avatar_uri(agent.avatar)" style="width:64px;"/>
+        <b-img v-if="agent.avatar !== 'undefined'" :src="this.$agent.avatar_uri(agent.avatar)" style="width:64px;"/>
         <b-img v-else src='src/assets/default_agent.png' style="width:100%" alt="avatar image" />
       </b-col>
       <b-col cols="8" class="agent-state-text">
@@ -34,7 +34,7 @@
       <b-col cols="5" class="agent-state-text">Permissions:</b-col>
       <b-col cols="7" class="agent-state-text">
         <b-row>
-          <b-col cols="12" v-if="agent.permissions.length > 0" v-for="(v, k, index) in agent.permissions" key="index">{{k}} {{index}}</b-col>
+          <b-col cols="12" v-for="(v, k, index) in agent.permissions" :key="index">{{k}}</b-col>
         </b-row>
       </b-col>
     </b-row>
@@ -46,7 +46,7 @@
       <b-col cols="5" class="agent-state-text">Skills:</b-col>
       <b-col cols="7" class="agent-state-text">
         <b-row>
-          <b-col cols="12" v-for="(v, k, index) in agent.skills" key="index">{{k}}</b-col>
+          <b-col cols="12" v-for="(v, k, index) in agent.skills" :key="index">{{k}}</b-col>
         </b-row>
       </b-col>
     </b-row>
@@ -65,7 +65,7 @@ export default {
     }
   },
   created () {
-    if (this.$agent.vm.storage_data.myProfileCollapsed != undefined)
+    if (this.$agent.vm.storage_data.myProfileCollapsed !== undefined)
       this.showCollapse = this.$agent.vm.storage_data.myProfileCollapsed
   }
 }
