@@ -35,7 +35,7 @@
         <icon  name="phone" scale="4"></icon>
         <div style="margin-left:9px">Barge</div>
       </div>
-      <div v-if="a.state == 'suspend'" class="agent-state-suspend">
+      <div v-if="a.state == 'suspended'" class="agent-state-suspend">
         <icon  name="hourglass-start" scale="4"></icon>
         <div style="margin-left:1px">Suspend</div>
       </div>
