@@ -35,6 +35,10 @@
         <icon  name="phone" scale="4"></icon>
         <div style="margin-left:9px">Barge</div>
       </div>
+      <div v-if="a.state == 'suspend'" class="agent-state-suspend">
+        <icon  name="hourglass-start" scale="4"></icon>
+        <div style="margin-left:1px">Suspend</div>
+      </div>
       <div v-if="this.$agent.is_onsession()" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
         <div style="margin-left:3px">On Call</div>

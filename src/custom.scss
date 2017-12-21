@@ -151,6 +151,15 @@ transition: opacity .2s
   font-size: $agent-state-font;
   height:100%;
 }
+.suspend {
+  background:#f7c180;
+  color: $agent-state-icon-color;
+  padding-top:11px;
+  padding-left:20px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
+  height:100%;
+}
 .agent-state-oncall {
   background:#d4fcbb;
   color: $agent-state-icon-color;
