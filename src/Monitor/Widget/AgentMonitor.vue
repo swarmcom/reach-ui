@@ -67,6 +67,14 @@
                 </b-col>
               </b-row>
             </div>
+            <div v-if="data.item.state == 'suspended'" class='agent-state-color'>
+              <icon  name="hourglass-start" scale="2"></icon>
+              <b-row>
+                <b-col cols="12">
+                  <div class="agent-state-text">Suspend</div>
+                </b-col>
+              </b-row>
+            </div>
             <div v-if="data.item.state == 'release'" class='agent-state-color'>
               <icon name="stop" scale="2"></icon>
               <b-row>
@@ -289,6 +297,7 @@ export default {
         {name: "barge"},
         {name: "conference"},
         {name: "inconference"},
+        {name: "suspended"},
         {name: "hold"},
         {name: "wrapup"}
       ],
@@ -456,6 +465,7 @@ export default {
             break
           }
           case "available":
+          case "suspended":
           case "wrapup": {
             key._cellVariants.state = "warning"
             key._cellVariants.media = "warning"

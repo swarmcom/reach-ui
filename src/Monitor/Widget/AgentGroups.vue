@@ -56,10 +56,12 @@ export default {
       fieldsStates: {
         totalAgents: { label: 'Total Agents', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         released: { label: 'Released', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        suspended: { label: 'Suspend', sortable: false, variant: "primary", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         idle: { label: 'Idle', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         ringing: { label: 'Ringing In/Out', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         outgoing: { label: 'Outgoing', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         insession: { label: 'In Session In/Out', sortable: false, variant: "success", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+        conference: { label: 'Conference', sortable: false, variant: "success", thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         wrapup: { label: 'Wrap-up', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       fieldNames: {
@@ -86,10 +88,12 @@ export default {
         let object = {
           "totalAgents":0,
           "released": 0,
+          "suspended": 0,
           "idle": 0,
           "ringing": { inbound: 0, outbound: 0 },
           "outgoing": 0,
           "insession": { inbound: 0, outbound: 0 },
+          "conference": 0,
           "wrapup": 0
         }
         let selectedProfile = key.id
@@ -99,29 +103,35 @@ export default {
             switch (key.state){
               case "release":
                 object.released++
-                break;
+                break
               case "available":
                 object.idle++
-                break;
+                break
+              case "suspended":
+                object.suspended++
+                break
               case "ringing":
                 if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'inbound')
                   object.ringing.inbound++
                 else if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'outbound')
                   object.ringing.outbound++
-                break;
+                break
               case "outgoing":
                 object.outgoing++
-                break;
+                break
+              case "conference":
+              case "inconference":
+                object.conference++
+                break
               case "oncall":
                 if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'inbound')
                   object.insession.inbound++
                 else if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'outbound')
                   object.insession.outbound++
-
-                break;
+                break
               case "wrapup":
                 object.wrapup++
-                break;
+                break
             }
           }
         } )

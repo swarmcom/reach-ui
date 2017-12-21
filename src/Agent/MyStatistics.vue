@@ -20,16 +20,16 @@
             <div style="background-color: #dbeffa">
               <b-progress-bar variant="primary" :value=data.item.statesCounts.release :max="data.item.agents" show-progress><div class="agent-state-text" style="min-width:100%; color:black">Released</div></b-progress-bar>
             </div>
-            <div style="margin-top:2px; background-color: #fbe7c3">
+            <div style="margin-top:2px; background-color: #ffeeba">
               <b-progress-bar variant="warning" :value="data.item.statesCounts.available" :max="data.item.agents" show-progress><div class="agent-state-text" style="min-width:100%; color:black">Available</div></b-progress-bar>
             </div>
-            <div style="margin-top:2px; background-color: #fbe7c3">
+            <div style="margin-top:2px; background-color: #ffeeba">
               <b-progress-bar variant="warning" :value="data.item.statesCounts.ringing" :max="data.item.agents" show-progress><div class="agent-state-text" style="min-width:100%; color:black">Ringing</div></b-progress-bar>
             </div>
             <div style="margin-top:2px; background-color: #e2fada">
               <b-progress-bar variant="success" :value="data.item.statesCounts.oncall" :max="data.item.agents" show-progress><div class="agent-state-text" style="min-width:100%; color:black">Oncall</div></b-progress-bar>
             </div>
-            <div style="margin-top:2px; background-color: #fbe7c3">
+            <div style="margin-top:2px; background-color: #ffeeba">
               <b-progress-bar variant="warning" :value="data.item.statesCounts.wrapup" :max="data.item.agents" show-progress><div class="agent-state-text" style="min-width:100%; color:black">Wrapup</div></b-progress-bar>
             </div>
           </template>

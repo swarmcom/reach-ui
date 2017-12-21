@@ -116,7 +116,7 @@ transition: opacity .2s
   color: $agent-state-icon-color;
 }
 .agent-state-available {
-  background:#f7c180;
+  background:#ffeeba;
   color: $agent-state-icon-color;
   padding-top:11px;
   padding-left:18px;
@@ -147,6 +147,15 @@ transition: opacity .2s
   color: $agent-state-icon-color;
   padding-top:18px;
   padding-left:18px;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
+  height:100%;
+}
+.agent-state-suspend {
+  background:#ffeeba;
+  color: $agent-state-icon-color;
+  padding-top:11px;
+  padding-left:20px;
   width: $agent-state-width;
   font-size: $agent-state-font;
   height:100%;
