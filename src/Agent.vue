@@ -26,10 +26,10 @@
       <agent-skills></agent-skills>
     </b-col>
     <b-col cols="6">
-      <override v-if="this.$agent.is_idle()"></override>
       <dialer v-if="this.$agent.is_idle()"></dialer>
     </b-col>
   </b-row>
+  <override style="margin-top: 20px" v-if="this.$agent.is_idle()"></override>
   <b-row style="margin-top: 20px">
     <b-col cols="4">
       <agent-count></agent-count>

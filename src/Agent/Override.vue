@@ -1,16 +1,21 @@
 <template>
-<b-form-group label="Override URI:">
-  <b-input-group>
-    <b-form-input v-model="uri" type="text"></b-form-input>
-    <b-input-group-button>
-      <b-dropdown text="Contacts" variant="outline-secondary" :disabled="isDisabled()" right>
-        <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
-      </b-dropdown>
-      <b-btn @click="test" variant="success">Test</b-btn>
-      <b-btn @click="override" variant="primary">Set</b-btn>
-    </b-input-group-button>
-  </b-input-group>
-</b-form-group>
+<b-form-row>
+  <b-col>
+    <b-input-group>
+      <b-form-input v-model="uri" type="text" :placeholder="this.$agent.vm.agent.uri"></b-form-input>
+      <b-input-group-button>
+        <b-dropdown text="Contacts" variant="outline-secondary" :disabled="isDisabled()" right>
+          <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
+        </b-dropdown>
+      </b-input-group-button>
+    </b-input-group>
+  </b-col>
+  <b-col>
+    <b-btn @click="override" variant="primary">Set</b-btn>
+    <b-btn @click="reset" variant="secondary">Reset</b-btn>
+    <b-btn @click="test" variant="success">Test</b-btn>
+  </b-col>
+</b-form-row>
 </template>
 
 <script>
@@ -18,8 +23,7 @@ export default {
   name: 'override',
   data () {
     return {
-      uri: '',
-      actions: ['asd', 'dsa']
+      uri: ''
     }
   },
   methods: {
@@ -41,6 +45,11 @@ export default {
     override: async function() {
       let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
       this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+    },
+    reset: async function() {
+      this.uri = undefined
+      let re = await this.$agent.p_mfa('ws_agent', 'reset_uri', [])
+      this.$notify({ title: 'Success:', text: 'SIP Contant reset', type: 'success' })
     }
   },
   created () {
