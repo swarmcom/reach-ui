@@ -21,27 +21,27 @@
       </div>
       <div v-if="a.state == 'ringing'" class="agent-state-ringing">
         <icon  name="wifi" scale="4" style="transform: rotate(270deg);"></icon>
-        <div>Ringing</div>
+        <div style="margin-left:5px">Ringing</div>
       </div>
       <div v-if="a.state == 'outgoing'" class="agent-state-outgoing">
         <icon  name="wifi" scale="4" style="transform: rotate(90deg);"></icon>
-        <div>{{a.state}}</div>
+        <div style="margin-left:7px">{{a.state}}</div>
       </div>
       <div v-if="a.state == 'test'" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
-        <div>Test</div>
+        <div style="margin-left:11px">Test</div>
       </div>
       <div v-if="a.state == 'barge'" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
-        <div>Barge</div>
+        <div style="margin-left:9px">Barge</div>
       </div>
       <div v-if="this.$agent.is_onsession()" class="agent-state-oncall">
         <icon  name="phone" scale="4"></icon>
-        <div>On Call</div>
+        <div style="margin-left:3px">On Call</div>
       </div>
       <div v-if="this.$agent.is_hold()" class="agent-state-hold">
         <icon  name="pause" scale="4"></icon>
-        <div style="margin-left:13px;">Hold</div>
+        <div style="margin-left:11px">Hold</div>
       </div>
       <div v-if="this.$agent.is_wrapup()" class="agent-state-wrap-up">
         <icon  name="pause" scale="4"></icon>
