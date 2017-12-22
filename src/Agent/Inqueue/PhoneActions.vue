@@ -1,6 +1,6 @@
 <template>
-<div>
-  <b-row class="float-right">
+<div class="float-right">
+  <b-row>
     <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
     <wrap-timer  v-if="this.wrap_visible" v-bind:inqueue="this.wrap" :state_time="state_time" class="state-time"></wrap-timer>
     <button v-if="this.$agent.is_hold()" style="background:#FFEDA4" @click="unhold" class="btn call-action-button">
@@ -17,11 +17,12 @@
     <button v-if="this.$agent.vm.state == 'barge'" @click="hangup" style="margin-left:2px" class="btn call-action-button">
       <icon style="padding-top:2px" name="close" scale="2"></icon></button>
   </b-row>
-  <b-row style="margin-top:5px; width:200px;" class="float-right">
+  <b-row style="margin-top:5px; width:200px;">
     <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" style="width:100%"></disposition>
   </b-row>
-  <br><br>
-  <b-row style="margin-top:5px; float:right;" v-if="$agent.is_oncall() && inqueue!=undefined">
+  <br>
+  <br>
+  <b-row style="margin-top:5px;" class="float-right"  v-if="$agent.is_oncall() && inqueue!=undefined">
     <b-button style="width:85px" size="sm" class="pointer" v-if="!inqueue.keep_record" @click="record" variant="outline-danger">Record</b-button>
     <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="inqueue.keep_record">Recording</b-button>
   </b-row>
