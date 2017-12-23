@@ -90,7 +90,7 @@ export default {
 
 <style lang="scss">
 //@import "./custom-bootstrap.scss";
-@import "custom.scss";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "custom.scss";
 </style>
 
