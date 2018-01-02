@@ -7,8 +7,8 @@
   </div>
 
   <div class="form">
-    <form-text label="Name" v-model="rec.name"></form-text>
-    <form-text label="Description" v-model="rec.description"></form-text>
+    <form-text label="Property Name" v-model="rec.name"></form-text>
+    <form-text label="Property Description" v-model="rec.description"></form-text>
     <template v-if="isGateway(rec)">
       <form-text label="Address" v-model="rec.address"></form-text>
       <form-text label="IP" v-model="rec.ip"></form-text>
