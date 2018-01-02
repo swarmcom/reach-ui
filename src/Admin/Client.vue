@@ -6,13 +6,13 @@
   <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
   <prompts label="Announce" v-model="rec.announce_id"></prompts>
   <form-select-bool label="Allow Voicemail" v-model="rec.allow_voicemail"></form-select-bool>
-  <form-select-bool label="Enable call recording" v-model="rec.enable_call_recording"></form-select-bool>
   <prompts label="Voicemail prompt" v-model="rec.voicemail_prompt_id"></prompts>
+  <form-select-bool label="Enable call recording" v-model="rec.enable_call_recording"></form-select-bool>
   <form-select-bool label="Override Caller ID on Line In" v-model="rec.override_clid_line_in"></form-select-bool>
   <form-select-bool label="Override Caller ID on Line Out" v-model="rec.override_clid_line_out"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name"></form-text>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text> 
-  <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
+  <form-file label="Client Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
   <form-tags label="Client Skills" placeholder="Skill..." v-model="skills"></form-tags>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>

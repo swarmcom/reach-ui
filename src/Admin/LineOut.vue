@@ -3,7 +3,7 @@
   <form-text label="Line-Out Name" v-model="rec.name"></form-text>
   <form-text label="Line-Out Description" v-model="rec.description"></form-text>
   <clients label="Client" v-model="rec.client_id"></clients>
-  <form-select-bool label="Override Caller ID" v-model="rec.override_clid"></form-select-bool>
+  <form-select-bool label="Override Caller ID (outbound)" v-model="rec.override_clid"></form-select-bool>
   <form-text label="Caller ID name" v-model="rec.caller_id_name"></form-text>
   <form-text label="Caller ID number" v-model="rec.caller_id_number"></form-text>
   <div style="margin-top: 20px">
