@@ -7,8 +7,8 @@
   </div>
 
   <div class="form">
-    <form-text id="name" label="Name" v-model="rec.name"></form-text>
-    <form-text id="description" label="Description" v-model="rec.description"></form-text>
+    <form-text id="name" label="Role Name" v-model="rec.name"></form-text>
+    <form-text id="description" label="Role Description" v-model="rec.description"></form-text>
   </div>
 
   <div class="row" style="margin-top: 20px">
