@@ -1,13 +1,13 @@
 <template>
 <div>
-  <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"></toggle-bar>
+  <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"/>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerCallView" class="mt-2">
     <div class="row">
       <div class="col-2">
         <div class="row toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </div>
-        <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" />
+        <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" ></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
           <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
         </b-form-select>
@@ -36,9 +36,8 @@
             <b-row class="text-center">
               <b-col>
                 <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                  <b-dropdown-item v-if="data.item.state == 'inqueue' || data.item.state == 'agent'" @click="take(data.item)">Take</b-dropdown-item>
-                  <b-dropdown-item v-if="data.item.state == 'oncall'" @click="takeover(data.item)">Takeover</b-dropdown-item>
-                  <b-dropdown-item v-if="data.item.state == 'oncall'" @click="spy(data.item)">Spy</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state === 'inqueue' || data.item.state === 'agent'" @click="take(data.item)">Take</b-dropdown-item>
+                  <b-dropdown-item v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" @click="spy(data.item)">Monitor</b-dropdown-item>
                   <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
                 </b-dropdown>
               </b-col>
@@ -46,12 +45,12 @@
           </template>
           <template slot="media" slot-scope="data">
             <b-row>
-              <b-col cols="1" v-if="data.item.record == 'inqueue_call'">
-                <icon name="mobile" scale="2" class='agent-state-color'></icon>
+              <b-col cols="1" v-if="data.item.record === 'inqueue_call'">
+                <icon name="mobile" scale="2" class='agent-state-color'/>
               </b-col>
               <b-col cols="1">
-                <b-img v-if="data.item.customer.avatar != 'undefined'" :src="$agent.avatar_uri(data.item.customer.avatar)" style="width:32px;"/>
-                <icon v-else name="handshake-o" scale="2"></icon>
+                <b-img v-if="data.item.customer.avatar !== 'undefined'" :src="$agent.avatar_uri(data.item.customer.avatar)" style="width:32px;"></b-img>
+                <icon v-else name="handshake-o" scale="2"/>
               </b-col>
               <b-col>
                 {{data.item.customer.name}}
@@ -60,13 +59,13 @@
           </template>
           <template slot="state" slot-scope="data">
             <b-row>
-              <b-col v-if="data.item.state == 'inqueue'">
+              <b-col v-if="data.item.state === 'inqueue'">
                 In Queue
               </b-col>
-              <b-col v-if="data.item.state == 'oncall'">
+              <b-col v-if="data.item.state === 'oncall'">
                 Connected
               </b-col>
-              <b-col v-if="data.item.state == 'agent'">
+              <b-col v-if="data.item.state === 'agent'">
                 Ringing
               </b-col>
             </b-row>
@@ -149,11 +148,11 @@ export default {
   },
   created () {
     this.query()
-    if (this.$agent.vm.storage_data.queueManagerMonitorCollapsed != undefined)
+    if (this.$agent.vm.storage_data.queueManagerMonitorCollapsed !== undefined)
       this.showCollapse = this.$agent.vm.storage_data.queueManagerMonitorCollapsed
-    if (this.$agent.vm.storage_data.queueManagerMonitorSortBy != undefined)
+    if (this.$agent.vm.storage_data.queueManagerMonitorSortBy !== undefined)
       this.sortBy = this.$agent.vm.storage_data.queueManagerMonitorSortBy
-    if (this.$agent.vm.storage_data.queueManagerMonitorSortDesc != undefined)
+    if (this.$agent.vm.storage_data.queueManagerMonitorSortDesc !== undefined)
       this.sortDesc = this.$agent.vm.storage_data.queueManagerMonitorSortDesc
   },
   computed: {
@@ -162,31 +161,31 @@ export default {
       let compInqueues = []
       inqueues.forEach( (key) => {
         key._cellVariants = { actions: 'success', media: 'primary', state: 'primary', line: 'primary', queue: 'primary', skillsReq: 'primary', timeInQueue: 'primary' }
-        if(key.queue != undefined){
-          if(this.selectedQueue != key.queue && this.selectedQueue != 'Any Queue')
+        if(key.queue !== undefined){
+          if(this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue')
             return
         }
-        else if(this.selectedQueue != 'Any Queue')
+        else if(this.selectedQueue !== 'Any Queue')
           return
 
-        if(key.line != undefined) {
-          if(this.selectedLine != key.line && this.selectedLine != 'Any Lines')
+        if(key.line !== undefined) {
+          if(this.selectedLine !== key.line && this.selectedLine !== 'Any Lines')
             return
         }
-        else if(this.selectedLine != 'Any Lines')
+        else if(this.selectedLine !== 'Any Lines')
           return
 
-        if(key.customer != undefined) {
-          if(this.selectedCustomer != key.customer.name && this.selectedCustomer != 'Any Customers')
+        if(key.customer !== undefined) {
+          if(this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers')
             return
         }
-        else if(this.selectedCustomer != 'Any Customers')
+        else if(this.selectedCustomer !== 'Any Customers')
           return
 
-        if(this.selectedState != key.state && this.selectedState != 'Any State')
+        if(this.selectedState !== key.state && this.selectedState !== 'Any State')
           return
 
-        if(key.skillsReq != undefined && this.selectedSkill != 'Any Skill') {
+        if(key.skillsReq !== undefined && this.selectedSkill !== 'Any Skill') {
           let skills = key.skillsReq.split(",")
           if(!skills.includes(this.selectedSkill)){
             return
