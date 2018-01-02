@@ -7,8 +7,8 @@
   </div>
 
   <div class="form">
-    <form-text id="name" label="Name" v-model="rec.name"></form-text>
-    <form-text id="description" label="Description" v-model="rec.description"></form-text>
+    <form-text id="name" label="Release Group Name" v-model="rec.name"></form-text>
+    <form-text id="description" label="Release Group Description" v-model="rec.description"></form-text>
     <div style="margin-top:20px">
       <button @click="onCommit" class="btn btn-primary">Commit</button>
       <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
