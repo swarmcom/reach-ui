@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    show(ev) {
+    show (ev) {
       if(! this.visible) {
         this.visible = true
         ev.stopPropagation()
@@ -30,7 +30,7 @@ export default {
         window.addEventListener('click', this.hide)
       }
     },
-    hide() {
+    hide () {
       if (this.visible) {
         this.visible = false
         $(this.$el).hide()
@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted () {
-    this.reference = $(`:contains('${this.target}')`).last()
+    this.reference = $(document.getElementById(this.target))
     this.reference.on('click', ev => this.onclick(ev) )
     this.reference.css('cursor', 'help')
   },
