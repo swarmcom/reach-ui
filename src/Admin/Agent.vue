@@ -7,8 +7,8 @@
   <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
   <lines label="Line Out" v-model="rec.line_id"></lines>
   <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
-  <form-text label="Primary SIP Contact" v-model="rec.uri"></form-text>
-  <uris label="SIP Contacts" v-model="rec.uris"></uris>
+  <form-text label="Primary Contact" v-model="rec.uri"></form-text>
+  <uris label="Additional Contacts" v-model="rec.uris"></uris>
   <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text>
   <form-text label="Ring Timeout" v-model="rec.ring_timeout" :effective="eff.ring_timeout"></form-text>
   <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>
