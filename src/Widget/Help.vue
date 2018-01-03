@@ -258,8 +258,12 @@ Description of the Disposition Group
 Name of the prompt.  A prompt may be something as simple as a tone that you want to play somewhere in the sytem or may be something more complex like an announcement to be used to prompt a caller for some interaction.  The prompts built here can be referenced throughout the system.  Example:  Line, Client, Recipes, Queue, Etc.
   </helper>
 
+  <helper target="Prompt Description">
+Description of the Prompt.  Some description that helps the administrator understand what the prompt is or what it is used for.
+  </helper>
+
   <helper target="Choose File">
-Choose the prompt file to upload.
+Choose the file to upload.
   </helper>
 
   <helper target="MOH Name">
@@ -271,7 +275,7 @@ Description of the MOH.  Some description that helps the administrator understan
   </helper>
 
   <helper target="File">
-Choose the prompt file to upload.
+Choose the MOH file to upload.
   </helper>
 
   <helper target="Line-In Name">
