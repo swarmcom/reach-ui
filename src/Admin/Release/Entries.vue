@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.releases = await this.$agent.p_mfa('ws_db_release', 'get', [this.id])
+      this.releases = await this.$agent.p_mfa('ws_db_release', 'by_group', [this.id])
     },
     onChange (release, field, value) {
       release[field] = value
