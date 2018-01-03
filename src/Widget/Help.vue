@@ -36,10 +36,14 @@ This is the default SIP end point or phone number that the agent will be offered
   Enter a list of additional contact numbers for this agent.  If given the permission to do so, the agent will be able to select from this list of predefined contact numbers when they are logged in.  This will allow the agent to change/set their contact or "phone" on the fly during their logged in session.  Note that these contacts can be SIP URIs or any number that is routable by the system.    Note that the system will route calls to agent URI's or phone numbers based on the configuration built in the Instance - Nodes and Instance - Domains configuration.
   </helper>
   
-  <helper target="Caller ID Number">
+  <helper target="Agent Caller ID Number">
 Caller ID number to be used for this agent when they make outbound calls. Note that this caller ID number may be overridden by Line or Client settings.  An agent selects an outbound line to use when placing an outbound call.  The configuration of this selected line and it's associated client are specifically what can override this caller ID information.  If you do not want this value to be overriden, be sure that Override Caller ID on Line Out and Override Caller ID (outbound) are not set to true.  If this value is not set, the configuration of the caller ID parameters of the Line/Client combination selected during the outbound call process will be used to determine the caller ID number.
   </helper>
 
+  <helper target="Caller ID Number">
+Caller ID (number portion)
+  </helper>
+  
   <helper target="Ring Timeout">
 Number of seconds that the agent(s) phone will ring when they are offered a call before the call is pulled back and offered to another agent. Enter a number of seconds or leave blank. Note that this configuration parameter can be set at both the agent and agent group level with the agent level setting taking precedence.  If left blank on both the agent and agent group, a system default (agent_ring_timeout) as set in the Params menu will be used to determine the ring timeout value.
   </helper>
@@ -155,7 +159,7 @@ Enter the name of the client.  Clients are used to categorize calls and provide 
 Select the Disposition Group to be assigned.  A disposition group is a simple list of call dispositions that an agent will choose from during the call or wrap-up time.  This call disposition is then recorded as part of the call detail record and can be reported on.  Dispositions are free form, meaning that the administrator can add as many dispositions as they would like with any name that they would like.  Disposition groups can then be used to provide a different list of dispositions to the agents for calls that arrive for different lines and clients.  Call dispositions and groups are configured in the Config - Disposition Groups configuration page.
   </helper>
 
-  <helper target="Lua Script">
+  <helper target="Lua script">
 Lua script to be executed at the begining of the call (upon call entry to the system).  Lua scripts are configured in the Config - Lua Actions configuration page and can be used to drastically extend the flexibility of the system.  The administrator can write and deploy as many lua actions or "scripts" as they would like and these lua scripts can be used for things as simple as prompting the caller for information or for functions as complex as integrating with a specific CRM system.
   </helper>
 
@@ -175,11 +179,11 @@ Select an announcement to play upon call arrival for this client.  Calls associa
 If True, queue voicemail is allowed.  If False, queue voicemail is not allowed.  Queue voicemail is a feature that allows a user to request to leave a voicemail or for a recipe step to force a call to leave a voicemail.  Unlike a typical system voicemail in a PBX, these recorded messages or "voicemails" are left as a media in the queue for delivery to an agent.  When a voicemail is recorded, the voicemail is placed into the queue that the call was in and maintains the skills that the call had.  These voicemails look and act like a call in the queue with the only difference being that an agent can simply listen to the message once they are offered and answered the voicemail media rather than being able to talk to the caller.  Voicemails are matched to agents based on skills exactly as calls are matched.  As mentioned, the caller can press a DTMF key to request the transfer.  The key used is configured in the voicemail_dtmf_trigger value under the Params administration menu.  Note that Allow Voicemail can be set on the Line or the Client with the Line setting taking precedence.  </helper>
 
   <helper target="Enable call recording">
-If True, call recording is enabled and all calls will be recorded.  If False, no calls will be recorded.  If set to On Demand, calls will only be recorded if the agent presses the record button during the call.  This allows functionality for "record all", "record none" and "record if agent indicates to do so.  Call recording can be set to true/false/on demand at the Client or Line level with the Line level setting taking precedence.  If it is undefined on the Line configuration, the value from the Client will be used.  It is worth noting that in reality, all calls in the system are recorded behind the scenes.  This setting is really used to determine whether or not to save the recording.  Thus, when call recording is set to On Demand, the entire call is saved as a recording when the agent presses the record button rather than only the portion of the call beyond the time that the agent pressed the record button.
+If True, call recording is enabled and all calls will be recorded.  If False, no calls will be recorded.  If set to On Demand, calls will only be recorded if the agent presses the record button during the call.  This allows functionality for "record all", "record none" and "record if agent indicates to do so".  Call recording can be set to true/false/on demand at the Client or Line level with the Line level setting taking precedence.  If it is undefined on the Line configuration, the value from the Client will be used.  It is worth noting that in reality, all calls in the system are recorded behind the scenes.  This setting is really used to determine whether or not to save the recording.  Thus, when call recording is set to On Demand, the entire call is saved as a recording when the agent presses the record button rather than only the portion of the call beyond the time that the agent pressed the record button.
   </helper>
 
   <helper target="Voicemail prompt">
-Select a prompt to be played prior to the beep when a user is about to leave a voicemail.  The list of prompts that can be selected are configured under the Sounds - Prompts configuration page.  Note that this Voicemail Prompt can be set at the Line or Client level with the Line level configuration taking precedence.  If Voicemail Prompt is not configured but call recording is enabled, only a beep tone will play prior to the user being in a state that they are recroding a message.  If Allow Voicemail is disabled and there is a configured Voicemail Prompt, the configured prompt will simply be ignored.
+Select a prompt to be played prior to the beep when a user is about to leave a voicemail.  The list of prompts that can be selected are configured under the Sounds - Prompts configuration page.  Note that this Voicemail Prompt can be set at the Line or Client level with the Line level configuration taking precedence.  If Voicemail Prompt is not configured but allow voicemail is true, only a beep tone will play prior to the user being in a state that they are recroding a message.  If Allow Voicemail is false and there is a configured Voicemail Prompt, the configured prompt will simply be ignored.
   </helper>
 
   <helper target="Override Caller ID on Line In">
@@ -203,7 +207,7 @@ Name of the Queue Group being configured
   </helper>
 
   <helper target="Client Avatar">
-A specific Avatar to associate with this Client.  This avatar is displayed in the agent UI and can therefore be a nice visual indicator to the agent.  If set, this avatar would be associated with calls to or from this Client.  In other words, if placing an outbound call through the agent UI, the Line Out selected determines the Client to associate with the outbound call and that Client in turn deterines the avatart to use for that outbound call.
+A specific Avatar to associate with this Client.  This avatar is displayed in the agent UI and can therefore be a nice visual indicator to the agent.  If set, this avatar would be associated with calls to or from this Client.  In other words, if placing an outbound call through the agent UI, the Line Out selected determines the Client to associate with the outbound call and that Client in turn deterines the avatar to use for that outbound call.
   </helper>
 
   <helper target="Client Skills">
