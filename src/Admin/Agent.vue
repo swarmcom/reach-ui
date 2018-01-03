@@ -9,7 +9,7 @@
   <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
   <form-text label="Primary Contact" v-model="rec.uri"></form-text>
   <uris label="Additional Contacts" v-model="rec.uris"></uris>
-  <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text>
+  <form-text label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-text>
   <form-text label="Ring Timeout" v-model="rec.ring_timeout" :effective="eff.ring_timeout"></form-text>
   <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>
   <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails" :effective="eff.max_ring_fails"></form-text>
