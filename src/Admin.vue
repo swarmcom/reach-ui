@@ -33,7 +33,7 @@
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Lines">
-    <b-dropdown-item to="/admin/dialplan">Dialplan</b-dropdown-item>
+    <b-dropdown-item to="/admin/dialplan">Inbound routing</b-dropdown-item>
     <b-dropdown-item to="/admin/line_ins">Lines In</b-dropdown-item>
     <b-dropdown-item to="/admin/line_outs">Lines Out</b-dropdown-item>
   </b-nav-item-dropdown>
