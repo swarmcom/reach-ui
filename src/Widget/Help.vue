@@ -39,10 +39,6 @@ This is the default SIP end point or phone number that the agent will be offered
   <helper target="Agent Caller ID Number">
 Caller ID number to be used for this agent when they make outbound calls. Note that this caller ID number may be overridden by Line or Client settings.  An agent selects an outbound line to use when placing an outbound call.  The configuration of this selected line and it's associated client are specifically what can override this caller ID information.  If you do not want this value to be overriden, be sure that Override Caller ID on Line Out and Override Caller ID (outbound) are not set to true.  If this value is not set, the configuration of the caller ID parameters of the Line/Client combination selected during the outbound call process will be used to determine the caller ID number.
   </helper>
-
-  <helper target="Caller ID Number">
-Caller ID (number portion)
-  </helper>
   
   <helper target="Ring Timeout">
 Number of seconds that the agent(s) phone will ring when they are offered a call before the call is pulled back and offered to another agent. Enter a number of seconds or leave blank. Note that this configuration parameter can be set at both the agent and agent group level with the agent level setting taking precedence.  If left blank on both the agent and agent group, a system default (agent_ring_timeout) as set in the Params menu will be used to determine the ring timeout value.
@@ -219,7 +215,7 @@ Name of the lua action or "script".  An administrator can define as may lua acti
   </helper>
 
   <helper target="Lua Description">
-Description of the lua action of "script".  It is useful to provide a clean and concise description for the lua action so that an administrator does not need to look at the lua code to determine what the script is intended to do.  Of course, the lua code below may also be well commented to ensure an understanding of what the script does.
+Description of the lua action or "script".  It is useful to provide a clean and concise description for the lua action so that an administrator does not need to look at the lua code to determine what the script is intended to do.  Of course, the lua code below may also be well commented to ensure an understanding of what the script does.
   </helper>
 
   <helper target="Skill Group Name">
