@@ -31,7 +31,7 @@
       </li>
     </ul>
     <span v-if="auth" class="navbar-text" style="margin-right: 20px">{{ this.$agent.vm.agent.login }}</span>
-    <button v-if="auth" @click="logout" class="btn btn-outline-danger">Logout</button>
+    <button v-if="auth" @click="logout" class="btn btn-sm btn-outline-danger">Logout</button>
   </div>
 </nav>
 <div class="container">

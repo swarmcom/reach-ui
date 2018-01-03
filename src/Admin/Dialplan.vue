@@ -1,18 +1,18 @@
 <template>
 <b-container>
   <b-row style="margin-bottom: 10px">
-    <b-col><h3>Dialplan:</h3></b-col>
+    <b-col><h3>Inbound routing:</h3></b-col>
   </b-row>
 
   <b-form-row v-for="dial of entries" :key="dial.id" style="margin-top: 5px">
     <b-col cols=2>
-      <button @click="del(dial.id)" class="btn btn-outline-danger">
+      <button @click="del(dial.id)" class="btn btn-sm btn-outline-danger">
         <icon class="align-middle" name="minus" scale="1"></icon>
       </button>
-      <button @click="up(dial.id)" class="btn btn-outline-success">
+      <button @click="up(dial.id)" class="btn btn-sm btn-outline-success">
         <icon class="align-middle" name="arrow-up" scale="1"></icon>
       </button>
-      <button @click="down(dial.id)" class="btn btn-outline-primary">
+      <button @click="down(dial.id)" class="btn btn-sm btn-outline-primary">
         <icon class="align-middle" name="arrow-down" scale="1"></icon>
       </button>
     </b-col>
@@ -33,7 +33,7 @@
 
   <b-form-row style="margin-top: 5px">
     <b-col cols=2>
-      <button @click="add" class="btn btn-outline-secondary">
+      <button @click="add" class="btn btn-sm btn-outline-secondary">
         <icon name="plus" scale="1" class="align-middle"></icon>
       </button>
     </b-col>

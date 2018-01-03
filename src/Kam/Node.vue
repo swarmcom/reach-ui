@@ -2,14 +2,14 @@
 <div class="form-row">
   <b-col cols=2>
     <template v-if="isEntry()">
-      <button @click="del(entry.id)" class="btn btn-outline-danger">
+      <button @click="del(entry.id)" class="btn btn-sm btn-outline-danger">
         <icon class="align-middle" name="minus" scale="1"></icon>
       </button>
-      <button @click="edit(entry.id)" class="btn btn-outline-primary">
+      <button @click="edit(entry.id)" class="btn btn-sm btn-outline-primary">
         <icon class="align-middle" name="gear" scale="1"></icon>
       </button>
     </template>
-    <button v-else @click="add" class="btn btn-outline-secondary">
+    <button v-else @click="add" class="btn btn-sm btn-outline-secondary">
       <icon class="align-middle" name="plus" scale="1"></icon>
     </button>
   </b-col>
