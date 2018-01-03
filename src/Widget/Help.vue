@@ -226,6 +226,10 @@ Name of the skill group.  A skill group is used to create lists or groups of ski
 Description of the skill group.
   </helper>
 
+  <helper target="Group Skills">
+Build the list of skills to associate with the Skill Group. Remove skills by clicking on the skill name to the right of the drop down selector.  Add skills by selecting a skill from the drop down.  The skills will be associated with the skill group and the skill group will be able to be assigned to queues, agents, etc throughout the system.
+  </helper>
+  
   <helper target="All skills">
 Add skills to the system by typing in the skill name in the entry box and pressing return.  Once added, a full list of the skills built in the system can be seen by using the drop down.  Remove skills from the system by clicking on the skill name to the right of the drop down selector.  Note that once a skill is built in the system here, it can be referenced throughout the system by name.  Example configuration referenceing these skills includes skill groups, queue, queue group, agent, agent group, line, client, etc.
   </helper>
@@ -279,7 +283,7 @@ Choose the MOH file to upload.
   </helper>
 
   <helper target="Line-In Name">
-Name of the line.  A Line-In is pointed to by the dialplan and is used to route inbound calls to a client and queue.  The dialplan matches a pattern and sends the call an inbound line.  Then the inbound line points a call to a queue and assigns the client as well perhaps some skills and other feature related configuration.  Note that reporting can be done at a line level so that the contact center can get details about calls to a specific number are being cared for.
+Name of the line.  A Line-In is pointed to by the inbound routing table and is used to route inbound calls to a client and queue.  The inbound routing matches a pattern and sends the call to an inbound line.  The inbound line points a call to a queue and assigns a client as well perhaps some skills and other feature related configuration.  Note that reporting can be done at a line level so that the contact center can get details about how calls to a specific number are being cared for.
   </helper>
 
   <helper target="Line-In Description">
@@ -295,7 +299,7 @@ Select the lua action to perform at the end of a call.  End of call means that t
   </helper>
 
   <helper target="Agent Lua Script">
-Select the lua action to perform when a call is answered by an agent.  Once the call is answered by the agent, the lua action would typically be performed in the background, without the knowledge of the agent or calle.  This hook can be used to do things like update a CRM database with call detail information that includes what agent took the call.  Lua actions are defined under the Config - Lua actions page.  Once configured there, they are selectable here.
+Select the lua action to perform when a call is answered by an agent.  Once the call is answered by the agent, the lua action would typically be performed in the background, without the knowledge of the agent or caller.  This hook can be used to do things like update a CRM database with call detail information that includes what agent took the call.  Lua actions are defined under the Config - Lua actions page.  Once configured there, they are selectable here.
   </helper>
 
   <helper target="Queue">
@@ -303,11 +307,15 @@ Select the queue that the call will be placed into.  Note that a call is answere
   </helper>
 
   <helper target="Client">
-Select the Client to assign the outbound call to.  For inbound calls, Client assignment is important for the purpose of both routing and configuration.  However, for outbound calls, it is used explicitly for reporting.  Reporting can be done based on the client assignment of outbound calls.  Clients are built in the Clients menu and configuration page.  Once they are added there, they can be selected here. 
+Select the Client to assign to the call.  For inbound calls, Client assignment is important for the purpose of both routing and feature configuration.  For outbound calls, it is used explicitly for reporting.  Reporting can be done based on the client assignment of outbound calls.  Clients are built in the Clients menu and configuration page.  Once they are added there, they can be selected here. 
   </helper>
 
   <helper target="Welcome Message">
 Select an announcement to play upon call arrival for this line.  Calls associated with this line will be delivered this announcement and then placed into queue.  It is a "welcome" message and will not be truncated.  Note that the call does not really enter a queue until this announcement is complete.  Also note that the Announcement configuration parameter on the Client configuration page is also a "welcome" message.  So, the administrator can define an announcement to play at the Line or Client level as they desire.  Announcements are built in the system via the Sounds - Prompts configuration page, then selected as desired in the line or client settings.
+  </helper>
+  
+    <helper target="Voicemail Prompt">
+Select a prompt to be played prior to the beep when a user is about to leave a voicemail.  The list of prompts that can be selected are configured under the Sounds - Prompts configuration page.  Note that this Voicemail Prompt can be set at the Line or Client level with the Line level configuration taking precedence.  If Voicemail Prompt is not configured but allow voicemail is true, only a beep tone will play prior to the user being in a state that they are recroding a message.  If Allow Voicemail is false and there is a configured Voicemail Prompt, the configured prompt will simply be ignored.
   </helper>
 
   <helper target="Answer on Agent pickup">
@@ -332,6 +340,14 @@ Description of the line.  This can be a description of what client the line is a
 
   <helper target="Override Caller ID (outbound)">
 If True, Caller ID used for outbound calls using this Line-Out is the Caller ID name and Caller ID number below.  If False, the Caller ID information is picked up from the Agent specific record under the Agents - Agents configuration page.  Specifically, the Agent Name and Caller ID Number of the agent is used as the Caller ID information sent.  Note that in the Client configuration, the Caller ID of both the agent and the Line-Out can be overridden.  This is done via the Override Caller ID on Line Out configuration parameter.  
+  </helper>
+  
+    <helper target="Caller ID name">
+Caller ID (name portion).
+  </helper>
+
+  <helper target="Caller ID number">
+Caller ID (number portion)
   </helper>
 
 </div>
