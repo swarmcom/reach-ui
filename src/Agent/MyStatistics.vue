@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
+  <toggle-bar style="cursor: move"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2">
     <b-row>
       <b-col cols="2">

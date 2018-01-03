@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
+  <toggle-bar style="cursor: move"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
     <inqueues-view :inqueues="inqueues"></inqueues-view>
     <inqueues-monitor :inqueues="inqueues"></inqueues-monitor>

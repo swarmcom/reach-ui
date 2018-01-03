@@ -1,11 +1,12 @@
 <template>
 <div v-bind:class="classObject">
-  <div class="row">
-    <div class="col"><agents></agents></div>
-  </div>
-  <div class="row">
-    <div class="col"><inqueues></inqueues></div>
-  </div>
+  <draggable :list="widgets">
+    <b-row v-for="(item, index) in widgets" :key="index">
+      <b-col>
+        <component v-bind:is="item"/>
+      </b-col>
+    </b-row>
+  </draggable>
 </div>
 
 </template>
@@ -13,10 +14,12 @@
 <script>
 import Agents from '@/Monitor/Agents'
 import Inqueues from '@/Monitor/Inqueues'
+import draggable from 'vuedraggable'
 
 export default {
   data () {
     return {
+      widgets: ['agents', 'inqueues']
     }
   },
   computed: {
@@ -31,7 +34,8 @@ export default {
   },
   components: {
     'agents': Agents,
-    'inqueues': Inqueues
+    'inqueues': Inqueues,
+    draggable
   }
 }
 </script>
