@@ -1,6 +1,6 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
+  <toggle-bar/>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
   <b-row>
     <b-col cols="2">
@@ -19,12 +19,12 @@
             content="You can search for any customer, agent, queue, line, skills, agent call id number,
                      caller id number, called number or by typing characters to the keyboard.">
         </b-popover>
-        <b-form-input class="customInput" style="cursor: text" v-model="filter" placeholder="Search ..."/>
+        <b-form-input class="customInput" style="cursor: text" v-model="filter" placeholder="Search ..."></b-form-input>
       </b-input-group>
       <div class="agent-state-text" style="margin-top:10px">Start Date:</div>
-      <date-picker class="pointer" size="sm" v-model="startDate" :config="config"></date-picker>
+      <datepicker v-model="startDate" bootstrapStyling/>
       <div class="agent-state-text" style="margin-top:10px">End Date:</div>
-      <date-picker class="pointer" size="sm" v-model="endDate" :config="config"></date-picker>
+      <datepicker v-model="endDate" bootstrapStyling/>
       <div class="agent-state-text" style="margin-top:10px">Queue:</div>
       <b-form-select class="pointer" size="sm" v-model="selectedQueue">
         <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
@@ -44,7 +44,7 @@
     </b-col>
     <b-col cols="10">
       <b-col cols="2" class="float-right">
-      <b-form-select size="sm" :options="pageOptions" v-model="perPage" @input="onSelectChange"/>
+      <b-form-select size="sm" :options="pageOptions" v-model="perPage" @input="onSelectChange"></b-form-select>
       </b-col>
       <b-table style="margin-top:10px" small hover
         :items="computedRecordings"
@@ -92,7 +92,7 @@
           <div class="agent-state-text"><b>Called Number: </b>{{data.item.calling}}</div>
         </template>
       </b-table>
-      <b-pagination size="sm" align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
+      <b-pagination size="sm" align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" ></b-pagination>
       <b-btn class="pointer" size="sm" style="width:80px" variant="primary" @click="reload">Refresh</b-btn>
     </b-col>
   </b-row>
@@ -102,9 +102,7 @@
 
 <script>
 import Player from '@/Recordings/Player'
-//import 'bootstrap/dist/css/bootstrap.css'
-import datePicker from 'vue-bootstrap-datetimepicker'
-import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
 export default {
   name: 'records',
@@ -112,7 +110,7 @@ export default {
   widgetName: 'CALL RECORDINGS',
   components: {
     player: Player,
-    'date-picker': datePicker
+    Datepicker
   },
   data () {
     return {
@@ -141,10 +139,6 @@ export default {
       totalRows: 0,
       startDate: '',
       endDate: '',
-      config: {
-        format: 'MM/DD/YYYY',
-        useCurrent: false
-      },
       selectedCustomer: 'Any Customer',
       selectedQueue: 'Any Queue',
       selectedLine: 'Any Line',
@@ -190,7 +184,7 @@ export default {
     },
     getQueueNames (queues, queue) {
       let names = ''
-      if (queues != undefined) {
+      if (queues !== undefined) {
         queues.forEach( (queue) => {
           names = names + queue + ' '
         } )
@@ -226,13 +220,13 @@ export default {
   },
   created () {
     this.query()
-    if (this.$agent.vm.storage_data.callRecordingsCollapsed != undefined)
+    if (this.$agent.vm.storage_data.callRecordingsCollapsed !== undefined)
       this.showCollapse = this.$agent.vm.storage_data.callRecordingsCollapsed
-    if (this.$agent.vm.storage_data.callRecordingsSortBy != undefined)
+    if (this.$agent.vm.storage_data.callRecordingsSortBy !== undefined)
       this.sortBy = this.$agent.vm.storage_data.callRecordingsSortBy
-    if (this.$agent.vm.storage_data.callRecordingsSortDesc != undefined)
+    if (this.$agent.vm.storage_data.callRecordingsSortDesc !== undefined)
       this.sortDesc = this.$agent.vm.storage_data.callRecordingsSortDesc
-    if (this.$agent.vm.storage_data.callRecordingsPerPage != undefined)
+    if (this.$agent.vm.storage_data.callRecordingsPerPage !== undefined)
       this.perPage = this.$agent.vm.storage_data.callRecordingsPerPage
   },
   computed: {
@@ -251,25 +245,25 @@ export default {
         if(actDate.getTime() > endDate.getTime() || actDate.getTime() < startDate.getTime() )
           return
 
-        if(key.client != undefined && this.selectedCustomer != 'Any Customer') {
-          if(this.selectedCustomer != key.client.name && this.selectedCustomer != 'Any Customer'){
+        if(key.client !== undefined && this.selectedCustomer !== 'Any Customer') {
+          if(this.selectedCustomer !== key.client.name && this.selectedCustomer !== 'Any Customer'){
             return
           }
         }
 
-        if(key.queue != undefined && this.selectedQueue != 'Any Queue') {
-          if(this.selectedQueue != key.queue.name && this.selectedQueue != 'Any Queue'){
+        if(key.queue !== undefined && this.selectedQueue !== 'Any Queue') {
+          if(this.selectedQueue !== key.queue.name && this.selectedQueue !== 'Any Queue'){
             return
           }
         }
 
-        if(key.line_in != undefined && this.selectedLine != 'Any Line') {
-          if(this.selectedLine != key.line_in.name && this.selectedLine != 'Any Line'){
+        if(key.line_in !== undefined && this.selectedLine !== 'Any Line') {
+          if(this.selectedLine !== key.line_in.name && this.selectedLine !== 'Any Line'){
             return
           }
         }
 
-        if(key.skills != undefined && this.selectedSkill != 'Any Skill') {
+        if(key.skills !== undefined && this.selectedSkill !== 'Any Skill') {
           let skills = Object.keys(key.skills)
           if(!skills.includes(this.selectedSkill)){
             return
