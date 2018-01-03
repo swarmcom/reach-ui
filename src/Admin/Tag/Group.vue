@@ -22,6 +22,8 @@
       <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
     </div>
   </div>
+
+  <help></help>
 </div>
 </template>
 
