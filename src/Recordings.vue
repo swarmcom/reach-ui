@@ -1,5 +1,5 @@
 <template>
-<div v-bind:class="classObject">
+<div v-access:supervisor-ui v-bind:class="classObject">
   <b-row>
     <b-col><records></records></b-col>
   </b-row>

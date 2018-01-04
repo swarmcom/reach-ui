@@ -1,5 +1,5 @@
 <template>
-<div class="form">
+<div v-access:supervisor-ui class="form">
   <form-text label="Agent Name" v-model="rec.name"></form-text>
   <form-text label="Login" v-model="rec.login"></form-text>
   <form-text label="Password" v-model="rec.password"></form-text>
