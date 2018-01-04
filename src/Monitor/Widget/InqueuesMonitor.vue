@@ -8,6 +8,9 @@
           <div class="titlenocollapse">Filter</div>
         </div>
         <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+        <b-form-select class="pointer" size="sm" v-model="selectedMedia" style="margin-top:10px">
+          <option v-for="media in this.medias" :value=media.value>{{media.name}}</option>
+        </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
           <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
         </b-form-select>
@@ -106,11 +109,17 @@ export default {
         {name: "In Queue", value: "inqueue"},
         {name: "Ringing", value: "agent"}
       ],
+      medias: [
+        {name: "Any Media", value: "Any Media"},
+        {name: "Voice Calls", value: "inqueue_call"},
+        {name: "Voicemails", value: "inqueue_vm"}
+      ],
       selectedQueue: 'Any Queue',
       selectedCustomer: 'Any Customers',
       selectedLine: 'Any Lines',
       selectedState: 'Any State',
       selectedSkill: 'Any Skill',
+      selectedMedia: 'Any Media',
       filter: null,
       sortBy: 'agent_id',
       sortDesc: false,
@@ -183,6 +192,9 @@ export default {
           return
 
         if(this.selectedState !== key.state && this.selectedState !== 'Any State')
+          return
+
+        if(this.selectedMedia !== key.record && this.selectedMedia !== 'Any Media')
           return
 
         if(key.skillsReq !== undefined && this.selectedSkill !== 'Any Skill') {
