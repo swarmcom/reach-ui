@@ -50,6 +50,13 @@
       <lines v-model="line_id"></lines>
     </b-col>
   </b-form-row>
+
+  <b-row style="margin-top: 20px">
+    <b-col>
+Add, Delete or reorder inbound routing pattern matches. Each pattern can be added to try to match the destination number of the offered call or to try to match some specific part of the caller's information. The pattern to match is standard regex capable. So, the pattern could be something as simple as a static number like 21005 or could be as complex as a full regex pattern such as [2-9]1. The routing entries here will be searched top to bottom until a match is found. Once a match is found, the inbound call will be sent to the specified line.
+    </b-col>
+  </b-row>
+
 </b-container>
 </template>
 
