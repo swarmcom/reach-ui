@@ -10,7 +10,7 @@
     <form-text id="name" label="Skill Group Name" v-model="rec.name"></form-text>
     <form-text id="description" label="Skill Group Description" v-model="rec.description"></form-text>
     <div class="row" style="margin-top: 5px">
-      <label class="col-3 col-form-label">Skills</label>
+      <label class="col-3 col-form-label">Group Skills</label>
       <div class="col-9">
         <tags v-model="tags"></tags>
       </div>
