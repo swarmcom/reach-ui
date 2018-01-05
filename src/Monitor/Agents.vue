@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-access:agentManager-widget>
   <toggle-bar style="cursor: move"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
     <agent-groups :agents="agents"></agent-groups>

@@ -21,13 +21,15 @@
     </div>
   </div>
 
-  <div v-for="perm of perms_check" class="form-row" style="margin-top: 5px">
-    <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)"
-                     >
-      {{perm.name}}
-    </b-form-checkbox>
-  </div>
-
+  <br>
+    <div v-for="(perm, index) of perms_check" style="margin-top: 5px">
+      <b-row v-if="index === 0"><b>Content</b></b-row>
+      <b-row v-if="index === 0"> <b-col>Displayed Tabs: </b-col></b-row>
+      <b-row v-if="index === 5"> <b>Accessible Widgets: </b></b-row>
+      <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
+        {{perm.displayName}}
+      </b-form-checkbox>
+    </div>
 </div>
 </template>
 
@@ -39,10 +41,14 @@ export default {
     return {
       name: undefined,
       permissions: [],
-      perms_check: [{name: "admin-ui", value: false},
-                    {name: "supervisor-ui", value: false},
-                    {name: "profile-ui", value: false},
-                    {name: "recording-ui", value: false}
+      perms_check: [{displayName: "Admin", name: "admin-ui", value: false},
+                    {displayName: "Profile", name: "profile-ui", value: false},
+                    {displayName: "Monitor", name: "monitor-ui", value: false},
+                    {displayName: "Recordings", name: "recordings-ui", value: false},
+                    {displayName: "Reports", name: "reports-ui", value: false},
+                    {displayName: "Agent Manager", name: "agentManager-widget", value: false},
+                    {displayName: "Queue Manager", name: "queueManager-widget", value: false},
+                    {displayName: "My Statistics", name: "myStatistics-widget", value: false}
       ]
     }
   },
