@@ -22,7 +22,7 @@
   </b-row>
   <br>
   <br>
-  <b-row style="margin-top:5px;" class="float-right"  v-if="$agent.is_oncall() && inqueue!=undefined">
+  <b-row style="margin-top:5px;" class="float-right"  v-access:CROnDemand-feature v-if="$agent.is_oncall() && inqueue!=undefined">
     <b-button style="width:85px" size="sm" class="pointer" v-if="!inqueue.keep_record" @click="record" variant="outline-danger">Record</b-button>
     <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="inqueue.keep_record">Recording</b-button>
   </b-row>

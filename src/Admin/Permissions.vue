@@ -26,6 +26,8 @@
       <b-row v-if="index === 0"><b>Content</b></b-row>
       <b-row v-if="index === 0"> <b-col>Displayed Tabs: </b-col></b-row>
       <b-row v-if="index === 5"> <b>Accessible Widgets: </b></b-row>
+      <b-row v-if="index === 8"> <b>Features: </b></b-row>
+      <b-row v-if="index === 11"><b-col> Conference/Transfer Privileges</b-col></b-row>
       <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
         {{perm.displayName}}
       </b-form-checkbox>
@@ -48,7 +50,17 @@ export default {
                     {displayName: "Reports", name: "reports-ui", value: false},
                     {displayName: "Agent Manager", name: "agentManager-widget", value: false},
                     {displayName: "Queue Manager", name: "queueManager-widget", value: false},
-                    {displayName: "My Statistics", name: "myStatistics-widget", value: false}
+                    {displayName: "My Statistics", name: "myStatistics-widget", value: false},
+                    {displayName: "Set My Phone", name: "myPhone-feature", value: false},
+                    {displayName: "Allow Outbound", name: "outbound-feature", value: false},
+                    {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
+                    {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
+                    {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
+                    {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
+                    {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
+                    {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
+                    {displayName: "Conference to Number", name: "confNumber-feature", value: false},
+                    {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}
       ]
     }
   },
