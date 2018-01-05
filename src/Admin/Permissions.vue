@@ -21,6 +21,13 @@
     </div>
   </div>
 
+  <div v-for="perm of perms_check" class="form-row" style="margin-top: 5px">
+    <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)"
+                     >
+      {{perm.name}}
+    </b-form-checkbox>
+  </div>
+
 </div>
 </template>
 
@@ -31,16 +38,46 @@ export default {
   data () {
     return {
       name: undefined,
-      permissions: []
+      permissions: [],
+      perms_check: [{name: "admin-ui", value: false},
+                    {name: "supervisor-ui", value: false},
+                    {name: "profile-ui", value: false},
+                    {name: "recording-ui", value: false}
+      ]
     }
   },
   methods: {
     query: async function () {
       this.permissions = await this.$agent.p_mfa('ws_db_permission', 'get', [this.id])
+        this.permissions.forEach( (key) =>
+          {
+            let i = this.perms_check.findIndex(E => E.name === key.name)
+            if (i >= 0) {
+              this.perms_check[i].value = true
+              this.perms_check[i].id = key.id
+            }
+          }
+        )
     },
     onChange (permission, field, value) {
       permission[field] = value
       this.$agent.p_mfa('ws_db_permission', 'update', [permission.id, permission])
+    },
+    onChangeCheck: async function(perm, checked) {
+      if(checked) {
+        let permission = await this.$agent.p_mfa('ws_db_permission', 'create', [this.id, {
+            name: perm.name
+        }])
+        perm.id = permission.id
+        this.permissions.push(permission)
+      }
+      else {
+        await this.$agent.p_mfa('ws_db_permission', 'delete', [perm.id])
+        let id = this.permissions.findIndex(Obj => Obj.id === perm.id)
+        if (id >= 0) {
+          this.permissions.splice(id, 1)
+        }
+      }
     },
     add: async function() {
       let permission = await this.$agent.p_mfa('ws_db_permission', 'create', [this.id, {
