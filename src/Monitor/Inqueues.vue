@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-access:queueManager-widget>
   <toggle-bar style="cursor: move"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
     <inqueues-view :inqueues="inqueues"></inqueues-view>

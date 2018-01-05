@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-access:myStatistics-widget>
   <toggle-bar style="cursor: move"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2">
     <b-row>

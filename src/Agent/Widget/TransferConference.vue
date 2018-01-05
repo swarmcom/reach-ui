@@ -32,8 +32,8 @@
       </b-col>
     </b-row>
     <b-row>
-    <b-col cols="9" order="3" style="margin-top:5px" v-if="selected=='queue' && selectedQueue">
-      <queue-skills v-if="uuid!==undefined" :uuid="uuid"></queue-skills>
+    <b-col cols="9" order="3" style="margin-top:5px" v-if="selected=='queue' && selectedQueue!==null">
+      <queue-skills v-access:transConfChangeSkills-feature v-if="uuid!==undefined" :uuid="uuid"></queue-skills>
     </b-col>
     </b-row>
     <b-row style="margin-top:10px">
@@ -112,16 +112,20 @@ export default {
       }
     },
     can_conference() {
-      if (this.$agent.can_conference() && (this.selectedAgent !== 'null' || this.selectedQueue !== 'null' ||
-          this.selectedNumber !== '')) {
+      if (this.$agent.can_conference() &&
+          ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['confAgent-feature']) ||
+          (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['confQueue-feature']) ||
+          (this.selectedNumber !== '') && this.$agent.vm.agent.permissions['confNumber-feature'])) {
         return true
       }
       else
         return false
     },
     can_transfer() {
-      if (this.$agent.can_transfer() && (this.selectedAgent !== 'null' || this.selectedQueue !== 'null' ||
-        this.selectedNumber !== '')) {
+      if (this.$agent.can_transfer() &&
+          ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['transAgent-feature']) ||
+          (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['transQueue-feature']) ||
+          (this.selectedNumber !== '') && this.$agent.vm.agent.permissions['transNumber-feature'])) {
         return true
       }
       else

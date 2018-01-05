@@ -1,5 +1,5 @@
 <template>
-<b-form-group v-if="this.$agent.can_call()" label="Outbound Call">
+<b-form-group v-access:outbound-feature v-if="this.$agent.can_call()" label="Outbound Call">
   <b-input-group>
     <b-form-input v-model="number" type="text" placeholder="enter a number..."></b-form-input>
     <b-input-group-button>
