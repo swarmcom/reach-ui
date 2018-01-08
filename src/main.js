@@ -33,6 +33,18 @@ Vue.directive('access', {
   }
 })
 
+Vue.mixin({
+  methods: {
+    ref_ui_uri () {
+      return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
+    },
+    ref_backend_uri () {
+      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
+    },
+    logout () { this.$agent.logout() }
+  }
+})
+
 const app = new Vue({
   el: '#app',
   data: {
