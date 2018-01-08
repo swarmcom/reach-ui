@@ -94,12 +94,6 @@ export default {
     }
   },
   methods: {
-    ref_ui_uri () {
-      return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
-    },
-    ref_backend_uri () {
-      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
-    },
     onPin () {
       this.isPinned = !this.isPinned
       this.$agent.vm.storage_data[this.$options.storageName+'Pinned'] = this.isPinned
@@ -119,8 +113,7 @@ export default {
       this.$agent.vm.layoutSM.isActiveQM = state
       this.$agent.vm.storage_data.isActiveQM = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-    },
-    logout () { this.$agent.logout() }
+    }
   },
   created: async function() {
     this.date = new Date()

@@ -56,16 +56,7 @@ const router = new VueRouter({
 
 export default {
   props: [ 'ref_ui', 'ref_backend' ],
-  router,
-  methods: {
-    ref_ui_uri () {
-      return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
-    },
-    ref_backend_uri () {
-      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
-    },
-    logout () { this.$agent.logout() }
-  },
+  router
 }
 </script>
 
