@@ -1,41 +1,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import App from '@/App'
+import SuperAdmin from '@/SuperAdmin'
+import Login from '@/Login'
 
 import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/scss/bootstrap.scss'
-import '../custom-bootstrap.scss'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import VueCodeMirror from 'vue-codemirror'
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 import Notifications from 'vue-notification'
 
 import AgentAPI from '@/agent-api-plugin'
 
-import Help from '@/Help'
-import Login from '@/Login'
-import Agent from '@/Agent'
-import Profile from '@/Profile'
-import Admin from '@/Admin'
-import Monitor from '@/Monitor'
-import Report from '@/Report'
-import Kam from '@/Kam'
-
-import AdminRoutes from '@/routes/admin'
-import ReportRoutes from '@/routes/report'
-import KamRoutes from '@/routes/kam'
-
 import '@/widgets'
 
 Vue.component('icon', Icon)
 
-Vue.use(VueRouter)
 Vue.use(AgentAPI)
 Vue.use(Notifications)
 Vue.use(BootstrapVue)
-Vue.use(VueCodeMirror)
+Vue.use(VueRouter)
 
 Vue.directive('access', {
   bind (el, binding, vnode) {
@@ -46,54 +32,44 @@ Vue.directive('access', {
   }
 })
 
-const router = new VueRouter({
-  routes: [
-    { path: '/admin', component: Admin, children: AdminRoutes },
-    { path: '/help', component: Help },
-    { path: '/login', component: Login },
-    { path: '/monitor', component: Monitor },
-    { path: '/profile', component: Profile },
-    { path: '/report', component: Report, children: ReportRoutes },
-    { path: '/kam', component: Kam, children: KamRoutes },
-    { path: '/', component: Agent }
-  ]
-})
-
-function guard (self, to, from, next) {
-  if (to.path === '/login') {
-    return next()
-  }
-  if (self.$agent.isAuth()) {
-    self.initial_path = to.path
-    next()
-  } else {
-    next('/login')
-  }
-}
-
-function handleAuth (R, Auth) {
-  if (Auth) {
-    if (R.initial_path == '/login') {
-      R.$router.replace('/')
-    } else {
-      R.$router.replace(R.initial_path)
-    }
-  } else {
-    R.$router.replace('/login')
-  }
-}
-
 const app = new Vue({
   el: '#app',
-  router,
-  template: '<App/>',
-  components: { App },
-  created () {
-    this.$router.beforeEach((to, from, next) => guard(this, to, from, next))
-    if (!this.$agent.isAuth()) {
-      this.initial_path = this.$router.currentRoute.path
-      this.$router.replace('/login')
+  data: {
+    ref_ui: 'HEAD',
+    ref_backend: 'HEAD',
+    app: 'app',
+  },
+  components: {
+    app: App,
+    superadmin: SuperAdmin,
+    login: Login
+  },
+  methods: {
+    handleAuth: async function (Auth) {
+      if (Auth) {
+        let backend = await this.$agent.p_mfa('ws_misc', 'version', [])
+        this.ref_backend = backend.version
+      }
+      this.chooseApp()
+    },
+    chooseApp () {
+      console.log("choose app", this.$agent.isAuth())
+      if (!this.$agent.isAuth()) {
+        this.app = 'login'
+      } else {
+        switch (this.$agent.role()) {
+          case 'master':
+            this.app = 'superadmin'
+            break
+          default:
+            this.app = 'app'
+        }
+      }
     }
-    this.$bus.$on('agent-auth', (Auth) => handleAuth(this, Auth))
+  },
+  created: async function () {
+    this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui
+    this.$bus.$on('agent-auth', this.handleAuth)
+    this.chooseApp()
   }
 })

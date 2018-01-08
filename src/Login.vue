@@ -52,7 +52,7 @@ export default {
 <style>
 .form-signin {
   max-width: 330px;
-  padding: 15px;
+  padding-top: 250px;
   margin: 0 auto;
 }
 #inputLogin {
@@ -66,4 +66,9 @@ export default {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+</style>
+
+<style lang="scss">
+@import "./custom-bootstrap.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 </style>

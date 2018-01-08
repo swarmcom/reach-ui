@@ -25,14 +25,14 @@ async function session_auth(agent) {
   try {
     let SessionKey = localStorage.getItem('session-key')
     if (SessionKey) {
-      let Agent = await agent.p_mfa('ws_agent', 'auth', [SessionKey])
+      let Agent = await agent.p_mfa('ws_auth', 'auth', [SessionKey])
       agent.vm.agent = Agent
       localStorage.setItem('session-key', Agent.session_key)
       EventBus.$emit('agent-auth', agent.isAuth())
     }
   }
   catch (error) {
-    console.log("failed to login with session key", error)
+    console.log("failed to login with session key:", error)
   }
   agent.vm.session_auth = true
 }
@@ -114,7 +114,7 @@ export default class Agent extends WsProto {
     if (this.isAuth()) {
       this.handleAuth(this.vm.agent)
     } else {
-      this.call('auth', [Login, Password, false], (A) => this.handleAuth(A, Cb))
+      this.mfa('ws_auth', 'auth', [Login, Password, false], (A) => this.handleAuth(A, Cb))
       this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
       this.subscribe('agents')
     }
@@ -124,7 +124,7 @@ export default class Agent extends WsProto {
     if (this.isAuth()) {
       this.handleAuth(this.vm.agent)
     } else {
-      this.call('auth', [Login, Password, true], (A) => this.handleAuth(A, Cb))
+      this.mfa('ws_auth', 'auth', [Login, Password, true], (A) => this.handleAuth(A, Cb))
       this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
       this.subscribe('agents')
     }
@@ -150,6 +150,7 @@ export default class Agent extends WsProto {
   }
 
   isAuth () { return this.vm.agent !== undefined }
+  role() { return this.vm.agent.role }
 
   is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
   is_idle() { return (this.vm.state == 'release' || this.vm.state == 'available') }

@@ -4,26 +4,11 @@
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <router-link class="nav-link" to="/profile">Profile</router-link>
-      </li>
-      <li v-access:admin-ui class="nav-item">
-        <router-link class="nav-link" to="/admin/agents">Admin</router-link>
-      </li>
-      <b-nav-item-dropdown v-access:supervisor-ui text="Reports">
-        <b-dropdown-item to="/report/agents/states">Agents man-hours</b-dropdown-item>
-        <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
-        <b-dropdown-item to="/report/agents/avg">Agents averages</b-dropdown-item>
-        <b-dropdown-item to="/report/measures/avg">Measures averages</b-dropdown-item>
-        <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
-        <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
+      <b-nav-item-dropdown text="Instance">
+        <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
+        <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
+        <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
       </b-nav-item-dropdown>
-      <li v-access:supervisor-ui class="nav-item">
-        <router-link class="nav-link" to="/monitor">Monitor</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link class="nav-link" to="/help">Help</router-link>
-      </li>
     </ul>
     <span class="navbar-text" style="margin-right: 20px">{{ this.$agent.vm.agent.login }}</span>
     <button @click="logout" class="btn btn-sm btn-outline-danger">Logout</button>
@@ -57,27 +42,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Help from '@/Help'
-import Agent from '@/Agent'
-import Profile from '@/Profile'
-import Admin from '@/Admin'
-import Monitor from '@/Monitor'
-import Report from '@/Report'
-
-import AdminRoutes from '@/routes/admin'
-import ReportRoutes from '@/routes/report'
+import Kam from '@/Kam'
+import KamRoutes from '@/routes/kam'
 
 const router = new VueRouter({
   routes: [
-    { path: '/admin', component: Admin, children: AdminRoutes },
-    { path: '/help', component: Help },
-    { path: '/monitor', component: Monitor },
-    { path: '/profile', component: Profile },
-    { path: '/report', component: Report, children: ReportRoutes },
-    { path: '/', component: Agent }
+    { path: '/kam', component: Kam, children: KamRoutes },
+    { path: '/', component: Help }
   ]
 })
-
-Vue.use(VueRouter)
 
 export default {
   props: [ 'ref_ui', 'ref_backend' ],
@@ -90,7 +63,7 @@ export default {
       return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
     },
     logout () { this.$agent.logout() }
-  }
+  },
 }
 </script>
 
