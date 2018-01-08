@@ -39,9 +39,9 @@
             <b-row class="text-center">
               <b-col>
                 <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                  <b-dropdown-item v-if="data.item.state === 'inqueue' || data.item.state === 'agent'" @click="take(data.item)">Take</b-dropdown-item>
+                  <b-dropdown-item v-access:takeCallQueue-feature v-if="data.item.state === 'inqueue' || data.item.state === 'agent'" @click="take(data.item)">Take</b-dropdown-item>
                   <b-dropdown-item v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" @click="spy(data.item)">Monitor</b-dropdown-item>
-                  <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
+                  <b-dropdown-item v-access:hangupCallQueue-feature @click="hangup(data.item)">Hangup</b-dropdown-item>
                 </b-dropdown>
               </b-col>
             </b-row>

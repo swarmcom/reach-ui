@@ -7,6 +7,7 @@
     <b-row v-if="index === 5"> <b>Accessible Widgets: </b></b-row>
     <b-row v-if="index === 8"> <b>Features: </b></b-row>
     <b-row v-if="index === 11"><b-col> Conference/Transfer Privileges</b-col></b-row>
+    <b-row v-if="index === 18"><b>Supervisor Privileges:</b></b-row>
     <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
@@ -39,7 +40,14 @@ export default {
                     {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
                     {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
                     {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-                    {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}
+                    {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
+                    {displayName: "Control Agent State", name: "controlAgentState-feature", value: false},
+                    {displayName: "Monitor", name: "monitor-feature", value: false},
+                    {displayName: "Barge", name: "barge-feature", value: false},
+                    {displayName: "Whisper", name: "whisper-feature", value: false},
+                    {displayName: "Take Over", name: "takeOver-feature", value: false},
+                    {displayName: "Take call from queue", name: "takeCallQueue-feature", value: false},
+                    {displayName: "Hangup call from queue", name: "hangupCallQueue-feature", value: false},
       ]
     }
   },
