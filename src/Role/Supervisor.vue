@@ -4,9 +4,6 @@
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <router-link class="nav-link" to="/profile">Profile</router-link>
-      </li>
       <li v-access:admin-ui class="nav-item">
         <router-link class="nav-link" to="/admin/agents">Admin</router-link>
       </li>
@@ -56,12 +53,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Help from '@/Help'
-import Agent from '@/Agent'
-import Profile from '@/Profile'
-import Admin from '@/Admin'
-import Monitor from '@/Monitor'
-import Report from '@/Report'
+import Help from '@/Role/Supervisor/Help'
+import Main from '@/Role/Supervisor/Main'
+import Admin from '@/Role/Supervisor/Admin'
+import Monitor from '@/Role/Supervisor/Monitor'
+import Report from '@/Role/Supervisor/Report'
 
 import AdminRoutes from '@/routes/admin'
 import ReportRoutes from '@/routes/report'
@@ -71,9 +67,8 @@ const router = new VueRouter({
     { path: '/admin', component: Admin, children: AdminRoutes },
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
-    { path: '/profile', component: Profile },
     { path: '/report', component: Report, children: ReportRoutes },
-    { path: '/', component: Agent }
+    { path: '/', component: Main }
   ]
 })
 
@@ -95,6 +90,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./custom-bootstrap.scss";
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../custom-bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>

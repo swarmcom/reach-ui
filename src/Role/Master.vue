@@ -41,14 +41,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Help from '@/Help'
-import Kam from '@/Kam'
+import Main from '@/Role/Master/Main'
+import Help from '@/Role/Master/Help'
+import Kam from '@/Role/Master/Kam'
 import KamRoutes from '@/routes/kam'
 
 const router = new VueRouter({
   routes: [
     { path: '/kam', component: Kam, children: KamRoutes },
-    { path: '/', component: Help }
+    { path: '/help', component: Help },
+    { path: '/', component: Main }
   ]
 })
 
@@ -68,6 +70,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./custom-bootstrap.scss";
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../custom-bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>
