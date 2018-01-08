@@ -95,8 +95,6 @@ const router = new VueRouter({
   ]
 })
 
-Vue.use(VueRouter)
-
 export default {
   props: [ 'ref_ui', 'ref_backend' ],
   storageName: 'navBar',
