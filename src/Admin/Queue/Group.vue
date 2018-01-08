@@ -29,7 +29,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_queue_group',
-      redirect: '/admin/queues',
+      redirect: '/queues',
       skills: []
     }
   },

@@ -22,10 +22,10 @@ export default {
       this.mohs = await this.$agent.p_mfa('ws_db_moh', 'get')
     },
     add () {
-      this.$router.push(`/admin/moh/`)
+      this.$router.push(`/moh/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/moh/${data.id}`)
+      this.$router.push(`/moh/${data.id}`)
     },
   },
   created () {

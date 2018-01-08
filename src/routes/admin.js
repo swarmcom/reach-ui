@@ -38,6 +38,7 @@ import Permissions from '@/Admin/Permissions'
 import Params from '@/Admin/Params'
 
 export default [
+  { path: '', component: Agents },
   { path: 'agents', component: Agents },
   { path: 'agent/persistent', component: PersistentAgents },
   { path: 'queues', component: Queues },

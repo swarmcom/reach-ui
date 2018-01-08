@@ -32,7 +32,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_release_group',
-      redirect: '/admin/releases'
+      redirect: '/releases'
     }
   },
 }

@@ -87,7 +87,7 @@ const app = new Vue({
             this.app = 'supervisor'
             break
           default:
-            this.app = 'agent'
+            this.app = 'supervisor'
         }
       }
     }

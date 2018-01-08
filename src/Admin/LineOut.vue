@@ -27,7 +27,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_line_out',
-      redirect: '/admin/line_outs'
+      redirect: '/line_outs'
     }
   }
 }

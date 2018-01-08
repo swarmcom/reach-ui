@@ -62,7 +62,6 @@ export default {
         agent.date = new Date() - agent.time
       })
       this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
-      this.groups.unshift({ name:"Any Profile" })
     }
   },
   created () {

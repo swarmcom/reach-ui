@@ -14,7 +14,7 @@
     </b-collapse>
   </b-navbar>
   <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item v-access:admin-ui to="/admin">ADMIN</b-nav-item>
+    <b-nav-item v-access:admin-ui to="/">ADMIN</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
       <b-dropdown-header>Options for Admin tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
@@ -43,6 +43,7 @@
       <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
       <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
     </b-nav-item-dropdown>
+    <b-nav-item to="/help">HELP</b-nav-item>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
         <icon name="eyedropper" scale="1.0"></icon>
@@ -76,6 +77,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
 import Admin from '@/Role/Supervisor/Admin'
 import Monitor from '@/Role/Supervisor/Monitor'
@@ -88,7 +90,8 @@ import moment from 'moment'
 
 const router = new VueRouter({
   routes: [
-    { path: '/admin', component: Admin, children: AdminRoutes },
+    { path: '/', component: Admin, children: AdminRoutes },
+    { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
     { path: '/recordings', component: Recordings },
     { path: '/report', component: Report, children: ReportRoutes },

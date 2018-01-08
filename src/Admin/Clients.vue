@@ -21,10 +21,10 @@ export default {
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
     },
     add () {
-      this.$router.push(`/admin/client/`)
+      this.$router.push(`/client/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/client/${data.id}`)
+      this.$router.push(`/client/${data.id}`)
     },
   },
   created () {

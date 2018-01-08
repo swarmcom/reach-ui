@@ -22,10 +22,10 @@ export default {
       this.luas = await this.$agent.p_mfa('ws_db_lua', 'get')
     },
     add () {
-      this.$router.push(`/admin/lua/`)
+      this.$router.push(`/lua/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/lua/${data.id}`)
+      this.$router.push(`/lua/${data.id}`)
     },
   },
   created () {

@@ -27,10 +27,10 @@ export default {
       this.totalRows = agents.length
     },
     add () {
-      this.$router.push(`/admin/agent/`)
+      this.$router.push(`/agent/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/agent/${data.id}`)
+      this.$router.push(`/agent/${data.id}`)
     }
   },
   created () {

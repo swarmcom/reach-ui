@@ -32,7 +32,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_agent_group',
-      redirect: '/admin/agent_groups',
+      redirect: '/agent_groups',
       skills: []
     }
   },
