@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import App from '@/App'
-import SuperAdmin from '@/SuperAdmin'
+import Master from '@/Master'
 import Login from '@/Login'
 
 import BootstrapVue from 'bootstrap-vue'
@@ -50,7 +50,7 @@ const app = new Vue({
   },
   components: {
     app: App,
-    superadmin: SuperAdmin,
+    master: Master,
     login: Login
   },
   methods: {
@@ -68,7 +68,7 @@ const app = new Vue({
       } else {
         switch (this.$agent.role()) {
           case 'master':
-            this.app = 'superadmin'
+            this.app = 'master'
             break
           default:
             this.app = 'app'
