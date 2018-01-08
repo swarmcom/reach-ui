@@ -20,8 +20,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import VueCodeMirror from 'vue-codemirror'
+
 import Common from '@/Admin/Common'
 import Obj from '@/Admin/Object'
+
+Vue.use(VueCodeMirror)
 
 require('codemirror/addon/selection/active-line.js')
 require('codemirror/addon/scroll/annotatescrollbar.js')

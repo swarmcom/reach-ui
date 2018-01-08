@@ -1,9 +1,9 @@
 <template>
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
-    <b-nav-toggle v-if="auth" target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand v-if="auth" to="/main">HOME</b-navbar-brand>
-    <b-collapse v-if="auth" is-nav id="nav_collapse">
+    <b-nav-toggle target="nav_collapse"></b-nav-toggle>
+    <b-navbar-brand to="/main">HOME</b-navbar-brand>
+    <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
         <b-nav-item @click="logout">LOGOUT</b-nav-item>
       </b-navbar-nav>
@@ -13,7 +13,7 @@
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
-  <b-nav v-if="auth" class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
+  <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
     <b-nav-item v-access:admin-ui to="/admin/agents">ADMIN</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
       <b-dropdown-header>Options for Admin tab</b-dropdown-header>
@@ -63,11 +63,6 @@
       <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
       <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item-dropdown v-access:admin-ui text="INSTANCE">
-      <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
-      <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
-      <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
-    </b-nav-item-dropdown>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
         <icon name="eyedropper" scale="1.0"></icon>
@@ -75,7 +70,7 @@
       </icon>
     </button>
   </b-nav><!--container-fluid-->
-  <div class="container-fluid" v-bind:class="{ 'pin-container': (isPinned && auth) }">
+  <div class="container-fluid" v-bind:class="{ 'pin-container': (isPinned) }">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -98,14 +93,41 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+//import Help from '@/Help'
+import Agent from '@/Agent'
+import Profile from '@/Profile'
+import Admin from '@/Admin'
+import Monitor from '@/Monitor'
+import Report from '@/Report'
+import Recordings from '@/Recordings'
+
+import AdminRoutes from '@/routes/admin'
+import ReportRoutes from '@/routes/report'
 import moment from 'moment'
+
+const router = new VueRouter({
+  routes: [
+    { path: '/admin', component: Admin, children: AdminRoutes },
+    //{ path: '/help', component: Help },
+    { path: '/monitor', component: Monitor },
+    { path: '/recordings', component: Recordings },
+    { path: '/profile', component: Profile },
+    { path: '/report', component: Report, children: ReportRoutes },
+    { path: '/main', component: Agent }
+  ]
+})
+
+Vue.use(VueRouter)
+
 export default {
+  props: [ 'ref_ui', 'ref_backend' ],
   storageName: 'navBar',
+  router,
   data () {
     return {
-      ref_ui: 'HEAD',
-      ref_backend: 'HEAD',
-      auth: false,
       date: null,
       isPinned: false
     }
@@ -122,11 +144,6 @@ export default {
     },
     ref_backend_uri () {
      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
-    },
-    handleAuth: async function (Auth) {
-     this.auth = Auth
-     let backend = await this.$agent.p_mfa('ws_misc', 'version', [])
-     this.ref_backend = backend.version
     },
     onWidgetMSChange( state) {
       this.$agent.vm.layoutSM.isActiveMS = state
@@ -145,8 +162,6 @@ export default {
     }
   },
   created: async function() {
-    this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui
-    this.$bus.$on('agent-auth', this.handleAuth)
     this.date = new Date()
     setInterval(() => this.date = new Date, 1000)
     if (this.$agent.vm.storage_data.navBarPinned != undefined)
@@ -161,7 +176,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "custom.scss";
+  //@import "custom.scss";
   //@import "./custom-bootstrap.scss";
   @import "../node_modules/bootstrap/scss/bootstrap.scss";
 </style>

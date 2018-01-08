@@ -1,29 +1,29 @@
 <template>
-<div class="container" v-if="this.$agent.can_login()">
-  <h6 style="margin-top:10px"><b>LOGIN</b></h6>
-  <div class="form-signin">
-    <h6 class="form-signin-heading">USERNAME AND PASSWORD</h6>
-    <div class="form-group row align-items-center">
-      <label for="inputLogin" class="sr-only">Email</label>
-      <div class="col-sm-3">
-        <input v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" id="inputLogin" placeholder="Login" required="true" autofocus="true">
+  <div class="container" v-if="this.$agent.can_login()">
+    <h6 style="margin-top:10px"><b>LOGIN</b></h6>
+    <div class="form-signin">
+      <h6 class="form-signin-heading">USERNAME AND PASSWORD</h6>
+      <div class="form-group row align-items-center">
+        <label for="inputLogin" class="sr-only">Email</label>
+        <div class="col-sm-3">
+          <input v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" id="inputLogin" placeholder="Login" required="true" autofocus="true">
+        </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputPassword" class="sr-only">Password</label>
-      <div class="col-sm-3">
-        <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
+      <div class="form-group row">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <div class="col-sm-3">
+          <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
+        </div>
       </div>
+      <input type="checkbox" id="checkbox" v-model="remember">
+      <label for="checkbox"> Remember me</label>
+      <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2 pointer" type="submit">Login</button>
     </div>
-    <input type="checkbox" id="checkbox" v-model="remember">
-    <label for="checkbox"> Remember me</label>
-    <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2 pointer" type="submit">Login</button>
+    <b-modal ref="takeover" hide-footer title="Agent is logged in">
+      <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
+      <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
+    </b-modal>
   </div>
-  <b-modal ref="takeover" hide-footer title="Agent is logged in">
-    <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
-    <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
-  </b-modal>
-</div>
 </template>
 
 <script>
@@ -87,3 +87,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+//@import "./custom-bootstrap.scss";
+@import "custom.scss";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+</style>
+
