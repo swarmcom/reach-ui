@@ -41,7 +41,7 @@ export default {
   data () {
     return {
       rec: {},
-      uis: ['agent', 'supervisor'],
+      uis: ['agent', 'supervisor'], // this list must correspond to main.js role components
       module: 'ws_db_role',
       redirect: '/roles'
     }
