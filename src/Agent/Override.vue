@@ -37,19 +37,19 @@ export default {
     set: async function(uri) {
       this.uri = uri
       let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
-      this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+      this.$notify({ title: 'Success:', text: 'SIP Contact updated', type: 'success' })
     },
     test () {
       this.$agent.p_mfa('ws_agent', 'test_uri', [this.uri])
     },
     override: async function() {
       let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
-      this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+      this.$notify({ title: 'Success:', text: 'SIP Contact updated', type: 'success' })
     },
     reset: async function() {
       this.uri = undefined
       let re = await this.$agent.p_mfa('ws_agent', 'reset_uri', [])
-      this.$notify({ title: 'Success:', text: 'SIP Contant reset', type: 'success' })
+      this.$notify({ title: 'Success:', text: 'SIP Contact reset', type: 'success' })
     }
   },
   created () {
