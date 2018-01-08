@@ -85,7 +85,7 @@
     <div class="container">
       <div class="row  justify-content-center">
         <small>
-          &copy; 2017 eZuce
+          &copy; 2018 eZuce
           UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
           Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
         </small>
