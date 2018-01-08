@@ -65,7 +65,7 @@ export default {
       })
     },
     onClick (data) {
-      this.$router.push(`/admin/agent/${data.agent_id}`)
+      this.$router.push(`/agent/${data.agent_id}`)
     },
     release (agent) {
       this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])

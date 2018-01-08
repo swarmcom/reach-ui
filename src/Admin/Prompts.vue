@@ -23,10 +23,10 @@ export default {
       this.prompts = await this.$agent.p_mfa('ws_db_prompt', 'get')
     },
     add () {
-      this.$router.push(`/admin/prompt/`)
+      this.$router.push(`/prompt/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/prompt/${data.id}`)
+      this.$router.push(`/prompt/${data.id}`)
     },
   },
   created () {

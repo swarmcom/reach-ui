@@ -38,13 +38,13 @@ export default {
       this.releases = await this.$agent.p_mfa('ws_db_release_group', 'get')
     },
     add () {
-      this.$router.push(`/admin/release/`)
+      this.$router.push(`/release/`)
     },
     edit (data) {
-      this.$router.push(`/admin/release/${data.id}`)
+      this.$router.push(`/release/${data.id}`)
     },
     entries (data) {
-      this.$router.push(`/admin/release/${data.id}/entries`)
+      this.$router.push(`/release/${data.id}/entries`)
     }
   },
   created () {

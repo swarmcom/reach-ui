@@ -4,9 +4,6 @@
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
-      <li v-access:admin-ui class="nav-item">
-        <router-link class="nav-link" to="/admin/agents">Admin</router-link>
-      </li>
       <b-nav-item-dropdown v-access:supervisor-ui text="Reports">
         <b-dropdown-item to="/report/agents/states">Agents man-hours</b-dropdown-item>
         <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
@@ -64,11 +61,10 @@ import ReportRoutes from '@/routes/report'
 
 const router = new VueRouter({
   routes: [
-    { path: '/admin', component: Admin, children: AdminRoutes },
+    { path: '/', component: Admin, children: AdminRoutes },
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
-    { path: '/report', component: Report, children: ReportRoutes },
-    { path: '/', component: Main }
+    { path: '/report', component: Report, children: ReportRoutes }
   ]
 })
 

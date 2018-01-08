@@ -42,7 +42,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_lua',
-      redirect: '/admin/luas',
+      redirect: '/luas',
 
       editorOption: {
         tabSize: 4,

@@ -30,7 +30,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_prompt',
-      redirect: '/admin/prompts',
+      redirect: '/prompts',
       disabled: true,
       file: undefined
     }

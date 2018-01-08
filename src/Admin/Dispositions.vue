@@ -38,13 +38,13 @@ export default {
       this.dispositions = await this.$agent.p_mfa('ws_db_disposition_group', 'get')
     },
     add () {
-      this.$router.push(`/admin/disposition/`)
+      this.$router.push(`/disposition/`)
     },
     edit (data) {
-      this.$router.push(`/admin/disposition/${data.id}`)
+      this.$router.push(`/disposition/${data.id}`)
     },
     entries (data) {
-      this.$router.push(`/admin/disposition/${data.id}/entries`)
+      this.$router.push(`/disposition/${data.id}/entries`)
     }
   },
   created () {

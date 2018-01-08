@@ -26,11 +26,11 @@ export default {
       this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
     },
     add () {
-      this.$router.push(`/admin/line_in/`)
+      this.$router.push(`/line_in/`)
     },
     onClick (data) {
       console.log(data)
-      this.$router.push(`/admin/line_in/${data.id}`)
+      this.$router.push(`/line_in/${data.id}`)
     }
   },
   created () {

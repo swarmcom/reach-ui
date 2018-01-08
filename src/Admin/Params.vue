@@ -87,7 +87,7 @@ export default {
       this.$notify({ title: 'Success:', text: 'Parameters updated.', type: 'success' });
     },
     cancel: async function () {
-      this.$router.push('/admin/agents')
+      this.$router.push('/agents')
     },
     save: async function () {
       await this.$agent.p_mfa('ws_admin', 'config', ['save'])

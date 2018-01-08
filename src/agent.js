@@ -150,7 +150,7 @@ export default class Agent extends WsProto {
   }
 
   isAuth () { return this.vm.agent !== undefined }
-  role() { return this.vm.agent.role }
+  role() { return this.vm.agent.role.ui }
 
   is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
   is_idle() { return (this.vm.state == 'release' || this.vm.state == 'available') }

@@ -23,7 +23,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_recipe',
-      redirect: '/admin/recipes'
+      redirect: '/recipes'
     }
   },
 }

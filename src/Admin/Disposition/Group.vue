@@ -32,7 +32,7 @@ export default {
     return {
       rec: {},
       module: 'ws_db_disposition_group',
-      redirect: '/admin/dispositions'
+      redirect: '/dispositions'
     }
   },
 }

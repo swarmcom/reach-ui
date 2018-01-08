@@ -41,7 +41,7 @@ export default {
       skills: [],
       effective_skills: [],
       module: 'ws_db_line_in',
-      redirect: '/admin/line_ins'
+      redirect: '/line_ins'
     }
   },
   methods: {

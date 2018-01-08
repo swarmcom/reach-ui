@@ -9,6 +9,9 @@
         <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
         <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
       </b-nav-item-dropdown>
+      <li class="nav-item">
+        <router-link class="nav-link" to="/help">Help</router-link>
+      </li>
     </ul>
     <span class="navbar-text" style="margin-right: 20px">{{ this.$agent.vm.agent.login }}</span>
     <button @click="logout" class="btn btn-sm btn-outline-danger">Logout</button>

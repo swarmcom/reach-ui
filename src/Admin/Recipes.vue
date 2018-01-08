@@ -38,13 +38,13 @@ export default {
       this.recipes = await this.$agent.p_mfa('ws_db_recipe', 'get')
     },
     add () {
-      this.$router.push(`/admin/recipe/`)
+      this.$router.push(`/recipe/`)
     },
     edit (data) {
-      this.$router.push(`/admin/recipe/${data.id}`)
+      this.$router.push(`/recipe/${data.id}`)
     },
     entries (data) {
-      this.$router.push(`/admin/recipe/${data.id}/entries`)
+      this.$router.push(`/recipe/${data.id}/entries`)
     }
   },
   created () {

@@ -38,13 +38,13 @@ export default {
       this.roles = await this.$agent.p_mfa('ws_db_role', 'get')
     },
     add () {
-      this.$router.push(`/admin/role/`)
+      this.$router.push(`/role/`)
     },
     edit (data) {
-      this.$router.push(`/admin/role/${data.id}`)
+      this.$router.push(`/role/${data.id}`)
     },
     permissions (data) {
-      this.$router.push(`/admin/role/${data.id}/permissions`)
+      this.$router.push(`/role/${data.id}/permissions`)
     }
   },
   created () {

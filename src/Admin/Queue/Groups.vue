@@ -27,10 +27,10 @@ export default {
       this.queue_groups = await this.$agent.p_mfa('ws_db_queue_group', 'get')
     },
     add () {
-      this.$router.push(`/admin/queue_group/`)
+      this.$router.push(`/queue_group/`)
     },
     onClick(data) {
-      this.$router.push(`/admin/queue_group/${data.id}`)
+      this.$router.push(`/queue_group/${data.id}`)
     }
   },
   created () {

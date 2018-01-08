@@ -40,7 +40,7 @@ export default {
       tags: [],
       rec: {},
       module: 'ws_db_tag_group',
-      redirect: '/admin/tag_groups'
+      redirect: '/tag_groups'
     }
   },
   watch: {
