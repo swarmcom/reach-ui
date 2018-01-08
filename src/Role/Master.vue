@@ -48,12 +48,13 @@ import Main from '@/Role/Master/Main'
 import Help from '@/Role/Master/Help'
 import Kam from '@/Role/Master/Kam'
 import KamRoutes from '@/routes/kam'
+import Params from '@/Role/Master/Params'
 
 const router = new VueRouter({
   routes: [
     { path: '/kam', component: Kam, children: KamRoutes },
     { path: '/help', component: Help },
-    { path: '/', component: Main }
+    { path: '/', component: Params }
   ]
 })
 

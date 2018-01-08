@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row"  style="margin-bottom: 20px">
     <div class="col">
-      <h3>System-wide parameters:</h3>
+      <h3>Domain parameters:</h3>
     </div>
   </div>
   <div v-for="param of params" class="form-row" style="margin-top: 5px">
@@ -33,19 +33,6 @@
     <b-col>
       <button @click="commit" class="btn btn-primary pointer">Commit</button>
       <button @click="cancel" class="btn btn-outline-primary pointer">Cancel</button>
-    </b-col>
-    <b-col cols=4>
-      <button @click="save" class="btn btn-success pointer">Save</button>
-      <button @click="erase" class="btn btn-danger pointer">Erase</button>
-      <button @click="apply" class="btn btn-warning pointer">Apply</button>
-    </b-col>
-  </b-row>
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <button @click="download" class="btn btn-success pointer">Download</button>
-    </b-col>
-    <b-col>
-      <b-form-file v-model="config_file" v-on:input="upload" placeholder="Choose json config to upload..."></b-form-file>
     </b-col>
   </b-row>
 </div>
@@ -88,49 +75,6 @@ export default {
     },
     cancel: async function () {
       this.$router.push('/agents')
-    },
-    save: async function () {
-      await this.$agent.p_mfa('ws_admin', 'config', ['save'])
-      this.$notify({ title: 'Success:', text: 'Configuration saved internally', type: 'success' })
-    },
-    erase: async function () {
-      await this.$agent.p_mfa('ws_admin', 'config', ['erase'])
-      this.$notify({ title: 'Success:', text: 'Configuration erased', type: 'success' })
-    },
-    apply: async function () {
-      await this.$agent.p_mfa('ws_admin', 'config', ['apply'])
-      this.$notify({ title: 'Success:', text: 'Configuration applied from internal save', type: 'success' })
-    },
-    upload: function (file) {
-      let xhr = new XMLHttpRequest()
-      let fd = new FormData()
-
-      xhr.open("POST", `${this.$agent.get_api()}/upload/config`, true)
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          let UUID = xhr.responseText
-          this.$agent.mfa('ws_admin', 'config', ['upload', UUID], (re) => {
-            if (re.reply == 'ok') {
-              this.$notify({ title: 'Success:', text: 'Configuration applied', type: 'success' })
-            } else {
-              this.$notify({ title: 'Error:', text: 'Error applying config', type: 'error' })
-            }
-          })
-        }
-      }
-      fd.append('config', file)
-      xhr.send(fd)
-    },
-    download: async function () {
-      let UUID = await this.$agent.p_mfa('ws_admin', 'config', ['download'])
-      let link = document.createElement('a')
-      link.href = `${this.$agent.get_rr_uri()}/config/${UUID}.json`
-      link.download = "reach_db.json"
-      link.target="_blank"
-
-      let clickEvent = document.createEvent("MouseEvent");
-      clickEvent.initEvent("click", true, true);
-      link.dispatchEvent(clickEvent);
     },
   },
   created () {
