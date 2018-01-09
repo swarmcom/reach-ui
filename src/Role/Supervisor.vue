@@ -4,7 +4,7 @@
   <router-link class="navbar-brand" to="/">Reach UI</router-link>
   <div class="collapse navbar-collapse" id="navbars">
     <ul class="navbar-nav mr-auto">
-      <b-nav-item-dropdown v-access:supervisor-ui text="Reports">
+      <b-nav-item-dropdown text="Reports">
         <b-dropdown-item to="/report/agents/states">Agents man-hours</b-dropdown-item>
         <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
         <b-dropdown-item to="/report/agents/avg">Agents averages</b-dropdown-item>
@@ -12,7 +12,7 @@
         <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
         <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
       </b-nav-item-dropdown>
-      <li v-access:supervisor-ui class="nav-item">
+      <li ui class="nav-item">
         <router-link class="nav-link" to="/monitor">Monitor</router-link>
       </li>
       <li class="nav-item">
@@ -33,7 +33,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <small>
-        &copy; 2018 eZuce
+        Supervisor &copy; 2018 eZuce
         UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
         Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
       </small>
