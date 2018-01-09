@@ -53,9 +53,9 @@
     </b-row>
     <b-row v-if="showPermCollapse" v-for="(v, index) in perms_check" :key="index">
       <b-col class="agent-state-text" cols="12" v-if="index===0"><b>Displayed Tabs:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===5"><b>Accessible Widgets:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===8"><b>Features:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===18"><b>Supervisor Privileges:</b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===4"><b>Accessible Widgets:</b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===7"><b>Features:</b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===17"><b>Supervisor Privileges:</b></b-col>
       <b-col class="agent-state-text" cols="8" >{{v.displayName}}:</b-col>
       <b-col class="agent-state-text" cols="4" >{{v.value}}</b-col>
     </b-row>
@@ -72,8 +72,7 @@ export default {
       agent: this.$agent.vm.agent,
       showCollapse: true,
       showPermCollapse: false,
-      perms_check: [{displayName: "Admin", name: "admin-ui", value: false},
-                    {displayName: "Profile", name: "profile-ui", value: false},
+      perms_check: [{displayName: "Profile", name: "profile-ui", value: false},
                     {displayName: "Monitor", name: "monitor-ui", value: false},
                     {displayName: "Recordings", name: "recordings-ui", value: false},
                     {displayName: "Reports", name: "reports-ui", value: false},

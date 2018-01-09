@@ -4,10 +4,10 @@
   <div v-for="(perm, index) of perms_check" style="margin-top: 5px">
     <b-row v-if="index === 0"><b>Content</b></b-row>
     <b-row v-if="index === 0"> <b-col>Displayed Tabs: </b-col></b-row>
-    <b-row v-if="index === 5"> <b>Accessible Widgets: </b></b-row>
-    <b-row v-if="index === 8"> <b>Features: </b></b-row>
-    <b-row v-if="index === 11"><b-col> Conference/Transfer Privileges</b-col></b-row>
-    <b-row v-if="index === 18"><b>Supervisor Privileges:</b></b-row>
+    <b-row v-if="index === 4"> <b>Accessible Widgets: </b></b-row>
+    <b-row v-if="index === 7"> <b>Features: </b></b-row>
+    <b-row v-if="index === 10"><b-col> Conference/Transfer Privileges</b-col></b-row>
+    <b-row v-if="index === 17"><b>Supervisor Privileges:</b></b-row>
     <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
@@ -23,8 +23,7 @@ export default {
     return {
       name: undefined,
       permissions: [],
-      perms_check: [{displayName: "Admin", name: "admin-ui", value: false},
-                    {displayName: "Profile", name: "profile-ui", value: false},
+      perms_check: [{displayName: "Profile", name: "profile-ui", value: false},
                     {displayName: "Monitor", name: "monitor-ui", value: false},
                     {displayName: "Recordings", name: "recordings-ui", value: false},
                     {displayName: "Reports", name: "reports-ui", value: false},
