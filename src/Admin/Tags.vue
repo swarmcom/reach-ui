@@ -10,11 +10,6 @@
       <tags v-model="tags"></tags>
     </b-col>
   </b-row>
-  <b-row style="margin-top: 20px">
-    <b-col>
-Add skills to the system by typing in the skill name in the entry box and pressing return. Once added, a full list of the skills built in the system can be seen by using the drop down. Remove skills from the system by clicking on the skill name to the right of the drop down selector. Note that once a skill is built in the system here, it can be referenced throughout the system by name. Example configuration referenceing these skills includes skill groups, queue, queue group, agent, agent group, line, client, etc.
-    </b-col>
-  </b-row>
 </div>
 </template>
 

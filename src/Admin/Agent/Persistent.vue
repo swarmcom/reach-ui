@@ -15,11 +15,6 @@
       </div>
     </template>
   </b-table>
-  <b-row>
-    <b-col>
- Persistent agents are configured by the Persistent parameter on the Agent configuration. All persistent agents are displayed here. Persistent agents are treated as ALWAYS logged in and available. They will not be subject to auto logout or auto release cases. However, the suspend and wrap up modes will still apply to this agent. Note that a user that has the permissions to do so can set the state of a persistent agent manually from this page. This allows for a mechanism to stop using a persistent agent for a period of time without the need to remove this agent record from the system.
-    </b-col>
-  </b-row>
 </div>
 </template>
 
