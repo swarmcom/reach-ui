@@ -2,7 +2,7 @@
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand to="/admin">HOME</b-navbar-brand>
+    <b-navbar-brand to="/">HOME</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
         <b-nav-item @click="logout">LOGOUT</b-nav-item>
@@ -14,7 +14,7 @@
     </b-collapse>
   </b-navbar>
   <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item v-access:admin-ui to="/">ADMIN</b-nav-item>
+    <b-nav-item to="/">ADMIN</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
       <b-dropdown-header>Options for Admin tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
@@ -61,7 +61,7 @@
     <div class="container">
       <div class="row  justify-content-center">
         <small>
-          &copy; 2018 eZuce
+          Supervisor &copy; 2018 eZuce
           UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
           Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
         </small>
