@@ -23,10 +23,10 @@ export default {
       this.line_outs = await this.$agent.p_mfa('ws_db_line_out', 'get')
     },
     add () {
-      this.$router.push(`/admin/line_out/`)
+      this.$router.push(`/line_out/`)
     },
     onClick (data) {
-      this.$router.push(`/admin/line_out/${data.id}`)
+      this.$router.push(`/line_out/${data.id}`)
     }
   },
   created () {

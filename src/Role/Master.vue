@@ -9,6 +9,9 @@
         <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
         <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
       </b-nav-item-dropdown>
+      <li class="nav-item">
+        <router-link class="nav-link" to="/help">Help</router-link>
+      </li>
     </ul>
     <span class="navbar-text" style="margin-right: 20px">{{ this.$agent.vm.agent.login }}</span>
     <button @click="logout" class="btn btn-sm btn-outline-danger">Logout</button>
@@ -24,7 +27,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <small>
-        &copy; 2018 eZuce
+        Master &copy; 2018 eZuce
         UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
         Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
       </small>
@@ -41,33 +44,27 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-//import Help from '@/Help'
-import Kam from '@/Kam'
+import Main from '@/Role/Master/Main'
+import Help from '@/Role/Master/Help'
+import Kam from '@/Role/Master/Kam'
 import KamRoutes from '@/routes/kam'
+import Params from '@/Role/Master/Params'
 
 const router = new VueRouter({
   routes: [
     { path: '/kam', component: Kam, children: KamRoutes },
-    //{ path: '/', component: Help }
+    { path: '/help', component: Help },
+    { path: '/', component: Params }
   ]
 })
 
 export default {
   props: [ 'ref_ui', 'ref_backend' ],
-  router,
-  methods: {
-    ref_ui_uri () {
-      return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
-    },
-    ref_backend_uri () {
-      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
-    },
-    logout () { this.$agent.logout() }
-  },
+  router
 }
 </script>
 
 <style lang="scss">
-@import "./custom-bootstrap.scss";
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../custom-bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>

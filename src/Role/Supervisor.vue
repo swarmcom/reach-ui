@@ -2,7 +2,7 @@
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand to="/main">HOME</b-navbar-brand>
+    <b-navbar-brand to="/">HOME</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
         <b-nav-item @click="logout">LOGOUT</b-nav-item>
@@ -14,32 +14,12 @@
     </b-collapse>
   </b-navbar>
   <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item v-access:admin-ui to="/admin/agents">ADMIN</b-nav-item>
+    <b-nav-item to="/">ADMIN</b-nav-item>
     <b-nav-item-dropdown v-access:supervisor-ui>
       <b-dropdown-header>Options for Admin tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.admin" @click="$agent.vm.isNarrowLayout.admin = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.admin" @click="$agent.vm.isNarrowLayout.admin = false">Switch to Wide layout</b-dropdown-item>
-    </b-nav-item-dropdown>
-    <b-nav-item to="/main">MAIN</b-nav-item>
-    <b-nav-item-dropdown>
-      <b-dropdown-header>Options for Main tab</b-dropdown-header>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = true">Switch to Narrow layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = false">Switch to Wide layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['myStatistics-widget'] && !$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(true)">Add My Statistics</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['myStatistics-widget'] && $agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(false)">Remove My Statistics</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['agentManager-widget'] && this.$agent.vm.agent.permissions['monitor-ui'] && !$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['agentManager-widget'] && this.$agent.vm.agent.permissions['monitor-ui'] && $agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && this.$agent.vm.agent.permissions['monitor-ui'] && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && this.$agent.vm.agent.permissions['monitor-ui'] && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
-    </b-nav-item-dropdown>
-    <b-nav-item v-access:profile-ui to="/profile">PROFILE</b-nav-item>
-    <b-nav-item-dropdown v-access:profile-ui>
-      <b-dropdown-header>Options for Profile tab</b-dropdown-header>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.profile" @click="$agent.vm.isNarrowLayout.profile = true">Switch to Narrow layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.profile" @click="$agent.vm.isNarrowLayout.profile = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:monitor-ui to="/monitor">MONITOR </b-nav-item>
     <b-nav-item-dropdown v-access:monitor-ui>
@@ -63,6 +43,7 @@
       <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
       <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
     </b-nav-item-dropdown>
+    <b-nav-item to="/help">HELP</b-nav-item>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
         <icon name="eyedropper" scale="1.0"></icon>
@@ -80,7 +61,7 @@
     <div class="container">
       <div class="row  justify-content-center">
         <small>
-          &copy; 2018 eZuce
+          Supervisor &copy; 2018 eZuce
           UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
           Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
         </small>
@@ -96,13 +77,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-//import Help from '@/Help'
-import Agent from '@/Agent'
-import Profile from '@/Profile'
-import Admin from '@/Admin'
-import Monitor from '@/Monitor'
-import Report from '@/Report'
-import Recordings from '@/Recordings'
+import Help from '@/Role/Supervisor/Help'
+import Main from '@/Role/Supervisor/Main'
+import Admin from '@/Role/Supervisor/Admin'
+import Monitor from '@/Role/Supervisor/Monitor'
+import Recordings from '@/Role/Supervisor/Recordings'
+import Report from '@/Role/Supervisor/Report'
 
 import AdminRoutes from '@/routes/admin'
 import ReportRoutes from '@/routes/report'
@@ -110,17 +90,13 @@ import moment from 'moment'
 
 const router = new VueRouter({
   routes: [
-    { path: '/admin', component: Admin, children: AdminRoutes },
-    //{ path: '/help', component: Help },
+    { path: '/', component: Admin, children: AdminRoutes },
+    { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
     { path: '/recordings', component: Recordings },
-    { path: '/profile', component: Profile },
     { path: '/report', component: Report, children: ReportRoutes },
-    { path: '/main', component: Agent }
   ]
 })
-
-Vue.use(VueRouter)
 
 export default {
   props: [ 'ref_ui', 'ref_backend' ],
@@ -133,17 +109,10 @@ export default {
     }
   },
   methods: {
-    ref_ui_uri () {
-      return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
-    },
-    logout () { this.$agent.logout() },
     onPin () {
       this.isPinned = !this.isPinned
       this.$agent.vm.storage_data[this.$options.storageName+'Pinned'] = this.isPinned
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-    },
-    ref_backend_uri () {
-     return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
     },
     onWidgetMSChange( state) {
       this.$agent.vm.layoutSM.isActiveMS = state
@@ -176,8 +145,7 @@ export default {
 </script>
 
 <style lang="scss">
-  //@import "custom.scss";
-  //@import "./custom-bootstrap.scss";
-  @import "../node_modules/bootstrap/scss/bootstrap.scss";
+//@import "../../custom-bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>
 

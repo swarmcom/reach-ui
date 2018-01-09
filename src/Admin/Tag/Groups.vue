@@ -30,10 +30,10 @@ export default {
       this.tags = await this.$agent.p_mfa('ws_db_tag_group', 'get')
     },
     add () {
-      this.$router.push(`/admin/tag_group/`)
+      this.$router.push(`/tag_group/`)
     },
     edit (data) {
-      this.$router.push(`/admin/tag_group/${data.id}`)
+      this.$router.push(`/tag_group/${data.id}`)
     }
   },
   created () {

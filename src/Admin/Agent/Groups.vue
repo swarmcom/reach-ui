@@ -24,10 +24,10 @@ export default {
       this.agent_groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
     },
     add () {
-      this.$router.push(`/admin/agent_group/`)
+      this.$router.push(`/agent_group/`)
     },
     onClick(data) {
-      this.$router.push(`/admin/agent_group/${data.id}`)
+      this.$router.push(`/agent_group/${data.id}`)
     }
   },
   created () {

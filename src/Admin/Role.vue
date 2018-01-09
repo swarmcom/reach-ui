@@ -9,6 +9,15 @@
   <div class="form">
     <form-text id="name" label="Role Name" v-model="rec.name"></form-text>
     <form-text id="description" label="Role Description" v-model="rec.description"></form-text>
+    <div class="row" style="margin-top: 5px">
+      <label id="UI Variant" class="col-3 col-form-label">UI Variant</label>
+      <div class="col-9">
+        <select class="custom-select" v-model="rec.ui">
+          <option></option>
+          <option v-for="ui in uis" :value="ui" :selected="ui == rec.ui">{{ ui }}</option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <div class="row" style="margin-top: 20px">
@@ -32,8 +41,9 @@ export default {
   data () {
     return {
       rec: {},
+      uis: ['agent', 'supervisor'], // this list must correspond to main.js role components
       module: 'ws_db_role',
-      redirect: '/admin/roles'
+      redirect: '/roles'
     }
   },
 }

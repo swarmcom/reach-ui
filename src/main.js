@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import App from '@/App'
-import Master from '@/Master'
+import Agent from '@/Role/Agent'
+import Supervisor from '@/Role/Supervisor'
+import Master from '@/Role/Master'
 import Login from '@/Login'
 
 import BootstrapVue from 'bootstrap-vue'
@@ -41,15 +42,28 @@ Vue.directive('access', {
   }
 })
 
+Vue.mixin({
+  methods: {
+    ref_ui_uri () {
+      return `https://github.com/swarmcom/reach-ui/commit/${this.ref_ui}`
+    },
+    ref_backend_uri () {
+      return `https://github.com/ezuce/reach3/commit/${this.ref_backend}`
+    },
+    logout () { this.$agent.logout() }
+  }
+})
+
 const app = new Vue({
   el: '#app',
   data: {
     ref_ui: 'HEAD',
     ref_backend: 'HEAD',
-    app: 'app',
+    app: undefined
   },
   components: {
-    app: App,
+    agent: Agent,
+    supervisor: Supervisor,
     master: Master,
     login: Login
   },
@@ -62,7 +76,6 @@ const app = new Vue({
       this.chooseApp()
     },
     chooseApp () {
-      console.log("choose app", this.$agent.isAuth())
       if (!this.$agent.isAuth()) {
         this.app = 'login'
       } else {
@@ -70,8 +83,11 @@ const app = new Vue({
           case 'master':
             this.app = 'master'
             break
+          case 'supervisor':
+            this.app = 'supervisor'
+            break
           default:
-            this.app = 'app'
+            this.app = 'agent'
         }
       }
     }

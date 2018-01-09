@@ -37,7 +37,7 @@ export default {
       rec: {},
       skills: [],
       module: 'ws_db_client',
-      redirect: '/admin/clients'
+      redirect: '/clients'
     }
   },
   methods: {
