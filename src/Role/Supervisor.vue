@@ -15,7 +15,7 @@
   </b-navbar>
   <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
     <b-nav-item to="/">ADMIN</b-nav-item>
-    <b-nav-item-dropdown v-access:supervisor-ui>
+    <b-nav-item-dropdown>
       <b-dropdown-header>Options for Admin tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.admin" @click="$agent.vm.isNarrowLayout.admin = true">Switch to Narrow layout</b-dropdown-item>

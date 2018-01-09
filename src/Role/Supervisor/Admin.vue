@@ -1,5 +1,5 @@
 <template>
-<div v-access:admin-ui v-bind:class="classObject">
+<div v-bind:class="classObject">
 <ul class="nav nav-tabs">
 
   <b-nav-item-dropdown text="Agents">
