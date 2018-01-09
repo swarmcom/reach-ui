@@ -1,6 +1,7 @@
 import Domains from '@/Kam/Domains'
 import Domain from '@/Kam/Domain'
 import DomainDialplan from '@/Kam/Domain/Dialplan'
+import DomainAdmins from '@/Kam/Admins'
 
 import Registry from '@/Kam/Registry'
 
@@ -13,6 +14,7 @@ export default [
   { path: 'domain', component: Domain },
   { path: 'domain/:id', component: Domain, props: true },
   { path: 'domain/:id/dialplan', component: DomainDialplan, props: true },
+  { path: 'domain/:id/admins', component: DomainAdmins, props: true },
   { path: 'node', component: Domain },
   { path: 'node/:id', component: NodeProps, props: true },
   { path: 'registry', component: Registry }
