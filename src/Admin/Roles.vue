@@ -44,7 +44,7 @@ export default {
       this.$router.push(`/role/${data.id}`)
     },
     permissions (data) {
-      this.$router.push(`/role/${data.id}/permissions`)
+      this.$router.push(`/role/${data.id}/permissions/${data.ui}`)
     }
   },
   created () {

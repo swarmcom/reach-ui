@@ -53,9 +53,9 @@
     </b-row>
     <b-row v-if="showPermCollapse" v-for="(v, index) in perms_check" :key="index">
       <b-col class="agent-state-text" cols="12" v-if="index===0"><b>Displayed Tabs:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===4"><b>Accessible Widgets:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===7"><b>Features:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===17"><b>Supervisor Privileges:</b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===1"><b>Accessible Widgets:</b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===4"><b>Features:</b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===7"><b>Conference/Transfer Privileges:</b></b-col>
       <b-col class="agent-state-text" cols="8" >{{v.displayName}}:</b-col>
       <b-col class="agent-state-text" cols="4" >{{v.value}}</b-col>
     </b-row>
@@ -73,9 +73,6 @@ export default {
       showCollapse: true,
       showPermCollapse: false,
       perms_check: [{displayName: "Profile", name: "profile-ui", value: false},
-                    {displayName: "Monitor", name: "monitor-ui", value: false},
-                    {displayName: "Recordings", name: "recordings-ui", value: false},
-                    {displayName: "Reports", name: "reports-ui", value: false},
                     {displayName: "Agent Manager", name: "agentManager-widget", value: false},
                     {displayName: "Queue Manager", name: "queueManager-widget", value: false},
                     {displayName: "My Statistics", name: "myStatistics-widget", value: false},
@@ -89,13 +86,7 @@ export default {
                     {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
                     {displayName: "Conference to Number", name: "confNumber-feature", value: false},
                     {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
-                    {displayName: "Control Agent State", name: "controlAgentState-feature", value: false},
-                    {displayName: "Monitor", name: "monitor-feature", value: false},
-                    {displayName: "Barge", name: "barge-feature", value: false},
-                    {displayName: "Whisper", name: "whisper-feature", value: false},
-                    {displayName: "Take Over", name: "takeOver-feature", value: false},
-                    {displayName: "Take call from queue", name: "takeCallQueue-feature", value: false},
-                    {displayName: "Hangup call from queue", name: "hangupCallQueue-feature", value: false},
+                    {displayName: "Control Agent State", name: "controlAgentState-feature", value: false}
       ]
     }
   },
