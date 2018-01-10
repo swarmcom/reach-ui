@@ -159,9 +159,9 @@ export default {
     preHandleInqueueLua (Re) {
       this.handleInqueueLua(Re.value)
     },
-    handleInqueueLua (Re) {
-      if (Re && typeof(Re) == 'object') {
-        let [Type, Value] = Re
+    handleInqueueLua (LuaRe) {
+      if (LuaRe && typeof(LuaRe) == 'object') {
+        let [Type, Value] = LuaRe
         if (Type == "embed") {
           this.lua_result = Value
         } else if (Type == "window") {
