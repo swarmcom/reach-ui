@@ -10,6 +10,9 @@
         <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
       </b-nav-item-dropdown>
       <li class="nav-item">
+        <router-link class="nav-link" to="/params">Params</router-link>
+      </li>
+      <li class="nav-item">
         <router-link class="nav-link" to="/help">Help</router-link>
       </li>
     </ul>
@@ -53,8 +56,9 @@ import Params from '@/Role/Master/Params'
 const router = new VueRouter({
   routes: [
     { path: '/kam', component: Kam, children: KamRoutes },
+    { path: '/params', component: Params },
     { path: '/help', component: Help },
-    { path: '/', component: Params }
+    { path: '/', component: Main }
   ]
 })
 

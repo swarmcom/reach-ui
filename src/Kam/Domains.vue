@@ -13,6 +13,7 @@
     <template slot="actions" slot-scope="data">
       <b-btn size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>
       <b-btn size="sm" variant="secondary" @click="dialplan(data.item)">Dialplan</b-btn>
+      <b-btn size="sm" variant="success" @click="admins(data.item)">Admins</b-btn>
     </template>
   </b-table>
 </div>
@@ -46,6 +47,9 @@ export default {
     },
     dialplan (data) {
       this.$router.push(`/kam/domain/${data.id}/dialplan`)
+    },
+    admins (data) {
+      this.$router.push(`/kam/domain/${data.id}/admins`)
     }
   },
   created () {

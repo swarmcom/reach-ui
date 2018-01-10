@@ -85,25 +85,25 @@ export default {
       this.rec.props[k] = v
     },
     sofia_reload: async function () {
-      this.result = await this.$agent.p_mfa('ws_admin', 'sofia_reload', [this.id])
+      this.result = await this.$agent.p_mfa('ws_master', 'sofia_reload', [this.id])
     },
     sofia_rescan: async function () {
-      this.result = await this.$agent.p_mfa('ws_admin', 'sofia_rescan', [this.id])
+      this.result = await this.$agent.p_mfa('ws_master', 'sofia_rescan', [this.id])
     },
     sofia_status: async function () {
-      this.result = await this.$agent.p_mfa('ws_admin', 'sofia_status', [this.id])
+      this.result = await this.$agent.p_mfa('ws_master', 'sofia_status', [this.id])
     },
     node_status: async function () {
-      this.result = await this.$agent.p_mfa('ws_admin', 'node_status', [this.id])
+      this.result = await this.$agent.p_mfa('ws_master', 'node_status', [this.id])
     },
     proxy_stats: async function () {
-      this.result = await this.$agent.p_mfa('ws_admin', 'proxy_stats', [this.id])
+      this.result = await this.$agent.p_mfa('ws_master', 'proxy_stats', [this.id])
     },
     proxy_regs: async function () {
-      this.result = await this.$agent.p_mfa('ws_admin', 'proxy_regs', [this.id])
+      this.result = await this.$agent.p_mfa('ws_master', 'proxy_regs', [this.id])
     },
     proxy_dlgs: async function () {
-      this.result = await this.$agent.p_mfa('ws_admin', 'proxy_dlgs', [this.id])
+      this.result = await this.$agent.p_mfa('ws_master', 'proxy_dlgs', [this.id])
     }
   },
 }

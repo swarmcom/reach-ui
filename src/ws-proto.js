@@ -1,7 +1,7 @@
 import {EventBus} from '@/event-bus.js'
 
 function handleReply (Re, resolve, reject) {
-  if (Re && Re.reply) {
+  if (Re && ('reply' in Re)) {
     resolve(Re.reply)
   } else {
     reject(Re.error)
@@ -44,9 +44,9 @@ export default class WsProto {
       args: [M, F, A]
     }
     if (this.ws.readyState === 1) {
-      this.r[this.id] = Cb
+      this.r[this.id] = { cb: Cb, id: this.id, m: M, f: F, a: A }
       this.id++
-      console.log('Cmd', msg)
+      console.log('Q:', `${M}:${F}`, A)
       return this.ws.send(JSON.stringify(msg))
     } else {
       console.log("wrong websocket state", this.ws.readyState)
@@ -64,7 +64,7 @@ export default class WsProto {
 
   onDisconnect () {
     for (var id in this.r) {
-      var Cb = this.r[id]
+      var Cb = this.r[id].cb
       if (Cb) {
         Cb({ error: "websocket disconnect" })
       }
@@ -74,11 +74,11 @@ export default class WsProto {
 
   onMessage (Ev) {
     var Data = JSON.parse(Ev.data)
-    var Cb = this.r[Data.id]
-    if (Cb !== undefined) {
-      console.log('Re', Data)
+    var Re = this.r[Data.id]
+    if (Re !== undefined) {
+      this.debugReply(Re, Data)
       delete this.r[Data.id]
-      Cb(Data)
+      Re.cb(Data)
     } else if (Data.event) {
       EventBus.$emit(Data.event, Data)
     }
@@ -99,5 +99,13 @@ export default class WsProto {
   onError (Ev) {
     console.log('WS ERROR:', Ev)
     this.onDisconnect()
+  }
+
+  debugReply(Req, Data) {
+    if ('reply' in Data) {
+      console.log('R:', `${Req.m}:${Req.f}`, Data.reply)
+    } else {
+      console.log('RAW:', Data)
+    }
   }
 }
