@@ -99,7 +99,7 @@ export default {
       this.handleInqueueLua(Re.value)
     },
     handleInqueueLua (Re) {
-      if (typeof(Re) == 'object') {
+      if (Re && typeof(Re) == 'object') {
         let [Type, Value] = Re
         if (Type == "embed") {
           this.lua_result = Value

@@ -1,7 +1,7 @@
 import {EventBus} from '@/event-bus.js'
 
 function handleReply (Re, resolve, reject) {
-  if (Re && Re.reply) {
+  if (Re && ('reply' in Re)) {
     resolve(Re.reply)
   } else {
     reject(Re.error)
@@ -102,7 +102,7 @@ export default class WsProto {
   }
 
   debugReply(Req, Data) {
-    if (Data.reply) {
+    if ('reply' in Data) {
       console.log('R:', `${Req.m}:${Req.f}`, Data.reply)
     } else {
       console.log('RAW:', Data)
