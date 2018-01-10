@@ -24,6 +24,9 @@ import Common from '@/Admin/Common'
 export default {
   name: 'monitor-agents-groups-stats',
   mixins: [Common],
+  props: {
+    groups: Array
+  },
   data () {
     return {
       fieldsStats: {
@@ -45,7 +48,6 @@ export default {
   },
   methods: {
     query: async function() {
-      this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
       this.updateStats(this.period.value)
     },
     updateStats: async function(val) {
