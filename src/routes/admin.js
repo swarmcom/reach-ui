@@ -71,7 +71,7 @@ export default [
   { path: 'release/:id/entries', component: ReleaseEntries, props: true },
   { path: 'role', component: Role },
   { path: 'role/:id', component: Role, props: true },
-  { path: 'role/:id/permissions', component: Permissions, props: true },
+  { path: 'role/:id/permissions/:ui', component: Permissions, props: true },
   { path: 'tag_group', component: TagGroup },
   { path: 'tag_group/:id', component: TagGroup, props: true },
   { path: 'disposition', component: DispositionGroup },

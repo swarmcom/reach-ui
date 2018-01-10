@@ -1,13 +1,21 @@
 <template>
 <div class="container">
   <b-row style="margin-bottom: 10px"><h3>Permissions:</h3></b-row>
-  <div v-for="(perm, index) of perms_check" style="margin-top: 5px">
+  <div v-if="ui == 'supervisor'" v-for="(perm, index) of perms_check" style="margin-top: 5px">
     <b-row v-if="index === 0"><b>Content</b></b-row>
     <b-row v-if="index === 0"> <b-col>Displayed Tabs: </b-col></b-row>
-    <b-row v-if="index === 4"> <b>Accessible Widgets: </b></b-row>
-    <b-row v-if="index === 7"> <b>Features: </b></b-row>
-    <b-row v-if="index === 10"><b-col> Conference/Transfer Privileges</b-col></b-row>
-    <b-row v-if="index === 17"><b>Supervisor Privileges:</b></b-row>
+    <b-row v-if="index === 3"> <b>Accessible Widgets: </b></b-row>
+    <b-row v-if="index === 6"><b>Supervisor Privileges:</b></b-row>
+    <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
+      {{perm.displayName}}
+    </b-form-checkbox>
+  </div>
+  <div v-if="ui == 'agent'" v-for="(perm, index) of perms_check" style="margin-top: 5px">
+    <b-row v-if="index === 0"><b>Content</b></b-row>
+    <b-row v-if="index === 0"> <b-col>Displayed Tabs: </b-col></b-row>
+    <b-row v-if="index === 1"> <b>Accessible Widgets: </b></b-row>
+    <b-row v-if="index === 4"> <b>Features: </b></b-row>
+    <b-row v-if="index === 7"><b-col> Conference/Transfer Privileges</b-col></b-row>
     <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
@@ -18,40 +26,50 @@
 <script>
 export default {
   name: 'admin-role-permissions',
-  props: ['id'],
+  props: ['id','ui'],
   data () {
     return {
       name: undefined,
       permissions: [],
-      perms_check: [{displayName: "Profile", name: "profile-ui", value: false},
-                    {displayName: "Monitor", name: "monitor-ui", value: false},
-                    {displayName: "Recordings", name: "recordings-ui", value: false},
-                    {displayName: "Reports", name: "reports-ui", value: false},
-                    {displayName: "Agent Manager", name: "agentManager-widget", value: false},
-                    {displayName: "Queue Manager", name: "queueManager-widget", value: false},
-                    {displayName: "My Statistics", name: "myStatistics-widget", value: false},
-                    {displayName: "Set My Phone", name: "myPhone-feature", value: false},
-                    {displayName: "Allow Outbound", name: "outbound-feature", value: false},
-                    {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
-                    {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
-                    {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
-                    {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
-                    {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
-                    {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
-                    {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-                    {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
-                    {displayName: "Control Agent State", name: "controlAgentState-feature", value: false},
-                    {displayName: "Monitor", name: "monitor-feature", value: false},
-                    {displayName: "Barge", name: "barge-feature", value: false},
-                    {displayName: "Whisper", name: "whisper-feature", value: false},
-                    {displayName: "Take Over", name: "takeOver-feature", value: false},
-                    {displayName: "Take call from queue", name: "takeCallQueue-feature", value: false},
-                    {displayName: "Hangup call from queue", name: "hangupCallQueue-feature", value: false},
-      ]
+      perms_check: []
     }
   },
   methods: {
     query: async function () {
+      this.perms_check = []
+      if (this.ui == 'supervisor') {
+        this.perms_check = [
+            {displayName: "Monitor", name: "monitor-ui", value: false},
+            {displayName: "Recordings", name: "recordings-ui", value: false},
+            {displayName: "Reports", name: "reports-ui", value: false},
+            {displayName: "Agent Manager", name: "agentManager-widget", value: false},
+            {displayName: "Queue Manager", name: "queueManager-widget", value: false},
+            {displayName: "My Statistics", name: "myStatistics-widget", value: false},
+            {displayName: "Control Agent State", name: "controlAgentState-feature", value: false},
+            {displayName: "Monitor", name: "monitor-feature", value: false},
+            {displayName: "Barge", name: "barge-feature", value: false},
+            {displayName: "Whisper", name: "whisper-feature", value: false},
+            {displayName: "Take Over", name: "takeOver-feature", value: false},
+            {displayName: "Take call from queue", name: "takeCallQueue-feature", value: false},
+            {displayName: "Hangup call from queue", name: "hangupCallQueue-feature", value: false}]
+      }
+      else if (this.ui == 'agent') {
+        this.perms_check = [
+            {displayName: "Profile", name: "profile-ui", value: false},
+            {displayName: "Agent Manager", name: "agentManager-widget", value: false},
+            {displayName: "Queue Manager", name: "queueManager-widget", value: false},
+            {displayName: "My Statistics", name: "myStatistics-widget", value: false},
+            {displayName: "Set My Phone", name: "myPhone-feature", value: false},
+            {displayName: "Allow Outbound", name: "outbound-feature", value: false},
+            {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
+            {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
+            {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
+            {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
+            {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
+            {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
+            {displayName: "Conference to Number", name: "confNumber-feature", value: false},
+            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}]
+      }
       this.permissions = await this.$agent.p_mfa('ws_db_permission', 'get', [this.id])
         this.permissions.forEach( (key) =>
           {
