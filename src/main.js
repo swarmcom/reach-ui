@@ -88,6 +88,9 @@ const app = new Vue({
           case 'supervisor':
             this.app = 'supervisor'
             break
+          case 'admin':
+            this.app = 'admin'
+            break
           default:
             this.app = 'agent'
         }
