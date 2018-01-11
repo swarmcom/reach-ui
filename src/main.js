@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Agent from '@/Role/Agent'
+import Admin from '@/Role/Admin'
 import Supervisor from '@/Role/Supervisor'
 import Master from '@/Role/Master'
 import Login from '@/Login'
@@ -63,6 +64,7 @@ const app = new Vue({
   },
   components: {
     agent: Agent,
+    admin: Admin,
     supervisor: Supervisor,
     master: Master,
     login: Login
@@ -85,6 +87,9 @@ const app = new Vue({
             break
           case 'supervisor':
             this.app = 'supervisor'
+            break
+          case 'admin':
+            this.app = 'admin'
             break
           default:
             this.app = 'agent'

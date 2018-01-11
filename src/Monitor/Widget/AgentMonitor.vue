@@ -348,7 +348,6 @@ export default {
       this.clients.unshift({ name:"Any Customers" })
       this.tags = await this.$agent.p_mfa('ws_db_tag', 'get')
       this.tags.unshift("Any Skill")
-      this.groups_select = []
       this.groups_select = this.groups.slice(0)
       this.groups_select.unshift({ name:"Any Profile" })
     },
@@ -512,11 +511,12 @@ export default {
 
         if(key.agent.group !== undefined){
           key.agentGroup = key.agent.group.name
-          if(this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile')
+          if((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile') || this.groups_select.length < 2)
             return
         }
-        else if(this.selectedProfile !== 'Any Profile')
+        else if(this.selectedProfile !== 'Any Profile' || this.groups_select.length < 2) {
           return
+        }
         if(this.selectedState !== key.state && this.selectedState !== 'Any State')
           return
 
