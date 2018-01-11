@@ -10,7 +10,7 @@
         </b-row>
         <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" ></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
-          <option v-for="group in this.groups" :value=group.name>{{group.name}}</option>
+          <option v-for="group in this.groups_select" :value=group.name>{{group.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
           <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
@@ -325,6 +325,7 @@ export default {
       ],
       stats: [],
       tags: [],
+      groups_select: [],
       period: { value: { last: '15m' }, name: "Last 15 minutes"},
       selectedProfile: 'Any Profile',
       selectedCustomer: 'Any Customers',
@@ -347,6 +348,9 @@ export default {
       this.clients.unshift({ name:"Any Customers" })
       this.tags = await this.$agent.p_mfa('ws_db_tag', 'get')
       this.tags.unshift("Any Skill")
+      this.groups_select = []
+      this.groups_select = this.groups.slice(0)
+      this.groups_select.unshift({ name:"Any Profile" })
     },
     updateStats: async function() {
       this.stats = await this.$agent.p_mfa('ws_stats', 'agents', [this.period.value])
@@ -396,12 +400,12 @@ export default {
       this.updateStats()
     },
     existAvatar(data){
-      return data.line_in !== undefined &&
+      return data && data.line_in !== undefined &&
         data.line_in.client !== undefined &&
         data.line_in.client.avatar !== 'undefined';
     },
     existClient(data){
-      return data.line_in !== undefined &&
+      return data && data.line_in !== undefined &&
         data.line_in.client !== undefined;
     },
     percent (value) {
@@ -484,20 +488,24 @@ export default {
 
         let i = this.stats.findIndex(E => E.agent_id === key.agent_id)
         if(i >= 0) {
-          if(Object.keys(this.stats[i].occupancy).length > 0 && this.stats[i].occupancy.states.ratio.oncall > 0)
+          if(Object.keys(this.stats[i].occupancy).length > 0 && ('states' in this.stats[i].occupancy) &&
+              ('ratio' in this.stats[i].occupancy.states) && this.stats[i].occupancy.states.ratio.oncall > 0)
             key.agentOccup = this.percent(this.stats[i].occupancy.states.ratio.oncall)
           else
             key.agentOccup = '0%'
-          if(Object.keys(this.stats[i].cpt).length > 0 && this.stats[i].cpt.avg.oncall > 0)
+          if(Object.keys(this.stats[i].cpt).length > 0 && ('avg' in this.stats[i].cpt) &&
+              this.stats[i].cpt.avg.oncall > 0)
             key.agentMyCpt = this.msToMs(this.stats[i].cpt.avg.oncall)
           else
             key.agentMyCpt = '--'
         }
 
-        if(key.inqueue.line_in !== undefined && key.inqueue.line_in.client !== undefined) {
-          key.agentClient = key.inqueue.line_in.client.name
-          if(this.selectedCustomer !== key.inqueue.line_in.client.name && this.selectedCustomer !== 'Any Customers')
-            return
+        if(key.inqueue !== null) {
+          if (key.inqueue.line_in !== undefined || key.inqueue.line_in.client !== undefined) {
+            key.agentClient = key.inqueue.line_in.client.name
+            if (this.selectedCustomer !== key.inqueue.line_in.client.name && this.selectedCustomer !== 'Any Customers')
+              return
+          }
         }
         else if(this.selectedCustomer !== 'Any Customers')
           return

@@ -36,7 +36,7 @@
         </b-table>
       </b-col>
       <b-col cols="3">
-        <group-stats></group-stats>
+        <group-stats :groups="groups"></group-stats>
       </b-col>
     </b-row>
   </b-collapse>
@@ -49,7 +49,8 @@ export default {
   storageName: 'agentManagerStates',
   widgetName: 'Agent Groups',
   props: {
-    agents: Array
+    agents: Array,
+    groups: Array,
   },
   data () {
     return {
@@ -67,17 +68,10 @@ export default {
       fieldNames: {
         name: { label: 'Name', sortable: false, thClass:"table-header-text-center" },
       },
-      groups: [],
       showCollapse: true,
     }
   },
-  methods: {
-    query: async function() {
-      this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
-    }
-  },
   created () {
-    this.query()
     if (this.$agent.vm.storage_data.agentManagerStatesCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.agentManagerStatesCollapsed
   },

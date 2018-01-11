@@ -4,8 +4,10 @@
   <div v-if="ui == 'supervisor'" v-for="(perm, index) of perms_check" style="margin-top: 5px">
     <b-row v-if="index === 0"><b>Content</b></b-row>
     <b-row v-if="index === 0"> <b-col>Displayed Tabs: </b-col></b-row>
-    <b-row v-if="index === 3"> <b>Accessible Widgets: </b></b-row>
-    <b-row v-if="index === 6"><b>Supervisor Privileges:</b></b-row>
+    <b-row v-if="index === 4"> <b>Accessible Widgets: </b></b-row>
+    <b-row v-if="index === 7"><b>Supervisor Privileges:</b></b-row>
+    <b-row v-if="index === 14"> <b>Features: </b></b-row>
+    <b-row v-if="index === 17"><b-col> Conference/Transfer Privileges</b-col></b-row>
     <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
@@ -39,6 +41,7 @@ export default {
       this.perms_check = []
       if (this.ui == 'supervisor') {
         this.perms_check = [
+            {displayName: "Main", name: "main-ui", value: false},
             {displayName: "Monitor", name: "monitor-ui", value: false},
             {displayName: "Recordings", name: "recordings-ui", value: false},
             {displayName: "Reports", name: "reports-ui", value: false},
@@ -51,7 +54,17 @@ export default {
             {displayName: "Whisper", name: "whisper-feature", value: false},
             {displayName: "Take Over", name: "takeOver-feature", value: false},
             {displayName: "Take call from queue", name: "takeCallQueue-feature", value: false},
-            {displayName: "Hangup call from queue", name: "hangupCallQueue-feature", value: false}]
+            {displayName: "Hangup call from queue", name: "hangupCallQueue-feature", value: false},
+            {displayName: "Set My Phone", name: "myPhone-feature", value: false},
+            {displayName: "Allow Outbound", name: "outbound-feature", value: false},
+            {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
+            {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
+            {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
+            {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
+            {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
+            {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
+            {displayName: "Conference to Number", name: "confNumber-feature", value: false},
+            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}]
       }
       else if (this.ui == 'agent') {
         this.perms_check = [
