@@ -400,12 +400,12 @@ export default {
       this.updateStats()
     },
     existAvatar(data){
-      return data.line_in !== undefined &&
+      return data && data.line_in !== undefined &&
         data.line_in.client !== undefined &&
         data.line_in.client.avatar !== 'undefined';
     },
     existClient(data){
-      return data !== null && data.line_in !== undefined &&
+      return data && data.line_in !== undefined &&
         data.line_in.client !== undefined;
     },
     percent (value) {
@@ -488,11 +488,13 @@ export default {
 
         let i = this.stats.findIndex(E => E.agent_id === key.agent_id)
         if(i >= 0) {
-          if(Object.keys(this.stats[i].occupancy).length > 0 && this.stats[i].occupancy.states.ratio.oncall > 0)
+          if(Object.keys(this.stats[i].occupancy).length > 0 && ('states' in this.stats[i].occupancy) &&
+              ('ratio' in this.stats[i].occupancy.states) && this.stats[i].occupancy.states.ratio.oncall > 0)
             key.agentOccup = this.percent(this.stats[i].occupancy.states.ratio.oncall)
           else
             key.agentOccup = '0%'
-          if(Object.keys(this.stats[i].cpt).length > 0 && this.stats[i].cpt.avg.oncall > 0)
+          if(Object.keys(this.stats[i].cpt).length > 0 && ('avg' in this.stats[i].cpt) &&
+              this.stats[i].cpt.avg.oncall > 0)
             key.agentMyCpt = this.msToMs(this.stats[i].cpt.avg.oncall)
           else
             key.agentMyCpt = '--'
