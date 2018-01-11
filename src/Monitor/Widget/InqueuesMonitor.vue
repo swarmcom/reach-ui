@@ -130,7 +130,10 @@ export default {
     query: async function() {
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customers" })
-      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
+      Object.keys(this.$agent.vm.agent.permissions).forEach( (key) => {
+        if (key.indexOf("-queues") !== -1)
+          this.queues.push({name:key.replace("-queues","")})
+      })
       this.queues.unshift({ name:"Any Queue" })
       this.lines = await this.$agent.p_mfa('ws_db_line_in', 'get')
       this.lines.unshift({ name:"Any Lines" })
@@ -171,10 +174,10 @@ export default {
       inqueues.forEach( (key) => {
         key._cellVariants = { actions: 'success', media: 'primary', state: 'primary', line: 'primary', queue: 'primary', skillsReq: 'primary', timeInQueue: 'primary' }
         if(key.queue !== undefined){
-          if(this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue')
+          if((this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue') || this.queues.length < 2)
             return
         }
-        else if(this.selectedQueue !== 'Any Queue')
+        else if(this.selectedQueue !== 'Any Queue' || this.queues.length < 2)
           return
 
         if(key.line !== undefined) {

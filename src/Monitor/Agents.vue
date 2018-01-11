@@ -57,11 +57,15 @@ export default {
       }
     },
     query: async function() {
+      this.groups = []
+      Object.keys(this.$agent.vm.agent.permissions).forEach( (key) => {
+          if (key.indexOf("-groups") !== -1)
+              this.groups.push({name:key.replace("-groups","")})
+      })
       this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
       this.agents.forEach((agent) => {
         agent.date = new Date() - agent.time
       })
-      this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
     }
   },
   created () {
