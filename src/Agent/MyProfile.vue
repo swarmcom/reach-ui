@@ -51,7 +51,16 @@
       </b-col>
       <b-col cols="5" class="title" style="margin-top:2px; color:#8c8c8c">Permissions:</b-col>
     </b-row>
-    <b-row v-if="showPermCollapse" v-for="(v, index) in perms_check" :key="index">
+    <b-row v-if="showPermCollapse && $agent.role() === 'supervisor'" v-for="(v, index) in perms_check_supervisor" :key="index">
+      <b-col class="agent-state-text" cols="12" v-if="index === 0"> <b>Displayed Tabs: </b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 4"> <b>Accessible Widgets: </b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 7"><b>Supervisor Privileges:</b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 14"> <b>Features: </b></b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 17"><b> Conference/Transfer Privileges</b></b-col>
+      <b-col class="agent-state-text" cols="8" >{{v.displayName}}:</b-col>
+      <b-col class="agent-state-text" cols="4" >{{v.value}}</b-col>
+    </b-row>
+    <b-row v-if="showPermCollapse && $agent.role() === 'agent'" v-for="(v, index) in perms_check_agent" :key="index">
       <b-col class="agent-state-text" cols="12" v-if="index===0"><b>Displayed Tabs:</b></b-col>
       <b-col class="agent-state-text" cols="12" v-if="index===1"><b>Accessible Widgets:</b></b-col>
       <b-col class="agent-state-text" cols="12" v-if="index===4"><b>Features:</b></b-col>
@@ -69,25 +78,50 @@ export default {
   storageName: 'myProfile',
   data () {
     return {
-      agent: this.$agent.vm.agent,
-      showCollapse: true,
-      showPermCollapse: false,
-      perms_check: [{displayName: "Profile", name: "profile-ui", value: false},
-                    {displayName: "Agent Manager", name: "agentManager-widget", value: false},
-                    {displayName: "Queue Manager", name: "queueManager-widget", value: false},
-                    {displayName: "My Statistics", name: "myStatistics-widget", value: false},
-                    {displayName: "Set My Phone", name: "myPhone-feature", value: false},
-                    {displayName: "Allow Outbound", name: "outbound-feature", value: false},
-                    {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
-                    {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
-                    {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
-                    {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
-                    {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
-                    {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
-                    {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-                    {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
-                    {displayName: "Control Agent State", name: "controlAgentState-feature", value: false}
-      ]
+        agent: this.$agent.vm.agent,
+        showCollapse: true,
+        showPermCollapse: false,
+        perms_check_agent: [{displayName: "Profile", name: "profile-ui", value: false},
+            {displayName: "Agent Manager", name: "agentManager-widget", value: false},
+            {displayName: "Queue Manager", name: "queueManager-widget", value: false},
+            {displayName: "My Statistics", name: "myStatistics-widget", value: false},
+            {displayName: "Set My Phone", name: "myPhone-feature", value: false},
+            {displayName: "Allow Outbound", name: "outbound-feature", value: false},
+            {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
+            {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
+            {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
+            {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
+            {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
+            {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
+            {displayName: "Conference to Number", name: "confNumber-feature", value: false},
+            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
+            {displayName: "Control Agent State", name: "controlAgentState-feature", value: false}
+        ],
+        perms_check_supervisor: [{displayName: "Main", name: "main-ui", value: false},
+            {displayName: "Monitor", name: "monitor-ui", value: false},
+            {displayName: "Recordings", name: "recordings-ui", value: false},
+            {displayName: "Reports", name: "reports-ui", value: false},
+            {displayName: "Agent Manager", name: "agentManager-widget", value: false},
+            {displayName: "Queue Manager", name: "queueManager-widget", value: false},
+            {displayName: "My Statistics", name: "myStatistics-widget", value: false},
+            {displayName: "Control Agent State", name: "controlAgentState-feature", value: false},
+            {displayName: "Monitor", name: "monitor-feature", value: false},
+            {displayName: "Barge", name: "barge-feature", value: false},
+            {displayName: "Whisper", name: "whisper-feature", value: false},
+            {displayName: "Take Over", name: "takeOver-feature", value: false},
+            {displayName: "Take call from queue", name: "takeCallQueue-feature", value: false},
+            {displayName: "Hangup call from queue", name: "hangupCallQueue-feature", value: false},
+            {displayName: "Set My Phone", name: "myPhone-feature", value: false},
+            {displayName: "Allow Outbound", name: "outbound-feature", value: false},
+            {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
+            {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
+            {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
+            {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
+            {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
+            {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
+            {displayName: "Conference to Number", name: "confNumber-feature", value: false},
+            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}
+        ]
     }
   },
   methods: {
@@ -99,11 +133,20 @@ export default {
   },
   created () {
     let perm = this.agent.permissions
-    this.perms_check.forEach( function(key) {
-      if(perm[key.name]) {
-        key.value =  perm[key.name]
-      }
-    })
+    if (this.$agent.role() === 'supervisor') {
+      this.perms_check_supervisor.forEach(function (key) {
+        if (perm[key.name]) {
+          key.value = perm[key.name]
+        }
+      })
+    }
+    else {
+      this.perms_check_agent.forEach(function (key) {
+        if (perm[key.name]) {
+          key.value = perm[key.name]
+        }
+      })
+    }
     if (this.$agent.vm.storage_data.myProfileCollapsed !== undefined)
       this.showCollapse = this.$agent.vm.storage_data.myProfileCollapsed
     if (this.$agent.vm.storage_data.myProfilePermissionsCollapsed !== undefined)

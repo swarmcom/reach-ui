@@ -29,10 +29,10 @@ export default {
         return true
       else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && this.$agent.vm.agent.permissions['myStatistics-widget'])
         return true
-      else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM && this.$agent.vm.agent.permissions['monitor-ui'] &&
+      else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  &&
         this.$agent.vm.agent.permissions['agentManager-widget'])
         return true
-      else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM && this.$agent.vm.agent.permissions['monitor-ui'] &&
+      else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  &&
         this.$agent.vm.agent.permissions['queueManager-widget'])
         return true
       else

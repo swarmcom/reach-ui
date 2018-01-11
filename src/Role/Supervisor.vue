@@ -2,7 +2,7 @@
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand to="/">HOME</b-navbar-brand>
+    <b-navbar-brand to="/#">HOME</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
         <b-nav-item @click="logout">LOGOUT</b-nav-item>
@@ -14,7 +14,20 @@
     </b-collapse>
   </b-navbar>
   <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item to="/">ADMIN</b-nav-item>
+    <b-nav-item v-access:main-ui to="/main">MAIN</b-nav-item>
+    <b-nav-item-dropdown v-access:main-ui>
+      <b-dropdown-header>Options for Main tab</b-dropdown-header>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = true">Switch to Narrow layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = false">Switch to Wide layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.agent.permissions['myStatistics-widget'] && !$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(true)">Add My Statistics</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.agent.permissions['myStatistics-widget'] && $agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(false)">Remove My Statistics</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.agent.permissions['agentManager-widget'] && !$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.agent.permissions['agentManager-widget'] && $agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
+    </b-nav-item-dropdown>
+    <b-nav-item to="/#">ADMIN</b-nav-item>
     <b-nav-item-dropdown>
       <b-dropdown-header>Options for Admin tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
@@ -91,10 +104,11 @@ import moment from 'moment'
 const router = new VueRouter({
   routes: [
     { path: '/', component: Admin, children: AdminRoutes },
+    { path: '/main', component: Main },
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
     { path: '/recordings', component: Recordings },
-    { path: '/report', component: Report, children: ReportRoutes },
+    { path: '/report', component: Report, children: ReportRoutes }
   ]
 })
 
