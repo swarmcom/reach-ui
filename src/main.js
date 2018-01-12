@@ -6,6 +6,10 @@ import Admin from '@/Role/Admin'
 import Supervisor from '@/Role/Supervisor'
 import Master from '@/Role/Master'
 import Login from '@/Login'
+import Agentdev from '@/Role/dev/Agent'
+import Admindev from '@/Role/dev/Admin'
+import Supervisordev from '@/Role/dev/Supervisor'
+import Masterdev from '@/Role/dev/Master'
 
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -60,13 +64,18 @@ const app = new Vue({
   data: {
     ref_ui: 'HEAD',
     ref_backend: 'HEAD',
+    ui: 'reach',
     app: undefined
   },
   components: {
     agent: Agent,
+    agentdev: Agentdev,
     admin: Admin,
+    admindev: Admindev,
     supervisor: Supervisor,
+    supervisordev: Supervisordev,
     master: Master,
+    masterdev: Masterdev,
     login: Login
   },
   methods: {
@@ -83,16 +92,28 @@ const app = new Vue({
       } else {
         switch (this.$agent.role()) {
           case 'master':
-            this.app = 'master'
+            if (this.ui === 'reach')
+              this.app = 'master'
+            else
+              this.app = 'masterdev'
             break
           case 'supervisor':
-            this.app = 'supervisor'
+            if (this.ui === 'reach')
+              this.app = 'supervisor'
+            else
+                this.app = 'supervisordev'
             break
           case 'admin':
-            this.app = 'admin'
+            if (this.ui === 'reach')
+              this.app = 'admin'
+            else
+                this.app = 'admindev'
             break
           default:
-            this.app = 'agent'
+            if (this.ui === 'reach')
+              this.app = 'agent'
+            else
+              this.app = 'agentdev'
         }
       }
     }

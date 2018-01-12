@@ -8,7 +8,7 @@
     <b-row v-if="index === 7"><b>Agent Groups:</b></b-row>
     <b-row v-if="index === (7+groups.length)"><b>Queues:</b></b-row>
     <b-row v-if="index === (7+groups.length + queues.length)"><b>Supervisor Privileges:</b></b-row>
-    <b-row v-if="index === (14+groups.length + queues.length)"> <b>Features: </b></b-row>
+    <b-row v-if="index === (13+groups.length + queues.length)"> <b>Features: </b></b-row>
     <b-row v-if="index === (17+groups.length + queues.length)"><b-col> Conference/Transfer Privileges</b-col></b-row>
     <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
