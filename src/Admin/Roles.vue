@@ -12,7 +12,7 @@
   <b-table style="margin-top:10px" striped hover small :items="roles" :fields="fields">
     <template slot="actions" slot-scope="data">
       <b-btn class="pointer" size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>
-      <b-btn class="pointer" size="sm" variant="success" @click="permissions(data.item)">Permissions</b-btn>
+      <b-btn class="pointer" size="sm" variant="success" v-if="data.item.name !== 'Admin'" @click="permissions(data.item)">Permissions</b-btn>
     </template>
   </b-table>
 </div>
