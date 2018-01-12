@@ -78,7 +78,7 @@ const router = new VueRouter({
     { path: '/help', component: Help },
     { path: '/profile', component: Profile },
     { path: '/main', component: Main },
-    { path: '/', redirect: 'main' }
+    { path: '*', redirect: '/main' }
   ]
 })
 
