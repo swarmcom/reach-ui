@@ -8,9 +8,9 @@
     <b-row v-if="index === 7"><b>Agent Groups:</b></b-row>
     <b-row v-if="index === (7+groups.length)"><b>Queues:</b></b-row>
     <b-row v-if="index === (7+groups.length + queues.length)"><b>Supervisor Privileges:</b></b-row>
-    <b-row v-if="index === (14+groups.length + queues.length)"> <b>Features: </b></b-row>
+    <b-row v-if="index === (13+groups.length + queues.length)"> <b>Features: </b></b-row>
     <b-row v-if="index === (17+groups.length + queues.length)"><b-col> Conference/Transfer Privileges</b-col></b-row>
-    <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
+    <b-form-checkbox v-if="canShow(index)" v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
   </div>
@@ -116,6 +116,17 @@ export default {
         if (id >= 0) {
           this.permissions.splice(id, 1)
         }
+      }
+    },
+    canShow(index) {
+      if(this.ui == 'supervisor') {
+        let main_perm = 13+this.groups.length + this.queues.length
+        if ( !this.perms_check[0].value && index >= main_perm)
+          return false
+        else if ( !this.perms_check[1].value && index >= 4 && index < main_perm)
+          return false
+        else
+          return true
       }
     }
   },
