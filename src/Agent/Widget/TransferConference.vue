@@ -6,7 +6,7 @@
       <b-col cols="4">
         <b-form-select class="pointer" v-model="selected">
         <option :value="null">Transfer / Conference</option>
-        <option :value="'queue'">Queue...</option>
+        <option v-if="!this.$agent.is_conference ()" :value="'queue'">Queue...</option>
         <option :value="'agent'">Agent...</option>
         <option v-if="this.$agent.can_call()" :value="'number'">Number...</option>
         </b-form-select>
