@@ -2,13 +2,13 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div v-if="effective" class="col-5">
-    <input class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)">
+    <input :disabled="disable" class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)">
   </div>
   <div v-if="effective" class="col-4">
     <input class="form-control" type="text" :value="safe_effective" disabled>
   </div>
   <div v-else class="col-9">
-    <input class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)">
+    <input :disabled="disable" class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)">
   </div>
 </div>
 </template>
@@ -16,7 +16,7 @@
 <script>
 export default {
   name: 'form-text',
-  props: ['label', 'value', 'effective'],
+  props: ['label', 'value', 'effective', 'disable'],
   data () {
     return {}
   },

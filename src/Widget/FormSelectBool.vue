@@ -2,13 +2,13 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div v-if="effective" class="col-5">
-    <b-form-select class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
+    <b-form-select :disabled="disable" class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
   </div>
   <div v-if="effective" class="col-4">
     <b-form-select class="pointer" :value="computed_effective" :options="options" disabled></b-form-select>
   </div>
   <div v-else class="col-9">
-    <b-form-select class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
+    <b-form-select :disabled="disable" class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
   </div>
 </div>
 </template>
@@ -26,7 +26,7 @@ function verbose(value) {
 
 export default {
   name: 'form-bool-drop',
-  props: ['label', 'value', 'effective'],
+  props: ['label', 'value', 'effective', 'disable'],
   data () {
     return {
       options: ['Not set', 'True', 'False']

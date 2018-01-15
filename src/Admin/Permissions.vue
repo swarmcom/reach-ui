@@ -20,6 +20,7 @@
     <b-row v-if="index === 1"> <b>Accessible Widgets: </b></b-row>
     <b-row v-if="index === 4"> <b>Features: </b></b-row>
     <b-row v-if="index === 7"><b-col> Conference/Transfer Privileges</b-col></b-row>
+    <b-row v-if="index === 14"><b> Administrative Control:</b></b-row>
     <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
@@ -89,7 +90,19 @@ export default {
             {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
             {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
             {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}]
+            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
+            {displayName: "Edit Agent Name", name: "agentName-edit", value: false},
+            {displayName: "Edit Password", name: "agentPassword-edit", value: false},
+            {displayName: "Line Out", name: "agentLineOut-visible", value: false},
+            {displayName: "Edit Primary SIP Contact", name: "primarySip-edit", value: false},
+            {displayName: "SIP Contacts", name: "additionalSip-visible", value: false},
+            {displayName: "Edit Ring Timeout", name: "ringTimeout-edit", value: false},
+            {displayName: "Edit Max Missed Calls(auto release)", name: "maxMissedCalls-edit", value: false},
+            {displayName: "Edit Reset Max Rings On Success", name: "maxRingsSuccess-edit", value: false},
+            {displayName: "Edit Auto Logout", name: "autoLogout-visible", value: false},
+            {displayName: "Avatar", name: "avatar-visible", value: false},
+            {displayName: "Agent Skills", name: "agentSkills-visible", value: false}
+        ]
       }
       this.permissions = await this.$agent.p_mfa('ws_db_permission', 'get', [this.id])
         this.permissions.forEach( (key) =>
