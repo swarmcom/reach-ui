@@ -8,9 +8,9 @@
     <b-row v-if="index === 7"><b>Agent Groups:</b></b-row>
     <b-row v-if="index === (7+groups.length)"><b>Queues:</b></b-row>
     <b-row v-if="index === (7+groups.length + queues.length)"><b>Supervisor Privileges:</b></b-row>
-    <b-row v-if="index === (14+groups.length + queues.length)"> <b>Features: </b></b-row>
+    <b-row v-if="index === (13+groups.length + queues.length)"> <b>Features: </b></b-row>
     <b-row v-if="index === (17+groups.length + queues.length)"><b-col> Conference/Transfer Privileges</b-col></b-row>
-    <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
+    <b-form-checkbox v-if="canShow(index)" v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
   </div>
@@ -20,6 +20,7 @@
     <b-row v-if="index === 1"> <b>Accessible Widgets: </b></b-row>
     <b-row v-if="index === 4"> <b>Features: </b></b-row>
     <b-row v-if="index === 7"><b-col> Conference/Transfer Privileges</b-col></b-row>
+    <b-row v-if="index === 14"><b> Administrative Control:</b></b-row>
     <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
@@ -89,7 +90,19 @@ export default {
             {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
             {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
             {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}]
+            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
+            {displayName: "Agent Name", name: "agentName-edit", value: false},
+            {displayName: "Password", name: "agentPassword-edit", value: false},
+            {displayName: "Line Out", name: "agentLineOut-visible", value: false},
+            {displayName: "Primary SIP Contact", name: "primarySip-edit", value: false},
+            {displayName: "SIP Contacts", name: "additionalSip-visible", value: false},
+            {displayName: "Ring Timeout", name: "ringTimeout-edit", value: false},
+            {displayName: "Max Missed Calls(auto release)", name: "maxMissedCalls-edit", value: false},
+            {displayName: "Reset Max Rings On Success", name: "maxRingsSuccess-edit", value: false},
+            {displayName: "Auto Logout", name: "autoLogout-visible", value: false},
+            {displayName: "Avatar", name: "avatar-visible", value: false},
+            {displayName: "Agent Skills", name: "agentSkills-visible", value: false}
+        ]
       }
       this.permissions = await this.$agent.p_mfa('ws_db_permission', 'get', [this.id])
         this.permissions.forEach( (key) =>
@@ -116,6 +129,17 @@ export default {
         if (id >= 0) {
           this.permissions.splice(id, 1)
         }
+      }
+    },
+    canShow(index) {
+      if(this.ui == 'supervisor') {
+        let main_perm = 13+this.groups.length + this.queues.length
+        if ( !this.perms_check[0].value && index >= main_perm)
+          return false
+        else if ( !this.perms_check[1].value && index >= 4 && index < main_perm)
+          return false
+        else
+          return true
       }
     }
   },
