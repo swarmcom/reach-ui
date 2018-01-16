@@ -1,12 +1,12 @@
 <template>
 <div>
   <b-row>
-    <b-col cols="9">
+    <b-col cols="12" md="9" order="2" order-md="1">
       <outgoing v-if="outgoing_visible"></outgoing>
       <call v-if="call_visible" :uuid="uuid"></call>
       <spy v-if="spy_visible" :uuid="uuid"></spy>
     </b-col>
-    <b-col cols="3">
+    <b-col cols="12" md="3" order="1" order-md="2">
       <phone-actions :uuid="uuid"></phone-actions>
     </b-col>
   </b-row>
