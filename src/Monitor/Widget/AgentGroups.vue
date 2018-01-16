@@ -3,20 +3,20 @@
   <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseAgentManagerProfiles" class="mt-2">
     <b-row>
-      <b-col cols="2">
+      <b-col cols="12" md="12" lg="2" xl="2">
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Groups</div>
         </b-row>
-        <b-table style="margin-top:10px" small responsive hover
+        <b-table style="margin-top:10px" small hover
           :items="groups"
           :fields="fieldNames">
         </b-table>
       </b-col>
-      <b-col cols="7">
+      <b-col cols="12" md="12" lg="10" xl="7">
         <b-row class="toggle-bar-custom" style="margin-left:1px">
           <div class="titlenocollapse">Agent States</div>
         </b-row>
-        <b-table style="margin-top:10px" small striped bordered hover
+        <b-table style="margin-top:10px; min-width:620px;" small striped bordered hover
           :items="computedAgentsStats"
           :fields="fieldsStates">
           <template slot="ringing" slot-scope="data">
@@ -35,7 +35,7 @@
           </template>
         </b-table>
       </b-col>
-      <b-col cols="3">
+      <b-col cols="12" md="12" lg="12" xl="3">
         <group-stats :groups="groups"></group-stats>
       </b-col>
     </b-row>
@@ -66,7 +66,7 @@ export default {
         wrapup: { label: 'Wrap-up', sortable: false, variant: "warning", thClass:"table-header-text-center", tdClass:"table-body-text-center" }
       },
       fieldNames: {
-        name: { label: 'Name', sortable: false, thClass:"table-header-text-center" },
+        name: { label: 'Name', sortable: false, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
       },
       showCollapse: true,
     }

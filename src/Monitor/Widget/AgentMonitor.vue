@@ -1,10 +1,10 @@
 <!--suppress ALL -->
 <template>
 <div>
-  <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"/>
+  <toggle-bar style="width:100%; background: #fff; border-bottom: 1px solid #fff;"/>
   <b-collapse v-model="showCollapse" id="collapseAgentManagerAgents" class="mt-2">
     <b-row>
-      <b-col cols="2">
+      <b-col cols="12" md="12" lg="3" xl="2">
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </b-row>
@@ -25,7 +25,7 @@
           <option v-for="period in periods" :value="period.value">{{period.name}}</option>
         </b-form-select>
       </b-col>
-      <b-col cols="10">
+      <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px">
         <b-table style="margin-top:10px" small bordered hover
           :items="computedAgents"
           :fields="fields"

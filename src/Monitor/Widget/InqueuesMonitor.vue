@@ -2,11 +2,11 @@
 <div>
   <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"/>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerCallView" class="mt-2">
-    <div class="row">
-      <div class="col-2">
-        <div class="row toggle-bar-custom">
+    <b-row class="row">
+      <b-col cols="12" md="12" lg="3" xl="2">
+        <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
-        </div>
+        </b-row>
         <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" ></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedMedia" style="margin-top:10px">
           <option v-for="media in this.medias" :value=media.value>{{media.name}}</option>
@@ -26,8 +26,8 @@
         <b-form-select class="pointer" size="sm" v-model="selectedSkill" style="margin-top:10px">
           <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
         </b-form-select>
-      </div>
-      <div class="col-10">
+      </b-col>
+      <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px">
         <b-table style="margin-top:10px" small bordered hover
           :items="computedInqueues"
           :fields="fields"
@@ -74,8 +74,8 @@
             </b-row>
           </template>
         </b-table>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </b-collapse>
 </div>
 </template>

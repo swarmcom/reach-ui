@@ -15,7 +15,7 @@
     "howler": "^2.0.7",
     "jquery": "^3.2.1",
     "moment": "^2.20.1",
-    "popper.js": "^1.12.9",
+    "popper.js": "^1.12.3",
     "vue": "^2.5.13",
     "vue-awesome": "^2.3.4",
     "vue-codemirror": "^4.0.2",
