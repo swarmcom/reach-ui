@@ -3,11 +3,11 @@
   <toggle-bar style="background: #fff; border-bottom: 1px solid #fff;"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManagerView" class="mt-2">
     <b-row>
-      <b-col cols="2">
+      <b-col cols="12" md="12" lg="2" xl="2">
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Queue Name</div>
         </b-row>
-        <b-table style="margin-top:10px" small responsive hover
+        <b-table style="margin-top:10px" small hover
           :items="computedStats"
           :fields="fieldNames">
           <template slot="name" slot-scope="data">
@@ -35,9 +35,9 @@
           </template>
         </b-table>
       </b-col>
-      <b-col cols="10">
+      <b-col cols="12" md="12" xl="10" lg="10">
         <b-row>
-          <b-col cols="2">
+          <b-col cols="3" md="3" xl="2" lg="2">
             <b-row class="toggle-bar-custom" style="margin-left:1px">
               <div class="titlenocollapse">Calls in Queue</div>
             </b-row>
@@ -46,20 +46,20 @@
               :fields="fieldCIQ">
             </b-table>
           </b-col>
-          <b-col cols="10">
+          <b-col cols="9" md="9" xl="10" lg="10">
             <b-row>
-              <b-col cols="9">
+              <b-col cols="7" md="7" xl="8" lg="8">
                 <b-row class="toggle-bar-custom" style="margin-left:1px">
                   <div class="titlenocollapse">Queue Statistics</div>
                 </b-row>
               </b-col>
-              <b-col cols="3">
+              <b-col cols="5" md="5" xl="4" lg="4">
               <b-form-select style="margin-top:8px" class="pointer" size="sm" v-model="period.value" @change="set_period">
                 <option v-for="period in periods" :value="period.value">{{period.name}}</option>
               </b-form-select>
               </b-col>
             </b-row>
-            <b-table style="margin-top:10px" small striped bordered hover
+            <b-table style="margin-top:10px; min-width:500px;" small striped bordered hover
               :items="computedStats"
               :fields="fieldsStats">
             </b-table>
@@ -84,7 +84,7 @@ export default {
         ciq: { label: "CIQ", variant: 'warning', thClass:"table-header-text-center", tdClass:"table-body-text-center"}
       },
       fieldNames: {
-        name: { label: 'Name', sortable: false, thClass:"table-header-text-center" },
+        name: { label: 'Name', sortable: false, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
       },
       fieldsStats: {
         speedAnswer: { label: 'Speed Answer', variant: 'primary', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
