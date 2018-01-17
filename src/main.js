@@ -8,6 +8,7 @@ import Master from '@/Role/Master'
 import Login from '@/Login'
 
 import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/scss/bootstrap.scss'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import 'vue-awesome/icons'
