@@ -43,7 +43,7 @@ export default {
   methods: {
     onChange (V) {
       if (V == 'Not set') {
-        this.$emit('input', undefined)
+        this.$emit('input', null)
       } else if (V == 'True') {
         this.$emit('input', true)
       } else if (V == 'False') {
