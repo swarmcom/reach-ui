@@ -88,7 +88,7 @@
             </div>
             <div v-if="data.item.state === 'ringing'" class='agent-state-color'>
               <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row v-if="data.item.call_vars">
                 <b-col cols="12">
                   <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
                 </b-col>
@@ -98,7 +98,7 @@
                   <div class="agent-state-text">Ringing</div>
                 </b-col>
               </b-row>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row>
                 <b-col cols="12">
                   <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
                   <icon v-else name="handshake-o" scale="2"/>
@@ -107,7 +107,7 @@
             </div>
             <div v-if="data.item.state === 'outgoing'" class='agent-state-color'>
               <icon name="wifi" scale="2" style="transform: rotate(90deg);"/>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row v-if="data.item.call_vars">
                 <b-col cols="12">
                   <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
                 </b-col>
@@ -120,7 +120,7 @@
             </div>
             <div v-if="data.item.state === 'oncall'" class='agent-state-color'>
               <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row v-if="data.item.call_vars">
                 <b-col cols="12">
                   <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
                 </b-col>
@@ -130,7 +130,7 @@
                   <div class="agent-state-text">On Call</div>
                 </b-col>
               </b-row>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row>
                 <b-col cols="12">
                   <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
                   <icon v-else name="handshake-o" scale="2"/>
@@ -139,7 +139,7 @@
             </div>
             <div v-if="data.item.state === 'conference'" class='agent-state-color'>
               <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row v-if="data.item.call_vars">
                 <b-col cols="12">
                   <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
                 </b-col>
@@ -149,7 +149,7 @@
                   <div class="agent-state-text">Conference</div>
                 </b-col>
               </b-row>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row>
                 <b-col cols="12">
                   <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
                   <icon v-else name="handshake-o" scale="2"/>
@@ -158,7 +158,7 @@
             </div>
             <div v-if="data.item.state === 'inconference'" class='agent-state-color'>
               <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row v-if="data.item.call_vars">
                 <b-col cols="12">
                   <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
                 </b-col>
@@ -168,7 +168,7 @@
                   <div class="agent-state-text">In Conference</div>
                 </b-col>
               </b-row>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row>
                 <b-col cols="12">
                   <icon name="handshake-o" scale="2"/>
                 </b-col>
@@ -184,7 +184,7 @@
             </div>
             <div v-if="data.item.state === 'hold'" class='agent-state-color'>
               <icon name="pause" scale="2"/>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row v-if="data.item.call_vars">
                 <b-col cols="12">
                   <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
                 </b-col>
@@ -194,7 +194,7 @@
                   <div class="agent-state-text">Hold</div>
                 </b-col>
               </b-row>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row>
                 <b-col cols="12">
                   <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
                   <icon v-else name="handshake-o" scale="2"/>
@@ -211,7 +211,7 @@
             </div>
             <div v-if="data.item.state === 'barge'" class='agent-state-color'>
               <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row v-if="data.item.call_vars">
                 <b-col cols="12">
                   <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
                 </b-col>
@@ -221,7 +221,7 @@
                   <div class="agent-state-text">Barge</div>
                 </b-col>
               </b-row>
-              <b-row v-if="data.item.call_vars !== undefined">
+              <b-row>
                 <b-col cols="12">
                   <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
                   <icon v-else name="handshake-o" scale="2"/>
@@ -243,14 +243,14 @@
                 <div v-if="existClient(data.item.inqueue)" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
               </b-col>
             </b-row>
-            <b-row v-if="data.item.call_vars !== undefined">
+            <b-row v-if="data.item.call_vars">
               <b-col cols="12">
-                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + data.item.call_vars['Caller-Orig-Caller-ID-Number']}}</div>
+                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Orig-Caller-ID-Number'])}}</div>
               </b-col>
             </b-row>
-            <b-row v-if="data.item.call_vars !== undefined">
+            <b-row v-if="data.item.call_vars">
               <b-col cols="12" v-if="data.item.state==='barge'">
-                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + data.item.call_vars['Caller-Caller-ID-Number']}}</div>
+                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Caller-ID-Number'])}}</div>
               </b-col>
             </b-row>
             <b-row v-if="data.item.state==='release'">
@@ -258,7 +258,7 @@
                 <div class="agent-state-text">{{data.item.release.name ? data.item.release.name : 'default'}}</div>
               </b-col>
             </b-row>
-            <b-row v-if="data.item.call_vars !== undefined">
+            <b-row v-if="data.item.call_vars">
               <b-col cols="12">
                 <div class="agent-state-text">{{isDefined(data.item.call_vars['Unique-ID'])}}</div>
               </b-col>
@@ -399,13 +399,10 @@ export default {
       this.updateStats()
     },
     existAvatar(data){
-      return data && data.line_in !== undefined &&
-        data.line_in.client !== undefined &&
-        data.line_in.client.avatar;
+      return data && data.line_in !== undefined && data.line_in.client.avatar;
     },
     existClient(data){
-      return data && data.line_in !== undefined &&
-        data.line_in.client !== undefined;
+      return data && data.line_in !== undefined;
     },
     percent (value) {
       if (value > 0) {
@@ -499,28 +496,21 @@ export default {
             key.agentMyCpt = '--'
         }
 
-        if(key.inqueue !== null) {
-          if (key.inqueue.line_in !== undefined || key.inqueue.line_in.client !== undefined) {
-            key.agentClient = key.inqueue.line_in.client.name
-            if (this.selectedCustomer !== key.inqueue.line_in.client.name && this.selectedCustomer !== 'Any Customers')
-              return
-          }
+        if (key.inqueue && key.inqueue.line_in !== undefined) {
+          if(this.selectedCustomer !== key.inqueue.line_in.client.name && this.selectedCustomer !== 'Any Customers')
+            return
         }
         else if(this.selectedCustomer !== 'Any Customers')
           return
 
-        if(key.agent.group !== undefined){
-          key.agentGroup = key.agent.group.name
-          if((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile') || this.groups_select.length < 2)
-            return
-        }
-        else if(this.selectedProfile !== 'Any Profile' || this.groups_select.length < 2) {
+        key.agentGroup = key.agent.group.name
+        if((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile') || this.groups_select.length < 2)
           return
-        }
+
         if(this.selectedState !== key.state && this.selectedState !== 'Any State')
           return
 
-        if(key.agentSkills !== undefined && this.selectedSkill !== 'Any Skill') {
+        if(this.selectedSkill !== 'Any Skill') {
           let skills = key.agentSkills.split(",")
           if(!skills.includes(this.selectedSkill)){
             return
