@@ -8,7 +8,7 @@
     <b-row v-if="index === 7"><b>Agent Groups:</b></b-row>
     <b-row v-if="index === (7+groups.length)"><b>Queues:</b></b-row>
     <b-row v-if="index === (7+groups.length + queues.length)"><b>Supervisor Privileges:</b></b-row>
-    <b-row v-if="index === (13+groups.length + queues.length)"> <b>Features: </b></b-row>
+    <b-row v-if="index === (14+groups.length + queues.length)"> <b>Features: </b></b-row>
     <b-row v-if="index === (17+groups.length + queues.length)"><b-col> Conference/Transfer Privileges</b-col></b-row>
     <b-form-checkbox v-if="canShow(index)" v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
@@ -59,6 +59,7 @@ export default {
             this.perms_check.push({displayName: key.name, name: key.name+'-queues', value: false})
         })
         this.perms_check.push({displayName: "Control Agent State", name: "controlAgentState-feature", value: false})
+        this.perms_check.push({displayName: "Monitor", name: "monitor-feature", value: false})
         this.perms_check.push({displayName: "Barge", name: "barge-feature", value: false})
         this.perms_check.push({displayName: "Whisper", name: "whisper-feature", value: false})
         this.perms_check.push({displayName: "Take Over", name: "takeOver-feature", value: false})
@@ -133,7 +134,7 @@ export default {
     },
     canShow(index) {
       if(this.ui == 'supervisor') {
-        let main_perm = 13+this.groups.length + this.queues.length
+        let main_perm = 14+this.groups.length + this.queues.length
         if ( !this.perms_check[0].value && index >= main_perm)
           return false
         else if ( !this.perms_check[1].value && index >= 4 && index < main_perm)
