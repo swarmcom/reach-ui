@@ -40,7 +40,7 @@
 <b-row>
   <b-col cols="2">
     <div class="call-hand-center">
-      <b-img v-if="this.inqueue.line_in.client.avatar != 'undefined'" :src="$agent.get_rr_uri()+'/avatar/'+this.inqueue.line_in.client.avatar" style="width:64px;"/>
+      <b-img v-if="this.inqueue.line_in.client.avatar" :src="$agent.get_rr_uri()+'/avatar/'+this.inqueue.line_in.client.avatar" style="width:64px;"/>
       <icon v-else style="color:#838383" name="handshake-o" scale="4"></icon>
     </div>
   </b-col>

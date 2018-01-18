@@ -401,7 +401,7 @@ export default {
     existAvatar(data){
       return data && data.line_in !== undefined &&
         data.line_in.client !== undefined &&
-        data.line_in.client.avatar !== 'undefined';
+        data.line_in.client.avatar;
     },
     existClient(data){
       return data && data.line_in !== undefined &&
