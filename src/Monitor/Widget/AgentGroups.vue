@@ -90,9 +90,9 @@ export default {
           "conference": 0,
           "wrapup": 0
         }
-        let selectedProfile = key.id
+        let selectedProfile = key.name
         this.agents.forEach( (key) => {
-          if(key.agent.group != undefined && selectedProfile == key.agent.group.id) {
+          if(selectedProfile == key.agent.group.name) {
             object.totalAgents++
             switch (key.state){
               case "release":
