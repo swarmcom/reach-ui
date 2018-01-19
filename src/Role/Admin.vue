@@ -38,7 +38,7 @@
       <div class="container">
         <div class="row  justify-content-center">
           <small>
-            Supervisor &copy; 2018 eZuce
+            Admin &copy; 2018 eZuce
             UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
             Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
           </small>
@@ -53,9 +53,7 @@
 <script>
     import Vue from 'vue'
     import VueRouter from 'vue-router'
-
-    import Admin from '@/Role/Supervisor/Admin'
-
+    import Admin from '@/Role/Admin/Admin'
     import AdminRoutes from '@/routes/admin'
     import moment from 'moment'
 

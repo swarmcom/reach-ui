@@ -2,7 +2,7 @@
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand to="/#">HOME</b-navbar-brand>
+    <b-navbar-brand to="/monitor">HOME</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
         <b-nav-item @click="logout">LOGOUT</b-nav-item>
@@ -26,13 +26,6 @@
       <b-dropdown-item v-if="$agent.vm.agent.permissions['agentManager-widget'] && $agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
-    </b-nav-item-dropdown>
-    <b-nav-item to="/#">ADMIN</b-nav-item>
-    <b-nav-item-dropdown>
-      <b-dropdown-header>Options for Admin tab</b-dropdown-header>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.admin" @click="$agent.vm.isNarrowLayout.admin = true">Switch to Narrow layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.admin" @click="$agent.vm.isNarrowLayout.admin = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:monitor-ui to="/monitor">MONITOR </b-nav-item>
     <b-nav-item-dropdown v-access:monitor-ui>
@@ -92,23 +85,21 @@ import VueRouter from 'vue-router'
 
 import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
-import Admin from '@/Role/Supervisor/Admin'
 import Monitor from '@/Role/Supervisor/Monitor'
 import Recordings from '@/Role/Supervisor/Recordings'
 import Report from '@/Role/Supervisor/Report'
 
-import AdminRoutes from '@/routes/admin'
 import ReportRoutes from '@/routes/report'
 import moment from 'moment'
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: Admin, children: AdminRoutes },
     { path: '/main', component: Main },
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
     { path: '/recordings', component: Recordings },
-    { path: '/report', component: Report, children: ReportRoutes }
+    { path: '/report', component: Report, children: ReportRoutes },
+    { path: '/', redirect: 'monitor' }
   ]
 })
 
