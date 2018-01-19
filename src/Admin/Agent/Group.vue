@@ -2,6 +2,7 @@
 <div class="form">
   <form-text label="Agent Group Name" v-model="rec.name"></form-text>
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
+  <lines label="Line Out" v-model="rec.lines_out"></lines>
   <roles label="Role" v-model="rec.role_id"></roles>
   <form-text label="Ring Timeout" v-model="rec.ring_timeout"></form-text>
   <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>

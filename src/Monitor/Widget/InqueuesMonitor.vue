@@ -52,7 +52,7 @@
                 <icon name="mobile" scale="2" class='agent-state-color'/>
               </b-col>
               <b-col cols="1">
-                <b-img v-if="data.item.customer.avatar !== 'undefined'" :src="$agent.avatar_uri(data.item.customer.avatar)" style="width:32px;"></b-img>
+                <b-img v-if="data.item.customer.avatar" :src="$agent.avatar_uri(data.item.customer.avatar)" style="width:32px;"></b-img>
                 <icon v-else name="handshake-o" scale="2"/>
               </b-col>
               <b-col>
@@ -173,21 +173,21 @@ export default {
       let compInqueues = []
       inqueues.forEach( (key) => {
         key._cellVariants = { actions: 'success', media: 'primary', state: 'primary', line: 'primary', queue: 'primary', skillsReq: 'primary', timeInQueue: 'primary' }
-        if(key.queue !== undefined){
+        if(key.queue){
           if((this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue') || this.queues.length < 2)
             return
         }
         else if(this.selectedQueue !== 'Any Queue' || this.queues.length < 2)
           return
 
-        if(key.line !== undefined) {
+        if(key.line) {
           if(this.selectedLine !== key.line && this.selectedLine !== 'Any Lines')
             return
         }
         else if(this.selectedLine !== 'Any Lines')
           return
 
-        if(key.customer !== undefined) {
+        if(key.customer) {
           if(this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers')
             return
         }

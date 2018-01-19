@@ -144,7 +144,7 @@ export default {
           "abandoned": '-'
         }
         inqueues.forEach( (key) => {
-          if(key.queue != undefined && selectedQueue == key.queue) {
+          if(key.queue && selectedQueue == key.queue) {
             object.details.push({ customer: key.customer, line: key.line })
             object.ciq++
             if(key.state == 'oncall')
