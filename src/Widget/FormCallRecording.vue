@@ -2,25 +2,26 @@
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
   <div v-if="effective" class="col-5">
-    <b-form-select class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
+    <b-form-select :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
   </div>
   <div v-if="effective" class="col-4">
-    <b-form-select class="pointer" :value="computed_effective" :options="options" disabled></b-form-select>
+    <b-form-select :value="computed_effective" :options="options" disabled></b-form-select>
   </div>
   <div v-else class="col-9">
-    <b-form-select class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
+    <b-form-select :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
   </div>
 </div>
 </template>
 
 <script>
 function verbose(value) {
+  console.log("value", value)
   if (value === true) {
-    return 'True'
+    return 'Enabled'
   } else if (value === false) {
-    return 'False'
+    return 'Disabled'
   } else {
-    return 'Not set'
+    return 'On Demand'
   }
 }
 
@@ -29,7 +30,7 @@ export default {
   props: ['label', 'value', 'effective'],
   data () {
     return {
-      options: ['Not set', 'True', 'False']
+      options: ['On Demand', 'Enabled', 'Disabled']
     }
   },
   computed: {
@@ -42,11 +43,11 @@ export default {
   },
   methods: {
     onChange (V) {
-      if (V == 'Not set') {
+      if (V == 'On Demand') {
         this.$emit('input', null)
-      } else if (V == 'True') {
+      } else if (V == 'Enabled') {
         this.$emit('input', true)
-      } else if (V == 'False') {
+      } else if (V == 'Disabled') {
         this.$emit('input', false)
       }
     }
