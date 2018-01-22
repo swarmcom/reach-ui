@@ -88,6 +88,7 @@ export default class Agent extends WsProto {
 
   // AGENT API
   logout () {
+    window.location.href = '#'
     localStorage.removeItem('session-key')
     this.call('stop', [], () => this.handleAuth())
     this.connect()
