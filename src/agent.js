@@ -48,10 +48,10 @@ export default class Agent extends WsProto {
     this.vm = new Vue({
       data: {
         session_auth: false,
-        agent: undefined,
+        agent: null,
         transfer_agents: [],
-        state: undefined,
-        hangup_state: undefined,
+        state: null,
+        hangup_state: null,
         auto_logout_timer: undefined,
         activity_time: undefined,
         release_id: undefined,
@@ -214,7 +214,7 @@ export default class Agent extends WsProto {
     }
   }
 
-  isAuth () { return this.vm.agent !== undefined }
+  isAuth () { return this.vm.agent }
   role() { return this.vm.agent.role.ui }
 
   is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
@@ -237,7 +237,7 @@ export default class Agent extends WsProto {
       this.vm.agent = Re.reply
       localStorage.setItem('session-key', Re.reply.session_key)
     } else {
-      this.vm.agent = undefined
+      this.vm.agent = null
     }
     Cb(Re)
     EventBus.$emit('agent-auth', this.isAuth())
