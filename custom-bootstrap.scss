@@ -21,3 +21,7 @@ $state-info-bg:     lighten($info, 45);
 // Set global options
 $enable-shadows:    true;
 $enable-gradients:  true;
+
+.navbar {
+	z-index: 10 !important;
+}
