@@ -1,8 +1,8 @@
 $form-signin-bg-color: #f5f5f5;
-$background: rgb(46,143,177);
-$backgroundColor1: rgba(46,143,177,1);
-$backgroundColor2: rgba(33,134,169,1);
-$backgroundColor3: rgba(13,119,153,1);
+$background: rgb(46, 143, 177);
+$backgroundColor1: rgba(46, 143, 177, 1);
+$backgroundColor2: rgba(33, 134, 169, 1);
+$backgroundColor3: rgba(13, 119, 153, 1);
 $agent-state-width: 90px;
 $agent-state-font: 13px;
 $agent-state-icon-color: #505050;
@@ -10,6 +10,7 @@ $agent-state-icon-color: #505050;
 body {
   padding-top: 56px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -18,16 +19,20 @@ body {
   line-height: 30px;
   background-color: #f5f5f5;
 }
+
 .footer > .container {
   padding-right: 15px;
   padding-left: 15px;
 }
+
 .reach-enter-active, .fade-leave-active {
-transition: opacity .2s
+  transition: opacity .2s
 }
+
 .reach-enter, .fade-leave-to {
   opacity: 0
 }
+
 /* custom login form to fit old UI*/
 .form-signin {
   padding: 25px;
@@ -36,40 +41,46 @@ transition: opacity .2s
   border: 1px solid #e3e3e3;
   border-radius: 4px;
 }
+
 /* custom navbar to fit old UI */
 .navbar-custom {
   z-index: 10 !important;
   min-height: 56px;
   background: $background; /* Old browsers */
-  background: -moz-linear-gradient(top,  $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$backgroundColor1), color-stop(53%,$backgroundColor2), color-stop(100%,$backgroundColor3)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* IE10+ */
-  background: linear-gradient(top,  $backgroundColor1 0%,$backgroundColor2 53%,$backgroundColor3 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2e8fb1', endColorstr='#0d7799',GradientType=0 ); /* IE6-9 */
+  background: -moz-linear-gradient(top, $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $backgroundColor1), color-stop(53%, $backgroundColor2), color-stop(100%, $backgroundColor3)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* IE10+ */
+  background: linear-gradient(top, $backgroundColor1 0%, $backgroundColor2 53%, $backgroundColor3 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2e8fb1', endColorstr='#0d7799', GradientType=0); /* IE6-9 */
 }
+
 /* change the brand and text color */
 .navbar-custom .navbar-text {
-    color: rgba(255,255,255,.8);
+  color: rgba(255, 255, 255, .8);
 }
+
 .navbar-custom .navbar-nav .nav-link {
-    color: rgba(255,255,255,.5);
+  color: rgba(255, 255, 255, .5);
 }
+
 /* change the color of active or hovered links */
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 #navbars > span {
   color: white;
 }
+
 /* custom b-nav to fit old UI */
 .custom-b-nav {
   background: #eff1f1;
-  color:#666;
+  color: #666;
 }
+
 /* custom toogle bar to fit old UI */
 .toggle-bar-custom {
   display: flex;
@@ -81,177 +92,294 @@ transition: opacity .2s
   border-bottom: 1px solid #b4b4b4;
   border-radius: 4px;
 }
+
 .toggle-bar-custom .title {
   margin-left: 10px;
   padding-top: 5px;
   font-size: 15px;
   color: #8c8c8c;
 }
+
 .toggle-bar-custom .titlenocollapse {
   margin-left: 10px;
   padding-top: 3px;
   font-size: 15px;
   color: #8c8c8c;
 }
+
 .pin-nav {
-    position: fixed; /* Set the navbar to fixed position */
-    top: 56px; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
-    z-index: 5;
-    margin-bottom: 42px;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 56px; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  z-index: 5;
+  margin-bottom: 42px;
 }
+
 .pin-container {
   margin-top: 52px;
 }
+
 .session-manager-text {
   font-size: 14px;
 }
+
 .agent-state-text {
-  font-size: 12px;
+  font-size: 11px;
 }
+
+.agent-state-texts {
+  font-size: 11px;
+  padding-left: 10px;
+  color: black;
+  height: 16px;
+  min-width: 100%;
+}
+
 .agent-state-text.myPhone {
-  padding-top:5px;
+  padding-top: 5px;
 }
+
 .agent-state-color {
   color: $agent-state-icon-color;
 }
+
 .agent-state-available {
-  background:#ffeeba;
+  background: #ffeeba;
   color: $agent-state-icon-color;
-  padding-top:11px;
-  padding-left:18px;
+  padding-top: 11px;
+  padding-left: 18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-released {
-  background:#dbeffa;
+  background: #dbeffa;
   color: $agent-state-icon-color;
-  padding-top:12px;
-  padding-left:18px;
+  padding-top: 12px;
+  padding-left: 18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-ringing {
-  background:#d4fcbb;
+  background: #d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:18px;
-  padding-left:18px;
+  padding-top: 18px;
+  padding-left: 18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-outgoing {
-  background:#d4fcbb;
+  background: #d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:18px;
-  padding-left:18px;
+  padding-top: 18px;
+  padding-left: 18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-suspend {
-  background:#ffeeba;
+  background: #ffeeba;
   color: $agent-state-icon-color;
-  padding-top:11px;
-  padding-left:20px;
+  padding-top: 11px;
+  padding-left: 20px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-oncall {
-  background:#d4fcbb;
+  background: #d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:11px;
-  padding-left:20px;
+  padding-top: 11px;
+  padding-left: 20px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-hold {
-  background:#d4fcbb;
+  background: #d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:12px;
-  padding-left:18px;
+  padding-top: 12px;
+  padding-left: 18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-wrap-up {
-  background:#d4fcbb;
+  background: #d4fcbb;
   color: $agent-state-icon-color;
-  padding-top:11px;
-  padding-left:18px;
+  padding-top: 11px;
+  padding-left: 18px;
   width: $agent-state-width;
   font-size: $agent-state-font;
-  height:100%;
+  height: 100%;
 }
+
 .agent-state-button {
   color: $agent-state-icon-color;
   min-width: 82px;
   max-width: 82px;
   height: 82px;
 }
+
 .agent-release-dropdown {
   min-width: 82px;
   max-width: 82px;
 }
+
 .state-time {
-  margin-right:2px;
-  padding-left:2px;
-  padding-right:2px;
-  font-size:18px;
-  line-height:55px;
+  margin-right: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-size: 18px;
+  line-height: 55px;
   font-weight: bold;
-  height:55px;
+  height: 55px;
   width: 90px;
-  background:#dbeffa;
+  background: #dbeffa;
   text-align: center;
 }
+
 .session-manager-info {
   font-size: 15px;
 }
+
 .pointer {
   cursor: pointer;
 }
+
 .deactivate {
   display: none;
 }
+
 .customInput {
   z-index: 100;
-  background: linear-gradient(to bottom,rgba(232,232,233,1) 0%,rgba(255,255,255,0.64) 18%,rgba(254,254,254,0) 50%,rgba(252,252,252,0.78) 89%,rgba(232,232,233,1) 100%) !important
+  background: linear-gradient(to bottom, rgba(232, 232, 233, 1) 0%, rgba(255, 255, 255, 0.64) 18%, rgba(254, 254, 254, 0) 50%, rgba(252, 252, 252, 0.78) 89%, rgba(232, 232, 233, 1) 100%) !important
 }
+
 .padding-container-fluid {
   padding-left: 20px;
   padding-right: 20px;
 }
+
 .table-header-text-center {
-  text-align:center;
-  font-size: 12px;
+  text-align: center;
+  font-size: 11px;
   font-weight: normal;
-  color:#969696;
+  color: #969696;
 }
+
 .table-body-text-center {
-  text-align:center;
+  text-align: center;
 }
+
+.agents-states {
+  width: 102px;
+  height: 88px;
+  padding-right: 10px;
+  border-right: 2px solid white;
+}
+
+.stats-value {
+  text-align: center;
+  color: #505050;
+  padding-top: 5px;
+  font-size: 15px;
+  line-height: 27px;
+  font-weight: 700;
+}
+
+@mixin table-body-ezuce {
+  text-align: center;
+  font-size: 11px;
+  font-weight: normal;
+  color: #969696;
+  padding-top: 12px;
+  border-right: 2px solid white;
+  display: block;
+  width: 60px;
+  height: 88px;
+  max-width: 60px !important;
+}
+
+.table-body-blue {
+  @include table-body-ezuce;
+  background: #DBEFFA;
+}
+
+.table-body-green {
+  @include table-body-ezuce;
+  background: #d4fcbb;
+}
+
+.table-body-orange {
+  @include table-body-ezuce;
+  background: #FAEDA4;
+}
+
+@mixin table-header-ezuce {
+  text-align: center;
+  font-size: 11px;
+  font-weight: normal;
+  color: #969696;
+  height: 0px;
+  display: none;
+  width: 60px;
+  max-width: 60px !important;
+}
+
+.table-header-blue {
+  @include table-header-ezuce;
+  background: #DBEFFA;
+}
+
+.table-header-green {
+  @include table-header-ezuce;
+  background: #d4fcbb;
+}
+
+.table-header-orange {
+  @include table-header-ezuce;
+  background: #FAEDA4;
+}
+
+div.inner-box {
+  padding-top: 12px;
+}
+
+td.table-cell {
+  padding: 0;
+  border: none;
+}
+
 .buttons-border {
   border-style: solid !important;
   border-width: 1px !important;
-  border-color:silver !important;
+  border-color: silver !important;
 }
+
 .call-phone-center {
   text-align: center;
   background: #dbeffa;
 }
+
 .call-hand-center {
   text-align: center;
 }
+
 .call-action-button {
   padding-top: 15px;
-  color:#505050 !important;
+  color: #505050 !important;
   border-style: solid !important;
   border-width: 1px !important;
-  border-color:silver !important;
+  border-color: silver !important;
   cursor: pointer;
 }
