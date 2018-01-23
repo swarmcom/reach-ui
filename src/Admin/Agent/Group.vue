@@ -9,6 +9,7 @@
   <form-text label="Auto Logout" v-model="rec.autologout"></form-text>
   <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-text>
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
+  <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
   <tag-group label="Skills Group" v-model="rec.tag_group_id"></tag-group>
   <form-tags placeholder="Skill..." label="Skills" v-model="skills"></form-tags>
 
@@ -24,11 +25,13 @@
 
 <script>
 import Common from '@/Admin/Common'
+import LineOuts from '@/Widget/LineOuts'
 
 export default {
   name: 'admin-agent-group',
   props: ['id'],
   mixins: [Common],
+  components: { 'line-outs': LineOuts },
   data () {
     return {
       rec: {},
