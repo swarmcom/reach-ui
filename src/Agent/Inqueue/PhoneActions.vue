@@ -22,7 +22,7 @@
   </b-row>
   <br>
   <br>
-  <b-row style="margin-top:5px;" class="float-right"  v-access:CROnDemand-feature v-if="$agent.is_oncall() && inqueue!=undefined">
+  <b-row style="margin-top:5px;" class="float-right"  v-access:CROnDemand-feature v-if="can_record()">
     <b-button style="width:85px" size="sm" class="pointer" v-if="!inqueue.keep_record" @click="record" variant="outline-danger">Record</b-button>
     <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="inqueue.keep_record">Recording</b-button>
   </b-row>
@@ -80,13 +80,16 @@ export default {
       if (S.state.state == 'oncall')
         this.queryWrap()
 
-      if (S.state.inqueue.record == 'inqueue_call')
+      if (S.state.inqueue !== null && S.state.inqueue.record == 'inqueue_call')
         this.query()
 
       if (S.state.state == 'wrapup')
         this.wrap_visible = true
       if (S.state.state != 'wrapup')
         this.wrap_visible = false
+    },
+    can_record () {
+      return this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null
     }
   },
   created () {
