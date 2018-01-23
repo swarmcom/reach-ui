@@ -50,13 +50,16 @@ import Prioritize from '@/Admin/Recipe/Action/Prioritize'
 import Deprioritize from '@/Admin/Recipe/Action/Deprioritize'
 import TransferToQueue from '@/Admin/Recipe/Action/TransferToQueue'
 import TransferToOutgoing from '@/Admin/Recipe/Action/TransferToOutgoing'
+import AddSkills from '@/Admin/Recipe/Action/AddSkills'
+import RemoveSkills from '@/Admin/Recipe/Action/RemoveSkills'
 
 export default {
   name: 'admin-recipe-actions',
   props: ['value', 'edit'],
   components: {
     hangup: Hangup, announce: Announce, voicemail: Voicemail, priority: Priority, prioritize: Prioritize, deprioritize: Deprioritize,
-    transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing, lua_script: Lua, lua_job: Lua
+    transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing, lua_script: Lua, lua_job: Lua,
+    add_skills: AddSkills, remove_skills: RemoveSkills
   },
   data () {
     return {
@@ -71,6 +74,8 @@ export default {
         { name: 'Deprioritize', ref: 'deprioritize' },
         { name: 'Transfer to Queue', ref: 'transfer_to_queue' },
         { name: 'Transfer to Outgoing', ref: 'transfer_to_outgoing' },
+        { name: 'Add Skills', ref: 'add_skills' },
+        { name: 'Remove Skills', ref: 'remove_skills'}
       ],
       action: undefined,
       args: [],
