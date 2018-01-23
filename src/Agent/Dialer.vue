@@ -1,9 +1,11 @@
 <template>
-<b-form-group v-if="this.$agent.can_call()" label="Call a number:">
+<b-form-group v-if="this.$agent.can_call()" label="Place a call to:">
   <b-input-group>
     <b-form-input v-model="number" type="text"></b-form-input>
     <b-input-group-button>
-      <b-btn @click="onClick" variant="outline-primary">Call</b-btn>
+      <b-dropdown text="Call as" variant="outline-secondary" right>
+        <b-dropdown-item v-for="line of this.$agent.vm.agent.lines" :key="line.id" @click="call(line.id)">{{line.name}}</b-dropdown-item>
+      </b-dropdown>
     </b-input-group-button>
   </b-input-group>
 </b-form-group>
@@ -12,15 +14,18 @@
 <script>
 export default {
   name: 'dialer',
+  props: ["lines"],
   data () {
     return {
       number: ''
     }
   },
   methods: {
-    onClick () {
-      this.$agent.make_call(this.number)
+    call (line) {
+      this.$agent.place_call(line.id, this.number)
     }
+  },
+  created () {
   }
 }
 </script>

@@ -99,7 +99,7 @@ export default class Agent extends WsProto {
   hangup () { this.call('hangup') }
   hold () { this.call('hold') }
   unhold () { this.call('unhold') }
-  make_call (Target) { this.call('call', [Target]) }
+  place_call (LineId, Target) { this.call('place_call', [LineId, Target]) }
   record (Cmd) { this.call('record', [Cmd]) }
   play (UUID) { this.call('record', ['play', UUID]) }
   end_wrapup () { this.call('end_wrapup') }
@@ -160,7 +160,7 @@ export default class Agent extends WsProto {
   is_hold () { return this.vm && this.vm.state == 'hold' }
   is_barge () { return this.vm && this.vm.state == 'barge' }
   can_login () { return this.vm.session_auth }
-  can_call () { return this.vm && this.vm.agent.line_id }
+  can_call () { return this.vm && (this.vm.agent.line_id || this.vm.agent.lines) }
   can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
