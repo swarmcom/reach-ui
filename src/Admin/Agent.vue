@@ -6,6 +6,7 @@
   <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
   <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
   <lines label="Line Out" v-model="rec.line_id"></lines>
+  <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
   <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
   <form-text label="Primary Contact" v-model="rec.uri"></form-text>
   <uris label="Additional Contacts" v-model="rec.uris"></uris>
@@ -33,11 +34,12 @@
 import Common from '@/Admin/Common'
 import URIs from '@/Widget/URIs'
 import FormTextEffective from '@/Widget/FormTextEffective'
+import LineOuts from '@/Widget/LineOuts'
 
 export default {
   name: 'admin-agent',
   mixins: [Common],
-  components: { uris: URIs, 'form-text-effective': FormTextEffective },
+  components: { uris: URIs, 'form-text-effective': FormTextEffective, 'line-outs': LineOuts },
   props: ['id'],
   data () {
     return {
