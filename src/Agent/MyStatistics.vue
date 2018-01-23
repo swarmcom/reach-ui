@@ -9,21 +9,15 @@
               <option v-for="period in periods" :value="period.value">{{period.name}}</option>
             </b-form-select>
           </b-col>
-          <b-col style="min-width: 300px" sm="8">
-            <multiselect
-                    v-model="selectedSkills"
-                    placeholder="Select skills"
-                    :options="this.skills2list(this.$agent.vm.agent.skills)"
-                    :multiple="true"
-                    :close-on-select="false"
-                    :clear-on-select="false"
-                    :hide-selected="true"
-                    :showLabels="false">
-            </multiselect>
+          <b-col sm="8">
+          <b-form-group label="Team tags:">
+            <b-form-checkbox-group id="tags" name="team tags" plain v-model="selectedSkills" :options="skillsOptions">
+            </b-form-checkbox-group>
+          </b-form-group>
           </b-col>
         </b-row>
         <b-row>
-          <b-container style="margin-top:20px; margin-left:15px; min-width: 600px">
+          <b-container style="margin-left:15px; min-width: 600px">
             <b-row>
               <b-col style="padding:0; max-width: 60px !important">
                 <div class="table-body-orange">
@@ -111,14 +105,10 @@
 
 <script>
 import Common from '@/Admin/Common'
-import Multiselect from 'vue-multiselect'
 
 export default {
   widgetName: 'MY STATISTICS',
   storageName: 'myStatistics',
-  components: {
-    Multiselect
-  },
 
   mixins: [Common],
   data () {
@@ -153,6 +143,7 @@ export default {
         { value:"1M", name:"This Month" }
       ],
       selectedSkills: [],
+      skillsOptions:[],
       period: { value: "15m", name: "Last 15 minutes"},
       showCollapse: true,
     }
@@ -223,8 +214,6 @@ export default {
     },
     set_period (value) {
       this.period.value = value
-      //this.group_query()
-      //this.stats_query()
       this.my_stats_query()
     }
   },
@@ -234,6 +223,7 @@ export default {
     this.$bus.$on('agent_stats', this.handleUpdateMyStats)
     //this.$bus.$on('agent_skills', this.handleUpdateSkills)
     this.query()
+    this.skillsOptions = this.skills2list(this.$agent.vm.agent.skills)
     if (this.$agent.vm.storage_data.myStatisticsCollapsed != undefined)
       this.showCollapse = this.$agent.vm.storage_data.myStatisticsCollapsed
   },
@@ -246,28 +236,11 @@ export default {
 }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-
 <style lang="scss">
-  .multiselect__tag {
-    background: #e6e6e6;
-    color: #495057;
+
+  .form-check {
+    margin-bottom: unset;
   }
 
-  .multiselect__tags {
-    border: 1px solid #ced4da;
-  }
-
-  .multiselect__tag-icon:hover {
-    background: #4d4f50;
-  }
-
-  .multiselect__tag-icon::after {
-    color: #495057;
-  }
-
-  .multiselect__option--highlight {
-    background: #007bff;
-  }
 </style>
 
