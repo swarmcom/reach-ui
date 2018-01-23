@@ -61,7 +61,7 @@
     <h4 v-if="this.$agent.is_oncall()">Actions:</h4>
     <button v-if="this.$agent.is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
     <button v-if="this.$agent.is_oncall()" @click="hold" class="btn btn-outline-info">Hold</button>
-    <b-button v-if="this.$agent.is_oncall()" @click="record" variant="outline-danger" :disabled="inqueue.keep_record">Record</b-button>
+    <b-button v-if="can_record()" @click="record" :variant="record_variant()" :disabled="inqueue.keep_record">Record</b-button>
     <disposition v-bind:uuid="this.uuid" :active="inqueue.disposition_id" v-on:input="update_disposition"></disposition>
   </b-col>
 
@@ -125,6 +125,12 @@ export default {
     }
   },
   methods: {
+    can_record () {
+      return this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null
+    },
+    record_variant () {
+      return this.inqueue.keep_record ? 'danger' : 'outline-danger'
+    },
     query: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
       this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
