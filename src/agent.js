@@ -48,10 +48,10 @@ export default class Agent extends WsProto {
     this.vm = new Vue({
       data: {
         session_auth: false,
-        agent: undefined,
+        agent: null,
         transfer_agents: [],
-        state: undefined,
-        hangup_state: undefined
+        state: null,
+        hangup_state: null
       }
     }),
     EventBus.$on('agent_update', () => update_agent(this))
@@ -150,7 +150,7 @@ export default class Agent extends WsProto {
     }
   }
 
-  isAuth () { return this.vm.agent !== undefined }
+  isAuth () { return this.vm.agent }
   role() { return this.vm.agent.role.ui }
 
   is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
@@ -160,7 +160,7 @@ export default class Agent extends WsProto {
   is_hold () { return this.vm && this.vm.state == 'hold' }
   is_barge () { return this.vm && this.vm.state == 'barge' }
   can_login () { return this.vm.session_auth }
-  can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
+  can_call () { return this.vm && this.vm.agent.line_id }
   can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
@@ -170,7 +170,7 @@ export default class Agent extends WsProto {
       this.vm.agent = Re.reply
       localStorage.setItem('session-key', Re.reply.session_key)
     } else {
-      this.vm.agent = undefined
+      this.vm.agent = null
     }
     Cb(Re)
     EventBus.$emit('agent-auth', this.isAuth())
