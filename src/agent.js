@@ -48,10 +48,10 @@ export default class Agent extends WsProto {
     this.vm = new Vue({
       data: {
         session_auth: false,
-        agent: undefined,
+        agent: null,
         transfer_agents: [],
-        state: undefined,
-        hangup_state: undefined,
+        state: null,
+        hangup_state: null,
         auto_logout_timer: undefined,
         activity_time: undefined,
         release_id: undefined,
@@ -135,7 +135,7 @@ export default class Agent extends WsProto {
   hangup () { this.call('hangup') }
   hold () { this.call('hold') }
   unhold () { this.call('unhold') }
-  make_call (Target) { this.call('call', [Target]) }
+  place_call (LineId, Target) { this.call('place_call', [LineId, Target]) }
   record (Cmd) { this.call('record', [Cmd]) }
   play (UUID) { this.call('record', ['play', UUID]) }
   end_wrapup () { this.call('end_wrapup') }
@@ -214,7 +214,7 @@ export default class Agent extends WsProto {
     }
   }
 
-  isAuth () { return this.vm.agent !== undefined }
+  isAuth () { return this.vm.agent }
   role() { return this.vm.agent.role.ui }
 
   is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
@@ -227,7 +227,7 @@ export default class Agent extends WsProto {
   is_barge () { return this.vm && this.vm.state == 'barge' }
   is_conference () { return this.vm && ( this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_login () { return this.vm.session_auth }
-  can_call () { return this.vm && this.vm.agent.line_id && this.vm.agent.line_id != "undefined"}
+  can_call () { return this.vm && (this.vm.agent.line_id || this.vm.agent.lines) }
   can_hangup () { return this.vm && ( this.vm.state == 'hold' || this.vm.state == 'oncall' || this.vm.state == 'outgoing' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
@@ -237,7 +237,7 @@ export default class Agent extends WsProto {
       this.vm.agent = Re.reply
       localStorage.setItem('session-key', Re.reply.session_key)
     } else {
-      this.vm.agent = undefined
+      this.vm.agent = null
     }
     Cb(Re)
     EventBus.$emit('agent-auth', this.isAuth())
