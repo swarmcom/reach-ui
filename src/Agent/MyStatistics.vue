@@ -11,7 +11,7 @@
           </b-col>
           <b-col sm="8">
           <b-form-group label="Team tags:">
-            <b-form-checkbox-group id="tags" name="team tags" plain v-model="selectedSkills" :options="skillsOptions">
+            <b-form-checkbox-group id="tags" name="team tags" v-model="selectedSkills" :options="skillsOptions">
             </b-form-checkbox-group>
           </b-form-group>
           </b-col>
