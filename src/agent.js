@@ -160,7 +160,7 @@ export default class Agent extends WsProto {
   is_hold () { return this.vm && this.vm.state == 'hold' }
   is_barge () { return this.vm && this.vm.state == 'barge' }
   can_login () { return this.vm.session_auth }
-  can_call () { return this.vm && (this.vm.agent.line_id || this.vm.agent.lines) }
+  can_call () { return this.vm && this.vm.agent.lines && this.vm.agent.lines.length > 0 }
   can_hangup () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' ) }
