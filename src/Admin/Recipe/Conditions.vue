@@ -60,6 +60,7 @@ import MediaType from '@/Admin/Recipe/Condition/MediaType'
 import ClientCallsQueued from '@/Admin/Recipe/Condition/ClientCallsQueued'
 import CallerId from '@/Admin/Recipe/Condition/CallerId'
 import CallerName from '@/Admin/Recipe/Condition/CallerName'
+import CallSkills from '@/Admin/Recipe/Condition/CallSkills'
 export default {
   name: 'admin-recipe-conditions',
   props: ['value', 'edit'],
@@ -83,6 +84,7 @@ export default {
     client_calls_queued: ClientCallsQueued,
     caller_id: CallerId,
     caller_name: CallerName,
+    call_skills: CallSkills,
   },
   data () {
     return {
@@ -106,6 +108,7 @@ export default {
         { name: 'Clients Calls Queued', ref: 'client_calls_queued' },
         { name: 'Caller ID', ref: 'caller_id' },
         { name: 'Caller Name', ref: 'caller_name' },
+        { name: 'Call Skills', ref: 'call_skills'},
       ],
       condition: undefined,
       args: [],
