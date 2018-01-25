@@ -4,7 +4,7 @@
     <b-form-input v-model="number" type="text"></b-form-input>
     <b-input-group-button>
       <b-dropdown text="Call as" variant="outline-secondary" right>
-        <b-dropdown-item v-for="line of this.$agent.vm.agent.lines" :key="line.id" @click="call(line.id)">{{line.name}}</b-dropdown-item>
+        <b-dropdown-item v-for="line of this.$agent.vm.agent.lines" :key="line.id" @click="call(line)">{{line.name}}</b-dropdown-item>
       </b-dropdown>
     </b-input-group-button>
   </b-input-group>
