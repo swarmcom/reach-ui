@@ -25,246 +25,295 @@
           <option v-for="period in periods" :value="period.value">{{period.name}}</option>
         </b-form-select>
       </b-col>
-      <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px">
-        <b-table style="margin-top:10px" small bordered hover
-          :items="computedAgents"
-          :fields="fields"
-          :filter="filter"
-          :sort-by="sortBy"
-          :sort-desc="sortDesc"
-          @sort-changed="onSortingChanged">
-          <template slot="actions" slot-scope="data">
-            <b-row class="text-center">
-              <b-col>
-                <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                  <b-dropdown-item v-access:controlAgentState-feature v-if="data.item.state === 'release'" @click="available(data.item)">Available</b-dropdown-item>
-                  <b-dropdown-item v-access:controlAgentState-feature  v-else @click="release(data.item)">Release</b-dropdown-item>
-                  <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
-                  <b-dropdown-item v-access:takeOver-feature v-if="allowTakeOver(data.item.state)" @click="takeover(data.item)">Take Over</b-dropdown-item>
-                  <b-dropdown-item v-access:monitor-feature v-if="allowSpy(data.item.state)" @click="spy(data.item)">Monitor</b-dropdown-item>
-                  <b-dropdown-item v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"  @click="cancelSpy()">Stop Monitor</b-dropdown-item>
-                  <b-dropdown-header v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id">Monitor actions</b-dropdown-header>
-                  <b-dropdown-item v-access:monitor-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" @click="setMode('spy')">Spy</b-dropdown-item>
-                  <b-dropdown-item v-access:barge-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" @click="setMode('barge')">Barge</b-dropdown-item>
-                  <b-dropdown-item v-access:whisper-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" @click="setMode('agent')">Whisper</b-dropdown-item>
-                </b-dropdown>
-              </b-col>
-            </b-row>
-          </template>
-          <template slot="agentDetail" slot-scope="data">
-            <b-row>
-              <b-col>
-                <div class="agent-state-text"><b>{{data.item.agentName+' '}}</b> {{data.item.agentLogin}}</div>
-                <div class="agent-state-text"><b>Profile: </b>{{data.item.agentGroup}}</div>
-                <div class="agent-state-text"><b>Phone: </b>{{data.item.agentPhone}}</div>
-                <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
-              </b-col>
-            </b-row>
-          </template>
-          <template slot="state" slot-scope="data">
-            <div v-if="data.item.state === 'available'" class='agent-state-color'>
-              <icon name="circle-o" scale="2"/>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Available</div>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'suspended'" class='agent-state-color'>
-              <icon name="hourglass-start" scale="2"/>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Suspend</div>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'release'" class='agent-state-color'>
-              <icon name="stop" scale="2"/>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Release</div>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'ringing'" class='agent-state-color'>
-              <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
-              <b-row v-if="data.item.call_vars">
-                <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Ringing</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
-                  <icon v-else name="handshake-o" scale="2"/>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'outgoing'" class='agent-state-color'>
-              <icon name="wifi" scale="2" style="transform: rotate(90deg);"/>
-              <b-row v-if="data.item.call_vars">
-                <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Outgoing</div>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'oncall'" class='agent-state-color'>
-              <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars">
-                <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">On Call</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
-                  <icon v-else name="handshake-o" scale="2"/>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'conference'" class='agent-state-color'>
-              <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars">
-                <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Conference</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
-                  <icon v-else name="handshake-o" scale="2"/>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'inconference'" class='agent-state-color'>
-              <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars">
-                <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">In Conference</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <icon name="handshake-o" scale="2"/>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'test'" class='agent-state-color'>
-              <icon name="phone" scale="2"/>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Test</div>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'hold'" class='agent-state-color'>
-              <icon name="pause" scale="2"/>
-              <b-row v-if="data.item.call_vars">
-                <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Hold</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
-                  <icon v-else name="handshake-o" scale="2"/>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'wrapup'" class='agent-state-color'>
-              <icon name="pause" scale="2"/>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Wrap Up</div>
-                </b-col>
-              </b-row>
-            </div>
-            <div v-if="data.item.state === 'barge'" class='agent-state-color'>
-              <icon name="phone" scale="2"/>
-              <b-row v-if="data.item.call_vars">
-                <b-col cols="12">
-                  <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <div class="agent-state-text">Barge</div>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col cols="12">
-                  <b-img v-if="existAvatar(data.item.inqueue)" :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)" style="width:32px;"></b-img>
-                  <icon v-else name="handshake-o" scale="2"/>
-                </b-col>
-              </b-row>
-            </div>
-          </template>
-          <template slot="media" slot-scope="data">
-            <b-row>
-              <b-col cols="1" v-if="data.item.state==='oncall' || data.item.state==='ringing' || data.item.state==='hold'">
-                <icon name="mobile" scale="2" class='agent-state-color'/>
-              </b-col>
-              <b-col>
-                <div class="agent-state-text" style="margin-top: 10px;">{{msToHms(Math.round(data.item.time).toString())}}</div>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="12">
-                <div v-if="existClient(data.item.inqueue)" class="agent-state-text">{{data.item.inqueue.line_in.client.name}}</div>
-              </b-col>
-            </b-row>
-            <b-row v-if="data.item.call_vars">
-              <b-col cols="12">
-                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Orig-Caller-ID-Number'])}}</div>
-              </b-col>
-            </b-row>
-            <b-row v-if="data.item.call_vars">
-              <b-col cols="12" v-if="data.item.state==='barge'">
-                <div class="agent-state-text">{{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Caller-ID-Number'])}}</div>
-              </b-col>
-            </b-row>
-            <b-row v-if="data.item.state==='release'">
-              <b-col cols="12">
-                <div class="agent-state-text">{{data.item.release.name ? data.item.release.name : 'default'}}</div>
-              </b-col>
-            </b-row>
-            <b-row v-if="data.item.call_vars">
-              <b-col cols="12">
-                <div class="agent-state-text">{{isDefined(data.item.call_vars['Unique-ID'])}}</div>
-              </b-col>
-            </b-row>
-          </template>
-        </b-table>
+      <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px;">
+        <b-row>
+          <b-col>
+            <b-table style="margin-top:10px;" small bordered hover
+                     :items="computedAgents"
+                     :fields="fields"
+                     :filter="filter"
+                     :sort-by="sortBy"
+                     :sort-desc="sortDesc"
+                     @sort-changed="onSortingChanged">
+              <template slot="actions" slot-scope="data">
+                <b-row class="text-center">
+                  <b-col>
+                    <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
+                      <b-dropdown-item v-access:controlAgentState-feature v-if="data.item.state === 'release'"
+                                       @click="available(data.item)">Available
+                      </b-dropdown-item>
+                      <b-dropdown-item v-access:controlAgentState-feature v-else @click="release(data.item)">Release
+                      </b-dropdown-item>
+                      <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
+                      <b-dropdown-item v-access:takeOver-feature v-if="allowTakeOver(data.item.state)"
+                                       @click="takeover(data.item)">Take Over
+                      </b-dropdown-item>
+                      <b-dropdown-item v-access:monitor-feature v-if="allowSpy(data.item.state)"
+                                       @click="spy(data.item)">Monitor
+                      </b-dropdown-item>
+                      <b-dropdown-item v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
+                                       @click="cancelSpy()">Stop Monitor
+                      </b-dropdown-item>
+                      <b-dropdown-header
+                              v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id">
+                        Monitor actions
+                      </b-dropdown-header>
+                      <b-dropdown-item v-access:monitor-feature
+                                       v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
+                                       @click="setMode('spy')">Spy
+                      </b-dropdown-item>
+                      <b-dropdown-item v-access:barge-feature
+                                       v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
+                                       @click="setMode('barge')">Barge
+                      </b-dropdown-item>
+                      <b-dropdown-item v-access:whisper-feature
+                                       v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
+                                       @click="setMode('agent')">Whisper
+                      </b-dropdown-item>
+                    </b-dropdown>
+                  </b-col>
+                </b-row>
+              </template>
+              <template slot="agentDetail" slot-scope="data">
+                <b-row>
+                  <b-col>
+                    <div class="agent-state-text"><b>{{data.item.agentName + ' '}}</b> {{data.item.agentLogin}}</div>
+                    <div class="agent-state-text"><b>Profile: </b>{{data.item.agentGroup}}</div>
+                    <div class="agent-state-text"><b>Phone: </b>{{data.item.agentPhone}}</div>
+                    <div class="agent-state-text"><b>Skills: </b>{{data.item.agentSkills}}</div>
+                  </b-col>
+                </b-row>
+              </template>
+              <template slot="state" slot-scope="data">
+                <div v-if="data.item.state === 'available'" class='agent-state-color'>
+                  <icon name="circle-o" scale="2"/>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Available</div>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'suspended'" class='agent-state-color'>
+                  <icon name="hourglass-start" scale="2"/>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Suspend</div>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'release'" class='agent-state-color'>
+                  <icon name="stop" scale="2"/>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Release</div>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'ringing'" class='agent-state-color'>
+                  <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
+                  <b-row v-if="data.item.call_vars">
+                    <b-col cols="12">
+                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Ringing</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <b-img v-if="existAvatar(data.item.inqueue)"
+                             :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)"
+                             style="width:32px;"></b-img>
+                      <icon v-else name="handshake-o" scale="2"/>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'outgoing'" class='agent-state-color'>
+                  <icon name="wifi" scale="2" style="transform: rotate(90deg);"/>
+                  <b-row v-if="data.item.call_vars">
+                    <b-col cols="12">
+                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Outgoing</div>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'oncall'" class='agent-state-color'>
+                  <icon name="phone" scale="2"/>
+                  <b-row v-if="data.item.call_vars">
+                    <b-col cols="12">
+                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">On Call</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <b-img v-if="existAvatar(data.item.inqueue)"
+                             :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)"
+                             style="width:32px;"></b-img>
+                      <icon v-else name="handshake-o" scale="2"/>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'conference'" class='agent-state-color'>
+                  <icon name="phone" scale="2"/>
+                  <b-row v-if="data.item.call_vars">
+                    <b-col cols="12">
+                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Conference</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <b-img v-if="existAvatar(data.item.inqueue)"
+                             :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)"
+                             style="width:32px;"></b-img>
+                      <icon v-else name="handshake-o" scale="2"/>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'inconference'" class='agent-state-color'>
+                  <icon name="phone" scale="2"/>
+                  <b-row v-if="data.item.call_vars">
+                    <b-col cols="12">
+                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">In Conference</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <icon name="handshake-o" scale="2"/>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'test'" class='agent-state-color'>
+                  <icon name="phone" scale="2"/>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Test</div>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'hold'" class='agent-state-color'>
+                  <icon name="pause" scale="2"/>
+                  <b-row v-if="data.item.call_vars">
+                    <b-col cols="12">
+                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Hold</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <b-img v-if="existAvatar(data.item.inqueue)"
+                             :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)"
+                             style="width:32px;"></b-img>
+                      <icon v-else name="handshake-o" scale="2"/>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'wrapup'" class='agent-state-color'>
+                  <icon name="pause" scale="2"/>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Wrap Up</div>
+                    </b-col>
+                  </b-row>
+                </div>
+                <div v-if="data.item.state === 'barge'" class='agent-state-color'>
+                  <icon name="phone" scale="2"/>
+                  <b-row v-if="data.item.call_vars">
+                    <b-col cols="12">
+                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <div class="agent-state-text">Barge</div>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="12">
+                      <b-img v-if="existAvatar(data.item.inqueue)"
+                             :src="$agent.avatar_uri(data.item.inqueue.line_in.client.avatar)"
+                             style="width:32px;"></b-img>
+                      <icon v-else name="handshake-o" scale="2"/>
+                    </b-col>
+                  </b-row>
+                </div>
+              </template>
+              <template slot="media" slot-scope="data">
+                <b-row>
+                  <b-col cols="1"
+                         v-if="data.item.state==='oncall' || data.item.state==='ringing' || data.item.state==='hold'">
+                    <icon name="mobile" scale="2" class='agent-state-color'/>
+                  </b-col>
+                  <b-col>
+                    <div class="agent-state-text" style="margin-top: 10px;">
+                      {{msToHms(Math.round(data.item.time).toString())}}
+                    </div>
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col cols="12">
+                    <div v-if="existClient(data.item.inqueue)" class="agent-state-text">
+                      {{data.item.inqueue.line_in.client.name}}
+                    </div>
+                  </b-col>
+                </b-row>
+                <b-row v-if="data.item.call_vars">
+                  <b-col cols="12">
+                    <div class="agent-state-text">
+                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Orig-Caller-ID-Number'])}}
+                    </div>
+                  </b-col>
+                </b-row>
+                <b-row v-if="data.item.call_vars">
+                  <b-col cols="12" v-if="data.item.state==='barge'">
+                    <div class="agent-state-text">
+                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Caller-ID-Number'])}}
+                    </div>
+                  </b-col>
+                </b-row>
+                <b-row v-if="data.item.state==='release'">
+                  <b-col cols="12">
+                    <div class="agent-state-text">{{data.item.release.name ? data.item.release.name : 'default'}}</div>
+                  </b-col>
+                </b-row>
+                <b-row v-if="data.item.call_vars">
+                  <b-col cols="12">
+                    <div class="agent-state-text">{{isDefined(data.item.call_vars['Unique-ID'])}}</div>
+                  </b-col>
+                </b-row>
+              </template>
+            </b-table>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <b-btn size="sm" class="pointer" style="float:right" @click="refresh" variant="outline-secondary">Refresh</b-btn>
+          </b-col>
+        </b-row>
       </b-col>
     </b-row>
   </b-collapse>
@@ -351,8 +400,11 @@ export default {
       this.groups_select = this.groups.slice(0)
       this.groups_select.unshift({ name:"Any Profile" })
     },
+    refresh () {
+      this.updateStats()
+    },
     updateStats: async function() {
-      this.stats = await this.$agent.p_mfa('ws_stats', 'agents', [this.period.value])
+      this.stats = await this.$agent.p_mfa('ws_stats', 'agent_manager_stats', [this.period.value.last, 'agent_id'])
     },
     onTimer () {
       this.agents.forEach((E, i, A) => {
@@ -476,24 +528,17 @@ export default {
             key._cellVariants.media = "primary"
           }
         }
-        /*key.timeComputed = this.msToHms(Math.round(key.time).toString())*/
         key.agentName = key.agent.name
         key.agentLogin = key.agent.login
         key.agentPhone = key.agent.uri
         key.agentSkills = (Object.keys(key.agent.skills)).toString()
 
-        let i = this.stats.findIndex(E => E.agent_id === key.agent_id)
-        if(i >= 0) {
-          if(Object.keys(this.stats[i].occupancy).length > 0 && ('states' in this.stats[i].occupancy) &&
-              ('ratio' in this.stats[i].occupancy.states) && this.stats[i].occupancy.states.ratio.oncall > 0)
-            key.agentOccup = this.percent(this.stats[i].occupancy.states.ratio.oncall)
-          else
-            key.agentOccup = '0%'
-          if(Object.keys(this.stats[i].cpt).length > 0 && ('avg' in this.stats[i].cpt) &&
-              this.stats[i].cpt.avg.oncall > 0)
-            key.agentMyCpt = this.msToMs(this.stats[i].cpt.avg.oncall)
-          else
-            key.agentMyCpt = '--'
+        let stats = this.stats.find(item => item.agent_id === key.agent_id)
+        if (stats !== undefined) {
+          key.agentOccup = (stats.occupancy ? stats.occupancy + "%" : "0%")
+          key.agentMyCpt = (stats.cpt ? this.msToMs(stats.cpt) : "--")
+          key.agentCalls = (stats.calls ? stats.calls : "--")
+          key.timeComputed = (stats.total_time ? this.msToHms(stats.total_time) : "--")
         }
 
         if (key.inqueue && key.inqueue.line_in !== undefined) {
