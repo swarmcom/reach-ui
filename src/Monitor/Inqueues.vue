@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inqueue requests</h3></div>
+    <div class="col"><h3>Calls in queues</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields">
     <template slot="twe" slot-scope="data">
@@ -106,9 +106,6 @@ export default {
   beforeDestroy () {
     this.$bus.$off('inqueue_state', this.handleState)
     clearInterval(this.updater)
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>
