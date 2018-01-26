@@ -4,6 +4,7 @@
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2">
     <inqueues-view :inqueues="inqueues"></inqueues-view>
     <inqueues-monitor :inqueues="inqueues"></inqueues-monitor>
+    <outgoings></outgoings>
   </b-collapse>
 </div>
 </template>
@@ -12,6 +13,7 @@
 import Common from '@/Admin/Common'
 import InqueuesView from '@/Monitor/Widget/InqueuesView'
 import InqueuesMonitor from '@/Monitor/Widget/InqueuesMonitor'
+import Outgoings from '@/Monitor/Widget/Outgoings'
 export default {
   name: 'inqueues',
   storageName: 'queueManager',
@@ -88,7 +90,8 @@ export default {
   },
   components: {
     'inqueues-view': InqueuesView,
-    'inqueues-monitor': InqueuesMonitor
+    'inqueues-monitor': InqueuesMonitor,
+    'outgoings': Outgoings
   }
 }
 </script>
