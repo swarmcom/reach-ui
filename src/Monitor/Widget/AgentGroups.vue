@@ -105,9 +105,9 @@ export default {
                 object.suspended++
                 break
               case "ringing":
-                if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'inbound')
+                if(key.inqueue && key.inqueue.record === 'inqueue_call')
                   object.ringing.inbound++
-                else if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'outbound')
+                else if(key.inqueue && key.inqueue.record === 'outgoing')
                   object.ringing.outbound++
                 break
               case "outgoing":
@@ -118,9 +118,9 @@ export default {
                 object.conference++
                 break
               case "oncall":
-                if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'inbound')
+                if(key.inqueue && key.inqueue.record === 'inqueue_call')
                   object.insession.inbound++
-                else if(key.call_vars != undefined && key.call_vars['Call-Direction'] == 'outbound')
+                else if(key.inqueue && key.inqueue.record === 'outgoing')
                   object.insession.outbound++
                 break
               case "wrapup":

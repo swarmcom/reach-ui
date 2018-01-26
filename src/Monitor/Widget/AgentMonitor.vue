@@ -113,7 +113,7 @@
                   <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
                   <b-row v-if="data.item.call_vars">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound' }}</div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -147,7 +147,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.call_vars">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound' }}</div>
                     </b-col>
                   </b-row>
                   <b-row>
