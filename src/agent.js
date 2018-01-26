@@ -170,8 +170,7 @@ export default class Agent extends WsProto {
   handleState (S) {
     if (S && this.vm.agent && this.vm.agent.id === S.agent_id) {
       this.vm.hangup_state = S.hangup_state
-      if (S.inqueue == null || S.inqueue.record !== 'outgoing')
-        this.vm.state = S.state
+      this.vm.state = S.state
       this.vm.release_id = S.release_id
       this.autoLogout(S.state)
     }
