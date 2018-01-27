@@ -9,7 +9,8 @@
         <b-dropdown-item to="/report/agents/unique">Unique agents</b-dropdown-item>
         <b-dropdown-item to="/report/agents/avg">Agents averages</b-dropdown-item>
         <b-dropdown-item to="/report/measures/avg">Measures averages</b-dropdown-item>
-        <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
+        <b-dropdown-item to="/report/sessions/inqueue">Inqueue sessions</b-dropdown-item>
+        <b-dropdown-item to="/report/sessions/outgoing">Outgoing sessions</b-dropdown-item>
         <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
       </b-nav-item-dropdown>
       <li ui class="nav-item">
