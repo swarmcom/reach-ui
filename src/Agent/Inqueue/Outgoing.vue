@@ -40,16 +40,6 @@ export default {
       this.outgoing = await this.$agent.p_mfa('ws_agent', 'get_outgoing', [])
       this.visible = true
       this.$agent.p_mfa('ws_agent', 'subscribe', ['outgoing', this.outgoing.id])
-      if(this.outgoing.state === 'init')
-        this.$agent.vm.state = 'ringing'
-    },
-    handleState ({state}) {
-      this.outgoing.state = state.state
-
-      if (state.state === 'ringing')
-        this.$agent.vm.state = 'outgoing'
-      else
-        this.$agent.vm.state = state.state
     },
     record: async function () {
       await this.$agent.p_mfa('ws_agent', 'record')
@@ -62,10 +52,8 @@ export default {
   },
   created () {
     this.query()
-    this.$bus.$on('outgoing_state', this.handleState)
   },
   beforeDestroy () {
-    this.$bus.$off('outgoing_state', this.handleState)
     this.$agent.mfa('ws_agent', 'unsubscribe', ['outgoing', this.outgoing.id])
   },
 }
