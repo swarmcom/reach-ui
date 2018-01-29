@@ -48,6 +48,7 @@
       <b-dropdown-item to="/report/measures/avg">Measures averages</b-dropdown-item>
       <b-dropdown-item to="/report/sessions/inqueue">Call sessions</b-dropdown-item>
       <b-dropdown-item to="/report/sessions/agent">Agent sessions</b-dropdown-item>
+      <b-dropdown-item to="/report/reports">Reach Reports</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item to="/help">HELP</b-nav-item>
     <button @click="onPin" class="btn ml-auto pointer">
@@ -150,7 +151,6 @@ export default {
 </script>
 
 <style lang="scss">
-//@import "../../custom-bootstrap.scss";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>
 

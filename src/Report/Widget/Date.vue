@@ -9,10 +9,10 @@ import Datepicker from 'vuejs-datepicker'
 export default {
   name: 'report-widget-date',
   components: {Datepicker},
-  props: ['value', 'placeholder'],
+  props: ['initValue', 'value', 'placeholder'],
   data () {
     return {
-      date: undefined,
+      date: this.initValue,
       highlighted: {
         dates: [new Date()]
       }
@@ -21,14 +21,14 @@ export default {
   methods: {
     to_timestamp(date) {
       if (date) {
-        return (new moment(date)).format("X")
+        return moment(date).unix()
       } else {
         return undefined
       }
     },
   },
   watch: {
-    value (value, old) {
+    value (value) {
       if (parseInt(value)) {
         this.date = moment.unix(value).format()
       } else {
