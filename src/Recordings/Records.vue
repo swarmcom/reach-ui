@@ -3,7 +3,7 @@
   <toggle-bar/>
   <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
   <b-row>
-    <b-col cols="2">
+    <b-col cols="12" lg="2">
       <div class="row toggle-bar-custom">
         <div class="titlenocollapse">Filter</div>
       </div>
@@ -29,9 +29,13 @@
       <b-form-select class="pointer" size="sm" v-model="selectedQueue">
         <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
       </b-form-select>
-      <div class="agent-state-text" style="margin-top:10px">Line:</div>
+      <div class="agent-state-text" style="margin-top:10px">Line In:</div>
       <b-form-select class="pointer" size="sm" v-model="selectedLine">
         <option v-for="line in this.line_ins" :value=line.name>{{line.name}}</option>
+      </b-form-select>
+      <div class="agent-state-text" style="margin-top:10px">Line Out:</div>
+      <b-form-select class="pointer" size="sm" v-model="selectedLineOut">
+        <option v-for="line in this.line_outs" :value=line.name>{{line.name}}</option>
       </b-form-select>
       <div class="agent-state-text" style="margin-top:10px">Customer:</div>
       <b-form-select class="pointer" size="sm" v-model="selectedCustomer">
@@ -42,7 +46,7 @@
         <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
       </b-form-select>
     </b-col>
-    <b-col cols="10">
+    <b-col cols="12" lg="10" style="min-width:700px">
       <b-col cols="2" class="float-right">
       <b-form-select size="sm" :options="pageOptions" v-model="perPage" @input="onSelectChange"></b-form-select>
       </b-col>
@@ -64,8 +68,8 @@
             <player :href="data.item.call_record_path"></player>
           </b-card>
         </template>
-        <template slot="line_in" slot-scope="data">
-          {{ maybe_name(data.item.line_in) }}
+        <template slot="line" slot-scope="data">
+          {{ maybe_name(data.item.line) }}
         </template>
         <template slot="client" slot-scope="data">
           {{ maybe_name(data.item.client) }}
@@ -86,6 +90,7 @@
           <b-col cols="12" v-for="(v, k, index) in data.item.skills" key="index">{{k}}</b-col>
         </template>
         <template slot="caller" slot-scope="data">
+          <div class="agent-state-text"><b>Direction: </b>{{data.item.direction}}</div>
           <div class="agent-state-text"><b>Call ID: </b>{{data.item.uuid}}</div>
           <div class="agent-state-text"><b>Caller ID: </b>{{data.item.caller}}</div>
           <div class="agent-state-text"><b>From System: </b>{{data.item.caller_ip}}</div>
@@ -119,15 +124,17 @@ export default {
         ts_ms: { label: 'Date / Start Time', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center", formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
         client: { label: 'Customer', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         queue: { label: 'Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        line_in: { label: 'Line In', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center"},
+        line: { label: 'Line', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center"},
         agent: { label: 'Agent', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         skills: { label: 'Skills', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
         caller: { label: 'Recording', thClass:"table-header-text-center" },
       },
       recordings: [],
+      recordings_outbound: [],
       clients: [],
       queues: [],
       line_ins: [],
+      line_outs: [],
       tags: [],
       filter: null,
       currentPage: 1,
@@ -141,7 +148,8 @@ export default {
       endDate: '',
       selectedCustomer: 'Any Customer',
       selectedQueue: 'Any Queue',
-      selectedLine: 'Any Line',
+      selectedLine: 'Any Line In',
+      selectedLineOut: 'Any Line Out',
       selectedSkill: 'Any Skill',
       sortBy: 'ts',
       sortDesc: false,
@@ -159,7 +167,9 @@ export default {
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customer" })
       this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
-      this.line_ins.unshift({ name:"Any Line" })
+      this.line_ins.unshift({ name:"Any Line In" })
+      this.line_outs = await this.$agent.p_mfa('ws_db_line_out', 'get')
+      this.line_outs.unshift({ name:"Any Line Out" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
       this.queues.unshift({ name:"Any Queue" })
       this.tags = await this.$agent.p_mfa('ws_db_tag', 'get')
@@ -167,6 +177,7 @@ export default {
       this.params.date_start = parseInt(this.startDate.getTime()/1000)
       this.params.date_end = parseInt(this.endDate.getTime()/1000)
       this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
+      this.recordings_outbound = await this.$agent.p_mfa('ws_report', 'outgoing_sessions', [this.params])
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -202,6 +213,7 @@ export default {
       this.params.date_start = parseInt(startDate.getTime()/1000)
       this.params.date_end = parseInt(endDate.getTime()/1000)
       this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
+      this.recordings_outbound = await this.$agent.p_mfa('ws_report', 'outgoing_sessions', [this.params])
     },
     onSortingChanged (ctx){
       this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
@@ -232,6 +244,7 @@ export default {
   computed: {
     computedRecordings () {
       let recordings = this.recordings.slice(0)
+      recordings.push(...this.recordings_outbound);
       let compRecordings = []
       recordings.forEach( (key) => {
         let actDate = new Date(key.ts_ms)
@@ -239,31 +252,46 @@ export default {
         startDate.setHours(0,0,0,0)
         let endDate =new Date(this.endDate)
         endDate.setHours(23,59,59,9999)
+
+        if(key.line_in) {
+          key.line = key.line_in
+          key.direction = 'inbound'
+        }
+        else if(key.line_out) {
+          key.line = key.line_out
+          key.direction = 'outbound'
+        }
         if(!key.keep_record)
           return
 
         if(actDate.getTime() > endDate.getTime() || actDate.getTime() < startDate.getTime() )
           return
 
-        if(key.client !== undefined && this.selectedCustomer !== 'Any Customer') {
+        if(key.client && this.selectedCustomer !== 'Any Customer') {
           if(this.selectedCustomer !== key.client.name && this.selectedCustomer !== 'Any Customer'){
             return
           }
         }
 
-        if(key.queue !== undefined && this.selectedQueue !== 'Any Queue') {
+        if(key.queue && this.selectedQueue !== 'Any Queue') {
           if(this.selectedQueue !== key.queue.name && this.selectedQueue !== 'Any Queue'){
             return
           }
         }
 
-        if(key.line_in !== undefined && this.selectedLine !== 'Any Line') {
-          if(this.selectedLine !== key.line_in.name && this.selectedLine !== 'Any Line'){
+        if(key.line_in && this.selectedLine !== 'Any Line In') {
+          if(this.selectedLine !== key.line_in.name && this.selectedLine !== 'Any Line In'){
             return
           }
         }
 
-        if(key.skills !== undefined && this.selectedSkill !== 'Any Skill') {
+        if(key.line_out && this.selectedLine !== 'Any Line In') {
+          if(this.selectedLineOut !== key.line_out.name && this.selectedLineOut !== 'Any Line Out'){
+            return
+          }
+        }
+
+        if(key.skills && this.selectedSkill !== 'Any Skill') {
           let skills = Object.keys(key.skills)
           if(!skills.includes(this.selectedSkill)){
             return
