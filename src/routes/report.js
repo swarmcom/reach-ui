@@ -8,7 +8,36 @@ import AgentSessions from '@/Report/Sessions/Agent'
 import InqueueEvents from '@/Report/Events/Inqueue'
 import OutgoingEvents from '@/Report/Events/Outgoing'
 import AgentEvents from '@/Report/Events/Agent'
-import ReachReports from '@/Report/Reports'
+// CDR
+import CDR from '@/Report/Legacy/CDR/CDR'
+import CDRCompact from '@/Report/Legacy/CDR/CDRCompact'
+import CDRExtended from '@/Report/Legacy/CDR/CDRExtended'
+// Agent
+import AgentActivityIndividual from '@/Report/Legacy/Agent/AgentActivityIndividual'
+import AgentActivityByGroup from '@/Report/Legacy/Agent/AgentActivityByGroup'
+import AgentAnswerPerformanceByGroup from '@/Report/Legacy/Agent/AgentAnswerPerformanceByGroup'
+import AgentAvailability from '@/Report/Legacy/Agent/AgentAvailability'
+import AgentCallDisposition from '@/Report/Legacy/Agent/AgentCallDisposition'
+import AgentGroupActivity from '@/Report/Legacy/Agent/AgentGroupActivity'
+import AgentGroupProductivity from '@/Report/Legacy/Agent/AgentGroupProductivity'
+import AgentProductivityByGroup from '@/Report/Legacy/Agent/AgentProductivityByGroup'
+import AgentStateHistory from '@/Report/Legacy/Agent/AgentStateHistory'
+import AgentStatesOverview from '@/Report/Legacy/Agent/AgentStatesOverview'
+import ConcurrentLoggedInAgents from '@/Report/Legacy/Agent/ConcurrentLoggedInAgents'
+import UnansweredCallDetails from '@/Report/Legacy/Agent/UnansweredCallDetails'
+// Outbound
+import OutboundDetailByClient from '@/Report/Legacy/Outbound/OutboundDetailByClient'
+import OutboundOverviewByClient from '@/Report/Legacy/Outbound/OutboundOverviewByClient'
+// Traffic
+import ClientTrafficDetail from '@/Report/Legacy/Traffic/ClientTrafficDetail'
+import ClientTrafficOverview from '@/Report/Legacy/Traffic/ClientTrafficOverview'
+import LineTrafficDetail from '@/Report/Legacy/Traffic/LineTrafficDetail'
+import LineTrafficOverview from '@/Report/Legacy/Traffic/LineTrafficOverview'
+import QueueGroupTrafficOverview from '@/Report/Legacy/Traffic/QueueGroupTrafficOverview'
+import QueueTrafficDetail from '@/Report/Legacy/Traffic/QueueTrafficDetail'
+import QueueTrafficOverview from '@/Report/Legacy/Traffic/QueueTrafficOverview'
+import VoicemailDetail from '@/Report/Legacy/Traffic/VoicemailDetail'
+import VoicemailOverview from '@/Report/Legacy/Traffic/VoicemailOverview'
 
 export default [
   { path: 'agents/states', component: AgentsStates },
@@ -21,5 +50,34 @@ export default [
   { path: 'events/inqueue/:uuid', component: InqueueEvents, props: true },
   { path: 'events/outgoing/:id', component: OutgoingEvents, props: true },
   { path: 'events/agent/:uuid', component: AgentEvents, props: true },
-  { path: 'reports', component: ReachReports }
+  // CDR
+  { path: 'legacy/cdr/cdr', component: CDR, name: CDR },
+  { path: 'legacy/cdr/cdr-extended', component: CDRExtended },
+  { path: 'legacy/cdr/cdr-compact', component: CDRCompact },
+  // Agent
+  { path: 'legacy/agent/agent-activity-individual', component: AgentActivityIndividual },
+  { path: 'legacy/agent/agent-activity-by-group', component: AgentActivityByGroup },
+  { path: 'legacy/agent/agent-answer-performance-by-group', component: AgentAnswerPerformanceByGroup },
+  { path: 'legacy/agent/agent-availability', component: AgentAvailability },
+  { path: 'legacy/agent/agent-call-disposition', component: AgentCallDisposition },
+  { path: 'legacy/agent/agent-group-activity', component: AgentGroupActivity },
+  { path: 'legacy/agent/agent-group-productivity', component: AgentGroupProductivity },
+  { path: 'legacy/agent/agent-productivity-by-group', component: AgentProductivityByGroup },
+  { path: 'legacy/agent/agent-state-history', component: AgentStateHistory },
+  { path: 'legacy/agent/agent-states-overview', component: AgentStatesOverview },
+  { path: 'legacy/agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
+  { path: 'legacy/agent/unanswered-call-details', component: UnansweredCallDetails },
+  // Outbound
+  { path: 'legacy/outbound/outbound-detail-by-client', component: OutboundDetailByClient },
+  { path: 'legacy/outbound/outbound-overview-by-client', component: OutboundOverviewByClient },
+  // Traffic
+  { path: 'legacy/traffic/client-traffic-detail', component: ClientTrafficDetail },
+  { path: 'legacy/traffic/client-traffic-overview', component: ClientTrafficOverview },
+  { path: 'legacy/traffic/line-traffic-detail', component: LineTrafficDetail },
+  { path: 'legacy/traffic/line-traffic-overview', component: LineTrafficOverview },
+  { path: 'legacy/traffic/queue-group-traffic-overview', component: QueueGroupTrafficOverview },
+  { path: 'legacy/traffic/queue-traffic-detail', component: QueueTrafficDetail },
+  { path: 'legacy/traffic/queue-traffic-overview', component: QueueTrafficOverview },
+  { path: 'legacy/traffic/voicemail-detail', component: VoicemailDetail },
+  { path: 'legacy/traffic/voicemail-overview', component: VoicemailOverview }
 ]
