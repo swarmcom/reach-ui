@@ -27,6 +27,7 @@
       {{perm.displayName}}
     </b-form-checkbox>
   </div>
+  <button @click="selectAll" class="btn btn-primary pointer">Select All</button>
 </div>
 </template>
 
@@ -148,6 +149,20 @@ export default {
         else
           return true
       }
+    },
+    selectPerm: async function(perm) {
+      let permission = await this.$agent.p_mfa('ws_db_permission', 'create', [this.id, {
+        name: perm.name
+      }])
+      perm.id = permission.id
+      perm.value = true
+      this.permissions.push(permission)
+    },
+    selectAll() {
+      this.perms_check.forEach( (perm) => {
+        if(!perm.value)
+          this.selectPerm(perm)
+      })
     }
   },
   created () {
