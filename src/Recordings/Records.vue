@@ -61,7 +61,7 @@
         @filtered="onFiltered"
         @sort-changed="onSortingChanged">
         <template  slot="player" slot-scope="data">
-          <b-form-checkbox v-if="data.item.keep_record" v-model="data.item._showDetails" plain></b-form-checkbox>
+          <b-form-checkbox v-if="data.item.keep_record" v-model="data.item._showDetails"></b-form-checkbox>
         </template>
         <template slot="row-details" slot-scope="data">
           <b-card>
