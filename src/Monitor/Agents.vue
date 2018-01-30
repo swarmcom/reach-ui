@@ -1,7 +1,7 @@
 <template>
 <div v-access:agentManager-widget>
   <toggle-bar style="cursor: move"></toggle-bar>
-  <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2">
+  <b-collapse v-model="showCollapse" id="collapseAgentManager" class="mt-2 itemDragable">
     <agent-groups :agents="agents" :groups="groups"></agent-groups>
     <agent-monitor :agents="agents" :groups="groups"></agent-monitor>
   </b-collapse>
