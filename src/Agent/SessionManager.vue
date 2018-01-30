@@ -1,7 +1,7 @@
 <template>
 <div>
   <toggle-bar style="cursor: move"></toggle-bar>
-  <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2">
+  <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2 itemDragable">
     <b-row>
       <b-col cols="12" md="6" lg="3" order="2" order-lg="1">
         <agent-state></agent-state>
