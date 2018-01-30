@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid style="margin-left: unset; margin-right: unset; padding-left: 0; padding-right: 0">
+  <b-container fluid style="margin-left: unset; margin-right: unset; padding-left: 0; padding-right: 0; margin-top: 15px">
     <b-row style="width: 100%; margin-left: unset; margin-right: unset">
       <b-col style="width: 20%; padding: 0px 2px 0px 0px;">
         <table style="width: 100%;">
@@ -209,7 +209,7 @@
           state_total: {label: 'Total Call Duration', tdClass: 'table-body-blue', thClass: 'table-header'}
         },
         sessions: [],
-        initFrom: Moment().subtract(3, 'days').format(),
+        initFrom: Moment().subtract(1, 'days').format(),
         initTo: Moment().format()
       }
     },
@@ -265,5 +265,5 @@
 </script>
 
 <style lang="scss">
-  @import "../reports.scss";
+  @import "../../reports";
 </style>
