@@ -549,7 +549,7 @@ export default {
           return
 
         key.agentGroup = key.agent.group.name
-        if((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile') || this.groups_select.length < 2)
+        if((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile'))
           return
 
         let groups_perm = this.groups.findIndex(E => E.name === key.agent.group.name)
