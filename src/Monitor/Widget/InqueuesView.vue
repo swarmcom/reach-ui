@@ -109,8 +109,10 @@ export default {
   },
   methods: {
     query: async function() {
-      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
-      this.queues.seeDetails = false
+      Object.keys(this.$agent.vm.agent.permissions).forEach( (key) => {
+        if (key.indexOf("-queues") !== -1)
+          this.queues.push({name:key.replace("-queues","")})
+      })
     },
     set_period (value) {
       this.period.value = value
