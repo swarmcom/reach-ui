@@ -166,9 +166,17 @@ export default {
       this.endDate.setHours(23,59,59,999)
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customer" })
-      this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
+      Object.keys(this.$agent.vm.agent.permissions).forEach( (key) => {
+        if (key.indexOf("-line_ins") !== -1) {
+          let name = key.replace("-line_ins", "")
+          this.line_ins.push({name: name})
+        }
+        else if (key.indexOf("-line_outs") !== -1) {
+          let name = key.replace("-line_outs", "")
+          this.line_outs.push({name: name})
+        }
+      })
       this.line_ins.unshift({ name:"Any Line In" })
-      this.line_outs = await this.$agent.p_mfa('ws_db_line_out', 'get')
       this.line_outs.unshift({ name:"Any Line Out" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
       this.queues.unshift({ name:"Any Queue" })
@@ -279,16 +287,22 @@ export default {
           }
         }
 
-        if(key.line_in && this.selectedLine !== 'Any Line In') {
+        if(key.line_in) {
+          let line_in_perm = this.line_ins.findIndex(E => E.name === key.line_in.name)
           if(this.selectedLine !== key.line_in.name && this.selectedLine !== 'Any Line In'){
             return
           }
+          else if (line_in_perm < 0)
+            return
         }
 
-        if(key.line_out && this.selectedLine !== 'Any Line In') {
+        if(key.line_out) {
+          let line_outs_perm = this.line_outs.findIndex(E => E.name === key.line_out.name)
           if(this.selectedLineOut !== key.line_out.name && this.selectedLineOut !== 'Any Line Out'){
             return
           }
+          else if (line_outs_perm < 0)
+            return
         }
 
         if(key.skills && this.selectedSkill !== 'Any Skill') {

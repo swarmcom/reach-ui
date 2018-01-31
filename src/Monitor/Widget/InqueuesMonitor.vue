@@ -177,8 +177,10 @@ export default {
           if((this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue') || this.queues.length < 2)
             return
         }
-        else if(this.selectedQueue !== 'Any Queue' || this.queues.length < 2)
-          return
+
+        let queue_perm = this.queues.findIndex(E => E.name === key.queue)
+        if (this.selectedQueue === 'Any Queue' && queue_perm < 0 )
+            return
 
         if(key.line) {
           if(this.selectedLine !== key.line && this.selectedLine !== 'Any Lines')

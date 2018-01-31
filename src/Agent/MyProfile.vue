@@ -94,8 +94,7 @@ export default {
             {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
             {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
             {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
-            {displayName: "Control Agent State", name: "controlAgentState-feature", value: false}
+            {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}
         ],
         perms_check_supervisor: [{displayName: "Main", name: "main-ui", value: false},
             {displayName: "Monitor", name: "monitor-ui", value: false},
