@@ -10,6 +10,9 @@
     <b-row v-if="index === (7+groups.length + queues.length)"><b>Supervisor Privileges:</b></b-row>
     <b-row v-if="index === (14+groups.length + queues.length)"> <b>Features: </b></b-row>
     <b-row v-if="index === (17+groups.length + queues.length)"><b-col> Conference/Transfer Privileges</b-col></b-row>
+    <b-row v-if="index === (24+groups.length + queues.length)"><b> Call Recording</b></b-row>
+    <b-row v-if="index === (24+groups.length + queues.length)"><b-col> Line In</b-col></b-row>
+    <b-row v-if="index === (24+groups.length + queues.length + line_ins.length)"><b-col> Line Out</b-col></b-row>
     <b-form-checkbox v-if="canShow(index)" v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
       {{perm.displayName}}
     </b-form-checkbox>
@@ -46,6 +49,8 @@ export default {
     query: async function () {
       this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
+      this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
+      this.line_outs = await this.$agent.p_mfa('ws_db_line_out', 'get')
       this.perms_check = []
       if (this.ui == 'supervisor') {
         this.perms_check.push({displayName: "Main", name: "main-ui", value: false})
@@ -78,6 +83,12 @@ export default {
         this.perms_check.push({displayName: "Conference to Queue", name: "confQueue-feature", value: false})
         this.perms_check.push({displayName: "Conference to Number", name: "confNumber-feature", value: false})
         this.perms_check.push({displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false})
+        this.line_ins.forEach( (key) => {
+          this.perms_check.push({displayName: key.name, name: key.name+'-line_ins', value: false})
+        })
+        this.line_outs.forEach( (key) => {
+            this.perms_check.push({displayName: key.name, name: key.name+'-line_outs', value: false})
+        })
       }
       else if (this.ui == 'agent') {
         this.perms_check.push({displayName: "Profile", name: "profile-ui", value: false})
