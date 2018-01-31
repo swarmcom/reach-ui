@@ -57,7 +57,8 @@ export default {
     }
   },
   created () {
-    this.selected = this.value
+    if (this.value != undefined)
+      this.selected = this.value
   }
 }
 </script>
