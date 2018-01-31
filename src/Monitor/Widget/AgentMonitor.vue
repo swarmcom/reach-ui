@@ -552,6 +552,10 @@ export default {
         if((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile') || this.groups_select.length < 2)
           return
 
+        let groups_perm = this.groups.findIndex(E => E.name === key.agent.group.name)
+        if (this.selectedProfile === 'Any Profile' && groups_perm < 0 )
+          return
+
         if(this.selectedState !== key.state && this.selectedState !== 'Any State')
           return
 
