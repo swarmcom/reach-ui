@@ -151,6 +151,7 @@ export default {
   watch: {
     selectedSkills: function () {
       this.my_stats_query()
+      this.states_query()
     }
   },
   methods: {
@@ -169,7 +170,7 @@ export default {
 
     },
     states_query: async function() {
-      let statesCounts = await this.$agent.p_mfa('ws_stats', 'agents_states', [])
+      let statesCounts = await this.$agent.p_mfa('ws_stats', 'my_stats_states', [this.list2skills(this.selectedSkills)])
       let totalAgents = 0
       let states = statesCounts
       Object.keys(statesCounts).forEach(function(key,index) {
@@ -198,6 +199,7 @@ export default {
     },
     refresh () {
       this.my_stats_query()
+      this.states_query()
     },
     percent (value) {
       if (value > 0) {
