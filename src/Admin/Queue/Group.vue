@@ -5,7 +5,7 @@
   <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
   <form-text label="Aging" v-model="rec.aging_factor"></form-text>
   <form-text label="Weight" v-model="rec.weight"></form-text>
-  <form-text label="Wrap-up enabled" v-model="rec.wrapup_enabled"></form-text>
+  <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled"></form-select-bool>
   <form-text label="Wrap-up timer" v-model="rec.wrapup_timer"></form-text>
   <form-text label="Auto wrap-up" v-model="rec.auto_wrapup"></form-text>
   <form-tags label="Skills" placeholder="Skill..." v-model="skills"></form-tags>
