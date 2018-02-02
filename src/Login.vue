@@ -23,6 +23,8 @@
       <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
       <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
     </b-modal>
+
+    <notifications position="bottom right" :speed="500" :duration="1000"/>
   </div>
 </template>
 
