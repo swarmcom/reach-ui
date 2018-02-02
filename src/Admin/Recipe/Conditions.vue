@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <b-form-row v-for="(cond, index) of conditions" :key="cond.name" style="margin-bottom: 5px">
+  <b-form-row v-if="edit" v-for="(cond, index) of conditions" :key="cond.name" style="margin-bottom: 5px">
     <b-col cols=1>
       <button @click="del(index)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </b-col>
