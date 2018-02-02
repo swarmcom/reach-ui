@@ -93,9 +93,6 @@
             <template slot="calling" slot-scope="data">
               {{ data.item.calling }}
             </template>
-            <template slot="player" slot-scope="data">
-              <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
-            </template>
           </b-table>
         </div>
       </b-col>
@@ -193,8 +190,6 @@
             thClass: 'table-header-last-in-group',
             thStyle: {width: '87px'}
           },
-          //player: { label: ' ', tdClass: 'table-body-orange-last-in-group', thClass: 'table-header-last-in-group' },
-
           ts_ms: {
             label: 'Offered to Reach',
             sortable: true,
