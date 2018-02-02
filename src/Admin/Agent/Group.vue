@@ -4,10 +4,10 @@
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
   <lines label="Line Out" v-model="rec.lines_out"></lines>
   <roles label="Role" v-model="rec.role_id"></roles>
-  <form-text label="Ring Timeout" v-model="rec.ring_timeout"></form-text>
-  <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>
-  <form-text label="Auto Logout" v-model="rec.autologout"></form-text>
-  <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-text>
+  <form-number label="Ring Timeout" v-model="rec.ring_timeout"></form-number>
+  <form-number label="Suspend Time" v-model="rec.suspend_time"></form-number>
+  <form-number label="Auto Logout" v-model="rec.autologout"></form-number>
+  <form-number label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-number>
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
   <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
   <tag-group label="Skills Group" v-model="rec.tag_group_id"></tag-group>

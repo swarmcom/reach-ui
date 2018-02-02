@@ -15,7 +15,7 @@
   <form-select-bool label="Answer on Agent pickup" v-model="rec.answer_on_agent"></form-select-bool>
   <form-select-bool label="Override Caller ID" v-model="rec.override_clid" :effective="eff.override_clid"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name" :effective="eff.caller_id_name"></form-text>
-  <form-text label="Caller ID Number" v-model="rec.caller_id_number" :effective="eff.caller_id_number"></form-text>
+  <form-number label="Caller ID Number" v-model="rec.caller_id_number" :effective="eff.caller_id_number"></form-number>
   <form-tags placeholder="Skill..." label="Line-In Skills" v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>

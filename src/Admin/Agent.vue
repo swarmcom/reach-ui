@@ -10,12 +10,12 @@
   <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
   <form-text label="Primary Contact" v-model="rec.uri"></form-text>
   <uris label="Additional Contacts" v-model="rec.uris"></uris>
-  <form-text label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-text>
-  <form-text label="Ring Timeout" v-model="rec.ring_timeout" :effective="eff.ring_timeout"></form-text>
-  <form-text label="Suspend Time" v-model="rec.suspend_time"></form-text>
-  <form-text label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails" :effective="eff.max_ring_fails"></form-text>
+  <form-number label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-number>
+  <form-number label="Ring Timeout" v-model="rec.ring_timeout" :effective="eff.ring_timeout"></form-number>
+  <form-number label="Suspend Time" v-model="rec.suspend_time"></form-number>
+  <form-number label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails" :effective="eff.max_ring_fails"></form-number>
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails" :effective="eff.reset_rings_fails"></form-select-bool>
-  <form-text label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
+  <form-number label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-number>
   <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
   <tag-group label="Skills Group" v-model="rec.tag_group_id" :effective="eff.tag_group_id"></tag-group>
   <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>

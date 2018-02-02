@@ -4,11 +4,11 @@
   <queue-groups label="Queue Group" v-model="rec.group_id"></queue-groups>
   <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
   <mohs label="Music on hold" v-model="rec.moh_id" :effective="eff.moh_id"></mohs>
-  <form-text label="Weight" v-model="rec.weight" :effective="eff.weight"></form-text>
+  <form-number label="Weight" v-model="rec.weight" :effective="eff.weight"></form-number>
   <form-text label="Aging" v-model="rec.aging_factor" :effective="eff.aging_factor"></form-text>
   <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled" :effective="eff.wrapup_enabled"></form-select-bool>
-  <form-text label="Wrap-up timer" v-model="rec.wrapup_timer" :effective="eff.wrapup_timer"></form-text>
-  <form-text label="Auto Wrap-up" v-model="rec.auto_wrapup" :effective="eff.auto_wrapup"></form-text>
+  <form-number label="Wrap-up timer" v-model="rec.wrapup_timer" :effective="eff.wrapup_timer"></form-number>
+  <form-number label="Auto Wrap-up" v-model="rec.auto_wrapup" :effective="eff.auto_wrapup"></form-number>
   <form-tags label="Queue Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>

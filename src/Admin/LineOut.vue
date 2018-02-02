@@ -6,7 +6,7 @@
   <form-call-recording label="Call recording" v-model="rec.enable_call_recording"></form-call-recording>
   <form-select-bool label="Override Caller ID (outbound)" v-model="rec.override_clid"></form-select-bool>
   <form-text label="Caller ID name" v-model="rec.caller_id_name"></form-text>
-  <form-text label="Caller ID number" v-model="rec.caller_id_number"></form-text>
+  <form-number label="Caller ID number" v-model="rec.caller_id_number"></form-number>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>

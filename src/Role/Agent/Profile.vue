@@ -6,7 +6,6 @@
   <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
   <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
   <lines v-if="showComponent('agentLineOut-visible')" label="Line Out" v-model="rec.line_id"></lines>
-  <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
   <form-text v-if="showComponent('primarySip-edit')" label="Primary Contact" v-model="rec.uri"></form-text>
   <uris v-if="showComponent('additionalSip-visible')" label="Additional Contacts" v-model="rec.uris"></uris>
   <form-text label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-text>
