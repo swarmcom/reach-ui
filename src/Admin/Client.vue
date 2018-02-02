@@ -11,7 +11,7 @@
   <form-select-bool label="Override Caller ID on Line In" v-model="rec.override_clid_line_in"></form-select-bool>
   <form-select-bool label="Override Caller ID on Line Out" v-model="rec.override_clid_line_out"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name"></form-text>
-  <form-text label="Caller ID Number" v-model="rec.caller_id_number"></form-text> 
+  <form-number label="Caller ID Number" v-model="rec.caller_id_number"></form-number>
   <form-file label="Client Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
   <form-tags label="Client Skills" placeholder="Skill..." v-model="skills"></form-tags>
   <div style="margin-top: 20px">
