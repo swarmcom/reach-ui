@@ -22,15 +22,15 @@
     },
     computed: {
       safe_value () {
-          return this.value === 'undefined' ? '' : this.value
+        return this.value === 'undefined' ? '' : this.value
       },
       safe_effective () {
-          return this.effective === 'undefined' ? '' : this.effective
+        return this.effective === 'undefined' ? '' : this.effective
       }
     },
     methods: {
       onUpdate (Value) {
-          this.$emit('input', Value)
+        this.$emit('input', Value)
       }
     }
   }
