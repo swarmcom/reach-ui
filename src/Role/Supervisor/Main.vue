@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="classObject">
+  <div v-access:main-ui v-bind:class="classObject">
     <draggable :list="widgets" :options="{draggable:'.itemDragable'}" @end="onDragEnd">
       <b-row v-for="(item, index) in widgets" :key="index" class="itemDragable">
         <b-col>

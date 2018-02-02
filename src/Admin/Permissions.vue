@@ -153,9 +153,12 @@ export default {
     canShow(index) {
       if(this.ui == 'supervisor') {
         let main_perm = 14+this.groups.length + this.queues.length
-        if ( !this.perms_check[0].value && index >= main_perm)
+        let records_perm = 24+this.groups.length + this.queues.length
+        if ( !this.perms_check[0].value && index >= main_perm && index < records_perm)
           return false
         else if ( !this.perms_check[1].value && index >= 4 && index < main_perm)
+          return false
+        else if ( !this.perms_check[2].value && index >= records_perm )
           return false
         else
           return true

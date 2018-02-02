@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div v-for="(action, index) of actions" class="form-row" style="margin-bottom: 5px">
+  <div v-if="edit" v-for="(action, index) of actions" class="form-row" style="margin-bottom: 5px">
     <b-col cols=1>
       <button @click="del(index)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
     </b-col>
