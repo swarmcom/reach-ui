@@ -22,7 +22,7 @@
 <script>
 import Vue from 'vue'
 import VueCodeMirror from 'vue-codemirror'
-
+import 'codemirror/lib/codemirror.css'
 import Common from '@/Admin/Common'
 import Obj from '@/Admin/Object'
 
