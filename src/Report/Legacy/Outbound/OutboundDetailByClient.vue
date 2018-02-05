@@ -1,82 +1,48 @@
 <template>
-  <b-container fluid style="margin-left: unset; margin-right: unset; padding-left: 0; padding-right: 0; margin-top: 15px">
-    <b-row style="width: 100%; margin-left: unset; margin-right: unset">
-      <b-col style="width: 20%; max-width: 20%; padding: 0px 2px 0px 0px;">
-        <table style="width: 100%;">
-          <tr>
-            <td class='report-headers' style="width: 100%; max-width: 100%; min-width: 100%">
-              Input Controls
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 15px;">
-              <out-details v-model="query_params" :from="initFrom" :to="initTo" :initInterval="initInterval"></out-details>
-              <b-form-checkbox id="checkbox1"
-                               v-model="status"
-                               value="yes"
-                               unchecked-value="no"
-                               style="margin-top: 40px">
-                Show Only Intervals with Activity
-              </b-form-checkbox>
-            </td>
-          </tr>
-        </table>
-      </b-col>
-      <b-col style="width: 80%; padding: unset;">
-        <table style="width: 100%;">
-          <tr>
-            <td class='report-headers' style="width: 100%; max-width: 100%; min-width: 100%">
-              Report: Outbound Detail by Client
-            </td>
-          </tr>
-        </table>
-        <div style="overflow-x: auto; margin: 15px">
-          <table style="margin-bottom: 3px">
-            <tr>
-              <td class='report-title' style="width: 100%">
-                Outbound Detail by Client
-              </td>
-            </tr>
-            <tr>
-              <td class='datetime-info' style="width: 100%">
-                {{from}} - {{to}}
-              </td>
-            </tr>
-            <tr style="margin-bottom: 7px">
-              <td class='timezone-info' style="width: 100%">
-                Time zone: GMT
-              </td>
-            </tr>
-          </table>
-          <tr>
-            <td class='table-sm table-header-group' style="width: 214px; max-width: 214px; min-width: 214px">
-              Intervals {{query_params.interval}} min
-            </td>
-            <td class='table-sm table-header-group' style="width: 402px; max-width: 402px; min-width: 402px">
-              Outbound Activity
-            </td>
-          </tr>
-          <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
-            <template slot="answered_percent" slot-scope="data">
-              {{ (data.item.placed != 0) ? (100*data.item.answered/data.item.placed).toFixed(1)+'%' : 'NA' }}
-            </template>
-          </b-table>
-        </div>
-      </b-col>
-    </b-row>
-  </b-container>
+  <report v-bind="reportFields"
+          v-on:apply="query"
+          v-on:reset="reset">
+    <div slot="input-controls">
+      <from-to v-model="fromTo"></from-to>
+      <interval v-model="interval"></interval>
+      <only-active v-model="onlyActive"></only-active>
+    </div>
+    <div slot="report">
+      <table>
+        <tr>
+          <td class='table-sm table-header-group' style="width: 210px; max-width: 210px; min-width: 210px">
+            Intervals {{reportFields.interval}} min
+          </td>
+          <td class='table-sm table-header-group' style="width: 402px; max-width: 402px; min-width: 402px">
+            Outbound Activity
+          </td>
+        </tr>
+      </table>
+      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
+        <template slot="answered_percent" slot-scope="data">
+          {{ (data.item.placed != 0) ? (100*data.item.answered/data.item.placed).toFixed(1)+'%' : 'NA' }}
+        </template>
+      </b-table>
+    </div>
+  </report>
 </template>
 
 <script>
-  import OutDetails from '@/Report/Input/OutDetails'
+  import Report from '@/Report/Legacy/Report'
+  import FromTo from '@/Report/Input/FromTo'
+  import Interval from '@/Report/Input/Interval'
+  import OnlyActive from '@/Report/Input/OnlyActive'
   import Moment from 'moment'
 
   export default {
-    name: 'OutboundDetailByClient',
-    components: {'out-details': OutDetails},
+    components: {
+      'report': Report,
+      'from-to': FromTo,
+      'interval': Interval,
+      'only-active': OnlyActive
+    },
     data () {
       return {
-        query_params: {},
         fields: {
           ts_from: {
             label: 'From',
@@ -125,76 +91,53 @@
             formatter: v => v ? new Moment(v, "x").format("mm:ss") : 'NA'
           }
         },
+        fromTo: {
+          date_start: Moment().subtract(1, 'days').format(),
+          date_end: Moment().format(),
+        },
+        reportFields: {
+          name: 'Outbound Traffic Detail',
+          title: 'Outbound Traffic Detail',
+          from: undefined,
+          to: undefined,
+          interval: undefined,
+          sla: undefined
+        },
         sessions: [],
-        initFrom: Moment().subtract(1, 'days').format(),
-        initTo: Moment().format(),
-        initInterval: 60,
-        status: 'no'
-      }
-    },
-    computed: {
-      from: function () {
-        return new Moment(this.query_params.date_start * 1000, "x").format('LL')
-      },
-      to: function () {
-        return new Moment(this.query_params.date_end * 1000, "x").format('LL')
+        onlyActive: 'false',
+        interval: 60
       }
     },
     methods: {
-      query: async function (params) {
-        this.sessions = await this.$agent.p_mfa('ws_report', 'outbound_details_stats', [params])
+      query: async function () {
+        this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
+        this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+        this.reportFields.interval = this.interval
+        let qry = {}
+        qry.date_start = Moment(this.fromTo.date_start).unix()
+        qry.date_end = Moment(this.fromTo.date_end).unix()
+        qry.interval = this.interval * 60
+        this.sessions = await this.$agent.p_mfa('ws_report', 'outbound_details_stats', [qry])
       },
-      format_ms (ms) {
-        if (Number.isInteger(ms)) {
-          return (ms / 1000).toFixed(1)
-        } else {
-          return ""
+      reset () {
+        this.sessions = []
+        this.fromTo = {
+          date_start: Moment().subtract(1, 'days').format(),
+          date_end: Moment().format()
         }
+        this.onlyActive ='false'
+        this.sla = 10
+        this.interval = 60
       },
       hideEmpty(item) {
-        if (this.status === 'no') return true
+        if (this.onlyActive === 'false') return true
         else {
           if (item.placed === 0)
             return false
           else
             return true
         }
-      },
-      maybe_name (item) {
-        if (typeof item === 'object') {
-          return item.name
-        } else {
-          return ''
-        }
-      },
-      more: async function () {
-        let params = this.query_params
-        let session = this.sessions[this.sessions.length - 1]
-        params.date_end = parseInt(session.ts / 1000)
-        let more = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
-        this.sessions = this.sessions.concat(more)
-      }
-    },
-    created () {
-      this.query_params.date_start = Moment(this.initFrom).unix()
-      this.query_params.date_end = Moment(this.initTo).unix()
-      this.query_params.interval = this.initInterval * 60
-      this.query(this.query_params)
-    },
-    watch: {
-      query_params (value) {
-        let qry = {}
-        qry.date_start = value.date_start
-        qry.date_end = value.date_end
-        qry.interval = value.interval * 60
-        this.query(qry)
-        return qry
       }
     }
   }
 </script>
-
-<style lang="scss">
-  @import "../../reports";
-</style>
-
