@@ -19,7 +19,7 @@
             content="You can search for any customer, agent, queue, line, skills, agent call id number,
                      caller id number, called number or by typing characters to the keyboard.">
         </b-popover>
-        <b-form-input class="customInput" style="cursor: text" v-model="filter" :formatter="format" placeholder="Search ..."></b-form-input>
+        <b-form-input class="customInput" style="cursor: text" :value="filter" v-on:input="onFilterUpdate" :state="filterState" placeholder="Search ..."></b-form-input>
       </b-input-group>
       <div class="agent-state-text" style="margin-top:10px">Start Date:</div>
       <datepicker v-model="startDate" bootstrapStyling/>
@@ -137,6 +137,7 @@ export default {
       line_outs: [],
       tags: [],
       filter: null,
+      filterState: null,
       currentPage: 1,
       perPage: 5,
       pageOptions: [
@@ -187,9 +188,6 @@ export default {
       this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
       this.recordings_outbound = await this.$agent.p_mfa('ws_report', 'outgoing_sessions', [this.params])
     },
-    format (value) {
-      this.filter = value.replace(/[^\w\s]/gi, '')
-    },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
         return (ms/1000).toFixed(1)
@@ -239,6 +237,16 @@ export default {
     onSelectChange (value) {
       this.$agent.vm.storage_data[this.$options.storageName+'PerPage'] = value
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    },
+    onFilterUpdate (event){
+      if (event.match(/[^\w\s]/gi)) {
+        this.filter = event.replace(/[^\w\s]/gi, '')
+        this.filterState = false
+      }
+      else {
+        this.filter = event
+        this.filterState = null
+      }
     },
   },
   created () {

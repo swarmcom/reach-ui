@@ -8,7 +8,7 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </b-row>
-        <b-form-input class="customInput" size="sm" v-model="filter" :formatter="format" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+        <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState" placeholder="Search..." style="margin-top:10px" ></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
           <option v-for="group in this.groups_select" :value=group.name>{{group.name}}</option>
         </b-form-select>
@@ -382,6 +382,7 @@ export default {
       selectedSkill: 'Any Skill',
       updater: '',
       filter: null,
+      filterState: null,
       sortBy: 'agent_id',
       sortDesc: false,
       showCollapse: true
@@ -470,9 +471,16 @@ export default {
         return "0s"
       }
     },
-    format (value) {
-      this.filter = value.replace(/[^\w\s]/gi, '')
-    }
+    onFilterUpdate (event){
+      if (event.match(/[^\w\s]/gi)) {
+        this.filter = event.replace(/[^\w\s]/gi, '')
+        this.filterState = false
+      }
+      else {
+        this.filter = event
+        this.filterState = null
+      }
+    },
   },
   created () {
     this.query()
