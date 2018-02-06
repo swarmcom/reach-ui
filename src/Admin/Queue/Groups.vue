@@ -16,7 +16,7 @@ export default {
         name: { label: 'Name', sortable: true },
         weight: { label: 'Weight', sortable: true },
         aging_factor: { label: 'Aging', sortable: true },
-        hold_music: { label: 'Music', sortable: true },
+        moh: { label: 'Music', sortable: true, formatter: (moh) => moh.name },
         wrapup_enabled: { label: 'Wrap', sortable: true }
       },
       queue_groups: []
