@@ -13,7 +13,7 @@ export default {
         id: { label: 'Id', sortable: true },
         name: { label: 'Name', sortable: true },
         group: { label: 'Group', sortable:true, formatter: (group) => group.name },
-        hold_music: { label: 'Music', sortable: true },
+        moh: { label: 'Music', sortable: true, formatter: (moh) => moh.name },
         wrapup_enabled: { label: 'Wrap', sortable: true },
         aging_factor: { label: 'Aging', sortable: true },
         weight: { label: 'Weight', sortable: true }
