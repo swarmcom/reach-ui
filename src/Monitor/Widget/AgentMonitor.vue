@@ -8,7 +8,7 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </b-row>
-        <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+        <b-form-input class="customInput" size="sm" v-model="filter" :formatter="format" placeholder="Search..." style="margin-top:10px" ></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
           <option v-for="group in this.groups_select" :value=group.name>{{group.name}}</option>
         </b-form-select>
@@ -469,6 +469,9 @@ export default {
       } else {
         return "0s"
       }
+    },
+    format (value) {
+      this.filter = value.replace(/[^\w\s]/gi, '')
     }
   },
   created () {

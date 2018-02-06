@@ -7,7 +7,7 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </b-row>
-        <b-form-input class="customInput" size="sm" v-model="filter" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+        <b-form-input class="customInput" size="sm" v-model="filter" :formatter="format" placeholder="Search..." style="margin-top:10px" ></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedMedia" style="margin-top:10px">
           <option v-for="media in this.medias" :value=media.value>{{media.name}}</option>
         </b-form-select>
@@ -156,6 +156,9 @@ export default {
     },
     hangup ({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
+    },
+    format (value) {
+      this.filter = value.replace(/[^\w\s]/gi, '')
     }
   },
   created () {

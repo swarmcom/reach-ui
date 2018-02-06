@@ -8,7 +8,7 @@
         <b-form-select :options="pageOptions" v-model="perPage" @input="onSelectChange" />
       </div>
       <div v-if="filter_button" class="col-md-4 float-right">
-        <b-form-input v-model="filter" placeholder="Type to Filter" />
+        <b-form-input v-model="filter" :formatter="format" placeholder="Type to Filter" />
       </div>
     </div>
     <b-row style="margin-top: 10px">
@@ -77,6 +77,9 @@ export default {
     onSortingChanged (ctx){
       let data = { "sortBy": ctx.sortBy, "sortDesc": ctx.sortDesc, "perPage": this.perPage }
       localStorage.setItem(this.storageName, JSON.stringify(data))
+    },
+    format (value) {
+      this.filter = value.replace(/[^\w\s]/gi, '')
     },
     loadDataStorage(name) {
       if(localStorage.getItem(name)) {

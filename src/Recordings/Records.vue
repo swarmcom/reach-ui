@@ -19,7 +19,7 @@
             content="You can search for any customer, agent, queue, line, skills, agent call id number,
                      caller id number, called number or by typing characters to the keyboard.">
         </b-popover>
-        <b-form-input class="customInput" style="cursor: text" v-model="filter" placeholder="Search ..."></b-form-input>
+        <b-form-input class="customInput" style="cursor: text" v-model="filter" :formatter="format" placeholder="Search ..."></b-form-input>
       </b-input-group>
       <div class="agent-state-text" style="margin-top:10px">Start Date:</div>
       <datepicker v-model="startDate" bootstrapStyling/>
@@ -186,6 +186,9 @@ export default {
       this.params.date_end = parseInt(this.endDate.getTime()/1000)
       this.recordings = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [this.params])
       this.recordings_outbound = await this.$agent.p_mfa('ws_report', 'outgoing_sessions', [this.params])
+    },
+    format (value) {
+      this.filter = value.replace(/[^\w\s]/gi, '')
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
