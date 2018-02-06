@@ -1,59 +1,53 @@
 <template>
-  <b-row style="padding: 0; margin: 0">
-    <b-col style="padding: 0; margin: 0">
+  <div style="margin: 0; padding-bottom: 20px">
       <div>From:</div>
-      <widget-date :value="date_start" @input="onFromChange" placeholder="Start date" :initValue="init_start"
-                   style="padding-bottom: 10px"></widget-date>
+      <datepicker :value="from_to.date_start"
+                  @input="onFromChange"
+                  placeholder="Start date"
+                  :highlighted="highlighted"
+                  bootstrapStyling style="padding-bottom: 10px"></datepicker>
       <div>To:</div>
-      <widget-date v-model="date_end" placeholder="End date" :initValue="init_end"
-                   style="padding-bottom: 30px"></widget-date>
-      <button @click="reset" class="btn btn-outline-secondary float-right">Reset</button>
-      <button @click="apply" class="btn btn-outline-secondary float-right" style="margin-right: 20px">Apply</button>
-    </b-col>
-  </b-row>
+      <datepicker :value="from_to.date_end"
+                  @input="onToChange"
+                  placeholder="End date"
+                  :highlighted="highlighted"
+                  bootstrapStyling style="padding-bottom: 10px"></datepicker>
+  </div>
 </template>
 
 <script>
-  import ReportDate from '@/Report/Widget/Date'
+  import Datepicker from 'vuejs-datepicker'
   import Moment from 'moment'
 
   export default {
-    name: 'report-from-to',
-    props: ['from', 'to'],
+    name: 'from-to-input',
+    props: ['value'],
     components: {
-      'widget-date': ReportDate,
+      'datepicker': Datepicker
     },
     data () {
       return {
-        date_start: undefined,
-        date_end: undefined,
-        init_start: this.from,
-        init_end: this.to
+        from_to: Object.assign({}, this.value),
+        highlighted: {
+          dates: [new Date()]
+        }
       }
     },
     methods: {
-      reset () {
-        this.date_start = Moment(this.init_start).unix()
-        this.date_end = Moment(this.to).unix()
-        this.$emit('input', this.make_query())
-      },
-      apply () {
-        this.$emit('input', this.make_query())
-      },
-      make_query() {
-        return {
-          date_start: this.date_start,
-          date_end: this.date_end,
-        }
-      },
       onFromChange(v) {
-        this.date_start = v
+        this.from_to.date_start = Moment(v).format()
+        this.$emit('input', Object.assign({}, this.from_to))
+      },
+      onToChange(v) {
+        this.from_to.date_end = Moment(v).format()
+        this.$emit('input', Object.assign({}, this.from_to))
       }
     },
-
-    created () {
-      this.date_start = Moment(this.from).unix()
-      this.date_end = Moment(this.to).unix()
+    watch: {
+      value (v) {
+        this.from_to = Object.assign({}, v)
+        return v
+      }
     }
   }
 </script>
