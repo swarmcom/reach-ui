@@ -119,7 +119,7 @@ export default {
     })
   },
   beforeDestroy () {
-    clearInterval(this.updater)
+    this.stop()
   },
   components: {
     'vue-slider': vueSlider
