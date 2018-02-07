@@ -112,17 +112,17 @@ export default {
       this.$agent.vm.storage_data[this.$options.storageName+'Pinned'] = this.isPinned
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-    onWidgetMSChange( state) {
+    onWidgetMSChange (state) {
       this.$agent.vm.layoutSM.isActiveMS = state
       this.$agent.vm.storage_data.isActiveMS = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-    onWidgetAMChange( state) {
+    onWidgetAMChange (state) {
       this.$agent.vm.layoutSM.isActiveAM = state
       this.$agent.vm.storage_data.isActiveAM = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-    onWidgetQMChange( state) {
+    onWidgetQMChange (state) {
       this.$agent.vm.layoutSM.isActiveQM = state
       this.$agent.vm.storage_data.isActiveQM = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
