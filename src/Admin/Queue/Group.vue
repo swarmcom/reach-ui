@@ -3,8 +3,8 @@
   <form-text label="Queue Group Name" v-model="rec.name"></form-text>
   <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
   <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
-  <form-number label="Aging" v-model="rec.aging_factor"></form-number>
-  <form-number-real label="Weight" v-model="rec.weight"></form-number-real>
+  <form-number-real label="Aging" v-model="rec.aging_factor"></form-number-real>
+  <form-number label="Weight" v-model="rec.weight"></form-number>
   <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled"></form-select-bool>
   <form-number label="Wrap-up timer" v-model="rec.wrapup_timer"></form-number>
   <form-number label="Auto wrap-up" v-model="rec.auto_wrapup"></form-number>
