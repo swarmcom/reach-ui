@@ -7,7 +7,7 @@
           <b-row class="toggle-bar-custom">
             <div class="titlenocollapse">Filter</div>
           </b-row>
-          <b-form-input class="customInput" size="sm" v-model="filter" :formatter="format" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+          <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState" placeholder="Search..." style="margin-top:10px" ></b-form-input>
           <b-form-select class="pointer" size="sm" v-model="selectedLine" style="margin-top:10px">
             <option v-for="line in this.lines" :value=line.name>{{line.name}}</option>
           </b-form-select>
@@ -99,6 +99,7 @@
         selectedCustomer: 'Any Customers',
         selectedState: 'Any State',
         filter: null,
+        filterState: null,
         showCollapse: true
       }
     },
@@ -151,9 +152,16 @@
       hangup ({id}) {
         this.$agent.p_mfa('ws_supervisor', 'hangup', ['outgoing', id])
       },
-      format (value) {
-        this.filter = value.replace(/[^\w\s]/gi, '')
-      }
+      onFilterUpdate (event){
+        if (event.match(/[^\w\s]/gi)) {
+          this.filter = event.replace(/[^\w\s]/gi, '')
+          this.filterState = false
+        }
+        else {
+          this.filter = event
+          this.filterState = null
+        }
+      },
     },
     created () {
       this.query()
