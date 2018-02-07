@@ -57,7 +57,7 @@ export default class Agent extends WsProto {
         release_id: undefined,
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
-        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true }
+        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true }
       }
     }),
     this.loadDataStorage("reach-ui")
@@ -80,6 +80,8 @@ export default class Agent extends WsProto {
         this.vm.isNarrowLayout.monitor = this.vm.storage_data.narrowScreenMonitor
       if (this.vm.storage_data.narrowScreenRecordings != undefined)
         this.vm.isNarrowLayout.recordings = this.vm.storage_data.narrowScreenRecordings
+      if (this.vm.storage_data.narrowScreenReports != undefined)
+        this.vm.isNarrowLayout.reports = this.vm.storage_data.narrowScreenReports
       if (this.vm.storage_data.isActiveAM != undefined)
         this.vm.layoutSM.isActiveAM = this.vm.storage_data.isActiveAM
       if (this.vm.storage_data.isActiveMS != undefined)
