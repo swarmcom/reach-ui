@@ -2,10 +2,10 @@
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand to="/monitor">HOME</b-navbar-brand>
+    <b-navbar-brand to="/monitor">Home</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
-        <b-nav-item @click="logout">LOGOUT</b-nav-item>
+        <b-nav-item @click="logout">Logout</b-nav-item>
       </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
@@ -14,7 +14,7 @@
     </b-collapse>
   </b-navbar>
   <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item v-access:main-ui to="/main">MAIN</b-nav-item>
+    <b-nav-item v-access:main-ui to="/main">Main</b-nav-item>
     <b-nav-item-dropdown v-access:main-ui>
       <b-dropdown-header>Options for Main tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
@@ -27,28 +27,22 @@
       <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item v-access:monitor-ui to="/monitor">MONITOR </b-nav-item>
+    <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
     <b-nav-item-dropdown v-access:monitor-ui>
       <b-dropdown-header>Options for Monitor tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item v-access:recordings-ui to="/recordings">RECORDINGS </b-nav-item>
+    <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
     <b-nav-item-dropdown v-access:recordings-ui>
       <b-dropdown-header>Options for Recordings tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item-dropdown v-access:reports-ui text="REPORTS">
-      <div v-for="reportGroup in reports" :key="reportGroup.reportGroupName">
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-header>{{ reportGroup.reportGroupName }}</b-dropdown-header>
-        <b-dropdown-item v-for="report in reportGroup.reports" :to="report.path" :key="report.name">{{ report.name }}</b-dropdown-item>
-      </div>
-    </b-nav-item-dropdown>
-    <b-nav-item to="/help">HELP</b-nav-item>
+    <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
+    <b-nav-item to="/help">Help</b-nav-item>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
         <icon name="eyedropper" scale="1.0"></icon>
@@ -86,7 +80,7 @@ import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
 import Monitor from '@/Role/Supervisor/Monitor'
 import Recordings from '@/Role/Supervisor/Recordings'
-import Report from '@/Role/Supervisor/Report'
+import Reports from '@/Role/Supervisor/Reports'
 
 import ReportRoutes from '@/routes/report'
 import moment from 'moment'
@@ -97,7 +91,7 @@ const router = new VueRouter({
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
     { path: '/recordings', component: Recordings },
-    { path: '/report', component: Report, children: ReportRoutes },
+    { path: '/reports', component: Reports, children: ReportRoutes },
     { path: '/', redirect: 'monitor' }
   ]
 })
@@ -109,66 +103,7 @@ export default {
   data () {
     return {
       date: null,
-      isPinned: false,
-      reports: [
-        {
-          reportGroupName: "Experimental Reach3 reports",
-          reports: [
-            {path: '/report/agents/states', name: 'Agents man-hours'},
-            {path: '/report/agents/unique', name: 'Unique agents'},
-            {path: '/report/agents/avg', name: 'Agents averages'},
-            {path: '/report/measures/avg', name: 'Measures averages'},
-            {path: '/report/sessions/inqueue', name: 'Call sessions'},
-            {path: '/report/sessions/agent', name: 'Agent sessions'}
-          ]
-        },
-        {
-          reportGroupName: "CDR reports",
-          reports: [
-            {path: '/report/legacy/cdr/cdr', name: 'CDR'},
-            {path: '/report/legacy/cdr/cdr-extended', name: 'CDR Extended'},
-            {path: '/report/legacy/cdr/cdr-compact', name: 'CDR Compact'}
-          ]
-        },
-        {
-          reportGroupName: "Agent reports",
-          reports: [
-            {path: '/report/legacy/agent/agent-activity-individual', name: 'Agent Activity Individual'},
-            {path: '/report/legacy/agent/agent-activity-by-group', name: 'Agent Activity by Group'},
-            {path: '/report/legacy/agent/agent-answer-performance-by-group', name: 'Agent Answer Performance by Group'},
-            {path: '/report/legacy/agent/agent-availability', name: 'Agent Availability'},
-            {path: '/report/legacy/agent/agent-call-disposition', name: 'Agent Call Disposition'},
-            {path: '/report/legacy/agent/agent-group-activity', name: 'Agent Group Activity'},
-            {path: '/report/legacy/agent/agent-group-productivity', name: 'Agent Group Productivity'},
-            {path: '/report/legacy/agent/agent-productivity-by-group', name: 'Agent Productivity by Group'},
-            {path: '/report/legacy/agent/agent-state-history', name: 'Agent State History'},
-            {path: '/report/legacy/agent/agent-states-overview', name: 'Agent States Overview'},
-            {path: '/report/legacy/agent/concurrent-logged-in-agents', name: 'Concurrent Logged in Agents'},
-            {path: '/report/legacy/agent/unanswered-call-details', name: 'Unanswered Call Details'}
-          ]
-        },
-        {
-          reportGroupName: "Outbound reports",
-          reports: [
-            {path: '/report/legacy/outbound/outbound-detail-by-client', name: "Outbound Detail by Client"},
-            {path: '/report/legacy/outbound/outbound-overview-by-client', name: "Outbound Overview by Client"}
-          ]
-        },
-        {
-          reportGroupName: "Traffic reports",
-          reports: [
-            {path: '/report/legacy/traffic/client-traffic-detail', name: "Client Traffic Detail"},
-            {path: '/report/legacy/traffic/client-traffic-overview', name: "Client Traffic Overview"},
-            {path: '/report/legacy/traffic/line-traffic-detail', name: "Line Traffic Detail"},
-            {path: '/report/legacy/traffic/line-traffic-overview', name: "Line Traffic Overview"},
-            {path: '/report/legacy/traffic/queue-group-traffic-overview', name: "Queue Group Traffic Overview"},
-            {path: '/report/legacy/traffic/queue-traffic-detail', name: "Queue Traffic Detail"},
-            {path: '/report/legacy/traffic/queue-traffic-overview', name: "Queue Traffic Overview"},
-            {path: '/report/legacy/traffic/voicemail-detail', name: "Voicemail Detail"},
-            {path: '/report/legacy/traffic/voicemail-overview', name: "Voicemail Overview"}
-          ]
-        }
-      ]
+      isPinned: false
     }
   },
   methods: {
@@ -177,17 +112,17 @@ export default {
       this.$agent.vm.storage_data[this.$options.storageName+'Pinned'] = this.isPinned
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-    onWidgetMSChange( state) {
+    onWidgetMSChange (state) {
       this.$agent.vm.layoutSM.isActiveMS = state
       this.$agent.vm.storage_data.isActiveMS = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-    onWidgetAMChange( state) {
+    onWidgetAMChange (state) {
       this.$agent.vm.layoutSM.isActiveAM = state
       this.$agent.vm.storage_data.isActiveAM = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-    onWidgetQMChange( state) {
+    onWidgetQMChange (state) {
       this.$agent.vm.layoutSM.isActiveQM = state
       this.$agent.vm.storage_data.isActiveQM = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
