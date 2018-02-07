@@ -5,7 +5,7 @@
   <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
   <mohs label="Music on hold" v-model="rec.moh_id" :effective="eff.moh_id"></mohs>
   <form-number label="Weight" v-model="rec.weight" :effective="eff.weight"></form-number>
-  <form-text label="Aging" v-model="rec.aging_factor" :effective="eff.aging_factor"></form-text>
+  <form-number-real label="Aging" v-model="rec.aging_factor" :effective="eff.aging_factor"></form-number-real>
   <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled" :effective="eff.wrapup_enabled"></form-select-bool>
   <form-number label="Wrap-up timer" v-model="rec.wrapup_timer" :effective="eff.wrapup_timer"></form-number>
   <form-number label="Auto Wrap-up" v-model="rec.auto_wrapup" :effective="eff.auto_wrapup"></form-number>
