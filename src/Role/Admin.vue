@@ -2,10 +2,10 @@
   <div style="min-height: 100%; padding-bottom: 60px">
     <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
       <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-      <b-navbar-brand to="/">HOME</b-navbar-brand>
+      <b-navbar-brand to="/">Home</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
-          <b-nav-item @click="logout">LOGOUT</b-nav-item>
+          <b-nav-item @click="logout">Logout</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
@@ -14,7 +14,7 @@
       </b-collapse>
     </b-navbar>
     <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-      <b-nav-item to="/">ADMIN</b-nav-item>
+      <b-nav-item to="/">Admin</b-nav-item>
       <b-nav-item-dropdown>
         <b-dropdown-header>Options for Admin tab</b-dropdown-header>
         <b-dropdown-divider></b-dropdown-divider>
