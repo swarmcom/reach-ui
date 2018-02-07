@@ -17,33 +17,33 @@
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Agent">
-    <b-dropdown-item to="/report/legacy/agent/agent-activity-individual">Activity Individual</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-activity-by-group">Activity by Group</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-answer-performance-by-group">Answer Performance by Group</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-availability">Availability</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-call-disposition">Call Disposition</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-group-activity">Group Activity</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-group-productivity">Group Productivity</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-productivity-by-group">Productivity by Group</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-state-history">State History</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/agent/agent-states-overview">States Overview</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/activity-individual">Activity Individual</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/activity-by-group">Activity by Group</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/answer-performance-by-group">Answer Performance by Group</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/availability">Availability</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/call-disposition">Call Disposition</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/group-activity">Group Activity</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/group-productivity">Group Productivity</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/productivity-by-group">Productivity by Group</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/state-history">State History</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/agent/states-overview">States Overview</b-dropdown-item>
     <b-dropdown-item to="/report/legacy/agent/concurrent-logged-in-agents">Concurrent Logged in Agents</b-dropdown-item>
     <b-dropdown-item to="/report/legacy/agent/unanswered-call-details">Unanswered Call Details</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Outbound">
-    <b-dropdown-item to="/report/legacy/outbound/outbound-detail-by-client">Detail by Client</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/outbound/outbound-overview-by-client">Overview by Client</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/outbound/detail-by-client">Detail by Client</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/outbound/overview-by-client">Overview by Client</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Traffic">
-    <b-dropdown-item to="/report/legacy/traffic/client-traffic-detail">Client Traffic Detail</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/traffic/client-traffic-overview">Client Traffic Overview</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/traffic/line-traffic-detail">Line Traffic Detail</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/traffic/line-traffic-overview">Line Traffic Overview</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/traffic/queue-group-traffic-overview">Queue Group Traffic Overview</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/traffic/queue-traffic-detail">Queue Traffic Detail</b-dropdown-item>
-    <b-dropdown-item to="/report/legacy/traffic/queue-traffic-overview">Queue Traffic Overview</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/traffic/client-detail">Client Detail</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/traffic/client-overview">Client Overview</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/traffic/line-detail">Line Detail</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/traffic/line-overview">Line Overview</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/traffic/queue-group-overview">Queue Group Overview</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/traffic/queue-detail">Queue Detail</b-dropdown-item>
+    <b-dropdown-item to="/report/legacy/traffic/queue-overview">Queue Overview</b-dropdown-item>
     <b-dropdown-item to="/report/legacy/traffic/voicemail-detail">Voicemail Detail</b-dropdown-item>
     <b-dropdown-item to="/report/legacy/traffic/voicemail-overview">Voicemail Overview</b-dropdown-item>
   </b-nav-item-dropdown>
