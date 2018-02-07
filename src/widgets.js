@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 import FormText from '@/Widget/FormText'
 import FormNumber from '@/Widget/FormNumber'
+import FormNumberReal from '@/Widget/FormNumberReal'
 import FormBool from '@/Widget/FormBool'
 import AgentGroups from '@/Widget/Agent/Groups'
 import Skills from '@/Widget/Skills'
@@ -26,6 +27,7 @@ import FormFile from '@/Widget/Form/File'
 
 Vue.component('form-text', FormText)
 Vue.component('form-number', FormNumber)
+Vue.component('form-number-real', FormNumberReal)
 Vue.component('form-bool', FormBool)
 Vue.component('form-select-bool', FormSelectBool)
 Vue.component('agent-groups', AgentGroups)
