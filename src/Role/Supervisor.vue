@@ -2,10 +2,10 @@
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand to="/monitor">HOME</b-navbar-brand>
+    <b-navbar-brand to="/monitor">Home</b-navbar-brand>
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
-        <b-nav-item @click="logout">LOGOUT</b-nav-item>
+        <b-nav-item @click="logout">Logout</b-nav-item>
       </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
@@ -14,7 +14,7 @@
     </b-collapse>
   </b-navbar>
   <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item v-access:main-ui to="/main">MAIN</b-nav-item>
+    <b-nav-item v-access:main-ui to="/main">Main</b-nav-item>
     <b-nav-item-dropdown v-access:main-ui>
       <b-dropdown-header>Options for Main tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
@@ -27,22 +27,22 @@
       <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item v-access:monitor-ui to="/monitor">MONITOR </b-nav-item>
+    <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
     <b-nav-item-dropdown v-access:monitor-ui>
       <b-dropdown-header>Options for Monitor tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item v-access:recordings-ui to="/recordings">RECORDINGS </b-nav-item>
+    <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
     <b-nav-item-dropdown v-access:recordings-ui>
       <b-dropdown-header>Options for Recordings tab</b-dropdown-header>
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item v-access:reports-ui to="/report">REPORTS</b-nav-item>
-    <b-nav-item to="/help">HELP</b-nav-item>
+    <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
+    <b-nav-item to="/help">Help</b-nav-item>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
         <icon name="eyedropper" scale="1.0"></icon>
@@ -80,7 +80,7 @@ import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
 import Monitor from '@/Role/Supervisor/Monitor'
 import Recordings from '@/Role/Supervisor/Recordings'
-import Report from '@/Role/Supervisor/Report'
+import Reports from '@/Role/Supervisor/Reports'
 
 import ReportRoutes from '@/routes/report'
 import moment from 'moment'
@@ -91,7 +91,7 @@ const router = new VueRouter({
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
     { path: '/recordings', component: Recordings },
-    { path: '/report', component: Report, children: ReportRoutes },
+    { path: '/reports', component: Reports, children: ReportRoutes },
     { path: '/', redirect: 'monitor' }
   ]
 })
