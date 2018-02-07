@@ -2,22 +2,19 @@
   <div style="min-height: 100%; padding-bottom: 60px">
     <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
       <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-      <b-navbar-brand to="/">Home</b-navbar-brand>
-      <b-collapse is-nav id="nav_collapse">
-        <b-navbar-nav>
-          <b-nav-item @click="logout">Logout</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
+      <b-navbar-brand to="/">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
+      <b-navbar-nav>
+        <b-nav-item-dropdown text="Instance">
+          <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
+          <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
+          <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item to="/params">Parameters</b-nav-item>
+        <b-nav-item @click="logout">Logout</b-nav-item>
+      </b-navbar-nav>
     </b-navbar>
-    <b-nav class="custom-b-nav" tabs>
-      <b-nav-item-dropdown text="Instance">
-        <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
-        <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
-        <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
-      </b-nav-item-dropdown>
-      <b-nav-item to="/params">Parameters</b-nav-item>
-    </b-nav><!--container-fluid-->
-    <div class="container-fluid">
+
+    <div class="container-fluid" style="margin-top: 20px">
       <transition name="reach" mode="out-in">
         <router-view></router-view>
       </transition>
@@ -66,6 +63,5 @@ export default {
 </script>
 
 <style lang="scss">
-//@import "../../custom-bootstrap.scss";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>
