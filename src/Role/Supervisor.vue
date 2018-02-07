@@ -2,60 +2,45 @@
 <div style="min-height: 100%; padding-bottom: 60px">
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-    <b-navbar-brand to="/monitor">Home</b-navbar-brand>
-    <b-collapse is-nav id="nav_collapse">
-      <b-navbar-nav>
-        <b-nav-item @click="logout">Logout</b-nav-item>
-      </b-navbar-nav>
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <span class="navbar-text">{{ date | filterDate }}</span>
-      </b-navbar-nav>
-    </b-collapse>
+    <b-navbar-brand to="/main">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
+    <b-navbar-nav>
+      <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
+      <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
+      <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
+      <b-nav-item to="/help">Help</b-nav-item>
+      <b-nav-item @click="logout">Logout</b-nav-item>
+    </b-navbar-nav>
+
+    <b-navbar-nav class="ml-auto">
+      <b-nav-item>
+        <span>{{ date | filterDate }}</span>
+      </b-nav-item>
+      <b-nav-form>
+        <b-nav-item-dropdown right>
+          <b-dropdown-item v-if="isPinned" @click="onPin()">Unpin</b-dropdown-item>
+          <b-dropdown-item v-else @click="onPin()">Pin</b-dropdown-item>
+          <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
+          <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
+          <template v-if="isMain()">
+            <template v-if="canMyStat()">
+              <b-dropdown-item v-if="isMyStat()" @click="changeWidget('isActiveMS')">Remove My Stats</b-dropdown-item>
+              <b-dropdown-item v-else @click="changeWidget('isActiveMS')">Add My Stats</b-dropdown-item>
+            </template>
+            <template v-if="canAgentManager()">
+              <b-dropdown-item v-if="isAgentManager()" @click="changeWidget('isActiveAM')">Remove Agent Manager</b-dropdown-item>
+              <b-dropdown-item v-else @click="changeWidget('isActiveAM')">Add Agent Manager</b-dropdown-item>
+            </template>
+            <template v-if="canQueueManager()">
+              <b-dropdown-item v-if="isQueueManager()" @click="changeWidget('isActiveQM')">Remove Queue Manager</b-dropdown-item>
+              <b-dropdown-item v-else @click="changeWidget('isActiveQM')">Add Queue Manager</b-dropdown-item>
+            </template>
+          </template>
+        </b-nav-item-dropdown>
+      </b-nav-form>
+    </b-navbar-nav>
+
   </b-navbar>
-  <b-nav class="custom-b-nav" v-bind:class="{ 'pin-nav': isPinned }" tabs>
-    <b-nav-item v-access:main-ui to="/main">Main</b-nav-item>
-    <b-nav-item-dropdown v-access:main-ui>
-      <b-dropdown-header>Options for Main tab</b-dropdown-header>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = true">Switch to Narrow layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = false">Switch to Wide layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.is_widget_mystat() && !$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(true)">Add My Statistics</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.is_widget_mystat() && $agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(false)">Remove My Statistics</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.is_widget_agent_manager() && !$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.is_widget_agent_manager() && $agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.is_widget_queue_manager() && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.is_widget_queue_manager() && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
-    </b-nav-item-dropdown>
-    <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
-    <b-nav-item-dropdown v-access:monitor-ui>
-      <b-dropdown-header>Options for Monitor tab</b-dropdown-header>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = true">Switch to Narrow layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.monitor" @click="$agent.vm.isNarrowLayout.monitor = false">Switch to Wide layout</b-dropdown-item>
-    </b-nav-item-dropdown>
-    <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
-    <b-nav-item-dropdown v-access:recordings-ui>
-      <b-dropdown-header>Options for Recordings tab</b-dropdown-header>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = true">Switch to Narrow layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = false">Switch to Wide layout</b-dropdown-item>
-    </b-nav-item-dropdown>
-    <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
-    <b-nav-item-dropdown v-access:reports-ui>
-      <b-dropdown-header>Options for Reports tab</b-dropdown-header>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.reports" @click="$agent.vm.isNarrowLayout.reports = true">Switch to Narrow layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.reports" @click="$agent.vm.isNarrowLayout.reports = false">Switch to Wide layout</b-dropdown-item>
-    </b-nav-item-dropdown>
-    <b-nav-item to="/help">Help</b-nav-item>
-    <button @click="onPin" class="btn ml-auto pointer">
-      <icon label="No Pined">
-        <icon name="eyedropper" scale="1.0"></icon>
-        <icon v-if="!isPinned" style="color:red" name="ban" scale="1.0"></icon>
-      </icon>
-    </button>
-  </b-nav><!--container-fluid-->
+
   <div class="container-fluid" v-bind:class="{ 'pin-container': (isPinned) }">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
@@ -93,12 +78,12 @@ import moment from 'moment'
 
 const router = new VueRouter({
   routes: [
-    { path: '/main', component: Main },
+    { path: '/main', component: Main, name: 'main' },
     { path: '/help', component: Help },
-    { path: '/monitor', component: Monitor },
-    { path: '/recordings', component: Recordings },
-    { path: '/reports', component: Reports, children: ReportRoutes },
-    { path: '/', redirect: 'monitor' }
+    { path: '/monitor', component: Monitor, name: 'monitor' },
+    { path: '/recordings', component: Recordings, name: 'recordings' },
+    { path: '/reports', component: Reports, children: ReportRoutes, name: 'reports' },
+    { path: '/', redirect: 'main' }
   ]
 })
 
@@ -109,42 +94,70 @@ export default {
   data () {
     return {
       date: null,
+      page: 'main',
       isPinned: false
     }
   },
   methods: {
+    isNarrow () {
+      return this.$agent.vm.isNarrowLayout[this.page]
+    },
+    isMain () {
+      return this.page == 'main'
+    },
+    changeLayout () {
+      this.$agent.vm.isNarrowLayout[this.page] = ! this.$agent.vm.isNarrowLayout[this.page]
+    },
+    canMyStat() {
+      return this.$agent.vm.agent.permissions['myStatistics-widget']
+    },
+    canAgentManager() {
+      return this.$agent.vm.agent.permissions['agentManager-widget']
+    },
+    canQueueManager() {
+      return this.$agent.vm.agent.permissions['queueManager-widget']
+    },
+    isMyStat () {
+      return this.$agent.vm.layoutSM.isActiveMS
+    },
+    isAgentManager () {
+      return this.$agent.vm.layoutSM.isActiveAM
+    },
+    isQueueManager () {
+      return this.$agent.vm.layoutSM.isActiveQM
+    },
     onPin () {
       this.isPinned = !this.isPinned
       this.$agent.vm.storage_data[this.$options.storageName+'Pinned'] = this.isPinned
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-    onWidgetMSChange (state) {
-      this.$agent.vm.layoutSM.isActiveMS = state
-      this.$agent.vm.storage_data.isActiveMS = state
+    changeWidget (name) {
+      let state = ! this.$agent.vm.layoutSM[name]
+      this.$agent.vm.layoutSM[name] = state
+      this.$agent.vm.storage_data[name] = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+      console.log(name, state)
     },
-    onWidgetAMChange (state) {
-      this.$agent.vm.layoutSM.isActiveAM = state
-      this.$agent.vm.storage_data.isActiveAM = state
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-    },
-    onWidgetQMChange (state) {
-      this.$agent.vm.layoutSM.isActiveQM = state
-      this.$agent.vm.storage_data.isActiveQM = state
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-    }
   },
   created: async function() {
     this.date = new Date()
     setInterval(() => this.date = new Date, 1000)
-    if (this.$agent.vm.storage_data.navBarPinned != undefined)
+    if (this.$agent.vm.storage_data.navBarPinned != undefined) {
       this.isPinned = this.$agent.vm.storage_data.navBarPinned
+    }
   },
   filters: {
     filterDate: function (date) {
       return moment(date).format('ddd[,] Do MMM YYYY[,] HH:mm:ss');
     }
-  }
+  },
+  watch:{
+    $route (to, from) {
+      if (to.name) {
+        this.page = to.name
+      }
+    }
+  } 
 }
 </script>
 
