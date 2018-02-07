@@ -41,13 +41,7 @@
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
-    <b-nav-item-dropdown v-access:reports-ui text="REPORTS">
-      <div v-for="reportGroup in reports" :key="reportGroup.reportGroupName">
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-header>{{ reportGroup.reportGroupName }}</b-dropdown-header>
-        <b-dropdown-item v-for="report in reportGroup.reports" :to="report.path" :key="report.name">{{ report.name }}</b-dropdown-item>
-      </div>
-    </b-nav-item-dropdown>
+    <b-nav-item v-access:reports-ui to="/report">REPORTS</b-nav-item>
     <b-nav-item to="/help">HELP</b-nav-item>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
@@ -109,66 +103,7 @@ export default {
   data () {
     return {
       date: null,
-      isPinned: false,
-      reports: [
-        {
-          reportGroupName: "Experimental Reach3 reports",
-          reports: [
-            {path: '/report/agents/states', name: 'Agents man-hours'},
-            {path: '/report/agents/unique', name: 'Unique agents'},
-            {path: '/report/agents/avg', name: 'Agents averages'},
-            {path: '/report/measures/avg', name: 'Measures averages'},
-            {path: '/report/sessions/inqueue', name: 'Call sessions'},
-            {path: '/report/sessions/agent', name: 'Agent sessions'}
-          ]
-        },
-        {
-          reportGroupName: "CDR reports",
-          reports: [
-            {path: '/report/legacy/cdr/cdr', name: 'CDR'},
-            {path: '/report/legacy/cdr/cdr-extended', name: 'CDR Extended'},
-            {path: '/report/legacy/cdr/cdr-compact', name: 'CDR Compact'}
-          ]
-        },
-        {
-          reportGroupName: "Agent reports",
-          reports: [
-            {path: '/report/legacy/agent/agent-activity-individual', name: 'Agent Activity Individual'},
-            {path: '/report/legacy/agent/agent-activity-by-group', name: 'Agent Activity by Group'},
-            {path: '/report/legacy/agent/agent-answer-performance-by-group', name: 'Agent Answer Performance by Group'},
-            {path: '/report/legacy/agent/agent-availability', name: 'Agent Availability'},
-            {path: '/report/legacy/agent/agent-call-disposition', name: 'Agent Call Disposition'},
-            {path: '/report/legacy/agent/agent-group-activity', name: 'Agent Group Activity'},
-            {path: '/report/legacy/agent/agent-group-productivity', name: 'Agent Group Productivity'},
-            {path: '/report/legacy/agent/agent-productivity-by-group', name: 'Agent Productivity by Group'},
-            {path: '/report/legacy/agent/agent-state-history', name: 'Agent State History'},
-            {path: '/report/legacy/agent/agent-states-overview', name: 'Agent States Overview'},
-            {path: '/report/legacy/agent/concurrent-logged-in-agents', name: 'Concurrent Logged in Agents'},
-            {path: '/report/legacy/agent/unanswered-call-details', name: 'Unanswered Call Details'}
-          ]
-        },
-        {
-          reportGroupName: "Outbound reports",
-          reports: [
-            {path: '/report/legacy/outbound/outbound-detail-by-client', name: "Outbound Detail by Client"},
-            {path: '/report/legacy/outbound/outbound-overview-by-client', name: "Outbound Overview by Client"}
-          ]
-        },
-        {
-          reportGroupName: "Traffic reports",
-          reports: [
-            {path: '/report/legacy/traffic/client-traffic-detail', name: "Client Traffic Detail"},
-            {path: '/report/legacy/traffic/client-traffic-overview', name: "Client Traffic Overview"},
-            {path: '/report/legacy/traffic/line-traffic-detail', name: "Line Traffic Detail"},
-            {path: '/report/legacy/traffic/line-traffic-overview', name: "Line Traffic Overview"},
-            {path: '/report/legacy/traffic/queue-group-traffic-overview', name: "Queue Group Traffic Overview"},
-            {path: '/report/legacy/traffic/queue-traffic-detail', name: "Queue Traffic Detail"},
-            {path: '/report/legacy/traffic/queue-traffic-overview', name: "Queue Traffic Overview"},
-            {path: '/report/legacy/traffic/voicemail-detail', name: "Voicemail Detail"},
-            {path: '/report/legacy/traffic/voicemail-overview', name: "Voicemail Overview"}
-          ]
-        }
-      ]
+      isPinned: false
     }
   },
   methods: {
