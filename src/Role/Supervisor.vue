@@ -17,8 +17,6 @@
       </b-nav-item>
       <b-nav-form>
         <b-nav-item-dropdown right>
-          <b-dropdown-item v-if="isPinned" @click="onPin()">Unpin</b-dropdown-item>
-          <b-dropdown-item v-else @click="onPin()">Pin</b-dropdown-item>
           <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
           <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
           <template v-if="isMain()">
@@ -41,7 +39,7 @@
 
   </b-navbar>
 
-  <div class="container-fluid" v-bind:class="{ 'pin-container': (isPinned) }">
+  <div class="container-fluid">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -94,8 +92,7 @@ export default {
   data () {
     return {
       date: null,
-      page: 'main',
-      isPinned: false
+      page: 'main'
     }
   },
   methods: {
@@ -126,11 +123,6 @@ export default {
     isQueueManager () {
       return this.$agent.vm.layoutSM.isActiveQM
     },
-    onPin () {
-      this.isPinned = !this.isPinned
-      this.$agent.vm.storage_data[this.$options.storageName+'Pinned'] = this.isPinned
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-    },
     changeWidget (name) {
       let state = ! this.$agent.vm.layoutSM[name]
       this.$agent.vm.layoutSM[name] = state
@@ -139,12 +131,9 @@ export default {
       console.log(name, state)
     },
   },
-  created: async function() {
+  created () {
     this.date = new Date()
     setInterval(() => this.date = new Date, 1000)
-    if (this.$agent.vm.storage_data.navBarPinned != undefined) {
-      this.isPinned = this.$agent.vm.storage_data.navBarPinned
-    }
   },
   filters: {
     filterDate: function (date) {
