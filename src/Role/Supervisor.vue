@@ -20,12 +20,12 @@
       <b-dropdown-divider></b-dropdown-divider>
       <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = true">Switch to Narrow layout</b-dropdown-item>
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.main" @click="$agent.vm.isNarrowLayout.main = false">Switch to Wide layout</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['myStatistics-widget'] && !$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(true)">Add My Statistics</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['myStatistics-widget'] && $agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(false)">Remove My Statistics</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['agentManager-widget'] && !$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['agentManager-widget'] && $agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
-      <b-dropdown-item v-if="$agent.vm.agent.permissions['queueManager-widget'] && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.is_widget_mystat() && !$agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(true)">Add My Statistics</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.is_widget_mystat() && $agent.vm.layoutSM.isActiveMS" @click="onWidgetMSChange(false)">Remove My Statistics</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.is_widget_agent_manager() && !$agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(true)">Add Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.is_widget_agent_manager() && $agent.vm.layoutSM.isActiveAM" @click="onWidgetAMChange(false)">Remove Agent Manager</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.is_widget_queue_manager() && !$agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(true)">Add Queue Manager</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.is_widget_queue_manager() && $agent.vm.layoutSM.isActiveQM" @click="onWidgetQMChange(false)">Remove Queue Manager</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
     <b-nav-item-dropdown v-access:monitor-ui>
