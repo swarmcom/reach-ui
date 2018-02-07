@@ -42,6 +42,12 @@
       <b-dropdown-item v-if="$agent.vm.isNarrowLayout.recordings" @click="$agent.vm.isNarrowLayout.recordings = false">Switch to Wide layout</b-dropdown-item>
     </b-nav-item-dropdown>
     <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
+    <b-nav-item-dropdown v-access:reports-ui>
+      <b-dropdown-header>Options for Reports tab</b-dropdown-header>
+      <b-dropdown-divider></b-dropdown-divider>
+      <b-dropdown-item v-if="!$agent.vm.isNarrowLayout.reports" @click="$agent.vm.isNarrowLayout.reports = true">Switch to Narrow layout</b-dropdown-item>
+      <b-dropdown-item v-if="$agent.vm.isNarrowLayout.reports" @click="$agent.vm.isNarrowLayout.reports = false">Switch to Wide layout</b-dropdown-item>
+    </b-nav-item-dropdown>
     <b-nav-item to="/help">Help</b-nav-item>
     <button @click="onPin" class="btn ml-auto pointer">
       <icon label="No Pined">
