@@ -232,6 +232,10 @@ export default class Agent extends WsProto {
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
 
+  is_widget_mystat() { return this.vm.agent.permissions['myStatistics-widget'] }
+  is_widget_agent_manager() { return this.vm.agent.permissions['agentManager-widget'] }
+  is_widget_queue_manager() { return this.vm.agent.permissions['queueManager-widget'] }
+
   handleAuth (Re, Cb = (A) => A) {
     if (Re && Re.reply) {
       this.vm.agent = Re.reply
