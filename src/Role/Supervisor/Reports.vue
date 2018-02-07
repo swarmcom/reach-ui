@@ -6,8 +6,12 @@
     <b-dropdown-item to="/reports/agents/unique">Unique agents</b-dropdown-item>
     <b-dropdown-item to="/reports/agents/avg">Agents averages</b-dropdown-item>
     <b-dropdown-item to="/reports/measures/avg">Measures averages</b-dropdown-item>
-    <b-dropdown-item to="/reports/sessions/inqueue">Call sessions</b-dropdown-item>
-    <b-dropdown-item to="/reports/sessions/agent">Agent sessions</b-dropdown-item>
+  </b-nav-item-dropdown>
+
+  <b-nav-item-dropdown text="Sessions">
+    <b-dropdown-item to="/reports/sessions/agent">Agent</b-dropdown-item>
+    <b-dropdown-item to="/reports/sessions/inqueue">Inqueue</b-dropdown-item>
+    <b-dropdown-item to="/reports/sessions/outgoing">Outgoing</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="CDR">
