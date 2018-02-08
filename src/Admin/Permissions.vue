@@ -133,7 +133,7 @@ export default {
         "agentLineOut-visible": { name: "Line Out" },
         "primarySip-edit": { name: "Primary SIP Contact" },
         "primarySip-edit": { name: "SIP Contacts" },
-        "ringTimeout-edit": { name "Ring Timeout" },
+        "ringTimeout-edit": { name: "Ring Timeout" },
         "maxMissedCalls-edit": { name: "Max Missed Calls" },
         "maxRingsSuccess-edit": { name: "Reset Max Rings On Success" },
         "autoLogout-visible": { name: "Auto Logout" },
