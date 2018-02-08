@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     query: async function() {
-      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
+      this.queues = await this.$agent.p_mfa('ws_agent_queue', 'get', [])
     },
     set_period (value) {
       this.period.value = value
