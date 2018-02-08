@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div>
   <b-row style="margin-bottom: 10px"><h3>Permissions:</h3></b-row>
   <div v-if="ui == 'supervisor'" v-for="(perm, index) of perms_check" style="margin-top: 5px">
     <b-row v-if="index === 0"><b>Content</b></b-row>

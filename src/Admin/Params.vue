@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div>
   <div class="row"  style="margin-bottom: 20px">
     <div class="col">
       <h3>Domain parameters:</h3>

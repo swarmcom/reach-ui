@@ -1,30 +1,30 @@
 <template>
-<b-container>
-  <b-row style="margin-bottom: 10px">
-    <b-col>
-      <widget-agent-groups v-model="agent_groups"></widget-agent-groups>
-    </b-col>
-  </b-row>
-  <b-row style="margin-bottom: 10px">
-    <b-col>
-      <widget-agents v-model="agents"></widget-agents>
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col cols=3>
-      <widget-date v-model="date_start" placeholder="Start date"></widget-date>
-    </b-col>
-    <b-col cols=3>
-      <widget-date v-model="date_end" placeholder="End date"></widget-date>
-    </b-col>
-    <b-col cols=1>
-      <button @click="apply" class="btn btn-outline-primary">Apply</button>
-    </b-col>
-    <b-col cols=1>
-      <button @click="reset" class="btn btn-outline-success">Reset</button>
-    </b-col>
-  </b-row>
-</b-container>
+  <div>
+    <b-row style="margin-bottom: 10px">
+      <b-col>
+        <widget-agent-groups v-model="agent_groups"></widget-agent-groups>
+      </b-col>
+    </b-row>
+    <b-row style="margin-bottom: 10px">
+      <b-col>
+        <widget-agents v-model="agents"></widget-agents>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols=3>
+        <widget-date v-model="date_start" placeholder="Start date"></widget-date>
+      </b-col>
+      <b-col cols=3>
+        <widget-date v-model="date_end" placeholder="End date"></widget-date>
+      </b-col>
+      <b-col cols=1>
+        <button @click="apply" class="btn btn-outline-primary">Apply</button>
+      </b-col>
+      <b-col cols=1>
+        <button @click="reset" class="btn btn-outline-success">Reset</button>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>

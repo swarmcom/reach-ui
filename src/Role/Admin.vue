@@ -53,7 +53,7 @@ import Layout from '@/Role/Layout'
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: Admin, children: AdminRoutes },
+    { path: '/', component: Admin, children: AdminRoutes, name: 'admin' },
   ]
 })
 
@@ -65,7 +65,7 @@ export default {
   data () {
     return {
       date: null,
-      page: ''
+      page: 'admin'
     }
   },
   methods: {

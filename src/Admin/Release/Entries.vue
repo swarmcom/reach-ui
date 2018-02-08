@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div>
   <div class="row" style="margin-bottom: 10px"><div class="col"><h3>Release types:</h3></div></div>
 
   <div v-for="release of releases" class="form-row" style="margin-top: 5px">
