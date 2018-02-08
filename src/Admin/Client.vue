@@ -38,8 +38,7 @@ export default {
     return {
       rec: {},
       skills: [],
-      module: 'ws_db_client',
-      redirect: '/clients'
+      module: 'ws_db_client'
     }
   },
   methods: {
@@ -57,7 +56,7 @@ export default {
         } else {
           await this.$agent.p_mfa(this.module, 'create', [this.rec])
         }
-        this.$router.push(this.redirect)
+        this.$router.go(-1)
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });

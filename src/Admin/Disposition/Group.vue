@@ -31,8 +31,7 @@ export default {
   data () {
     return {
       rec: {},
-      module: 'ws_db_disposition_group',
-      redirect: '/dispositions'
+      module: 'ws_db_disposition_group'
     }
   },
 }

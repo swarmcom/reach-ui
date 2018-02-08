@@ -22,8 +22,7 @@ export default {
   data () {
     return {
       rec: {},
-      module: 'ws_db_recipe',
-      redirect: '/recipes'
+      module: 'ws_db_recipe'
     }
   },
 }

@@ -52,7 +52,6 @@ export default class Agent extends WsProto {
         transfer_agents: [],
         state: null,
         hangup_state: null,
-        auto_logout_timer: undefined,
         activity_time: undefined,
         release_id: undefined,
         storage_data: {},
@@ -174,7 +173,6 @@ export default class Agent extends WsProto {
       this.vm.hangup_state = S.hangup_state
       this.vm.state = S.state
       this.vm.release_id = S.release_id
-      this.autoLogout(S.state)
     }
   }
 
@@ -184,24 +182,6 @@ export default class Agent extends WsProto {
       icon: TheIcon
     }
     let n = new Notification(theTitle, options);
-  }
-
-  autoLogout(state) {
-    if(this.vm.agent.autologout > 0){
-      if(state === 'release'){
-        if (this.vm.auto_logout_timer != 'undefined'){
-          clearTimeout(this.vm.auto_logout_timer)
-          this.vm.auto_logout_timer = 'undefined'
-        }
-        this.vm.auto_logout_timer = setTimeout (() =>  { this.logout() }, this.vm.agent.autologout*1000)
-      }
-      else{
-        if(this.vm.auto_logout_timer != 'undefined') {
-          clearTimeout(this.vm.auto_logout_timer)
-          this.vm.auto_logout_timer = 'undefined'
-        }
-      }
-    }
   }
 
   handleAgents ({info}) {

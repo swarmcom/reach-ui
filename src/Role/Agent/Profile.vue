@@ -52,14 +52,14 @@ export default {
       this.rec.skills = this.list2skills(this.skills)
       try {
         await this.$agent.p_mfa('ws_agent', 'update', [this.rec])
-        this.$router.push('/main')
+        this.$router.go(-1)
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });
       }
     },
-    onCancel: async function () {
-      this.$router.push('/main')
+    onCancel () {
+      this.$router.go(-1)
     },
       showComponent(name) {
       if(this.$agent.vm.agent.permissions && this.$agent.vm.agent.permissions[name])

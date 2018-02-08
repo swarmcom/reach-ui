@@ -29,7 +29,6 @@ export default {
     return {
       rec: {},
       module: 'ws_db_moh',
-      redirect: '/mohs',
       disabled: true,
       file: null
     }

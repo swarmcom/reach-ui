@@ -42,8 +42,6 @@ export default {
     return {
       rec: {},
       module: 'ws_db_lua',
-      redirect: '/luas',
-
       editorOption: {
         tabSize: 4,
         styleActiveLine: true,
