@@ -8,18 +8,6 @@
           <b-col cols="10">{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-    </b-col>
-    <b-col>
-      <b-row> <b-col><h4>Available Widgets:</h4></b-col></b-row>
-      <b-row v-for="p of this.widgets" :key="p">
-          <b-col cols="10">{{names[p].name}}</b-col>
-          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
-      </b-row>
-    </b-col>
-  </b-row>
-
-  <b-row style="margin-top: 20px">
-    <b-col>
       <b-row><b-col><h4>UI Features:</h4></b-col></b-row>
       <b-row v-for="p of this.features" :key="p">
           <b-col cols="10">{{names[p].name}}</b-col>
@@ -27,6 +15,11 @@
       </b-row>
     </b-col>
     <b-col>
+      <b-row> <b-col><h4>Available Widgets:</h4></b-col></b-row>
+      <b-row v-for="p of this.widgets" :key="p">
+          <b-col cols="10">{{names[p].name}}</b-col>
+          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      </b-row>
       <b-row><b-col><h4>Call Features:</h4></b-col></b-row>
       <b-row v-for="p of this.call_features" :key="p">
           <b-col cols="10">{{names[p].name}}</b-col>
@@ -37,10 +30,8 @@
           <b-col cols="10">{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-
     </b-col>
   </b-row>
-
 </div>
 </template>
 
@@ -92,7 +83,7 @@ export default {
         "agentPassword-edit",
         "agentLineOut-visible",
         "primarySip-edit",
-        "primarySip-edit",
+        "additionalSip-visible",
         "ringTimeout-edit",
         "maxMissedCalls-edit",
         "maxRingsSuccess-edit",
@@ -132,7 +123,7 @@ export default {
         "agentPassword-edit": { name: "Password" },
         "agentLineOut-visible": { name: "Line Out" },
         "primarySip-edit": { name: "Primary SIP Contact" },
-        "primarySip-edit": { name: "SIP Contacts" },
+        "additionalSip-visible": { name: "SIP Contacts" },
         "ringTimeout-edit": { name: "Ring Timeout" },
         "maxMissedCalls-edit": { name: "Max Missed Calls" },
         "maxRingsSuccess-edit": { name: "Reset Max Rings On Success" },
