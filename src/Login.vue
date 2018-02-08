@@ -29,15 +29,16 @@
 
 <script>
 import {EventBus} from '@/event-bus.js'
+import Storage from '@/Storage'
 
 export default {
-  storageName: 'login',
+  name: 'login',
+  mixins: [Storage],
   data () {
     return {
       login: '',
       password: '',
-      remember: false,
-      storage_name: 'login_remember'
+      remember: false
     }
   },
   methods: {
@@ -62,29 +63,19 @@ export default {
       })
     },
     loadDataStorage() {
-      if(this.$agent.vm.storage_data.loginLogin != undefined)
-        this.login = this.$agent.vm.storage_data.loginLogin
-      if(this.$agent.vm.storage_data.loginPassword != undefined)
-        this.password = this.$agent.vm.storage_data.loginPassword
-      if(this.$agent.vm.storage_data.loginRemember != undefined)
-        this.remember = this.$agent.vm.storage_data.loginRemember
+      this.loadLocal(['login', 'password', 'remember'])
     },
     saveDataStorage() {
       if (this.remember) {
-        this.$agent.vm.storage_data[this.$options.storageName+'Login'] = this.login
-        this.$agent.vm.storage_data[this.$options.storageName+'Password'] = this.password
-        this.$agent.vm.storage_data[this.$options.storageName+'Remember'] = this.remember
+        this.saveLocal(['login', 'password', 'remember']).writeLocal()
       }
       else {
-        this.$agent.vm.storage_data[this.$options.storageName+'Login'] = ''
-        this.$agent.vm.storage_data[this.$options.storageName+'Password'] = ''
-        this.$agent.vm.storage_data[this.$options.storageName+'Remember'] = this.remember
+        this.eraseLocal(['login', 'password', 'remember']).writeLocal()
       }
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     }
   },
   created () {
-    this.loadDataStorage()
+    this.maybeInitLocal().loadDataStorage()
   }
 }
 </script>
