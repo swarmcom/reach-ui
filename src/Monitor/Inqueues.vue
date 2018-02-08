@@ -53,7 +53,7 @@ export default {
       return info
     },
     query: async function() {
-      this.queues = await this.$agent.p_mfa('ws_agent', 'queue')
+      this.queues = await this.$agent.p_mfa('ws_agent', 'queues')
       this.inqueues = await this.$agent.p_mfa('ws_agent', 'inqueues')
       this.inqueues.forEach((inq) => {
         inq.date = new Date() - inq.time

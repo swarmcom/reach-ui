@@ -131,9 +131,9 @@
           inq.line = inq.line_out.name
           inq.customer = inq.line_out.client
         })
-        this.lines = await this.$agent.p_mfa('ws_agent', 'line_out')
+        this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
         this.lines.unshift({ name:"Any Lines" })
-        this.clients = await this.$agent.p_mfa('ws_agent', 'client')
+        this.clients = await this.$agent.p_mfa('ws_agent', 'clients')
         this.clients.unshift({ name:"Any Customers" })
       },
       onTimer () {
