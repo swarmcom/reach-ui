@@ -57,17 +57,7 @@ export default {
       }
     },
     query: async function() {
-      let agent_group = await this.$agent.p_mfa('ws_db_agent_group', 'get')
-      this.groups = []
-      Object.keys(this.$agent.vm.agent.permissions).forEach( (key) => {
-        if (key.indexOf("-groups") !== -1) {
-          let name = key.replace("-groups", "")
-          let i = agent_group.findIndex(E => E.name === name)
-          if (i >= 0) {
-            this.groups.push({name: name, id: agent_group[i].id})
-          }
-        }
-      })
+      this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
       this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
       this.agents.forEach((agent) => {
         agent.date = new Date() - agent.time

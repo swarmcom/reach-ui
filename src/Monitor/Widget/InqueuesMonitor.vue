@@ -131,10 +131,7 @@ export default {
     query: async function() {
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customers" })
-      Object.keys(this.$agent.vm.agent.permissions).forEach( (key) => {
-        if (key.indexOf("-queues") !== -1)
-          this.queues.push({name:key.replace("-queues","")})
-      })
+      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
       this.queues.unshift({ name:"Any Queue" })
       this.lines = await this.$agent.p_mfa('ws_db_line_in', 'get')
       this.lines.unshift({ name:"Any Lines" })

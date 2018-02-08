@@ -167,17 +167,9 @@ export default {
       this.endDate.setHours(23,59,59,999)
       this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
       this.clients.unshift({ name:"Any Customer" })
-      Object.keys(this.$agent.vm.agent.permissions).forEach( (key) => {
-        if (key.indexOf("-line_ins") !== -1) {
-          let name = key.replace("-line_ins", "")
-          this.line_ins.push({name: name})
-        }
-        else if (key.indexOf("-line_outs") !== -1) {
-          let name = key.replace("-line_outs", "")
-          this.line_outs.push({name: name})
-        }
-      })
+      this.line_ins = await this.$agent.p_mfa('ws_db_line_in', 'get')
       this.line_ins.unshift({ name:"Any Line In" })
+      this.line_outs = await this.$agent.p_mfa('ws_db_line_out', 'get')
       this.line_outs.unshift({ name:"Any Line Out" })
       this.queues = await this.$agent.p_mfa('ws_db_queue', 'get')
       this.queues.unshift({ name:"Any Queue" })
