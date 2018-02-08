@@ -124,16 +124,16 @@
         return state
       },
       query: async function() {
-        this.outgoings = await this.$agent.p_mfa('ws_agent', 'outgoings', ['all'])
+        this.outgoings = await this.$agent.p_mfa('ws_agent', 'outgoings')
         this.outgoings.forEach((inq) => {
           inq.date = new Date() - inq.time
           inq.time = Math.round(inq.time/1000)
           inq.line = inq.line_out.name
           inq.customer = inq.line_out.client
         })
-        this.lines = await this.$agent.p_mfa('ws_agent_line_out', 'get')
+        this.lines = await this.$agent.p_mfa('ws_agent', 'line_out')
         this.lines.unshift({ name:"Any Lines" })
-        this.clients = await this.$agent.p_mfa('ws_agent_client', 'get')
+        this.clients = await this.$agent.p_mfa('ws_agent', 'client')
         this.clients.unshift({ name:"Any Customers" })
       },
       onTimer () {

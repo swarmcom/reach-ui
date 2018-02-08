@@ -394,9 +394,9 @@ export default {
         this.updateStats()
     },
     query: async function() {
-      this.clients = await this.$agent.p_mfa('ws_agent_client', 'get')
+      this.clients = await this.$agent.p_mfa('ws_agent', 'client')
       this.clients.unshift({ name:"Any Customers" })
-      this.tags = await this.$agent.p_mfa('ws_agent_tag', 'get')
+      this.tags = await this.$agent.p_mfa('ws_agent', 'tag')
       this.tags.unshift("Any Skill")
       this.groups_select = this.groups.slice(0)
       this.groups_select.unshift({ name:"Any Profile" })
