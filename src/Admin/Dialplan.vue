@@ -1,5 +1,5 @@
 <template>
-<b-container>
+<div>
   <b-row style="margin-bottom: 10px">
     <b-col><h3>Inbound routing:</h3></b-col>
   </b-row>
@@ -50,7 +50,7 @@
       <lines v-model="line_id"></lines>
     </b-col>
   </b-form-row>
-</b-container>
+</div>
 </template>
 
 <script>

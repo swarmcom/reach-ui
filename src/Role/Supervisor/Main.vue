@@ -19,74 +19,52 @@
     import draggable from 'vuedraggable'
     export default {
         data () {
-            return {
-                widgets: []
-            }
+          return {
+            widgets: []
+          }
         },
         methods: {
-            showWidget(name) {
-                if (name === 'session-manager')
-                    return true
-                else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && this.$agent.vm.agent.permissions['myStatistics-widget'])
-                    return true
-                else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  &&
-                    this.$agent.vm.agent.permissions['agentManager-widget'])
-                    return true
-                else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  &&
-                    this.$agent.vm.agent.permissions['queueManager-widget'])
-                    return true
-                else
-                    return false
+          showWidget(name) {
+            if (name === 'session-manager')
+              return true
+            else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && this.$agent.vm.agent.permissions['myStatistics-widget'])
+              return true
+            else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  &&
+              this.$agent.vm.agent.permissions['agentManager-widget'])
+              return true
+            else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  &&
+              this.$agent.vm.agent.permissions['queueManager-widget'])
+              return true
+            else
+              return false
             },
             onDragEnd () {
-                this.$agent.vm.storage_data["agentWidgets"] = this.widgets
-                localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-            },
-            moveWidgetmoj () {
-                console.log("moveWidgetmojsadfasd" + this.$agent.vm.storage_data.navBarMoveWidget)
-
-                if (this.$agent.vm.storage_data.navBarMoveWidget != undefined) {
-                    return true
-                    activeClass = ''
-                }
-                else {
-                    return true//this.$agent.vm.storage_data.navBarMoveWidget
-                    activeClass = 'itemDragable'
-                }
+              this.$agent.vm.storage_data["agentWidgets"] = this.widgets
+              localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
             }
         },
         created () {
-            if (this.$agent.vm.storage_data.agentWidgets != undefined)
-                this.widgets = this.$agent.vm.storage_data.agentWidgets
-            else
-                this.widgets = ['session-manager', 'my-statistics', 'agents', 'inqueues']
-            if (this.$agent.vm.storage_data.navBarMoveWidget != undefined)
-                this.isMoveActive = this.$agent.vm.storage_data.navBarMoveWidget
+          if (this.$agent.vm.storage_data.agentWidgets != undefined)
+            this.widgets = this.$agent.vm.storage_data.agentWidgets
+          else
+            this.widgets = ['session-manager', 'my-statistics', 'agents', 'inqueues']
         },
         computed: {
-            classObject: function () {
-                this.$agent.vm.storage_data["narrowScreenMain"] = this.$agent.vm.isNarrowLayout.main
-                localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-                return {
-                    container: this.$agent.vm.isNarrowLayout.main,
-                    'padding-container-fluid': !this.$agent.vm.isNarrowLayout.main
-                }
-            },
-            moveWidget: function () {
-                console.log("moveWidget"+this.$agent.vm.storage_data.navBarMoveWidget)
-                //return true
-                if (this.$agent.vm.storage_data.navBarMoveWidget != undefined)
-                    return false
-                else
-                    return this.$agent.vm.storage_data.navBarMoveWidget
+          classObject: function () {
+            this.$agent.vm.storage_data["narrowScreenMain"] = this.$agent.vm.isNarrowLayout.main
+            localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+            return {
+              container: this.$agent.vm.isNarrowLayout.main,
+              'padding-container-fluid': !this.$agent.vm.isNarrowLayout.main
             }
+          }
         },
         components: {
-            'session-manager': SessionManager,
-            'my-statistics': MyStatistics,
-            'agents': Agents,
-            'inqueues': Inqueues,
-            draggable
+          'session-manager': SessionManager,
+          'my-statistics': MyStatistics,
+          'agents': Agents,
+          'inqueues': Inqueues,
+          draggable
         }
     }
 </script>

@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div>
   <b-row style="margin-bottom: 10px"><b-col><h3>Permissions:</h3></b-col></b-row>
   <b-row>
     <b-col>
