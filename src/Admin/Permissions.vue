@@ -25,7 +25,7 @@
           <b-col cols="10">{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-      <b-row><b-col><h4>Agent Features:</h4></b-col></b-row>
+      <b-row><b-col><h4>Agent Profile Edit:</h4></b-col></b-row>
       <b-row v-for="p of this.agent_features" :key="p">
           <b-col cols="10">{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
