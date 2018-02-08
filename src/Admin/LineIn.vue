@@ -42,8 +42,7 @@ export default {
       eff: {},
       skills: [],
       effective_skills: [],
-      module: 'ws_db_line_in',
-      redirect: '/line_ins'
+      module: 'ws_db_line_in'
     }
   },
   methods: {
@@ -63,7 +62,7 @@ export default {
         } else {
           await this.$agent.p_mfa(this.module, 'create', [this.rec])
         }
-        this.$router.push(this.redirect)
+        this.$router.go(-1)
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });

@@ -68,8 +68,7 @@ export default {
   data () {
     return {
       rec: {},
-      module: 'ws_kam_node',
-      redirect: '/kam/nodes',
+      module: 'ws_kam_node'
       result: '',
       view: null
     }
