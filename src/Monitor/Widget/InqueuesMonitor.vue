@@ -129,13 +129,13 @@ export default {
   },
   methods: {
     query: async function() {
-      this.clients = await this.$agent.p_mfa('ws_db_client', 'get')
+      this.clients = await this.$agent.p_mfa('ws_agent', 'clients')
       this.clients.unshift({ name:"Any Customers" })
-      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
+      this.queues = await this.$agent.p_mfa('ws_agent', 'queues')
       this.queues.unshift({ name:"Any Queue" })
-      this.lines = await this.$agent.p_mfa('ws_db_line_in', 'get')
+      this.lines = await this.$agent.p_mfa('ws_agent', 'lines_in')
       this.lines.unshift({ name:"Any Lines" })
-      this.tags = await this.$agent.p_mfa('ws_db_tag', 'get')
+      this.tags = await this.$agent.p_mfa('ws_agent', 'tags')
       this.tags.unshift("Any Skill")
     },
     onSortingChanged (ctx){

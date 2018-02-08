@@ -53,8 +53,8 @@ export default {
       return info
     },
     query: async function() {
-      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
-      this.inqueues = await this.$agent.p_mfa('ws_admin', 'inqueues', ['all'])
+      this.queues = await this.$agent.p_mfa('ws_agent', 'queues')
+      this.inqueues = await this.$agent.p_mfa('ws_agent', 'inqueues')
       this.inqueues.forEach((inq) => {
         inq.date = new Date() - inq.time
         inq.effective = Math.round(inq.effective_time.time/1000)

@@ -57,8 +57,8 @@ export default {
       }
     },
     query: async function() {
-      this.groups = await this.$agent.p_mfa('ws_db_agent_group', 'get')
-      this.agents = await this.$agent.p_mfa('ws_admin', 'agents', ['all'])
+      this.groups = await this.$agent.p_mfa('ws_agent', 'agent_groups')
+      this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
       this.agents.forEach((agent) => {
         agent.date = new Date() - agent.time
       })
