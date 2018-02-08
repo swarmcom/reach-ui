@@ -66,7 +66,7 @@ export default {
         } else {
           await this.$agent.p_mfa('ws_db_agent', 'create', [this.rec])
         }
-        this.$router.push('/agents')
+        this.$router.go(-1)
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });
@@ -75,11 +75,11 @@ export default {
     onDelete: async function () {
       if (this.id) {
         await this.$agent.p_mfa('ws_db_agent', 'delete', [this.id])
-        this.$router.push('/agents')
+        this.$router.go(-1)
       }
     },
-    onCancel: async function () {
-      this.$router.push('/agents')
+    onCancel () {
+      this.$router.go(-1)
     },
   },
   created () {
