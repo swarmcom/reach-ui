@@ -1,5 +1,6 @@
 <template>
-<btable :fields="fields" :data="agent_groups" :add_button=true></btable>
+<btable :fields="fields" :data="agent_groups" :add_button=true>
+</btable>
 </template>
 
 <script>
@@ -14,7 +15,7 @@ export default {
         name: { label: 'Name', sortable: true },
         role: { label: 'Role', sortable: true, formatter: (role) => role.name },
         ring_timeout: { label: 'Ring Timeout', sortable: true },
-        max_ring_fails: { label: 'Max Ring Fails', sortable: true }
+        max_ring_fails: { label: 'Max Ring Fails', sortable: true },
       },
       agent_groups: []
     }
@@ -28,6 +29,9 @@ export default {
     },
     onClick(data) {
       this.$router.push(`/agent_group/${data.id}`)
+    },
+    acl (id) {
+      this.$router.push(`/agent_group/${id}`)
     }
   },
   created () {
