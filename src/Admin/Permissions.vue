@@ -1,17 +1,41 @@
 <template>
-  <div class="container">
-  <b-row style="margin-bottom: 10px"><h3>Permissions:</h3></b-row>
-  <div v-for="(perm, index) of perms_check" style="margin-top: 5px">
-    <b-row v-if="index === 0"><b>Content</b></b-row>
-    <b-row v-if="index === 0"> <b-col>Displayed Tabs: </b-col></b-row>
-    <b-row v-if="index === 5"> <b>Accessible Widgets: </b></b-row>
-    <b-row v-if="index === 8"> <b>Features: </b></b-row>
-    <b-row v-if="index === 11"><b-col> Conference/Transfer Privileges</b-col></b-row>
-    <b-form-checkbox v-model="perm.value" v-on:change="onChangeCheck(perm, $event)">
-    {{perm.displayName}}
-    </b-form-checkbox>
-  </div>
-  </div>
+<div class="container">
+  <b-row style="margin-bottom: 10px"><b-col><h3>Permissions:</h3></b-col></b-row>
+  <b-row>
+    <b-col>
+      <b-row> <b-col><h4>Available Tabs:</h4></b-col></b-row>
+      <b-row v-for="p of this.ui" :key="p">
+          <b-col cols="10">{{names[p].name}}</b-col>
+          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      </b-row>
+    </b-col>
+    <b-col>
+      <b-row> <b-col><h4>Available Widgets:</h4></b-col></b-row>
+      <b-row v-for="p of this.widgets" :key="p">
+          <b-col cols="10">{{names[p].name}}</b-col>
+          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      </b-row>
+    </b-col>
+  </b-row>
+
+  <b-row style="margin-top: 20px">
+    <b-col>
+      <b-row><b-col><h4>UI Features:</h4></b-col></b-row>
+      <b-row v-for="p of this.features" :key="p">
+          <b-col cols="10">{{names[p].name}}</b-col>
+          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      </b-row>
+    </b-col>
+    <b-col>
+      <b-row><b-col><h4>Call Features:</h4></b-col></b-row>
+      <b-row v-for="p of this.call_features" :key="p">
+          <b-col cols="10">{{names[p].name}}</b-col>
+          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      </b-row>
+    </b-col>
+  </b-row>
+
+</div>
 </template>
 
 <script>
@@ -21,55 +45,49 @@ export default {
   data () {
     return {
       name: undefined,
-      permissions: [],
-      perms_check: [{displayName: "Admin", name: "admin-ui", value: false},
-        {displayName: "Profile", name: "profile-ui", value: false},
-        {displayName: "Monitor", name: "monitor-ui", value: false},
-        {displayName: "Recordings", name: "recordings-ui", value: false},
-        {displayName: "Reports", name: "reports-ui", value: false},
-        {displayName: "Agent Manager", name: "agentManager-widget", value: false},
-        {displayName: "Queue Manager", name: "queueManager-widget", value: false},
-        {displayName: "My Statistics", name: "myStatistics-widget", value: false},
-        {displayName: "Set My Phone", name: "myPhone-feature", value: false},
-        {displayName: "Allow Outbound", name: "outbound-feature", value: false},
-        {displayName: "Allow On Demand Call Recording", name: "CROnDemand-feature", value: false},
-        {displayName: "Transfer to Agent", name: "transAgent-feature", value: false},
-        {displayName: "Transfer to Queue", name: "transQueue-feature", value: false},
-        {displayName: "Transfer to Number", name: "transNumber-feature", value: false},
-        {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
-        {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
-        {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-        {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}
-      ]
+      effective: {},
+      ui: ['admin-ui', 'profile-ui', 'recordings-ui', 'reports-ui', 'monitor-ui'],
+      widgets: ['myStatistics-widget', 'queueManager-widget', 'agentManager-widget' ],
+      features: [
+        'myPhone-feature', 'outbound-feature', 'CROnDemand-feature', 'transAgent-feature', 'transQueue-feature',
+        'transNumber-feature', 'confAgent-feature', 'confQueue-feature', 'confNumber-feature', 'transConfChangeSkills-feature'
+      ],
+      call_features: ['sip-can-register'],
+      names: {
+        "admin-ui": { name: "Admin" },
+        "profile-ui": { name: "Profile" },
+        "recordings-ui": { name: "Recordings" },
+        "reports-ui": { name: "Reports" },
+        "monitor-ui": { name: "Monitor" },
+        "agentManager-widget": { name: "Agent Manger" },
+        "queueManager-widget": { name: "Queue Manager" },
+        "myStatistics-widget": { name: "My Statistics" },
+        "myPhone-feature": { name: "Set My Phone" },
+        "outbound-feature": { name: "Allow Outbound" },
+        "CROnDemand-feature": { name: "Allow On Demand Call Recording" },
+        "transAgent-feature": { name: "Transfer to Agent" },
+        "transQueue-feature": { name: "Transfer to Queue" },
+        "transNumber-feature": { name: "Transfer to Number" },
+        "confAgent-feature": { name: "Conference to Agent" },
+        "confQueue-feature": { name: "Conference to Queue" },
+        "confNumber-feature": { name: "Conference to Number" },
+        "transConfChangeSkills-feature": { name: "Change Skills on Conf/Tran" },
+        "sip-can-register": { name: "Allow to register SIP phone" }
+      }
     }
   },
   methods: {
     query: async function () {
-      this.permissions = await this.$agent.p_mfa('ws_db_permission', 'get', [this.id])
-      this.permissions.forEach( (key) =>
-        {
-          let i = this.perms_check.findIndex(E => E.name === key.name)
-          if (i >= 0) {
-            this.perms_check[i].value = true
-            this.perms_check[i].id = key.id
-          }
-        }
-      )
+      this.effective = await this.$agent.p_mfa('ws_db_permission', 'map', [this.id])
     },
-    onChangeCheck: async function(perm, checked) {
-      if(checked) {
-        let permission = await this.$agent.p_mfa('ws_db_permission', 'create', [this.id, {
-          name: perm.name
-        }])
-        perm.id = permission.id
-        this.permissions.push(permission)
+    onChange: async function(perm, checked) {
+      if (checked) {
+        await this.$agent.p_mfa('ws_db_permission', 'set', [this.id, perm])
+        this.effective[perm] = true
       }
       else {
-        await this.$agent.p_mfa('ws_db_permission', 'delete', [perm.id])
-        let id = this.permissions.findIndex(Obj => Obj.id === perm.id)
-        if (id >= 0) {
-          this.permissions.splice(id, 1)
-        }
+        await this.$agent.p_mfa('ws_db_permission', 'unset', [this.id, perm])
+        delete this.effective[perm]
       }
     }
   },
