@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <b-row style="margin-bottom: 10px"><b-col><h3>Nodes:</h3></b-col></b-row>
-  <b-table striped hover small :items="nodes" :fields="fields">
+  <b-table striped hover small :items="nodes" :fields="fields" @row-clicked="row_click">
   </b-table>
 </div>
 
@@ -28,6 +28,9 @@ export default {
     query: async function () {
       this.nodes = await this.$agent.p_mfa('ws_kam_node', 'get')
     },
+    row_click (node) {
+      this.$router.push(`/kam/node/${node.id}`)
+    }
   },
   created () {
     this.query()
