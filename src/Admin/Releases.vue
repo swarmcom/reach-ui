@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div>
   <div class="row">
     <div class="col-4">
       <h3>Release groups:</h3>

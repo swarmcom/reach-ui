@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div>
   <div class="row" style="margin-bottom: 10px"><div class="col"><h3>Dispositions:</h3></div></div>
 
   <div v-for="disposition of dispositions" class="form-row" style="margin-top: 5px">
