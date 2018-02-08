@@ -104,7 +104,10 @@ export default {
     },
     proxy_dlgs: async function () {
       this.result = await this.$agent.p_mfa('ws_master', 'proxy_dlgs', [this.id])
-    }
+    },
+    onCancel () {
+      this.$router.go(-1)
+    },
   },
 }
 </script>
