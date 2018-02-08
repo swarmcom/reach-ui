@@ -39,8 +39,7 @@ export default {
     return {
       tags: [],
       rec: {},
-      module: 'ws_db_tag_group',
-      redirect: '/tag_groups'
+      module: 'ws_db_tag_group'
     }
   },
   watch: {

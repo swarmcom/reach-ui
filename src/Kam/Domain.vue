@@ -32,8 +32,7 @@ export default {
   data () {
     return {
       rec: {},
-      module: 'ws_kam_domain',
-      redirect: '/kam/domains'
+      module: 'ws_kam_domain'
     }
   },
 }

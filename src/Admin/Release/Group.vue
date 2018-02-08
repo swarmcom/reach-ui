@@ -31,8 +31,7 @@ export default {
   data () {
     return {
       rec: {},
-      module: 'ws_db_release_group',
-      redirect: '/releases'
+      module: 'ws_db_release_group'
     }
   },
 }

@@ -13,7 +13,7 @@ export default {
         } else {
           await this.$agent.p_mfa(this.module, 'create', [this.rec])
         }
-        this.$router.push(this.redirect)
+        this.$router.go(-1)
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });
@@ -22,11 +22,11 @@ export default {
     onDelete: async function () {
       if (this.id) {
         await this.$agent.p_mfa(this.module, 'delete', [this.id])
-        this.$router.push(this.redirect)
+        this.$router.go(-1)
       }
     },
-    onCancel: async function () {
-      this.$router.push(this.redirect)
+    onCancel () {
+      this.$router.go(-1)
     },
   },
   created () {

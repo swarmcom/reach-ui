@@ -29,8 +29,7 @@ export default {
   data () {
     return {
       rec: {},
-      module: 'ws_db_line_out',
-      redirect: '/line_outs'
+      module: 'ws_db_line_out'
     }
   }
 }

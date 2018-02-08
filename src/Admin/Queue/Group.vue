@@ -29,7 +29,6 @@ export default {
     return {
       rec: {},
       module: 'ws_db_queue_group',
-      redirect: '/queues',
       skills: []
     }
   },
@@ -48,7 +47,7 @@ export default {
         } else {
           await this.$agent.p_mfa('ws_db_queue_group', 'create', [this.rec])
         }
-        this.$router.push(this.redirect)
+        this.$router.go(-1)
       }
       catch (error) {
         this.$notify({ title: 'Data error:', text: error, type: 'error' });
@@ -57,11 +56,11 @@ export default {
     onDelete: async function () {
       if (this.id) {
         await this.$agent.p_mfa('ws_db_queue_group', 'delete', [this.id])
-        this.$router.push(this.redirect)
+        this.$router.go(-1)
       }
     },
-    onCancel: async function () {
-      this.$router.push(this.redirect)
+    onCancel () {
+      this.$router.go(-1)
     },
   },
   created () {
