@@ -11,11 +11,13 @@
 <script>
 import AgentGroups from '@/Monitor/Widget/AgentGroups'
 import AgentMonitor from '@/Monitor/Widget/AgentMonitor'
+import Storage from '@/Storage'
+
 export default {
-  name: 'monitor-agents',
-  storageName: 'agentManager',
+  name: 'agent-manager',
   widgetName: 'AGENT MANAGER',
-  data () {
+  mixins: [Storage],
+  data() {
     return {
       agents: [],
       groups: [],
@@ -23,8 +25,8 @@ export default {
     }
   },
   methods: {
-    handleState ( {tag, info} ) {
-      if(info != 'undefined' ) {
+    handleState({tag, info}) {
+      if (info != 'undefined') {
         if (tag === 'ws_login') {
           let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
           if (i >= 0) {
@@ -48,7 +50,7 @@ export default {
           }
         }
 
-        if(tag == 'change') {
+        if (tag == 'change') {
           let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
           if (i >= 0) {
             this.agents[i].date = new Date()
@@ -56,23 +58,35 @@ export default {
         }
       }
     },
-    query: async function() {
+    query: async function () {
       this.groups = await this.$agent.p_mfa('ws_agent', 'agent_groups')
       this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
       this.agents.forEach((agent) => {
         agent.date = new Date() - agent.time
       })
+    },
+    loadDataStorage() {
+      this.loadLocal('showCollapse')
+    },
+    saveDataStorage() {
+      this.saveLocal('showCollapse').writeLocal()
     }
   },
-  created () {
+  created() {
     this.query()
     this.$bus.$on('agents_state', this.handleState)
     this.$agent.subscribe('agents')
-    if (this.$agent.vm.storage_data.agentManagerCollapsed != undefined)
-      this.showCollapse = this.$agent.vm.storage_data.agentManagerCollapsed
+    this.maybeInitLocal().loadDataStorage()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.$bus.$off('agents_state', this.handleState)
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveDataStorage()
+      }
+    },
   },
   components: {
     'agent-groups': AgentGroups,

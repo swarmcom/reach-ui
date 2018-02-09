@@ -8,7 +8,8 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </b-row>
-        <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+        <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState"
+                      placeholder="Search..." style="margin-top:10px"></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
           <option v-for="group in this.groups_select" :value=group.name>{{group.name}}</option>
         </b-form-select>
@@ -55,7 +56,7 @@
                                        @click="cancelSpy()">Stop Monitor
                       </b-dropdown-item>
                       <b-dropdown-header
-                              v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id">
+                        v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id">
                         Monitor actions
                       </b-dropdown-header>
                       <b-dropdown-item v-access:monitor-feature
@@ -113,7 +114,9 @@
                   <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
                   <b-row v-if="data.item.call_vars">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound' }}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                        }}
+                      </div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -147,7 +150,9 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.call_vars">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound' }}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                        }}
+                      </div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -284,20 +289,23 @@
                 <b-row v-if="data.item.call_vars">
                   <b-col cols="12">
                     <div class="agent-state-text">
-                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Orig-Caller-ID-Number'])}}
+                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' +
+                      isDefined(data.item.call_vars['Caller-Orig-Caller-ID-Number'])}}
                     </div>
                   </b-col>
                 </b-row>
                 <b-row v-if="data.item.call_vars">
                   <b-col cols="12" v-if="data.item.state==='barge'">
                     <div class="agent-state-text">
-                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' + isDefined(data.item.call_vars['Caller-Caller-ID-Number'])}}
+                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' +
+                      isDefined(data.item.call_vars['Caller-Caller-ID-Number'])}}
                     </div>
                   </b-col>
                 </b-row>
                 <b-row v-if="data.item.state==='release'">
                   <b-col cols="12">
-                    <div class="agent-state-text">{{data.item.release.name ? data.item.release.name : 'default'}}</div>
+                    <div class="agent-state-text">{{data.item.release.name ? data.item.release.name : 'default'}}
+                    </div>
                   </b-col>
                 </b-row>
                 <b-row v-if="data.item.call_vars">
@@ -311,7 +319,9 @@
         </b-row>
         <b-row>
           <b-col>
-            <b-btn size="sm" class="pointer" style="float:right" @click="refresh" variant="outline-secondary">Refresh</b-btn>
+            <b-btn size="sm" class="pointer" style="float:right" @click="refresh" variant="outline-secondary">
+              Refresh
+            </b-btn>
           </b-col>
         </b-row>
       </b-col>
@@ -322,26 +332,52 @@
 
 <script>
 import Common from '@/Admin/Common'
+import Storage from '@/Storage'
+
 export default {
-  name: 'monitor-agents-manager',
-  storageName: 'agentManagerMonitor',
+  name: 'agents-manager-monitor',
   widgetName: 'Agents',
-  mixins: [Common],
+  mixins: [Common, Storage],
   props: {
     agents: Array,
     groups: Array
   },
-  data () {
+  data() {
     return {
       fields: {
-        actions: { label: 'Actions', thClass:"table-header-text-center" },
-        agentDetail: { label: 'Agent Details', thClass:"table-header-text-center" },
-        agentOccup: { label: 'Occup', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        agentMyCpt: { label: 'My CPT', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        agentCalls: { label: 'Calls', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        timeComputed: { label: 'Time logged in', sortable:true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        media: { label: 'Media', sortable: false, thClass:"table-header-text-center" }
+        actions: {label: 'Actions', thClass: "table-header-text-center"},
+        agentDetail: {label: 'Agent Details', thClass: "table-header-text-center"},
+        agentOccup: {
+          label: 'Occup',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        agentMyCpt: {
+          label: 'My CPT',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        agentCalls: {
+          label: 'Calls',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        timeComputed: {
+          label: 'Time logged in',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        state: {
+          label: 'State',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        media: {label: 'Media', sortable: false, thClass: "table-header-text-center"}
       },
       clients: [],
       states: [
@@ -359,23 +395,23 @@ export default {
         {name: "wrapup"}
       ],
       periods: [
-        { value:{ last: '15m' }, name:"Last 15 minutes"},
-        { value:{ last: '30m' }, name:"Last 30 minutes"},
-        { value:{ last: '1h' }, name:"Last Hour"},
-        { value:{ last: '1d' }, name:"Today" },
-        { value:{ last: '1w' }, name:"This Week" },
-        { value:{ last: '1M' }, name:"This Month" }
+        {value: {last: '15m'}, name: "Last 15 minutes"},
+        {value: {last: '30m'}, name: "Last 30 minutes"},
+        {value: {last: '1h'}, name: "Last Hour"},
+        {value: {last: '1d'}, name: "Today"},
+        {value: {last: '1w'}, name: "This Week"},
+        {value: {last: '1M'}, name: "This Month"}
       ],
       modes: [
-        { value: 'spy', name: 'Spy' },
-        { value: 'barge', name: 'Barge' },
-        { value: 'agent', name: 'Whisper Agent' },
-        { value: 'caller', name: 'Whisper Caller' }
+        {value: 'spy', name: 'Spy'},
+        {value: 'barge', name: 'Barge'},
+        {value: 'agent', name: 'Whisper Agent'},
+        {value: 'caller', name: 'Whisper Caller'}
       ],
       stats: [],
       tags: [],
       groups_select: [],
-      period: { value: { last: '15m' }, name: "Last 15 minutes"},
+      period: {value: {last: '15m'}, name: "Last 15 minutes"},
       selectedProfile: 'Any Profile',
       selectedCustomer: 'Any Customers',
       selectedState: 'Any State',
@@ -389,89 +425,89 @@ export default {
     }
   },
   methods: {
-    handleState ({ tag }) {
-      if(tag === "change")
+    handleState({tag}) {
+      if (tag === "change")
         this.updateStats()
     },
-    query: async function() {
+    query: async function () {
       this.clients = await this.$agent.p_mfa('ws_agent', 'clients')
-      this.clients.unshift({ name:"Any Customers" })
+      this.clients.unshift({name: "Any Customers"})
       this.tags = await this.$agent.p_mfa('ws_agent', 'tags')
       this.tags.unshift("Any Skill")
       this.groups_select = this.groups.slice(0)
-      this.groups_select.unshift({ name:"Any Profile" })
+      this.groups_select.unshift({name: "Any Profile"})
     },
-    refresh () {
+    refresh() {
       this.updateStats()
     },
-    updateStats: async function() {
+    updateStats: async function () {
       this.stats = await this.$agent.p_mfa('ws_stats', 'agent_manager_stats', [this.period.value.last, 'agent_id'])
     },
-    onTimer () {
+    onTimer() {
       this.agents.forEach((E, i, A) => {
         E.time = new Date() - E.date
         A.splice(i, 1, E)
       })
     },
-    release (agent) {
+    release(agent) {
       this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])
     },
-    onSortingChanged (ctx){
-      this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
-      this.$agent.vm.storage_data[this.$options.storageName+'SortDesc'] = ctx.sortDesc
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    onSortingChanged(ctx) {
+      this.sortBy = ctx.sortBy
+      this.sortDesc = ctx.sortDesc
+      this.saveDataStorage()
     },
-    available (agent) {
+    available(agent) {
       this.$agent.mfa('ws_supervisor', 'available', [agent.agent_id])
     },
-    stop (agent) {
+    stop(agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
     },
-    takeover ({inqueue}) {
+    takeover({inqueue}) {
       this.$agent.mfa('ws_supervisor', 'takeover', [inqueue.record, inqueue.uuid])
     },
-    allowSpy (state) {
+    allowSpy(state) {
       return (state === 'oncall' || state === 'conference') &&
-          (!this.$agent.is_onsession() && !this.$agent.is_barge());
+        (!this.$agent.is_onsession() && !this.$agent.is_barge());
     },
-    allowTakeOver (state) {
+    allowTakeOver(state) {
       return (state === 'oncall') &&
-          (!this.$agent.is_onsession() && !this.$agent.is_barge());
+        (!this.$agent.is_onsession() && !this.$agent.is_barge());
     },
-    spy ({inqueue}) {
+    spy({inqueue}) {
       this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.uuid])
     },
-    cancelSpy () {
+    cancelSpy() {
       this.$agent.mfa('ws_supervisor', 'cancel', [])
     },
-    setMode (mode) {
+    setMode(mode) {
       this.$agent.mfa('ws_supervisor', 'set_barge_mode', [mode])
     },
-    set_period (value) {
+    set_period(value) {
       this.period.value = value
       this.updateStats()
     },
-    existAvatar(data){
+    existAvatar(data) {
       return data && data.line_in !== undefined && data.line_in.client.avatar;
     },
-    existClient(data){
+    existClient(data) {
       return data && data.line_in !== undefined;
     },
-    percent (value) {
+    percent(value) {
       if (value > 0) {
-        return `${(value*100).toFixed(2)}%`
+        return `${(value * 100).toFixed(2)}%`
       } else {
         return "0%"
       }
     },
-    time (value) {
+    time(value) {
       if (value > 0) {
-        return `${(value/1000).toFixed(1)}s`
+        return `${(value / 1000).toFixed(1)}s`
       } else {
         return "0s"
       }
     },
-    onFilterUpdate (event){
+    onFilterUpdate(event) {
       if (event.match(/[^\w\s]/gi)) {
         this.filter = event.replace(/[^\w\s]/gi, '')
         this.filterState = false
@@ -481,30 +517,45 @@ export default {
         this.filterState = null
       }
     },
+    loadDataStorage() {
+      this.loadLocal('sortBy', 'sortDesc', 'showCollapse')
+    },
+    saveDataStorage() {
+      this.saveLocal('sortBy', 'sortDesc').writeLocal()
+    }
   },
-  created () {
+  created() {
     this.query()
     this.updateStats()
     this.$bus.$on('agents_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
-    if (this.$agent.vm.storage_data.agentManagerMonitorCollapsed !== undefined)
-      this.showCollapse = this.$agent.vm.storage_data.agentManagerMonitorCollapsed
-    if (this.$agent.vm.storage_data.agentManagerMonitorSortBy !== undefined)
-      this.sortBy = this.$agent.vm.storage_data.agentManagerMonitorSortBy
-    if (this.$agent.vm.storage_data.agentManagerMonitorSortDesc !== undefined)
-      this.sortDesc = this.$agent.vm.storage_data.agentManagerMonitorSortDesc
+    this.maybeInitLocal().loadDataStorage()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.updater)
     this.$bus.$off('agents_state', this.handleState)
   },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal('showCollapse').writeLocal()
+      }
+    },
+  },
   computed: {
-    computedAgents () {
+    computedAgents() {
       let agents = this.agents.slice(0)
       let compAgents = []
-      agents.forEach( (key) => {
-        key._cellVariants = { actions: 'success', agentDetail: 'primary', agentOccup: 'primary', agentMyCpt: 'primary', agentCalls: 'primary', timeComputed: 'primary' }
-        switch(key.state) {
+      agents.forEach((key) => {
+        key._cellVariants = {
+          actions: 'success',
+          agentDetail: 'primary',
+          agentOccup: 'primary',
+          agentMyCpt: 'primary',
+          agentCalls: 'primary',
+          timeComputed: 'primary'
+        }
+        switch (key.state) {
           case "release": {
             key._cellVariants.state = "primary"
             key._cellVariants.media = "primary"
@@ -516,8 +567,7 @@ export default {
           case "conference":
           case "inconference":
           case "hold":
-          case "test":
-          {
+          case "test": {
             key._cellVariants.state = "success"
             key._cellVariants.media = "success"
             break
@@ -553,32 +603,37 @@ export default {
         }
 
         if (key.inqueue && key.inqueue.line_in !== undefined) {
-          if(this.selectedCustomer !== key.inqueue.line_in.client.name && this.selectedCustomer !== 'Any Customers')
+          if (this.selectedCustomer !== key.inqueue.line_in.client.name && this.selectedCustomer !== 'Any Customers') {
             return
+          }
         }
-        else if(this.selectedCustomer !== 'Any Customers')
+        else if (this.selectedCustomer !== 'Any Customers') {
           return
+        }
 
         key.agentGroup = key.agent.group.name
-        if((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile'))
+        if ((this.selectedProfile !== key.agent.group.name && this.selectedProfile !== 'Any Profile')) {
           return
+        }
 
         let groups_perm = this.groups.findIndex(E => E.name === key.agent.group.name)
-        if (this.selectedProfile === 'Any Profile' && groups_perm < 0 && key.agent.group.name !== undefined )
+        if (this.selectedProfile === 'Any Profile' && groups_perm < 0 && key.agent.group.name !== undefined) {
           return
+        }
 
-        if(this.selectedState !== key.state && this.selectedState !== 'Any State')
+        if (this.selectedState !== key.state && this.selectedState !== 'Any State') {
           return
+        }
 
-        if(this.selectedSkill !== 'Any Skill') {
+        if (this.selectedSkill !== 'Any Skill') {
           let skills = key.agentSkills.split(",")
-          if(!skills.includes(this.selectedSkill)){
+          if (!skills.includes(this.selectedSkill)) {
             return
           }
         }
 
         compAgents.push(key);
-      } )
+      })
       return compAgents;
     }
   }

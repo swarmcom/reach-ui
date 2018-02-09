@@ -11,15 +11,15 @@ export default {
       this.$agent.vm.storage_data[this.$options.name][K] = V
       return this
     },
-    loadLocal (Ks) {
-      Ks.forEach( (K) => this[K] = this.getLocal(K) )
+    loadLocal (...Ks) {
+      Ks.forEach( (K) => { if (this.getLocal(K) !== undefined) { this[K] = this.getLocal(K) } } )
       return this
     },
-    saveLocal (Ks) {
+    saveLocal (...Ks) {
       Ks.forEach( (K) => this.setLocal(K, this[K]) )
       return this
     },
-    eraseLocal (Ks) {
+    eraseLocal (...Ks) {
       Ks.forEach( (K) => delete this.$agent.vm.storage_data[this.$options.name][K] )
       return this
     },

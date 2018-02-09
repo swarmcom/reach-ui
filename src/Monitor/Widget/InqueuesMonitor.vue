@@ -7,7 +7,8 @@
         <b-row class="toggle-bar-custom">
           <div class="titlenocollapse">Filter</div>
         </b-row>
-        <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+        <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState"
+                      placeholder="Search..." style="margin-top:10px"></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedMedia" style="margin-top:10px">
           <option v-for="media in this.medias" :value=media.value>{{media.name}}</option>
         </b-form-select>
@@ -29,19 +30,26 @@
       </b-col>
       <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px">
         <b-table style="margin-top:10px" small bordered hover
-          :items="computedInqueues"
-          :fields="fields"
-          :filter="filter"
-          :sort-by="sortBy"
-          :sort-desc="sortDesc"
-          @sort-changed="onSortingChanged">
+                 :items="computedInqueues"
+                 :fields="fields"
+                 :filter="filter"
+                 :sort-by="sortBy"
+                 :sort-desc="sortDesc"
+                 @sort-changed="onSortingChanged">
           <template slot="actions" slot-scope="data">
             <b-row class="text-center">
               <b-col>
                 <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                  <b-dropdown-item v-access:takeCallQueue-feature v-if="data.item.state === 'inqueue' || data.item.state === 'agent'" @click="take(data.item)">Take</b-dropdown-item>
-                  <b-dropdown-item v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" @click="spy(data.item)">Monitor</b-dropdown-item>
-                  <b-dropdown-item v-access:hangupCallQueue-feature @click="hangup(data.item)">Hangup</b-dropdown-item>
+                  <b-dropdown-item v-access:takeCallQueue-feature
+                                   v-if="data.item.state === 'inqueue' || data.item.state === 'agent'"
+                                   @click="take(data.item)">Take
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())"
+                    @click="spy(data.item)">Monitor
+                  </b-dropdown-item>
+                  <b-dropdown-item v-access:hangupCallQueue-feature @click="hangup(data.item)">Hangup
+                  </b-dropdown-item>
                 </b-dropdown>
               </b-col>
             </b-row>
@@ -52,7 +60,8 @@
                 <icon name="mobile" scale="2" class='agent-state-color'/>
               </b-col>
               <b-col cols="1">
-                <b-img v-if="data.item.customer.avatar" :src="$agent.avatar_uri(data.item.customer.avatar)" style="width:32px;"></b-img>
+                <b-img v-if="data.item.customer.avatar" :src="$agent.avatar_uri(data.item.customer.avatar)"
+                       style="width:32px;"></b-img>
                 <icon v-else name="handshake-o" scale="2"/>
               </b-col>
               <b-col>
@@ -81,23 +90,45 @@
 </template>
 
 <script>
+import Storage from '@/Storage'
+
 export default {
-  name: 'monitor-queues-manager',
-  storageName: 'queueManagerMonitor',
+  name: 'queue-manager-monitor',
   widgetName: 'Call View',
+  mixins: [Storage],
   props: {
     inqueues: Array
   },
-  data () {
+  data() {
     return {
       fields: {
-        actions: { label: 'Actions', thClass:"table-header-text-center" },
-        media: { label: 'Media / Customer', thClass:"table-header-text-center", tdClass:"table-body-text-center"},
-        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        line: { label: 'Line', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        queue: { label: 'Queue', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        skillsReq: { label: 'Skills Req', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        timeInQueue: { label: 'T in State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
+        actions: {label: 'Actions', thClass: "table-header-text-center"},
+        media: {label: 'Media / Customer', thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+        state: {
+          label: 'State',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        line: {label: 'Line', sortable: true, thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+        queue: {
+          label: 'Queue',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        skillsReq: {
+          label: 'Skills Req',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+        timeInQueue: {
+          label: 'T in State',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        }
       },
       clients: [],
       queues: [],
@@ -128,34 +159,34 @@ export default {
     }
   },
   methods: {
-    query: async function() {
+    query: async function () {
       this.clients = await this.$agent.p_mfa('ws_agent', 'clients')
-      this.clients.unshift({ name:"Any Customers" })
+      this.clients.unshift({name: "Any Customers"})
       this.queues = await this.$agent.p_mfa('ws_agent', 'queues')
-      this.queues.unshift({ name:"Any Queue" })
+      this.queues.unshift({name: "Any Queue"})
       this.lines = await this.$agent.p_mfa('ws_agent', 'lines_in')
-      this.lines.unshift({ name:"Any Lines" })
+      this.lines.unshift({name: "Any Lines"})
       this.tags = await this.$agent.p_mfa('ws_agent', 'tags')
       this.tags.unshift("Any Skill")
     },
-    onSortingChanged (ctx){
-      this.$agent.vm.storage_data[this.$options.storageName+'SortBy'] = ctx.sortBy
-      this.$agent.vm.storage_data[this.$options.storageName+'SortDesc'] = ctx.sortDesc
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+    onSortingChanged(ctx) {
+      this.sortBy = ctx.sortBy
+      this.sortDesc = ctx.sortDesc
+      this.saveDataStorage()
     },
-    take ({record, uuid}) {
+    take({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
     },
-    takeover ({record, uuid}) {
+    takeover({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
     },
-    spy ({record, uuid}) {
+    spy({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
     },
-    hangup ({record, uuid}) {
+    hangup({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
     },
-    onFilterUpdate (event){
+    onFilterUpdate(event) {
       if (event.match(/[^\w\s]/gi)) {
         this.filter = event.replace(/[^\w\s]/gi, '')
         this.filterState = false
@@ -165,60 +196,80 @@ export default {
         this.filterState = null
       }
     },
+    loadDataStorage() {
+      this.loadLocal('sortBy', 'sortDesc', 'showCollapse')
+    },
+    saveDataStorage() {
+      this.saveLocal('sortBy', 'sortDesc').writeLocal()
+    }
   },
-  created () {
+  created() {
     this.query()
-    if (this.$agent.vm.storage_data.queueManagerMonitorCollapsed !== undefined)
-      this.showCollapse = this.$agent.vm.storage_data.queueManagerMonitorCollapsed
-    if (this.$agent.vm.storage_data.queueManagerMonitorSortBy !== undefined)
-      this.sortBy = this.$agent.vm.storage_data.queueManagerMonitorSortBy
-    if (this.$agent.vm.storage_data.queueManagerMonitorSortDesc !== undefined)
-      this.sortDesc = this.$agent.vm.storage_data.queueManagerMonitorSortDesc
+    this.maybeInitLocal().loadDataStorage()
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal('showCollapse').writeLocal()
+      }
+    },
   },
   computed: {
-    computedInqueues () {
+    computedInqueues() {
       let inqueues = this.inqueues.slice(0)
       let compInqueues = []
-      inqueues.forEach( (key) => {
-        key._cellVariants = { actions: 'success', media: 'primary', state: 'primary', line: 'primary', queue: 'primary', skillsReq: 'primary', timeInQueue: 'primary' }
-        if(key.queue){
-          if((this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue') || this.queues.length < 2)
+      inqueues.forEach((key) => {
+        key._cellVariants = {
+          actions: 'success',
+          media: 'primary',
+          state: 'primary',
+          line: 'primary',
+          queue: 'primary',
+          skillsReq: 'primary',
+          timeInQueue: 'primary'
+        }
+        if (key.queue) {
+          if ((this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue') || this.queues.length < 2) {
             return
+          }
         }
 
         let queue_perm = this.queues.findIndex(E => E.name === key.queue)
-        if (this.selectedQueue === 'Any Queue' && queue_perm < 0 )
-            return
-
-        if(key.line) {
-          if(this.selectedLine !== key.line && this.selectedLine !== 'Any Lines')
-            return
+        if (this.selectedQueue === 'Any Queue' && queue_perm < 0) {
+          return
         }
-        else if(this.selectedLine !== 'Any Lines')
-          return
 
-        if(key.customer) {
-          if(this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers')
+        if (key.line) {
+          if (this.selectedLine !== key.line && this.selectedLine !== 'Any Lines') {
             return
+          }
         }
-        else if(this.selectedCustomer !== 'Any Customers')
+        else if (this.selectedLine !== 'Any Lines') {
           return
-
-        if(this.selectedState !== key.state && this.selectedState !== 'Any State')
+        }
+        if (key.customer) {
+          if (this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers') {
+            return
+          }
+        }
+        else if (this.selectedCustomer !== 'Any Customers') {
           return
-
-        if(this.selectedMedia !== key.record && this.selectedMedia !== 'Any Media')
+        }
+        if (this.selectedState !== key.state && this.selectedState !== 'Any State') {
           return
-
-        if(key.skillsReq !== undefined && this.selectedSkill !== 'Any Skill') {
+        }
+        if (this.selectedMedia !== key.record && this.selectedMedia !== 'Any Media') {
+          return
+        }
+        if (key.skillsReq !== undefined && this.selectedSkill !== 'Any Skill') {
           let skills = key.skillsReq.split(",")
-          if(!skills.includes(this.selectedSkill)){
+          if (!skills.includes(this.selectedSkill)) {
             return
           }
         }
 
         compInqueues.push(key)
-      } )
+      })
       return compInqueues
     }
   }
