@@ -35,6 +35,7 @@
       <button @click="sofia_rescan" class="btn btn-primary">SIP Reload</button>
       <button @click="sofia_status" class="btn btn-secondary">Sofia Status</button>
       <button @click="node_status" class="btn btn-secondary">Node Status</button>
+      <button @click="sofia_profile_status" class="btn btn-secondary">SIP Profile Status</button>
     </b-col>
   </b-row>
 
@@ -91,6 +92,9 @@ export default {
     },
     sofia_status: async function () {
       this.result = await this.$agent.p_mfa('ws_master', 'sofia_status', [this.id])
+    },
+    sofia_profile_status: async function () {
+      this.result = await this.$agent.p_mfa('ws_master', 'sofia_profile_status', [this.id])
     },
     node_status: async function () {
       this.result = await this.$agent.p_mfa('ws_master', 'node_status', [this.id])
