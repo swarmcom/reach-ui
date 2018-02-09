@@ -19,6 +19,7 @@ import Roles from '@/Widget/Roles'
 import TagGroups from '@/Widget/TagGroups'
 import AdminHelp from '@/Widget/Help'
 import Tags from '@/Widget/Tags'
+import Acls from '@/Widget/Acls'
 import FormTags from '@/Widget/Form/Tags'
 import FormFile from '@/Widget/Form/File'
 
@@ -41,5 +42,6 @@ Vue.component('roles', Roles)
 Vue.component('help', AdminHelp)
 Vue.component('tag-group', TagGroups)
 Vue.component('tags', Tags)
+Vue.component('acls', Acls)
 Vue.component('form-tags', FormTags)
 Vue.component('form-file', FormFile)

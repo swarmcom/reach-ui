@@ -7,7 +7,6 @@ import QueueGroup from '@/Admin/Queue/Group'
 import QueueGroups from '@/Admin/Queue/Groups'
 import AgentGroup from '@/Admin/Agent/Group'
 import AgentGroups from '@/Admin/Agent/Groups'
-import AgentGroupAcl from '@/Admin/Agent/Acl'
 import ReleaseGroup from '@/Admin/Release/Group'
 import Releases from '@/Admin/Releases'
 import ReleaseEntries from '@/Admin/Release/Entries'
@@ -38,6 +37,10 @@ import Tags from '@/Admin/Tags'
 import Permissions from '@/Admin/Permissions'
 import Params from '@/Admin/Params'
 
+import Acls from '@/Admin/Acls'
+import Acl from '@/Admin/ACL/Group'
+import AclEntries from '@/Admin/ACL/Entries'
+
 export default [
   { path: '', component: Agents },
   { path: 'agents', component: Agents },
@@ -65,7 +68,6 @@ export default [
   { path: 'queue/:id', component: Queue, props: true },
   { path: 'agent_group', component: AgentGroup },
   { path: 'agent_group/:id', component: AgentGroup, props: true },
-  { path: 'agent_group_acl/:id', component: AgentGroupAcl, props: true },
   { path: 'queue_group', component: QueueGroup },
   { path: 'queue_group/:id', component: QueueGroup, props: true },
   { path: 'release', component: ReleaseGroup },
@@ -79,6 +81,10 @@ export default [
   { path: 'disposition', component: DispositionGroup },
   { path: 'disposition/:id', component: DispositionGroup, props: true },
   { path: 'disposition/:id/entries', component: DispositionEntries, props: true },
+  { path: 'acls', component: Acls },
+  { path: 'acl', component: Acl },
+  { path: 'acl/:id', component: Acl, props: true },
+  { path: 'acl/:id/entries', component: AclEntries, props: true },
   { path: 'prompt', component: Prompt },
   { path: 'prompt/:id', component: Prompt, props: true },
   { path: 'moh', component: MOH },
