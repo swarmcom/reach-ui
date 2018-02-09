@@ -41,7 +41,8 @@
             label: 'State Entered',
             tdClass: 'table-body-orange-last-in-group',
             thClass: 'table-header-last-in-group',
-            thStyle: {width: '150px'}
+            thStyle: {width: '150px'},
+            formatter: (v, _, item) => (v === 'release' && item.release.name !== undefined) ? (v + ' [ ' + item.release.name + ' ]') : v
           },
           ts_from: {
             label: 'From',
