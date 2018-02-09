@@ -7,7 +7,8 @@
           <b-row class="toggle-bar-custom">
             <div class="titlenocollapse">Filter</div>
           </b-row>
-          <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState" placeholder="Search..." style="margin-top:10px" ></b-form-input>
+          <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState"
+                        placeholder="Search..." style="margin-top:10px"></b-form-input>
           <b-form-select class="pointer" size="sm" v-model="selectedLine" style="margin-top:10px">
             <option v-for="line in this.lines" :value=line.name>{{line.name}}</option>
           </b-form-select>
@@ -28,7 +29,10 @@
                 <b-col>
                   <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
                     <b-dropdown-item @click="takeover(data.item)">Take over</b-dropdown-item>
-                    <b-dropdown-item v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" @click="spy(data.item)">Monitor</b-dropdown-item>
+                    <b-dropdown-item
+                      v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())"
+                      @click="spy(data.item)">Monitor
+                    </b-dropdown-item>
                     <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
                   </b-dropdown>
                 </b-col>
@@ -40,7 +44,8 @@
                   <icon name="mobile" scale="2" class='agent-state-color'/>
                 </b-col>
                 <b-col cols="1">
-                  <b-img v-if="data.item.customer.avatar" :src="$agent.avatar_uri(data.item.customer.avatar)" style="width:32px;"></b-img>
+                  <b-img v-if="data.item.customer.avatar" :src="$agent.avatar_uri(data.item.customer.avatar)"
+                         style="width:32px;"></b-img>
                   <icon v-else name="handshake-o" scale="2"/>
                 </b-col>
                 <b-col>
@@ -70,19 +75,30 @@
 
 <script>
   import Common from '@/Admin/Common'
+
   export default {
     name: 'outgoings',
     storageName: 'queueManagerOutgoings',
     widgetName: 'Outgoing Call View',
     mixins: [Common],
-    data () {
+    data() {
       return {
         fields: {
-          actions: { label: 'Actions', thClass:"table-header-text-center" },
-          media: { label: 'Media / Customer', thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-          state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-          line: { label: 'Line', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-          timeInQueue: { label: 'T in State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
+          actions: {label: 'Actions', thClass: "table-header-text-center"},
+          media: {label: 'Media / Customer', thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+          state: {
+            label: 'State',
+            sortable: true,
+            thClass: "table-header-text-center",
+            tdClass: "table-body-text-center"
+          },
+          line: {label: 'Line', sortable: true, thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+          timeInQueue: {
+            label: 'T in State',
+            sortable: true,
+            thClass: "table-header-text-center",
+            tdClass: "table-body-text-center"
+          },
         },
         name: 'monitor/outgoings',
         outgoings: [],
@@ -104,7 +120,7 @@
       }
     },
     methods: {
-      handleState ({state}) {
+      handleState({state}) {
         let i = this.outgoings.findIndex(E => E.id === state.id)
         if (i >= 0) {
           if (state.state === 'terminate') {
@@ -116,43 +132,43 @@
           this.outgoings.push(this.enrich_queue(state))
         }
       },
-      enrich_queue (state) {
-        state.time = Math.round(state.time/1000)
+      enrich_queue(state) {
+        state.time = Math.round(state.time / 1000)
         state.date = new Date()
         state.line = state.line_out.name
         state.customer = state.line_out.client
         return state
       },
-      query: async function() {
+      query: async function () {
         this.outgoings = await this.$agent.p_mfa('ws_agent', 'outgoings')
         this.outgoings.forEach((inq) => {
           inq.date = new Date() - inq.time
-          inq.time = Math.round(inq.time/1000)
+          inq.time = Math.round(inq.time / 1000)
           inq.line = inq.line_out.name
           inq.customer = inq.line_out.client
         })
         this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
-        this.lines.unshift({ name:"Any Lines" })
+        this.lines.unshift({name: "Any Lines"})
         this.clients = await this.$agent.p_mfa('ws_agent', 'clients')
-        this.clients.unshift({ name:"Any Customers" })
+        this.clients.unshift({name: "Any Customers"})
       },
-      onTimer () {
+      onTimer() {
         this.outgoings.forEach((E, i, Arr) => {
           E.time = E.time + 1
           E.timeInQueue = this.msToHms((new Date() - E.date).toString())
           Arr.splice(i, 1, E)
         })
       },
-      takeover ({record, uuid}) {
+      takeover({record, uuid}) {
         this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
       },
-      spy ({record, uuid}) {
+      spy({record, uuid}) {
         this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
       },
-      hangup ({id}) {
+      hangup({id}) {
         this.$agent.p_mfa('ws_supervisor', 'hangup', ['outgoing', id])
       },
-      onFilterUpdate (event){
+      onFilterUpdate(event) {
         if (event.match(/[^\w\s]/gi)) {
           this.filter = event.replace(/[^\w\s]/gi, '')
           this.filterState = false
@@ -163,7 +179,7 @@
         }
       },
     },
-    created () {
+    created() {
       this.query()
       this.$agent.subscribe('outgoings')
       this.$bus.$on('outgoing_state', this.handleState)
@@ -171,7 +187,7 @@
       if (this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed !== undefined)
         this.showCollapse = this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed
     },
-    beforeDestroy () {
+    beforeDestroy() {
       this.$bus.$off('outgoing_state', this.handleState)
       clearInterval(this.updater)
     },
