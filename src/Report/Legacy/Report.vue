@@ -17,8 +17,8 @@
                       Put some input controls here.
                     </slot>
                   </div>
-                  <button @click="reset" class="btn btn-outline-secondary float-right">Reset</button>
-                  <button @click="apply" class="btn btn-outline-secondary float-right" style="margin-right: 20px">Apply</button>
+                  <b-button @click="reset" class="btn btn-outline-secondary float-right" size="sm">Reset</b-button>
+                  <b-button @click="apply" class="btn btn-outline-secondary float-right" style="margin-right: 20px" size="sm">Apply</b-button>
                 </b-col>
               </b-row>
             </td>
