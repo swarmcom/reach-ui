@@ -170,7 +170,7 @@ export default {
       this.queues[value.index].seeDetails = !this.queues[value.index].seeDetails
     },
     loadDataStorage() {
-      this.loadLocal(['showCollapse'])
+      this.loadLocal('showCollapse')
     },
   },
   created() {
@@ -180,7 +180,7 @@ export default {
   watch: {
     showCollapse: function (newVal, oldVal) {
       if (newVal !== oldVal) {
-        this.saveLocal(['showCollapse']).writeLocal()
+        this.saveLocal('showCollapse').writeLocal()
       }
     },
   },

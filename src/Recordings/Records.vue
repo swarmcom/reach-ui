@@ -260,7 +260,7 @@ export default {
       this.currentPage = 1;
     },
     onSelectChange(value) {
-      this.saveLocal(['perPage']).writeLocal()
+      this.saveLocal('perPage').writeLocal()
     },
     onFilterUpdate(event) {
       if (event.match(/[^\w\s]/gi)) {
@@ -273,10 +273,10 @@ export default {
       }
     },
     loadDataStorage() {
-      this.loadLocal(['sortBy', 'sortDesc', 'perPage', 'showCollapse'])
+      this.loadLocal('sortBy', 'sortDesc', 'perPage', 'showCollapse')
     },
     saveDataStorage() {
-      this.saveLocal(['sortBy', 'sortDesc']).writeLocal()
+      this.saveLocal('sortBy', 'sortDesc').writeLocal()
     }
   },
   created() {
@@ -286,7 +286,7 @@ export default {
   watch: {
     showCollapse: function (newVal, oldVal) {
       if (newVal !== oldVal) {
-        this.saveLocal(['showCollapse']).writeLocal()
+        this.saveLocal('showCollapse').writeLocal()
       }
     },
   },

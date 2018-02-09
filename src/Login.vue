@@ -63,14 +63,14 @@ export default {
       })
     },
     loadDataStorage() {
-      this.loadLocal(['login', 'password', 'remember'])
+      this.loadLocal('login', 'password', 'remember')
     },
     saveDataStorage() {
       if (this.remember) {
-        this.saveLocal(['login', 'password', 'remember']).writeLocal()
+        this.saveLocal('login', 'password', 'remember').writeLocal()
       }
       else {
-        this.eraseLocal(['login', 'password', 'remember']).writeLocal()
+        this.eraseLocal('login', 'password', 'remember').writeLocal()
       }
     }
   },

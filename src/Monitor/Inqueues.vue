@@ -77,10 +77,10 @@ export default {
       return Queue ? Queue.name : ''
     },
     loadDataStorage() {
-      this.loadLocal(['showCollapse'])
+      this.loadLocal('showCollapse')
     },
     saveDataStorage() {
-      this.saveLocal(['showCollapse']).writeLocal()
+      this.saveLocal('showCollapse').writeLocal()
     }
   },
   created() {

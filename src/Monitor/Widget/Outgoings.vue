@@ -188,10 +188,10 @@ export default {
       this.saveDataStorage()
     },
     loadDataStorage() {
-      this.loadLocal(['sortBy', 'sortDesc', 'showCollapse'])
+      this.loadLocal('sortBy', 'sortDesc', 'showCollapse')
     },
     saveDataStorage() {
-      this.saveLocal(['sortBy', 'sortDesc']).writeLocal()
+      this.saveLocal('sortBy', 'sortDesc').writeLocal()
     }
   },
   created() {
@@ -208,7 +208,7 @@ export default {
   watch: {
     showCollapse: function (newVal, oldVal) {
       if (newVal !== oldVal) {
-        this.saveLocal(['showCollapse']).writeLocal()
+        this.saveLocal('showCollapse').writeLocal()
       }
     },
   },
