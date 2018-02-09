@@ -4,7 +4,7 @@
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
   <lines label="Line Out" v-model="rec.lines_out"></lines>
   <roles label="Role" v-model="rec.role_id"></roles>
-  <acls label="Access list" v-model="rec.acl_group_id"></acls>
+  <acl label="Access list" v-model="rec.acl_group_id"></acl>
   <form-number label="Ring Timeout" v-model="rec.ring_timeout"></form-number>
   <form-number label="Suspend Time" v-model="rec.suspend_time"></form-number>
   <form-number label="Auto Logout" v-model="rec.autologout"></form-number>

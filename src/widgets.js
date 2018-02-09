@@ -23,6 +23,7 @@ import AdminHelp from '@/Widget/Help'
 import ToggleBar from '@/Widget/ToggleBar.vue'
 import Tags from '@/Widget/Tags'
 import Acls from '@/Widget/Acls'
+import Acl from '@/Widget/Acl'
 import FormTags from '@/Widget/Form/Tags'
 import FormFile from '@/Widget/Form/File'
 
@@ -49,5 +50,6 @@ Vue.component('toggle-bar', ToggleBar)
 Vue.component('tag-group', TagGroups)
 Vue.component('tags', Tags)
 Vue.component('acls', Acls)
+Vue.component('acl', Acl)
 Vue.component('form-tags', FormTags)
 Vue.component('form-file', FormFile)
