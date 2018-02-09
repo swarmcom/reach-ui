@@ -20,6 +20,7 @@ import TagGroups from '@/Widget/TagGroups'
 import AdminHelp from '@/Widget/Help'
 import Tags from '@/Widget/Tags'
 import Acls from '@/Widget/Acls'
+import Acl from '@/Widget/Acl'
 import FormTags from '@/Widget/Form/Tags'
 import FormFile from '@/Widget/Form/File'
 
@@ -43,5 +44,6 @@ Vue.component('help', AdminHelp)
 Vue.component('tag-group', TagGroups)
 Vue.component('tags', Tags)
 Vue.component('acls', Acls)
+Vue.component('acl', Acl)
 Vue.component('form-tags', FormTags)
 Vue.component('form-file', FormFile)
