@@ -11,11 +11,12 @@
 <script>
 import AgentGroups from '@/Monitor/Widget/AgentGroups'
 import AgentMonitor from '@/Monitor/Widget/AgentMonitor'
+import Storage from '@/Storage'
 
 export default {
-  name: 'monitor-agents',
-  storageName: 'agentManager',
+  name: 'agent-manager',
   widgetName: 'AGENT MANAGER',
+  mixins: [Storage],
   data() {
     return {
       agents: [],
@@ -63,17 +64,29 @@ export default {
       this.agents.forEach((agent) => {
         agent.date = new Date() - agent.time
       })
+    },
+    loadDataStorage() {
+      this.loadLocal(['showCollapse'])
+    },
+    saveDataStorage() {
+      this.saveLocal(['showCollapse']).writeLocal()
     }
   },
   created() {
     this.query()
     this.$bus.$on('agents_state', this.handleState)
     this.$agent.subscribe('agents')
-    if (this.$agent.vm.storage_data.agentManagerCollapsed != undefined)
-      this.showCollapse = this.$agent.vm.storage_data.agentManagerCollapsed
+    this.maybeInitLocal().loadDataStorage()
   },
   beforeDestroy() {
     this.$bus.$off('agents_state', this.handleState)
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveDataStorage()
+      }
+    },
   },
   components: {
     'agent-groups': AgentGroups,

@@ -332,12 +332,12 @@
 
 <script>
 import Common from '@/Admin/Common'
+import Storage from '@/Storage'
 
 export default {
-  name: 'monitor-agents-manager',
-  storageName: 'agentManagerMonitor',
+  name: 'agents-manager-monitor',
   widgetName: 'Agents',
-  mixins: [Common],
+  mixins: [Common, Storage],
   props: {
     agents: Array,
     groups: Array
@@ -453,9 +453,9 @@ export default {
       this.$agent.mfa('ws_supervisor', 'release', [agent.agent_id])
     },
     onSortingChanged(ctx) {
-      this.$agent.vm.storage_data[this.$options.storageName + 'SortBy'] = ctx.sortBy
-      this.$agent.vm.storage_data[this.$options.storageName + 'SortDesc'] = ctx.sortDesc
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+      this.sortBy = ctx.sortBy
+      this.sortDesc = ctx.sortDesc
+      this.saveDataStorage()
     },
     available(agent) {
       this.$agent.mfa('ws_supervisor', 'available', [agent.agent_id])
@@ -517,22 +517,30 @@ export default {
         this.filterState = null
       }
     },
+    loadDataStorage() {
+      this.loadLocal(['sortBy', 'sortDesc', 'showCollapse'])
+    },
+    saveDataStorage() {
+      this.saveLocal(['sortBy', 'sortDesc']).writeLocal()
+    }
   },
   created() {
     this.query()
     this.updateStats()
     this.$bus.$on('agents_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
-    if (this.$agent.vm.storage_data.agentManagerMonitorCollapsed !== undefined)
-      this.showCollapse = this.$agent.vm.storage_data.agentManagerMonitorCollapsed
-    if (this.$agent.vm.storage_data.agentManagerMonitorSortBy !== undefined)
-      this.sortBy = this.$agent.vm.storage_data.agentManagerMonitorSortBy
-    if (this.$agent.vm.storage_data.agentManagerMonitorSortDesc !== undefined)
-      this.sortDesc = this.$agent.vm.storage_data.agentManagerMonitorSortDesc
+    this.maybeInitLocal().loadDataStorage()
   },
   beforeDestroy() {
     clearInterval(this.updater)
     this.$bus.$off('agents_state', this.handleState)
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal(['showCollapse']).writeLocal()
+      }
+    },
   },
   computed: {
     computedAgents() {

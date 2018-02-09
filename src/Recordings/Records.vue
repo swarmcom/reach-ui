@@ -111,11 +111,12 @@
 import Player from '@/Recordings/Player'
 import Datepicker from 'vuejs-datepicker'
 import moment from 'moment'
+import Storage from '@/Storage'
 
 export default {
-  name: 'records',
-  storageName: 'callRecordings',
+  name: 'call-recordings',
   widgetName: 'CALL RECORDINGS',
+  mixins: [Storage],
   components: {
     player: Player,
     Datepicker
@@ -184,7 +185,7 @@ export default {
       selectedLine: 'Any Line In',
       selectedLineOut: 'Any Line Out',
       selectedSkill: 'Any Skill',
-      sortBy: 'ts',
+      sortBy: 'ts_ms',
       sortDesc: false,
       showCollapse: true,
       params: {}
@@ -249,9 +250,9 @@ export default {
       this.recordings_outbound = await this.$agent.p_mfa('ws_report', 'outgoing_sessions', [this.params])
     },
     onSortingChanged(ctx) {
-      this.$agent.vm.storage_data[this.$options.storageName + 'SortBy'] = ctx.sortBy
-      this.$agent.vm.storage_data[this.$options.storageName + 'SortDesc'] = ctx.sortDesc
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+      this.sortBy = ctx.sortBy
+      this.sortDesc = ctx.sortDesc
+      this.saveDataStorage()
     },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
@@ -259,8 +260,7 @@ export default {
       this.currentPage = 1;
     },
     onSelectChange(value) {
-      this.$agent.vm.storage_data[this.$options.storageName + 'PerPage'] = value
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+      this.saveLocal(['perPage']).writeLocal()
     },
     onFilterUpdate(event) {
       if (event.match(/[^\w\s]/gi)) {
@@ -272,17 +272,23 @@ export default {
         this.filterState = null
       }
     },
+    loadDataStorage() {
+      this.loadLocal(['sortBy', 'sortDesc', 'perPage', 'showCollapse'])
+    },
+    saveDataStorage() {
+      this.saveLocal(['sortBy', 'sortDesc']).writeLocal()
+    }
   },
   created() {
     this.query()
-    if (this.$agent.vm.storage_data.callRecordingsCollapsed !== undefined)
-      this.showCollapse = this.$agent.vm.storage_data.callRecordingsCollapsed
-    if (this.$agent.vm.storage_data.callRecordingsSortBy !== undefined)
-      this.sortBy = this.$agent.vm.storage_data.callRecordingsSortBy
-    if (this.$agent.vm.storage_data.callRecordingsSortDesc !== undefined)
-      this.sortDesc = this.$agent.vm.storage_data.callRecordingsSortDesc
-    if (this.$agent.vm.storage_data.callRecordingsPerPage !== undefined)
-      this.perPage = this.$agent.vm.storage_data.callRecordingsPerPage
+    this.maybeInitLocal().loadDataStorage()
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal(['showCollapse']).writeLocal()
+      }
+    },
   },
   computed: {
     computedRecordings() {

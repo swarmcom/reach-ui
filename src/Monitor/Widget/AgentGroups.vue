@@ -44,11 +44,12 @@
 </template>
 <script>
 import AgentGroupsStats from '@/Monitor/Widget/AgentGroupsStats'
+import Storage from '@/Storage'
 
 export default {
-  name: 'monitor-agents-groups',
-  storageName: 'agentManagerStates',
+  name: 'agent-manager-groups',
   widgetName: 'Agent Groups',
+  mixins: [Storage],
   props: {
     agents: Array,
     groups: Array,
@@ -131,9 +132,23 @@ export default {
       showCollapse: true,
     }
   },
+  methods: {
+    loadDataStorage() {
+      this.loadLocal(['showCollapse'])
+    },
+    saveDataStorage() {
+      this.saveLocal(['showCollapse']).writeLocal()
+    }
+  },
   created() {
-    if (this.$agent.vm.storage_data.agentManagerStatesCollapsed != undefined)
-      this.showCollapse = this.$agent.vm.storage_data.agentManagerStatesCollapsed
+    this.maybeInitLocal().loadDataStorage()
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveDataStorage()
+      }
+    },
   },
   computed: {
     computedAgentsStats() {

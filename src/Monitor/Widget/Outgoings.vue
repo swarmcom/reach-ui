@@ -23,7 +23,10 @@
           <b-table style="margin-top:10px" small bordered hover
                    :items="computedOutgoings"
                    :fields="fields"
-                   :filter="filter">
+                   :filter="filter"
+                   :sort-by="sortBy"
+                   :sort-desc="sortDesc"
+                   @sort-changed="onSortingChanged">
             <template slot="actions" slot-scope="data">
               <b-row class="text-center">
                 <b-col>
@@ -75,12 +78,12 @@
 
 <script>
 import Common from '@/Admin/Common'
+import Storage from '@/Storage'
 
 export default {
-  name: 'outgoings',
-  storageName: 'queueManagerOutgoings',
+  name: 'queue-manager-outgoings',
   widgetName: 'Outgoing Call View',
-  mixins: [Common],
+  mixins: [Common, Storage],
   data() {
     return {
       fields: {
@@ -100,7 +103,6 @@ export default {
           tdClass: "table-body-text-center"
         },
       },
-      name: 'monitor/outgoings',
       outgoings: [],
       lines: [],
       clients: [],
@@ -116,6 +118,8 @@ export default {
       selectedState: 'Any State',
       filter: null,
       filterState: null,
+      sortBy: 'agent_id',
+      sortDesc: false,
       showCollapse: true
     }
   },
@@ -178,18 +182,35 @@ export default {
         this.filterState = null
       }
     },
+    onSortingChanged(ctx) {
+      this.sortBy = ctx.sortBy
+      this.sortDesc = ctx.sortDesc
+      this.saveDataStorage()
+    },
+    loadDataStorage() {
+      this.loadLocal(['sortBy', 'sortDesc', 'showCollapse'])
+    },
+    saveDataStorage() {
+      this.saveLocal(['sortBy', 'sortDesc']).writeLocal()
+    }
   },
   created() {
     this.query()
     this.$agent.subscribe('outgoings')
     this.$bus.$on('outgoing_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
-    if (this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed !== undefined)
-      this.showCollapse = this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed
+    this.maybeInitLocal().loadDataStorage()
   },
   beforeDestroy() {
     this.$bus.$off('outgoing_state', this.handleState)
     clearInterval(this.updater)
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal(['showCollapse']).writeLocal()
+      }
+    },
   },
   computed: {
     computedOutgoings() {

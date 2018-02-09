@@ -14,12 +14,12 @@ import Common from '@/Admin/Common'
 import InqueuesView from '@/Monitor/Widget/InqueuesView'
 import InqueuesMonitor from '@/Monitor/Widget/InqueuesMonitor'
 import Outgoings from '@/Monitor/Widget/Outgoings'
+import Storage from '@/Storage'
 
 export default {
-  name: 'inqueues',
-  storageName: 'queueManager',
+  name: 'queue-manager',
   widgetName: 'QUEUE MANAGER',
-  mixins: [Common],
+  mixins: [Common, Storage],
   data() {
     return {
       name: 'monitor/inqueues',
@@ -75,6 +75,12 @@ export default {
     queue_name(Id) {
       let Queue = this.queues.find(I => I.id == Id)
       return Queue ? Queue.name : ''
+    },
+    loadDataStorage() {
+      this.loadLocal(['showCollapse'])
+    },
+    saveDataStorage() {
+      this.saveLocal(['showCollapse']).writeLocal()
     }
   },
   created() {
@@ -82,12 +88,18 @@ export default {
     this.$agent.subscribe('inqueues')
     this.$bus.$on('inqueue_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
-    if (this.$agent.vm.storage_data.queueManagerCollapsed != undefined)
-      this.showCollapse = this.$agent.vm.storage_data.queueManagerCollapsed
+    this.maybeInitLocal().loadDataStorage()
   },
   beforeDestroy() {
     this.$bus.$off('inqueue_state', this.handleState)
     clearInterval(this.updater)
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveDataStorage()
+      }
+    },
   },
   components: {
     'inqueues-view': InqueuesView,

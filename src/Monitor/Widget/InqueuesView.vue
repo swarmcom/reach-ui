@@ -81,10 +81,12 @@
 </div>
 </template>
 <script>
+import Storage from '@/Storage'
+
 export default {
-  name: 'monitor-queues-view',
-  storageName: 'queueManagerView',
+  name: 'queue-manager-queues',
   widgetName: 'Queue View',
+  mixins: [Storage],
   props: {
     inqueues: Array
   },
@@ -166,12 +168,21 @@ export default {
     },
     showDetails(value) {
       this.queues[value.index].seeDetails = !this.queues[value.index].seeDetails
-    }
+    },
+    loadDataStorage() {
+      this.loadLocal(['showCollapse'])
+    },
   },
   created() {
     this.query()
-    if (this.$agent.vm.storage_data.queueManagerViewCollapsed != undefined)
-      this.showCollapse = this.$agent.vm.storage_data.queueManagerViewCollapsed
+    this.maybeInitLocal().loadDataStorage()
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal(['showCollapse']).writeLocal()
+      }
+    },
   },
   computed: {
     computedStats() {

@@ -90,10 +90,12 @@
 </template>
 
 <script>
+import Storage from '@/Storage'
+
 export default {
-  name: 'monitor-queues-manager',
-  storageName: 'queueManagerMonitor',
+  name: 'queue-manager-monitor',
   widgetName: 'Call View',
+  mixins: [Storage],
   props: {
     inqueues: Array
   },
@@ -168,9 +170,9 @@ export default {
       this.tags.unshift("Any Skill")
     },
     onSortingChanged(ctx) {
-      this.$agent.vm.storage_data[this.$options.storageName + 'SortBy'] = ctx.sortBy
-      this.$agent.vm.storage_data[this.$options.storageName + 'SortDesc'] = ctx.sortDesc
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
+      this.sortBy = ctx.sortBy
+      this.sortDesc = ctx.sortDesc
+      this.saveDataStorage()
     },
     take({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
@@ -194,15 +196,23 @@ export default {
         this.filterState = null
       }
     },
+    loadDataStorage() {
+      this.loadLocal(['sortBy', 'sortDesc', 'showCollapse'])
+    },
+    saveDataStorage() {
+      this.saveLocal(['sortBy', 'sortDesc']).writeLocal()
+    }
   },
   created() {
     this.query()
-    if (this.$agent.vm.storage_data.queueManagerMonitorCollapsed !== undefined)
-      this.showCollapse = this.$agent.vm.storage_data.queueManagerMonitorCollapsed
-    if (this.$agent.vm.storage_data.queueManagerMonitorSortBy !== undefined)
-      this.sortBy = this.$agent.vm.storage_data.queueManagerMonitorSortBy
-    if (this.$agent.vm.storage_data.queueManagerMonitorSortDesc !== undefined)
-      this.sortDesc = this.$agent.vm.storage_data.queueManagerMonitorSortDesc
+    this.maybeInitLocal().loadDataStorage()
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal(['showCollapse']).writeLocal()
+      }
+    },
   },
   computed: {
     computedInqueues() {
