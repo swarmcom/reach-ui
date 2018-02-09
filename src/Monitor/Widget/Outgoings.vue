@@ -74,157 +74,162 @@
 </template>
 
 <script>
-  import Common from '@/Admin/Common'
+import Common from '@/Admin/Common'
 
-  export default {
-    name: 'outgoings',
-    storageName: 'queueManagerOutgoings',
-    widgetName: 'Outgoing Call View',
-    mixins: [Common],
-    data() {
-      return {
-        fields: {
-          actions: {label: 'Actions', thClass: "table-header-text-center"},
-          media: {label: 'Media / Customer', thClass: "table-header-text-center", tdClass: "table-body-text-center"},
-          state: {
-            label: 'State',
-            sortable: true,
-            thClass: "table-header-text-center",
-            tdClass: "table-body-text-center"
-          },
-          line: {label: 'Line', sortable: true, thClass: "table-header-text-center", tdClass: "table-body-text-center"},
-          timeInQueue: {
-            label: 'T in State',
-            sortable: true,
-            thClass: "table-header-text-center",
-            tdClass: "table-body-text-center"
-          },
+export default {
+  name: 'outgoings',
+  storageName: 'queueManagerOutgoings',
+  widgetName: 'Outgoing Call View',
+  mixins: [Common],
+  data() {
+    return {
+      fields: {
+        actions: {label: 'Actions', thClass: "table-header-text-center"},
+        media: {label: 'Media / Customer', thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+        state: {
+          label: 'State',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
         },
-        name: 'monitor/outgoings',
-        outgoings: [],
-        lines: [],
-        clients: [],
-        states: [
-          {name: "Any State", value: "Any State"},
-          {name: "Connected", value: "oncall"},
-          {name: "Ringing", value: "ringing"},
-          {name: "Init", value: "init"}
-        ],
-        updater: null,
-        selectedLine: 'Any Lines',
-        selectedCustomer: 'Any Customers',
-        selectedState: 'Any State',
-        filter: null,
-        filterState: null,
-        showCollapse: true
-      }
-    },
-    methods: {
-      handleState({state}) {
-        let i = this.outgoings.findIndex(E => E.id === state.id)
-        if (i >= 0) {
-          if (state.state === 'terminate') {
-            this.outgoings.splice(i, 1)
-          } else {
-            this.outgoings.splice(i, 1, this.enrich_queue(state))
-          }
+        line: {label: 'Line', sortable: true, thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+        timeInQueue: {
+          label: 'T in State',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        },
+      },
+      name: 'monitor/outgoings',
+      outgoings: [],
+      lines: [],
+      clients: [],
+      states: [
+        {name: "Any State", value: "Any State"},
+        {name: "Connected", value: "oncall"},
+        {name: "Ringing", value: "ringing"},
+        {name: "Init", value: "init"}
+      ],
+      updater: null,
+      selectedLine: 'Any Lines',
+      selectedCustomer: 'Any Customers',
+      selectedState: 'Any State',
+      filter: null,
+      filterState: null,
+      showCollapse: true
+    }
+  },
+  methods: {
+    handleState({state}) {
+      let i = this.outgoings.findIndex(E => E.id === state.id)
+      if (i >= 0) {
+        if (state.state === 'terminate') {
+          this.outgoings.splice(i, 1)
         } else {
-          this.outgoings.push(this.enrich_queue(state))
+          this.outgoings.splice(i, 1, this.enrich_queue(state))
         }
-      },
-      enrich_queue(state) {
-        state.time = Math.round(state.time / 1000)
-        state.date = new Date()
-        state.line = state.line_out.name
-        state.customer = state.line_out.client
-        return state
-      },
-      query: async function () {
-        this.outgoings = await this.$agent.p_mfa('ws_agent', 'outgoings')
-        this.outgoings.forEach((inq) => {
-          inq.date = new Date() - inq.time
-          inq.time = Math.round(inq.time / 1000)
-          inq.line = inq.line_out.name
-          inq.customer = inq.line_out.client
-        })
-        this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
-        this.lines.unshift({name: "Any Lines"})
-        this.clients = await this.$agent.p_mfa('ws_agent', 'clients')
-        this.clients.unshift({name: "Any Customers"})
-      },
-      onTimer() {
-        this.outgoings.forEach((E, i, Arr) => {
-          E.time = E.time + 1
-          E.timeInQueue = this.msToHms((new Date() - E.date).toString())
-          Arr.splice(i, 1, E)
-        })
-      },
-      takeover({record, uuid}) {
-        this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
-      },
-      spy({record, uuid}) {
-        this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
-      },
-      hangup({id}) {
-        this.$agent.p_mfa('ws_supervisor', 'hangup', ['outgoing', id])
-      },
-      onFilterUpdate(event) {
-        if (event.match(/[^\w\s]/gi)) {
-          this.filter = event.replace(/[^\w\s]/gi, '')
-          this.filterState = false
-        }
-        else {
-          this.filter = event
-          this.filterState = null
-        }
-      },
-    },
-    created() {
-      this.query()
-      this.$agent.subscribe('outgoings')
-      this.$bus.$on('outgoing_state', this.handleState)
-      this.updater = setInterval(this.onTimer, 1000)
-      if (this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed !== undefined)
-        this.showCollapse = this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed
-    },
-    beforeDestroy() {
-      this.$bus.$off('outgoing_state', this.handleState)
-      clearInterval(this.updater)
-    },
-    computed: {
-      computedOutgoings() {
-        let outgoings = this.outgoings.slice(0)
-        let compOutgoings = []
-        outgoings.forEach((key) => {
-          key._cellVariants = {
-            actions: 'success',
-            media: 'primary',
-            state: 'primary',
-            line: 'primary',
-            timeInQueue: 'primary'
-          }
-
-          if (key.line) {
-            if (this.selectedLine !== key.line && this.selectedLine !== 'Any Lines')
-              return
-          }
-          else if (this.selectedLine !== 'Any Lines')
-            return
-
-          if (key.customer) {
-            if (this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers')
-              return
-          }
-          else if (this.selectedCustomer !== 'Any Customers')
-            return
-
-          if (this.selectedState !== key.state && this.selectedState !== 'Any State')
-            return
-
-          compOutgoings.push(key)
-        })
-        return compOutgoings
+      } else {
+        this.outgoings.push(this.enrich_queue(state))
       }
+    },
+    enrich_queue(state) {
+      state.time = Math.round(state.time / 1000)
+      state.date = new Date()
+      state.line = state.line_out.name
+      state.customer = state.line_out.client
+      return state
+    },
+    query: async function () {
+      this.outgoings = await this.$agent.p_mfa('ws_agent', 'outgoings')
+      this.outgoings.forEach((inq) => {
+        inq.date = new Date() - inq.time
+        inq.time = Math.round(inq.time / 1000)
+        inq.line = inq.line_out.name
+        inq.customer = inq.line_out.client
+      })
+      this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
+      this.lines.unshift({name: "Any Lines"})
+      this.clients = await this.$agent.p_mfa('ws_agent', 'clients')
+      this.clients.unshift({name: "Any Customers"})
+    },
+    onTimer() {
+      this.outgoings.forEach((E, i, Arr) => {
+        E.time = E.time + 1
+        E.timeInQueue = this.msToHms((new Date() - E.date).toString())
+        Arr.splice(i, 1, E)
+      })
+    },
+    takeover({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
+    },
+    spy({record, uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
+    },
+    hangup({id}) {
+      this.$agent.p_mfa('ws_supervisor', 'hangup', ['outgoing', id])
+    },
+    onFilterUpdate(event) {
+      if (event.match(/[^\w\s]/gi)) {
+        this.filter = event.replace(/[^\w\s]/gi, '')
+        this.filterState = false
+      }
+      else {
+        this.filter = event
+        this.filterState = null
+      }
+    },
+  },
+  created() {
+    this.query()
+    this.$agent.subscribe('outgoings')
+    this.$bus.$on('outgoing_state', this.handleState)
+    this.updater = setInterval(this.onTimer, 1000)
+    if (this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed !== undefined)
+      this.showCollapse = this.$agent.vm.storage_data.queueManagerOutgoingsCollapsed
+  },
+  beforeDestroy() {
+    this.$bus.$off('outgoing_state', this.handleState)
+    clearInterval(this.updater)
+  },
+  computed: {
+    computedOutgoings() {
+      let outgoings = this.outgoings.slice(0)
+      let compOutgoings = []
+      outgoings.forEach((key) => {
+        key._cellVariants = {
+          actions: 'success',
+          media: 'primary',
+          state: 'primary',
+          line: 'primary',
+          timeInQueue: 'primary'
+        }
+
+        if (key.line) {
+          if (this.selectedLine !== key.line && this.selectedLine !== 'Any Lines') {
+            return
+          }
+        }
+        else if (this.selectedLine !== 'Any Lines') {
+          return
+        }
+
+        if (key.customer) {
+          if (this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers') {
+            return
+          }
+        }
+        else if (this.selectedCustomer !== 'Any Customers') {
+          return
+        }
+
+        if (this.selectedState !== key.state && this.selectedState !== 'Any State') {
+          return
+        }
+
+        compOutgoings.push(key)
+      })
+      return compOutgoings
     }
   }
+}
 </script>

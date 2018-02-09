@@ -219,34 +219,38 @@ export default {
           timeInQueue: 'primary'
         }
         if (key.queue) {
-          if ((this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue') || this.queues.length < 2)
+          if ((this.selectedQueue !== key.queue && this.selectedQueue !== 'Any Queue') || this.queues.length < 2) {
             return
+          }
         }
 
         let queue_perm = this.queues.findIndex(E => E.name === key.queue)
-        if (this.selectedQueue === 'Any Queue' && queue_perm < 0)
+        if (this.selectedQueue === 'Any Queue' && queue_perm < 0) {
           return
+        }
 
         if (key.line) {
-          if (this.selectedLine !== key.line && this.selectedLine !== 'Any Lines')
+          if (this.selectedLine !== key.line && this.selectedLine !== 'Any Lines') {
             return
+          }
         }
-        else if (this.selectedLine !== 'Any Lines')
+        else if (this.selectedLine !== 'Any Lines') {
           return
-
+        }
         if (key.customer) {
-          if (this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers')
+          if (this.selectedCustomer !== key.customer.name && this.selectedCustomer !== 'Any Customers') {
             return
+          }
         }
-        else if (this.selectedCustomer !== 'Any Customers')
+        else if (this.selectedCustomer !== 'Any Customers') {
           return
-
-        if (this.selectedState !== key.state && this.selectedState !== 'Any State')
+        }
+        if (this.selectedState !== key.state && this.selectedState !== 'Any State') {
           return
-
-        if (this.selectedMedia !== key.record && this.selectedMedia !== 'Any Media')
+        }
+        if (this.selectedMedia !== key.record && this.selectedMedia !== 'Any Media') {
           return
-
+        }
         if (key.skillsReq !== undefined && this.selectedSkill !== 'Any Skill') {
           let skills = key.skillsReq.split(",")
           if (!skills.includes(this.selectedSkill)) {
