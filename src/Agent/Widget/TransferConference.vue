@@ -178,12 +178,12 @@ export default {
       if (newVal !== oldVal) {
         this.saveLocal('showCollapse').writeLocal()
       }
-    },
+    }
   },
   created() {
     this.a = this.$agent.getData()
     this.query()
-    this.maybeInitLocal().loadDataStorage('showCollapse')
+    this.maybeInitLocal().loadLocal('showCollapse')
   }
 }
 </script>
