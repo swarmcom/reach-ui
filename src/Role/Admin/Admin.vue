@@ -23,6 +23,7 @@
     <b-dropdown-item to="/tag_groups">Skill groups</b-dropdown-item>
     <b-dropdown-item to="/tags">Skills</b-dropdown-item>
     <b-dropdown-item to="/roles">Roles</b-dropdown-item>
+    <b-dropdown-item to="/acls">Access lists</b-dropdown-item>
     <b-dropdown-item to="/releases">Release Groups</b-dropdown-item>
     <b-dropdown-item to="/dispositions">Disposition Groups</b-dropdown-item>
   </b-nav-item-dropdown>
