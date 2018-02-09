@@ -8,6 +8,7 @@
   <lines label="Line Out" v-model="rec.line_id"></lines>
   <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
   <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
+  <acl label="Access list" v-model="rec.acl_group_id" :effective="eff.acl_group_id"></acl>
   <form-text label="Primary Contact" v-model="rec.uri"></form-text>
   <uris label="Additional Contacts" v-model="rec.uris"></uris>
   <form-number label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-number>
