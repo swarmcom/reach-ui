@@ -12,7 +12,7 @@ export default {
       return this
     },
     loadLocal (Ks) {
-      Ks.forEach( (K) => this[K] = this.getLocal(K) )
+      Ks.forEach( (K) => { if (this.getLocal(K) !== undefined) { this[K] = this.getLocal(K) } } )
       return this
     },
     saveLocal (Ks) {
