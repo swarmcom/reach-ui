@@ -5,12 +5,12 @@
     <b-row>
       <b-col cols="4">
         <b-form-select class="pointer" v-model="selected">
-        <option :value="null">Transfer / Conference</option>
-        <option v-if="!this.$agent.is_conference ()" :value="'queue'">Queue...</option>
-        <option :value="'agent'">Agent...</option>
-        <option v-if="this.$agent.can_call()" :value="'number'">Number...</option>
+          <option :value="null">Transfer / Conference</option>
+          <option v-if="!this.$agent.is_conference ()" :value="'queue'">Queue...</option>
+          <option :value="'agent'">Agent...</option>
+          <option v-if="this.$agent.can_call()" :value="'number'">Number...</option>
         </b-form-select>
-        <b-form-input class="customInput" v-if="selected==='agent'" v-model="filter" placeholder="Search..." />
+        <b-form-input class="customInput" v-if="selected==='agent'" v-model="filter" placeholder="Search..."/>
       </b-col>
       <b-col cols="4" v-if="(selected==='queue' || selected==='number')">
         <b-form-select class="pointer" v-if="selected==='queue'" v-model="selectedQueue">
@@ -22,24 +22,30 @@
       </b-col>
       <b-col cols="8" v-if="selected==='agent'">
         <b-table small bordered
-          tbody-tr-class="pointer"
-          @row-clicked="onSelectAgent"
-          :items="computedAgents"
-          :fields="fieldsAgents"
-          :filter="filter">
+                 tbody-tr-class="pointer"
+                 @row-clicked="onSelectAgent"
+                 :items="computedAgents"
+                 :fields="fieldsAgents"
+                 :filter="filter">
         </b-table>
-        <div v-if="!allowTransConf" style="color:#F2635F" class="agent-state-text">Transfer or Conference only to the available agent is allowed</div>
+        <div v-if="!allowTransConf" style="color:#F2635F" class="agent-state-text">Transfer or Conference only to the
+          available agent is allowed
+        </div>
       </b-col>
     </b-row>
     <b-row>
-    <b-col cols="9" order="3" style="margin-top:5px" v-if="selected=='queue' && selectedQueue!==null">
-      <queue-skills v-access:transConfChangeSkills-feature v-if="uuid!==undefined" :uuid="uuid"></queue-skills>
-    </b-col>
+      <b-col cols="9" order="3" style="margin-top:5px" v-if="selected=='queue' && selectedQueue!==null">
+        <queue-skills v-access:transConfChangeSkills-feature v-if="uuid!==undefined" :uuid="uuid"></queue-skills>
+      </b-col>
     </b-row>
     <b-row style="margin-top:10px">
       <b-col>
-        <button v-if="this.can_conference()" class="btn call-action-button" @click="conference()" style="margin-left:5px; float:right">Conference</button>
-        <button v-if="this.can_transfer()" class="btn call-action-button" @click="transfer()" style=" float:right">Transfer</button>
+        <button v-if="this.can_conference()" class="btn call-action-button" @click="conference()"
+                style="margin-left:5px; float:right">Conference
+        </button>
+        <button v-if="this.can_transfer()" class="btn call-action-button" @click="transfer()" style=" float:right">
+          Transfer
+        </button>
       </b-col>
     </b-row>
   </b-collapse>
@@ -49,25 +55,40 @@
 <script>
 import Common from '../../Admin/Common'
 import QueueSkills from '@/Agent/Inqueue/Skills'
+import Storage from '@/Storage'
+
 export default {
   widgetName: 'Transfer / Conference',
-  storageName: 'smtransferConference',
+  name: 'sm-transfer-conference',
   components: {
     'queue-skills': QueueSkills,
   },
-  mixins: [Common],
+  mixins: [Common, Storage],
   props: {
     uuid: String
   },
-  data () {
+  data() {
     return {
       showCollapse: true,
       allowTransConf: true,
       selected: null,
       fieldsAgents: {
-        name: { label: 'Name', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" },
-        group: { label: 'Group', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center", formatter: (value) => { return value.name } },
-        state: { label: 'State', sortable: true, thClass:"table-header-text-center", tdClass:"table-body-text-center" }
+        name: {label: 'Name', sortable: true, thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+        group: {
+          label: 'Group',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center",
+          formatter: (value) => {
+            return value.name
+          }
+        },
+        state: {
+          label: 'State',
+          sortable: true,
+          thClass: "table-header-text-center",
+          tdClass: "table-body-text-center"
+        }
       },
       selectedQueue: 'null',
       selectedAgent: 'null',
@@ -80,7 +101,7 @@ export default {
     query: async function () {
       this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
     },
-    conference () {
+    conference() {
       if (this.selected === 'queue' && this.selectedQueue !== 'null') {
         this.$agent.conference_to_queue(this.selectedQueue)
       }
@@ -91,7 +112,7 @@ export default {
         this.$agent.conference_to_uri(this.selectedNumber)
       }
     },
-    transfer () {
+    transfer() {
       if (this.selected === 'queue' && this.selectedQueue !== 'null') {
         this.$agent.transfer_to_queue(this.selectedQueue)
       }
@@ -102,7 +123,7 @@ export default {
         this.$agent.transfer_to_uri(this.selectedNumber)
       }
     },
-    onSelectAgent (data) {
+    onSelectAgent(data) {
       if (data.state === 'available') {
         this.selectedAgent === data.id ? this.selectedAgent = 'null' : this.selectedAgent = data.id
         this.allowTransConf = true
@@ -113,7 +134,7 @@ export default {
     },
     can_conference() {
       if (this.$agent.can_conference() &&
-          ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['confAgent-feature']) ||
+        ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['confAgent-feature']) ||
           (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['confQueue-feature']) ||
           (this.selectedNumber !== '') && this.$agent.vm.agent.permissions['confNumber-feature'])) {
         return true
@@ -123,7 +144,7 @@ export default {
     },
     can_transfer() {
       if (this.$agent.can_transfer() &&
-          ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['transAgent-feature']) ||
+        ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['transAgent-feature']) ||
           (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['transQueue-feature']) ||
           (this.selectedNumber !== '') && this.$agent.vm.agent.permissions['transNumber-feature'])) {
         return true
@@ -133,9 +154,9 @@ export default {
     }
   },
   computed: {
-    computedAgents () {
+    computedAgents() {
       let agents = this.$agent.vm.transfer_agents.slice(0)
-      agents.forEach( (key) => {
+      agents.forEach((key) => {
         key._rowVariant = 'primary'
         if (key.id === this.selectedAgent) {
           if (key.state === 'available')
@@ -148,17 +169,21 @@ export default {
     }
   },
   watch: {
-    selected: function(val) {
+    selected: function (val) {
       this.selectedAgent = 'null'
       this.selectedQueue = 'null'
       this.selectedNumber = ''
-    }
+    },
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal('showCollapse').writeLocal()
+      }
+    },
   },
-  created () {
+  created() {
     this.a = this.$agent.getData()
     this.query()
-    if (this.a.storage_data.smtransferConferenceCollapsed !== undefined)
-      this.showCollapse = this.a.storage_data.smtransferConferenceCollapsed
+    this.maybeInitLocal().loadDataStorage('showCollapse')
   }
 }
 </script>
