@@ -7,6 +7,7 @@ import QueueGroup from '@/Admin/Queue/Group'
 import QueueGroups from '@/Admin/Queue/Groups'
 import AgentGroup from '@/Admin/Agent/Group'
 import AgentGroups from '@/Admin/Agent/Groups'
+import AgentGroupAcl from '@/Admin/Agent/Acl'
 import ReleaseGroup from '@/Admin/Release/Group'
 import Releases from '@/Admin/Releases'
 import ReleaseEntries from '@/Admin/Release/Entries'
@@ -64,6 +65,7 @@ export default [
   { path: 'queue/:id', component: Queue, props: true },
   { path: 'agent_group', component: AgentGroup },
   { path: 'agent_group/:id', component: AgentGroup, props: true },
+  { path: 'agent_group_acl/:id', component: AgentGroupAcl, props: true },
   { path: 'queue_group', component: QueueGroup },
   { path: 'queue_group/:id', component: QueueGroup, props: true },
   { path: 'release', component: ReleaseGroup },

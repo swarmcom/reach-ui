@@ -1,0 +1,25 @@
+<template>
+<div class="form-inline">
+<autocomplete v-model="obj" :query="query" placeholder="Queue..."></autocomplete>
+<button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="obj in selected" @click="remove(obj)">{{obj.name}}</button>
+</div>
+</template>
+
+<script>
+import Autocomplete from '@/Widget/Autocomplete'
+import API from '@/Admin/ACL/API'
+
+export default {
+  name: 'acl-widget-queues',
+  components: {Autocomplete},
+  props: ['value'],
+  mixins: [API],
+  data () {
+    return {
+      module: 'ws_db_queue',
+      obj: undefined,
+      selected: []
+    }
+  }
+}
+</script>
