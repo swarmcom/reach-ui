@@ -67,7 +67,7 @@
             tdClass: ['table-body-blue-last-in-group', 'text-align-right'],
             thClass: 'table-header-last-in-group',
             thStyle: {width: '59px'},
-            formatter: v => v ? new Moment(v, "x").format("mm:ss") : 'NA'
+            formatter: v => v ? this.durationFormatter(v) : 'NA'
           },
           first_from_state: {
             label: 'First Login',
