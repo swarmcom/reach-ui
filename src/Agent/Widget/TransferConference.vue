@@ -101,7 +101,7 @@ export default {
     query: async function () {
       this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
     },
-    conference() {
+    conference () {
       if (this.selected === 'queue' && this.selectedQueue !== 'null') {
         this.$agent.conference_to_queue(this.selectedQueue)
       }
@@ -112,7 +112,7 @@ export default {
         this.$agent.conference_to_uri(this.selectedNumber)
       }
     },
-    transfer() {
+    transfer () {
       if (this.selected === 'queue' && this.selectedQueue !== 'null') {
         this.$agent.transfer_to_queue(this.selectedQueue)
       }
@@ -123,7 +123,7 @@ export default {
         this.$agent.transfer_to_uri(this.selectedNumber)
       }
     },
-    onSelectAgent(data) {
+    onSelectAgent (data) {
       if (data.state === 'available') {
         this.selectedAgent === data.id ? this.selectedAgent = 'null' : this.selectedAgent = data.id
         this.allowTransConf = true
@@ -132,7 +132,7 @@ export default {
         this.allowTransConf = false
       }
     },
-    can_conference() {
+    can_conference () {
       if (this.$agent.can_conference() &&
         ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['confAgent-feature']) ||
           (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['confQueue-feature']) ||
@@ -142,7 +142,7 @@ export default {
       else
         return false
     },
-    can_transfer() {
+    can_transfer () {
       if (this.$agent.can_transfer() &&
         ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['transAgent-feature']) ||
           (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['transQueue-feature']) ||
@@ -154,7 +154,7 @@ export default {
     }
   },
   computed: {
-    computedAgents() {
+    computedAgents () {
       let agents = this.$agent.vm.transfer_agents.slice(0)
       agents.forEach((key) => {
         key._rowVariant = 'primary'
@@ -180,7 +180,7 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.a = this.$agent.getData()
     this.query()
     this.maybeInitLocal().loadLocal('showCollapse')

@@ -111,7 +111,7 @@ export default {
   widgetName: 'MY STATISTICS',
   name: 'my-statistics',
   mixins: [Common, Storage],
-  data() {
+  data () {
     return {
       statistics: [{
         ciq: 0,
@@ -155,7 +155,7 @@ export default {
     }
   },
   methods: {
-    query() {
+    query () {
       this.states_query()
       this.ciq_query()
       this.my_stats_query()
@@ -183,39 +183,39 @@ export default {
       let ciq = await this.$agent.p_mfa('ws_stats', 'ciq', [])
       this.statistics[0].ciq = ciq.ciq
     },
-    handleUpdateMyStats(ev) {
+    handleUpdateMyStats (ev) {
       this.my_stats_query()
     },
-    handleUpdateStatesStats(ev) {
+    handleUpdateStatesStats (ev) {
       this.states_query()
       this.my_stats_query()
     },
-    handleCiq(ev) {
+    handleCiq (ev) {
       this.ciq_query()
     },
-    refresh() {
+    refresh () {
       this.my_stats_query()
       this.states_query()
     },
-    percent(value) {
+    percent (value) {
       if (value > 0) {
         return `${(value * 100).toFixed(2)}%`
       } else {
         return "0%"
       }
     },
-    time(value) {
+    time (value) {
       if (value > 0)
         return this.msToMs(value)
       else
         return "--"
     },
-    set_period(value) {
+    set_period (value) {
       this.period.value = value
       this.my_stats_query()
     }
   },
-  created() {
+  created () {
     this.$bus.$on('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$on('inqueue_state', this.handleCiq)
     this.$bus.$on('agent_stats', this.handleUpdateMyStats)
@@ -223,7 +223,7 @@ export default {
     this.skillsOptions = this.skills2list(this.$agent.vm.agent.skills)
     this.maybeInitLocal().loadLocal('showCollapse')
   },
-  beforeDestroy() {
+  beforeDestroy () {
     this.$bus.$off('agent_group_state', this.handleUpdateStatesStats)
     this.$bus.$off('inqueue_state', this.handleCiq)
     this.$bus.$off('agent_stats', this.handleUpdateMyStats)

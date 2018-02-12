@@ -80,7 +80,7 @@ export default {
   widgetName: 'My Profile',
   name: 'my-profile',
   mixins: [Storage],
-  data() {
+  data () {
     return {
       agent: this.$agent.vm.agent,
       showCollapse: true,
@@ -128,12 +128,12 @@ export default {
     }
   },
   methods: {
-    showCollapsePerm() {
+    showCollapsePerm () {
       this.showPermCollapse = !this.showPermCollapse
       this.saveLocal('showPermCollapse').writeLocal()
     }
   },
-  created() {
+  created () {
     let perm = this.agent.permissions
     if (this.$agent.role() === 'supervisor') {
       this.perms_check_supervisor.forEach(function (key) {
