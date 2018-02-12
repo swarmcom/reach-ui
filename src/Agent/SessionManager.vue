@@ -28,9 +28,12 @@ import Dialer from '@/Agent/Dialer'
 import Release from '@/Agent/Widget/Release'
 import AgentState from '@/Agent/AgentState'
 import MyProfile from '@/Agent/MyProfile'
+import Storage from '@/Storage'
+
 export default {
   widgetName: 'SESSION MANAGER',
-  storageName: 'sessionManager',
+  name: 'session-manager',
+  mixins: [Storage],
   data () {
     return {
       showCollapse: true,
@@ -40,8 +43,14 @@ export default {
     logout () { this.$agent.logout() },
   },
   created () {
-    if (this.$agent.vm.storage_data.sessionManagerCollapsed != undefined)
-      this.showCollapse = this.$agent.vm.storage_data.sessionManagerCollapsed
+    this.maybeInitLocal().loadLocal('showCollapse')
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal('showCollapse').writeLocal()
+      }
+    },
   },
   components: {
     inqueue: Inqueue,

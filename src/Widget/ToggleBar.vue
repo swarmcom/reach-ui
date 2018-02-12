@@ -21,10 +21,6 @@ export default {
   methods: {
     showCollapse () {
       this.$parent.showCollapse = !(this.$parent.showCollapse)
-      let key = this.$parent.$options.storageName+'Collapsed'
-
-      this.$agent.vm.storage_data[key] = this.$parent.showCollapse
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     }
   }
 }
