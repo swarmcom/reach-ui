@@ -10,8 +10,8 @@
       </b-row>
       <b-row style="margin-top: 5px; margin-bottom:5px">
         <b-col>
-          <button @click="selectTabs" class="btn btn-secondary pointer">Select All</button>
-          <button @click="unselectTabs" class="btn btn-secondary pointer">Unselect All</button>
+          <button @click="select(tabs)" class="btn btn-secondary pointer">Select All</button>
+          <button @click="unselect(tabs)" class="btn btn-secondary pointer">Unselect All</button>
         </b-col>
       </b-row>
       <b-row><b-col><h4>UI Features:</h4></b-col></b-row>
@@ -21,8 +21,8 @@
       </b-row>
       <b-row style="margin-top: 5px; margin-bottom:5px">
         <b-col>
-          <button @click="selectFeatures" class="btn btn-secondary pointer">Select All</button>
-          <button @click="unselectFeatures" class="btn btn-secondary pointer">Unselect All</button>
+          <button @click="select(features)" class="btn btn-secondary pointer">Select All</button>
+          <button @click="unselect(features)" class="btn btn-secondary pointer">Unselect All</button>
         </b-col>
       </b-row>
     </b-col>
@@ -34,8 +34,8 @@
       </b-row>
       <b-row style="margin-top: 5px; margin-bottom:5px">
         <b-col>
-          <button @click="selectWidgets" class="btn btn-secondary pointer">Select All</button>
-          <button @click="unselectWidgets" class="btn btn-secondary pointer">Unselect All</button>
+          <button @click="select(widgets)" class="btn btn-secondary pointer">Select All</button>
+          <button @click="unselect(widgets)" class="btn btn-secondary pointer">Unselect All</button>
         </b-col>
       </b-row>
       <b-row><b-col><h4>Call Features:</h4></b-col></b-row>
@@ -45,8 +45,8 @@
       </b-row>
       <b-row style="margin-top: 5px; margin-bottom:5px">
         <b-col>
-          <button @click="selectCallFeatures" class="btn btn-secondary pointer">Select All</button>
-          <button @click="unselectCallFeatures" class="btn btn-secondary pointer">Unselect All</button>
+          <button @click="select(call_features)" class="btn btn-secondary pointer">Select All</button>
+          <button @click="unselect(call_features)" class="btn btn-secondary pointer">Unselect All</button>
         </b-col>
       </b-row>
       <b-row><b-col><h4>Agent Profile Edit:</h4></b-col></b-row>
@@ -56,8 +56,8 @@
       </b-row>
       <b-row style="margin-top: 5px; margin-bottom:5px">
         <b-col>
-          <button @click="selectAgentFeatures" class="btn btn-secondary pointer">Select All</button>
-          <button @click="unselectAgentFeatures" class="btn btn-secondary pointer">Unselect All</button>
+          <button @click="select(agent_features)" class="btn btn-secondary pointer">Select All</button>
+          <button @click="unselect(agent_features)" class="btn btn-secondary pointer">Unselect All</button>
         </b-col>
       </b-row>
     </b-col>
@@ -237,9 +237,6 @@ export default {
     isAgent () {
       return this.ui == 'agent'
     },
-    profileSelected () {
-      return (this.effective['profile-ui'] && this.isAgent())
-    },
     selectAll () {
       let self = this
       Object.keys(this.names).forEach(function (key) {
@@ -251,68 +248,19 @@ export default {
       Object.keys(this.names).forEach(function (key) {
         self.onChange(key, false)
       })
-
     },
-    selectTabs () {
+    select (group) {
       let self = this
-      this.tabs.forEach(function (key) {
+      group.forEach(function (key) {
         self.onChange(key, true)
       })
     },
-    unselectTabs () {
+    unselect (group) {
       let self = this
-      this.tabs.forEach(function (key) {
+      group.forEach(function (key) {
         self.onChange(key, false)
       })
-    },
-    selectFeatures () {
-      let self = this
-      this.features.forEach(function (key) {
-        self.onChange(key, true)
-      })
-    },
-    unselectFeatures () {
-      let self = this
-      this.features.forEach(function (key) {
-        self.onChange(key, false)
-      })
-    },
-    selectWidgets () {
-      let self = this
-      this.widgets.forEach(function (key) {
-        self.onChange(key, true)
-      })
-    },
-    unselectWidgets () {
-      let self = this
-      this.widgets.forEach(function (key) {
-        self.onChange(key, false)
-      })
-    },
-    selectCallFeatures () {
-      let self = this
-      this.call_features.forEach(function (key) {
-        self.onChange(key, true)
-      })
-    },
-    unselectCallFeatures () {
-      let self = this
-      this.call_features.forEach(function (key) {
-        self.onChange(key, false)
-      })
-    },
-    selectAgentFeatures () {
-      let self = this
-      this.agent_features.forEach(function (key) {
-        self.onChange(key, true)
-      })
-    },
-    unselectAgentFeatures () {
-      let self = this
-      this.agent_features.forEach(function (key) {
-        self.onChange(key, false)
-      })
-    },
+    }
   },
   created () {
     this.query()
