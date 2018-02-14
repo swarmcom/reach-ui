@@ -20,9 +20,6 @@
         </tr>
       </table>
       <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields">
-        <template slot="abandoned_percent" slot-scope="data">
-          {{ (data.item.call_count != 0) ? (100*data.item.abandoned/data.item.call_count).toFixed(1)+'%' : 'NA' }}
-        </template>
       </b-table>
     </div>
   </report>
