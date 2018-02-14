@@ -1,6 +1,5 @@
 <template>
-<btable :fields="fields" :data="agent_groups" :add_button=true :filter_button=true :paginate=true></btable>
-</btable>
+  <btable :fields="fields" :data="agent_groups" :add_button=true :filter_button=true :paginate=true></btable>
 </template>
 
 <script>

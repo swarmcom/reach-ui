@@ -2,7 +2,7 @@
 <div class="form">
   <form-text label="Agent Group Name" v-model="rec.name"></form-text>
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
-  <lines label="Line Out" v-model="rec.lines_out"></lines>
+  <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
   <roles label="Role" v-model="rec.role_id"></roles>
   <acl label="Access list" v-model="rec.acl_group_id"></acl>
   <form-number label="Ring Timeout" v-model="rec.ring_timeout"></form-number>
@@ -10,7 +10,6 @@
   <form-number label="Auto Logout" v-model="rec.autologout"></form-number>
   <form-number label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-number>
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
-  <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
   <tag-group label="Skills Group" v-model="rec.tag_group_id"></tag-group>
   <form-tags placeholder="Skill..." label="Skills" v-model="skills"></form-tags>
 
