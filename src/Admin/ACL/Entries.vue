@@ -16,6 +16,9 @@
   <b-row style="margin-top: 20px"><b-col><h3>Lines Out:</h3></b-col></b-row>
   <b-row><b-col><line-outs v-model="line_outs" @add="set('line_out', $event)" @remove="unset('line_out', $event)"></line-outs></b-col></b-row>
 
+  <b-row style="margin-top: 20px"><b-col><h3>Agent Group:</h3></b-col></b-row>
+  <b-row><b-col><agent-groups v-model="agent_groups" @add="set('agent_group', $event)" @remove="unset('agent_group', $event)"></agent-groups></b-col></b-row>
+
 </div>
 </template>
 
@@ -24,6 +27,7 @@ import Common from '@/Admin/Common'
 import Queues from '@/Admin/ACL/Queues'
 import Clients from '@/Admin/ACL/Clients'
 import Agents from '@/Admin/ACL/Agents'
+import AgentGroups from '@/Admin/ACL/AgentGroups'
 import LineIns from '@/Admin/ACL/LineIns'
 import LineOuts from '@/Admin/ACL/LineOuts'
 
@@ -34,6 +38,7 @@ export default {
     'queues': Queues,
     'clients': Clients,
     'agents': Agents,
+    'agent-groups': AgentGroups,
     'line-ins': LineIns,
     'line-outs': LineOuts
   },
@@ -46,7 +51,8 @@ export default {
       clients: [],
       agents: [],
       line_ins: [],
-      line_outs: []
+      line_outs: [],
+      agent_groups: []
     }
   },
   methods: {
@@ -58,6 +64,7 @@ export default {
         this.agents = this.acl.agent? this.acl.agent : []
         this.line_ins = this.acl.line_in? this.acl.line_in : []
         this.line_outs = this.acl.line_out? this.acl.line_out : []
+        this.agent_groups = this.acl.agent_groups? this.acl.agent_groups : []
       }
     },
     onCancel () {
