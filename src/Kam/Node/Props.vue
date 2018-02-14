@@ -41,7 +41,18 @@
 
   <b-row style="margin-top:20px" v-if="rec.type=='proxy'">
     <b-col>
+      <button @click="proxy_debug('debug')" class="btn btn-outline-secondary">Debug</button>
+      <button @click="proxy_debug('info')" class="btn btn-outline-secondary">Info</button>
+      <button @click="proxy_debug('notice')" class="btn btn-outline-secondary">Notice</button>
+      <button @click="proxy_debug('warn')" class="btn btn-outline-secondary">Warn</button>
+      <button @click="proxy_debug('err')" class="btn btn-outline-secondary">Err</button>
+    </b-col>
+  </b-row>
+
+  <b-row style="margin-top:20px" v-if="rec.type=='proxy'">
+    <b-col>
       <button @click="proxy_stats" class="btn btn-secondary">Stats</button>
+      <button @click="proxy_cfgs" class="btn btn-secondary">Configs</button>
       <button @click="proxy_regs" class="btn btn-secondary">Regs</button>
       <button @click="proxy_dlgs" class="btn btn-secondary">Dialogs</button>
     </b-col>
@@ -101,6 +112,12 @@ export default {
     },
     proxy_stats: async function () {
       this.result = await this.$agent.p_mfa('ws_master', 'proxy_stats', [this.id])
+    },
+    proxy_cfgs: async function () {
+      this.result = await this.$agent.p_mfa('ws_master', 'proxy_cfgs', [this.id])
+    },
+    proxy_debug: async function (level) {
+      this.result = await this.$agent.p_mfa('ws_master', 'proxy_debug', [this.id, level])
     },
     proxy_regs: async function () {
       this.result = await this.$agent.p_mfa('ws_master', 'proxy_regs', [this.id])
