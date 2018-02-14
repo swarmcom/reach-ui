@@ -42,6 +42,7 @@
   <b-row style="margin-top:20px" v-if="rec.type=='proxy'">
     <b-col>
       <button @click="proxy_stats" class="btn btn-secondary">Stats</button>
+      <button @click="proxy_cfgs" class="btn btn-secondary">Configs</button>
       <button @click="proxy_regs" class="btn btn-secondary">Regs</button>
       <button @click="proxy_dlgs" class="btn btn-secondary">Dialogs</button>
     </b-col>
@@ -101,6 +102,9 @@ export default {
     },
     proxy_stats: async function () {
       this.result = await this.$agent.p_mfa('ws_master', 'proxy_stats', [this.id])
+    },
+    proxy_cfgs: async function () {
+      this.result = await this.$agent.p_mfa('ws_master', 'proxy_cfgs', [this.id])
     },
     proxy_regs: async function () {
       this.result = await this.$agent.p_mfa('ws_master', 'proxy_regs', [this.id])
