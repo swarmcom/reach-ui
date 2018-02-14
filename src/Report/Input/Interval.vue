@@ -8,30 +8,30 @@
 </template>
 
 <script>
-  export default {
-    name: 'interval-input',
-    props: {
-      value: {
-        type: Number,
-        required: true
-      }
-    },
-    data () {
-      return {
-        interval: this.value
-      }
-    },
-    methods: {
-      checkValue(v) {
-        this.interval = Number(v)
-        this.$emit('input', this.interval)
-      }
-    },
-    watch: {
-      value (v) {
-        this.interval = v
-        return v
-      }
+export default {
+  name: 'interval-input',
+  props: {
+    value: {
+      type: Number,
+      required: true
+    }
+  },
+  data () {
+    return {
+      interval: this.value
+    }
+  },
+  methods: {
+    checkValue (v) {
+      this.interval = Number(v)
+      this.$emit('input', this.interval)
+    }
+  },
+  watch: {
+    value (v) {
+      this.interval = v
+      return v
     }
   }
+}
 </script>

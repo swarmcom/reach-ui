@@ -61,43 +61,42 @@
 </template>
 
 <script>
-
-  export default {
-    name: 'ReportTemplate',
-    props: {
-      name: {
-        type: String,
-        default: "unknown"
-      },
-      title: {
-        default: "undefined"
-      },
-      from: {
-        default: undefined
-      },
-      to: {
-        default: undefined
-      }
+export default {
+  name: 'ReportTemplate',
+  props: {
+    name: {
+      type: String,
+      default: "unknown"
     },
-    data () {
-      return {
-        reportFromTo: {
-          date_start: undefined,
-          date_end: undefined,
-        },
-      }
+    title: {
+      default: "undefined"
     },
-    methods: {
-      reset () {
-        this.$emit('reset')
+    from: {
+      default: undefined
+    },
+    to: {
+      default: undefined
+    }
+  },
+  data () {
+    return {
+      reportFromTo: {
+        date_start: undefined,
+        date_end: undefined,
       },
-      apply () {
-        this.$emit('apply')
-      }
+    }
+  },
+  methods: {
+    reset () {
+      this.$emit('reset')
+    },
+    apply () {
+      this.$emit('apply')
     }
   }
+}
 </script>
 
 <style lang="scss">
-  @import "../reports";
+@import "../reports";
 </style>
