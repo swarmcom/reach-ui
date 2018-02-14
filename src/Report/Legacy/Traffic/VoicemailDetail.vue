@@ -1,14 +1,15 @@
 <template>
-  <div style="margin-top: 20px"><strong>{{ title }}</strong> - To be added</div>
+  <div style="margin-top: 20px">
+    <strong>{{ title }}</strong> - To be added</div>
 </template>
 
 <script>
-  export default {
-    name: 'VoicemailDetail',
-    data () {
-      return {
-        title: 'Voicemail Detail'
-      }
+export default {
+  name: 'VoicemailDetail',
+  data () {
+    return {
+      title: 'Voicemail Detail'
     }
   }
+}
 </script>

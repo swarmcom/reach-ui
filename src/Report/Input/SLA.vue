@@ -8,30 +8,30 @@
 </template>
 
 <script>
-  export default {
-    name: 'sla-input',
-    props: {
-      value: {
-        type: Number,
-        required: true
-      }
-    },
-    data () {
-      return {
-        sla: this.value
-      }
-    },
-    methods: {
-      checkValue(v) {
-        this.sla = Number(v)
-        this.$emit('input', this.sla)
-      }
-    },
-    watch: {
-      value (v) {
-        this.sla = v
-        return v
-      }
+export default {
+  name: 'sla-input',
+  props: {
+    value: {
+      type: Number,
+      required: true
+    }
+  },
+  data () {
+    return {
+      sla: this.value
+    }
+  },
+  methods: {
+    checkValue (v) {
+      this.sla = Number(v)
+      this.$emit('input', this.sla)
+    }
+  },
+  watch: {
+    value (v) {
+      this.sla = v
+      return v
     }
   }
+}
 </script>
