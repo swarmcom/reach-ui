@@ -1,7 +1,7 @@
 <template>
 <div class="form-inline">
-<autocomplete v-model="obj" :query="query" placeholder="Client..."></autocomplete>
-<button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="obj in selected" @click="remove(obj)">{{obj.name}}</button>
+  <autocomplete v-model="obj" :query="query" placeholder="Client..."></autocomplete>
+  <button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="obj in selected" :key="obj.id" @click="remove(obj)">{{obj.name}}</button>
 </div>
 </template>
 

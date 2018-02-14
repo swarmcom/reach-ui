@@ -11,10 +11,10 @@
   <b-row><b-col><agents v-model="agents" @add="set('agent', $event)" @remove="unset('agent', $event)"></agents></b-col></b-row>
 
   <b-row style="margin-top: 20px"><b-col><h3>Lines In:</h3></b-col></b-row>
-  <b-row><b-col><line_ins v-model="line_ins" @add="set('line_in', $event)" @remove="unset('line_in', $event)"></line_ins></b-col></b-row>
+  <b-row><b-col><line-ins v-model="line_ins" @add="set('line_in', $event)" @remove="unset('line_in', $event)"></line-ins></b-col></b-row>
 
   <b-row style="margin-top: 20px"><b-col><h3>Lines Out:</h3></b-col></b-row>
-  <b-row><b-col><line_outs v-model="line_outs" @add="set('line_out', $event)" @remove="unset('line_out', $event)"></line_outs></b-col></b-row>
+  <b-row><b-col><line-outs v-model="line_outs" @add="set('line_out', $event)" @remove="unset('line_out', $event)"></line-outs></b-col></b-row>
 
 </div>
 </template>
@@ -34,8 +34,8 @@ export default {
     'queues': Queues,
     'clients': Clients,
     'agents': Agents,
-    'line_ins': LineIns,
-    'line_outs': LineOuts
+    'line-ins': LineIns,
+    'line-outs': LineOuts
   },
   props: ['id'],
   data () {
