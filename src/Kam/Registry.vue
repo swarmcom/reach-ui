@@ -6,11 +6,19 @@
     </div>
   </div>
 
+  <b-row style="margin-top:10px">
+    <b-col>
+      <button @click="flush" class="btn btn-danger">Flush</button>
+    </b-col>
+  </b-row>
+
+
   <b-table style="margin-top:10px" striped hover small :items="registry" :fields="fields">
     <template slot="agent" slot-scope="data">
       {{ data.item.name }}
     </template>
   </b-table>
+
 </div>
 </template>
 
@@ -36,6 +44,9 @@ export default {
     query: async function () {
       this.registry = await this.$agent.p_mfa('ws_kam_registry', 'get')
     },
+    flush: async function () {
+      this.registry = await this.$agent.p_mfa('ws_kam_registry', 'flush')
+    }
   },
   created () {
     this.query()
