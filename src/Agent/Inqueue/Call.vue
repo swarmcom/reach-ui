@@ -1,57 +1,80 @@
 <template>
 <div style="margin-top: 10px" v-if="visible && !this.$agent.is_wrapup()">
-<b-row v-if="lua_result">
-  <b-col>{{lua_result}}</b-col>
-</b-row>
+  <b-row v-if="lua_result">
+    <b-col>{{lua_result}}</b-col>
+  </b-row>
 
-<b-row>
-  <b-col cols="2">
-    <div class="call-phone-center"><icon style="color:#838383" name="mobile" scale="4"></icon></div>
-  </b-col>
-  <b-col cols="5">
-    <dl class="row agent-state-text">
-      <dt class="col-sm-12 session-manager-text">Incoming Call:</dt>
-      <dd class="col-sm-5">Queue:</dd>
-      <dd class="col-sm-7">{{ this.inqueue.queue.name }}</dd>
-      <dd v-if="!this.$agent.is_ringing()" class="col-sm-5">Wait Time:</dd>
-      <dd v-if="!this.$agent.is_ringing()" class="col-sm-7">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
-    </dl>
-  </b-col>
-  <b-col cols="5">
-    <dl class="row agent-state-text">
-      <dt class="col-sm-12 session-manager-text">Skills:</dt>
-      <dd class="col-sm-6">Requested skills:</dd>
-      <dd class="col-sm-6">
-        <b-row>
-          <b-col cols="12" v-for="(v, k, index) in this.inqueue.queue.skills" key="index">{{k}}</b-col>
-        </b-row>
-      </dd>
-      <dd class="col-sm-6">Matched Skills:</dd>
-      <dd class="col-sm-6">
-        <b-row>
-          <b-col cols="12" v-for="(v, k, index) in this.inqueue.skills" key="index">{{k}}</b-col>
-        </b-row>
-      </dd>
-      <dt class="col-sm-6">Transferers:</dt>
-      <dd class="col-sm-6">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
-    </dl>
-  </b-col>
-</b-row>
-<b-row>
-  <b-col cols="2">
-    <div class="call-hand-center">
-      <b-img v-if="this.inqueue.line_in.client.avatar" :src="$agent.get_rr_uri()+'/avatar/'+this.inqueue.line_in.client.avatar" style="width:64px;"/>
-      <icon v-else style="color:#838383" name="handshake-o" scale="4"></icon>
-    </div>
-  </b-col>
-  <b-col cols="5">
-    <dl class="row agent-state-text">
-      <dt class="col-sm-12 session-manager-text">{{ this.inqueue.line_in.client.name }}</dt>
-      <dd class="col-sm-12">{{ isDefined(this.call_info['Caller-Caller-ID-Name']) + ' ' + this.call_info['Caller-Orig-Caller-ID-Number'] }} </dd>
-    </dl>
-  </b-col>
-</b-row>
-</div><!-- container -->
+  <b-row>
+    <b-col cols="2">
+      <div class="call-phone-center">
+        <icon style="color:#838383" name="mobile" scale="4"></icon>
+      </div>
+    </b-col>
+    <b-col cols="5">
+      <dl class="row agent-state-text">
+        <dt class="col-sm-12 session-manager-text">Incoming Call:</dt>
+        <dd class="col-sm-5">Queue:</dd>
+        <dd class="col-sm-7">{{ this.inqueue.queue.name }}</dd>
+        <dd v-if="!this.$agent.is_ringing()" class="col-sm-5">Wait Time:</dd>
+        <dd v-if="!this.$agent.is_ringing()" class="col-sm-7">{{ msToHms(this.$agent.vm.wait_time) }}</dd>
+      </dl>
+    </b-col>
+    <b-col cols="5">
+      <dl class="row agent-state-text">
+        <dt class="col-sm-12 session-manager-text">Skills:</dt>
+        <dd class="col-sm-12">Requested skills:</dd>
+        <dd class="col-sm-12">
+          <b-row>
+            <b-col cols="6" offset="1">queue:</b-col>
+            <b-row>
+              <b-col cols="12" v-for="(v, k, index) in inqueue.queue.skills" :key="index">{{k}}</b-col>
+            </b-row>
+          </b-row>
+          <b-row>
+            <b-col cols="6" offset="1">queue group:</b-col>
+            <b-row>
+              <b-col cols="6" v-for="(v, k, index) in inqueue.queue.group.skills" :key="index">{{k}}</b-col>
+            </b-row>
+          </b-row>
+          <b-row>
+            <b-col cols="6" offset="1">line:</b-col>
+            <b-row>
+              <b-col cols="6" v-for="(v, k, index) in inqueue.line_in.skills" :key="index">{{k}}</b-col>
+            </b-row>
+          </b-row>
+          <b-row>
+            <b-col cols="6" offset="1">client:</b-col>
+            <b-row>
+              <b-col cols="12" v-for="(v, k, index) in inqueue.line_in.client.skills" :key="index">{{k}}</b-col>
+            </b-row>
+          </b-row>
+        </dd>
+        <dd class="col-sm-6">Matched Skills:</dd>
+        <dd class="col-sm-6">
+          <b-row>
+            <b-col cols="12" v-for="(v, k, index) in this.inqueue.skills" :key="index">{{k}}</b-col>
+          </b-row>
+        </dd>
+        <dt class="col-sm-6">Transferers:</dt>
+        <dd class="col-sm-6">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd>
+      </dl>
+    </b-col>
+  </b-row>
+  <b-row>
+    <b-col cols="2">
+      <div class="call-hand-center">
+        <b-img v-if="this.inqueue.line_in.client.avatar" :src="$agent.get_rr_uri()+'/avatar/'+this.inqueue.line_in.client.avatar" style="width:64px;" />
+        <icon v-else style="color:#838383" name="handshake-o" scale="4"></icon>
+      </div>
+    </b-col>
+    <b-col cols="5">
+      <dl class="row agent-state-text">
+        <dt class="col-sm-12 session-manager-text">{{ this.inqueue.line_in.client.name }}</dt>
+        <dd class="col-sm-12">{{ isDefined(this.call_info['Caller-Caller-ID-Name']) + ' ' + this.call_info['Caller-Orig-Caller-ID-Number'] }} </dd>
+      </dl>
+    </b-col>
+  </b-row>
+</div>
 </template>
 
 <script>
@@ -87,7 +110,7 @@ export default {
     queryCall: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
-    onTimer() {
+    onTimer () {
       if (this.inqueue.time) {
         this.inqueue.time += 1000
       }
@@ -99,7 +122,7 @@ export default {
       this.handleInqueueLua(Re.value)
     },
     handleInqueueLua (LuaRe) {
-      if (LuaRe && typeof(LuaRe) == 'object') {
+      if (LuaRe && typeof LuaRe == 'object') {
         let [Type, Value] = LuaRe
         if (Type == "embed") {
           this.lua_result = Value
@@ -113,12 +136,12 @@ export default {
         return
       } else if (Notification.permission === "granted" && this.inqueue.line_in) {
         let body = `Number: ${this.call_info['Caller-Destination-Number']}\nClient: ${this.inqueue.line_in.client.name}\nQueue: ${this.inqueue.queue.name}`
-        this.notification = new Notification("Incoming call", {body: body})
+        this.notification = new Notification("Incoming call", { body: body })
       } else if (Notification.permission !== 'denied') {
         Notification.requestPermission()
       }
     },
-    handleState ({state}) {
+    handleState ({ state }) {
       this.inqueue.state = state.state
       if (state.state === 'conference')
         this.queryCall()
