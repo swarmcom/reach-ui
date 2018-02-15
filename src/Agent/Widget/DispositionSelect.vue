@@ -1,6 +1,6 @@
 <template>
 <div>
-  <b-form-select size="sm" v-model="selected" :disabled="isDisabled()" >
+  <b-form-select size="sm" v-model="selected" :disabled="isDisabled()" @change="disposition">
     <option :value="null" disabled>Disposition</option>
     <option v-for="r in dispositions" :key="r.id" :value="r.id">{{r.name}}</option>
   </b-form-select>
