@@ -39,18 +39,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Help from '@/Role/Supervisor/Help'
-import Main from '@/Role/Supervisor/Main'
 import Admin from '@/Role/Supervisor/Admin'
-import Monitor from '@/Role/Supervisor/Monitor'
-
 import AdminRoutes from '@/routes/admin'
-import ReportRoutes from '@/routes/report'
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: Admin, children: AdminRoutes },
-    { path: '/help', component: Help }
+    { path: '/', component: Admin, children: AdminRoutes }
   ]
 })
 

@@ -36,7 +36,7 @@ import TagGroup from '@/Admin/Tag/Group'
 import Tags from '@/Admin/Tags'
 import Permissions from '@/Admin/Permissions'
 import Params from '@/Admin/Params'
-
+import License from '@/Admin/License'
 import Acls from '@/Admin/Acls'
 import Acl from '@/Admin/ACL/Group'
 import AclEntries from '@/Admin/ACL/Entries'
@@ -47,6 +47,7 @@ export default [
   { path: 'agent/persistent', component: PersistentAgents },
   { path: 'queues', component: Queues },
   { path: 'params', component: Params },
+  { path: 'license', component: License },
   { path: 'queue_groups', component: QueueGroups },
   { path: 'agent_groups', component: AgentGroups },
   { path: 'releases', component: Releases },
