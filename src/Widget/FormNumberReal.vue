@@ -27,7 +27,7 @@
     },
     methods: {
       onUpdate (Value) {
-        if (Value.toString().match(/^[0-9.]+$/gi)) {
+        if (Value.toString().match(/^[0-9.]+$/gi) || Value.toString() === "") {
           this.$emit('input', Value)
           this.filterState = null
         }
