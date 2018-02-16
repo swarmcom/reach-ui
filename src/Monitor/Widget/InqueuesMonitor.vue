@@ -10,22 +10,22 @@
         <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState"
                       placeholder="Search..." style="margin-top:10px"></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedMedia" style="margin-top:10px">
-          <option v-for="media in this.medias" :value=media.value>{{media.name}}</option>
+          <option v-for="media in this.medias" :value=media.value :key=media.name>{{media.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedQueue" style="margin-top:10px">
-          <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
+          <option v-for="queue in this.queues" :value=queue.name :key="queue.name">{{queue.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedLine" style="margin-top:10px">
-          <option v-for="line in this.lines" :value=line.name>{{line.name}}</option>
+          <option v-for="line in this.lines" :value=line.name :key="line.name">{{line.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
-          <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
+          <option v-for="client in this.clients" :value=client.name :key="client.name">{{client.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
-          <option v-for="state in this.states" :value=state.value>{{state.name}}</option>
+          <option v-for="state in this.states" :value=state.value :key="state.name">{{state.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedSkill" style="margin-top:10px">
-          <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
+          <option v-for="skill in this.tags" :value=skill :key="skill">{{skill}}</option>
         </b-form-select>
       </b-col>
       <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px">
@@ -36,21 +36,18 @@
                  :sort-by="sortBy"
                  :sort-desc="sortDesc"
                  @sort-changed="onSortingChanged">
-          <template slot="actions" slot-scope="data">
-            <b-row class="text-center">
+          <template slot="row-details" slot-scope="data">
+            <b-row>
               <b-col>
-                <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                  <b-dropdown-item v-access:takeCallQueue-feature
-                                   v-if="data.item.state === 'inqueue' || data.item.state === 'agent'"
-                                   @click="take(data.item)">Take
-                  </b-dropdown-item>
-                  <b-dropdown-item
-                    v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())"
-                    @click="spy(data.item)">Monitor
-                  </b-dropdown-item>
-                  <b-dropdown-item v-access:hangupCallQueue-feature @click="hangup(data.item)">Hangup
-                  </b-dropdown-item>
-                </b-dropdown>
+                <b-button class="pointer" v-access:takeCallQueue-feature v-if="data.item.state === 'inqueue' || data.item.state === 'agent'" size="sm" @click="take(data.item)">
+                  Take
+                </b-button>
+                <b-button class="pointer" v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" size="sm" @click="spy(data.item)">
+                  Monitor
+                </b-button>
+                <b-button class="pointer" v-access:hangupCallQueue-feature size="sm" @click="hangup(data.item)">
+                  Hangup
+                </b-button>
               </b-col>
             </b-row>
           </template>
@@ -102,7 +99,6 @@ export default {
   data() {
     return {
       fields: {
-        actions: {label: 'Actions', thClass: "table-header-text-center"},
         media: {label: 'Media / Customer', thClass: "table-header-text-center", tdClass: "table-body-text-center"},
         state: {
           label: 'State',
@@ -219,8 +215,8 @@ export default {
       let inqueues = this.inqueues.slice(0)
       let compInqueues = []
       inqueues.forEach((key) => {
+        key._showDetails = true
         key._cellVariants = {
-          actions: 'success',
           media: 'primary',
           state: 'primary',
           line: 'primary',
