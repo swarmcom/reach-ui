@@ -34,7 +34,6 @@ export default {
             this.agents[i].date = new Date() - this.agents[i].time
           } else {
             this.agents.push(info)
-            this.agents[i].date = new Date() - this.agents[i].time
           }
         }
         else if (info.state === 'terminate') {
