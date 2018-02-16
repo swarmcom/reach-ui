@@ -10,6 +10,7 @@
   <b-row><b-col cols=1>Start:</b-col><b-col>{{ license.start }}</b-col></b-row>
   <b-row><b-col cols=1>End:</b-col><b-col>{{ license.end }}</b-col></b-row>
   <b-row><b-col cols=1>Users:</b-col><b-col>{{ license.users }}</b-col></b-row>
+  <b-row><b-col cols=1>Domain:</b-col><b-col>{{ license.domain }}</b-col></b-row>
 
   <b-row style="margin-top: 20px">
     <b-col>
@@ -60,7 +61,7 @@ export default {
               this.$notify({ title: 'Success:', text: 'License uploaded', type: 'success' })
               this.query()
             } else {
-              this.$notify({ title: 'Error:', text: 'Error uploading license', type: 'error' })
+              this.$notify({ title: 'Error:', text: re.error, type: 'error' })
             }
           })
         }
