@@ -3,6 +3,7 @@
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
       <interval v-model="interval"></interval>
+      <entity-selector v-model="clients" :query=clientsQuery entity="Clients"></entity-selector>
       <sla v-model="sla"></sla>
       <only-active v-model="onlyActive"></only-active>
     </div>
@@ -27,19 +28,21 @@
 </template>
 
 <script>
-import Report from "@/Report/Legacy/Report";
-import FromTo from "@/Report/Input/FromTo";
-import SLA from "@/Report/Input/SLA";
-import Interval from "@/Report/Input/Interval";
-import OnlyActive from "@/Report/Input/OnlyActive";
-import Moment from "moment";
+import Report from "@/Report/Legacy/Report"
+import FromTo from "@/Report/Input/FromTo"
+import EntitySelector from '@/Report/Input/EntitySelector'
+import SLA from "@/Report/Input/SLA"
+import Interval from "@/Report/Input/Interval"
+import OnlyActive from "@/Report/Input/OnlyActive"
+import Moment from "moment"
 
 export default {
   components: {
-    report: Report,
-    "from-to": FromTo,
-    sla: SLA,
-    interval: Interval,
+    'report': Report,
+    'from-to': FromTo,
+    'entity-selector': EntitySelector,
+    'sla': SLA,
+    'interval': Interval,
     "only-active": OnlyActive
   },
   data () {
@@ -128,6 +131,7 @@ export default {
           .format(),
         date_end: Moment().format()
       },
+      clients: [],
       reportFields: {
         name: "Client Traffic Detail",
         title: "Client Traffic Detail",
@@ -139,47 +143,44 @@ export default {
       sessions: [],
       onlyActive: "false",
       sla: 10,
-      interval: 60
-    };
+      interval: 60,
+      clientsQuery: function () {
+        return this.$agent.p_mfa('ws_agent', 'clients')
+      }
+    }
   },
   methods: {
     query: async function () {
-      this.setReportFields();
-      let qry = {};
-      qry.date_start = Moment(this.fromTo.date_start).unix();
-      qry.date_end = Moment(this.fromTo.date_end).unix();
-      qry.interval = this.interval * 60;
-      qry.sla = this.sla * 1000;
-      this.sessions = await this.$agent.p_mfa(
-        "ws_report",
-        "traffic_details_stats",
-        [qry]
-      );
+      this.setReportFields()
+      let date_start = Moment(this.fromTo.date_start).unix()
+      let date_end = Moment(this.fromTo.date_end).unix()
+      let interval = this.interval * 60
+      let sla = this.sla * 1000
+      let clientsIDs = this.clients.map(obj => obj.id)
+      this.sessions = await this.$agent.p_mfa('ws_report', 'traffic_details_stats', [date_start, date_end, interval, sla, 'client_id', clientsIDs])
     },
     reset () {
-      this.sessions = [];
+      this.sessions = []
       this.fromTo = {
-        date_start: Moment()
-          .subtract(1, "days")
-          .format(),
+        date_start: Moment().subtract(1, "days").format(),
         date_end: Moment().format()
-      };
-      this.onlyActive = "false";
-      this.sla = 10;
-      this.interval = 60;
+      }
+      this.onlyActive = "false"
+      this.sla = 10
+      this.interval = 60
     },
     hideEmpty (item) {
-      if (this.onlyActive === "false") return true;
+      if (this.onlyActive === "false") return true
       else {
-        if (item.call_count === 0) return false;
-        else return true;
+        if (item.call_count === 0) return false
+        else return true
       }
     },
     setReportFields () {
-      this.reportFields.from = new Moment(this.fromTo.date_start).format("LL");
-      this.reportFields.to = new Moment(this.fromTo.date_end).format("LL");
-      this.reportFields.interval = this.interval;
+      this.reportFields.from = new Moment(this.fromTo.date_start).format("LL")
+      this.reportFields.to = new Moment(this.fromTo.date_end).format("LL")
+      this.reportFields.interval = this.interval
     }
   }
-};
+}
 </script>
