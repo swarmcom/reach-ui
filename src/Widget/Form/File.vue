@@ -19,12 +19,13 @@ export default {
   props: ['label', 'value', 'placeholder', 'uri'],
   data () {
     return {
-      file: undefined
+      value: null,
+      file: null
     }
   },
   methods: {
     defined() {
-      return (this.value != undefined && this.value != "undefined")
+      return this.value
     },
     clear() {
       this.$emit("input", undefined)
