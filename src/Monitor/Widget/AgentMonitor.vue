@@ -11,19 +11,19 @@
         <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState"
                       placeholder="Search..." style="margin-top:10px"></b-form-input>
         <b-form-select class="pointer" size="sm" v-model="selectedProfile" style="margin-top:10px">
-          <option v-for="group in this.groups_select" :value=group.name>{{group.name}}</option>
+          <option v-for="group in this.groups_select" :value=group.name :key=group.id>{{group.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
-          <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
+          <option v-for="client in this.clients" :value=client.name :key=client.id>{{client.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
-          <option v-for="state in this.states" :value=state.name>{{state.name}}</option>
+          <option v-for="(state, index) in this.states" :value=state.name :key=index>{{state.name}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="selectedSkill" style="margin-top:10px">
-          <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
+          <option v-for="(skill, index) in this.tags" :value=skill :key="index">{{skill}}</option>
         </b-form-select>
         <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period" style="margin-top:10px">
-          <option v-for="period in periods" :value="period.value">{{period.name}}</option>
+          <option v-for="(period, index) in periods" :value="period.value" :key="index">{{period.name}}</option>
         </b-form-select>
       </b-col>
       <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px;">
@@ -36,42 +36,36 @@
                      :sort-by="sortBy"
                      :sort-desc="sortDesc"
                      @sort-changed="onSortingChanged">
-              <template slot="actions" slot-scope="data">
-                <b-row class="text-center">
+              <template slot="row-details" slot-scope="data">
+                <b-row>
                   <b-col>
-                    <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                      <b-dropdown-item v-access:controlAgentState-feature v-if="data.item.state === 'release'"
-                                       @click="available(data.item)">Available
-                      </b-dropdown-item>
-                      <b-dropdown-item v-access:controlAgentState-feature v-else @click="release(data.item)">Release
-                      </b-dropdown-item>
-                      <b-dropdown-item @click="stop(data.item)">Kill</b-dropdown-item>
-                      <b-dropdown-item v-access:takeOver-feature v-if="allowTakeOver(data.item.state)"
-                                       @click="takeover(data.item)">Take Over
-                      </b-dropdown-item>
-                      <b-dropdown-item v-access:monitor-feature v-if="allowSpy(data.item.state)"
-                                       @click="spy(data.item)">Monitor
-                      </b-dropdown-item>
-                      <b-dropdown-item v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
-                                       @click="cancelSpy()">Stop Monitor
-                      </b-dropdown-item>
-                      <b-dropdown-header
-                        v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id">
-                        Monitor actions
-                      </b-dropdown-header>
-                      <b-dropdown-item v-access:monitor-feature
-                                       v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
-                                       @click="setMode('spy')">Spy
-                      </b-dropdown-item>
-                      <b-dropdown-item v-access:barge-feature
-                                       v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
-                                       @click="setMode('barge')">Barge
-                      </b-dropdown-item>
-                      <b-dropdown-item v-access:whisper-feature
-                                       v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id"
-                                       @click="setMode('agent')">Whisper
-                      </b-dropdown-item>
-                    </b-dropdown>
+                    <b-button class="pointer" v-access:controlAgentState-feature v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
+                      Available
+                    </b-button>
+                    <b-button class="pointer" v-access:controlAgentState-feature v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
+                      Release
+                    </b-button>
+                    <b-button class="pointer" size="sm" @click="stop(data.item)">
+                      Kill
+                    </b-button>
+                    <b-button class="pointer" v-access:monitor-feature v-if="allowSpy(data.item.state)" size="sm" @click="spy(data.item)">
+                      Monitor
+                    </b-button>
+                    <b-button class="pointer" v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="cancelSpy(data.item)">
+                      Stop Monitor
+                    </b-button>
+                    <b-button class="pointer" v-access:takeOver-feature v-if="allowTakeOver(data.item.state)" size="sm" @click="takeover(data.item)">
+                      Take Over
+                    </b-button>
+                    <b-button class="pointer" v-access:monitor-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('spy')">
+                      Spy
+                    </b-button>
+                    <b-button class="pointer" v-access:barge-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('barge')">
+                      Barge
+                    </b-button>
+                    <b-button class="pointer" v-access:barge-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('agent')">
+                      Whisper
+                    </b-button>
                   </b-col>
                 </b-row>
               </template>
@@ -345,7 +339,6 @@ export default {
   data() {
     return {
       fields: {
-        actions: {label: 'Actions', thClass: "table-header-text-center"},
         agentDetail: {label: 'Agent Details', thClass: "table-header-text-center"},
         agentOccup: {
           label: 'Occup',
@@ -445,6 +438,9 @@ export default {
     },
     onTimer() {
       this.agents.forEach((E, i, A) => {
+        if (E.date == undefined) {
+          E.date = new Date()
+        }
         E.time = new Date() - E.date
         A.splice(i, 1, E)
       })
@@ -547,8 +543,8 @@ export default {
       let agents = this.agents.slice(0)
       let compAgents = []
       agents.forEach((key) => {
+        key._showDetails = true
         key._cellVariants = {
-          actions: 'success',
           agentDetail: 'primary',
           agentOccup: 'primary',
           agentMyCpt: 'primary',
