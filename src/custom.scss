@@ -252,6 +252,13 @@ body {
   cursor: pointer;
 }
 
+.pointerLink {
+  cursor: pointer;
+}
+.pointerLink:hover {
+  color: #007bff !important
+}
+
 .deactivate {
   display: none;
 }
