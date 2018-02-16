@@ -3,6 +3,7 @@
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
       <interval v-model="interval"></interval>
+      <entity-selector v-model="queues" :query=queuesQuery entity="Queues"></entity-selector>
       <sla v-model="sla"></sla>
       <only-active v-model="onlyActive"></only-active>
     </div>
@@ -29,6 +30,7 @@
 <script>
 import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
+import EntitySelector from '@/Report/Input/EntitySelector'
 import SLA from '@/Report/Input/SLA'
 import Interval from '@/Report/Input/Interval'
 import OnlyActive from '@/Report/Input/OnlyActive'
@@ -39,6 +41,7 @@ export default {
   components: {
     'report': Report,
     'from-to': FromTo,
+    'entity-selector': EntitySelector,
     'sla': SLA,
     'interval': Interval,
     'only-active': OnlyActive
@@ -128,6 +131,7 @@ export default {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format(),
       },
+      queues: [],
       reportFields: {
         name: 'Queue Traffic Detail',
         title: 'Queue Traffic Detail',
@@ -139,7 +143,11 @@ export default {
       sessions: [],
       onlyActive: 'false',
       sla: 10,
-      interval: 60
+      interval: 60,
+      queuesQuery: function () {
+        return this.$agent.p_mfa('ws_agent', 'queues')
+      }
+       
     }
   },
   methods: {
@@ -147,12 +155,12 @@ export default {
       this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
       this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
       this.reportFields.interval = this.interval
-      let qry = {}
-      qry.date_start = Moment(this.fromTo.date_start).unix()
-      qry.date_end = Moment(this.fromTo.date_end).unix()
-      qry.interval = this.interval * 60
-      qry.sla = this.sla * 1000
-      this.sessions = await this.$agent.p_mfa('ws_report', 'traffic_details_stats', [qry])
+      let date_start = Moment(this.fromTo.date_start).unix()
+      let date_end = Moment(this.fromTo.date_end).unix()
+      let interval = this.interval * 60
+      let sla = this.sla * 1000
+      let queuesIDs = this.queues.map(obj => obj.id)
+      this.sessions = await this.$agent.p_mfa('ws_report', 'traffic_details_stats', [date_start, date_end, interval, sla, 'queue_id', queuesIDs])
     },
     reset () {
       this.fromTo = {

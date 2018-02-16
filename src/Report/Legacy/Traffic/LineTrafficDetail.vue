@@ -3,6 +3,7 @@
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
       <interval v-model="interval"></interval>
+      <entity-selector v-model="lines" :query=linesQuery entity="Lines"></entity-selector>
       <sla v-model="sla"></sla>
       <only-active v-model="onlyActive"></only-active>
     </div>
@@ -29,6 +30,7 @@
 <script>
 import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
+import EntitySelector from '@/Report/Input/EntitySelector'
 import SLA from '@/Report/Input/SLA'
 import Interval from '@/Report/Input/Interval'
 import OnlyActive from '@/Report/Input/OnlyActive'
@@ -38,6 +40,7 @@ export default {
   components: {
     'report': Report,
     'from-to': FromTo,
+    'entity-selector': EntitySelector,
     'sla': SLA,
     'interval': Interval,
     'only-active': OnlyActive
@@ -127,6 +130,7 @@ export default {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format(),
       },
+      lines: [],
       reportFields: {
         name: 'Line Traffic Detail',
         title: 'Line Traffic Detail',
@@ -138,18 +142,21 @@ export default {
       sessions: [],
       onlyActive: 'false',
       sla: 10,
-      interval: 60
+      interval: 60,
+      linesQuery: function() {
+        return this.$agent.p_mfa('ws_agent', 'lines_in')
+      }
     }
   },
   methods: {
     query: async function () {
       this.setReportFields()
-      let qry = {}
-      qry.date_start = Moment(this.fromTo.date_start).unix()
-      qry.date_end = Moment(this.fromTo.date_end).unix()
-      qry.interval = this.interval * 60
-      qry.sla = this.sla * 1000
-      this.sessions = await this.$agent.p_mfa('ws_report', 'traffic_details_stats', [qry])
+      let date_start = Moment(this.fromTo.date_start).unix()
+      let date_end = Moment(this.fromTo.date_end).unix()
+      let interval = this.interval * 60
+      let sla = this.sla * 1000
+      let linesIDs = this.lines.map(obj => obj.id)
+      this.sessions = await this.$agent.p_mfa('ws_report', 'traffic_details_stats', [date_start, date_end, interval, sla, 'line_in_id', linesIDs])
     },
     reset () {
       this.fromTo = {

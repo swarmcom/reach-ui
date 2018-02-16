@@ -8,7 +8,7 @@
   <b-row><b-col><queue-groups v-model="queue_groups" @add="set('queue_group', $event)" @remove="unset('queue_group', $event)"></queue-groups></b-col></b-row>
 
   <b-row style="margin-top: 20px"><b-col><h3>Clients:</h3></b-col></b-row>
-  <b-row><b-col><clients v-model="clients" @add="set('client', $event)" @remove="unset('clients', $event)"></clients></b-col></b-row>
+  <b-row><b-col><clients v-model="clients" @add="set('client', $event)" @remove="unset('client', $event)"></clients></b-col></b-row>
 
   <b-row style="margin-top: 20px"><b-col><h3>Agents:</h3></b-col></b-row>
   <b-row><b-col><agents v-model="agents" @add="set('agent', $event)" @remove="unset('agent', $event)"></agents></b-col></b-row>

@@ -1,15 +1,142 @@
 <template>
-  <div style="margin-top: 20px">
-    <strong>{{ title }}</strong> - To be added</div>
+  <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
+    <div slot="input-controls">
+      <from-to v-model="fromTo"></from-to>
+      <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+    </div>
+    <div slot="report">
+      <table>
+        <tr>
+          <td class='table-sm table-header-group' style="width: 383px; max-width: 383px; min-width: 383px">
+            Agent
+          </td>
+          <td class='table-sm table-header-group' :style='dispColGroupWidth'>
+            Disposition Breakdown
+          </td>
+        </tr>
+      </table>
+      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields">
+      </b-table>
+    </div>
+  </report>
 </template>
 
 <script>
+import Report from '@/Report/Legacy/Report'
+import FromTo from '@/Report/Input/FromTo'
+import EntitySelector from '@/Report/Input/EntitySelector'
+import Moment from 'moment'
+
 export default {
   name: 'AgentCallDisposition',
+  components: {
+    'report': Report,
+    'from-to': FromTo,
+    'entity-selector': EntitySelector
+  },
   data () {
     return {
-      title: "Agent Call Disposition"
+      fields: [],
+      fromTo: {
+        date_start: Moment().subtract(1, 'days').format(),
+        date_end: Moment().format(),
+      },
+      agents: [],
+      reportFields: {
+        name: 'Agent Call Disposition',
+        title: 'Agent Call Disposition',
+        from: undefined,
+        to: undefined
+      },
+      dispColGroupWidth: undefined,
+      sessions: [],
+      agentsQuery: function() {
+        return this.$agent.p_mfa('ws_agent', 'agents')
+      }
+    }
+  },
+  methods: {
+    query: async function () {
+      this.setReportFields()
+      let date_start = Moment(this.fromTo.date_start).unix()
+      let date_end = Moment(this.fromTo.date_end).unix()
+      let agentIDs = this.agents.map(obj => obj.id)
+      
+      let data = await this.$agent.p_mfa('ws_report', 'agent_call_disposition', [date_start, date_end, agentIDs])
+      this.generateTableColumns(data)
+      this.sessions = data
+    },
+    reset () {
+      this.sessions = []
+      this.fields = []
+      this.fromTo = {
+        date_start: Moment().subtract(1, 'days').format(),
+        date_end: Moment().format()
+      }
+    },
+    setReportFields () {
+      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
+      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+    },
+    generateTableColumns (data) {
+      this.fields = [
+        {
+          key: 'agent_id',
+          label: 'Name',
+          tdClass: 'table-body-blue',
+          thClass: 'table-header',
+          thStyle: { width: '120px' }
+        },
+        {
+          key: 'agent_group',
+          label: 'Agent Group',
+          tdClass: 'table-body-blue',
+          thClass: 'table-header',
+          thStyle: { width: '120px' }
+        },
+        {
+          key: 'login',
+          label: 'Login',
+          tdClass: 'table-body-blue',
+          thClass: 'table-header',
+          thStyle: { width: '70px' }
+        },
+        {
+          key: 'calls',
+          label: 'Total Calls Handled',
+          tdClass: ['table-body-blue-last-in-group', 'text-align-right'],
+          thClass: 'table-header-last-in-group',
+          thStyle: { width: '73px' },
+          formatter: v => v ? v : 0
+        }
+      ]
+      let dispFields = [], dispKeys = new Set(), dispColGroupWidth = 2
+      data.forEach(function (row, index) {
+        Object.keys(row.dispositions).forEach(function (key) {
+          if (!dispKeys.has(key)) {
+            dispKeys.add(key)
+            let field = {
+              key: key,
+              label: key,
+              tdClass: [
+                'table-body-orange', 'text-align-right'],
+              thClass: 'table-header',
+              thStyle: { width: '70px' },
+              formatter: (_v, _, item) => (item.dispositions[key] !== undefined) ? item.dispositions[key] : 0
+            }
+            dispFields.push(field)
+            dispColGroupWidth += 70
+          }
+        })
+      })
+      this.dispColGroupWidth = {
+        'width': dispColGroupWidth+'px',
+        'max-width': dispColGroupWidth+'px',
+        'min-width': dispColGroupWidth+'px'
+      }
+      this.fields = this.fields.concat(dispFields)
     }
   }
 }
 </script>
+
