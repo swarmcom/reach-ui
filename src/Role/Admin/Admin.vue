@@ -43,6 +43,10 @@
     <router-link class="nav-link" to="/params">Params</router-link>
   </li>
 
+  <li class="nav-item">
+    <router-link class="nav-link" to="/license">License</router-link>
+  </li>
+
 </ul>
 <transition name="reach" mode="out-in">
   <router-view style="margin-top: 20px"></router-view>
