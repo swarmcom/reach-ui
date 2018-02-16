@@ -168,6 +168,7 @@ export default class Agent extends WsProto {
   handleAuth (Re, Cb = (A) => A) {
     if (Re && Re.reply) {
       this.vm.agent = Re.reply
+      $('title').text(`Reach: ${this.vm.agent.name}`)
       localStorage.setItem('session-key', Re.reply.session_key)
     } else {
       this.vm.agent = null
