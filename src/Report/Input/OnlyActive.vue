@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form-checkbox id="checkbox1" :checked="status" @change="onChange" value="true" unchecked-value="false" style="padding-bottom: 30px" size="sm">
-      Show Only Intervals with Activity
+      {{caption}}
     </b-form-checkbox>
   </div>
 </template>
@@ -9,7 +9,15 @@
 <script>
 export default {
   name: 'only-active-input',
-  props: ['value'],
+  props: {
+    value: {
+      required: true
+    },
+    caption: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       status: this.value

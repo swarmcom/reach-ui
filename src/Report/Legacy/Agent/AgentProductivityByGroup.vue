@@ -27,7 +27,7 @@
 import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
 import Moment from 'moment'
-import momentDurationFormatSetup from 'moment-duration-format'
+import 'moment-duration-format'
 
 export default {
   name: 'AgentProductivityByGroup',
