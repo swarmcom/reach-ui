@@ -114,6 +114,7 @@ export default {
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
+          sortable: true,
           formatter: (v, _, item) => (item.call_count !== undefined && item.call_count !== 0) ? (100*item.abandoned/item.call_count).toFixed(1)+'%' : 'NA'
         },
         cpt: {
