@@ -50,7 +50,7 @@ export default {
       },
       dispColGroupWidth: undefined,
       sessions: [],
-      agentsQuery: function() {
+      agentsQuery: function () {
         return this.$agent.p_mfa('ws_agent', 'agents')
       }
     }
@@ -60,15 +60,15 @@ export default {
       this.setReportFields()
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
-      let agentIDs = this.agents.map(obj => obj.id)
-      
-      let data = await this.$agent.p_mfa('ws_report', 'agent_call_disposition', [date_start, date_end, agentIDs])
+      let agentsIDs = this.agents.map(obj => obj.id)
+      let data = await this.$agent.p_mfa('ws_report', 'agent_call_disposition', [date_start, date_end, agentsIDs])
       this.generateTableColumns(data)
       this.sessions = data
     },
     reset () {
       this.sessions = []
       this.fields = []
+      this.agents = []
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -78,6 +78,18 @@ export default {
       this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
       this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
     },
+    findName (id) {
+      let obj = this.agents.find(v => { return v.id === id })
+      return obj.name
+    },
+    findLogin (id) {
+      let obj = this.agents.find(v => { return v.id === id })
+      return obj.login
+    },
+    findProfileName (id) {
+      let obj = this.agents.find(v => { return v.id === id })
+      return (obj.group.name !== undefined) ? obj.group.name : "No Profile"
+    },
     generateTableColumns (data) {
       this.fields = [
         {
@@ -85,21 +97,25 @@ export default {
           label: 'Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '120px' }
+          thStyle: { width: '120px' },
+          sortable: true,
+          formatter: v => this.findName(v)
         },
         {
           key: 'agent_group',
           label: 'Agent Group',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '120px' }
+          thStyle: { width: '120px' },
+          formatter: (_v, _, item) => this.findProfileName(item.agent_id)
         },
         {
           key: 'login',
           label: 'Login',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '70px' }
+          thStyle: { width: '70px' },
+          formatter: (_v, _, item) => this.findLogin(item.agent_id)
         },
         {
           key: 'calls',
@@ -107,6 +123,7 @@ export default {
           tdClass: ['table-body-blue-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
           thStyle: { width: '73px' },
+          sortable: true,
           formatter: v => v ? v : 0
         }
       ]
