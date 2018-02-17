@@ -5,7 +5,7 @@
       <interval v-model="interval"></interval>
       <entity-selector v-model="queues" :query=queuesQuery entity="Queues"></entity-selector>
       <sla v-model="sla"></sla>
-      <only-active v-model="onlyActive"></only-active>
+      <only-active v-model="onlyActive" caption="Show Only Intervals with Activity"></only-active>
     </div>
     <div slot="report">
       <table>
@@ -19,9 +19,6 @@
         </tr>
       </table>
       <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
-        <template slot="abandoned_percent" slot-scope="data">
-          {{ (data.item.call_count != 0) ? (100*data.item.abandoned/data.item.call_count).toFixed(1)+'%' : 'NA' }}
-        </template>
       </b-table>
     </div>
   </report>
@@ -67,64 +64,73 @@ export default {
           label: 'Total Calls Offered',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          sortable: true
         },
         ring_count: {
           label: 'Offered to Agent',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          sortable: true
         },
         answered_count: {
           label: 'Answered by Agent',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          sortable: true
         },
         voicemail: {
           label: 'Sent to Voicemail',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          sortable: true
         },
         transferred_out: {
           label: 'Transferred Out',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          sortable: true
         },
         abandoned: {
           label: 'Total Abandoned',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          sortable: true
         },
         sla_count: {
           label: 'SLA',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          sortable: true
         },
         abandoned_percent: {
           label: 'Abandoned [%]',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          formatter: (v, _, item) => (item.call_count !== undefined && item.call_count !== 0) ? (100*item.abandoned/item.call_count).toFixed(1)+'%' : 'NA'
         },
         cpt: {
           label: 'CPT',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '73px' },
-          formatter: v => v ? new Moment(v, "x").format("mm:ss") : 'NA'
-
+          sortable: true,
+          formatter: (v, _, item) => (item.call_count !== undefined) ? this.durationFormatter(v) : 'NA'
         },
         asa: {
           label: 'ASA',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '70px' },
-          formatter: v => v ? new Moment(v, "x").format("mm:ss") : 'NA'
+          sortable: true,
+          formatter: (v, _, item) => (item.call_count !== undefined) ? this.durationFormatter(v) : 'NA'
         }
       },
       fromTo: {
@@ -163,6 +169,8 @@ export default {
       this.sessions = await this.$agent.p_mfa('ws_report', 'traffic_details_stats', [date_start, date_end, interval, sla, 'queue_id', queuesIDs])
     },
     reset () {
+      this.sessions = []
+      this.queues = []
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -179,6 +187,9 @@ export default {
         else
           return true
       }
+    },
+    durationFormatter (v) {
+      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }
