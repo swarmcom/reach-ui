@@ -113,9 +113,6 @@ export default {
       let date_end = Moment(this.fromTo.date_end).unix()
       let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
       this.sessions = await this.$agent.p_mfa('ws_report', 'agent_answer_performance', [date_start, date_end, agentGroupsIDs])
-      
-      
-      //this.sessions = await this.$agent.p_mfa('ws_report', 'agent_answer_performance', [qry.date_start, qry.date_end])
     },
     reset () {
       this.sessions = []
