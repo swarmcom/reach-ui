@@ -4,7 +4,7 @@
   <b-row><b-col><h3>Queues:</h3></b-col></b-row>
   <b-row><b-col><queues v-model="queues" @add="set('queue', $event)" @remove="unset('queue', $event)"></queues></b-col></b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Queue Group:</h3></b-col></b-row>
+  <b-row style="margin-top: 20px"><b-col><h3>Queue Groups:</h3></b-col></b-row>
   <b-row><b-col><queue-groups v-model="queue_groups" @add="set('queue_group', $event)" @remove="unset('queue_group', $event)"></queue-groups></b-col></b-row>
 
   <b-row style="margin-top: 20px"><b-col><h3>Clients:</h3></b-col></b-row>
@@ -13,7 +13,7 @@
   <b-row style="margin-top: 20px"><b-col><h3>Agents:</h3></b-col></b-row>
   <b-row><b-col><agents v-model="agents" @add="set('agent', $event)" @remove="unset('agent', $event)"></agents></b-col></b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Agent Group:</h3></b-col></b-row>
+  <b-row style="margin-top: 20px"><b-col><h3>Agent Groups:</h3></b-col></b-row>
   <b-row><b-col><agent-groups v-model="agent_groups" @add="set('agent_group', $event)" @remove="unset('agent_group', $event)"></agent-groups></b-col></b-row>
 
   <b-row style="margin-top: 20px"><b-col><h3>Lines In:</h3></b-col></b-row>
