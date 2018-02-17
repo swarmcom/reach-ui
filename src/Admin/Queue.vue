@@ -2,6 +2,7 @@
 <div class="form">
   <form-text label="Queue Name" v-model="rec.name"></form-text>
   <queue-groups label="Queue Group" v-model="rec.group_id"></queue-groups>
+  <queues label="Voicemail Queue" v-model="rec.voicemail_queue_id" :effective="eff.voicemail_queue_id"></queues>
   <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
   <mohs label="Music on hold" v-model="rec.moh_id" :effective="eff.moh_id"></mohs>
   <form-text label="Weight" v-model="rec.weight" :effective="eff.weight"></form-text>

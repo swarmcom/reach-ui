@@ -1,6 +1,7 @@
 <template>
 <div class="form">
   <form-text label="Queue Group Name" v-model="rec.name"></form-text>
+  <queues label="Voicemail Queue" v-model="rec.voicemail_queue_id"></queues>
   <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
   <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
   <form-text label="Aging" v-model="rec.aging_factor"></form-text>
