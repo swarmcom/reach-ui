@@ -2,6 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
+      <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
     </div>
     <div slot="report">
       <table>
@@ -29,13 +30,15 @@
 <script>
 import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
+import EntitySelector from '@/Report/Input/EntitySelector'
 import Moment from 'moment'
 
 export default {
   name: 'AgentActivityIndividual',
   components: {
     'report': Report,
-    'from-to': FromTo
+    'from-to': FromTo,
+    'entity-selector': EntitySelector
   },
   data () {
     return {
@@ -44,13 +47,16 @@ export default {
           label: 'Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '120px' }
+          thStyle: { width: '120px' },
+          sortable: true,
+          formatter: v => this.findName(v)
         },
         login: {
           label: 'Login',
           tdClass: 'table-body-blue-last-in-group',
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '67px' }
+          thStyle: { width: '67px' },
+          formatter: (_v, _, item) => this.findLogin(item.id)
         },
         in_answered: {
           label: 'Total Calls',
@@ -64,7 +70,7 @@ export default {
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
-          formatter: v => v ? Moment(v, "x").format("mm:ss") : Moment(0, "x").format("mm:ss")
+          formatter: v => v ? this.durationFormatter(v) : this.durationFormatter(0)
         },
         in_completed: {
           label: 'Completed Calls',
@@ -85,7 +91,7 @@ export default {
           tdClass: ['table-body-green-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
           thStyle: { width: '67px' },
-          formatter: v => v ? new Moment(v, "x").format("mm:ss") : 'NA'
+          formatter: (v, _, item) => v ? this.durationFormatter(v) : 'NA'
         },
         out_started: {
           label: 'Started Calls',
@@ -113,8 +119,7 @@ export default {
           tdClass: ['table-body-green-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
           thStyle: { width: '67px' },
-          formatter: v => v ? Moment(v, "x").format("mm:ss") : Moment(0, "x").format("mm:ss")
-
+          formatter: v => v ? this.durationFormatter(v) : this.durationFormatter(0)
         },
         total_calls: {
           label: 'Total Calls',
@@ -128,33 +133,38 @@ export default {
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
-          formatter: v => v ? Moment(v, "x").format("mm:ss") : Moment(0, "x").format("mm:ss")
+          formatter: v => v ? this.durationFormatter(v) : this.durationFormatter(0)
         }
       },
       fromTo: {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format(),
       },
+      agents: [],
       reportFields: {
         name: 'Agent Activity Individual',
         title: 'Agent Activity Individual',
         from: undefined,
         to: undefined
       },
-      sessions: []
+      sessions: [],
+      agentsQuery: function () {
+        return this.$agent.p_mfa('ws_agent', 'agents')
+      }
     }
   },
   methods: {
     query: async function () {
       this.setReportFields()
-      let qry = {}
-      qry.date_start = Moment(this.fromTo.date_start).unix()
-      qry.date_end = Moment(this.fromTo.date_end).unix()
-      qry.group_by = 'agent_id'
-      this.sessions = await this.$agent.p_mfa('ws_report', 'agent_activity_stats', [qry])
+      let date_start = Moment(this.fromTo.date_start).unix()
+      let date_end = Moment(this.fromTo.date_end).unix()
+      let agentsIDs = this.agents.map(obj => obj.id)
+      this.sessions = await this.$agent.p_mfa('ws_report', 'agent_activity_stats', [date_start, date_end, 'agent_id', 'agent_id', agentsIDs])
+      this.addMissingRows()
     },
     reset () {
       this.sessions = []
+      this.agents = []
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -163,6 +173,24 @@ export default {
     setReportFields () {
       this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
       this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+    },
+    findName (id) {
+      let obj = this.agents.find(v => { return v.id === id })
+      return obj.name
+    },
+    findLogin (id) {
+      let obj = this.agents.find(v => { return v.id === id })
+      return obj.login
+    },
+    addMissingRows () {
+      this.agents.forEach((obj) => {
+        if (this.sessions.find(v => { return v.id === obj.id}) === undefined) {
+          this.sessions.push({ id: obj.id })
+        }
+      })
+    },
+    durationFormatter (v) {
+      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }

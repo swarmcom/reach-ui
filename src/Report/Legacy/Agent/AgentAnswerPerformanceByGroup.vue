@@ -2,6 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
+      <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
     </div>
     <div slot="report">
       <table>
@@ -23,13 +24,15 @@
 <script>
 import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
+import EntitySelector from '@/Report/Input/EntitySelector'
 import Moment from 'moment'
 
 export default {
   name: 'AgentAnswerPerformanceByGroup',
   components: {
     'report': Report,
-    'from-to': FromTo
+    'from-to': FromTo,
+    'entity-selector': EntitySelector,
   },
   data () {
     return {
@@ -38,19 +41,24 @@ export default {
           label: 'Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '120px' }
+          thStyle: { width: '120px' },
+          sortable: true,
+          formatter: v => this.findName(v)
         },
         login: {
           label: 'Login',
           tdClass: 'table-body-blue-last-in-group',
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '67px' }
+          thStyle: { width: '67px' },
+          sortable: true,
+          formatter: (_v, _, item) => this.findLogin(item.agent_id)
         },
         ring_count: {
           label: 'Calls Offered',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '80px' },
+          sortable: true,
           formatter: v => v ? v : 0
         },
         answered_count: {
@@ -58,6 +66,7 @@ export default {
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '80px' },
+          sortable: true,
           formatter: v => v ? v : 0
         },
         abandoned: {
@@ -65,6 +74,7 @@ export default {
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '80px' },
+          sortable: true,
           formatter: v => v ? v : 0
         },
         percent_answered: {
@@ -72,6 +82,7 @@ export default {
           tdClass: ['table-body-orange-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
           thStyle: { width: '84px' },
+          sortable: true,
           formatter: (v, _, item) => (item.ring_count != 0) ? (100 * item.answered_count / item.ring_count).toFixed(1) + '%' : 'NA'
         }
       },
@@ -79,25 +90,34 @@ export default {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format(),
       },
+      agentGroups: [],
+      agents: [],
       reportFields: {
         name: 'Agent Answer Performance by Group',
         title: 'Agent Answer Performance by Group',
         from: undefined,
         to: undefined
       },
-      sessions: []
+      sessions: [],
+      agentGroupsQuery: function () {
+        let profiles = this.$agent.p_mfa('ws_agent', 'agent_groups')
+        profiles.then ( p => p.push({ name: 'No Profile', id: -1 }))
+        return profiles
+      }
     }
   },
   methods: {
     query: async function () {
       this.setReportFields()
-      let qry = {}
-      qry.date_start = Moment(this.fromTo.date_start).unix()
-      qry.date_end = Moment(this.fromTo.date_end).unix()
-      this.sessions = await this.$agent.p_mfa('ws_report', 'agent_answer_performance', [qry.date_start, qry.date_end])
+      let date_start = Moment(this.fromTo.date_start).unix()
+      let date_end = Moment(this.fromTo.date_end).unix()
+      let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
+      this.sessions = await this.$agent.p_mfa('ws_report', 'agent_answer_performance', [date_start, date_end, agentGroupsIDs])
     },
     reset () {
       this.sessions = []
+      this.agentGroups = []
+      this.getAgents()
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -106,7 +126,21 @@ export default {
     setReportFields () {
       this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
       this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+    },
+    findName (id) {
+      let obj = this.agents.find(v => { return v.id === id })
+      return obj.name
+    },
+    findLogin (id) {
+      let obj = this.agents.find(v => { return v.id === id })
+      return obj.login
+    },
+    getAgents: async function () {
+      this.agents = await this.$agent.p_mfa('ws_db_agent', 'suggest', [''])
     }
+  },
+  created () {
+    this.getAgents()
   }
 }
 </script>
