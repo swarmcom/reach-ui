@@ -91,7 +91,7 @@ export default {
         'cpt': null,
         'calls': null
       }
-      let response = await this.$agent.p_mfa('ws_stats', 'agent_manager_stats', [val, 'group_id'])
+      let response = await this.$agent.p_mfa('ws_stats', 'agent_manager_stats', [val, 'agent_group_id'])
       this.stats = []
       for (let key of this.groups) {
         let stats = response.find(item => item.group_id === key.id)
