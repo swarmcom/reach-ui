@@ -7,21 +7,13 @@
     <div slot="report">
       <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields">
         <template slot="show_details" slot-scope="row">
-          <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-          <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2">
+          <b-button size="sm" @click="row.toggleDetails" class="mr-2">
             {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
           </b-button>
         </template>
         <template slot="row-details" slot-scope="row">
-          <b-card>
-            <b-row class="mb-2">
-              <b-col sm="3" class="text-sm-right">
-                <b>Records:</b>
-              </b-col>
-              <b-col>{{ row.item.records }}</b-col>
-            </b-row>
-            <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
-          </b-card>
+          <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="row.item.records" :fields="fields_row">
+          </b-table>
         </template>
       </b-table>
     </div>
@@ -48,7 +40,7 @@ export default {
           label: 'Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '520px' },
+          thStyle: { width: '720px' },
           sortable: true,
           formatter: (v, _, item) => this.findName(v) + ' has ' + item.abandoned + ' unanswered calls'
         },
@@ -56,9 +48,63 @@ export default {
           label: '',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '0px' }
-
+          thStyle: { width: '136px' },
         }
+      },
+      fields_row: {
+        uuid: { label: 'Call ID', tdClass: 'table-body-green', thClass: 'table-header', thStyle: { width: '113px' } },
+        media: {
+          label: 'Media Type',
+          tdClass: 'table-body-green-last-in-group',
+          thClass: 'table-header-last-in-group',
+          thStyle: { width: '72px' }
+        },
+        queue_group: {
+          label: 'Queue Group',
+          formatter: queue => queue.name,
+          tdClass: 'table-body-orange',
+          thClass: 'table-header',
+          thStyle: { width: '90px' }
+        },
+        queue: {
+          label: 'Queue',
+          formatter: queue => queue.name,
+          tdClass: 'table-body-orange',
+          thClass: 'table-header',
+          thStyle: { width: '90px' }
+        },
+        calling: {
+          label: 'Called Number / Queue',
+          tdClass: 'table-body-orange',
+          thClass: 'table-header',
+          thStyle: { width: '90px' }
+        },
+        client: {
+          label: 'Client',
+          formatter: client => client.name,
+          tdClass: 'table-body-orange-dark',
+          thClass: 'table-header',
+          thStyle: { width: '90px' }
+        },
+        caller: {
+          label: 'Endpoint ANI',
+          tdClass: 'table-body-orange-dark',
+          thClass: 'table-header',
+          thStyle: { width: '90px' }
+        },
+        caller_ip: {
+          label: 'Originating Caller ID',
+          tdClass: 'table-body-orange-dark-last-in-group',
+          thClass: 'table-header-last-in-group',
+          thStyle: { width: '87px' }
+        },
+        ts: {
+          label: 'Offered to Reach',
+          sortable: true,
+          tdClass: "table-body-blue",
+          thClass: ['table-header'],
+          thStyle: { width: '130px' }
+        },
       },
       fromTo: {
         date_start: Moment().subtract(1, 'days').format(),
