@@ -2,6 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
+      <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
     </div>
     <div slot="report">
       <table>
@@ -26,14 +27,15 @@
 <script>
 import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
+import EntitySelector from '@/Report/Input/EntitySelector'
 import Moment from 'moment'
-import momentDurationFormatSetup from 'moment-duration-format'
 
 export default {
   name: 'AgentGroupProductivity',
   components: {
     'report': Report,
-    'from-to': FromTo
+    'from-to': FromTo,
+    'entity-selector': EntitySelector
   },
   data () {
     return {
@@ -42,7 +44,9 @@ export default {
           label: 'Group Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '143px' }
+          thStyle: { width: '143px' },
+          sortable: true,
+          formatter: v => this.findName(v)
         },
         agents_in_grp: {
           label: 'Number of Agents',
@@ -129,12 +133,12 @@ export default {
           formatter: v => this.durationFormatter(v)
 
         },
-        talk: {
+        talk_total: {
           label: 'Inbound Talk',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
-          formatter: v => this.durationFormatter(v)
+          formatter: (v, _, item) => this.durationFormatter((v - item.oubound_talk < 0) ? 0 : v - item.oubound_talk)
         },
         wrapup: {
           label: 'Wrap Up',
@@ -143,7 +147,7 @@ export default {
           thStyle: { width: '63px' },
           formatter: v => this.durationFormatter(v)
         },
-        out_talk: {
+        oubound_talk: {
           label: 'Outbound Talk',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
@@ -155,33 +159,38 @@ export default {
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
-          formatter: v => this.durationFormatter(v)
+          formatter: (_v, _, item) => this.durationFormatter(item.out_ringing_local + item.out_ringing_remote)
         }
       },
       fromTo: {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format(),
       },
+      agentGroups: [],
       reportFields: {
         name: 'Agent Group Productivity',
         title: 'Agent Group Productivity',
         from: undefined,
         to: undefined
       },
-      sessions: []
+      sessions: [],
+      agentGroupsQuery: function () {
+        return this.$agent.p_mfa('ws_agent', 'agent_groups')
+      }
     }
   },
   methods: {
     query: async function () {
       this.setReportFields()
-      let qry = {}
-      qry.date_start = Moment(this.fromTo.date_start).unix()
-      qry.date_end = Moment(this.fromTo.date_end).unix()
-      qry.group_by = 'group_id'
-      this.sessions = await this.$agent.p_mfa('ws_report', 'agent_productivity_stats', [qry])
+      let date_start = Moment(this.fromTo.date_start).unix()
+      let date_end = Moment(this.fromTo.date_end).unix()
+      let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
+      this.sessions = await this.$agent.p_mfa('ws_report', 'agent_productivity_stats', [date_start, date_end, 'agent_group_id', 'agent_group_id', agentGroupsIDs])
+      this.addMissingRows()
     },
     reset () {
       this.sessions = []
+      this.agentGroups = []
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -191,11 +200,20 @@ export default {
       this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
       this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
     },
+    findName (id) {
+      let obj = this.agentGroups.find(v => { return v.id === id })
+      return obj.name
+    },
+    addMissingRows () {
+      this.agentGroups.forEach((obj) => {
+        if (this.sessions.find(v => { return v.id === obj.id}) === undefined) {
+          this.sessions.push({ id: obj.id })
+        }
+      })
+    },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }
 </script>
-
-
