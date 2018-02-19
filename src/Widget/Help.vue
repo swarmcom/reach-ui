@@ -21,7 +21,7 @@ Select from the drop down which release group will be available to agent(s). A r
   </helper>
 
   <helper target="Line Out">
-Line Out is used to determine what client to associate an outbound call to. When the agent is assigned and uses a specific Line Out, the outbound call they are making will be associated with the that the line is associated with in the Lines - Line Out configuration page. In addition, this selected Line Out will drive the caller ID information used for the outbound call if the line out has Override Caler ID configured as true.
+Line Out is used to determine what client to associate an outbound call to. When the agent is assigned and uses a specific Line Out, the outbound call they are making will be associated with the that the line is associated with in the Lines - Line Out configuration page. In addition, this selected Line Out will drive the caller ID information used for the outbound call if the line out has Override Caller ID configured as true.
   </helper>
   
   <helper target="Role">
@@ -37,7 +37,7 @@ Enter a list of additional contact numbers for this agent. If given the permissi
   </helper>
   
   <helper target="Agent Caller ID Number">
-Caller ID number to be used for this agent when they make outbound calls. Note that this caller ID number may be overridden by Line or Client settings.  An agent selects an outbound line to use when placing an outbound call.  The configuration of this selected line and it's associated client are specifically what can override this caller ID information.  If you do not want this value to be overriden, be sure that Override Caller ID on Line Out and Override Caller ID (outbound) are not set to true.  If this value is not set, the configuration of the caller ID parameters of the Line/Client combination selected during the outbound call process will be used to determine the caller ID number.
+Caller ID number to be used for this agent when they make outbound calls. Note that this caller ID number may be overridden by Line or Client settings.  An agent selects an outbound line to use when placing an outbound call.  The configuration of this selected line and it's associated client are specifically what can override this caller ID information.  If you do not want this value to be overridden, be sure that Override Caller ID on Line Out and Override Caller ID (outbound) are not set to true.  If this value is not set, the configuration of the caller ID parameters of the Line/Client combination selected during the outbound call process will be used to determine the caller ID number.
   </helper>
   
   <helper target="Ring Timeout">
@@ -53,7 +53,7 @@ If checked, each time an agent accepts a call, the counter associated with the "
   </helper>
 
   <helper target="Suspend Time">
-Enter the number of seconds to suspend the agent9s) when they miss a call.  If left blank, the suspend feature will be off.  However, note that suspend time can be set at both the agent and agent group levels with the agent level taking precedence.  An agent that is in this "suspended" mode will not be offered calls even though they are generally available. This feature is often used to ensure that a single agent is not rang over and over for the same call until such time as they are put in auto release based on the 'Max Missed Calls (auto release) setting. Note that a missed call includes cases such as the agent was rang but did not answer, the agent declined the call via their phone or were on Do Not Disturb, or the agent phone/end point could not be reached (e.g. their sip phone is not registered).
+Enter the number of seconds to suspend the agents when they miss a call.  If left blank, the suspend feature will be off.  However, note that suspend time can be set at both the agent and agent group levels with the agent level taking precedence.  An agent that is in this "suspended" mode will not be offered calls even though they are generally available. This feature is often used to ensure that a single agent is not rang over and over for the same call until such time as they are put in auto release based on the "Max Missed Calls (auto release)" setting. Note that a missed call includes cases such as the agent was rang but did not answer, the agent declined the call via their phone or were on Do Not Disturb, or the agent phone/end point could not be reached (e.g. their sip phone is not registered).
   </helper>
 
   <helper target="Auto Logout">
@@ -116,7 +116,7 @@ Check or Uncheck. This check box determines whether or not the wrap up feature i
   </helper>
 
   <helper target="Wrap-up timer">
-Enter a number of seconds. This value represents the targeted amount of time that an agent should be in the wrap up mode after a call. The agent will be shown a timer that counts down from this number of seconds to 0 and the counter will turn red thereafter, serving as an indicator that they are taking too much time in after call or wrap-up mode. The Auto wrap-up parameter can be used in conjunction with this timer to futomatically end their wrap up mode either at the same time as this counter or at some time later than this timer. This parameter is only in effect if the Wrap Up Enabled parameter is enabled (True).  This timer can be set at the queue or queue group level with the queue level taking precedence.  If it is not set on queue or queue group, it will be treated as blank and the auto wrap-up feature will use only the Auto wrap up timer to control the wrap up counter.
+Enter a number of seconds. This value represents the targeted amount of time that an agent should be in the wrap up mode after a call. The agent will be shown a timer that counts down from this number of seconds to 0 and the counter will turn red thereafter, serving as an indicator that they are taking too much time in after call or wrap-up mode. The Auto wrap-up parameter can be used in conjunction with this timer to automatically end their wrap up mode either at the same time as this counter or at some time later than this timer. This parameter is only in effect if the Wrap Up Enabled parameter is enabled (True).  This timer can be set at the queue or queue group level with the queue level taking precedence.  If it is not set on queue or queue group, it will be treated as blank and the auto wrap-up feature will use only the Auto wrap up timer to control the wrap up counter.
   </helper>
 
   <helper target="Auto Wrap Up">
@@ -140,7 +140,7 @@ Select the required skills from the drop down selector for calls entering this q
   </helper>
 
   <helper target="Recipe Name">
-Enter the name of the recipe. Once the recipe is built (given a name/description and committed), the administrator can change the recipe name or description by clicking the Edit button. Recipe steps associated with a named recipe are configured after the recipe is built by clicking on the Entries button. When building the steps of a recipe, the administrator can build one or more criteria and one or more actions to execute if those criteria are true. In addition, recipe steps may be moved up/down for convienence. However, it is worth noting that all recipe criteria are checked every second. Therefore the order of the recipe steps is not important in terms of how the steps are checked and executed. Ordering the recipe steps is allowed simply to make the recipe more understandable in the configuration.  Also note that when building a recipe, the administrator can provide a description of each recipe step. They can then expand and contract the recipe step, looking at only the descriptions or all details of the recipe steps (e.g. criterias and actions).
+Enter the name of the recipe. Once the recipe is built (given a name/description and committed), the administrator can change the recipe name or description by clicking the Edit button. Recipe steps associated with a named recipe are configured after the recipe is built by clicking on the Entries button. When building the steps of a recipe, the administrator can build one or more criteria and one or more actions to execute if those criteria are true. In addition, recipe steps may be moved up/down for convenience. However, it is worth noting that all recipe criteria are checked every second. Therefore the order of the recipe steps is not important in terms of how the steps are checked and executed. Ordering the recipe steps is allowed simply to make the recipe more understandable in the configuration.  Also note that when building a recipe, the administrator can provide a description of each recipe step. They can then expand and contract the recipe step, looking at only the descriptions or all details of the recipe steps (e.g. criterias and actions).
   </helper>
 
   <helper target="Recipe Descripton">
@@ -156,7 +156,7 @@ Select the Disposition Group to be assigned. A disposition group is a simple lis
   </helper>
 
   <helper target="Lua Script">
-Lua script to be executed at the begining of the call (upon call entry to the system). Lua scripts are configured in the Config - Lua Actions configuration page and can be used to drastically extend the flexibility of the system. The administrator can write and deploy as many lua actions or "scripts" as they would like and these lua scripts can be used for things as simple as prompting the caller for information or for functions as complex as integrating with a specific CRM system.
+Lua script to be executed at the beginning of the call (upon call entry to the system). Lua scripts are configured in the Config - Lua Actions configuration page and can be used to drastically extend the flexibility of the system. The administrator can write and deploy as many lua actions or "scripts" as they would like and these lua scripts can be used for things as simple as prompting the caller for information or for functions as complex as integrating with a specific CRM system.
   </helper>
 
   <helper target="Queue Group Name">
@@ -179,7 +179,7 @@ If Enabled, call recording is enabled and all calls will be recorded. If Disable
   </helper>
 
   <helper target="Voicemail prompt">
-Select a prompt to be played prior to the beep when a user is about to leave a voicemail. The list of prompts that can be selected are configured under the Sounds - Prompts configuration page. Note that this Voicemail Prompt can be set at the Line or Client level with the Line level configuration taking precedence. If Voicemail Prompt is not configured but call recording is enabled, only a beep tone will play prior to the user being in a state that they are recroding a message. If Allow Voicemail is disabled and there is a configured Voicemail Prompt, the configured prompt will simply be ignored.
+Select a prompt to be played prior to the beep when a user is about to leave a voicemail. The list of prompts that can be selected are configured under the Sounds - Prompts configuration page. Note that this Voicemail Prompt can be set at the Line or Client level with the Line level configuration taking precedence. If Voicemail Prompt is not configured but call recording is enabled, only a beep tone will play prior to the user being in a state that they are recording a message. If Allow Voicemail is disabled and there is a configured Voicemail Prompt, the configured prompt will simply be ignored.
   </helper>
 
   <helper target="Override Caller ID on Line In">
@@ -203,7 +203,7 @@ Name of the Queue Group being configured
   </helper>
 
   <helper target="Client Avatar">
-A specific Avatar to associate with this Client. This avatar is displayed in the agent UI and can therefore be a nice visual indicator to the agent. If set, this avatar would be associated with calls to or from this Client. In other words, if placing an outbound call through the agent UI, the Line Out selected determines the Client to associate with the outbound call and that Client in turn deterines the avatart to use for that outbound call.
+A specific Avatar to associate with this Client. This avatar is displayed in the agent UI and can therefore be a nice visual indicator to the agent. If set, this avatar would be associated with calls to or from this Client. In other words, if placing an outbound call through the agent UI, the Line Out selected determines the Client to associate with the outbound call and that Client in turn determines the avatar to use for that outbound call.
   </helper>
 
   <helper target="Client Skills">
@@ -231,7 +231,7 @@ Build the list of skills to associate with the Skill Group. Remove skills by cli
   </helper>
   
   <helper target="All skills">
-Add skills to the system by typing in the skill name in the entry box and pressing return. Once added, a full list of the skills built in the system can be seen by using the drop down. Remove skills from the system by clicking on the skill name to the right of the drop down selector. Note that once a skill is built in the system here, it can be referenced throughout the system by name. Example configuration referenceing these skills includes skill groups, queue, queue group, agent, agent group, line, client, etc.
+Add skills to the system by typing in the skill name in the entry box and pressing return. Once added, a full list of the skills built in the system can be seen by using the drop down. Remove skills from the system by clicking on the skill name to the right of the drop down selector. Note that once a skill is built in the system here, it can be referenced throughout the system by name. Example configuration referencing these skills includes skill groups, queue, queue group, agent, agent group, line, client, etc.
   </helper>
 
   <helper target="Role Name">
@@ -259,7 +259,7 @@ Description of the Disposition Group
   </helper>
 
   <helper target="Prompt Name">
-Name of the prompt. A prompt may be something as simple as a tone that you want to play somewhere in the sytem or may be something more complex like an announcement to be used to prompt a caller for some interaction. The prompts built here can be referenced throughout the system. Example: Line, Client, Recipes, Queue, Etc.
+Name of the prompt. A prompt may be something as simple as a tone that you want to play somewhere in the system or may be something more complex like an announcement to be used to prompt a caller for some interaction. The prompts built here can be referenced throughout the system. Example: Line, Client, Recipes, Queue, Etc.
   </helper>
 
   <helper target="Prompt Description">
@@ -299,7 +299,7 @@ Select the lua action to perform at the end of a call. End of call means that th
   </helper>
 
   <helper target="Agent Lua Script">
-Select the lua action to perform when a call is answered by an agent. Once the call is answered by the agent, the lua action would typically be performed in the background, without the knowledge of the agent or calle. This hook can be used to do things like update a CRM database with call detail information that includes what agent took the call. Lua actions are defined under the Config - Lua actions page. Once configured there, they are selectable here.
+Select the lua action to perform when a call is answered by an agent. Once the call is answered by the agent, the lua action would typically be performed in the background, without the knowledge of the agent or callee. This hook can be used to do things like update a CRM database with call detail information that includes what agent took the call. Lua actions are defined under the Config - Lua actions page. Once configured there, they are selectable here.
   </helper>
 
   <helper target="Queue">
@@ -315,7 +315,7 @@ Select an announcement to play upon call arrival for this line. Calls associated
   </helper>
   
     <helper target="Voicemail Prompt">
-Select a prompt to be played prior to the beep when a user is about to leave a voicemail.  The list of prompts that can be selected are configured under the Sounds - Prompts configuration page.  Note that this Voicemail Prompt can be set at the Line or Client level with the Line level configuration taking precedence.  If Voicemail Prompt is not configured but allow voicemail is true, only a beep tone will play prior to the user being in a state that they are recroding a message.  If Allow Voicemail is false and there is a configured Voicemail Prompt, the configured prompt will simply be ignored.
+Select a prompt to be played prior to the beep when a user is about to leave a voicemail.  The list of prompts that can be selected are configured under the Sounds - Prompts configuration page.  Note that this Voicemail Prompt can be set at the Line or Client level with the Line level configuration taking precedence.  If Voicemail Prompt is not configured but allow voicemail is true, only a beep tone will play prior to the user being in a state that they are recording a message.  If Allow Voicemail is false and there is a configured Voicemail Prompt, the configured prompt will simply be ignored.
   </helper>
 
   <helper target="Answer on Agent pickup">
