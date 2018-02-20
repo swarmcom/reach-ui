@@ -1,5 +1,5 @@
 <template>
-<div v-if="this.$agent.is_onsession() || this.$agent.is_hold() ">
+<div v-if="isVisible">
   <toggle-bar></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseTransferConference" class="mt-2">
     <b-row>
@@ -65,7 +65,8 @@ export default {
   },
   mixins: [Common, Storage],
   props: {
-    uuid: String
+    uuid: String,
+    inqueue_record: String
   },
   data() {
     return {
@@ -166,7 +167,13 @@ export default {
         }
       })
       return agents
-    }
+    },
+    isVisible () {
+      if ( this.inqueue_record != 'inqueue_vm' && (this.$agent.is_onsession() || this.$agent.is_hold()) )
+        return true
+      else
+        return false
+    } 
   },
   watch: {
     selected: function (val) {
