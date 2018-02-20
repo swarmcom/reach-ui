@@ -2,7 +2,7 @@
   <div>
     <div>{{entity}}:</div>
     <div style="padding-bottom: 30px">
-      <autocomplete v-model="obj" :query="query" :placeholder="entity"></autocomplete>
+      <autocomplete v-model="obj" :query="query" :placeholder="entity" :to_name="skillsOptionName"></autocomplete>
       <button class="btn btn-sm btn-outline-primary" style="margin: 3px" v-for="obj in selected" :key="obj.id" @click="remove(obj)">{{obj.name}}</button>
     </div>
   </div>
@@ -43,6 +43,12 @@ export default {
         this.$emit('remove', obj)
         this.selected.splice(index, 1)
       }
+    },
+    skillsOptionName: function (obj) {
+      if (obj instanceof Object) 
+        return obj.name
+      else
+        return obj
     }
   },
   watch: {
@@ -51,11 +57,20 @@ export default {
       return v
     },
     obj (value) {
-      let index = this.selected.findIndex(el => el.id === value.id)
-      if (index < 0) {
-        this.$emit('add', value)
-        this.selected.push(value)
+      let item = {}
+      if ( !(value instanceof Object)) {
+        if (value == undefined || value == "" || value.match(/^\s*$/)) {
+          return
+        }
+        item = { name: value, id: value }
       }
+      else item = value
+      let index = this.selected.findIndex(el => el.id === item.id)
+      if (index < 0) {
+        this.$emit('add', item)
+        this.selected.push(item)
+      }
+      this.obj = undefined
       return value
     },
     selected (value) {
