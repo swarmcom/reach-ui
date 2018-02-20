@@ -74,7 +74,15 @@ export default {
       allowTransConf: true,
       selected: null,
       fieldsAgents: {
-        name: {label: 'Name', sortable: true, thClass: "table-header-text-center", tdClass: "table-body-text-center"},
+        agent: {
+          label: 'Name', 
+          sortable: true, 
+          thClass: "table-header-text-center", 
+          tdClass: "table-body-text-center", 
+          formatter: (value) => {
+            return value.name
+          }
+        },
         group: {
           label: 'Group',
           sortable: true,
@@ -96,11 +104,37 @@ export default {
       selectedNumber: '',
       filter: null,
       queues: [],
+      agents: []
     }
   },
   methods: {
     query: async function () {
       this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
+      this.agents = await this.$agent.p_mfa('ws_agent', 'live_agents')
+    },
+    handleState({tag, info}) {
+      if (info != 'undefined') {
+        if (tag === 'ws_login') {
+          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+          if (i >= 0) {
+            this.agents.splice(i, 1, info)
+          } else {
+            this.agents.push(info)
+          }
+        }
+        else if (info.state === 'terminate') {
+          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+          if (i >= 0) {
+            this.agents.splice(i, 1)
+          }
+        }
+        else {
+          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
+          if (i >= 0) {
+            this.agents.splice(i, 1, info)
+          }
+        }
+      }
     },
     conference () {
       if (this.selected === 'queue' && this.selectedQueue !== 'null') {
@@ -126,7 +160,7 @@ export default {
     },
     onSelectAgent (data) {
       if (data.state === 'available') {
-        this.selectedAgent === data.id ? this.selectedAgent = 'null' : this.selectedAgent = data.id
+        this.selectedAgent === data.agent_id ? this.selectedAgent = 'null' : this.selectedAgent = data.agent_id
         this.allowTransConf = true
       }
       else {
@@ -156,10 +190,11 @@ export default {
   },
   computed: {
     computedAgents () {
-      let agents = this.$agent.vm.transfer_agents.slice(0)
+      let agents = this.agents.slice(0)
       agents.forEach((key) => {
         key._rowVariant = 'primary'
-        if (key.id === this.selectedAgent) {
+        key.group = key.agent.group
+        if (key.agent_id === this.selectedAgent) {
           if (key.state === 'available')
             key._rowVariant = 'warning'
           else
@@ -190,7 +225,12 @@ export default {
   created () {
     this.a = this.$agent.getData()
     this.query()
+    this.$bus.$on('agents_state', this.handleState)
+    this.$agent.subscribe('agents')
     this.maybeInitLocal().loadLocal('showCollapse')
+  },
+  beforeDestroy() {
+    this.$bus.$off('agents_state', this.handleState)
   }
 }
 </script>
