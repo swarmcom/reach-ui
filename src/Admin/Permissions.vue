@@ -1,65 +1,74 @@
 <template>
 <div>
   <b-row style="margin-bottom: 10px">
-    <b-col><h3>Permissions: (
-      <a class="pointerLink" @click='selectAll()'>all</a> / 
-      <a class="pointerLink" @click='unselectAll()'>none</a> )
-    </h3></b-col>
+    <b-col cols=2><h3>Permissions:</h3></b-col>
+    <b-col>
+      <b-btn variant="link" @click='selectAll()'>all</b-btn>|<b-btn variant="link" @click='unselectAll()'>none</b-btn>
+    </b-col>
   </b-row>
   <b-row>
     <b-col>
+
       <b-row>
-        <b-col><h4>Available Tabs: (
-          <a class="pointerLink" @click='select(tabs)'>all</a> / 
-          <a class="pointerLink" @click='unselect(tabs)'>none</a> )
-        </h4></b-col
-      ></b-row>
+        <b-col cols=6>
+          <h4>Available Tabs:</h4>
+        </b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(tabs)'>all</b-btn>|<b-btn variant="link" @click='unselect(tabs)'>none</b-btn>
+        </b-col>
+      </b-row>
       <b-row v-for="(p) of this.tabs" :key="p" v-if="tabsVisible(p)">
-        <b-col cols="10">{{names[p].name}}</b-col>
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-      <b-row>
-        <b-col><h4>UI Features: (
-          <a class="pointerLink" @click='select(features)'>all</a> / 
-          <a class="pointerLink" @click='unselect(features)'>none</a> )
-        </h4></b-col>
+
+      <b-row style="margin-top: 15px">
+        <b-col cols=6><h4>UI Features:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(features)'>all</b-btn>|<b-btn variant="link" @click='unselect(features)'>none</b-btn>
+        </b-col>
       </b-row>
       <b-row v-for="(p) of this.features" :key="p">
-        <b-col cols="10">{{names[p].name}}</b-col>
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
     </b-col>
+
     <b-col>
+
       <b-row>
-        <b-col><h4>Available Widgets: (
-          <a class="pointerLink" @click='select(widgets)'>all</a> / 
-          <a class="pointerLink" @click='unselect(widgets)'>none</a> )
-        </h4></b-col>
+        <b-col cols=6><h4>Available Widgets:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(widgets)'>all</b-btn>|<b-btn variant="link" @click='unselect(widgets)'>none</b-btn>
+        </b-col>
       </b-row>
       <b-row v-for="p of this.widgets" :key="p">
-          <b-col cols="10">{{names[p].name}}</b-col>
+          <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-      <b-row>
-        <b-col><h4>Call Features: (
-          <a class="pointerLink" @click='select(call_features)'>all</a> / 
-          <a class="pointerLink" @click='unselect(call_features)'>none</a> )
-        </h4></b-col>
+
+      <b-row style="margin-top: 15px">
+        <b-col cols=6><h4>Call Features:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(call_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(call_features)'>none</b-btn>
+        </b-col>
       </b-row>
       <b-row v-for="(p) of this.call_features" :key="p">
-        <b-col cols="10">{{names[p].name}}</b-col>
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-      <b-row>
-        <b-col><h4>Agent Profile Edit: (
-          <a class="pointerLink" @click='select(agent_features)'>all</a> / 
-          <a class="pointerLink" @click='unselect(agent_features)'>none</a> )
-        </h4></b-col>
+
+      <b-row style="margin-top: 15px">
+        <b-col cols=6><h4>Agent Profile:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(agent_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(agent_features)'>none</b-btn>
+        </b-col>
       </b-row>
       <b-row v-for="p of this.agent_features" :key="p">
-        <b-col cols="10">{{names[p].name}}</b-col>
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
+
     </b-col>
   </b-row>
 </div>
