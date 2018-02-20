@@ -16,8 +16,6 @@
 
   <b-nav-item-dropdown text="CDR">
     <b-dropdown-item to="/reports/legacy/cdr/cdr">CDR</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/cdr/extended">Extended</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/cdr/compact">Compact</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Agent">

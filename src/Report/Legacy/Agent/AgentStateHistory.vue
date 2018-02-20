@@ -2,6 +2,12 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
+      <div>Agents:</div>
+      <div style="padding-bottom: 30px">
+      <b-form-select class="pointer" size="sm" v-model="agent" @change="setAgent">
+            <option v-for="agent in agents" :value="agent" :key="agent.id">{{agent.name}}</option>
+      </b-form-select>
+      </div>
     </div>
     <div slot="report">
       <table>
@@ -20,6 +26,7 @@
 <script>
 import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
+import EntitySelector from '@/Report/Input/EntitySelector'
 import Moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 
@@ -27,7 +34,8 @@ export default {
   name: 'AgentStateHistory',
   components: {
     'report': Report,
-    'from-to': FromTo
+    'from-to': FromTo,
+    'entity-selector': EntitySelector
   },
   data () {
     return {
@@ -65,13 +73,18 @@ export default {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format(),
       },
+      agents: [],
+      agent: {},
       reportFields: {
         name: 'Agent State History',
         title: 'Agent State History',
         from: undefined,
         to: undefined
       },
-      sessions: []
+      sessions: [],
+      agentsQuery: function () {
+        return this.$agent.p_mfa('ws_agent', 'agents')
+      }
     }
   },
   methods: {
@@ -80,11 +93,12 @@ export default {
       let qry = {}
       qry.date_start = Moment(this.fromTo.date_start).unix()
       qry.date_end = Moment(this.fromTo.date_end).unix()
-      qry.agent_id = 3
+      qry.agent_id = this.agent.id
       this.sessions = await this.$agent.p_mfa('ws_report', 'agent_state_history', [qry])
     },
     reset () {
       this.sessions = []
+      this.agent = -1
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -93,10 +107,20 @@ export default {
     setReportFields () {
       this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
       this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+      this.reportFields.title = 'Agent State History for agent: ' + this.agent.name
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
+    },
+    getAgents: async function () {
+      this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
+    },
+    setAgent (value) {
+      this.agent = value
     }
+  },
+  created () {
+    this.getAgents()
   }
 }
 </script>
