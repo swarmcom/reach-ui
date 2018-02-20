@@ -28,23 +28,23 @@
         <datepicker v-model="endDate" bootstrapStyling/>
         <div class="agent-state-text" style="margin-top:10px">Queue:</div>
         <b-form-select class="pointer" size="sm" v-model="selectedQueue">
-          <option v-for="queue in this.queues" :value=queue.name>{{queue.name}}</option>
+          <option v-for="queue in this.queues" :value=queue.name :key=queue.name>{{queue.name}}</option>
         </b-form-select>
         <div class="agent-state-text" style="margin-top:10px">Line In:</div>
         <b-form-select class="pointer" size="sm" v-model="selectedLine">
-          <option v-for="line in this.line_ins" :value=line.name>{{line.name}}</option>
+          <option v-for="line in this.line_ins" :value=line.name :key=line.name>{{line.name}}</option>
         </b-form-select>
         <div class="agent-state-text" style="margin-top:10px">Line Out:</div>
         <b-form-select class="pointer" size="sm" v-model="selectedLineOut">
-          <option v-for="line in this.line_outs" :value=line.name>{{line.name}}</option>
+          <option v-for="line in this.line_outs" :value=line.name :key=line.name>{{line.name}}</option>
         </b-form-select>
         <div class="agent-state-text" style="margin-top:10px">Customer:</div>
         <b-form-select class="pointer" size="sm" v-model="selectedCustomer">
-          <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
+          <option v-for="client in this.clients" :value=client.name :key=client.name>{{client.name}}</option>
         </b-form-select>
         <div class="agent-state-text" style="margin-top:10px">Skills:</div>
         <b-form-select class="pointer" size="sm" v-model="selectedSkill">
-          <option v-for="skill in this.tags" :value=skill>{{skill}}</option>
+          <option v-for="skill in this.tags" :value=skill :key=skill>{{skill}}</option>
         </b-form-select>
       </b-col>
       <b-col cols="12" lg="10" style="min-width:700px">
@@ -88,7 +88,7 @@
             {{ maybe_name(data.item.agent) }}
           </template>
           <template slot="skills" slot-scope="data">
-            <b-col cols="12" v-for="(v, k, index) in data.item.skills" key="index">{{k}}</b-col>
+            <b-col cols="12" v-for="(v, k, index) in data.item.skills" :key="index">{{k}}</b-col>
           </template>
           <template slot="caller" slot-scope="data">
             <div class="agent-state-text"><b>Direction: </b>{{data.item.direction}}</div>

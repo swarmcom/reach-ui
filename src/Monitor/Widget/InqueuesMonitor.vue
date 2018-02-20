@@ -74,6 +74,9 @@
               <b-col v-if="data.item.state === 'oncall'">
                 Connected
               </b-col>
+              <b-col v-if="data.item.state === 'voicemail'">
+                Voicemail
+              </b-col>
               <b-col v-if="data.item.state === 'agent'">
                 Ringing
               </b-col>
@@ -133,6 +136,7 @@ export default {
       states: [
         {name: "Any State", value: "Any State"},
         {name: "Connected", value: "oncall"},
+        {name: "Voicemail", value: "voicemail"},
         {name: "In Queue", value: "inqueue"},
         {name: "Ringing", value: "agent"}
       ],

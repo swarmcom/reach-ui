@@ -44,7 +44,7 @@ export default {
       updater: undefined,
       state_time: 0,
       state_date: 0,
-      inqueue: undefined,
+      inqueue: null,
       wrap_visible: false,
       wrap: undefined
     }
@@ -80,8 +80,10 @@ export default {
       if (S.state.state == 'oncall')
         this.queryWrap()
 
-      if (S.state.inqueue !== null && S.state.inqueue.record == 'inqueue_call')
+      if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call')
         this.query()
+      else
+        this.inqueue = null
 
       if (S.state.state == 'wrapup')
         this.wrap_visible = true

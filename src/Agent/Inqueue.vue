@@ -13,7 +13,7 @@
   <b-row>
     <b-col cols="12">
       <ringer v-if="ringer_visible"></ringer>
-      <transfer-conference :uuid="uuid" v-if="this.$agent.can_conference()"></transfer-conference>
+      <transfer-conference :uuid="uuid" :inqueue_record="inqueue_record" v-if="this.$agent.can_conference()"></transfer-conference>
       <conference v-if="conf_visible"></conference>
       <conf-request></conf-request>
     </b-col>
@@ -38,7 +38,8 @@ export default {
       ringer_visible: false,
       outgoing_visible: false,
       spy_visible: false,
-      uuid: undefined
+      uuid: undefined,
+      inqueue_record: null
     }
   },
   methods: {
@@ -50,15 +51,17 @@ export default {
         this.outgoing_visible = false
         this.spy_visible = false
         this.uuid = undefined
+        this.inqueue_record = null
       } else {
-        if (state.inqueue.record == 'inqueue_call') {
+        state.inqueue ? this.inqueue_record = state.inqueue.record : this.inqueue_record = null       
+        if (state.inqueue && state.inqueue.record == 'inqueue_call') {
           this.call_visible = true
           this.uuid = state.inqueue.uuid
         }
-        if (state.inqueue.record == 'outgoing') {
+        if (state.inqueue && state.inqueue.record == 'outgoing') {
           this.outgoing_visible = true
         }
-        if (state.inqueue.record == 'spy') {
+        if (state.inqueue && state.inqueue.record == 'spy') {
           this.spy_visible = true
           this.uuid = state.inqueue.uuid
         }
