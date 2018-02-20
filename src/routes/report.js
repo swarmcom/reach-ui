@@ -10,8 +10,6 @@ import OutgoingEvents from '@/Report/Events/Outgoing'
 import AgentEvents from '@/Report/Events/Agent'
 // CDR
 import CDR from '@/Report/Legacy/CDR/CDR'
-import CDRCompact from '@/Report/Legacy/CDR/CDRCompact'
-import CDRExtended from '@/Report/Legacy/CDR/CDRExtended'
 // Agent
 import AgentActivityIndividual from '@/Report/Legacy/Agent/AgentActivityIndividual'
 import AgentActivityByGroup from '@/Report/Legacy/Agent/AgentActivityByGroup'
@@ -52,8 +50,6 @@ export default [
   { path: 'events/agent/:uuid', component: AgentEvents, props: true },
   // CDR
   { path: 'legacy/cdr/cdr', component: CDR, name: CDR },
-  { path: 'legacy/cdr/extended', component: CDRExtended },
-  { path: 'legacy/cdr/compact', component: CDRCompact },
   // Agent
   { path: 'legacy/agent/activity-individual', component: AgentActivityIndividual },
   { path: 'legacy/agent/activity-by-group', component: AgentActivityByGroup },
