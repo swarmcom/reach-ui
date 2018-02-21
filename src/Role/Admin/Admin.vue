@@ -20,7 +20,6 @@
 
   <b-nav-item-dropdown text="Config">
     <b-dropdown-item to="/luas">Lua actions</b-dropdown-item>
-    <b-dropdown-item to="/tag_groups">Skill groups</b-dropdown-item>
     <b-dropdown-item to="/tags">Skills</b-dropdown-item>
     <b-dropdown-item to="/roles">Roles</b-dropdown-item>
     <b-dropdown-item to="/acls">Access lists</b-dropdown-item>
