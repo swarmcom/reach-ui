@@ -1,9 +1,11 @@
 <template>
 <b-form-row>
-  <b-col cols="2">
+  <b-col cols="4">
     <b-form-select v-model="comparision" @change="commit" :options="comparasions"></b-form-select>
   </b-col>
+  <b-col cols="8">
   <tags v-model="skills" placeholder="Add Call Skills"></tags>
+  </b-col>
 </b-form-row>
 </template>
 

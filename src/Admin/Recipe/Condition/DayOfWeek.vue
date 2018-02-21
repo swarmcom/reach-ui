@@ -1,6 +1,6 @@
 <template>
 <b-form-row>
-  <b-col cols="6">
+  <b-col cols="4">
     <b-form-select v-model="comparision" @change="commit" :options="comparasions"></b-form-select>
   </b-col>
   <b-col>
