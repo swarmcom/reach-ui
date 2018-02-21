@@ -1,6 +1,6 @@
 <template>
 <b-form-row>
-  <b-col cols="6">
+  <b-col cols="4">
     <b-form-input v-model="value"></b-form-input>
   </b-col>
 </b-form-row>
