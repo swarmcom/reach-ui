@@ -31,8 +31,6 @@ import Lua from '@/Admin/Lua'
 import Luas from '@/Admin/Luas'
 import Role from '@/Admin/Role'
 import Roles from '@/Admin/Roles'
-import TagGroups from '@/Admin/Tag/Groups'
-import TagGroup from '@/Admin/Tag/Group'
 import Tags from '@/Admin/Tags'
 import Permissions from '@/Admin/Permissions'
 import Params from '@/Admin/Params'
@@ -60,7 +58,6 @@ export default [
   { path: 'mohs', component: MOHs },
   { path: 'recipes', component: Recipes },
   { path: 'luas', component: Luas },
-  { path: 'tag_groups', component: TagGroups },
   { path: 'tags', component: Tags },
   { path: 'agent', component: Agent },
   { path: 'dialplan', component: Dialplan },
@@ -77,8 +74,6 @@ export default [
   { path: 'role', component: Role },
   { path: 'role/:id', component: Role, props: true },
   { path: 'role/:id/permissions/:ui', component: Permissions, props: true },
-  { path: 'tag_group', component: TagGroup },
-  { path: 'tag_group/:id', component: TagGroup, props: true },
   { path: 'disposition', component: DispositionGroup },
   { path: 'disposition/:id', component: DispositionGroup, props: true },
   { path: 'disposition/:id/entries', component: DispositionEntries, props: true },

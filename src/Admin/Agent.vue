@@ -17,7 +17,6 @@
   <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails" :effective="eff.reset_rings_fails"></form-select-bool>
   <form-number label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-number>
   <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
-  <tag-group label="Skills Group" v-model="rec.tag_group_id" :effective="eff.tag_group_id"></tag-group>
   <form-file label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
   <form-tags label="Agent Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
 
