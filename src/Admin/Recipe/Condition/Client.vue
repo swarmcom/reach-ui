@@ -4,9 +4,9 @@
     <b-form-select v-model="comparision" @change="commit" :options="comparasions"></b-form-select>
   </b-col>
   <b-col cols="6">
-    <select class="custom-select" :value="value" @change="commit">
+    <select class="custom-select" v-model="value" @change="commit">
       <option></option>
-      <option v-for="client in clients" :value="client.id" :key="client.id">{{ client.name }}</option>
+      <option v-for="client in clients" :value="client.id">{{ client.name }}</option>
     </select>
   </b-col>
 </b-form-row>
