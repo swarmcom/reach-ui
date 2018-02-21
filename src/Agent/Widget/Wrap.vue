@@ -18,7 +18,7 @@ export default {
   methods: {
     computedTime() {
       let time = 0
-      if(this.inqueue && this.inqueue.queue != undefined){
+      if(this.inqueue && this.inqueue.queue){
         time = this.state_time
         if(this.state_time < (this.inqueue.queue.wrapup_timer*1000))
           time = (this.inqueue.queue.wrapup_timer*1000) - this.state_time
