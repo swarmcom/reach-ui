@@ -2,7 +2,7 @@
 <div class="float-right">
   <b-row>
     <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
-    <wrap-timer  v-if="this.wrap_visible" v-bind:inqueue="this.wrap" :state_time="state_time" class="state-time"></wrap-timer>
+    <wrap-timer  v-if="this.wrap_visible" v-bind:inqueue="this.$agent.vm.wrap" :state_time="state_time" class="state-time"></wrap-timer>
     <button v-if="this.$agent.is_hold()" style="background:#FFEDA4" @click="unhold" class="btn call-action-button">
       <icon style="padding-top:5px" name="pause" scale="2"></icon>
     </button>
@@ -45,8 +45,7 @@ export default {
       state_time: 0,
       state_date: 0,
       inqueue: null,
-      wrap_visible: false,
-      wrap: undefined
+      wrap_visible: false
     }
   },
   methods: {
@@ -54,7 +53,8 @@ export default {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
     queryWrap: async function () {
-      this.wrap = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
+      this.$agent.vm.wrap = null
+      this.$agent.vm.wrap = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
     onTimer() {
       this.state_time = new Date() - this.state_date
