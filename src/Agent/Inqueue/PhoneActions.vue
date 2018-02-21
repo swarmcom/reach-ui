@@ -2,7 +2,7 @@
 <div class="float-right">
   <b-row>
     <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
-    <wrap-timer  v-if="this.wrap_visible" v-bind:inqueue="this.wrap" :state_time="state_time" class="state-time"></wrap-timer>
+    <wrap-timer  v-if="this.wrap_visible" class="state-time"></wrap-timer>
     <button v-if="this.$agent.is_hold()" style="background:#FFEDA4" @click="unhold" class="btn call-action-button">
       <icon style="padding-top:5px" name="pause" scale="2"></icon>
     </button>
@@ -45,16 +45,13 @@ export default {
       state_time: 0,
       state_date: 0,
       inqueue: null,
-      wrap_visible: false,
-      wrap: undefined
+      wrapup_timer: 0,
+      wrap_visible: false
     }
   },
   methods: {
     query: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
-    },
-    queryWrap: async function () {
-      this.wrap = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
     onTimer() {
       this.state_time = new Date() - this.state_date
@@ -77,18 +74,22 @@ export default {
         this.state_time = 0
         this.state_date = new Date()
       }
-      if (S.state.state == 'oncall')
-        this.queryWrap()
 
-      if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call')
+      if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call') {
         this.query()
+      }
       else
         this.inqueue = null
 
-      if (S.state.state == 'wrapup')
+      if (S.state.state == 'wrapup') {
+        this.wrapup_timer = S.state.queue.wrapup_timer
         this.wrap_visible = true
-      if (S.state.state != 'wrapup')
+      }
+      else {
         this.wrap_visible = false
+        this.wrapup_timer = 0
+      } 
+        
     },
     can_record () {
       return this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null
