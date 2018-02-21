@@ -15,7 +15,7 @@
     props: ['args'],
     data () {
       return {
-        comparasions: [ '=', '!=' ],
+        comparasions: [ 'is', 'has_one', 'has_all' ],
         comparision: this.args[0],
         skills: [],
       }
