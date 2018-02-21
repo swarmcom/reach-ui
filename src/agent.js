@@ -54,7 +54,6 @@ export default class Agent extends WsProto {
         hangup_state: null,
         activity_time: undefined,
         release_id: undefined,
-        wrap: null,
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
         isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true }

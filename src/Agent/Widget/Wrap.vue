@@ -8,7 +8,6 @@
 import Common from '../../Admin/Common'
 export default {
   name: 'wrap-up',
-  props: ['inqueue', 'state_time'],
   mixins: [Common],
   data () {
     return {
@@ -18,14 +17,12 @@ export default {
   methods: {
     computedTime() {
       let time = 0
-      if(this.inqueue && this.inqueue.queue){
-        time = this.state_time
-        if(this.state_time < (this.inqueue.queue.wrapup_timer*1000))
-          time = (this.inqueue.queue.wrapup_timer*1000) - this.state_time
-        else {
-          time = (this.state_time - (this.inqueue.queue.wrapup_timer*1000))
-          this.activeColor = 'red';
-        }
+      if(this.$parent.state_time < (this.$parent.wrapup_timer*1000)) {
+        time = (this.$parent.wrapup_timer*1000) - this.$parent.state_time
+      }
+      else {
+        time = (this.$parent.state_time - (this.$parent.wrapup_timer*1000))
+        this.activeColor = 'red';
       }
       return time
     }
