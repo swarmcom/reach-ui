@@ -5,7 +5,7 @@
     <b-img :src="filePath()" fluid/>
   </b-col>
   <b-col>
-    <b-form-file v-model="file" v-on:input="onFile" :placeholder="placeholder"></b-form-file>
+    <b-form-file v-model="file" v-on:input="onFile" :placeholder="placeholder" :accept="fileType"></b-form-file>
   </b-col>
   <b-col v-if="defined()" cols="1">
     <b-btn variant="outline-danger" @click="clear">Clear</b-btn>
@@ -16,7 +16,7 @@
 <script>
 export default {
   name: 'form-file',
-  props: ['label', 'value', 'placeholder', 'uri'],
+  props: ['label', 'value', 'placeholder', 'uri', 'fileType' ],
   data () {
     return {
       file: undefined

@@ -5,7 +5,7 @@
   <div class="row">
     <label class="col-3 col-form-label">File</label>
     <div class="col-9">
-      <b-form-file v-model="file" v-on:input="onFile" :placeholder="rec.file"></b-form-file>
+      <b-form-file v-model="file" v-on:input="onFile" :placeholder="rec.file" accept=".mp3"></b-form-file>
     </div>
   </div>
   <div style="margin-top: 20px">

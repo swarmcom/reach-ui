@@ -45,7 +45,7 @@
       <button @click="download" class="btn btn-success">Download</button>
     </b-col>
     <b-col>
-      <b-form-file v-model="config_file" v-on:input="upload" placeholder="Choose json config to upload..."></b-form-file>
+      <b-form-file v-model="config_file" v-on:input="upload" placeholder="Choose json config to upload..." accept=".json"></b-form-file>
     </b-col>
   </b-row>
 </div>
