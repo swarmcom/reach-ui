@@ -14,7 +14,7 @@
   <form-text v-if="showComponent('maxMissedCalls-edit')" label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails" :effective="eff.max_ring_fails"></form-text>
   <form-select-bool v-if="showComponent('maxRingsSuccess-edit')" label="Reset Max Rings On Success" v-model="rec.reset_rings_fails" :effective="eff.reset_rings_fails"></form-select-bool>
   <form-text v-if="showComponent('autoLogout-edit')" label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
-  <form-file v-if="showComponent('avatar-visible')" label="Avatar" uri="/avatar" v-model="rec.avatar"></form-file>
+  <form-file v-if="showComponent('avatar-visible')" label="Avatar" uri="/avatar" v-model="rec.avatar" :fileType="'image/*'"></form-file>
   <form-tags v-if="showComponent('agentSkills-visible')" label="Agent Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>

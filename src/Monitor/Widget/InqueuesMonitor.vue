@@ -53,12 +53,12 @@
           </template>
           <template slot="media" slot-scope="data">
             <b-row>
-              <b-col cols="1" v-if="data.item.record === 'inqueue_call'">
-                <icon v-if="data.item.state != 'voicemail'" name="mobile" scale="2" class='agent-state-color'/>
-                <icon v-else name="file-audio-o" scale="2" class='agent-state-color'/>
+              <b-col cols="1">
+                <icon v-if="data.item.record == 'inqueue_call'" name="mobile" scale="2" class='agent-state-color'/>
+                <icon v-if="data.item.record == 'inqueue_vm'" name="file-audio-o" scale="2" class='agent-state-color'/>
               </b-col>
               <b-col cols="1">
-                <b-img v-if="data.item.customer != undefined && data.item.customer.avatar" :src="$agent.avatar_uri(data.item.customer.avatar)"
+                <b-img v-if="data.item.customer && data.item.customer.avatar" :src="$agent.avatar_uri(data.item.customer.avatar)"
                        style="width:32px;"></b-img>
                 <icon v-else name="handshake-o" scale="2"/>
               </b-col>
