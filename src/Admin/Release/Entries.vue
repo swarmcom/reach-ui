@@ -2,7 +2,7 @@
 <div>
   <div class="row" style="margin-bottom: 10px"><div class="col"><h3>Release types:</h3></div></div>
 
-  <div v-for="release of releases" class="form-row" style="margin-top: 5px">
+  <div v-for="release of releases" :key="release.id" class="form-row" style="margin-top: 5px">
     <div class="col-1">
       <button @click="del(release.id)" class="btn btn-sm btn-outline-danger pointer"><icon name="minus" class="align-middle" scale="1"></icon></button>
     </div>
@@ -15,7 +15,7 @@
         :value="safe_value(release.description)" v-on:change="onChange(release, 'description', $event.target.value)">
     </div>
     <div class="col-2">
-      <input type="text" class="form-control"
+      <input type="number" class="form-control"
         :value="safe_value(release.score)" v-on:change="onChange(release, 'score', $event.target.value)">
     </div>
   </div>
@@ -31,7 +31,7 @@
       <input type="text" class="form-control" v-model="description" placeholder="Description">
     </div>
     <div class="col-2">
-      <input type="text" class="form-control" v-model="score" placeholder="Score">
+      <input type="number" class="form-control" v-model="score" placeholder="Score">
     </div>
   </div>
 
