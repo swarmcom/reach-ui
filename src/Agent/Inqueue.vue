@@ -56,7 +56,7 @@ export default {
         state.inqueue ? this.inqueue_record = state.inqueue.record : this.inqueue_record = null       
         if (state.inqueue && state.inqueue.record == 'inqueue_call') {
           this.call_visible = true
-          if (state.inqueue.uuid !== undefined)
+          if (state.inqueue.uuid)
             this.uuid = state.inqueue.uuid
         }
         if (state.inqueue && state.inqueue.record == 'outgoing') {
