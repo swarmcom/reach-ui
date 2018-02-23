@@ -6,7 +6,7 @@
       <b-row>
         <b-col sm="4">
           <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period">
-            <option v-for="period in periods" :value="period.value">{{period.name}}</option>
+            <option v-for="period in periods" :value="period.value" :key="period.name">{{period.name}}</option>
           </b-form-select>
         </b-col>
         <b-col sm="8">
@@ -33,31 +33,31 @@
             </b-col>
             <b-col style="padding:0; max-width: 102px !important; padding-right:10px; border-right: 2px solid white;">
               <div style="background-color: #dbeffa">
-                <b-progress-bar :value="statistics[0].statesCounts.release" :max="statistics[0].agents" show-progress>
+                <b-progress-bar :value="statistics[0].statesCounts.release" :max="maxAgents" show-progress>
                   <div class="agent-state-texts">Released</div>
                 </b-progress-bar>
               </div>
               <div style="margin-top:2px; background-color: #fbe7c3">
                 <b-progress-bar variant="warning" :value="statistics[0].statesCounts.available"
-                                :max="statistics[0].agents" show-progress>
+                                :max="maxAgents" show-progress>
                   <div class="agent-state-texts">Available</div>
                 </b-progress-bar>
               </div>
               <div style="margin-top:2px; background-color: #fbe7c3">
                 <b-progress-bar variant="warning" :value="statistics[0].statesCounts.ringing"
-                                :max="statistics[0].agents" show-progress>
+                                :max="maxAgents" show-progress>
                   <div class="agent-state-texts">Ringing</div>
                 </b-progress-bar>
               </div>
               <div style="margin-top:2px; background-color: #e2fada">
                 <b-progress-bar variant="success" :value="statistics[0].statesCounts.oncall"
-                                :max="statistics[0].agents" show-progress>
+                                :max="maxAgents" show-progress>
                   <div class="agent-state-texts">Oncall</div>
                 </b-progress-bar>
               </div>
               <div style="margin-top:2px; background-color: #fbe7c3">
                 <b-progress-bar variant="warning" :value="statistics[0].statesCounts.wrapup"
-                                :max="statistics[0].agents" show-progress>
+                                :max="maxAgents" show-progress>
                   <div class="agent-state-texts">Wrapup</div>
                 </b-progress-bar>
               </div>
@@ -132,8 +132,7 @@ export default {
         },
         asa: 0,
         longest: 0
-      }
-      ],
+      }],
       periods: [
         {value: "15m", name: "Last 15 minutes"},
         {value: "30m", name: "Last 30 minutes"},
@@ -146,6 +145,7 @@ export default {
       skillsOptions: [],
       period: {value: "15m", name: "Last 15 minutes"},
       showCollapse: true,
+      maxAgents: 1
     }
   },
   watch: {
@@ -172,12 +172,12 @@ export default {
     states_query: async function () {
       let statesCounts = await this.$agent.p_mfa('ws_stats', 'my_stats_states', [this.list2skills(this.selectedSkills)])
       let totalAgents = 0
-      let states = statesCounts
       Object.keys(statesCounts).forEach(function (key, index) {
         totalAgents += statesCounts[key]
       })
-      this.statistics[0].statesCounts = states
+      this.statistics[0].statesCounts = statesCounts
       this.statistics[0].agents = totalAgents
+      totalAgents < 1 ? this.maxAgents=1 : this.maxAgents=totalAgents 
     },
     ciq_query: async function () {
       let ciq = await this.$agent.p_mfa('ws_stats', 'ciq', [])
