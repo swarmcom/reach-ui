@@ -18,8 +18,10 @@
           </td>
         </tr>
       </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
-      </b-table>
+      <div style="max-height:60vh">
+        <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
+        </b-table>
+      </div>
     </div>
   </report>
 </template>
