@@ -74,7 +74,12 @@ import Reports from '@/Role/Supervisor/Reports'
 import ReportRoutes from '@/routes/report'
 import Layout from '@/Role/Layout'
 
+const scrollBehavior = (to, from, savedPosition) => {
+  return { x: 0, y: 0 }
+}
+
 const router = new VueRouter({
+  scrollBehavior,
   routes: [
     { path: '/main', component: Main, name: 'main' },
     { path: '/help', component: Help },

@@ -69,7 +69,12 @@ import Help from '@/Role/Agent/Help'
 import Profile from '@/Role/Agent/Profile'
 import Layout from '@/Role/Layout'
 
+const scrollBehavior = (to, from, savedPosition) => {
+  return { x: 0, y: 0 }
+}
+
 const router = new VueRouter({
+  scrollBehavior,
   routes: [
     { path: '/help', component: Help },
     { path: '/profile', component: Profile, name: 'profile' },
