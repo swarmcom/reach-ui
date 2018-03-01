@@ -265,7 +265,8 @@
                 <b-row>
                   <b-col cols="1"
                          v-if="data.item.state==='oncall' || data.item.state==='ringing' || data.item.state==='hold'">
-                    <icon name="mobile" scale="2" class='agent-state-color'/>
+                    <icon v-if="data.item.inqueue.record == 'inqueue_vm'" name="file-audio-o" scale="2"  class='agent-state-color'/>
+                    <icon v-else name="mobile" scale="2" class='agent-state-color'/>
                   </b-col>
                   <b-col>
                     <div class="agent-state-text" style="margin-top: 10px;">
