@@ -4,10 +4,11 @@
     <b-col cols="12" md="9" order="2" order-md="1">
       <outgoing v-if="outgoing_visible"></outgoing>
       <call v-if="call_visible" :uuid="uuid"></call>
+      <vm v-if="vm_visible" :uuid="uuid"></vm>
       <spy v-if="spy_visible" :uuid="uuid"></spy>
     </b-col>
     <b-col cols="12" md="3" order="1" order-md="2">
-      <phone-actions :uuid="uuid"></phone-actions>
+      <phone-actions :uuid="uuid" :showDispositions="showDispositions"></phone-actions>
     </b-col>
   </b-row>
   <b-row>
@@ -23,6 +24,7 @@
 
 <script>
 import Call from '@/Agent/Inqueue/Call'
+import Vm from '@/Agent/Inqueue/Vm'
 import Conference from '@/Agent/Inqueue/Conference'
 import Outgoing from '@/Agent/Inqueue/Outgoing'
 import Ringer from '@/Agent/Inqueue/Ringer'
@@ -34,10 +36,12 @@ export default {
   data () {
     return {
       call_visible: false,
+      vm_visible: false,
       conf_visible: false,
       ringer_visible: false,
       outgoing_visible: false,
       spy_visible: false,
+      showDispositions: true,
       uuid: undefined,
       inqueue_record: null
     }
@@ -46,6 +50,7 @@ export default {
     handleState ({ state }) {
       if (state.state == "available" || state.state == "release" || state.state == "suspended") {
         this.call_visible = false
+        this.vm_visible = false
         this.conf_visible = false
         this.ringer_visible = false
         this.outgoing_visible = false
@@ -56,8 +61,14 @@ export default {
         state.inqueue ? this.inqueue_record = state.inqueue.record : this.inqueue_record = null       
         if (state.inqueue && state.inqueue.record == 'inqueue_call') {
           this.call_visible = true
+          this.showDispositions = true
           if (state.inqueue.uuid)
             this.uuid = state.inqueue.uuid
+        }
+        if (state.inqueue && state.inqueue.record == 'inqueue_vm') {
+          this.vm_visible = true
+          this.showDispositions = false
+          this.uuid = state.inqueue.uuid
         }
         if (state.inqueue && state.inqueue.record == 'outgoing') {
           this.outgoing_visible = true
@@ -90,6 +101,7 @@ export default {
   },
   components: {
     call: Call,
+    vm: Vm,
     conference: Conference,
     outgoing: Outgoing,
     ringer: Ringer,

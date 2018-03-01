@@ -18,7 +18,7 @@
       <icon style="padding-top:2px" name="close" scale="2"></icon></button>
   </b-row>
   <b-row style="margin-top:5px; width:200px;">
-    <disposition v-if="this.uuid!=undefined" v-bind:uuid="this.uuid" style="width:100%"></disposition>
+    <disposition v-if="this.uuid!=undefined && this.disp_visible" v-bind:uuid="this.uuid" style="width:100%"></disposition>
   </b-row>
   <br>
   <br>
@@ -37,7 +37,11 @@ import DispositionSelect from '@/Agent/Widget/DispositionSelect'
 export default {
   mixins: [Common],
   props: {
-    uuid: String
+    uuid: String,
+    showDispositions: {
+      type: Boolean,
+      default: true
+    },
   },
   data () {
     return {
@@ -45,8 +49,9 @@ export default {
       state_time: 0,
       state_date: 0,
       inqueue: null,
-      wrapup_timer: 0,
-      wrap_visible: false
+      wrap_visible: false,
+      disp_visible: this.showDispositions,
+      wrap: undefined
     }
   },
   methods: {
@@ -75,6 +80,10 @@ export default {
         this.state_date = new Date()
       }
 
+      if (S.state.inqueue && S.state.inqueue.record === 'inqueue_vm') {
+        this.disp_visible = false
+      }
+
       if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call') {
         this.query()
       }
@@ -88,11 +97,16 @@ export default {
       else {
         this.wrap_visible = false
         this.wrapup_timer = 0
-      } 
-        
+      }
     },
     can_record () {
       return this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null
+    }
+  },
+  watch: {
+    showDispositions (v) {
+      this.disp_visible = v
+      return v
     }
   },
   created () {
