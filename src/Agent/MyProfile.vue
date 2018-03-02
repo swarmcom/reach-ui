@@ -44,7 +44,7 @@
     </b-row>
     <b-row>
       <b-col cols="1">
-        <button type="button" class="btn btn-sm pointer" @click="showCollapsePerm">
+        <button type="button" class="btn btn-sm pointer" @click="show('showPermCollapse')">
           <icon v-if="showPermCollapse" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermCollapse" name="plus" scale="0.5"></icon>
         </button>
@@ -53,23 +53,89 @@
     </b-row>
     <b-row v-if="showPermCollapse && $agent.role() === 'supervisor'" v-for="(v, index) in perms_check_supervisor"
            :key="index">
-      <b-col class="agent-state-text" cols="12" v-if="index === 0"><b>Displayed Tabs: </b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 4"><b>Accessible Widgets: </b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 7"><b>Supervisor Privileges:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 15"><b>Features: </b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 18"><b> Conference/Transfer Privileges</b></b-col>
-      <b-col class="agent-state-text" cols="8">{{v.displayName}}:</b-col>
-      <b-col class="agent-state-text" cols="4">{{v.value}}</b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 0">
+        <div style="cursor:pointer" v-on:click="show('showPermTabs')">
+          <icon v-if="showPermTabs" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermTabs" name="plus" scale="0.5"></icon>
+          <b>Displayed Tabs:</b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 4">
+        <div style="cursor:pointer" v-on:click="show('showPermWidgets')">
+          <icon v-if="showPermWidgets" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermWidgets" name="plus" scale="0.5"></icon>
+          <b>Accessible Widgets: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 7">
+        <div style="cursor:pointer" v-on:click="show('showPermSupervisor')">
+          <icon v-if="showPermSupervisor" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermSupervisor" name="plus" scale="0.5"></icon>
+          <b>Supervisor Privileges: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 15">
+        <div style="cursor:pointer" v-on:click="show('showPermFeatures')">
+          <icon v-if="showPermFeatures" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermFeatures" name="plus" scale="0.5"></icon>
+          <b>Features: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 18">
+        <div style="cursor:pointer" v-on:click="show('showPermConfTrans')">
+          <icon v-if="showPermConfTrans" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermConfTrans" name="plus" scale="0.5"></icon>
+          <b>Conference/Transfer Privileges: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="8" v-if="isVisible(index)">{{v.displayName}}:</b-col>
+      <b-col class="agent-state-text" cols="4" v-if="isVisible(index)">{{v.value}}</b-col>
     </b-row>
     <b-row v-if="showPermCollapse && $agent.role() === 'agent'" v-for="(v, index) in perms_check_agent" :key="index">
-      <b-col class="agent-state-text" cols="12" v-if="index===0"><b>Displayed Tabs:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===2"><b>Accessible Widgets:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===5"><b>Features:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index===8"><b>Conference/Transfer Privileges:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 15"><b>Supervisor Privileges:</b></b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 23"><b> Agent Profile Privileges:</b></b-col>
-      <b-col class="agent-state-text" cols="8">{{v.displayName}}:</b-col>
-      <b-col class="agent-state-text" cols="4">{{v.value}}</b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===0">
+        <div style="cursor:pointer" v-on:click="show('showPermTabs')">
+          <icon v-if="showPermTabs" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermTabs" name="plus" scale="0.5"></icon>
+          <b>Displayed Tabs:</b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===2">
+        <div style="cursor:pointer" v-on:click="show('showPermWidgets')">
+          <icon v-if="showPermWidgets" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermWidgets" name="plus" scale="0.5"></icon>
+          <b>Accessible Widgets: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===5">
+        <div style="cursor:pointer" v-on:click="show('showPermFeatures')">
+          <icon v-if="showPermFeatures" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermFeatures" name="plus" scale="0.5"></icon>
+          <b>Features: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index===8">
+        <div style="cursor:pointer" v-on:click="show('showPermConfTrans')">
+          <icon v-if="showPermConfTrans" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermConfTrans" name="plus" scale="0.5"></icon>
+          <b>Conference/Transfer Privileges: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 15">
+        <div style="cursor:pointer" v-on:click="show('showPermSupervisor')">
+          <icon v-if="showPermSupervisor" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermSupervisor" name="plus" scale="0.5"></icon>
+          <b>Supervisor Privileges: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 23">
+        <div style="cursor:pointer" v-on:click="show('showPermProfile')">
+          <icon v-if="showPermProfile" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermProfile" name="plus" scale="0.5"></icon>
+          <b>Agent Profile Privileges: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="8" v-if="isVisible(index)">{{v.displayName}}:</b-col>
+      <b-col class="agent-state-text" cols="4" v-if="isVisible(index)">{{v.value}}</b-col>
     </b-row>
   </b-collapse>
 </div>
@@ -87,6 +153,12 @@ export default {
       agent: this.$agent.vm.agent,
       showCollapse: true,
       showPermCollapse: false,
+      showPermTabs: false,
+      showPermWidgets: false,
+      showPermSupervisor: false,
+      showPermFeatures: false,
+      showPermConfTrans: false,
+      showPermProfile: false,
       perms_check_agent: [{displayName: "Main", name: "main-ui", value: false},
         {displayName: "Profile", name: "profile-ui", value: false},
         {displayName: "Agent Manager", name: "agentManager-widget", value: false},
@@ -151,9 +223,48 @@ export default {
     }
   },
   methods: {
-    showCollapsePerm () {
-      this.showPermCollapse = !this.showPermCollapse
-      this.saveLocal('showPermCollapse').writeLocal()
+    show (perm) {
+      this[perm] = !this[perm]
+      this.saveLocal(perm).writeLocal()
+    },
+    isVisible(index) {
+      if (this.$agent.role() === 'agent') {
+        if (index >= 0 && index < 2) {
+          return this.showPermTabs
+        }
+        else if (index >= 2 && index < 5) {
+          return this.showPermWidgets
+        }
+        else if (index >= 15 && index < 23) {
+          return this.showPermSupervisor
+        }
+        else if (index >= 5 && index < 8) {
+          return this.showPermFeatures
+        }
+        else if (index >= 8 && index < 15) {
+          return this.showPermConfTrans
+        }
+        else if (index >= 23) {
+          return this.showPermProfile
+        }
+      }
+      else if (this.$agent.role() === 'supervisor') {
+        if (index >= 0 && index < 4) {
+          return this.showPermTabs
+        }
+        else if (index >= 4 && index < 7) {
+          return this.showPermWidgets
+        }
+        else if (index >= 7 && index < 15) {
+          return this.showPermSupervisor
+        }
+        else if (index >= 15 && index < 18) {
+          return this.showPermFeatures
+        }
+        else if (index >= 18) {
+          return this.showPermConfTrans
+        }
+      }
     }
   },
   created () {
@@ -173,6 +284,12 @@ export default {
       })
     }
     this.maybeInitLocal().loadLocal('showCollapse', 'showPermCollapse')
+    this.maybeInitLocal().loadLocal('showCollapse', 'showPermTabs')
+    this.maybeInitLocal().loadLocal('showCollapse', 'showPermWidgets')
+    this.maybeInitLocal().loadLocal('showCollapse', 'showPermSupervisor')
+    this.maybeInitLocal().loadLocal('showCollapse', 'showPermFeatures')
+    this.maybeInitLocal().loadLocal('showCollapse', 'showPermConfTrans')
+    this.maybeInitLocal().loadLocal('showCollapse', 'showPermProfile')
   },
   watch: {
     showCollapse: function (newVal, oldVal) {
