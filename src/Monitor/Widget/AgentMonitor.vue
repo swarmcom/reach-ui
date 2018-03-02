@@ -63,7 +63,7 @@
                     <b-button class="pointer" v-access:barge-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('barge')">
                       Barge
                     </b-button>
-                    <b-button class="pointer" v-access:barge-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('agent')">
+                    <b-button class="pointer" v-access:whisper-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('agent')">
                       Whisper
                     </b-button>
                   </b-col>
