@@ -60,32 +60,39 @@
           <b>Displayed Tabs:</b>
         </div>
       </b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 4">
+      <b-col class="agent-state-text" cols="12" v-if="index === 5">
         <div style="cursor:pointer" v-on:click="show('showPermWidgets')">
           <icon v-if="showPermWidgets" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermWidgets" name="plus" scale="0.5"></icon>
           <b>Accessible Widgets: </b>
         </div>
       </b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 7">
+      <b-col class="agent-state-text" cols="12" v-if="index === 8">
         <div style="cursor:pointer" v-on:click="show('showPermSupervisor')">
           <icon v-if="showPermSupervisor" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermSupervisor" name="plus" scale="0.5"></icon>
           <b>Supervisor Privileges: </b>
         </div>
       </b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 14">
+      <b-col class="agent-state-text" cols="12" v-if="index === 15">
         <div style="cursor:pointer" v-on:click="show('showPermFeatures')">
           <icon v-if="showPermFeatures" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermFeatures" name="plus" scale="0.5"></icon>
           <b>Features: </b>
         </div>
       </b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 17">
+      <b-col class="agent-state-text" cols="12" v-if="index === 18">
         <div style="cursor:pointer" v-on:click="show('showPermConfTrans')">
           <icon v-if="showPermConfTrans" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermConfTrans" name="plus" scale="0.5"></icon>
           <b>Conference/Transfer Privileges: </b>
+        </div>
+      </b-col>
+      <b-col class="agent-state-text" cols="12" v-if="index === 25">
+        <div style="cursor:pointer" v-on:click="show('showPermProfile')">
+          <icon v-if="showPermProfile" name="minus" scale="0.5"></icon>
+          <icon v-if="!showPermProfile" name="plus" scale="0.5"></icon>
+          <b>Agent Profile Privileges: </b>
         </div>
       </b-col>
       <b-col class="agent-state-text" cols="8" v-if="isVisible(index)">{{v.displayName}}:</b-col>
@@ -194,6 +201,7 @@ export default {
         {displayName: "Agent Skills", name: "agentSkills-visible", value: false},
       ],
       perms_check_supervisor: [{displayName: "Main", name: "main-ui", value: false},
+        {displayName: "Profile", name: "profile-ui", value: false},
         {displayName: "Monitor", name: "monitor-ui", value: false},
         {displayName: "Recordings", name: "recordings-ui", value: false},
         {displayName: "Reports", name: "reports-ui", value: false},
@@ -216,7 +224,18 @@ export default {
         {displayName: "Conference to Agent", name: "confAgent-feature", value: false},
         {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
         {displayName: "Conference to Number", name: "confNumber-feature", value: false},
-        {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false}
+        {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
+        {displayName: "Agent Name", name: "agentName-edit", value: false},
+        {displayName: "Password", name: "agentPassword-edit", value: false},
+        {displayName: "Line Out", name: "agentLineOut-visible", value: false},
+        {displayName: "Primary SIP Contact", name: "primarySip-edit", value: false},
+        {displayName: "SIP Contacts", name: "additionalSip-visible", value: false},
+        {displayName: "Ring Timeout", name: "ringTimeout-edit", value: false},
+        {displayName: "Max Missed Calls", name: "maxMissedCalls-edit", value: false},
+        {displayName: "Reset Max Rings On Success", name: "maxRingsSuccess-edit", value: false},
+        {displayName: "Auto Logout", name: "autoLogout-visible", value: false},
+        {displayName: "Avatar", name: "avatar-visible", value: false},
+        {displayName: "Agent Skills", name: "agentSkills-visible", value: false},
       ]
     }
   },
@@ -247,20 +266,23 @@ export default {
         }
       }
       else if (this.$agent.role() === 'supervisor') {
-        if (index >= 0 && index < 4) {
+        if (index >= 0 && index < 5) {
           return this.showPermTabs
         }
-        else if (index >= 4 && index < 7) {
+        else if (index >= 5 && index < 8) {
           return this.showPermWidgets
         }
-        else if (index >= 7 && index < 14) {
+        else if (index >= 8 && index < 15) {
           return this.showPermSupervisor
         }
-        else if (index >= 14 && index < 17) {
+        else if (index >= 15 && index < 18) {
           return this.showPermFeatures
         }
-        else if (index >= 17) {
+        else if (index >= 18 && index < 25) {
           return this.showPermConfTrans
+        }
+        else if (index >= 25) {
+          return this.showPermProfile
         }
       }
     }
