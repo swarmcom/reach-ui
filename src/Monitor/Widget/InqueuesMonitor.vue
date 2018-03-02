@@ -42,7 +42,7 @@
                 <b-button class="pointer" v-access:takeCallQueue-feature v-if="data.item.state === 'inqueue' || data.item.state === 'agent'" size="sm" @click="take(data.item)">
                   Take
                 </b-button>
-                <b-button class="pointer" v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" size="sm" @click="spy(data.item)">
+                <b-button class="pointer" v-access:monitor-feature v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" size="sm" @click="spy(data.item)">
                   Monitor
                 </b-button>
                 <b-button class="pointer" v-access:hangupCallQueue-feature size="sm" @click="hangup(data.item)">
