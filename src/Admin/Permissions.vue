@@ -108,7 +108,6 @@ export default {
         "confQueue-feature": false,
         "confNumber-feature": false,
         "transConfChangeSkills-feature": false,
-        "sip-can-register": false,
         "agentName-edit": false,
         "agentPassword-edit": false,
         "agentLineOut-visible": false,
@@ -148,7 +147,6 @@ export default {
         'transConfChangeSkills-feature'
       ],
       call_features: [
-        'sip-can-register',
         'monitor-feature',
         'whisper-feature',
         'barge-feature',
@@ -196,7 +194,6 @@ export default {
         "confQueue-feature": { name: "Conference to Queue" },
         "confNumber-feature": { name: "Conference to Number" },
         "transConfChangeSkills-feature": { name: "Change Skills on Conf/Tran" },
-        "sip-can-register": { name: "Allow to register SIP phone" },
         "agentName-edit": { name: "Name" },
         "agentPassword-edit": { name: "Password" },
         "agentLineOut-visible": { name: "Line Out" },
