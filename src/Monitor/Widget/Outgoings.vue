@@ -10,13 +10,13 @@
           <b-form-input class="customInput" size="sm" :value="filter" v-on:input="onFilterUpdate" :state="filterState"
                         placeholder="Search..." style="margin-top:10px"></b-form-input>
           <b-form-select class="pointer" size="sm" v-model="selectedLine" style="margin-top:10px">
-            <option v-for="line in this.lines" :value=line.name>{{line.name}}</option>
+            <option v-for="line in this.lines" :value=line.name :key=line.name>{{line.name}}</option>
           </b-form-select>
           <b-form-select class="pointer" size="sm" v-model="selectedCustomer" style="margin-top:10px">
-            <option v-for="client in this.clients" :value=client.name>{{client.name}}</option>
+            <option v-for="client in this.clients" :value=client.name :key="client.name">{{client.name}}</option>
           </b-form-select>
           <b-form-select class="pointer" size="sm" v-model="selectedState" style="margin-top:10px">
-            <option v-for="state in this.states" :value=state.value>{{state.name}}</option>
+            <option v-for="state in this.states" :value=state.value :key=state.value>{{state.name}}</option>
           </b-form-select>
         </b-col>
         <b-col cols="12" md="12" lg="9" xl="10" style="min-width:700px">
@@ -34,7 +34,7 @@
                     <b-dropdown-item @click="takeover(data.item)">Take over</b-dropdown-item>
                     <b-dropdown-item
                       v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())"
-                      @click="spy(data.item)">Monitor
+                      v-access:monitor-feature @click="spy(data.item)">Monitor
                     </b-dropdown-item>
                     <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
                   </b-dropdown>

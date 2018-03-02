@@ -74,14 +74,14 @@
           <b>Supervisor Privileges: </b>
         </div>
       </b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 15">
+      <b-col class="agent-state-text" cols="12" v-if="index === 14">
         <div style="cursor:pointer" v-on:click="show('showPermFeatures')">
           <icon v-if="showPermFeatures" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermFeatures" name="plus" scale="0.5"></icon>
           <b>Features: </b>
         </div>
       </b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 18">
+      <b-col class="agent-state-text" cols="12" v-if="index === 17">
         <div style="cursor:pointer" v-on:click="show('showPermConfTrans')">
           <icon v-if="showPermConfTrans" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermConfTrans" name="plus" scale="0.5"></icon>
@@ -127,7 +127,7 @@
           <b>Supervisor Privileges: </b>
         </div>
       </b-col>
-      <b-col class="agent-state-text" cols="12" v-if="index === 23">
+      <b-col class="agent-state-text" cols="12" v-if="index === 22">
         <div style="cursor:pointer" v-on:click="show('showPermProfile')">
           <icon v-if="showPermProfile" name="minus" scale="0.5"></icon>
           <icon v-if="!showPermProfile" name="plus" scale="0.5"></icon>
@@ -174,7 +174,6 @@ export default {
         {displayName: "Conference to Queue", name: "confQueue-feature", value: false},
         {displayName: "Conference to Number", name: "confNumber-feature", value: false},
         {displayName: "Change Skills on Conf/Tran", name: "transConfChangeSkills-feature", value: false},
-        {displayName: "Allow to register SIP phone", name: "sip-can-register", value: false},
         {displayName: "Control Agent State", name: "controlAgentState-feature", value: false},
         {displayName: "Monitor", name: "monitor-feature", value: false},
         {displayName: "Barge", name: "barge-feature", value: false},
@@ -201,7 +200,6 @@ export default {
         {displayName: "Agent Manager", name: "agentManager-widget", value: false},
         {displayName: "Queue Manager", name: "queueManager-widget", value: false},
         {displayName: "My Statistics", name: "myStatistics-widget", value: false},
-        {displayName: "Allow to register SIP phone", name: "sip-can-register", value: false},
         {displayName: "Control Agent State", name: "controlAgentState-feature", value: false},
         {displayName: "Monitor", name: "monitor-feature", value: false},
         {displayName: "Barge", name: "barge-feature", value: false},
@@ -235,7 +233,7 @@ export default {
         else if (index >= 2 && index < 5) {
           return this.showPermWidgets
         }
-        else if (index >= 15 && index < 23) {
+        else if (index >= 15 && index < 22) {
           return this.showPermSupervisor
         }
         else if (index >= 5 && index < 8) {
@@ -244,7 +242,7 @@ export default {
         else if (index >= 8 && index < 15) {
           return this.showPermConfTrans
         }
-        else if (index >= 23) {
+        else if (index >= 22) {
           return this.showPermProfile
         }
       }
@@ -255,13 +253,13 @@ export default {
         else if (index >= 4 && index < 7) {
           return this.showPermWidgets
         }
-        else if (index >= 7 && index < 15) {
+        else if (index >= 7 && index < 14) {
           return this.showPermSupervisor
         }
-        else if (index >= 15 && index < 18) {
+        else if (index >= 14 && index < 17) {
           return this.showPermFeatures
         }
-        else if (index >= 18) {
+        else if (index >= 17) {
           return this.showPermConfTrans
         }
       }
