@@ -224,7 +224,7 @@ export default {
     },
     tabsVisible: function (perm) {
       if (this.ui == 'supervisor') {
-        return (perm != 'admin-ui' && perm != 'profile-ui')
+        return (perm != 'admin-ui')
       }
       else if (this.ui == 'agent') {
         return (perm == 'main-ui' || perm == 'profile-ui')
