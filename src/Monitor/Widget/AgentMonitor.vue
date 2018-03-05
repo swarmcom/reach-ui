@@ -48,22 +48,22 @@
                     <b-button class="pointer" size="sm" @click="stop(data.item)">
                       Kill
                     </b-button>
-                    <b-button class="pointer" v-access:monitor-feature v-if="allowSpy(data.item.state)" size="sm" @click="spy(data.item)">
+                    <b-button class="pointer" v-if="canMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                       Monitor
                     </b-button>
-                    <b-button class="pointer" v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="cancelSpy(data.item)">
+                    <b-button class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy(data.item)">
                       Stop Monitor
                     </b-button>
-                    <b-button class="pointer" v-access:takeOver-feature v-if="allowTakeOver(data.item.state)" size="sm" @click="takeover(data.item)">
+                    <b-button class="pointer" v-if="canTakeOver(data.item.state)" size="sm" @click="takeover(data.item)">
                       Take Over
                     </b-button>
-                    <b-button class="pointer" v-access:monitor-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('spy')">
+                    <b-button class="pointer" v-if="canSpy(data.item)" size="sm" @click="setMode('spy')">
                       Spy
                     </b-button>
-                    <b-button class="pointer" v-access:barge-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('barge')">
+                    <b-button class="pointer" v-if="canBarge(data.item)" size="sm" @click="setMode('barge')">
                       Barge
                     </b-button>
-                    <b-button class="pointer" v-access:whisper-feature v-if="data.item.state === 'barge' && data.item.agent.id === $agent.vm.agent.id" size="sm" @click="setMode('agent')">
+                    <b-button class="pointer" v-if="canWhisper(data.item)" size="sm" @click="setMode('agent')">
                       Whisper
                     </b-button>
                   </b-col>
@@ -463,13 +463,27 @@ export default {
     takeover({inqueue}) {
       this.$agent.mfa('ws_supervisor', 'takeover', [inqueue.record, inqueue.uuid])
     },
-    allowSpy(state) {
-      return (state === 'oncall' || state === 'conference') &&
-        (!this.$agent.is_onsession() && !this.$agent.is_barge());
+    canMonitor(state) {
+      return (this.$agent.permAllowed('monitor-feature') &&
+        (state === 'oncall' || state === 'conference') &&
+        (!this.$agent.is_onsession() && !this.$agent.is_barge()))
     },
-    allowTakeOver(state) {
-      return (state === 'oncall') &&
-        (!this.$agent.is_onsession() && !this.$agent.is_barge());
+    canSpy(agent) {
+      return (this.$agent.permAllowed('monitor-feature') &&
+        agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
+    },
+    canTakeOver(state) {
+      return (this.$agent.permAllowed('takeOver-feature') &&
+        state === 'oncall' &&
+        (!this.$agent.is_onsession() && !this.$agent.is_barge()))
+    },
+    canBarge(agent) {
+      return (this.$agent.permAllowed('barge-feature') &&
+        agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
+    },
+    canWhisper(agent) {
+      return (this.$agent.permAllowed('whisper-feature') &&
+        agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
     },
     spy({inqueue}) {
       this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.uuid])

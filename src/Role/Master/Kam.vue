@@ -1,5 +1,5 @@
 <template>
-  <div v-access:admin-ui>
+  <div>
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>

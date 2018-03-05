@@ -19,7 +19,7 @@
       </dl>
     </b-col>
   </b-row>
-  <b-row style="margin-top:5px;" class="float-right"  v-access:CROnDemand-feature v-if="can_record()">
+  <b-row style="margin-top:5px;" class="float-right" v-if="can_record()">
     <b-button style="width:85px" size="sm" class="pointer" v-if="!outgoing.keep_record" @click="record" variant="outline-danger">Record</b-button>
     <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="outgoing.keep_record">Recording</b-button>
   </b-row>
@@ -46,7 +46,8 @@ export default {
       this.outgoing.keep_record = true
     },
     can_record () {
-      return this.outgoing && this.outgoing.line_out && this.outgoing.line_out.enable_call_recording === null
+      return this.$agent.permAllowed('CROnDemand-feature') &&
+        this.outgoing && this.outgoing.line_out && this.outgoing.line_out.enable_call_recording === null
     }
 
   },
