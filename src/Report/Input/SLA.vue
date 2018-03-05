@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>SLA target answer time [s]:</div>
+    <div>{{caption}}:</div>
     <div style="padding-bottom: 30px">
       <b-input :value="sla" @input="checkValue" min="1" step="1" size="sm" type="number"></b-input>
     </div>
@@ -13,6 +13,10 @@ export default {
   props: {
     value: {
       type: Number,
+      required: true
+    },
+    caption: {
+      type: String,
       required: true
     }
   },
