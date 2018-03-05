@@ -1,5 +1,5 @@
 <template>
-<div v-access:main-ui v-bind:class="classObject">
+<div v-if="$agent.permAllowed('main-ui')" v-bind:class="classObject">
   <draggable :list="widgets" :options="{draggable:'.itemDragable'}" @end="onDragEnd">
     <b-row v-for="(item, index) in widgets" :key="index" class="itemDragable">
       <b-col>
@@ -25,18 +25,24 @@ export default {
   },
   methods: {
     showWidget(name) {
-      if (name === 'session-manager')
+      if (name === 'session-manager') {
         return true
-      else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && this.$agent.vm.agent.permissions['myStatistics-widget'])
+      }
+      else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && 
+        this.$agent.permAllowed('myStatistics-widget')) {
         return true
+      }
       else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  &&
-        this.$agent.vm.agent.permissions['agentManager-widget'])
+        this.$agent.permAllowed('agentManager-widget')) {
         return true
+      }
       else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  &&
-        this.$agent.vm.agent.permissions['queueManager-widget'])
+        this.$agent.permAllowed('queueManager-widget')) {
         return true
-      else
+      }
+      else {
         return false
+      }
     },
     onDragEnd () {
       this.$agent.vm.storage_data["agentWidgets"] = this.widgets

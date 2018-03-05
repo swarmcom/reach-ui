@@ -39,13 +39,13 @@
           <template slot="row-details" slot-scope="data">
             <b-row>
               <b-col>
-                <b-button class="pointer" v-access:takeCallQueue-feature v-if="data.item.state === 'inqueue' || data.item.state === 'agent'" size="sm" @click="take(data.item)">
+                <b-button class="pointer" v-if="allowTake(data.item.state)" size="sm" @click="take(data.item)">
                   Take
                 </b-button>
-                <b-button class="pointer" v-access:monitor-feature v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())" size="sm" @click="spy(data.item)">
+                <b-button class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                   Monitor
                 </b-button>
-                <b-button class="pointer" v-access:hangupCallQueue-feature size="sm" @click="hangup(data.item)">
+                <b-button class="pointer" v-if="$agent.permAllowed('hangupCallQueue-feature')" size="sm" @click="hangup(data.item)">
                   Hangup
                 </b-button>
               </b-col>
@@ -174,6 +174,14 @@ export default {
       this.sortBy = ctx.sortBy
       this.sortDesc = ctx.sortDesc
       this.saveDataStorage()
+    },
+    allowTake(state) {
+      return (this.$agent.permAllowed('takeCallQueue-feature') &&
+        (state === 'inqueue' || state === 'agent'))
+    },
+    allowMonitor(state) {
+      return (this.$agent.permAllowed('monitor-feature') &&
+        state === 'oncall' && !this.$agent.is_onsession() && !this.$agent.is_barge())
     },
     take({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])

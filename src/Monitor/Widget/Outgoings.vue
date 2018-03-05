@@ -33,8 +33,7 @@
                   <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
                     <b-dropdown-item @click="takeover(data.item)">Take over</b-dropdown-item>
                     <b-dropdown-item
-                      v-if="data.item.state === 'oncall' && (!$agent.is_onsession() && !$agent.is_barge())"
-                      v-access:monitor-feature @click="spy(data.item)">Monitor
+                      v-if="allowMonitor(data.item.state)" @click="spy(data.item)">Monitor
                     </b-dropdown-item>
                     <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
                   </b-dropdown>
@@ -162,6 +161,10 @@ export default {
         E.timeInQueue = this.msToHms((new Date() - E.date).toString())
         Arr.splice(i, 1, E)
       })
+    },
+    allowMonitor(state) {
+      return (this.$agent.permAllowed('monitor-feature')) && (state === 'oncall') &&
+        (!$agent.is_onsession() && !$agent.is_barge())
     },
     takeover({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])

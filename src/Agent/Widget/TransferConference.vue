@@ -35,7 +35,7 @@
     </b-row>
     <b-row>
       <b-col cols="9" order="3" style="margin-top:5px" v-if="selected=='queue' && selectedQueue!==null">
-        <queue-skills v-access:transConfChangeSkills-feature v-if="uuid!==undefined" :uuid="uuid"></queue-skills>
+        <queue-skills v-if="canTransConf(uuid)" :uuid="uuid"></queue-skills>
       </b-col>
     </b-row>
     <b-row style="margin-top:10px">
@@ -167,25 +167,30 @@ export default {
         this.allowTransConf = false
       }
     },
+    canTransConf(uuid) {
+      return this.$agent.permAllowed('transConfChangeSkills-feature') && uuid != undefined
+    },
     can_conference () {
       if (this.$agent.can_conference() &&
-        ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['confAgent-feature']) ||
-          (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['confQueue-feature']) ||
-          (this.selectedNumber !== '') && this.$agent.vm.agent.permissions['confNumber-feature'])) {
+        ((this.selectedAgent !== 'null' && this.$agent.permAllowed('confAgent-feature')) ||
+          (this.selectedQueue !== 'null' && this.$agent.permAllowed('confQueue-feature')) ||
+          (this.selectedNumber !== '') && this.$agent.permAllowed('confNumber-feature'))) {
         return true
       }
-      else
+      else {
         return false
+      }
     },
     can_transfer () {
       if (this.$agent.can_transfer() &&
-        ((this.selectedAgent !== 'null' && this.$agent.vm.agent.permissions['transAgent-feature']) ||
-          (this.selectedQueue !== 'null' && this.$agent.vm.agent.permissions['transQueue-feature']) ||
-          (this.selectedNumber !== '') && this.$agent.vm.agent.permissions['transNumber-feature'])) {
+        ((this.selectedAgent !== 'null' && this.$agent.permAllowed('transAgent-feature')) ||
+          (this.selectedQueue !== 'null' && this.$agent.permAllowed('transQueue-feature')) ||
+          (this.selectedNumber !== '') && this.$agent.permAllowed('transNumber-feature'))) {
         return true
       }
-      else
+      else {
         return false
+      }
     }
   },
   computed: {

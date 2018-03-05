@@ -1,5 +1,5 @@
 <template>
-<div v-access:queueManager-widget>
+<div v-if="$agent.permAllowed('queueManager-widget')">
   <toggle-bar style="cursor: move"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseQueueManager" class="mt-2 itemDragable">
     <inqueues-view :inqueues="inqueues"></inqueues-view>
