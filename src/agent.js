@@ -198,6 +198,12 @@ export default class Agent extends WsProto {
 
   isAuth () { return this.vm.agent }
   role() { return this.vm.agent.role.ui }
+  permAllowed(name) {
+    if(this.vm.agent.permissions && this.vm.agent.permissions[name])
+      return true
+    else
+      return false
+  }
 
   is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
   is_idle() { return (this.vm.state == 'release' || this.vm.state == 'available') }
