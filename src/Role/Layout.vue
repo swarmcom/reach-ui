@@ -13,13 +13,13 @@ export default {
       this.$agent.vm.isNarrowLayout[this.page] = ! this.$agent.vm.isNarrowLayout[this.page]
     },
     canMyStat() {
-      return this.$agent.vm.agent.permissions['myStatistics-widget']
+      return this.$agent.permAllowed('myStatistics-widget')
     },
     canAgentManager() {
-      return this.$agent.vm.agent.permissions['agentManager-widget']
+      return this.$agent.permAllowed('agentManager-widget')
     },
     canQueueManager() {
-      return this.$agent.vm.agent.permissions['queueManager-widget']
+      return this.$agent.permAllowed('queueManager-widget')
     },
     isMyStat () {
       return this.$agent.vm.layoutSM.isActiveMS

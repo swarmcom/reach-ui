@@ -198,6 +198,12 @@ export default class Agent extends WsProto {
 
   isAuth () { return this.vm.agent }
   role() { return this.vm.agent.role.ui }
+  permAllowed(name) {
+    if(this.vm.agent.permissions && this.vm.agent.permissions[name])
+      return true
+    else
+      return false
+  }
 
   is_active () { return (this.vm.state !== 'release' || this.vm.state !== 'available') }
   is_idle() { return (this.vm.state == 'release' || this.vm.state == 'available') }
@@ -209,7 +215,7 @@ export default class Agent extends WsProto {
   is_barge () { return this.vm && this.vm.state == 'barge' }
   is_conference () { return this.vm && ( this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_login () { return this.vm.session_auth }
-  can_call () { return this.vm && this.vm.agent.lines && this.vm.agent.lines.length > 0 }
+  can_call () { return this.vm && this.permAllowed('outbound-feature') && this.vm.agent.lines && this.vm.agent.lines.length > 0 }
   can_hangup () { return this.vm && ( this.vm.state == 'hold' || this.vm.state == 'oncall' || this.vm.state == 'outgoing' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
