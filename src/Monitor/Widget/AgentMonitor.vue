@@ -39,10 +39,10 @@
               <template slot="row-details" slot-scope="data">
                 <b-row>
                   <b-col>
-                    <b-button class="pointer" v-if="$agent.permAllowed('controlAgentState-feature') && data.item.state === 'release'" size="sm" @click="available(data.item)">
+                    <b-button class="pointer" v-access:controlAgentState-feature v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
                       Available
                     </b-button>
-                    <b-button class="pointer" v-if="$agent.permAllowed('controlAgentState-feature') && data.item.state !== 'release'" size="sm" @click="release(data.item)">
+                    <b-button class="pointer" v-access:controlAgentState-feature v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
                       Release
                     </b-button>
                     <b-button class="pointer" size="sm" @click="stop(data.item)">
