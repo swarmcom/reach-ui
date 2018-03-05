@@ -2,7 +2,8 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
-      <sla v-model="sla"></sla>
+      <sla caption="SLA target answer time [s]" v-model="sla"></sla>
+      <sla caption="Voicemail SLA target answer time [s]" v-model="vmSla"></sla>
       <only-active v-model="onlyActive" caption="Show Only Active Queues"></only-active>
     </div>
     <div slot="report">
@@ -48,7 +49,7 @@ export default {
           sortable: true,
           formatter: v => this.findName(v)
         },
-        call_count: {
+        vm_left: {
           label: 'Total Queued',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
@@ -56,21 +57,21 @@ export default {
           sortable: true,
           formatter: v => (v !== undefined) ? v : 0
         },
-        answered: {
+        vm_answered: {
           label: 'Answered by Agent',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? v : 'NA'
+          formatter: (v, _, item) => (item.vm_left !== undefined) ? v : 'NA'
         },
-        returned: {
+        vm_callback_placed: {
           label: 'Returned by Agent',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           sortable: true,
-          formatter: (v, _, item) => (item.ring_count !== undefined) ? v : 'NA'
+          formatter: (v, _, item) => (item.vm_answered !== undefined) ? v : 'NA'
         },
         returned_percent: {
           label: '% Returned by Agent',
@@ -78,15 +79,16 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '63px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? v : 'NA'
+          formatter: (v, _, item) => (item.vm_answered !== undefined && item.vm_answered !== 0) ? (100*item.vm_callback_placed/item.vm_answered).toFixed(1)+'%' : 'NA'
+        
         },
-        answered_caller: {
+        vm_callback_answered: {
           label: 'Answered by Caller',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? v : 'NA'
+          formatter: (v, _, item) => (item.vm_callback_placed !== undefined) ? v : 'NA'
         },
         answered_caller_percent: {
           label: '% Answered by Caller',
@@ -94,7 +96,7 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '63px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? v : 'NA'
+          formatter: (v, _, item) => (item.vm_answered !== undefined && item.vm_answered !== 0) ? (100*item.vm_callback_answered/item.vm_answered).toFixed(1)+'%' : 'NA'
         },
         sla_count: {
           label: 'SLA',
@@ -102,15 +104,15 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '63px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? v : 'NA'
+          formatter: (v, _, item) => (item.vm_answered !== undefined) ? v : 'NA'
         },
-        sla_voicemail: {
+        vm_sla_count: {
           label: 'Voicemail SLA',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined && item.call_count !== 0) ? (100*item.abandoned/item.call_count).toFixed(1)+'%' : 'NA'
+          formatter: (v, _, item) => (item.vm_callback_placed !== undefined) ? v : 'NA'
         },
         asa: {
           label: 'ASA',
@@ -118,7 +120,7 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '73px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? this.durationFormatter(v) : 'NA'
+          formatter: (v, _, item) => (item.vm_answered !== undefined) ? this.durationFormatter(v) : 'NA'
         },
         avg_time_to_callback: {
           label: 'Avg. Time to Callback',
@@ -126,7 +128,7 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '70px' },
           sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? this.durationFormatter(v) : 'NA'
+          formatter: (v, _, item) => (item.vm_callback_placed !== undefined) ? this.durationFormatter(v) : 'NA'
         }
       },
       fromTo: {
@@ -139,10 +141,12 @@ export default {
         title: 'Voicemail Overview',
         from: undefined,
         to: undefined,
-        sla: undefined
+        sla: undefined,
+        vmSla: undefined
       },
       sessions: [],
       sla: 10,
+      vmSla: 10,
       onlyActive: "false"
     }
   },
@@ -154,9 +158,9 @@ export default {
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
       let sla = this.sla * 1000
-      let slaVM = this.sla * 1000
+      let vmSla = this.vmSla * 1000
       let queuesIDs = this.queues.map(obj => obj.id)
-      this.sessions = await this.$agent.p_mfa('ws_report', 'vm_overview_stats', [date_start, date_end, sla, slaVM, queuesIDs])
+      this.sessions = await this.$agent.p_mfa('ws_report', 'vm_overview_stats', [date_start, date_end, sla, vmSla, queuesIDs])
       this.addMissingRows()
     },
     reset () {
@@ -167,11 +171,12 @@ export default {
         date_end: Moment().format()
       }
       this.sla = 10
+      this.vmSla = 10
     },
     hideEmpty (item) {
       if (this.onlyActive === "false") return true
       else {
-        if (item.call_count === 0 || item.call_count === undefined) return false
+        if (item.vm_left === 0 || item.vm_left === undefined) return false
         else return true
       }
     },
