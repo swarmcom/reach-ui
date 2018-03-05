@@ -5,7 +5,7 @@
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand to="/main">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
     <b-navbar-nav>
-      <b-nav-item v-if="$agent.permAllowed('profile-ui')" to="/profile">Profile</b-nav-item>
+      <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
       <b-nav-item to="/help">Help</b-nav-item>
       <b-nav-item @click="logout">Logout</b-nav-item>
     </b-navbar-nav>

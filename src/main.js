@@ -27,6 +27,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 
 Vue.directive('access', {
+  isLiteral: true,
   bind (el, binding, vnode) {
     let Rights = vnode.context.$agent.vm.agent.permissions
     if (! Rights[binding.arg]) {

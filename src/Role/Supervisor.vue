@@ -4,10 +4,10 @@
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand to="/main">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
     <b-navbar-nav>
-      <b-nav-item v-if="$agent.permAllowed('profile-ui')" to="/profile">Profile</b-nav-item>
-      <b-nav-item v-if="$agent.permAllowed('monitor-ui')" to="/monitor">Monitor</b-nav-item>
-      <b-nav-item v-if="$agent.permAllowed('recordings-ui')" to="/recordings">Recordings</b-nav-item>
-      <b-nav-item v-if="$agent.permAllowed('reports-ui')" to="/reports">Reports</b-nav-item>
+      <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
+      <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
+      <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
+      <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
       <b-nav-item to="/help">Help</b-nav-item>
       <b-nav-item @click="logout">Logout</b-nav-item>
     </b-navbar-nav>

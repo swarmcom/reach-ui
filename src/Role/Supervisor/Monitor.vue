@@ -1,5 +1,5 @@
 <template>
-<div v-if="$agent.permAllowed('monitor-ui')" v-bind:class="classObject">
+<div v-access:monitor-ui v-bind:class="classObject">
   <draggable :list="widgets" :options="{draggable:'.itemDragable'}" @end="onDragEnd">
     <b-row v-for="(item, index) in widgets" :key="index" class="itemDragable">
       <b-col>

@@ -1,5 +1,5 @@
 <template>
-<div v-bind:class="classObject" v-if="$agent.permAllowed('reports-ui')">
+<div v-bind:class="classObject" v-access:reports-ui>
 <ul style="margin-top: 10px" class="nav nav-tabs">
   <b-nav-item-dropdown text="Experimental">
     <b-dropdown-item to="/reports/agents/states">Agents man-hours</b-dropdown-item>
