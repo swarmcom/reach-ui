@@ -3,7 +3,7 @@
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
       <interval v-model="interval"></interval>
-      <sla v-model="sla"></sla>
+      <sla caption="SLA target answer time [s]" v-model="sla"></sla>
       <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
       <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
       <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>

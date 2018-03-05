@@ -2,7 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
-      <sla v-model="sla"></sla>
+      <sla caption="SLA target answer time [s]" v-model="sla"></sla>
       <only-active v-model="onlyActive" caption="Show Only Active Queues"></only-active>
     </div>
     <div slot="report">

@@ -4,7 +4,7 @@
       <from-to v-model="fromTo"></from-to>
       <interval v-model="interval"></interval>
       <entity-selector v-model="clients" :query=clientsQuery entity="Clients"></entity-selector>
-      <sla v-model="sla"></sla>
+      <sla caption="SLA target answer time [s]" v-model="sla"></sla>
       <only-active v-model="onlyActive" caption="Show Only Intervals with Activity"></only-active>
     </div>
     <div slot="report">
