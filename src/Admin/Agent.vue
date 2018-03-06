@@ -5,7 +5,7 @@
   <form-text label="Password" v-model="rec.password"></form-text>
   <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
   <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
-  <lines label="Line Out" v-model="rec.line_id" :effective="eff.line.name"></lines>
+  <lines label="Line Out" v-model="rec.line_id" :effective="eff.line_id ? eff.line.name : ''"></lines>
   <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
   <acl label="Access list" v-model="rec.acl_group_id" :effective="eff.acl_group_id"></acl>
   <form-text label="Primary Contact" v-model="rec.uri"></form-text>
