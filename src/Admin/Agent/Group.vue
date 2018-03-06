@@ -2,7 +2,7 @@
 <div class="form">
   <form-text label="Agent Group Name" v-model="rec.name"></form-text>
   <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
-  <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
+  <lines label="Line Out" v-model="rec.line_id"></lines>
   <roles label="Role" v-model="rec.role_id"></roles>
   <acl label="Access list" v-model="rec.acl_group_id"></acl>
   <form-number label="Ring Timeout" v-model="rec.ring_timeout"></form-number>
@@ -24,13 +24,11 @@
 
 <script>
 import Common from '@/Admin/Common'
-import LineOuts from '@/Widget/LineOuts'
 
 export default {
   name: 'admin-agent-group',
   props: ['id'],
   mixins: [Common],
-  components: { 'line-outs': LineOuts },
   data () {
     return {
       rec: {},

@@ -5,7 +5,7 @@
   <form-text label="Password" v-model="rec.password"></form-text>
   <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
   <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
-  <line-outs label="Lines Out" v-model="rec.lines"></line-outs>
+  <lines label="Line Out" v-model="rec.line_id" :effective="eff.line_id"></lines>
   <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
   <acl label="Access list" v-model="rec.acl_group_id" :effective="eff.acl_group_id"></acl>
   <form-text label="Primary Contact" v-model="rec.uri"></form-text>
@@ -38,7 +38,7 @@ import LineOuts from '@/Widget/LineOuts'
 export default {
   name: 'admin-agent',
   mixins: [Common],
-  components: { uris: URIs, 'form-text-effective': FormTextEffective, 'line-outs': LineOuts },
+  components: { uris: URIs, 'form-text-effective': FormTextEffective },
   props: ['id'],
   data () {
     return {
