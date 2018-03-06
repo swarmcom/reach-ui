@@ -10,7 +10,7 @@
     </select>
   </b-col>
   <b-col v-if="effective" cols="4">
-    <input class="form-control" type="number" :value="safe_effective" disabled>
+    <input class="form-control" :value="safe_effective" disabled>
   </b-col>
   <b-col v-else cols="9">
     <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
