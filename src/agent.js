@@ -143,10 +143,10 @@ export default class Agent extends WsProto {
 
   transfer_to_agent (Agent) { this.call('transfer_to_agent', [Agent]) }
   transfer_to_queue (Queue) { this.call('transfer_to_queue', [Queue]) }
-  transfer_to_uri (Uri) { this.call('transfer_to_uri', [Uri]) }
+  transfer_to_uri (Uri, LineId) { this.call('transfer_to_uri', [Uri, LineId]) }
   conference_to_agent (Agent) { this.call('conference_to_agent', [Agent]) }
   conference_to_queue (Queue) { this.call('conference_to_queue', [Queue]) }
-  conference_to_uri (Uri) { this.call('conference_to_uri', [Uri]) }
+  conference_to_uri (Uri, LineId) { this.call('conference_to_uri', [Uri, LineId]) }
 
   login (Login, Password, Cb = (A) => A) {
     if (this.isAuth()) {

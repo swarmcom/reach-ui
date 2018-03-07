@@ -12,13 +12,25 @@
         </b-form-select>
         <b-form-input class="customInput" v-if="selected==='agent'" v-model="filter" placeholder="Search..."/>
       </b-col>
-      <b-col cols="4" v-if="(selected==='queue' || selected==='number')">
-        <b-form-select class="pointer" v-if="selected==='queue'" v-model="selectedQueue">
+      <b-col cols="4" v-if="(selected==='queue')">
+        <b-form-select class="pointer" v-model="selectedQueue">
           <option :value="null">Select Queue...</option>
           <option v-for="queue in queues" :key="queue.id" :value="queue.id">{{queue.name}}</option>
         </b-form-select>
-        <b-form-input class="customInput" v-if="selected==='number'" v-model="selectedNumber" type="text">
-        </b-form-input>
+      </b-col>
+      <b-col cols="8" v-if="(selected==='number')">
+        <b-input-group>
+          <b-form-input v-model="selectedNumber" type="text" placeholder="enter a number..."></b-form-input>
+          <b-input-group-button>
+            <b-dropdown v-if="lines.length > 0" text="Call as" variant="outline-secondary" right>
+              <b-dropdown-item v-for="line of lines" :key="line.id" @click="selectLine(line)">{{line.name}}</b-dropdown-item>
+            </b-dropdown>
+            <b-btn v-if="$agent.vm.agent.line_id" @click="selectLine($agent.vm.agent.line)" variant="outline-secondary">{{$agent.vm.agent.line.name}}</b-btn>
+          </b-input-group-button>
+        </b-input-group>
+        <div v-if="!selectedLine" style="color:#F2635F" class="agent-state-text">
+          Please select the line
+        </div>
       </b-col>
       <b-col cols="8" v-if="selected==='agent'">
         <b-table small bordered
@@ -104,13 +116,16 @@ export default {
       selectedNumber: '',
       filter: null,
       queues: [],
-      agents: []
+      agents: [],
+      lines: [],
+      selectedLine: null
     }
   },
   methods: {
     query: async function () {
       this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
       this.agents = await this.$agent.p_mfa('ws_agent', 'live_agents')
+      this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
     },
     handleState({tag, info}) {
       if (info != 'undefined') {
@@ -144,7 +159,7 @@ export default {
         this.$agent.conference_to_agent(this.selectedAgent)
       }
       else if (this.selected === 'number' && this.selectedNumber !== 'null') {
-        this.$agent.conference_to_uri(this.selectedNumber)
+        this.$agent.conference_to_uri(this.selectedNumber, this.selectedLine)
       }
     },
     transfer () {
@@ -155,7 +170,7 @@ export default {
         this.$agent.transfer_to_agent(this.selectedAgent)
       }
       else if (this.selected === 'number' && this.selectedNumber !== '') {
-        this.$agent.transfer_to_uri(this.selectedNumber)
+        this.$agent.transfer_to_uri(this.selectedNumber, this.selectedLine)
       }
     },
     onSelectAgent (data) {
@@ -174,7 +189,7 @@ export default {
       if (this.$agent.can_conference() &&
         ((this.selectedAgent !== 'null' && this.$agent.permAllowed('confAgent-feature')) ||
           (this.selectedQueue !== 'null' && this.$agent.permAllowed('confQueue-feature')) ||
-          (this.selectedNumber !== '') && this.$agent.permAllowed('confNumber-feature'))) {
+          (this.selectedNumber !== '' && this.selectedLine) && this.$agent.permAllowed('confNumber-feature'))) {
         return true
       }
       else {
@@ -185,11 +200,19 @@ export default {
       if (this.$agent.can_transfer() &&
         ((this.selectedAgent !== 'null' && this.$agent.permAllowed('transAgent-feature')) ||
           (this.selectedQueue !== 'null' && this.$agent.permAllowed('transQueue-feature')) ||
-          (this.selectedNumber !== '') && this.$agent.permAllowed('transNumber-feature'))) {
+          (this.selectedNumber !== '' && this.selectedLine) && this.$agent.permAllowed('transNumber-feature'))) {
         return true
       }
       else {
         return false
+      }
+    },
+    selectLine(line) {
+      if (this.selectedLine === line.id) {
+        this.selectedLine = null
+      }
+      else {
+        this.selectedLine = line.id
       }
     }
   },
