@@ -143,10 +143,10 @@ export default class Agent extends WsProto {
 
   transfer_to_agent (Agent) { this.call('transfer_to_agent', [Agent]) }
   transfer_to_queue (Queue) { this.call('transfer_to_queue', [Queue]) }
-  transfer_to_uri (Uri) { this.call('transfer_to_uri', [Uri]) }
+  transfer_to_uri (Uri, LineId) { this.call('transfer_to_uri', [Uri, LineId]) }
   conference_to_agent (Agent) { this.call('conference_to_agent', [Agent]) }
   conference_to_queue (Queue) { this.call('conference_to_queue', [Queue]) }
-  conference_to_uri (Uri) { this.call('conference_to_uri', [Uri]) }
+  conference_to_uri (Uri, LineId) { this.call('conference_to_uri', [Uri, LineId]) }
 
   login (Login, Password, Cb = (A) => A) {
     if (this.isAuth()) {
@@ -215,7 +215,7 @@ export default class Agent extends WsProto {
   is_barge () { return this.vm && this.vm.state == 'barge' }
   is_conference () { return this.vm && ( this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_login () { return this.vm.session_auth }
-  can_call () { return this.vm && this.permAllowed('outbound-feature') && this.vm.agent.lines && this.vm.agent.lines.length > 0 }
+  can_call () { return this.vm && this.permAllowed('outbound-feature') }
   can_hangup () { return this.vm && ( this.vm.state == 'hold' || this.vm.state == 'oncall' || this.vm.state == 'outgoing' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
