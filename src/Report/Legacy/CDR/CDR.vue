@@ -61,7 +61,7 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '55px' }
         },
-        media: {
+        media_type: {
           label: 'Media Type',
           tdClass: 'table-body-green-last-in-group',
           thClass: 'table-header-last-in-group',
