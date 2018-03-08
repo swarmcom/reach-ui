@@ -35,7 +35,8 @@ export default {
         let i = this.inqueues.findIndex(E => E.uuid === info.uuid)
         if (i >= 0) {
           if (info.state === 'terminate') {
-            this.inqueues.splice(i, 1)
+            if(this.inqueues[i].record != 'inqueue_vm' || this.inqueues[i].state != 'inqueue')             
+              this.inqueues.splice(i, 1)
           } else {
             this.inqueues.splice(i, 1, this.enrich_queue(info))
           }
