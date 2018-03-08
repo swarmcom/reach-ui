@@ -8,7 +8,7 @@
           <option :value="null">Transfer / Conference</option>
           <option v-if="!this.$agent.is_conference ()" :value="'queue'">Queue...</option>
           <option :value="'agent'">Agent...</option>
-          <option v-if="this.$agent.can_call()" :value="'number'">Number...</option>
+          <option v-if="can_call()" :value="'number'">Number...</option>
         </b-form-select>
         <b-form-input class="customInput" v-if="selected==='agent'" v-model="filter" placeholder="Search..."/>
       </b-col>
@@ -206,6 +206,9 @@ export default {
       else {
         return false
       }
+    },
+    can_call () {
+      return (this.lines.length > 0 || this.$agent.vm.agent.line_id)
     },
     selectLine(line) {
       if (this.selectedLine === line.id) {

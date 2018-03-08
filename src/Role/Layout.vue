@@ -49,7 +49,7 @@ export default {
   },
   watch:{
     $route (to, from) {
-      if (to.matched[0].name) {
+      if (to.matched[0] && to.matched[0].name) {
         this.page = to.matched[0].name
       }
     }
