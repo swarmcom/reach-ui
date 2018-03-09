@@ -61,7 +61,7 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '55px' }
         },
-        media: {
+        media_type: {
           label: 'Media Type',
           tdClass: 'table-body-green-last-in-group',
           thClass: 'table-header-last-in-group',
@@ -194,6 +194,7 @@ export default {
       this.sessions = await this.$agent.p_mfa('ws_report', 'cdr', [date_start, date_end])
     },
     reset () {
+      this.sessions = []
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
