@@ -16,7 +16,7 @@
           </td>
         </tr>
       </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
+      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty" :sort-compare="sortCompareCustom">
       </b-table>
     </div>
   </report>
@@ -27,10 +27,12 @@ import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
 import SLA from '@/Report/Input/SLA'
 import OnlyActive from "@/Report/Input/OnlyActive"
+import Common from '@/Report/Legacy/Common'
 import Moment from 'moment'
 
 export default {
   name: 'QueueGroupTrafficOverview',
+  mixins: [Common],
   components: {
     'report': Report,
     'from-to': FromTo,

@@ -19,7 +19,7 @@
         </tr>
       </table>
       <div style="max-height:60vh">
-        <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
+        <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty" :sort-compare="sortCompareCustom">
         </b-table>
       </div>
     </div>
@@ -33,10 +33,12 @@ import EntitySelector from '@/Report/Input/EntitySelector'
 import SLA from '@/Report/Input/SLA'
 import Interval from '@/Report/Input/Interval'
 import OnlyActive from '@/Report/Input/OnlyActive'
+import Common from '@/Report/Legacy/Common'
 import Moment from 'moment'
 
 export default {
   name: 'QueueTrafficDetail',
+  mixins: [Common],
   components: {
     'report': Report,
     'from-to': FromTo,
