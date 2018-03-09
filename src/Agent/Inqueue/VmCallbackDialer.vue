@@ -6,6 +6,7 @@
       <b-dropdown text="Call as" variant="outline-secondary" right>
         <b-dropdown-item v-for="line of this.$agent.vm.agent.lines" :key="line.id" @click="call(line)">{{line.name}}</b-dropdown-item>
       </b-dropdown>
+      <b-btn v-if="$agent.vm.agent.line_id" @click="call($agent.vm.agent.line)" variant="outline-secondary">{{$agent.vm.agent.line.name}}</b-btn>
     </b-input-group-button>
   </b-input-group>
 </b-form-group>
