@@ -194,6 +194,7 @@ export default {
       this.sessions = await this.$agent.p_mfa('ws_report', 'cdr', [date_start, date_end])
     },
     reset () {
+      this.sessions = []
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
