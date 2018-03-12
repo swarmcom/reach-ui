@@ -47,6 +47,9 @@ export default {
           if (i >= 0) {
             this.agents.splice(i, 1, info)
           }
+          else {
+            this.agents.push(info)
+          }
         }
 
         if (tag == 'change') {
