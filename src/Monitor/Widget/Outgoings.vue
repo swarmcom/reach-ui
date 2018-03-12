@@ -164,7 +164,7 @@ export default {
     },
     allowMonitor(state) {
       return (this.$agent.permAllowed('monitor-feature')) && (state === 'oncall') &&
-        (!$agent.is_onsession() && !$agent.is_barge())
+        (!this.$agent.is_onsession() && !this.$agent.is_barge())
     },
     takeover({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
