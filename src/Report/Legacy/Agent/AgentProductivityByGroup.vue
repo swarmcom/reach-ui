@@ -13,7 +13,7 @@
           <td class='table-sm table-header-group' style="width: 286px; max-width: 286px; min-width: 286px">
             Log In/Out
           </td>
-          <td class='table-sm table-header-group' style="width: 506px; max-width: 506px; min-width: 506px">
+          <td class='table-sm table-header-group' style="width: 569px; max-width: 569px; min-width: 569px">
             Logged In Time Breakdown
           </td>
         </tr>
@@ -99,6 +99,13 @@ export default {
         },
         released: {
           label: 'Released',
+          tdClass: ['table-body-orange-dark', 'text-align-right'],
+          thClass: 'table-header',
+          thStyle: { width: '63px' },
+          formatter: v => this.durationFormatter(v)
+        },
+        suspended: {
+          label: 'Suspended',
           tdClass: ['table-body-orange-dark', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
