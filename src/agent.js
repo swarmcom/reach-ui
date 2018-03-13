@@ -64,6 +64,7 @@ export default class Agent extends WsProto {
     EventBus.$on('agent_update', () => update_agent(this))
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
     EventBus.$on('agents_state', (S) => this.handleAgents(S))
+    EventBus.$on('takeover', (S) => this.handleTakeOver(S))
   }
 
   loadDataStorage(name) {
@@ -166,6 +167,10 @@ export default class Agent extends WsProto {
       this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
       this.subscribe('agents')
     }
+  }
+
+  handleTakeOver(S) {
+    alert("You have been logged out by the system. Another user has logged in with the same credentials")
   }
 
   handleState (S) {
