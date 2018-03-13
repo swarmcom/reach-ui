@@ -2,7 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
-      <interval v-model="interval"></interval>
+      <interval v-model="interval" :min_value="1"></interval>
       <sla caption="SLA target answer time [s]" v-model="sla"></sla>
       <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
       <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>

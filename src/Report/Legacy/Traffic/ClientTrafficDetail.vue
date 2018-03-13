@@ -2,7 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
-      <interval v-model="interval"></interval>
+      <interval v-model="interval" :min_value="min_interval"></interval>
       <entity-selector v-model="clients" :query=clientsQuery entity="Clients"></entity-selector>
       <sla caption="SLA target answer time [s]" v-model="sla"></sla>
       <only-active v-model="onlyActive" caption="Show Only Intervals with Activity"></only-active>
@@ -195,6 +195,12 @@ export default {
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
+    }
+  },
+  computed: {
+    min_interval() {
+      // min 5 minutes interval for one day
+      return parseInt(((Moment(this.fromTo.date_end).unix()) - (Moment(this.fromTo.date_start).unix())) / 17280)
     }
   }
 }

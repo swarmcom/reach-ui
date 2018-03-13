@@ -2,7 +2,7 @@
   <div>
     <div>Interval [min]:</div>
     <div style="padding-bottom: 30px">
-      <b-input :value="interval" @input="checkValue" min="1" step="1" size="sm" type="number"></b-input>
+      <b-input :value="interval" @input="checkValue" :min="min_value" step="1" size="sm" type="number"></b-input>
     </div>
   </div>
 </template>
@@ -14,6 +14,9 @@ export default {
     value: {
       type: Number,
       required: true
+    },
+    min_value: {
+      type: Number
     }
   },
   data () {

@@ -2,7 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
-      <interval v-model="interval"></interval>
+      <interval v-model="interval" :min_value="1"></interval>
       <entity-selector v-model="queues" :query=queuesQuery entity="Queues"></entity-selector>
       <sla caption="SLA target answer time [s]" v-model="sla"></sla>
       <only-active v-model="onlyActive" caption="Show Only Intervals with Activity"></only-active>
