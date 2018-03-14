@@ -166,8 +166,10 @@ export default {
       }
       else if (state.state === 'oncall') {
         this.title = 'Voicemail Processing'
-        this.dialer_visible = true
         this.queryCallInfo()
+      }
+      else if (state.state === 'wrapup') {
+        this.dialer_visible = true
       }
     }
   },

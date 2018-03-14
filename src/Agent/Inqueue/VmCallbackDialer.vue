@@ -23,10 +23,6 @@ export default {
   },
   methods: {
     call (line) {
-      //this.$agent.hangup()
-      if (this.$agent.is_wrapup()) {
-        this.$agent.p_mfa('ws_agent', 'end_wrapup')
-      }
       this.$agent.place_call(line.id, this.number)
       this.$emit('dialer_input')
     }
