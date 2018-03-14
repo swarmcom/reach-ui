@@ -27,6 +27,9 @@ export default {
       this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
     },
     call (line) {
+      if (this.$agent.is_wrapup()) {
+        this.$agent.p_mfa('ws_agent', 'end_wrapup')
+      }
       this.$agent.place_call(line.id, this.number)
     },
     can_call() {
