@@ -28,6 +28,10 @@
     </transition>
   </div>
 
+  <b-modal ref="loggedout" hide-footer title="Logged out" @hidden="cancel()">
+    You have been logged out by the system. Another user has logged in with the same credentials
+  </b-modal>
+
   <footer class="footer">
     <div class="container">
       <div class="row  justify-content-center">
@@ -69,6 +73,16 @@ export default {
     }
   },
   methods: {
+    cancel () {
+      this.$agent.vm.canLogout = true
+      this.$agent.onDisconnect()
+    },
+    handleTakeOver(S) {
+      this.$refs.loggedout.show()
+    }
+  },
+  created () {
+    this.$bus.$on('takeover', this.handleTakeOver)
   }
 }
 </script>

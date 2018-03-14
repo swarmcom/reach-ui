@@ -56,7 +56,8 @@ export default class Agent extends WsProto {
         release_id: undefined,
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
-        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true }
+        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true },
+        canLogout: true
       }
     }),
     this.loadDataStorage("reach-ui")
@@ -64,6 +65,7 @@ export default class Agent extends WsProto {
     EventBus.$on('agent_update', () => update_agent(this))
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
     EventBus.$on('agents_state', (S) => this.handleAgents(S))
+    EventBus.$on('takeover', (S) => this.handleTakeOver(S))
   }
 
   loadDataStorage(name) {
@@ -105,8 +107,10 @@ export default class Agent extends WsProto {
   }
 
   onDisconnect () {
-    super.onDisconnect()
-    this.handleAuth()
+    if(this.vm.canLogout) {
+      super.onDisconnect()
+      this.handleAuth()
+    }
   }
 
   onConnect () {
@@ -166,6 +170,10 @@ export default class Agent extends WsProto {
       this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
       this.subscribe('agents')
     }
+  }
+
+  handleTakeOver(S) {
+    this.vm.canLogout = false
   }
 
   handleState (S) {

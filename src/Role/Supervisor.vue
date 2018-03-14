@@ -40,6 +40,10 @@
 
   </b-navbar>
 
+  <b-modal ref="loggedout" hide-footer title="Logged out" @hidden="cancel()">
+    You have been logged out by the system. Another user has logged in with the same credentials
+  </b-modal>
+
   <div class="container-fluid">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
@@ -105,6 +109,16 @@ export default {
     }
   },
   methods: {
+    cancel () {
+      this.$agent.vm.canLogout = true
+      this.$agent.onDisconnect()
+    },
+    handleTakeOver(S) {
+      this.$refs.loggedout.show()
+    }
+  },
+  created () {
+    this.$bus.$on('takeover', this.handleTakeOver)
   }
 }
 </script>
