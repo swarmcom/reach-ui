@@ -117,8 +117,11 @@ export default {
       this.$refs.loggedout.show()
     }
   },
-  created () {
+  mounted () {
     this.$bus.$on('takeover', this.handleTakeOver)
+  },
+  beforeDestroy () {
+    this.$bus.$off('takeover', this.handleTakeOver)
   }
 }
 </script>
