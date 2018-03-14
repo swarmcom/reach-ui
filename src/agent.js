@@ -56,7 +56,8 @@ export default class Agent extends WsProto {
         release_id: undefined,
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
-        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true }
+        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true },
+        canLogout: true
       }
     }),
     this.loadDataStorage("reach-ui")
@@ -106,8 +107,10 @@ export default class Agent extends WsProto {
   }
 
   onDisconnect () {
-    super.onDisconnect()
-    this.handleAuth()
+    if(this.vm.canLogout) {
+      super.onDisconnect()
+      this.handleAuth()
+    }
   }
 
   onConnect () {
@@ -170,7 +173,7 @@ export default class Agent extends WsProto {
   }
 
   handleTakeOver(S) {
-    alert("You have been logged out by the system. Another user has logged in with the same credentials")
+    this.vm.canLogout = false
   }
 
   handleState (S) {
