@@ -81,6 +81,9 @@
               <b-col v-if="data.item.state === 'agent'">
                 Ringing
               </b-col>
+              <b-col v-if="data.item.state === 'wrapup'">
+                Wrap-up
+              </b-col>
             </b-row>
           </template>
         </b-table>
@@ -139,7 +142,8 @@ export default {
         {name: "Connected", value: "oncall"},
         {name: "Voicemail", value: "voicemail"},
         {name: "In Queue", value: "inqueue"},
-        {name: "Ringing", value: "agent"}
+        {name: "Ringing", value: "agent"},
+        {name: "Wrap-up", value: "wrapup"}
       ],
       medias: [
         {name: "Any Media", value: "Any Media"},
