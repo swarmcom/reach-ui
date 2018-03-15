@@ -33,7 +33,7 @@
               </b-col>
             </b-row>
             <b-row v-if="data.item.seeDetails && data.item.details.length > 0" v-for="(v, k) in data.item.details"
-                   key="k">
+                   :key="k">
               <b-col cols="6">
                 <div class="agent-state-text">{{v.line}}</div>
               </b-col>
@@ -82,11 +82,12 @@
 </template>
 <script>
 import Storage from '@/Storage'
+import Common from '@/Admin/Common'
 
 export default {
   name: 'queue-manager-queues',
   widgetName: 'Queue View',
-  mixins: [Storage],
+  mixins: [Storage, Common],
   props: {
     inqueues: Array
   },
@@ -157,14 +158,17 @@ export default {
       ],
       period: {value: "15m", name: "Last 15 minutes"},
       showCollapse: true,
+      stats: [],
     }
   },
   methods: {
     query: async function () {
       this.queues = await this.$agent.p_mfa('ws_agent', 'queues')
+      this.updateStats(this.period.value)
     },
     set_period(value) {
       this.period.value = value
+      this.updateStats(this.period.value)
     },
     showDetails(value) {
       this.queues[value.index].seeDetails = !this.queues[value.index].seeDetails
@@ -172,10 +176,23 @@ export default {
     loadDataStorage() {
       this.loadLocal('showCollapse')
     },
+    updateStats: async function (val) {
+      let queuesIDs = this.queues.map(obj => obj.id)
+      this.stats = await this.$agent.p_mfa('ws_stats', 'queue_manager_stats', [val, queuesIDs])
+    },
+    handleState({info}) {
+      if (info.state === 'terminate' || info.state === 'hangup') {
+        this.updateStats(this.period.value)
+      }
+    }
   },
   created() {
     this.query()
+    this.$bus.$on('inqueue_state', this.handleState)
     this.maybeInitLocal().loadDataStorage()
+  },
+  beforeDestroy() {
+    this.$bus.$off('inqueue_state', this.handleState)
   },
   watch: {
     showCollapse: function (newVal, oldVal) {
@@ -190,7 +207,7 @@ export default {
       let inqueues = this.inqueues.slice(0)
       let stats = []
       queues.forEach((key) => {
-        let selectedQueue = key.name
+        let selectedQueue = key.id
         let object = {
           "seeDetails": key.seeDetails,
           "details": [],
@@ -203,11 +220,19 @@ export default {
           "abandonTime": '-',
           "abandoned": '-'
         }
+        let index = this.stats.findIndex(el => el.queue_id === key.id)
+        if (index >= 0) {
+          object.speedAnswer =  this.msToMs(this.stats[index].avg_answered_time)
+          object.longestWait = this.msToMs(this.stats[index].longest_wait)
+          object.completed = this.stats[index].completed
+          object.abandonTime = this.msToMs(this.stats[index].avg_abandoned_time)
+          object.abandoned = this.stats[index].abandoned
+        }
         inqueues.forEach((key) => {
-          if (key.queue && selectedQueue == key.queue) {
+          if (key.queue && selectedQueue == key.queue_id) {
             object.details.push({customer: key.customer, line: key.line})
             object.ciq++
-            if (key.state == 'oncall') {
+            if (key.state == 'oncall' || key.state == 'wrapup') {
               object.connected++
             }
           }
