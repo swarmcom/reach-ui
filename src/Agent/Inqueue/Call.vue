@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 10px" v-if="visible && !this.$agent.is_wrapup()">
+<div style="margin-top: 10px" v-if="visible">
   <b-row v-if="lua_result">
     <b-col>{{lua_result}}</b-col>
   </b-row>
@@ -74,15 +74,20 @@
       </dl>
     </b-col>
   </b-row>
+  <b-row>
+    <dialer v-if="inqueue.state == 'wrapup'"></dialer>
+  </b-row>
 </div>
 </template>
 
 <script>
 import Tags from '@/Widget/Tags'
 import Common from '@/Admin/Common'
+import Dialer from '@/Agent/Dialer'
 export default {
   components: {
-    'tags': Tags
+    'tags': Tags,
+    'dialer': Dialer
   },
   props: {
     uuid: String

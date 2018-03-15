@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top: 10px" v-if="visible && !this.$agent.is_wrapup()">
+<div style="margin-top: 10px" v-if="visible">
   <b-row v-if="lua_result">
     <b-col>{{lua_result}}</b-col>
   </b-row>
@@ -74,7 +74,7 @@
       </dl>
     </b-col>
   </b-row>
-  <dialer v-if="dialer_visible" :original_caller='originalCaller' @dialer_input="onDialerInput"></dialer>
+  <dialer v-if="dialer_visible" :original_caller='originalCaller' :lines="lines" @dialer_input="onDialerInput"></dialer>
 </div>
 </template>
 
@@ -100,7 +100,8 @@ export default {
       call_info: {},
       lua_result: false,
       updater: undefined,
-      notification: undefined
+      notification: undefined,
+      lines: []
     }
   },
   computed: {
@@ -110,6 +111,7 @@ export default {
   },
   methods: {
     query: async function () {
+      this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_vm', this.uuid])
       this.call_info = await this.$agent.p_mfa('ws_agent', 'call_info', [this.uuid])
       let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
@@ -164,8 +166,10 @@ export default {
       }
       else if (state.state === 'oncall') {
         this.title = 'Voicemail Processing'
-        this.dialer_visible = true
         this.queryCallInfo()
+      }
+      else if (state.state === 'wrapup') {
+        this.dialer_visible = true
       }
     }
   },
