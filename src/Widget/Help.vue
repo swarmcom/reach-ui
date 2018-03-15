@@ -164,7 +164,7 @@ Name of the Queue Group being configured
   </helper>
 
   <helper target="Music on hold">
-Music on hold to be used for calls that are in queue or on hold. MOH can be configured on the Client, Queue and Queue Group. The MOH used for a specific call is determined by the most specific of these. Specifically, MOH will be determined by Client first, then by Queue, then by Queue Group, then by system default (in that order). MOH sources are configured in the Sounds - MOHs configuration page and then selected as desired.
+Music on hold to be used for calls that are in queue or on hold. MOH can be configured on the Client, Queue and Queue Group. The MOH used for a specific call is determined by the most specific of these. Specifically, MOH will be determined by by Queue, then by Queue Group, then by Client, and then by system default (in that order). MOH sources are configured in the Sounds - MOHs configuration page and then selected as desired.
   </helper>
 
   <helper target="Announce">
