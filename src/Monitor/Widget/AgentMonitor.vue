@@ -106,7 +106,7 @@
                 </div>
                 <div v-if="data.item.state === 'ringing'" class='agent-state-color'>
                   <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
-                  <b-row v-if="data.item.call_vars">
+                  <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
                       <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
                         }}
@@ -142,7 +142,7 @@
                 </div>
                 <div v-if="data.item.state === 'oncall'" class='agent-state-color'>
                   <icon name="phone" scale="2"/>
-                  <b-row v-if="data.item.call_vars">
+                  <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
                       <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
                         }}
@@ -165,9 +165,11 @@
                 </div>
                 <div v-if="data.item.state === 'conference'" class='agent-state-color'>
                   <icon name="phone" scale="2"/>
-                  <b-row v-if="data.item.call_vars">
+                  <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                        }}
+                      </div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -186,9 +188,11 @@
                 </div>
                 <div v-if="data.item.state === 'inconference'" class='agent-state-color'>
                   <icon name="phone" scale="2"/>
-                  <b-row v-if="data.item.call_vars">
+                  <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                        }}
+                      </div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -212,9 +216,11 @@
                 </div>
                 <div v-if="data.item.state === 'hold'" class='agent-state-color'>
                   <icon name="pause" scale="2"/>
-                  <b-row v-if="data.item.call_vars">
+                  <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                        }}
+                      </div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -241,9 +247,11 @@
                 </div>
                 <div v-if="data.item.state === 'barge'" class='agent-state-color'>
                   <icon name="phone" scale="2"/>
-                  <b-row v-if="data.item.call_vars">
+                  <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.call_vars['Call-Direction']}}</div>
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                        }}
+                      </div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -281,19 +289,19 @@
                     </div>
                   </b-col>
                 </b-row>
-                <b-row v-if="data.item.call_vars">
+                <b-row v-if="data.item.inqueue && data.item.inqueue.call_vars">
                   <b-col cols="12">
                     <div class="agent-state-text">
-                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' +
-                      isDefined(data.item.call_vars['Caller-Orig-Caller-ID-Number'])}}
+                      {{isDefined(data.item.inqueue.call_vars['Caller-Caller-ID-Name']) + ' ' +
+                      isDefined(data.item.inqueue.call_vars['Caller-Orig-Caller-ID-Number'])}}
                     </div>
                   </b-col>
                 </b-row>
-                <b-row v-if="data.item.call_vars">
+                <b-row v-if="data.item.inqueue && data.item.inqueue.call_vars">
                   <b-col cols="12" v-if="data.item.state==='barge'">
                     <div class="agent-state-text">
-                      {{isDefined(data.item.call_vars['Caller-Caller-ID-Name']) + ' ' +
-                      isDefined(data.item.call_vars['Caller-Caller-ID-Number'])}}
+                      {{isDefined(data.item.inqueue.call_vars['Caller-Caller-ID-Name']) + ' ' +
+                      (isDefineddata.item.inqueue.call_vars['Caller-Caller-ID-Number'])}}
                     </div>
                   </b-col>
                 </b-row>
@@ -303,9 +311,9 @@
                     </div>
                   </b-col>
                 </b-row>
-                <b-row v-if="data.item.call_vars">
+                <b-row v-if="data.item.inqueue && data.item.inqueue.call_vars">
                   <b-col cols="12">
-                    <div class="agent-state-text">{{isDefined(data.item.call_vars['Unique-ID'])}}</div>
+                    <div class="agent-state-text">{{isDefined(data.item.inqueue.call_vars['Unique-ID'])}}</div>
                   </b-col>
                 </b-row>
               </template>

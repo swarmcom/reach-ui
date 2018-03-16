@@ -27,16 +27,15 @@
                    :sort-by="sortBy"
                    :sort-desc="sortDesc"
                    @sort-changed="onSortingChanged">
-            <template slot="actions" slot-scope="data">
-              <b-row class="text-center">
+            <template slot="row-details" slot-scope="data">
+              <b-row>
                 <b-col>
-                  <b-dropdown size="sm" text="Select Action" variant="outline-secondary">
-                    <b-dropdown-item @click="takeover(data.item)">Take over</b-dropdown-item>
-                    <b-dropdown-item
-                      v-if="allowMonitor(data.item.state)" @click="spy(data.item)">Monitor
-                    </b-dropdown-item>
-                    <b-dropdown-item @click="hangup(data.item)">Hangup</b-dropdown-item>
-                  </b-dropdown>
+                  <b-button class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
+                    Monitor
+                  </b-button>
+                  <b-button class="pointer" size="sm" @click="hangup(data.item)">
+                    Hangup
+                  </b-button>
                 </b-col>
               </b-row>
             </template>
@@ -86,7 +85,6 @@ export default {
   data() {
     return {
       fields: {
-        actions: {label: 'Actions', thClass: "table-header-text-center"},
         media: {label: 'Media / Customer', thClass: "table-header-text-center", tdClass: "table-body-text-center"},
         state: {
           label: 'State',
@@ -220,6 +218,7 @@ export default {
       let outgoings = this.outgoings.slice(0)
       let compOutgoings = []
       outgoings.forEach((key) => {
+        key._showDetails = true
         key._cellVariants = {
           actions: 'success',
           media: 'primary',
