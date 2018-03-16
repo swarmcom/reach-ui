@@ -23,8 +23,8 @@
   <br>
   <br>
   <b-row style="margin-top:5px;" class="float-right" v-if="can_record()">
-    <b-button style="width:85px" size="sm" class="pointer" v-if="!inqueue.keep_record" @click="record" variant="outline-danger">Record</b-button>
-    <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="inqueue.keep_record">Recording</b-button>
+    <b-button style="width:85px" size="sm" class="pointer" v-if="!isRecording()" @click="record" variant="outline-danger">Record</b-button>
+    <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="isRecording()">Recording</b-button>
   </b-row>
 </div>
 </template>
@@ -49,6 +49,7 @@ export default {
       state_time: 0,
       state_date: 0,
       inqueue: null,
+      outgoing: null,
       wrap_visible: false,
       disp_visible: this.showDispositions,
       wrap: undefined
@@ -58,12 +59,21 @@ export default {
     query: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
     },
+    query_outgoing: async function () {
+      this.outgoing = await this.$agent.p_mfa('ws_agent', 'get_outgoing', [])
+      this.$agent.p_mfa('ws_agent', 'subscribe', ['outgoing', this.outgoing.id])
+    },
     onTimer() {
       this.state_time = new Date() - this.state_date
     },
     record: async function () {
       await this.$agent.p_mfa('ws_agent', 'record')
-      this.inqueue.keep_record = true
+      if(this.inqueue) {
+        this.inqueue.keep_record = true
+      }
+      if(this.outgoing) {
+        this.outgoing.keep_record = true
+      }
     },
     hold () { this.$agent.hold() },
     unhold () { this.$agent.unhold() },
@@ -87,9 +97,13 @@ export default {
       if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call') {
         this.query()
       }
-      else
+      if (S.state.inqueue && S.state.inqueue.record == 'outgoing') {
+        this.query_outgoing()
+      }
+      else {
         this.inqueue = null
-
+        this.outgoing = null
+      }
       if (S.state.state == 'wrapup') {
         this.wrapup_timer = S.state.queue.wrapup_timer
         this.wrap_visible = true
@@ -101,7 +115,11 @@ export default {
     },
     can_record () {
       return this.$agent.permAllowed('CROnDemand-feature') &&
-        this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null
+        (this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null ||
+        this.outgoing && this.outgoing.line_out && this.outgoing.line_out.enable_call_recording === null) 
+    },
+    isRecording () {
+      return ((this.inqueue && this.inqueue.keep_record) || (this.outgoing && this.outgoing.keep_record)) 
     }
   },
   watch: {
@@ -118,6 +136,9 @@ export default {
   beforeDestroy () {
     clearInterval(this.updater)
     this.$bus.$off('agent_state', this.getState)
+    if(this.outgoing) {
+      this.$agent.mfa('ws_agent', 'unsubscribe', ['outgoing', this.outgoing.id])
+    }
   },
   components: {
     'wrap-timer': Wrap,

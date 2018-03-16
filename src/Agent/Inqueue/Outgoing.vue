@@ -19,10 +19,6 @@
       </dl>
     </b-col>
   </b-row>
-  <b-row style="margin-top:5px;" class="float-right" v-if="can_record()">
-    <b-button style="width:85px" size="sm" class="pointer" v-if="!outgoing.keep_record" @click="record" variant="outline-danger">Record</b-button>
-    <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="outgoing.keep_record">Recording</b-button>
-  </b-row>
 </div><!-- container -->
 </template>
 <script>
@@ -39,23 +35,10 @@ export default {
     query: async function () {
       this.outgoing = await this.$agent.p_mfa('ws_agent', 'get_outgoing', [])
       this.visible = true
-      this.$agent.p_mfa('ws_agent', 'subscribe', ['outgoing', this.outgoing.id])
-    },
-    record: async function () {
-      await this.$agent.p_mfa('ws_agent', 'record')
-      this.outgoing.keep_record = true
-    },
-    can_record () {
-      return this.$agent.permAllowed('CROnDemand-feature') &&
-        this.outgoing && this.outgoing.line_out && this.outgoing.line_out.enable_call_recording === null
     }
-
   },
   created () {
     this.query()
-  },
-  beforeDestroy () {
-    this.$agent.mfa('ws_agent', 'unsubscribe', ['outgoing', this.outgoing.id])
-  },
+  }
 }
 </script>
