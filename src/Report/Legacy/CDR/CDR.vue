@@ -6,7 +6,7 @@
     <div slot="report">
       <table>
         <tr>
-          <td class='table-sm table-header-group' style="width: 313px; max-width: 313px; min-width: 313px">
+          <td class='table-sm table-header-group' style="width: 250px; max-width: 250px; min-width: 250px">
             Call Identification
           </td>
           <td class='table-sm table-header-group' style="width: 868px; max-width: 868px; min-width: 868px">
@@ -17,7 +17,7 @@
           </td>
         </tr>
       </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed; overflow-wrap: break-word;" small hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
       </b-table>
     </div>
   </report>
@@ -41,31 +41,19 @@ export default {
           label: 'Call ID',
           tdClass: 'table-body-green',
           thClass: 'table-header',
-          thStyle: { width: '113px' }
-        },
-        segment: {
-          label: 'Segment',
-          tdClass: 'table-body-green',
-          thClass: 'table-header',
-          thStyle: { width: '45px' }
-        },
-        last_segment: {
-          label: 'Last Segment',
-          tdClass: 'table-body-green',
-          thClass: 'table-header',
-          thStyle: { width: '45px' }
+          thStyle: { width: '120px' }
         },
         direction: {
           label: 'Direction',
           tdClass: 'table-body-green',
           thClass: 'table-header',
-          thStyle: { width: '55px' }
+          thStyle: { width: '60px' }
         },
         media_type: {
           label: 'Media Type',
           tdClass: 'table-body-green-last-in-group',
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '55px' }
+          thStyle: { width: '70px' }
         },
         queue_group: {
           label: 'Queue Group',
