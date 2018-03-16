@@ -97,7 +97,7 @@ export default {
       if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call') {
         this.query()
       }
-      if (S.state.inqueue && S.state.inqueue.record == 'outgoing') {
+      if (S.state.inqueue && S.state.inqueue.record == 'outgoing_call') {
         this.query_outgoing()
       }
       else {
