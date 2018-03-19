@@ -108,7 +108,7 @@
                   <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
                         }}
                       </div>
                     </b-col>
@@ -144,7 +144,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
                         }}
                       </div>
                     </b-col>
@@ -167,7 +167,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
                         }}
                       </div>
                     </b-col>
@@ -190,7 +190,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
                         }}
                       </div>
                     </b-col>
@@ -218,7 +218,7 @@
                   <icon name="pause" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
                         }}
                       </div>
                     </b-col>
@@ -249,7 +249,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
                         }}
                       </div>
                     </b-col>
@@ -293,7 +293,7 @@
                   <b-col cols="12">
                     <div class="agent-state-text">
                       {{isDefined(data.item.inqueue.call_vars['Caller-Caller-ID-Name']) + ' ' +
-                      isDefined(data.item.inqueue.call_vars['Caller-Orig-Caller-ID-Number'])}}
+                      isDefined(data.item.inqueue.call_vars['Caller-Caller-ID-Name'])}}
                     </div>
                   </b-col>
                 </b-row>
