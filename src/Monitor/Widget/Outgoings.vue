@@ -30,12 +30,8 @@
             <template slot="row-details" slot-scope="data">
               <b-row>
                 <b-col>
-                  <b-button class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
-                    Monitor
-                  </b-button>
-                  <b-button class="pointer" size="sm" @click="hangup(data.item)">
-                    Hangup
-                  </b-button>
+                  <b-badge variant="warning" class="pointer" v-if="allowMonitor(data.item.state)" @click="spy(data.item)">Monitor</b-badge>
+                  <b-badge variant="danger" class="pointer" @click="hangup(data.item)">Hangup</b-badge>
                 </b-col>
               </b-row>
             </template>
@@ -122,7 +118,7 @@ export default {
   },
   methods: {
     handleState({state}) {
-      let i = this.outgoings.findIndex(E => E.id === state.id)
+      let i = this.outgoings.findIndex(E => E.uuid === state.uuid)
       if (i >= 0) {
         if (state.state === 'terminate') {
           this.outgoings.splice(i, 1)
@@ -170,8 +166,8 @@ export default {
     spy({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
     },
-    hangup({id}) {
-      this.$agent.p_mfa('ws_supervisor', 'hangup', ['outgoing', id])
+    hangup({uuid}) {
+      this.$agent.p_mfa('ws_supervisor', 'hangup', ['outgoing', uuid])
     },
     onFilterUpdate(event) {
       if (event.match(/[^\w\s]/gi)) {
