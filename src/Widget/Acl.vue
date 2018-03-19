@@ -1,10 +1,19 @@
 <template>
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9">
+  <div v-if="effective" class="col-5">
     <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
       <option></option>
-      <option v-for="acl in acls" :value="acl.id" :selected="isActive(acl.id)">{{ acl.name }}</option>
+      <option v-for="acl in acls" :value="acl.id" :selected="isActive(acl.id)" :key="acl.id">{{ acl.name }}</option>
+    </select>
+  </div>
+  <div v-if="effective" class="col-4">
+    <input class="form-control" type="text" :value="safe_effective" disabled>
+  </div>
+  <div v-else class="col-9">
+    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
+      <option></option>
+      <option v-for="acl in acls" :value="acl.id" :selected="isActive(acl.id)" :key="acl.id">{{ acl.name }}</option>
     </select>
   </div>
 </div>
@@ -13,7 +22,7 @@
 <script>
 export default {
   name: 'form-text',
-  props: ['label', 'value'],
+  props: ['label', 'value', 'effective'],
   data () {
     return {
       acls: []
@@ -31,6 +40,22 @@ export default {
     },
     onUpdate (value) {
       this.$emit('input', value)
+    }
+  },
+  computed: {
+    safe_effective () {
+      if (this.effective === 'undefined') {
+        return ''
+      }
+      else {
+        let index = this.acls.findIndex(el => el.id === this.effective)
+        if (index >= 0) {
+          return this.acls[index].name
+        }
+        else {
+          return ''
+        }
+      }
     }
   },
   created () {

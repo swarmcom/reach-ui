@@ -110,7 +110,7 @@ export default {
       let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
       this.handleInqueueLua(lua_re)
       this.visible = true
-      this.show_notification()
+      //this.show_notification()
     },
     queryCall: async function () {
       this.inqueue = await this.$agent.p_mfa('ws_agent', 'inqueue_state', ['inqueue_call', this.uuid])
