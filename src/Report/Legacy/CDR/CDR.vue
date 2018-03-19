@@ -117,7 +117,7 @@ export default {
           thStyle: { width: '83px' }
         },
         caller_ip: {
-          label: 'Originating Caller ID',
+          label: 'Caller IP',
           tdClass: 'table-body-orange-dark-last-in-group',
           thClass: 'table-header-last-in-group',
           thStyle: { width: '87px' }
