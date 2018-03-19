@@ -57,7 +57,8 @@ export default class Agent extends WsProto {
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
         isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true },
-        canLogout: true
+        canLogout: true,
+        notification: null
       }
     }),
     this.loadDataStorage("reach-ui")
@@ -181,6 +182,14 @@ export default class Agent extends WsProto {
       this.vm.hangup_state = S.hangup_state
       this.vm.state = S.state
       this.vm.release_id = S.release_id
+      if(S.state === 'ringing') {
+        if (!this.vm.notification) {
+          this.show_callnotification(S.inqueue)
+        }
+      }
+      else if (this.vm.notification) {
+        this.vm.notification = null
+      }
     }
   }
 
@@ -190,6 +199,17 @@ export default class Agent extends WsProto {
       icon: TheIcon
     }
     let n = new Notification(theTitle, options);
+  }
+
+  show_callnotification (inqueue) {
+    if (!("Notification" in window)) {
+      return
+    } else if (Notification.permission === "granted" && inqueue.line_in) {
+      let body = `Client: ${inqueue.line_in.client.name}\nQueue: ${inqueue.queue.name}`
+      this.vm.notification = new Notification("Incoming call", { body: body })
+    } else if (Notification.permission !== 'denied') {
+      Notification.requestPermission()
+    }
   }
 
   handleAgents ({info}) {
