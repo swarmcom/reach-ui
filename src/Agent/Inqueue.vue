@@ -89,6 +89,9 @@ export default {
         if (state.state == 'outgoing') {
           this.outgoing_visible = true
         }
+        if (state.state == 'wrapup') {
+          this.conf_visible = false
+        }
       }
     },
   },
