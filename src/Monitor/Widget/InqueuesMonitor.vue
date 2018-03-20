@@ -39,15 +39,15 @@
           <template slot="row-details" slot-scope="data">
             <b-row>
               <b-col>
-                <b-button class="pointer" v-if="allowTake(data.item.state)" size="sm" @click="take(data.item)">
+                <b-badge variant="warning" class="pointer" v-if="allowTake(data.item.state)" size="sm" @click="take(data.item)">
                   Take
-                </b-button>
-                <b-button class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
+                </b-badge>
+                <b-badge variant="warning" class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                   Monitor
-                </b-button>
-                <b-button class="pointer" v-if="$agent.permAllowed('hangupCallQueue-feature')" size="sm" @click="hangup(data.item)">
+                </b-badge>
+                <b-badge variant="danger" class="pointer" v-if="$agent.permAllowed('hangupCallQueue-feature')" size="sm" @click="hangup(data.item)">
                   Hangup
-                </b-button>
+                </b-badge>
               </b-col>
             </b-row>
           </template>
