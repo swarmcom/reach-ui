@@ -86,6 +86,29 @@
               </b-col>
             </b-row>
           </template>
+          <template slot="skillsReq" slot-scope="data">
+            <b-row v-if="data.item.skillsReq ==='_agent'">
+              <b-col v-if="data.item.skills._agent.avatar" cols="1">
+                <b-img :src="$agent.avatar_uri(data.item.skills._agent.avatar)"
+                       style="width:32px;"></b-img>
+              </b-col>
+              <b-col>
+                <b-row>
+                  <b-col>
+                    name: {{data.item.skills._agent.name}}
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col>
+                    login: {{data.item.skills._agent.login}}
+                  </b-col>
+                </b-row>
+              </b-col>
+            </b-row>
+            <b-row v-else>
+              {{data.item.skillsReq}}
+            </b-row>
+          </template>
         </b-table>
       </b-col>
     </b-row>
