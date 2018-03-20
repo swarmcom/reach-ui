@@ -293,7 +293,7 @@
                   <b-col cols="12">
                     <div class="agent-state-text">
                       {{isDefined(data.item.inqueue.call_vars['Caller-Caller-ID-Name']) + ' ' +
-                      isDefined(data.item.inqueue.call_vars['Caller-Caller-ID-Name'])}}
+                      isDefined(data.item.inqueue.call_vars['Caller-Caller-ID-Number'])}}
                     </div>
                   </b-col>
                 </b-row>
