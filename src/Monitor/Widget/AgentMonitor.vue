@@ -108,7 +108,7 @@
                   <icon name="wifi" scale="2" style="transform: rotate(270deg);"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'inqueue_call' ? 'inbound' : 'outbound'
                         }}
                       </div>
                     </b-col>
@@ -144,7 +144,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'inqueue_call' ? 'inbound' : 'outbound'
                         }}
                       </div>
                     </b-col>
@@ -167,7 +167,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'inqueue_call' ? 'inbound' : 'outbound'
                         }}
                       </div>
                     </b-col>
@@ -190,7 +190,7 @@
                   <icon name="phone" scale="2"/>
                   <b-row v-if="data.item.inqueue">
                     <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
+                      <div class="agent-state-text">{{data.item.inqueue.record === 'inqueue_call' ? 'inbound' : 'outbound'
                         }}
                       </div>
                     </b-col>
@@ -247,13 +247,6 @@
                 </div>
                 <div v-if="data.item.state === 'barge'" class='agent-state-color'>
                   <icon name="phone" scale="2"/>
-                  <b-row v-if="data.item.inqueue">
-                    <b-col cols="12">
-                      <div class="agent-state-text">{{data.item.inqueue.record === 'outgoing_call' ? 'outbound' : 'inbound'
-                        }}
-                      </div>
-                    </b-col>
-                  </b-row>
                   <b-row>
                     <b-col cols="12">
                       <div class="agent-state-text">Barge</div>
@@ -482,7 +475,7 @@ export default {
     },
     canTakeOver(agent) {
       return (this.$agent.permAllowed('takeOver-feature') &&
-        agent.state === 'oncall' && agent.inqueue.record === "inqueue_call" &&
+        agent.state === 'oncall' && agent.inqueue && agent.inqueue.record === "inqueue_call" &&
         (!this.$agent.is_onsession() && !this.$agent.is_barge()))
     },
     canBarge(agent) {
@@ -494,7 +487,12 @@ export default {
         agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
     },
     spy({inqueue}) {
-      this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.uuid])
+      if (inqueue.record === "outgoing_call") {
+        this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.target])
+      }
+      else {
+        this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.uuid])
+      }
     },
     cancelSpy() {
       this.$agent.mfa('ws_supervisor', 'cancel', [])
