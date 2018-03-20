@@ -39,33 +39,33 @@
               <template slot="row-details" slot-scope="data">
                 <b-row>
                   <b-col>
-                    <b-button class="pointer" v-access:controlAgentState-feature v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
+                    <b-badge class="pointer" v-access:controlAgentState-feature v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
                       Available
-                    </b-button>
-                    <b-button class="pointer" v-access:controlAgentState-feature v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
+                    </b-badge>
+                    <b-badge class="pointer" v-access:controlAgentState-feature v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
                       Release
-                    </b-button>
-                    <b-button class="pointer" size="sm" @click="stop(data.item)">
+                    </b-badge>
+                    <b-badge class="pointer" size="sm" @click="stop(data.item)">
                       Kill
-                    </b-button>
-                    <b-button class="pointer" v-if="canMonitor(data.item.state)" size="sm" @click="spy(data.item)">
+                    </b-badge>
+                    <b-badge class="pointer" v-if="canMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                       Monitor
-                    </b-button>
-                    <b-button class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy(data.item)">
+                    </b-badge>
+                    <b-badge class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy(data.item)">
                       Stop Monitor
-                    </b-button>
-                    <b-button class="pointer" v-if="canTakeOver(data.item.state)" size="sm" @click="takeover(data.item)">
+                    </b-badge>
+                    <b-badge class="pointer" v-if="canTakeOver(data.item)" size="sm" @click="takeover(data.item)">
                       Take Over
-                    </b-button>
-                    <b-button class="pointer" v-if="canSpy(data.item)" size="sm" @click="setMode('spy')">
+                    </b-badge>
+                    <b-badge class="pointer" v-if="canSpy(data.item)" size="sm" @click="setMode('spy')">
                       Spy
-                    </b-button>
-                    <b-button class="pointer" v-if="canBarge(data.item)" size="sm" @click="setMode('barge')">
+                    </b-badge>
+                    <b-badge class="pointer" v-if="canBarge(data.item)" size="sm" @click="setMode('barge')">
                       Barge
-                    </b-button>
-                    <b-button class="pointer" v-if="canWhisper(data.item)" size="sm" @click="setMode('agent')">
+                    </b-badge>
+                    <b-badge class="pointer" v-if="canWhisper(data.item)" size="sm" @click="setMode('agent')">
                       Whisper
-                    </b-button>
+                    </b-badge>
                   </b-col>
                 </b-row>
               </template>
@@ -480,9 +480,9 @@ export default {
       return (this.$agent.permAllowed('monitor-feature') &&
         agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
     },
-    canTakeOver(state) {
+    canTakeOver(agent) {
       return (this.$agent.permAllowed('takeOver-feature') &&
-        state === 'oncall' &&
+        agent.state === 'oncall' && agent.inqueue.record === "inqueue_call" &&
         (!this.$agent.is_onsession() && !this.$agent.is_barge()))
     },
     canBarge(agent) {
