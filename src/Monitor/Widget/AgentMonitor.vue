@@ -39,22 +39,22 @@
               <template slot="row-details" slot-scope="data">
                 <b-row>
                   <b-col>
-                    <b-badge class="pointer" v-access:controlAgentState-feature v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
+                    <b-badge variant="success" class="pointer" v-access:controlAgentState-feature v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
                       Available
                     </b-badge>
-                    <b-badge class="pointer" v-access:controlAgentState-feature v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
+                    <b-badge variant="success" class="pointer" v-access:controlAgentState-feature v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
                       Release
                     </b-badge>
-                    <b-badge class="pointer" size="sm" @click="stop(data.item)">
+                    <b-badge variant="danger" class="pointer" size="sm" @click="stop(data.item)">
                       Kill
                     </b-badge>
-                    <b-badge class="pointer" v-if="canMonitor(data.item.state)" size="sm" @click="spy(data.item)">
+                    <b-badge variant="warning" class="pointer" v-if="canMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                       Monitor
                     </b-badge>
-                    <b-badge class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy(data.item)">
+                    <b-badge variant="warning" class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy(data.item)">
                       Stop Monitor
                     </b-badge>
-                    <b-badge class="pointer" v-if="canTakeOver(data.item)" size="sm" @click="takeover(data.item)">
+                    <b-badge variant="warning" class="pointer" v-if="canTakeOver(data.item)" size="sm" @click="takeover(data.item)">
                       Take Over
                     </b-badge>
                     <b-badge class="pointer" v-if="canSpy(data.item)" size="sm" @click="setMode('spy')">
