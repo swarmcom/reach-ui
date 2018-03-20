@@ -89,7 +89,7 @@
           <template slot="skillsReq" slot-scope="data">
             <b-row v-if="data.item.skillsReq ==='_agent'">
               <b-col v-if="data.item.skills._agent.avatar" cols="1">
-                <b-img :src="$agent.avatar_uri(data.item.customer.avatar)"
+                <b-img :src="$agent.avatar_uri(data.item.skills._agent.avatar)"
                        style="width:32px;"></b-img>
               </b-col>
               <b-col>
