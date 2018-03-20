@@ -89,7 +89,7 @@ export default {
           thStyle: { width: '83px' },
           formatter: (_v, _, item) => item.agent.name
         },
-        ended: { label: 'Ended By', tdClass: 'table-body-orange', thClass: 'table-header', thStyle: { width: '56px' } },
+        ended_by: { label: 'Ended By', tdClass: 'table-body-orange', thClass: 'table-header', thStyle: { width: '56px' } },
         disposition: {
           label: 'Disposition',
           tdClass: 'table-body-orange',
