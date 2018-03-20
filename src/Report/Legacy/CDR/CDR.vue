@@ -4,19 +4,6 @@
       <from-to v-model="fromTo"></from-to>
     </div>
     <div slot="report">
-      <table>
-        <tr>
-          <td class='table-sm table-header-group' style="width: 250px; max-width: 250px; min-width: 250px">
-            Call Identification
-          </td>
-          <td class='table-sm table-header-group' style="width: 868px; max-width: 868px; min-width: 868px">
-            Call Details
-          </td>
-          <td class='table-sm table-header-group' style="width: 322px; max-width: 322px; min-width: 322px">
-            Timestamps
-          </td>
-        </tr>
-      </table>
       <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed; overflow-wrap: break-word;" small hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
       </b-table>
     </div>
@@ -37,12 +24,6 @@ export default {
   data () {
     return {
       fields: {
-        uuid: {
-          label: 'Call ID',
-          tdClass: 'table-body-green',
-          thClass: 'table-header',
-          thStyle: { width: '120px' }
-        },
         direction: {
           label: 'Direction',
           tdClass: 'table-body-green',
@@ -51,8 +32,8 @@ export default {
         },
         media_type: {
           label: 'Media Type',
-          tdClass: 'table-body-green-last-in-group',
-          thClass: 'table-header-last-in-group',
+          tdClass: 'table-body-green',
+          thClass: 'table-header',
           thStyle: { width: '70px' }
         },
         queue_group: {
@@ -94,14 +75,8 @@ export default {
           label: 'Disposition',
           tdClass: 'table-body-orange',
           thClass: 'table-header',
-          thStyle: { width: '83px' }
-        },
-        agent_disposition: {
-          label: 'Agent Disposition',
-          tdClass: 'table-body-orange',
-          thClass: 'table-header',
           thStyle: { width: '83px' },
-          formatter: (_v, _, item) => item.agent_disposition.name
+          formatter: (_v, _, item) => item.disposition.name
         },
         client: {
           label: 'Client',
@@ -118,8 +93,8 @@ export default {
         },
         caller_ip: {
           label: 'Caller IP',
-          tdClass: 'table-body-orange-dark-last-in-group',
-          thClass: 'table-header-last-in-group',
+          tdClass: 'table-body-orange-dark',
+          thClass: 'table-header',
           thStyle: { width: '87px' }
         },
         ts_ms: {
