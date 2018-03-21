@@ -16,7 +16,7 @@ import FromTo from '@/Report/Input/FromTo'
 import Moment from 'moment'
 
 export default {
-  name: 'report-CDR',
+  name: 'report-cdr-inqueue',
   components: {
     'report': Report,
     'from-to': FromTo
@@ -24,18 +24,6 @@ export default {
   data () {
     return {
       fields: {
-        direction: {
-          label: 'Direction',
-          tdClass: 'table-body-green',
-          thClass: 'table-header',
-          thStyle: { width: '60px' }
-        },
-        media_type: {
-          label: 'Media Type',
-          tdClass: 'table-body-green',
-          thClass: 'table-header',
-          thStyle: { width: '70px' }
-        },
         queue_group: {
           label: 'Queue Group',
           tdClass: 'table-body-orange',
@@ -51,7 +39,7 @@ export default {
           formatter: v => v.name
         },
         calling: {
-          label: 'Called Number / Queue',
+          label: 'Calling',
           tdClass: 'table-body-orange',
           thClass: 'table-header',
           thStyle: { width: '90px' }
@@ -70,7 +58,6 @@ export default {
           thStyle: { width: '83px' },
           formatter: (_v, _, item) => item.agent.name
         },
-        ended_by: { label: 'Ended By', tdClass: 'table-body-orange', thClass: 'table-header', thStyle: { width: '56px' } },
         disposition: {
           label: 'Disposition',
           tdClass: 'table-body-orange',
@@ -140,8 +127,8 @@ export default {
         date_end: Moment().format(),
       },
       reportFields: {
-        name: 'CDR',
-        title: 'CDR',
+        name: 'Inqueue',
+        title: 'Inqueue',
         from: undefined,
         to: undefined
       },
@@ -154,7 +141,7 @@ export default {
       this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
-      this.sessions = await this.$agent.p_mfa('ws_report', 'cdr', [date_start, date_end])
+      this.sessions = await this.$agent.p_mfa('ws_report', 'cdr', ['voicemail', date_start, date_end])
     },
     reset () {
       this.sessions = []
@@ -164,7 +151,7 @@ export default {
       }
     },
     click ({ uuid }) {
-      this.$router.push(`/report/events/inqueue/${uuid}`)
+      this.$router.push(`/report/events/voicemail/${uuid}`)
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })

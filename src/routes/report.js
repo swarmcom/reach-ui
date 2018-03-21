@@ -10,6 +10,10 @@ import OutgoingEvents from '@/Report/Events/Outgoing'
 import AgentEvents from '@/Report/Events/Agent'
 // CDR
 import CDR from '@/Report/Legacy/CDR/CDR'
+import CDRInqueue from '@/Report/Legacy/CDR/Inqueue'
+import CDROutgoing from '@/Report/Legacy/CDR/Outgoing'
+import CDRVoicemail from '@/Report/Legacy/CDR/Voicemail'
+
 // Agent
 import AgentActivityIndividual from '@/Report/Legacy/Agent/AgentActivityIndividual'
 import AgentActivityByGroup from '@/Report/Legacy/Agent/AgentActivityByGroup'
@@ -50,6 +54,9 @@ export default [
   { path: 'events/agent/:uuid', component: AgentEvents, props: true },
   // CDR
   { path: 'legacy/cdr/cdr', component: CDR, name: CDR },
+  { path: 'legacy/cdr/inqueue', component: CDRInqueue, name: CDRInqueue },
+  { path: 'legacy/cdr/outgoing', component: CDROutgoing, name: CDROutgoing },
+  { path: 'legacy/cdr/voicemail', component: CDRVoicemail, name: CDRVoicemail },
   // Agent
   { path: 'legacy/agent/activity-individual', component: AgentActivityIndividual },
   { path: 'legacy/agent/activity-by-group', component: AgentActivityByGroup },

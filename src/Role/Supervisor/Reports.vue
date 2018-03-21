@@ -15,7 +15,10 @@
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="CDR">
-    <b-dropdown-item to="/reports/legacy/cdr/cdr">CDR</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/cdr/cdr">Combined</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/cdr/inqueue">Inqueue</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/cdr/outgoing">Outgoing</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/cdr/voicemail">Voicemail</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Agent">
