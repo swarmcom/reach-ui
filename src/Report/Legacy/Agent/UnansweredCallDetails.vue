@@ -12,7 +12,7 @@
           </b-button>
         </template>
         <template slot="row-details" slot-scope="row">
-          <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="row.item.records" :fields="fields_row">
+          <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed; overflow-wrap: break-word;" small hover :items="row.item.records" :fields="fields_row">
           </b-table>
         </template>
       </b-table>
