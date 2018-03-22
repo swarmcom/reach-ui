@@ -15,9 +15,12 @@
 <script>
 export default {
   name: 'dialer',
+  props: {
+    original_caller: String
+  },
   data () {
     return {
-      number: '',
+      number: this.original_caller,
       line_out: {},
       lines: [],
     }
@@ -36,6 +39,13 @@ export default {
   },
   created () {
     this.query()
+  },
+  watch: {
+    original_caller: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.number = newVal
+      }
+    },
   }
 }
 </script>

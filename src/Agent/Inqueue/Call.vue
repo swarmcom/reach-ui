@@ -70,12 +70,12 @@
     <b-col cols="5">
       <dl class="row agent-state-text">
         <dt class="col-sm-12 session-manager-text">{{ this.inqueue.line_in.client.name }}</dt>
-        <dd class="col-sm-12">{{ isDefined(this.call_info['Caller-Caller-ID-Name']) + ' ' + this.call_info['Caller-Orig-Caller-ID-Number'] }} </dd>
+        <dd class="col-sm-12">{{ isDefined(this.call_info['Caller-Caller-ID-Name']) + ' ' + isDefined(inqueue.call_vars['Caller-ANI']) }} </dd>
       </dl>
     </b-col>
   </b-row>
   <b-row>
-    <dialer v-if="inqueue.state == 'wrapup'"></dialer>
+    <dialer :original_caller="original_caller" v-if="inqueue.state == 'wrapup'"></dialer>
   </b-row>
 </div>
 </template>
@@ -100,7 +100,8 @@ export default {
       call_info: {},
       lua_result: false,
       updater: undefined,
-      notification: undefined
+      notification: undefined,
+      original_caller: undefined
     }
   },
   methods: {
@@ -110,6 +111,7 @@ export default {
       let lua_re = await this.$agent.p_mfa('ws_agent', 'lua_result', [this.uuid, 'agent_urlpop'])
       this.handleInqueueLua(lua_re)
       this.visible = true
+      this.original_caller = this.inqueue.call_vars['Caller-ANI']
       //this.show_notification()
     },
     queryCall: async function () {
