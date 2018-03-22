@@ -1,7 +1,7 @@
 <template>
   <b-container fluid style="margin-left: unset; margin-right: unset; padding-left: 0; padding-right: 0; margin-top: 15px">
     <b-row style="width: 100%; margin-left: unset; margin-right: unset">
-      <b-form @submit="apply" @reset="reset">
+      <b-form @submit="apply">
         <b-col style="width: 20%; max-width: 20%; min-width: 200px; padding: 0 2px 0 0;">
           <table style="width: 100%;">
             <tr>
@@ -18,7 +18,7 @@
                         Put some input controls here.
                       </slot>
                     </div>
-                    <b-button type="reset" class="btn btn-outline-secondary float-right" size="sm">Reset</b-button>
+                    <b-button @click="reset" class="btn btn-outline-secondary float-right" size="sm">Reset</b-button>
                     <b-button type="submit" class="btn btn-outline-secondary float-right" style="margin-right: 20px" size="sm">Apply</b-button>
                   </b-col>
                 </b-row>
