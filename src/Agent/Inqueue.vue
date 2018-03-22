@@ -72,6 +72,7 @@ export default {
         }
         if (state.inqueue && state.inqueue.record == 'outgoing_call') {
           this.outgoing_visible = true
+          this.call_visible = false
         }
         if (state.inqueue && state.inqueue.record == 'spy') {
           this.spy_visible = true
