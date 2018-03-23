@@ -53,14 +53,12 @@ export default {
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' }
-          //formatter: v => v ? v+' %' : 0+' %'
         },
         total_avail_time: {
           label: 'Total Avail. Time',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' }
-          //formatter: v => v ? v+' %' : 0+' %'
         },
         occupancy: {
           label: 'Occupancy',
@@ -76,14 +74,14 @@ export default {
           thStyle: { width: '59px' },
           formatter: v => v ? new Moment(v, "x").format("mm:ss") : 'NA'
         },
-        first_from_state: {
+        first_event_state: {
           label: 'First Login',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '80px' },
           formatter: (v, _, item) => (v === 'init') ? Moment(item.first_event_ts, "x").format("YYYY-MM-DD HH:mm:ss") : "outside of interval"
         },
-        last_state: {
+        last_event_state: {
           label: 'Last Logout',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',

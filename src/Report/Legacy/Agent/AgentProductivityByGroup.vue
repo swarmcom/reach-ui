@@ -69,14 +69,14 @@ export default {
           thStyle: { width: '59px' },
           formatter: v => v ? this.durationFormatter(v) : 'NA'
         },
-        first_from_state: {
+        first_event_state: {
           label: 'First Login',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '80px' },
           formatter: (v, _, item) => (v === 'init') ? Moment(item.first_event_ts, "x").format("YYYY-MM-DD HH:mm:ss") : "outside of interval"
         },
-        last_state: {
+        last_event_state: {
           label: 'Last Logout',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',

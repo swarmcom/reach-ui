@@ -54,14 +54,32 @@
   background: #E2FADA;
 }
 
+.table-body-green-last-in-group {
+  @include report-table-body-ezuce;
+  background: #E2FADA;
+  border-right: 7px solid white;
+}
+
 .table-body-orange {
   @include report-table-body-ezuce;
   background: #FFE7C3;
 }
 
+.table-body-orange-last-in-group {
+  @include report-table-body-ezuce;
+  background: #FFE7C3;
+  border-right: 7px solid white;
+}
+
 .table-body-orange-dark {
   @include report-table-body-ezuce;
   background: #FCD081;
+}
+
+.table-body-orange-dark-last-in-group {
+  @include report-table-body-ezuce;
+  background: #FCD081;
+  border-right: 7px solid white;
 }
 
 @mixin table-header-ezuce {
