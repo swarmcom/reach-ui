@@ -75,10 +75,10 @@
       <div class="col-5 agent-state-text">Activity Time:</div>
       <div class="col-7 agent-state-text"> {{msToHms(this.time_activity) }} </div>
     </div>
-    <div v-access:myPhone-feature class="row">
+    <div v-access:agent-feature-my-phone class="row">
       <div class="col-5 agent-state-text myPhone">My Phone:</div>
     </div>
-    <div v-access:myPhone-feature class="row">
+    <div v-access:agent-feature-my-phone class="row">
     <my-phone-uri v-if="this.$agent.is_idle()"></my-phone-uri>
     </div>
   </div>

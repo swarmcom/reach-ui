@@ -183,13 +183,13 @@ export default {
       }
     },
     canTransConf(uuid) {
-      return this.$agent.permAllowed('transConfChangeSkills-feature') && uuid != undefined
+      return this.$agent.permAllowed('agent-feature-conference-change-skills') && uuid != undefined
     },
     can_conference () {
       if (this.$agent.can_conference() &&
-        ((this.selectedAgent !== 'null' && this.$agent.permAllowed('confAgent-feature')) ||
-          (this.selectedQueue !== 'null' && this.$agent.permAllowed('confQueue-feature')) ||
-          (this.selectedNumber !== '' && this.selectedLine) && this.$agent.permAllowed('confNumber-feature'))) {
+        ((this.selectedAgent !== 'null' && this.$agent.permAllowed('agent-feature-conference-agent')) ||
+          (this.selectedQueue !== 'null' && this.$agent.permAllowed('agent-feature-conference-queue')) ||
+          (this.selectedNumber !== '' && this.selectedLine) && this.$agent.permAllowed('agent-feature-conference-number'))) {
         return true
       }
       else {
@@ -198,9 +198,9 @@ export default {
     },
     can_transfer () {
       if (this.$agent.can_transfer() &&
-        ((this.selectedAgent !== 'null' && this.$agent.permAllowed('transAgent-feature')) ||
-          (this.selectedQueue !== 'null' && this.$agent.permAllowed('transQueue-feature')) ||
-          (this.selectedNumber !== '' && this.selectedLine) && this.$agent.permAllowed('transNumber-feature'))) {
+        ((this.selectedAgent !== 'null' && this.$agent.permAllowed('agent-feature-transfer-agent')) ||
+          (this.selectedQueue !== 'null' && this.$agent.permAllowed('agent-feature-transfer-queue')) ||
+          (this.selectedNumber !== '' && this.selectedLine) && this.$agent.permAllowed('agent-feature-transfer-number'))) {
         return true
       }
       else {

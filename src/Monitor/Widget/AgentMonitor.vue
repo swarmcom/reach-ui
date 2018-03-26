@@ -39,10 +39,10 @@
               <template slot="row-details" slot-scope="data">
                 <b-row>
                   <b-col>
-                    <b-badge variant="success" class="pointer" v-access:controlAgentState-feature v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
+                    <b-badge variant="success" class="pointer" v-access:supervisor-feature-control-agent-state v-if="data.item.state === 'release'" size="sm" @click="available(data.item)">
                       Available
                     </b-badge>
-                    <b-badge variant="success" class="pointer" v-access:controlAgentState-feature v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
+                    <b-badge variant="success" class="pointer" v-access:supervisor-feature-control-agent-state v-if="data.item.state !== 'release'" size="sm" @click="release(data.item)">
                       Release
                     </b-badge>
                     <b-badge variant="danger" class="pointer" size="sm" @click="stop(data.item)">
@@ -465,25 +465,25 @@ export default {
       this.$agent.mfa('ws_supervisor', 'takeover', [inqueue.record, inqueue.uuid])
     },
     canMonitor(state) {
-      return (this.$agent.permAllowed('monitor-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
         (state === 'oncall' || state === 'conference') &&
         (!this.$agent.is_onsession() && !this.$agent.is_barge()))
     },
     canSpy(agent) {
-      return (this.$agent.permAllowed('monitor-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
         agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
     },
     canTakeOver(agent) {
-      return (this.$agent.permAllowed('takeOver-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-take-over') &&
         agent.state === 'oncall' && agent.inqueue && agent.inqueue.record === "inqueue_call" &&
         (!this.$agent.is_onsession() && !this.$agent.is_barge()))
     },
     canBarge(agent) {
-      return (this.$agent.permAllowed('barge-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-barge') &&
         agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
     },
     canWhisper(agent) {
-      return (this.$agent.permAllowed('whisper-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-whisper') &&
         agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
     },
     spy({inqueue}) {
