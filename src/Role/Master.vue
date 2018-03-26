@@ -51,7 +51,7 @@ const router = new VueRouter({
   routes: [
     { path: '/kam', component: Kam, children: KamRoutes },
     { path: '/params', component: Params },
-    { path: '/help', component: Help },
+    { path: '/help', component: Help, name: 'help' },
     { path: '/', component: Main }
   ]
 })
