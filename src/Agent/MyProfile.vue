@@ -31,10 +31,6 @@
       <b-col cols="7" class="agent-state-text"> {{ agent.uri || '&nbsp' }}</b-col>
     </b-row>
     <b-row>
-      <b-col cols="5" class="agent-state-text">Persistent:</b-col>
-      <b-col cols="7" class="agent-state-text"> {{ agent.persistent }}</b-col>
-    </b-row>
-    <b-row>
       <b-col cols="5" class="agent-state-text">Skills:</b-col>
       <b-col cols="7" class="agent-state-text">
         <b-row>
