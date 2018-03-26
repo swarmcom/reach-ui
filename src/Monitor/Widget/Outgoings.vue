@@ -157,7 +157,7 @@ export default {
       })
     },
     allowMonitor(state) {
-      return (this.$agent.permAllowed('monitor-feature')) && (state === 'oncall') &&
+      return (this.$agent.permAllowed('supervisor-feature-monitor')) && (state === 'oncall') &&
         (!this.$agent.is_onsession() && !this.$agent.is_barge())
     },
     takeover({record, uuid}) {

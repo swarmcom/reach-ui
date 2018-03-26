@@ -45,7 +45,7 @@
                 <b-badge variant="warning" class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                   Monitor
                 </b-badge>
-                <b-badge variant="danger" class="pointer" v-if="$agent.permAllowed('hangupCallQueue-feature')" size="sm" @click="hangup(data.item)">
+                <b-badge variant="danger" class="pointer" v-if="$agent.permAllowed('supervisor-feature-hangup-call-queue')" size="sm" @click="hangup(data.item)">
                   Hangup
                 </b-badge>
               </b-col>
@@ -203,11 +203,11 @@ export default {
       this.saveDataStorage()
     },
     allowTake(state) {
-      return (this.$agent.permAllowed('takeCallQueue-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-take-call-queue') &&
         (state === 'inqueue' || state === 'agent'))
     },
     allowMonitor(state) {
-      return (this.$agent.permAllowed('monitor-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
         state === 'oncall' && !this.$agent.is_onsession() && !this.$agent.is_barge())
     },
     take({record, uuid}) {
