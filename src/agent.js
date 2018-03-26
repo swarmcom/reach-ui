@@ -56,7 +56,7 @@ export default class Agent extends WsProto {
         release_id: undefined,
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
-        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true },
+        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true, help: true },
         canLogout: true,
         notification: null
       }
@@ -74,6 +74,8 @@ export default class Agent extends WsProto {
       this.vm.storage_data = JSON.parse(localStorage.getItem(name));
       if (this.vm.storage_data.narrowScreenMain != undefined)
         this.vm.isNarrowLayout.main = this.vm.storage_data.narrowScreenMain
+      if (this.vm.storage_data.narrowScreenHelp != undefined)
+        this.vm.isNarrowLayout.help = this.vm.storage_data.narrowScreenHelp
       if (this.vm.storage_data.narrowScreenAdmin != undefined)
         this.vm.isNarrowLayout.admin = this.vm.storage_data.narrowScreenAdmin
       if (this.vm.storage_data.narrowScreenProfile != undefined)
