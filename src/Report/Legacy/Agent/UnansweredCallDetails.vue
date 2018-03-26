@@ -42,7 +42,7 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '720px' },
           sortable: true,
-          formatter: (v, _, item) => this.findName(v) + ' has ' + item.abandoned + ' unanswered calls'
+          formatter: (v, _, item) => this.findName(v) + ' has ' + item.unanswered + ' unanswered calls'
         },
         show_details: {
           label: '',
@@ -53,7 +53,7 @@ export default {
       },
       fields_row: {
         uuid: { label: 'Call ID', tdClass: 'table-body-green', thClass: 'table-header', thStyle: { width: '113px' } },
-        media: {
+        media_type: {
           label: 'Media Type',
           tdClass: 'table-body-green-last-in-group',
           thClass: 'table-header-last-in-group',
@@ -61,14 +61,14 @@ export default {
         },
         queue_group: {
           label: 'Queue Group',
-          formatter: queue => queue.name,
+          formatter: qg => qg ? qg.name : '',
           tdClass: 'table-body-orange',
           thClass: 'table-header',
           thStyle: { width: '90px' }
         },
         queue: {
           label: 'Queue',
-          formatter: queue => queue.name,
+          formatter: q => q ? q.name : '',
           tdClass: 'table-body-orange',
           thClass: 'table-header',
           thStyle: { width: '90px' }
@@ -86,7 +86,7 @@ export default {
           thClass: 'table-header',
           thStyle: { width: '90px' }
         },
-        caller: {
+        endpoint_ani: {
           label: 'Endpoint ANI',
           tdClass: 'table-body-orange-dark',
           thClass: 'table-header',
@@ -98,12 +98,13 @@ export default {
           thClass: 'table-header-last-in-group',
           thStyle: { width: '87px' }
         },
-        ts: {
+        ts_ms: {
           label: 'Offered to Reach',
           sortable: true,
           tdClass: "table-body-blue",
           thClass: ['table-header'],
-          thStyle: { width: '130px' }
+          thStyle: { width: '130px' },
+          formatter: ts => new Moment(ts, "x").format("YYYY-MM-DD HH:mm:ss")
         },
       },
       fromTo: {
