@@ -3,9 +3,9 @@
   <form-text v-access:agent-profile-edit-name label="Agent Name" v-model="rec.name"></form-text>
   <form-text label="Login" v-model="rec.login"></form-text>
   <form-text v-access:agent-profile-edit-password label="Password" v-model="rec.password"></form-text>
-  <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
-  <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
-  <lines v-access:agent-profile-edit-line-out label="Line Out" v-model="rec.line_id"></lines>
+  <profile-agent-groups label="Agent Group" v-model="rec.group_id"></profile-agent-groups>
+  <profile-release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></profile-release-groups>
+  <profile-lines v-access:agent-profile-edit-line-out label="Line Out" v-model="rec.line_id"></profile-lines>
   <form-text v-access:agent-profile-edit-primary-sip label="Primary Contact" v-model="rec.uri"></form-text>
   <uris v-access:agent-profile-edit-additional-sip label="Additional Contacts" v-model="rec.uris"></uris>
   <form-text label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-text>
@@ -28,10 +28,19 @@
 import Common from '@/Admin/Common'
 import URIs from '@/Widget/URIs'
 import FormTextEffective from '@/Widget/FormTextEffective'
+import ProfileAgentGroups from '@/Agent/Profile/Agent/Groups'
+import ProfileReleaseGroups from '@/Agent/Profile/Release/Groups'
+import ProfileLines from '@/Agent/Profile/Lines'
 
 export default {
   name: 'agent-profile',
-  components: { uris: URIs, 'form-text-effective': FormTextEffective },
+  components: {
+    uris: URIs,
+    'form-text-effective': FormTextEffective,
+    'profile-agent-groups': ProfileAgentGroups,
+    'profile-release-groups': ProfileReleaseGroups,
+    'profile-lines': ProfileLines
+  },
   mixins: [Common],
   data () {
     return {
