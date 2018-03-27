@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     query (text) {
-      return this.$agent.p_mfa("ws_db_agent_group", "suggest", [text])
+      return this.$agent.p_mfa('ws_agent', 'suggest', ['agent_group', text])
     },
     remove (group) {
       let index = this.selected.findIndex(el => el.id === group.id)

@@ -10,8 +10,9 @@
 
   <b-nav-item-dropdown text="Sessions">
     <b-dropdown-item to="/reports/sessions/agent">Agent</b-dropdown-item>
-    <b-dropdown-item to="/reports/sessions/inqueue">Inqueue</b-dropdown-item>
-    <b-dropdown-item to="/reports/sessions/outgoing">Outgoing</b-dropdown-item>
+    <b-dropdown-item to="/reports/sessions/inqueue">Inbound</b-dropdown-item>
+    <b-dropdown-item to="/reports/sessions/voicemail">Voicemail</b-dropdown-item>
+    <b-dropdown-item to="/reports/sessions/outgoing">Outbound</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="CDR">
