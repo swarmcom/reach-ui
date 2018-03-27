@@ -122,9 +122,9 @@ export default class Agent extends WsProto {
   }
 
   // MONITOR API
-  subscribe (Channel) { this.mfa('ws_admin', 'subscribe', [Channel]) }
-  agents (Cb = (A) => A) { this.mfa('ws_admin', 'agents', ['all'], Cb) }
-  inqueues (Cb = (A) => A) { this.mfa('ws_admin', 'inqueues', ['all'], Cb) }
+  subscribe (Channel) { this.mfa('ws_agent', 'subscribe', [Channel]) }
+  agents (Cb = (A) => A) { this.mfa('ws_agent', 'agents', [], Cb) }
+  inqueues (Cb = (A) => A) { this.mfa('ws_agent', 'inqueues', [], Cb) }
 
   // AGENT API
   logout () {
