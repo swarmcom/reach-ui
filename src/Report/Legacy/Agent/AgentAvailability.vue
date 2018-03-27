@@ -177,7 +177,7 @@ export default {
         return this.$agent.p_mfa('ws_agent', 'clients')
       },
       skillsQuery: function () {
-        return this.$agent.p_mfa('ws_db_tag', 'suggest', [''])
+        return this.$agent.p_mfa('ws_agent', 'tags')
       }
     }
   },
