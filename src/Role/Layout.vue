@@ -16,10 +16,10 @@ export default {
       return this.$agent.permAllowed('widget-my-statistics')
     },
     canAgentManager() {
-      return this.$agent.permAllowed('widget-agent-manager')
+      return this.$agent.permAllowed('widget-agent-manager') && this.$agent.role() == 'supervisor'
     },
     canQueueManager() {
-      return this.$agent.permAllowed('widget-queue-manager')
+      return this.$agent.permAllowed('widget-queue-manager') && this.$agent.role() == 'supervisor'
     },
     isMyStat () {
       return this.$agent.vm.layoutSM.isActiveMS
