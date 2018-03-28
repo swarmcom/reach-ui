@@ -199,11 +199,11 @@ export default {
     },
     findName (id) {
       let obj = this.agents.find(v => { return v.id === id })
-      return obj.name
+      return (obj !== undefined) ? obj.name : "removed entity"
     },
     findLogin (id) {
       let obj = this.agents.find(v => { return v.id === id })
-      return obj.login
+      return (obj !== undefined) ? obj.login : "removed entity"
     },
     addMissingRows () {
       let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
