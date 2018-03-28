@@ -14,7 +14,7 @@
           <td class='table-sm table-header-group' style="width: 210px; max-width: 210px; min-width: 210px">
             Intervals {{reportFields.interval}} min
           </td>
-          <td class='table-sm table-header-group' style="width: 649px; max-width: 649px; min-width: 649px">
+          <td class='table-sm table-header-group' style="width: 650px; max-width: 650px; min-width: 650px">
             Voicemail Activity Details
           </td>
         </tr>
