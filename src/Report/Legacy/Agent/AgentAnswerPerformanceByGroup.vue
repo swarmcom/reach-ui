@@ -113,6 +113,7 @@ export default {
       let date_end = Moment(this.fromTo.date_end).unix()
       let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
       this.sessions = await this.$agent.p_mfa('ws_report', 'agent_answer_performance', [date_start, date_end, agentGroupsIDs])
+      this.addMissingRows()
     },
     reset () {
       this.sessions = []
@@ -129,11 +130,21 @@ export default {
     },
     findName (id) {
       let obj = this.agents.find(v => { return v.id === id })
-      return obj.name
+      return (obj !== undefined) ? obj.name : "removed entity"
     },
     findLogin (id) {
       let obj = this.agents.find(v => { return v.id === id })
-      return obj.login
+      return (obj !== undefined) ? obj.login : "removed entity"
+    },
+    addMissingRows () {
+      let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
+      this.agents.forEach(obj => {
+        if (agentGroupsIDs.includes(obj.group_id)) {
+          if (this.sessions.find(v => { return v.agent_id === obj.id}) === undefined ) {
+            this.sessions.push({ agent_id: obj.id })
+          }
+        }
+      })
     },
     getAgents: async function () {
       this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
