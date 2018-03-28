@@ -56,7 +56,7 @@ export default class Agent extends WsProto {
         release_id: undefined,
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
-        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true, help: true },
+        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true, help: true, permissions: true },
         canLogout: true,
         notification: null
       }
@@ -80,6 +80,8 @@ export default class Agent extends WsProto {
         this.vm.isNarrowLayout.admin = this.vm.storage_data.narrowScreenAdmin
       if (this.vm.storage_data.narrowScreenProfile != undefined)
         this.vm.isNarrowLayout.profile = this.vm.storage_data.narrowScreenProfile
+      if (this.vm.storage_data.narrowScreenPermissions != undefined)
+        this.vm.isNarrowLayout.permissions = this.vm.storage_data.narrowScreenPermissions
       if (this.vm.storage_data.narrowScreenMonitor != undefined)
         this.vm.isNarrowLayout.monitor = this.vm.storage_data.narrowScreenMonitor
       if (this.vm.storage_data.narrowScreenRecordings != undefined)

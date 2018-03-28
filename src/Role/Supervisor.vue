@@ -5,6 +5,7 @@
     <b-navbar-brand to="/main">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
     <b-navbar-nav>
       <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
+      <b-nav-item to="/permissions">Permissions</b-nav-item>
       <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
       <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
       <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
@@ -73,6 +74,7 @@ import VueRouter from 'vue-router'
 import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
 import Profile from '@/Role/Agent/Profile'
+import Permissions from '@/Role/Permissions'
 import Monitor from '@/Role/Supervisor/Monitor'
 import Recordings from '@/Role/Supervisor/Recordings'
 import Reports from '@/Role/Supervisor/Reports'
@@ -89,6 +91,7 @@ const router = new VueRouter({
   routes: [
     { path: '/main', component: Main, name: 'main' },
     { path: '/profile', component: Profile, name: 'profile' },
+    { path: '/permissions', component: Permissions, name: 'permissions' },
     { path: '/help', component: Help, name: 'help' },
     { path: '/monitor', component: Monitor, name: 'monitor' },
     { path: '/recordings', component: Recordings, name: 'recordings' },

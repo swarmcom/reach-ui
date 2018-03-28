@@ -6,6 +6,7 @@
     <b-navbar-brand to="/main">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
     <b-navbar-nav>
       <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
+      <b-nav-item to="/permissions">Permissions</b-nav-item>
       <b-nav-item to="/help">Help</b-nav-item>
       <b-nav-item @click="logout">Logout</b-nav-item>
     </b-navbar-nav>
@@ -71,6 +72,7 @@ import VueRouter from 'vue-router'
 import Main from '@/Role/Agent/Main'
 import Help from '@/Role/Agent/Help'
 import Profile from '@/Role/Agent/Profile'
+import Permissions from '@/Role/Permissions'
 import Layout from '@/Role/Layout'
 
 const scrollBehavior = (to, from, savedPosition) => {
@@ -82,6 +84,7 @@ const router = new VueRouter({
   routes: [
     { path: '/help', component: Help, name: 'help' },
     { path: '/profile', component: Profile, name: 'profile' },
+    { path: '/permissions', component: Permissions, name: 'permissions' },
     { path: '/main', component: Main, name: 'main' },
     { path: '/', redirect: 'main' }
   ]
