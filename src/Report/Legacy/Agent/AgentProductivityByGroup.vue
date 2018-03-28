@@ -13,7 +13,7 @@
           <td class='table-sm table-header-group' style="width: 286px; max-width: 286px; min-width: 286px">
             Log In/Out
           </td>
-          <td class='table-sm table-header-group' style="width: 569px; max-width: 569px; min-width: 569px">
+          <td class='table-sm table-header-group' style="width: 507px; max-width: 507px; min-width: 507px">
             Logged In Time Breakdown
           </td>
         </tr>
@@ -95,25 +95,18 @@ export default {
           tdClass: ['table-body-green-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
           thStyle: { width: '63px' },
-          formatter: v => this.durationFormatter(v)
+          formatter: (v, _, item) => this.durationFormatter(this.computeLoggedOutTime(item.total_time))
         },
         released: {
           label: 'Released',
-          tdClass: ['table-body-orange-dark', 'text-align-right'],
+          tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           formatter: v => this.durationFormatter(v)
         },
         suspended: {
           label: 'Suspended',
-          tdClass: ['table-body-orange-dark', 'text-align-right'],
-          thClass: 'table-header',
-          thStyle: { width: '63px' },
-          formatter: v => this.durationFormatter(v)
-        },
-        available: {
-          label: 'Available',
-          tdClass: ['table-body-orange-dark', 'text-align-right'],
+          tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           formatter: v => this.durationFormatter(v)
@@ -159,7 +152,7 @@ export default {
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
-          formatter: (_v, _, item) => this.durationFormatter(item.out_ringing_local + item.out_ringing_remote)
+          formatter: (_v, _, item) => this.durationFormatter(item.init + item.grace)
         }
       },
       fromTo: {
@@ -168,6 +161,7 @@ export default {
       },
       agentGroups: [],
       agents: [],
+      intervalLength: 0,
       reportFields: {
         name: 'Agent Productivity by Group',
         title: 'Agent Productivity by Group',
@@ -185,13 +179,15 @@ export default {
       this.setReportFields()
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
+      this.intervalLength = (date_end - date_start)*1000
       let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
       this.sessions = await this.$agent.p_mfa('ws_report', 'agent_productivity_stats', [date_start, date_end, 'agent_id', 'agent_group_id', agentGroupsIDs])
-      // this.addMissingRows()
+      this.addMissingRows()
     },
     reset () {
       this.sessions = []
       this.agentGroups = []
+      this.intervalLength = 0,
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -210,17 +206,23 @@ export default {
       return obj.login
     },
     addMissingRows () {
-      this.agents.forEach((obj) => {
-        if (this.sessions.find(v => { return v.id === obj.id}) === undefined) {
-          this.sessions.push({ id: obj.id })
+      let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
+      this.agents.forEach(obj => {
+        if (agentGroupsIDs.includes(obj.group_id)) {
+          if (this.sessions.find(v => { return v.id === obj.id}) === undefined ) {
+            this.sessions.push({ id: obj.id, total_time: 0 })
+          }
         }
       })
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     },
+    computeLoggedOutTime (loggedInTime) {
+      return (this.intervalLength - loggedInTime)
+    },
     getAgents: async function () {
-      this.agents = await this.$agent.p_mfa('ws_db_agent', 'suggest', [''])
+      this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
     }
   },
   created () {

@@ -136,7 +136,7 @@ export default {
       return obj.login
     },
     getAgents: async function () {
-      this.agents = await this.$agent.p_mfa('ws_db_agent', 'suggest', [''])
+      this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
     }
   },
   created () {

@@ -76,7 +76,7 @@ export default {
         return this.$agent.p_mfa('ws_agent', 'agents')
       },
       skillsQuery: function () {
-        return this.$agent.p_mfa('ws_db_tag', 'suggest', [''])
+        return this.$agent.p_mfa('ws_agent', 'tags')
       }
     }
   },
@@ -114,7 +114,7 @@ export default {
       //this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
     },
     getAgents: async function () {
-      this.allAgents = await this.$agent.p_mfa('ws_db_agent', 'suggest', [''])
+      this.allAgents = await this.$agent.p_mfa('ws_agent', 'agents')
     }
   },
   created () {

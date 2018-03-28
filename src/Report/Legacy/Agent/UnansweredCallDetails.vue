@@ -165,7 +165,7 @@ export default {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     },
     getAgents: async function () {
-      this.agents = await this.$agent.p_mfa('ws_db_agent', 'suggest', [''])
+      this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
     }
   },
   created () {
