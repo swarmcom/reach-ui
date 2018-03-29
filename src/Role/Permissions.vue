@@ -1,5 +1,5 @@
 <template>
-<div v-bind:class="classObject">
+<div v-access:profile-ui v-bind:class="classObject">
   <b-row style="margin-top: 10px">
     <b-col cols=6>
       <b-row>
@@ -24,7 +24,7 @@
       <b-row v-for="(value, key, index) of isVisible(this.$agent.vm.agent.permissions, 'widget')" :key="index">
         <b-col>&nbsp;&nbsp;{{value}}</b-col>
       </b-row>
-      <b-row style="margin-top: 15px">
+      <b-row style="margin-top: 15px" v-if="this.$agent.role() == 'supervisor'">
         <b-col cols=6><h4>Call Features:</h4></b-col>
       </b-row>
       <b-row v-for="(value, key, index) of isVisible(this.$agent.vm.agent.permissions, 'supervisor-feature')" :key="index">
