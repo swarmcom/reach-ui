@@ -90,27 +90,33 @@ export default {
         this.state_date = new Date()
       }
 
-      if (S.state.inqueue && S.state.inqueue.record === 'inqueue_vm') {
-        this.disp_visible = false
-      }
-
-      if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call') {
-        this.query()
-      }
-      if (S.state.inqueue && S.state.inqueue.record == 'outgoing_call') {
-        this.query_outgoing()
-      }
-      else {
+      if (S.state.state == "available" || S.state.state == "release" || S.state.state == "suspended") {
         this.inqueue = null
         this.outgoing = null
-      }
-      if (S.state.state == 'wrapup') {
-        this.wrapup_timer = S.state.queue.wrapup_timer
-        this.wrap_visible = true
-      }
-      else {
         this.wrap_visible = false
         this.wrapup_timer = 0
+      } else {
+        if (S.state.inqueue && S.state.inqueue.record === 'inqueue_vm') {
+          this.disp_visible = false
+        }
+        else if (S.state.inqueue && S.state.inqueue.record == 'inqueue_call') {
+          this.query()
+        }
+        else if (S.state.inqueue && S.state.inqueue.record == 'outgoing_call') {
+          this.query_outgoing()
+        }
+        else {
+          this.inqueue = null
+          this.outgoing = null
+        }
+        if (S.state.state == 'wrapup') {
+          this.wrapup_timer = S.state.queue.wrapup_timer
+          this.wrap_visible = true
+        }
+        else {
+          this.wrap_visible = false
+          this.wrapup_timer = 0
+        }
       }
     },
     can_record () {
@@ -129,7 +135,6 @@ export default {
     }
   },
   created () {
-    this.$agent.p_mfa('ws_agent', 'request_state', [])
     this.$bus.$on('agent_state', this.getState)
     this.updater = setInterval(this.onTimer, 1000)
   },
