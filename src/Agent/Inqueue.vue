@@ -60,10 +60,11 @@ export default {
       } else {
         state.inqueue ? this.inqueue_record = state.inqueue.record : this.inqueue_record = null       
         if (state.inqueue && state.inqueue.record == 'inqueue_call') {
-          this.call_visible = true
-          this.showDispositions = true
-          if (state.inqueue.uuid)
+          if (state.inqueue.uuid) {
             this.uuid = state.inqueue.uuid
+            this.call_visible = true
+            this.showDispositions = true
+          }
         }
         if (state.inqueue && state.inqueue.record == 'inqueue_vm') {
           this.vm_visible = true
