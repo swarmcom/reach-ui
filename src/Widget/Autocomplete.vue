@@ -58,7 +58,8 @@ export default {
         this.ref.destroy()
       }
     },
-    select(i) {
+    select(i, ev) {
+      ev.preventDefault()
       this.hide()
       this.text = ''
       this.$emit('input', this.options[i])
