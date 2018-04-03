@@ -51,7 +51,7 @@
                     <b-badge variant="warning" class="pointer" v-if="canMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                       Monitor
                     </b-badge>
-                    <b-badge variant="warning" class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy(data.item)">
+                    <b-badge variant="warning" class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy()">
                       Stop Monitor
                     </b-badge>
                     <b-badge variant="warning" class="pointer" v-if="canTakeOver(data.item)" size="sm" @click="takeover(data.item)">

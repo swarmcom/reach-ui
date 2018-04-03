@@ -110,6 +110,20 @@
             </b-row>
           </template>
         </b-table>
+        <b-row class="row">
+          <b-badge variant="warning" class="pointer" v-if="canSpy()" size="sm" @click="cancelSpy()">
+            Stop Monitor
+          </b-badge>
+          <b-badge style="margin-left:5px" class="pointer" v-if="canSpy()" size="sm" @click="setMode('spy')">
+            Spy
+          </b-badge>
+          <b-badge style="margin-left:5px" class="pointer" v-if="canBarge()" size="sm" @click="setMode('barge')">
+            Barge
+          </b-badge>
+          <b-badge style="margin-left:5px" class="pointer" v-if="canWhisper()" size="sm" @click="setMode('agent')">
+            Whisper
+          </b-badge>
+        </b-row>
       </b-col>
     </b-row>
   </b-collapse>
@@ -221,6 +235,24 @@ export default {
     },
     hangup({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
+    },
+    canSpy() {
+      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
+        this.$agent.is_barge())
+    },
+    canBarge() {
+      return (this.$agent.permAllowed('supervisor-feature-barge') &&
+        this.$agent.is_barge())
+    },
+    canWhisper() {
+      return (this.$agent.permAllowed('supervisor-feature-whisper') &&
+        this.$agent.is_barge())
+    },
+    cancelSpy() {
+      this.$agent.mfa('ws_supervisor', 'cancel', [])
+    },
+    setMode(mode) {
+      this.$agent.mfa('ws_supervisor', 'set_barge_mode', [mode])
     },
     onFilterUpdate(event) {
       if (event.match(/[^\w\s]/gi)) {
