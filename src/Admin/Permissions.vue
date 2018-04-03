@@ -17,7 +17,7 @@
           <b-btn variant="link" @click='select(tabs)'>all</b-btn>|<b-btn variant="link" @click='unselect(tabs)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="(p) of this.tabs" :key="p" v-if="tabsVisible(p)">
+      <b-row v-for="(p) of this.tabs" :key="p" v-if="isVisible(p)">
         <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
@@ -42,18 +42,18 @@
           <b-btn variant="link" @click='select(widgets)'>all</b-btn>|<b-btn variant="link" @click='unselect(widgets)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="p of this.widgets" :key="p">
+      <b-row v-for="p of this.widgets" :key="p" v-if="isVisible(p)">
           <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
 
-      <b-row style="margin-top: 15px">
+      <b-row style="margin-top: 15px" v-if="ui != 'agent'">
         <b-col cols=6><h4>Call Features:</h4></b-col>
         <b-col>
           <b-btn variant="link" @click='select(call_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(call_features)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="(p) of this.call_features" :key="p">
+      <b-row v-for="(p) of this.call_features" :key="p" v-if="ui != 'agent'">
         <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
@@ -134,7 +134,6 @@ export default {
         'widget-agent-manager'
       ],
       features: [
-        'supervisor-feature-control-agent-state',
         'agent-feature-my-phone',
         'agent-feature-outbound-calling',
         'agent-feature-call-recording-on-demand',
@@ -147,6 +146,7 @@ export default {
         'agent-feature-conference-change-skills'
       ],
       call_features: [
+        'supervisor-feature-control-agent-state',
         'supervisor-feature-monitor',
         'supervisor-feature-whisper',
         'supervisor-feature-barge',
@@ -222,15 +222,14 @@ export default {
         this.effective[perm] = false
       }
     },
-    tabsVisible: function (perm) {
+    isVisible: function (perm) {
       if (this.ui == 'supervisor') {
         return (perm != 'admin-ui')
       }
       else if (this.ui == 'agent') {
-        return (perm == 'main-ui' || perm == 'profile-ui')
-      }
-      else {
-        return true
+        return (perm != 'widget-agent-manager' && perm != 'widget-queue-manager' && perm != 'admin-ui' &&
+          perm != 'recordings-ui' && perm != 'reports-ui' && perm != 'monitor-ui' &&
+          !perm.includes("supervisor-feature"))
       }
     },
     isAgent () {
@@ -239,25 +238,33 @@ export default {
     selectAll () {
       let self = this
       Object.keys(this.names).forEach(function (key) {
-        self.onChange(key, true)
+        if (self.isVisible(key)) {
+          self.onChange(key, true)
+        }
       })
     },
     unselectAll () {
       let self = this
       Object.keys(this.names).forEach(function (key) {
-        self.onChange(key, false)
+        if (self.isVisible(key)) {
+          self.onChange(key, false)
+        }
       })
     },
     select (group) {
       let self = this
       group.forEach(function (key) {
-        self.onChange(key, true)
+        if (self.isVisible(key)) {
+          self.onChange(key, true)
+        }
       })
     },
     unselect (group) {
       let self = this
       group.forEach(function (key) {
-        self.onChange(key, false)
+        if (self.isVisible(key)) {
+          self.onChange(key, false)
+        }
       })
     }
   },

@@ -32,14 +32,6 @@ export default {
         this.$agent.permAllowed('widget-my-statistics')) {
         return true
       }
-      else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  &&
-        this.$agent.permAllowed('widget-agent-manager')) {
-        return true
-      }
-      else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  &&
-        this.$agent.permAllowed('widget-queue-manager')) {
-        return true
-      }
       else {
         return false
       }
@@ -53,7 +45,7 @@ export default {
     if (this.$agent.vm.storage_data.agentWidgets != undefined)
       this.widgets = this.$agent.vm.storage_data.agentWidgets
     else
-      this.widgets = ['session-manager', 'my-statistics', 'agents', 'inqueues']
+      this.widgets = ['session-manager', 'my-statistics']
   },
   computed: {
     classObject: function () {
@@ -68,8 +60,6 @@ export default {
   components: {
     'session-manager': SessionManager,
     'my-statistics': MyStatistics,
-    'agents': Agents,
-    'inqueues': Inqueues,
     draggable
   }
 }

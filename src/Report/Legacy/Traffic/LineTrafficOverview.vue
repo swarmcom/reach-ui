@@ -11,7 +11,7 @@
           <td class='table-sm table-header-group' style="width: 151px; max-width: 151px; min-width: 151px">
             Lines
           </td>
-          <td class='table-sm table-header-group' style="width: 649px; max-width: 649px; min-width: 649px">
+          <td class='table-sm table-header-group' style="width: 587px; max-width: 587px; min-width: 587px">
             Line Activity Details
           </td>
         </tr>
@@ -76,14 +76,6 @@ export default {
         },
         voicemail: {
           label: 'Sent to Voicemail',
-          tdClass: ['table-body-green', 'text-align-right'],
-          thClass: 'table-header',
-          thStyle: { width: '63px' },
-          sortable: true,
-          formatter: (v, _, item) => (item.call_count !== undefined) ? v : 'NA'
-        },
-        transferred_out: {
-          label: 'Transferred Out',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },

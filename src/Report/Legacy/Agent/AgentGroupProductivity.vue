@@ -2,7 +2,6 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <from-to v-model="fromTo"></from-to>
-      <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
     </div>
     <div slot="report">
       <table>
@@ -13,7 +12,7 @@
           <td class='table-sm table-header-group' style="width: 286px; max-width: 286px; min-width: 286px">
             Log In/Out
           </td>
-          <td class='table-sm table-header-group' style="width: 569px; max-width: 569px; min-width: 569px">
+          <td class='table-sm table-header-group' style="width: 507px; max-width: 507px; min-width: 507px">
             Logged In Time Breakdown
           </td>
         </tr>
@@ -58,7 +57,8 @@ export default {
           label: 'Total Avail. Time',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' }
+          thStyle: { width: '63px' },
+          formatter: v => v ? this.durationFormatter(v) : 'NA'
         },
         occupancy: {
           label: 'Occupancy',
@@ -72,7 +72,7 @@ export default {
           tdClass: ['table-body-blue-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
           thStyle: { width: '59px' },
-          formatter: v => v ? new Moment(v, "x").format("mm:ss") : 'NA'
+          formatter: v => v ? this.durationFormatter(v) : 'NA'
         },
         first_event_state: {
           label: 'First Login',
@@ -100,25 +100,18 @@ export default {
           tdClass: ['table-body-green-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
           thStyle: { width: '63px' },
-          formatter: v => this.durationFormatter(v)
+          formatter: (v, _, item) => this.durationFormatter(item.total_avail_time - item.total_time)
         },
         released: {
           label: 'Released',
-          tdClass: ['table-body-orange-dark', 'text-align-right'],
+          tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           formatter: v => this.durationFormatter(v)
         },
         suspended: {
           label: 'Suspended',
-          tdClass: ['table-body-orange-dark', 'text-align-right'],
-          thClass: 'table-header',
-          thStyle: { width: '63px' },
-          formatter: v => this.durationFormatter(v)
-        },
-        available: {
-          label: 'Available',
-          tdClass: ['table-body-orange-dark', 'text-align-right'],
+          tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
           formatter: v => this.durationFormatter(v)
@@ -164,24 +157,23 @@ export default {
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },
-          formatter: (_v, _, item) => this.durationFormatter(item.out_ringing_local + item.out_ringing_remote)
+          formatter: (_v, _, item) => this.durationFormatter(item.init + item.grace)
         }
       },
       fromTo: {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format(),
       },
+      agents: [],
       agentGroups: [],
+      intervalLength: 0,
       reportFields: {
         name: 'Agent Group Productivity',
         title: 'Agent Group Productivity',
         from: undefined,
         to: undefined
       },
-      sessions: [],
-      agentGroupsQuery: function () {
-        return this.$agent.p_mfa('ws_agent', 'agent_groups')
-      }
+      sessions: []
     }
   },
   methods: {
@@ -190,12 +182,15 @@ export default {
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
       let agentGroupsIDs = this.agentGroups.map(obj => obj.id)
+      this.intervalLength = (date_end - date_start)*1000
       this.sessions = await this.$agent.p_mfa('ws_report', 'agent_productivity_stats', [date_start, date_end, 'agent_group_id', 'agent_group_id', agentGroupsIDs])
       this.addMissingRows()
+      this.enrichData()
     },
     reset () {
       this.sessions = []
       this.agentGroups = []
+      this.intervalLength = 0
       this.fromTo = {
         date_start: Moment().subtract(1, 'days').format(),
         date_end: Moment().format()
@@ -209,16 +204,33 @@ export default {
       let obj = this.agentGroups.find(v => { return v.id === id })
       return obj.name
     },
+    enrichData () {
+      this.sessions.forEach(row => {
+        const agentsCount = this.agents.filter(a => a.group_id == row.id).length;
+        row.agents_in_grp = agentsCount
+        row.total_avail_time = agentsCount * this.intervalLength
+      })
+    },
     addMissingRows () {
-      this.agentGroups.forEach((obj) => {
+      this.agentGroups.forEach(obj => {
         if (this.sessions.find(v => { return v.id === obj.id}) === undefined) {
-          this.sessions.push({ id: obj.id })
+          this.sessions.push({ id: obj.id, total_time: 0 })
         }
       })
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
+    },
+    getAgents: async function () {
+      this.agents = await this.$agent.p_mfa('ws_agent', 'agents')
+    },
+    getAgentGroups: async function () {
+      this.agentGroups = await this.$agent.p_mfa('ws_agent', 'agent_groups')
     }
+  },
+  created () {
+    this.getAgents()
+    this.getAgentGroups()
   }
 }
 </script>

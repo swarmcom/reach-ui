@@ -13,7 +13,7 @@
           <td class='table-sm table-header-group' style="width: 210px; max-width: 210px; min-width: 210px">
             Intervals {{reportFields.interval}} min
           </td>
-          <td class='table-sm table-header-group' style="width: 649px; max-width: 649px; min-width: 649px">
+          <td class='table-sm table-header-group' style="width: 587px; max-width: 587px; min-width: 587px">
             Traffic Details
           </td>
         </tr>
@@ -86,13 +86,6 @@ export default {
         },
         voicemail: {
           label: 'Sent to Voicemail',
-          tdClass: ['table-body-green', 'text-align-right'],
-          thClass: 'table-header',
-          thStyle: { width: '63px' },
-          sortable: true
-        },
-        transferred_out: {
-          label: 'Transferred Out',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
           thStyle: { width: '63px' },

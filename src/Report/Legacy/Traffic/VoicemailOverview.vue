@@ -12,7 +12,7 @@
           <td class='table-sm table-header-group' style="width: 151px; max-width: 151px; min-width: 151px">
             Queues
           </td>
-          <td class='table-sm table-header-group' style="width: 649px; max-width: 649px; min-width: 649px">
+          <td class='table-sm table-header-group' style="width: 650px; max-width: 650px; min-width: 650px">
             Voicemail Activity Details
           </td>
         </tr>

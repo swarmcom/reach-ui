@@ -77,6 +77,7 @@ import Monitor from '@/Role/Supervisor/Monitor'
 import Recordings from '@/Role/Supervisor/Recordings'
 import Reports from '@/Role/Supervisor/Reports'
 
+import ProfileRoutes from '@/routes/profile'
 import ReportRoutes from '@/routes/report'
 import Layout from '@/Role/Layout'
 
@@ -88,7 +89,7 @@ const router = new VueRouter({
   scrollBehavior,
   routes: [
     { path: '/main', component: Main, name: 'main' },
-    { path: '/profile', component: Profile, name: 'profile' },
+    { path: '/profile', component: Profile, children: ProfileRoutes, name: 'profile' },
     { path: '/help', component: Help, name: 'help' },
     { path: '/monitor', component: Monitor, name: 'monitor' },
     { path: '/recordings', component: Recordings, name: 'recordings' },
