@@ -48,24 +48,6 @@
                     <b-badge variant="danger" class="pointer" size="sm" @click="stop(data.item)">
                       Kill
                     </b-badge>
-                    <b-badge variant="warning" class="pointer" v-if="canMonitor(data.item.state)" size="sm" @click="spy(data.item)">
-                      Monitor
-                    </b-badge>
-                    <b-badge variant="warning" class="pointer" v-if="canSpy(data.item)" size="sm" @click="cancelSpy()">
-                      Stop Monitor
-                    </b-badge>
-                    <b-badge variant="warning" class="pointer" v-if="canTakeOver(data.item)" size="sm" @click="takeover(data.item)">
-                      Take Over
-                    </b-badge>
-                    <b-badge class="pointer" v-if="canSpy(data.item)" size="sm" @click="setMode('spy')">
-                      Spy
-                    </b-badge>
-                    <b-badge class="pointer" v-if="canBarge(data.item)" size="sm" @click="setMode('barge')">
-                      Barge
-                    </b-badge>
-                    <b-badge class="pointer" v-if="canWhisper(data.item)" size="sm" @click="setMode('agent')">
-                      Whisper
-                    </b-badge>
                   </b-col>
                 </b-row>
               </template>
@@ -460,45 +442,6 @@ export default {
     },
     stop(agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
-    },
-    takeover({inqueue}) {
-      this.$agent.mfa('ws_supervisor', 'takeover', [inqueue.record, inqueue.uuid])
-    },
-    canMonitor(state) {
-      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
-        (state === 'oncall' || state === 'conference') &&
-        (!this.$agent.is_onsession() && !this.$agent.is_barge()))
-    },
-    canSpy(agent) {
-      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
-        agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
-    },
-    canTakeOver(agent) {
-      return (this.$agent.permAllowed('supervisor-feature-take-over') &&
-        agent.state === 'oncall' && agent.inqueue && agent.inqueue.record === "inqueue_call" &&
-        (!this.$agent.is_onsession() && !this.$agent.is_barge()))
-    },
-    canBarge(agent) {
-      return (this.$agent.permAllowed('supervisor-feature-barge') &&
-        agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
-    },
-    canWhisper(agent) {
-      return (this.$agent.permAllowed('supervisor-feature-whisper') &&
-        agent.state === 'barge' && (agent.agent.id === this.$agent.vm.agent.id))
-    },
-    spy({inqueue}) {
-      if (inqueue.record === "outgoing_call") {
-        this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.target])
-      }
-      else {
-        this.$agent.mfa('ws_supervisor', 'spy', [inqueue.record, inqueue.uuid])
-      }
-    },
-    cancelSpy() {
-      this.$agent.mfa('ws_supervisor', 'cancel', [])
-    },
-    setMode(mode) {
-      this.$agent.mfa('ws_supervisor', 'set_barge_mode', [mode])
     },
     set_period(value) {
       this.period.value = value

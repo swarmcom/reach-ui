@@ -42,6 +42,9 @@
                 <b-badge variant="warning" class="pointer" v-if="allowTake(data.item.state)" size="sm" @click="take(data.item)">
                   Take
                 </b-badge>
+                <b-badge variant="warning" class="pointer" v-if="canTakeOver(data.item.state)" size="sm" @click="takeover(data.item)">
+                  Take Over
+                </b-badge>
                 <b-badge variant="warning" class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                   Monitor
                 </b-badge>
@@ -223,6 +226,11 @@ export default {
     allowMonitor(state) {
       return (this.$agent.permAllowed('supervisor-feature-monitor') &&
         state === 'oncall' && !this.$agent.is_onsession() && !this.$agent.is_barge())
+    },
+    canTakeOver(state) {
+      return (this.$agent.permAllowed('supervisor-feature-take-over') &&
+        state === 'oncall' &&
+        (!this.$agent.is_onsession() && !this.$agent.is_barge()))
     },
     take({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
