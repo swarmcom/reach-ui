@@ -15,7 +15,7 @@ export default {
   props: ['args'],
   data () {
     return {
-      comparasions: [ '<', '=', '>' ],
+      comparasions: [ '>' ],
       comparision: this.args[0],
       value: this.args[1]
     }

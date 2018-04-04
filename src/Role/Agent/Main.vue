@@ -26,7 +26,7 @@
       <agent-skills></agent-skills>
     </b-col>
     <b-col cols="6">
-      <dialer v-if="this.$agent.is_idle()"></dialer>
+      <dialer v-if="can_dial()"></dialer>
     </b-col>
   </b-row>
   <override style="margin-top: 20px" v-if="this.$agent.is_idle()"></override>
@@ -64,6 +64,9 @@ export default {
     answer () { this.$agent.answer() },
     hangup () { this.$agent.hangup() },
     wrapup () { this.$agent.p_mfa('ws_agent', 'end_wrapup') },
+    can_dial () {
+      return this.$agent.is_idle() || this.$agent.is_wrapup()
+    },
   },
   created () {
     this.a = this.$agent.getData()

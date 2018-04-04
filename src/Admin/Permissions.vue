@@ -1,58 +1,125 @@
 <template>
 <div class="container">
-  <b-row style="margin-bottom: 10px"><b-col><h3>Permissions:</h3></b-col></b-row>
+  <b-row style="margin-bottom: 10px">
+    <b-col cols=2><h3>Permissions:</h3></b-col>
+    <b-col>
+      <b-btn variant="link" @click='selectAll()'>all</b-btn>|<b-btn variant="link" @click='unselectAll()'>none</b-btn>
+    </b-col>
+  </b-row>
   <b-row>
     <b-col>
-      <b-row> <b-col><h4>Available Tabs:</h4></b-col></b-row>
-      <b-row v-for="p of this.ui" :key="p">
-          <b-col cols="10">{{names[p].name}}</b-col>
-          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      <b-row>
+        <b-col cols=6>
+          <h4>Available Tabs:</h4>
+        </b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(tabs)'>all</b-btn>|<b-btn variant="link" @click='unselect(tabs)'>none</b-btn>
+        </b-col>
+      </b-row>
+      <b-row v-for="(p) of this.tabs" :key="p" v-if="tabsVisible(p)">
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
+        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      </b-row>
+
+      <b-row style="margin-top: 15px">
+        <b-col cols=6><h4>UI Features:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(features)'>all</b-btn>|<b-btn variant="link" @click='unselect(features)'>none</b-btn>
+        </b-col>
+      </b-row>
+      <b-row v-for="(p) of this.features" :key="p">
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
+        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
     </b-col>
+
     <b-col>
-      <b-row> <b-col><h4>Available Widgets:</h4></b-col></b-row>
+
+      <b-row>
+        <b-col cols=6><h4>Available Widgets:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(widgets)'>all</b-btn>|<b-btn variant="link" @click='unselect(widgets)'>none</b-btn>
+        </b-col>
+      </b-row>
       <b-row v-for="p of this.widgets" :key="p">
-          <b-col cols="10">{{names[p].name}}</b-col>
+          <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-    </b-col>
-  </b-row>
 
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <b-row><b-col><h4>UI Features:</h4></b-col></b-row>
-      <b-row v-for="p of this.features" :key="p">
-          <b-col cols="10">{{names[p].name}}</b-col>
-          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      <b-row style="margin-top: 15px">
+        <b-col cols=6><h4>Call Features:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(call_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(call_features)'>none</b-btn>
+        </b-col>
       </b-row>
-    </b-col>
-    <b-col>
-      <b-row><b-col><h4>Call Features:</h4></b-col></b-row>
-      <b-row v-for="p of this.call_features" :key="p">
-          <b-col cols="10">{{names[p].name}}</b-col>
-          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+      <b-row v-for="(p) of this.call_features" :key="p">
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
+        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
-      <b-row><b-col><h4>Agent Features:</h4></b-col></b-row>
+
+      <b-row style="margin-top: 15px">
+        <b-col cols=6><h4>Agent Profile:</h4></b-col>
+        <b-col>
+          <b-btn variant="link" @click='select(agent_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(agent_features)'>none</b-btn>
+        </b-col>
+      </b-row>
       <b-row v-for="p of this.agent_features" :key="p">
-          <b-col cols="10">{{names[p].name}}</b-col>
-          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
+        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
+        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
 
     </b-col>
   </b-row>
-
 </div>
 </template>
 
 <script>
 export default {
   name: 'admin-role-permissions',
-  props: ['id'],
+  props: ['id', 'ui'],
   data () {
     return {
       name: undefined,
-      effective: {},
-      ui: [
+      effective: {
+        "main-ui": false,
+        "admin-ui": false,
+        "profile-ui": false,
+        "recordings-ui": false,
+        "reports-ui": false,
+        "monitor-ui": false,
+        "agentManager-widget": false,
+        "queueManager-widget": false,
+        "myStatistics-widget": false,
+        "controlAgentState-feature": false,
+        "monitor-feature": false,
+        "barge-feature": false,
+        "whisper-feature": false,
+        "takeOver-feature": false,
+        "takeCallQueue-feature": false,
+        "hangupCallQueue-feature": false,
+        "myPhone-feature": false,
+        "outbound-feature": false,
+        "CROnDemand-feature": false,
+        "transAgent-feature": false,
+        "transQueue-feature": false,
+        "transNumber-feature": false,
+        "confAgent-feature": false,
+        "confQueue-feature": false,
+        "confNumber-feature": false,
+        "transConfChangeSkills-feature": false,
+        "agentName-edit": false,
+        "agentPassword-edit": false,
+        "agentLineOut-visible": false,
+        "primarySip-edit": false,
+        "additionalSip-visible": false,
+        "ringTimeout-edit": false,
+        "maxMissedCalls-edit": false,
+        "maxRingsSuccess-edit": false,
+        "autoLogout-visible": false,
+        "avatar-visible": false,
+        "agentSkills-visible": false
+      },
+      tabs: [
         'main-ui',
         'admin-ui',
         'profile-ui',
@@ -79,7 +146,6 @@ export default {
         'transConfChangeSkills-feature'
       ],
       call_features: [
-        'sip-can-register',
         'monitor-feature',
         'whisper-feature',
         'barge-feature',
@@ -92,7 +158,7 @@ export default {
         "agentPassword-edit",
         "agentLineOut-visible",
         "primarySip-edit",
-        "primarySip-edit",
+        "additionalSip-visible",
         "ringTimeout-edit",
         "maxMissedCalls-edit",
         "maxRingsSuccess-edit",
@@ -127,12 +193,11 @@ export default {
         "confQueue-feature": { name: "Conference to Queue" },
         "confNumber-feature": { name: "Conference to Number" },
         "transConfChangeSkills-feature": { name: "Change Skills on Conf/Tran" },
-        "sip-can-register": { name: "Allow to register SIP phone" },
         "agentName-edit": { name: "Name" },
         "agentPassword-edit": { name: "Password" },
         "agentLineOut-visible": { name: "Line Out" },
         "primarySip-edit": { name: "Primary SIP Contact" },
-        "primarySip-edit": { name: "SIP Contacts" },
+        "additionalSip-visible": { name: "SIP Contacts" },
         "ringTimeout-edit": { name: "Ring Timeout" },
         "maxMissedCalls-edit": { name: "Max Missed Calls" },
         "maxRingsSuccess-edit": { name: "Reset Max Rings On Success" },
@@ -153,8 +218,46 @@ export default {
       }
       else {
         await this.$agent.p_mfa('ws_db_permission', 'unset', [this.id, perm])
-        delete this.effective[perm]
+        this.effective[perm] = false
       }
+    },
+    tabsVisible: function (perm) {
+      if (this.ui == 'supervisor') {
+        return (perm != 'admin-ui')
+      }
+      else if (this.ui == 'agent') {
+        return (perm == 'main-ui' || perm == 'profile-ui')
+      }
+      else {
+        return true
+      }
+    },
+    isAgent () {
+      return this.ui == 'agent'
+    },
+    selectAll () {
+      let self = this
+      Object.keys(this.names).forEach(function (key) {
+        self.onChange(key, true)
+      })
+    },
+    unselectAll () {
+      let self = this
+      Object.keys(this.names).forEach(function (key) {
+        self.onChange(key, false)
+      })
+    },
+    select (group) {
+      let self = this
+      group.forEach(function (key) {
+        self.onChange(key, true)
+      })
+    },
+    unselect (group) {
+      let self = this
+      group.forEach(function (key) {
+        self.onChange(key, false)
+      })
     }
   },
   created () {

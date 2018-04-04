@@ -51,14 +51,14 @@ export default {
       query_params: {},
       fields: {
         ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
-        state_total: { label: 'Total', tdClass: 'text-right' },
-        state_ringing: { label: 'Ringing', tdClass: 'text-right' },
-        state_oncall: { label: 'Oncall', tdClass: 'text-right' },
-        line_out: { label: 'Line out', tdClass: 'text-right' },
-        client: { label: 'Client', tdClass: 'text-right' },
-        agent: { label: 'Agent', tdClass: 'text-right' },
-        target: { label: 'Target', tdClass: 'text-right' },
-        player: { label: ' ', tdClass: 'text-right' }
+        state_total: { label: 'Total' },
+        state_ringing: { label: 'Ringing' },
+        state_oncall: { label: 'Oncall' },
+        line_out: { label: 'Line out' },
+        client: { label: 'Client' },
+        agent: { label: 'Agent' },
+        target: { label: 'Target' },
+        player: { label: ' ' }
       },
       sessions: []
     }

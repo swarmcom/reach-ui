@@ -29,12 +29,28 @@
   </b-row>
 
   <b-row v-if="is_oncall()" style="margin-top: 20px">
-    <b-col>
+    <b-col cols=3>
       <h4>Actions:</h4>
       <button v-if="is_hold()" @click="unhold" class="btn btn-outline-info">UnHold</button>
       <button v-else @click="hold" class="btn btn-outline-info">Hold</button>
       <button @click="hangup" class="btn btn-outline-primary">Hangup</button>
       <b-button v-if="can_record()" @click="record" :variant="record_variant()" :disabled="outgoing.keep_record">Record</b-button>
+    </b-col>
+    <b-col v-if="this.$agent.can_transfer()">
+      <h4>Transfer to:</h4>
+      <div class="form-inline">
+        <transfer-agent></transfer-agent>&nbsp;
+        <transfer-queue></transfer-queue>&nbsp;
+        <transfer-uri v-if="this.$agent.can_call()" class="form-control"></transfer-uri>
+      </div>
+    </b-col>
+    <b-col v-if="this.$agent.can_conference()">
+      <h4>Conference with:</h4>
+      <div class="form-inline">
+        <conference-agent></conference-agent>&nbsp;
+        <conference-queue></conference-queue>&nbsp;
+        <conference-uri v-if="this.$agent.can_call()" class="form-control"></conference-uri>
+      </div>
     </b-col>
   </b-row>
 
@@ -45,12 +61,26 @@
     </b-col>
   </b-row>
 
-
 </div><!-- container -->
 </template>
 
 <script>
+import TransferAgent from '@/Agent/Widget/TransferAgent'
+import TransferQueue from '@/Agent/Widget/TransferQueue'
+import TransferUri from '@/Agent/Widget/TransferUri'
+import ConferenceAgent from '@/Agent/Widget/ConferenceAgent'
+import ConferenceQueue from '@/Agent/Widget/ConferenceQueue'
+import ConferenceUri from '@/Agent/Widget/ConferenceUri'
+
 export default {
+  components: {
+    'transfer-agent': TransferAgent,
+    'transfer-queue': TransferQueue,
+    'transfer-uri': TransferUri,
+    'conference-agent': ConferenceAgent,
+    'conference-queue': ConferenceQueue,
+    'conference-uri': ConferenceUri
+  },
   data () {
     return {
       visible: false,
@@ -77,7 +107,7 @@ export default {
     query: async function () {
       this.outgoing = await this.$agent.p_mfa('ws_agent', 'get_outgoing', [])
       this.visible = true
-      this.$agent.p_mfa('ws_agent', 'subscribe', ['outgoing', this.outgoing.id])
+      this.$agent.p_mfa('ws_agent', 'subscribe', ['outgoing', this.outgoing.uuid])
     },
     onTimer() {
       if (this.outgoing.time) {
@@ -102,7 +132,7 @@ export default {
   },
   beforeDestroy () {
     this.$bus.$off('outgoing_state', this.handleState)
-    this.$agent.mfa('ws_agent', 'unsubscribe', ['outgoing', this.outgoing.id])
+    this.$agent.mfa('ws_agent', 'unsubscribe', ['outgoing', this.outgoing.uuid])
   },
 }
 </script>
