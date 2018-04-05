@@ -73,15 +73,9 @@ export default {
     title: {
       default: "undefined"
     },
-    from: {
-      default: undefined
-    },
-    to: {
-      default: undefined
-    },
     timeRange: {
       type: String,
-      default: "unknown"
+      default: "-"
     }
   },
   data () {
