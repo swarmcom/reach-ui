@@ -29,15 +29,15 @@
               return true
             }
             else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && 
-              this.$agent.permAllowed('myStatistics-widget')) {
+              this.$agent.permAllowed('widget-my-statistics')) {
               return true
             }
             else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  &&
-              this.$agent.permAllowed('agentManager-widget')) {
+              this.$agent.permAllowed('widget-agent-manager')) {
               return true
             }
             else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  &&
-              this.$agent.permAllowed('queueManager-widget')) {
+              this.$agent.permAllowed('widget-queue-manager')) {
               return true
             }
             else {

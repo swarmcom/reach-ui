@@ -42,10 +42,13 @@
                 <b-badge variant="warning" class="pointer" v-if="allowTake(data.item.state)" size="sm" @click="take(data.item)">
                   Take
                 </b-badge>
+                <b-badge variant="warning" class="pointer" v-if="canTakeOver(data.item.state)" size="sm" @click="takeover(data.item)">
+                  Take Over
+                </b-badge>
                 <b-badge variant="warning" class="pointer" v-if="allowMonitor(data.item.state)" size="sm" @click="spy(data.item)">
                   Monitor
                 </b-badge>
-                <b-badge variant="danger" class="pointer" v-if="$agent.permAllowed('hangupCallQueue-feature')" size="sm" @click="hangup(data.item)">
+                <b-badge variant="danger" class="pointer" v-if="$agent.permAllowed('supervisor-feature-hangup-call-queue')" size="sm" @click="hangup(data.item)">
                   Hangup
                 </b-badge>
               </b-col>
@@ -110,6 +113,20 @@
             </b-row>
           </template>
         </b-table>
+        <b-row class="row">
+          <b-badge variant="warning" class="pointer" v-if="canSpy()" size="sm" @click="cancelSpy()">
+            Stop Monitor
+          </b-badge>
+          <b-badge style="margin-left:5px" class="pointer" v-if="canSpy()" size="sm" @click="setMode('spy')">
+            Spy
+          </b-badge>
+          <b-badge style="margin-left:5px" class="pointer" v-if="canBarge()" size="sm" @click="setMode('barge')">
+            Barge
+          </b-badge>
+          <b-badge style="margin-left:5px" class="pointer" v-if="canWhisper()" size="sm" @click="setMode('agent')">
+            Whisper
+          </b-badge>
+        </b-row>
       </b-col>
     </b-row>
   </b-collapse>
@@ -203,12 +220,17 @@ export default {
       this.saveDataStorage()
     },
     allowTake(state) {
-      return (this.$agent.permAllowed('takeCallQueue-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-take-call-queue') &&
         (state === 'inqueue' || state === 'agent'))
     },
     allowMonitor(state) {
-      return (this.$agent.permAllowed('monitor-feature') &&
+      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
         state === 'oncall' && !this.$agent.is_onsession() && !this.$agent.is_barge())
+    },
+    canTakeOver(state) {
+      return (this.$agent.permAllowed('supervisor-feature-take-over') &&
+        state === 'oncall' &&
+        (!this.$agent.is_onsession() && !this.$agent.is_barge()))
     },
     take({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
@@ -221,6 +243,24 @@ export default {
     },
     hangup({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
+    },
+    canSpy() {
+      return (this.$agent.permAllowed('supervisor-feature-monitor') &&
+        this.$agent.is_barge())
+    },
+    canBarge() {
+      return (this.$agent.permAllowed('supervisor-feature-barge') &&
+        this.$agent.is_barge())
+    },
+    canWhisper() {
+      return (this.$agent.permAllowed('supervisor-feature-whisper') &&
+        this.$agent.is_barge())
+    },
+    cancelSpy() {
+      this.$agent.mfa('ws_supervisor', 'cancel', [])
+    },
+    setMode(mode) {
+      this.$agent.mfa('ws_supervisor', 'set_barge_mode', [mode])
     },
     onFilterUpdate(event) {
       if (event.match(/[^\w\s]/gi)) {

@@ -17,7 +17,7 @@
           <b-btn variant="link" @click='select(tabs)'>all</b-btn>|<b-btn variant="link" @click='unselect(tabs)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="(p) of this.tabs" :key="p" v-if="tabsVisible(p)">
+      <b-row v-for="(p) of this.tabs" :key="p" v-if="isVisible(p)">
         <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
@@ -42,18 +42,18 @@
           <b-btn variant="link" @click='select(widgets)'>all</b-btn>|<b-btn variant="link" @click='unselect(widgets)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="p of this.widgets" :key="p">
+      <b-row v-for="p of this.widgets" :key="p" v-if="isVisible(p)">
           <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
           <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
 
-      <b-row style="margin-top: 15px">
+      <b-row style="margin-top: 15px" v-if="ui != 'agent'">
         <b-col cols=6><h4>Call Features:</h4></b-col>
         <b-col>
           <b-btn variant="link" @click='select(call_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(call_features)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="(p) of this.call_features" :key="p">
+      <b-row v-for="(p) of this.call_features" :key="p" v-if="ui != 'agent'">
         <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
         <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
       </b-row>
@@ -88,37 +88,37 @@ export default {
         "recordings-ui": false,
         "reports-ui": false,
         "monitor-ui": false,
-        "agentManager-widget": false,
-        "queueManager-widget": false,
-        "myStatistics-widget": false,
-        "controlAgentState-feature": false,
-        "monitor-feature": false,
-        "barge-feature": false,
-        "whisper-feature": false,
-        "takeOver-feature": false,
-        "takeCallQueue-feature": false,
-        "hangupCallQueue-feature": false,
-        "myPhone-feature": false,
-        "outbound-feature": false,
-        "CROnDemand-feature": false,
-        "transAgent-feature": false,
-        "transQueue-feature": false,
-        "transNumber-feature": false,
-        "confAgent-feature": false,
-        "confQueue-feature": false,
-        "confNumber-feature": false,
-        "transConfChangeSkills-feature": false,
-        "agentName-edit": false,
-        "agentPassword-edit": false,
-        "agentLineOut-visible": false,
-        "primarySip-edit": false,
-        "additionalSip-visible": false,
-        "ringTimeout-edit": false,
-        "maxMissedCalls-edit": false,
-        "maxRingsSuccess-edit": false,
-        "autoLogout-visible": false,
-        "avatar-visible": false,
-        "agentSkills-visible": false
+        "widget-agent-manager": false,
+        "widget-queue-manager": false,
+        "widget-my-statistics": false,
+        "supervisor-feature-control-agent-state": false,
+        "supervisor-feature-monitor": false,
+        "supervisor-feature-barge": false,
+        "supervisor-feature-whisper": false,
+        "supervisor-feature-take-over": false,
+        "supervisor-feature-take-call-queue": false,
+        "supervisor-feature-hangup-call-queue": false,
+        "agent-feature-my-phone": false,
+        "agent-feature-outbound-calling": false,
+        "agent-feature-call-recording-on-demand": false,
+        "agent-feature-transfer-agent": false,
+        "agent-feature-transfer-queue": false,
+        "agent-feature-transfer-number": false,
+        "agent-feature-conference-agent": false,
+        "agent-feature-conference-queue": false,
+        "agent-feature-conference-number": false,
+        "agent-feature-conference-change-skills": false,
+        "agent-profile-edit-name": false,
+        "agent-profile-edit-password": false,
+        "agent-profile-edit-line-out": false,
+        "agent-profile-edit-primary-sip": false,
+        "agent-profile-edit-additional-sip": false,
+        "agent-profile-edit-ring-timeout": false,
+        "agent-profile-edit-max-missed-calls": false,
+        "agent-profile-edit-max-ring-success": false,
+        "agent-profile-edit-autologout": false,
+        "agent-profile-edit-avatar": false,
+        "agent-profile-edit-agent-skills": false
       },
       tabs: [
         'main-ui',
@@ -129,43 +129,43 @@ export default {
         'monitor-ui'
       ],
       widgets: [
-        'myStatistics-widget',
-        'queueManager-widget',
-        'agentManager-widget'
+        'widget-my-statistics',
+        'widget-queue-manager',
+        'widget-agent-manager'
       ],
       features: [
-        'controlAgentState-feature',
-        'myPhone-feature',
-        'outbound-feature',
-        'CROnDemand-feature',
-        'transAgent-feature',
-        'transQueue-feature',
-        'transNumber-feature',
-        'confAgent-feature',
-        'confQueue-feature',
-        'confNumber-feature',
-        'transConfChangeSkills-feature'
+        'agent-feature-my-phone',
+        'agent-feature-outbound-calling',
+        'agent-feature-call-recording-on-demand',
+        'agent-feature-transfer-agent',
+        'agent-feature-transfer-queue',
+        'agent-feature-transfer-number',
+        'agent-feature-conference-agent',
+        'agent-feature-conference-queue',
+        'agent-feature-conference-number',
+        'agent-feature-conference-change-skills'
       ],
       call_features: [
-        'monitor-feature',
-        'whisper-feature',
-        'barge-feature',
-        'takeOver-feature',
-        'takeCallQueue-feature',
-        'hangupCallQueue-feature'
+        'supervisor-feature-control-agent-state',
+        'supervisor-feature-monitor',
+        'supervisor-feature-whisper',
+        'supervisor-feature-barge',
+        'supervisor-feature-take-over',
+        'supervisor-feature-take-call-queue',
+        'supervisor-feature-hangup-call-queue'
       ],
       agent_features: [
-        "agentName-edit",
-        "agentPassword-edit",
-        "agentLineOut-visible",
-        "primarySip-edit",
-        "additionalSip-visible",
-        "ringTimeout-edit",
-        "maxMissedCalls-edit",
-        "maxRingsSuccess-edit",
-        "autoLogout-visible",
-        "avatar-visible",
-        "agentSkills-visible"
+        "agent-profile-edit-name",
+        "agent-profile-edit-password",
+        "agent-profile-edit-line-out",
+        "agent-profile-edit-primary-sip",
+        "agent-profile-edit-additional-sip",
+        "agent-profile-edit-ring-timeout",
+        "agent-profile-edit-max-missed-calls",
+        "agent-profile-edit-max-ring-success",
+        "agent-profile-edit-autologout",
+        "agent-profile-edit-avatar",
+        "agent-profile-edit-agent-skills"
       ],
       names: {
         "main-ui": { name: "Main Tab" },
@@ -174,37 +174,37 @@ export default {
         "recordings-ui": { name: "Recordings" },
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
-        "agentManager-widget": { name: "Agent Manger" },
-        "queueManager-widget": { name: "Queue Manager" },
-        "myStatistics-widget": { name: "My Statistics" },
-        "controlAgentState-feature": { name: "Control Agent State" },
-        "monitor-feature": { name: "Monitor" },
-        "barge-feature": { name: "Barge" },
-        "whisper-feature": { name: "Whisper" },
-        "takeOver-feature": { name: "Take Over" },
-        "takeCallQueue-feature": { name: "Take call from queue" },
-        "hangupCallQueue-feature": { name: "Hangup call from queue"},
-        "myPhone-feature": { name: "Set My Phone" },
-        "outbound-feature": { name: "Allow Outbound" },
-        "CROnDemand-feature": { name: "Allow On Demand Call Recording" },
-        "transAgent-feature": { name: "Transfer to Agent" },
-        "transQueue-feature": { name: "Transfer to Queue" },
-        "transNumber-feature": { name: "Transfer to Number" },
-        "confAgent-feature": { name: "Conference to Agent" },
-        "confQueue-feature": { name: "Conference to Queue" },
-        "confNumber-feature": { name: "Conference to Number" },
-        "transConfChangeSkills-feature": { name: "Change Skills on Conf/Tran" },
-        "agentName-edit": { name: "Name" },
-        "agentPassword-edit": { name: "Password" },
-        "agentLineOut-visible": { name: "Line Out" },
-        "primarySip-edit": { name: "Primary SIP Contact" },
-        "additionalSip-visible": { name: "SIP Contacts" },
-        "ringTimeout-edit": { name: "Ring Timeout" },
-        "maxMissedCalls-edit": { name: "Max Missed Calls" },
-        "maxRingsSuccess-edit": { name: "Reset Max Rings On Success" },
-        "autoLogout-visible": { name: "Auto Logout" },
-        "avatar-visible": { name: "Avatar" },
-        "agentSkills-visible": { name: "Agent Skills" }
+        "widget-agent-manager": { name: "Agent Manger" },
+        "widget-queue-manager": { name: "Queue Manager" },
+        "widget-my-statistics": { name: "My Statistics" },
+        "supervisor-feature-control-agent-state": { name: "Control Agent State" },
+        "supervisor-feature-monitor": { name: "Monitor" },
+        "supervisor-feature-barge": { name: "Barge" },
+        "supervisor-feature-whisper": { name: "Whisper" },
+        "supervisor-feature-take-over": { name: "Take Over" },
+        "supervisor-feature-take-call-queue": { name: "Take call from queue" },
+        "supervisor-feature-hangup-call-queue": { name: "Hangup call from queue"},
+        "agent-feature-my-phone": { name: "Set My Phone" },
+        "agent-feature-outbound-calling": { name: "Allow Outbound" },
+        "agent-feature-call-recording-on-demand": { name: "Allow On Demand Call Recording" },
+        "agent-feature-transfer-agent": { name: "Transfer to Agent" },
+        "agent-feature-transfer-queue": { name: "Transfer to Queue" },
+        "agent-feature-transfer-number": { name: "Transfer to Number" },
+        "agent-feature-conference-agent": { name: "Conference to Agent" },
+        "agent-feature-conference-queue": { name: "Conference to Queue" },
+        "agent-feature-conference-number": { name: "Conference to Number" },
+        "agent-feature-conference-change-skills": { name: "Change Skills on Conf/Tran" },
+        "agent-profile-edit-name": { name: "Name" },
+        "agent-profile-edit-password": { name: "Password" },
+        "agent-profile-edit-line-out": { name: "Line Out" },
+        "agent-profile-edit-primary-sip": { name: "Primary SIP Contact" },
+        "agent-profile-edit-additional-sip": { name: "SIP Contacts" },
+        "agent-profile-edit-ring-timeout": { name: "Ring Timeout" },
+        "agent-profile-edit-max-missed-calls": { name: "Max Missed Calls" },
+        "agent-profile-edit-max-ring-success": { name: "Reset Max Rings On Success" },
+        "agent-profile-edit-autologout": { name: "Auto Logout" },
+        "agent-profile-edit-avatar": { name: "Avatar" },
+        "agent-profile-edit-agent-skills": { name: "Agent Skills" }
       }
     }
   },
@@ -222,15 +222,14 @@ export default {
         this.effective[perm] = false
       }
     },
-    tabsVisible: function (perm) {
+    isVisible: function (perm) {
       if (this.ui == 'supervisor') {
         return (perm != 'admin-ui')
       }
       else if (this.ui == 'agent') {
-        return (perm == 'main-ui' || perm == 'profile-ui')
-      }
-      else {
-        return true
+        return (perm != 'widget-agent-manager' && perm != 'widget-queue-manager' && perm != 'admin-ui' &&
+          perm != 'recordings-ui' && perm != 'reports-ui' && perm != 'monitor-ui' &&
+          !perm.includes("supervisor-feature"))
       }
     },
     isAgent () {
@@ -239,25 +238,33 @@ export default {
     selectAll () {
       let self = this
       Object.keys(this.names).forEach(function (key) {
-        self.onChange(key, true)
+        if (self.isVisible(key)) {
+          self.onChange(key, true)
+        }
       })
     },
     unselectAll () {
       let self = this
       Object.keys(this.names).forEach(function (key) {
-        self.onChange(key, false)
+        if (self.isVisible(key)) {
+          self.onChange(key, false)
+        }
       })
     },
     select (group) {
       let self = this
       group.forEach(function (key) {
-        self.onChange(key, true)
+        if (self.isVisible(key)) {
+          self.onChange(key, true)
+        }
       })
     },
     unselect (group) {
       let self = this
       group.forEach(function (key) {
-        self.onChange(key, false)
+        if (self.isVisible(key)) {
+          self.onChange(key, false)
+        }
       })
     }
   },

@@ -56,7 +56,7 @@ export default class Agent extends WsProto {
         release_id: undefined,
         storage_data: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
-        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true },
+        isNarrowLayout: { admin: true, main: true, profile: true, monitor: true, recordings: true, reports: true, help: true, permissions: true },
         canLogout: true,
         notification: null
       }
@@ -74,10 +74,14 @@ export default class Agent extends WsProto {
       this.vm.storage_data = JSON.parse(localStorage.getItem(name));
       if (this.vm.storage_data.narrowScreenMain != undefined)
         this.vm.isNarrowLayout.main = this.vm.storage_data.narrowScreenMain
+      if (this.vm.storage_data.narrowScreenHelp != undefined)
+        this.vm.isNarrowLayout.help = this.vm.storage_data.narrowScreenHelp
       if (this.vm.storage_data.narrowScreenAdmin != undefined)
         this.vm.isNarrowLayout.admin = this.vm.storage_data.narrowScreenAdmin
       if (this.vm.storage_data.narrowScreenProfile != undefined)
         this.vm.isNarrowLayout.profile = this.vm.storage_data.narrowScreenProfile
+      if (this.vm.storage_data.narrowScreenPermissions != undefined)
+        this.vm.isNarrowLayout.permissions = this.vm.storage_data.narrowScreenPermissions
       if (this.vm.storage_data.narrowScreenMonitor != undefined)
         this.vm.isNarrowLayout.monitor = this.vm.storage_data.narrowScreenMonitor
       if (this.vm.storage_data.narrowScreenRecordings != undefined)
@@ -120,9 +124,9 @@ export default class Agent extends WsProto {
   }
 
   // MONITOR API
-  subscribe (Channel) { this.mfa('ws_admin', 'subscribe', [Channel]) }
-  agents (Cb = (A) => A) { this.mfa('ws_admin', 'agents', ['all'], Cb) }
-  inqueues (Cb = (A) => A) { this.mfa('ws_admin', 'inqueues', ['all'], Cb) }
+  subscribe (Channel) { this.mfa('ws_agent', 'subscribe', [Channel]) }
+  agents (Cb = (A) => A) { this.mfa('ws_agent', 'agents', [], Cb) }
+  inqueues (Cb = (A) => A) { this.mfa('ws_agent', 'inqueues', [], Cb) }
 
   // AGENT API
   logout () {
@@ -243,7 +247,7 @@ export default class Agent extends WsProto {
   is_barge () { return this.vm && this.vm.state == 'barge' }
   is_conference () { return this.vm && ( this.vm.state == 'conference' || this.vm.state == 'inconference' ) }
   can_login () { return this.vm.session_auth }
-  can_call () { return this.vm && this.permAllowed('outbound-feature') }
+  can_call () { return this.vm && this.permAllowed('agent-feature-outbound-calling') }
   can_hangup () { return this.vm && ( this.vm.state == 'hold' || this.vm.state == 'oncall' || this.vm.state == 'outgoing' || this.vm.state == 'ringing' || this.vm.state == 'conference' || this.vm.state == 'inconference' || this.vm.state == 'test') }
   can_conference () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }
   can_transfer () { return this.vm && ( this.vm.state == 'oncall' || this.vm.state == 'conference' || this.vm.state == 'inconference') }

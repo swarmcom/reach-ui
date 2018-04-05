@@ -58,13 +58,6 @@ export default {
           thStyle: { width: '83px' },
           formatter: (_v, _, item) => item.agent.name
         },
-        disposition: {
-          label: 'Disposition',
-          tdClass: 'table-body-orange',
-          thClass: 'table-header',
-          thStyle: { width: '83px' },
-          formatter: (_v, _, item) => item.disposition.name
-        },
         client: {
           label: 'Client',
           tdClass: 'table-body-orange-dark',
@@ -127,8 +120,8 @@ export default {
         date_end: Moment().format(),
       },
       reportFields: {
-        name: 'Inqueue',
-        title: 'Inqueue',
+        name: 'Voicemail',
+        title: 'Voicemail',
         from: undefined,
         to: undefined
       },

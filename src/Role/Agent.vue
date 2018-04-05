@@ -72,6 +72,7 @@ import Main from '@/Role/Agent/Main'
 import Help from '@/Role/Agent/Help'
 import Profile from '@/Role/Agent/Profile'
 import Layout from '@/Role/Layout'
+import ProfileRoutes from '@/routes/profile'
 
 const scrollBehavior = (to, from, savedPosition) => {
   return { x: 0, y: 0 }
@@ -80,8 +81,8 @@ const scrollBehavior = (to, from, savedPosition) => {
 const router = new VueRouter({
   scrollBehavior,
   routes: [
-    { path: '/help', component: Help },
-    { path: '/profile', component: Profile, name: 'profile' },
+    { path: '/help', component: Help, name: 'help' },
+    { path: '/profile', component: Profile, children: ProfileRoutes, name: 'profile' },
     { path: '/main', component: Main, name: 'main' },
     { path: '/', redirect: 'main' }
   ]
