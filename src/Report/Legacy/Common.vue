@@ -15,6 +15,9 @@ export default {
     },
     formatTimeRange (from, to) { 
       return new Moment(from).format('MMMM D, YYYY HH:mm:ss') + ' - ' + new Moment(to).format('MMMM D, YYYY HH:mm:ss')
+    },
+    durationFormatter (v) {
+      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }

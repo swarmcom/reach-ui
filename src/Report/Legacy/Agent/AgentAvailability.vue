@@ -37,9 +37,11 @@ import SLA from '@/Report/Input/SLA'
 import Interval from '@/Report/Input/Interval'
 import OnlyActive from '@/Report/Input/OnlyActive'
 import Moment from 'moment'
+import Common from '@/Report/Legacy/Common'
 
 export default {
   name: 'AgentAvailability',
+  mixins: [Common],
   components: {
     'report': Report,
     'from-to': FromTo,
@@ -140,8 +142,8 @@ export default {
         }
       },
       fromTo: {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format(),
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       },
       agentGroups: [],
       agents: [],
@@ -152,8 +154,7 @@ export default {
       reportFields: {
         name: 'Agent Availability',
         title: 'Agent Availability',
-        from: undefined,
-        to: undefined,
+        timeRange: '-',
         interval: undefined,
         sla: undefined
       },
@@ -183,8 +184,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
-      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+      this.reportFields.timeRange = this.formatTimeRange(this.fromTo.date_start, this.fromTo.date_end)
       this.reportFields.interval = this.interval
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
@@ -206,8 +206,8 @@ export default {
       this.clients = []
       this.skills = []
       this.fromTo = {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format()
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       }
       this.onlyActive = 'false'
       this.sla = 10
@@ -221,9 +221,6 @@ export default {
         else
           return true
       }
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }

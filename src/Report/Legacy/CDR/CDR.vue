@@ -165,9 +165,6 @@ export default {
     },
     click ({ uuid }) {
       this.$router.push(`/report/events/inqueue/${uuid}`)
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }

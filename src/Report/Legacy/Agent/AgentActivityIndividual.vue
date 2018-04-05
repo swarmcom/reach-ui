@@ -140,14 +140,12 @@ export default {
       },
       fromTo: {
         date_start: Moment().startOf('day').toDate(),
-        date_end: Moment().toDate(),
+        date_end: Moment().toDate()
       },
       agents: [],
       reportFields: {
         name: 'Agent Activity Individual',
         title: 'Agent Activity Individual',
-        from: undefined,
-        to: undefined,
         timeRange: '-'
       },
       sessions: [],
@@ -190,9 +188,6 @@ export default {
           this.sessions.push({ id: obj.id })
         }
       })
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }
