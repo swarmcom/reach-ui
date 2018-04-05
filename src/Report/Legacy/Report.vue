@@ -1,8 +1,8 @@
 <template>
   <b-container fluid style="margin-left: unset; margin-right: unset; padding-left: 0; padding-right: 0; margin-top: 15px">
     <b-row style="width: 100%; margin-left: unset; margin-right: unset">
-      <b-form @submit="apply">
-        <b-col style="width: 20%; max-width: 20%; min-width: 200px; padding: 0 2px 0 0;">
+      <b-form @submit="apply" style="width: 20%; max-width: 20%; min-width: 315px; padding: 0 2px 0 0;">
+        <b-col style="width: 100%; padding-right: 0; padding-left: 0">
           <table style="width: 100%;">
             <tr>
               <td class='report-headers' style="width: 100%; max-width: 100%; min-width: 100%">
@@ -10,7 +10,7 @@
               </td>
             </tr>
             <tr>
-              <td style="padding: 15px;">
+              <td style="padding: 5px;">
                 <b-row style="padding: 0; margin: 0">
                   <b-col style="padding: 0; margin: 0">
                     <div>
@@ -44,7 +44,7 @@
             </tr>
             <tr>
               <td class='datetime-info' style="width: 100%">
-                {{from}} - {{to}}
+                {{timeRange}}
               </td>
             </tr>
             <tr style="margin-bottom: 7px">
@@ -78,6 +78,10 @@ export default {
     },
     to: {
       default: undefined
+    },
+    timeRange: {
+      type: String,
+      default: "unknown"
     }
   },
   data () {
@@ -92,7 +96,8 @@ export default {
     reset () {
       this.$emit('reset')
     },
-    apply () {
+    apply (evt) {
+      evt.preventDefault();
       this.$emit('apply')
     }
   }
