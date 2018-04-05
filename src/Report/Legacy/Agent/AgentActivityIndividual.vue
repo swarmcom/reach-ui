@@ -35,8 +35,8 @@ import Moment from 'moment'
 import Common from '@/Report/Legacy/Common'
 
 export default {
-  mixins: [Common],
   name: 'AgentActivityIndividual',
+  mixins: [Common],
   components: {
     'report': Report,
     'from-to': FromTo,
