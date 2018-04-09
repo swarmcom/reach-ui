@@ -10,17 +10,19 @@
           </b-col>
         </b-row>
       </b-col>
-      <b-form v-if="isVisible" @submit="apply">
-        <b-col>
-          <div>
-            <slot name="input-controls">
-              Put some input controls here.
-            </slot>
-          </div>
-        </b-col>
-        <b-button type="submit" class="btn btn-outline-secondary" style="margin-left: 20px" size="sm">Apply</b-button>
-        <b-button @click="reset" class="btn btn-outline-secondary" size="sm">Reset</b-button> 
-      </b-form>
+      <b-col cols="12">
+        <b-form v-if="isVisible" @submit="apply">
+          <b-col>
+            <div>
+              <slot name="input-controls">
+                Put some input controls here.
+              </slot>
+            </div>
+          </b-col>
+          <b-button @click="reset" class="btn btn-outline-secondary float-right" size="sm">Reset</b-button>
+          <b-button type="submit" class="btn btn-outline-secondary float-right" style="margin-right: 20px" size="sm">Apply</b-button>
+        </b-form>
+      </b-col>
     </b-row>
     <b-row style="width: 100%; margin-left: unset; margin-right: unset">
       <b-col style="overflow-x: auto; padding: unset;">
