@@ -1,12 +1,16 @@
 <template>
   <b-container fluid style="margin-left: unset; margin-right: unset; padding-left: 0; padding-right: 0; margin-top: 15px">
     <b-row style="width: 100%; margin-left: unset; margin-bottom: 10px; margin-right: unset">
-      <b-col class='report-headers' style="padding-top: 10px">
-        Input Controls
+      <b-col cols="12" class='report-headers' style="padding-top: 10px; margin-bottom: 10px">
+        <b-row>
+          <b-col style="cursor:pointer" v-on:click="isVisible = !isVisible">
+            <icon v-if="isVisible" name="minus" scale="0.5"></icon>
+            <icon v-if="!isVisible" name="plus" scale="0.5"></icon>
+            Input Controls
+          </b-col>
+        </b-row>
       </b-col>
-    </b-row>
-    <b-row style="width: 100%; margin-left: unset; margin-bottom: 10px; margin-right: unset">
-      <b-form @submit="apply">
+      <b-form v-if="isVisible" @submit="apply">
         <b-col>
           <div>
             <slot name="input-controls">
@@ -76,6 +80,7 @@ export default {
         date_start: undefined,
         date_end: undefined,
       },
+      isVisible: true
     }
   },
   methods: {
