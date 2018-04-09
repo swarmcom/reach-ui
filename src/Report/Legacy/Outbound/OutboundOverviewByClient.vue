@@ -26,8 +26,10 @@ import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
 import OnlyActive from "@/Report/Input/OnlyActive"
 import Moment from 'moment'
+import Common from '@/Report/Legacy/Common'
 
 export default {
+  mixins: [Common],
   components: {
     'report': Report,
     'from-to': FromTo,
@@ -86,15 +88,14 @@ export default {
         }
       },
       fromTo: {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format(),
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       },
       clients: [],
       reportFields: {
         name: 'Outbound Traffic Overview by Client',
         title: 'Outbound Traffic Overview by Client',
-        from: undefined,
-        to: undefined
+        timeRange: '-'
       },
       sessions: [],
       onlyActive: "false",
@@ -102,8 +103,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
-      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+      this.reportFields.timeRange = this.formatTimeRange(this.fromTo.date_start, this.fromTo.date_end)
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
       let clientsIDs = this.clients.map(obj => obj.id)
@@ -114,8 +114,8 @@ export default {
       this.sessions = []
       this.getClients()
       this.fromTo = {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format()
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       }
     },
     hideEmpty (item) {
@@ -138,9 +138,6 @@ export default {
           this.sessions.push({ client_id: obj.id })
         }
       })
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   },
   created () {

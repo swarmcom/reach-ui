@@ -124,15 +124,14 @@ export default {
         }
       },
       fromTo: {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format(),
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       },
       queues: [],
       reportFields: {
         name: 'Queue Group Traffic Overview',
         title: 'Queue Group Traffic Overview',
-        from: undefined,
-        to: undefined,
+        timeRange: '-',
         sla: undefined
       },
       sessions: [],
@@ -142,8 +141,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
-      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+      this.reportFields.timeRange = this.formatTimeRange(this.fromTo.date_start, this.fromTo.date_end)
       this.reportFields.sla = this.sla
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
@@ -156,8 +154,8 @@ export default {
       this.sessions = []
       this.getQueueGroups()
       this.fromTo = {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format()
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       }
       this.sla = 10
     },
@@ -181,9 +179,6 @@ export default {
           this.sessions.push({ queue_group_id: obj.id })
         }
       })
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   },
   created () {
