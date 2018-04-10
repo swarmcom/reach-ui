@@ -1,29 +1,57 @@
 <template>
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
-      <from-to v-model="fromTo"></from-to>
-      <interval v-model="interval" :min_value="1"></interval>
-      <sla caption="SLA target answer time [s]" v-model="sla"></sla>
-      <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
-      <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
-      <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
-      <entity-selector v-model="queueGroups" :query=queueGroupsQuery entity="Queue Groups"></entity-selector>
-      <entity-selector v-model="queues" :query=queuesQuery entity="Queues"></entity-selector>
-      <entity-selector v-model="clients" :query=clientsQuery entity="Clients"></entity-selector>
-      <only-active v-model="onlyActive" caption="Show Only Intervals with Activity"></only-active>
+      <b-row>
+        <b-col cols="12" md="12" lg="12" xl="12">
+          <from-to v-model="fromTo"></from-to>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" md="6" lg="3" xl="2">
+          <interval v-model="interval" :min_value="1"></interval>
+        </b-col>
+        <b-col cols="12" md="6" lg="4" xl="3">
+          <sla caption="SLA target answer time [s]" v-model="sla"></sla>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" md="6" lg="3" xl="2">
+          <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" xl="2">
+          <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" xl="2">
+          <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" xl="2">
+          <entity-selector v-model="queueGroups" :query=queueGroupsQuery entity="Queue Groups"></entity-selector>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" xl="2">
+          <entity-selector v-model="queues" :query=queuesQuery entity="Queues"></entity-selector>
+        </b-col>
+        <b-col cols="12" md="6" lg="3" xl="2">
+          <entity-selector v-model="clients" :query=clientsQuery entity="Clients"></entity-selector>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" md="12" lg="12" xl="12">
+          <only-active v-model="onlyActive" caption="Show Only Intervals with Activity"></only-active>
+        </b-col>
+      </b-row>
     </div>
     <div slot="report">
-      <table>
+      <table style="width:100%">
         <tr>
-          <td class='table-sm table-header-group' style="width: 210px; max-width: 210px; min-width: 210px">
+          <td class='table-sm table-header-group' style="width: 24%; min-width: 210px">
             Intervals {{reportFields.interval}} min
           </td>
-          <td class='table-sm table-header-group' style="width: 649px; max-width: 649px; min-width: 649px">
+          <td class='table-sm table-header-group' style="width: 76%; min-width: 648px">
             Traffic Details
           </td>
         </tr>
       </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
+      <b-table style="min-width: 6px; width:100%" small hover :items="sessions" :fields="fields" :filter="hideEmpty">
       </b-table>
     </div>
   </report>
@@ -57,70 +85,70 @@ export default {
           label: 'From',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '103px' },
+          thStyle: { width: '12%', 'min-width': '105px' },
           formatter: ts => new Moment(ts, "x").format("YYYY-MM-DD HH:mm"),
         },
         ts_to: {
           label: 'To',
           tdClass: 'table-body-blue-last-in-group',
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '107px' },
+          thStyle: { width: '12%', 'min-width': '105px' },
           formatter: ts => new Moment(ts, "x").format("YYYY-MM-DD HH:mm"),
         },
         call_count: {
           label: 'Total Calls Offered',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '7%', 'min-width': '64px' },
           sortable: true
         },
         ring_count: {
           label: 'Offered to Agent',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '7%', 'min-width': '64px' },
           sortable: true
         },
         answered_count: {
           label: 'Answered by Agent',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: {width: '7%', 'min-width': '64px' },
           sortable: true
         },
         voicemail: {
           label: 'Sent to Voicemail',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '7%', 'min-width': '64px' },
           sortable: true
         },
         transferred_out: {
           label: 'Transferred Out',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '7%', 'min-width': '64px' },
           sortable: true
         },
         abandoned: {
           label: 'Total Abandoned',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '7%', 'min-width': '64px' },
           sortable: true
         },
         sla_count: {
           label: 'SLA',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '7%', 'min-width': '64px' },
           sortable: true
         },
         abandoned_percent: {
           label: 'Abandoned [%]',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '7%', 'min-width': '64px' },
           sortable: true,
           formatter: (v, _, item) => (item.call_count !== undefined && item.call_count !== 0) ? (100*item.abandoned/item.call_count).toFixed(1)+'%' : 'NA'
         },
@@ -128,7 +156,7 @@ export default {
           label: 'CPT',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '73px' },
+          thStyle: { width: '10%', 'min-width': '68px' },
           sortable: true,
           formatter: (v, _, item) => (item.call_count !== undefined) ? this.durationFormatter(v) : 'NA'
         },
@@ -136,7 +164,7 @@ export default {
           label: 'ASA',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '70px' },
+          thStyle: { width: '10%', 'min-width': '68px' },
           sortable: true,
           formatter: (v, _, item) => (item.call_count !== undefined) ? this.durationFormatter(v) : 'NA'
         }
