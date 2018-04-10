@@ -1,21 +1,27 @@
 <template>
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
-      <from-to v-model="fromTo"></from-to>
-      <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
+      <b-row>
+        <b-col cols="12" md="6" lg="4">
+          <from-to v-model="fromTo"></from-to>
+        </b-col>
+        <b-col cols="12" md="6" lg="3">
+          <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
+        </b-col>
+      </b-row>
     </div>
     <div slot="report">
-      <table>
+      <table style="width:100%">
         <tr>
-          <td class='table-sm table-header-group' style="width: 187px; max-width: 187px; min-width: 187px">
+          <td class='table-sm table-header-group' style="width: 37%; min-width: 187px">
             Agent
           </td>
-          <td class='table-sm table-header-group' style="width: 324px; max-width: 324px; min-width: 324px">
+          <td class='table-sm table-header-group' style="width: 63%; min-width: 324px">
             Activity Details
           </td>
         </tr>
       </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields">
+      <b-table style="min-width: 6px; width:100%;" small hover :items="sessions" :fields="fields">
       </b-table>
     </div>
   </report>
@@ -43,7 +49,7 @@ export default {
           label: 'Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '120px' },
+          thStyle: { width: '24%', 'min-width': '120px' },
           sortable: true,
           formatter: v => this.findName(v)
         },
@@ -51,7 +57,7 @@ export default {
           label: 'Login',
           tdClass: 'table-body-blue-last-in-group',
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '67px' },
+          thStyle: { width: '13%', 'min-width': '67px' },
           sortable: true,
           formatter: (_v, _, item) => this.findLogin(item.agent_id)
         },
@@ -59,7 +65,7 @@ export default {
           label: 'Calls Offered',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '80px' },
+          thStyle: { width: '15%', 'min-width': '80px' },
           sortable: true,
           formatter: v => v ? v : 0
         },
@@ -67,7 +73,7 @@ export default {
           label: 'Calls Answered',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '80px' },
+          thStyle: { width: '15%', 'min-width': '80px' },
           sortable: true,
           formatter: v => v ? v : 0
         },
@@ -75,7 +81,7 @@ export default {
           label: 'Unanswered calls',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '80px' },
+          thStyle: { width: '15%', 'min-width': '80px' },
           sortable: true,
           formatter: v => v ? v : 0
         },
@@ -83,7 +89,7 @@ export default {
           label: 'Percent Answered',
           tdClass: ['table-body-orange-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '84px' },
+          thStyle: { width: '18%', 'min-width': '84px' },
           sortable: true,
           formatter: (v, _, item) => (item.ring_count != 0) ? (100 * item.answered_count / item.ring_count).toFixed(1) + '%' : 'NA'
         }

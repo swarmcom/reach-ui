@@ -13,10 +13,10 @@
     <div slot="report">
       <table style="width:100%;">
         <tr>
-          <td class='table-sm table-header-group' style="width: 21%; min-width: 187px">
+          <td class='table-sm table-header-group' style="width: 22%; min-width: 187px">
             Agent
           </td>
-          <td class='table-sm table-header-group' style="width: 36%; min-width: 319px">
+          <td class='table-sm table-header-group' style="width: 35%; min-width: 319px">
             Inbound Activity
           </td>
           <td class='table-sm table-header-group' style="width: 29%; min-width: 256px">
@@ -55,7 +55,7 @@ export default {
           label: 'Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '13%', 'min-width': '120px' },
+          thStyle: { width: '14%', 'min-width': '120px' },
           sortable: true,
           formatter: v => this.findName(v)
         },
@@ -98,7 +98,7 @@ export default {
           label: 'Avg. Hold Time',
           tdClass: ['table-body-green-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '8%', 'min-width': '67px' },
+          thStyle: { width: '7%', 'min-width': '67px' },
           formatter: (v, _, item) => v ? this.durationFormatter(v) : 'NA'
         },
         out_started: {
