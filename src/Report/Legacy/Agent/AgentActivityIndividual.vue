@@ -1,8 +1,14 @@
 <template>
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
-      <from-to v-model="fromTo"></from-to>
-      <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+      <b-row>
+        <b-col cols="12" md="6" lg="4">
+          <from-to v-model="fromTo"></from-to>
+        </b-col>
+        <b-col cols="12" md="6" lg="3">
+          <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+        </b-col>
+      </b-row>
     </div>
     <div slot="report">
       <table style="width:100%;">
@@ -92,7 +98,7 @@ export default {
           label: 'Avg. Hold Time',
           tdClass: ['table-body-green-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '7%', 'min-width': '63px' },
+          thStyle: { width: '8%', 'min-width': '67px' },
           formatter: (v, _, item) => v ? this.durationFormatter(v) : 'NA'
         },
         out_started: {
