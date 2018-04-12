@@ -4,22 +4,24 @@
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand to="/">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
-    <b-navbar-nav>
-      <b-nav-item to="/help">Help</b-nav-item>
-      <b-nav-item @click="logout">Logout</b-nav-item>
-    </b-navbar-nav>
+    <b-collapse is-nav id="nav_collapse">
+      <b-navbar-nav>
+        <b-nav-item to="/help">Help</b-nav-item>
+        <b-nav-item @click="logout">Logout</b-nav-item>
+      </b-navbar-nav>
 
-    <b-navbar-nav class="ml-auto">
-      <b-nav-item>
-        <span>{{ date | filterDate }}</span>
-      </b-nav-item>
-      <b-nav-form>
-        <b-nav-item-dropdown right>
-          <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
-          <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-nav-form>
-    </b-navbar-nav>
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item>
+          <span>{{ date | filterDate }}</span>
+        </b-nav-item>
+        <b-nav-form>
+          <b-nav-item-dropdown right>
+            <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
+            <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-nav-form>
+      </b-navbar-nav>
+    </b-collapse>
   </b-navbar>
 
   <div class="container-fluid">
