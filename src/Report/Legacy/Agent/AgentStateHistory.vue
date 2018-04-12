@@ -29,9 +29,11 @@ import FromTo from '@/Report/Input/FromTo'
 import EntitySelector from '@/Report/Input/EntitySelector'
 import Moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
+import Common from '@/Report/Legacy/Common'
 
 export default {
   name: 'AgentStateHistory',
+  mixins: [Common],
   components: {
     'report': Report,
     'from-to': FromTo,
@@ -70,16 +72,15 @@ export default {
         }
       },
       fromTo: {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format(),
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       },
       agents: [],
       agent: {},
       reportFields: {
         name: 'Agent State History',
         title: 'Agent State History',
-        from: undefined,
-        to: undefined
+        timeRange: '-'
       },
       sessions: [],
       agentsQuery: function () {
@@ -100,17 +101,13 @@ export default {
       this.sessions = []
       this.agent = -1
       this.fromTo = {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format()
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       }
     },
     setReportFields () {
-      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
-      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+      this.reportFields.timeRange = this.formatTimeRange(this.fromTo.date_start, this.fromTo.date_end)
       this.reportFields.title = 'Agent State History for agent: ' + this.agent.name
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     },
     getAgents: async function () {
       this.agents = await this.$agent.p_mfa('ws_agent', 'agents')

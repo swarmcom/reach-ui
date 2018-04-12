@@ -32,9 +32,11 @@ import Report from '@/Report/Legacy/Report'
 import FromTo from '@/Report/Input/FromTo'
 import EntitySelector from '@/Report/Input/EntitySelector'
 import Moment from 'moment'
+import Common from '@/Report/Legacy/Common'
 
 export default {
   name: 'AgentGroupActivity',
+  mixins: [Common],
   components: {
     'report': Report,
     'from-to': FromTo,
@@ -130,15 +132,14 @@ export default {
         }
       },
       fromTo: {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format(),
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       },
       agentGroups: [],
       reportFields: {
         name: 'Agent Group Activity',
         title: 'Agent Group Activity',
-        from: undefined,
-        to: undefined
+        timeRange: '-'
       },
       sessions: [],
       agentGroupsQuery: function () {
@@ -159,13 +160,12 @@ export default {
       this.sessions = []
       this.agentGroups = []
       this.fromTo = {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format()
+        date_start: Moment().startOf('day').toDate(),
+        date_end: Moment().toDate()
       }
     },
     setReportFields () {
-      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
-      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
+      this.reportFields.timeRange = this.formatTimeRange(this.fromTo.date_start, this.fromTo.date_end)
     },
     findName (id) {
       let obj = this.agentGroups.find(v => { return v.id === id })
@@ -177,9 +177,6 @@ export default {
           this.sessions.push({ id: obj.id })
         }
       })
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   }
 }

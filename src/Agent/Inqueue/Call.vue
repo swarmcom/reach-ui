@@ -70,7 +70,7 @@
     <b-col cols="5">
       <dl class="row agent-state-text">
         <dt class="col-sm-12 session-manager-text">{{ this.inqueue.line_in.client.name }}</dt>
-        <dd class="col-sm-12">{{ isDefined(this.call_info['Caller-Caller-ID-Name']) + ' ' + isDefined(inqueue.call_vars['Caller-ANI']) }} </dd>
+        <dd class="col-sm-12">{{ isDefined(inqueue.call_vars['Caller-ANI']) }} </dd>
       </dl>
     </b-col>
   </b-row>
