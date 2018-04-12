@@ -132,7 +132,7 @@ export default class Agent extends WsProto {
   logout () {
     window.location.href = '#'
     localStorage.removeItem('session-key')
-    this.call('stop', [], () => this.handleAuth())
+    this.mfa('ws_auth', 'logout', [], () => this.handleAuth())
     this.connect()
   }
 
