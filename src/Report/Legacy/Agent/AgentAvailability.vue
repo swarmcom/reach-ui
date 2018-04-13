@@ -2,37 +2,33 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <b-row>
-        <b-col cols="12" md="12" lg="12" xl="12">
+        <b-col cols="6" md="4" lg="3">
           <from-to v-model="fromTo"></from-to>
         </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="12" md="6" lg="3" xl="2">
+        <b-col cols="6" md="4" lg="3">
           <interval v-model="interval" :min_value="1"></interval>
         </b-col>
-        <b-col cols="12" md="6" lg="4" xl="3">
+        <b-col cols="6" md="4" lg="3">
           <sla caption="SLA target answer time [s]" v-model="sla"></sla>
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="12" md="6" lg="3" xl="2">
-          <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
-        </b-col>
-        <b-col cols="12" md="6" lg="3" xl="2">
-          <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
-        </b-col>
-        <b-col cols="12" md="6" lg="3" xl="2">
-          <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
-        </b-col>
-        <b-col cols="12" md="6" lg="3" xl="2">
-          <entity-selector v-model="queueGroups" :query=queueGroupsQuery entity="Queue Groups"></entity-selector>
-        </b-col>
-        <b-col cols="12" md="6" lg="3" xl="2">
-          <entity-selector v-model="queues" :query=queuesQuery entity="Queues"></entity-selector>
-        </b-col>
-        <b-col cols="12" md="6" lg="3" xl="2">
-          <entity-selector v-model="clients" :query=clientsQuery entity="Clients"></entity-selector>
-        </b-col>
+        <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="queueGroups" :query=queueGroupsQuery entity="Queue Groups"></entity-selector>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="queues" :query=queuesQuery entity="Queues"></entity-selector>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="clients" :query=clientsQuery entity="Clients"></entity-selector>
       </b-row>
       <b-row>
         <b-col cols="12" md="12" lg="12" xl="12">

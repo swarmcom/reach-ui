@@ -2,12 +2,12 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <b-row>
-        <b-col cols="12" md="6" lg="4">
+        <b-col cols="6" md="4" lg="3">
           <from-to v-model="fromTo"></from-to>
         </b-col>
-        <b-col cols="12" md="6" lg="3">
-          <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
-        </b-col>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
       </b-row>
     </div>
     <div slot="report">
