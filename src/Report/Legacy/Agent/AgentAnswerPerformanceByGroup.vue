@@ -16,7 +16,7 @@
           <td class='table-sm table-header-group' style="width: 37%; min-width: 187px">
             Agent
           </td>
-          <td class='table-sm table-header-group' style="width: 63%; min-width: 324px">
+          <td class='table-sm table-header-group' style="width: 63%; min-width: 324px; border-right:0px solid;">
             Activity Details
           </td>
         </tr>
@@ -89,7 +89,7 @@ export default {
           label: 'Percent Answered',
           tdClass: ['table-body-orange-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '18%', 'min-width': '84px' },
+          thStyle: { width: '18%', 'min-width': '84px', 'border-right': '0px solid'},
           sortable: true,
           formatter: (v, _, item) => (item.ring_count != 0) ? (100 * item.answered_count / item.ring_count).toFixed(1) + '%' : 'NA'
         }

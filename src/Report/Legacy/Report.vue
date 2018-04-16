@@ -33,7 +33,7 @@
             </td>
           </tr>
         </table>
-        <div style="overflow-x: auto; margin: 15px">
+        <div style="margin: 15px">
           <table style="margin-bottom: 3px">
             <tr>
               <td class='report-title' style="width: 100%">

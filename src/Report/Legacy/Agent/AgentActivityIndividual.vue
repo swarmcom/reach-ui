@@ -22,7 +22,7 @@
           <td class='table-sm table-header-group' style="width: 29%; min-width: 256px">
             Outbound Activity
           </td>
-          <td class='table-sm table-header-group' style="width: 14%; min-width: 128px">
+          <td class='table-sm table-header-group' style="width: 14%; min-width: 128px; border-right:0px solid;">
             Total Activity
           </td>
         </tr>
@@ -140,7 +140,7 @@ export default {
           label: 'Total Time',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '7%', 'min-width': '63px' },
+          thStyle: { width: '7%', 'min-width': '63px', 'border-right': '0px solid' },
           formatter: v => v ? this.durationFormatter(v) : this.durationFormatter(0)
         }
       },

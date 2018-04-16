@@ -42,7 +42,7 @@
           <td class='table-sm table-header-group' style="width: 24%; min-width: 210px">
             Intervals {{reportFields.interval}} min
           </td>
-          <td class='table-sm table-header-group' style="width: 76%; min-width: 648px">
+          <td class='table-sm table-header-group' style="width: 76%; min-width: 648px; border-right:0px solid;">
             Traffic Details
           </td>
         </tr>
@@ -160,7 +160,7 @@ export default {
           label: 'ASA',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '10%', 'min-width': '68px' },
+          thStyle: { width: '10%', 'min-width': '68px', 'border-right': '0px solid' },
           sortable: true,
           formatter: (v, _, item) => (item.call_count !== undefined) ? this.durationFormatter(v) : 'NA'
         }
