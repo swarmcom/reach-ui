@@ -2,7 +2,7 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <b-row>
-        <b-col cols="6" md="4" lg="3">
+        <b-col cols="10" md="6" lg="4">
           <from-to v-model="fromTo"></from-to>
         </b-col>
       </b-row>

@@ -2,13 +2,13 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <b-row>
-        <b-col cols="6" md="4" lg="3">
+        <b-col cols="10" md="6" lg="4">
           <from-to v-model="fromTo"></from-to>
         </b-col>
-        <b-col cols="6" md="4" lg="3">
+        <b-col cols="10" md="6" lg="4">
           <interval v-model="interval" :min_value="1"></interval>
         </b-col>
-        <b-col cols="6" md="4" lg="3">
+        <b-col cols="10" md="6" lg="4">
           <sla caption="SLA target answer time [s]" v-model="sla"></sla>
         </b-col>
       </b-row>
