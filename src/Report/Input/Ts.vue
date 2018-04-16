@@ -44,7 +44,7 @@ export default {
 .mx-input-custom {
   display: inline-block;
   width: 100%;
-  height: 31px;
+  height: 38px;
   padding: 6px 7px 6px 7px;
   font-size: 14px;
   line-height: 1.5;

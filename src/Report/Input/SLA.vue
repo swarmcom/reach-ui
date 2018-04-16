@@ -2,7 +2,7 @@
   <div>
     <div>{{caption}}:</div>
     <div style="padding-bottom: 30px">
-      <b-input :value="sla" @input="checkValue" min="1" step="1" size="sm" type="number"></b-input>
+      <b-input :value="sla" @input="checkValue" min="1" step="1" type="number"></b-input>
     </div>
   </div>
 </template>
