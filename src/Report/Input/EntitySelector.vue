@@ -1,6 +1,5 @@
 <template>
   <div style="width: 100%">
-    <b-col>{{entity}}:</b-col>
     <div style="padding-bottom: 30px;" class="form-inline">
       <b-col cols="10" md="6" lg="4">
       <autocomplete v-model="obj" :query="query" :placeholder="entity" :to_name="skillsOptionName"></autocomplete>

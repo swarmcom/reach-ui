@@ -1,10 +1,20 @@
 <template>
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
-      <timestamp v-model="ts"></timestamp>
-      <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
-      <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
-      <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+      <b-row>
+        <b-col cols="10" md="6" lg="4">
+          <timestamp v-model="ts"></timestamp>
+        </b-col>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+      </b-row>
     </div>
     <div slot="report">
       <table>

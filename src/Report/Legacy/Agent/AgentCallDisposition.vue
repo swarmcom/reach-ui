@@ -1,8 +1,14 @@
 <template>
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
-      <from-to v-model="fromTo"></from-to>
-      <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+      <b-row>
+        <b-col cols="10" md="6" lg="4">
+          <from-to v-model="fromTo"></from-to>
+        </b-col>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
+      </b-row>
     </div>
     <div slot="report">
       <table>

@@ -1,24 +1,30 @@
 <template>
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
-      <from-to v-model="fromTo"></from-to>
-      <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
+      <b-row>
+        <b-col cols="10" md="6" lg="4">
+          <from-to v-model="fromTo"></from-to>
+        </b-col>
+      </b-row>
+      <b-row>
+        <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
+      </b-row>
     </div>
     <div slot="report">
-      <table>
+      <table style="width:100%">
         <tr>
-          <td class='table-sm table-header-group' style="width: 297px; max-width: 297px; min-width: 297px">
+          <td class='table-sm table-header-group' style="width: 26%; min-width: 297px">
             Agent Information
           </td>
-          <td class='table-sm table-header-group' style="width: 286px; max-width: 286px; min-width: 286px">
+          <td class='table-sm table-header-group' style="width: 26%; min-width: 286px">
             Log In/Out
           </td>
-          <td class='table-sm table-header-group' style="width: 507px; max-width: 507px; min-width: 507px">
+          <td class='table-sm table-header-group' style="width: 48%; min-width: 507px; border-right:0px solid;">
             Logged In Time Breakdown
           </td>
         </tr>
       </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields">
+      <b-table style="min-width: 6px; width:100%;" small hover :items="sessions" :fields="fields">
       </b-table>
     </div>
   </report>
@@ -46,7 +52,7 @@ export default {
           label: 'Name',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '120px' },
+          thStyle: {  width: '9%', 'min-width': '120px' },
           sortable: true,
           formatter: v => this.findName(v)
         },
@@ -54,77 +60,77 @@ export default {
           label: 'Login',
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: (_v, _, item) => this.findLogin(item.id)
         },
         occupancy: {
           label: 'Occupancy',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '55px' },
+          thStyle: { width: '5%', 'min-width': '55px' },
           formatter: v => v ? v + ' %' : 0 + ' %'
         },
         cpt: {
           label: 'CPT (M:S)',
           tdClass: ['table-body-blue-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '59px' },
+          thStyle: { width: '6%', 'min-width': '59px' },
           formatter: v => v ? this.durationFormatter(v) : 'NA'
         },
         first_event_state: {
           label: 'First Login',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '80px' },
+          thStyle: { width: '7%', 'min-width': '80px' },
           formatter: (v, _, item) => (v === 'init') ? Moment(item.first_event_ts, "x").format("YYYY-MM-DD HH:mm:ss") : "outside of interval"
         },
         last_event_state: {
           label: 'Last Logout',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '80px' },
+          thStyle: { width: '7%', 'min-width': '80px' },
           formatter: (v, _, item) => (v === 'terminate') ? Moment(item.last_event_ts, "x").format("YYYY-MM-DD HH:mm:ss") : "outside of interval"
         },
         total_time: {
           label: 'Logged In',
           tdClass: ['table-body-green', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: v => this.durationFormatter(v)
         },
         logged_out: {
           label: 'Logged Out',
           tdClass: ['table-body-green-last-in-group', 'text-align-right'],
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: (v, _, item) => this.durationFormatter(this.computeLoggedOutTime(item.total_time))
         },
         released: {
           label: 'Released',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: v => this.durationFormatter(v)
         },
         suspended: {
           label: 'Suspended',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: v => this.durationFormatter(v)
         },
         idle: {
           label: 'Idle',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: v => this.durationFormatter(v)
         },
         ringing: {
           label: 'Ringing',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: {width: '6%', 'min-width': '63px' },
           formatter: v => this.durationFormatter(v)
 
         },
@@ -132,28 +138,28 @@ export default {
           label: 'Inbound Talk',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: (v, _, item) => this.durationFormatter((v - item.oubound_talk < 0) ? 0 : v - item.oubound_talk)
         },
         wrapup: {
           label: 'Wrap Up',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: v => this.durationFormatter(v)
         },
         oubound_talk: {
           label: 'Outbound Talk',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px' },
           formatter: v => this.durationFormatter(v)
         },
         other: {
           label: 'Other',
           tdClass: ['table-body-orange', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '63px' },
+          thStyle: { width: '6%', 'min-width': '63px', 'border-right': '0px solid' },
           formatter: (_v, _, item) => this.durationFormatter(item.init + item.grace)
         }
       },
