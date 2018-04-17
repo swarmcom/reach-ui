@@ -10,7 +10,7 @@
   <acl label="Access list" v-model="rec.acl_group_id" :effective="eff.acl_group_id"></acl>
   <form-text label="Primary Contact" v-model="rec.uri"></form-text>
   <uris label="Additional Contacts" v-model="rec.uris"></uris>
-  <form-number label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-number>
+  <form-text label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-text>
   <form-number label="Ring Timeout" v-model="rec.ring_timeout" :effective="eff.ring_timeout"></form-number>
   <form-number label="Suspend Time" v-model="rec.suspend_time"></form-number>
   <form-number label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails" :effective="eff.max_ring_fails"></form-number>

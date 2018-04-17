@@ -57,7 +57,7 @@ import Layout from '@/Role/Layout'
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: Admin, children: AdminRoutes, name: 'admin' },
+    { path: '/', component: Admin, children: AdminRoutes },
   ]
 })
 

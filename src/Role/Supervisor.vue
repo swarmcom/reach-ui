@@ -89,7 +89,7 @@ const router = new VueRouter({
   scrollBehavior,
   routes: [
     { path: '/main', component: Main, name: 'main' },
-    { path: '/profile', component: Profile, children: ProfileRoutes, name: 'profile' },
+    { path: '/profile', component: Profile, children: ProfileRoutes },
     { path: '/help', component: Help, name: 'help' },
     { path: '/monitor', component: Monitor, name: 'monitor' },
     { path: '/recordings', component: Recordings, name: 'recordings' },
