@@ -4,8 +4,7 @@
       <from-to v-model="fromTo"></from-to>
     </div>
     <div slot="report">
-      <b-table style="overflow-wrap: break-word;" small hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
-      </b-table>
+      <b-table style="overflow-wrap: break-word;" small hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click"></b-table>
     </div>
   </report>
 </template>
@@ -65,34 +64,34 @@ export default {
           label: 'Disposition',
           tdClass: 'table-body-orange',
           thClass: 'table-header',
-          thStyle: { width: '83px' },
           formatter: (_v, _, item) => item.disposition.name
         },
         client: {
           label: 'Client',
           tdClass: 'table-body-orange-dark',
           thClass: 'table-header',
-          thStyle: { width: '83px'},
           formatter: (_v, _, item) => item.client.name
         },
-        endpoint_ani: {
-          label: 'Endpoint ANI',
+        caller: {
+          label: 'Caller',
           tdClass: 'table-body-orange-dark',
           thClass: 'table-header',
-          thStyle: { width: '83px' }
+        },
+        calling: {
+          label: 'Calling',
+          tdClass: 'table-body-orange-dark',
+          thClass: 'table-header',
         },
         caller_ip: {
           label: 'Caller IP',
           tdClass: 'table-body-orange-dark',
           thClass: 'table-header',
-          thStyle: { width: '87px' }
         },
         ts_ms: {
-          label: 'Offered to Reach',
+          label: 'Time',
           sortable: true,
           tdClass: 'table-body-blue',
           thClass: 'table-header',
-          thStyle: { width: '80px' },
           formatter: ts => new Moment(ts, "x").format("YYYY-MM-DD HH:mm:ss")
         },
         state_inqueue: {
@@ -102,15 +101,10 @@ export default {
           formatter: (_v, _, item) => this.durationFormatter(item.states.states.inqueue)
         },
         state_agent: {
-          label: 'Agent/ Ringing',
+          label: 'Agent',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          formatter: (_v, _, item) => (
-            (item.direction === 'inbound') ?
-              this.durationFormatter(item.states.states.agent)
-            :
-              this.durationFormatter(item.states.states.ringing)
-          )
+          formatter: (_v, _, item) => this.durationFormatter(item.states.states.agent)
         },
         state_oncall: {
           label: 'CPT',

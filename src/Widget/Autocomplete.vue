@@ -50,6 +50,9 @@ export default {
         this.visible = true
         this.popper.show()
       }
+      else {
+        this.hide()
+      }
     },
     hide() {
       if (this.visible) {

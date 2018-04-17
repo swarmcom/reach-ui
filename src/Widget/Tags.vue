@@ -49,10 +49,10 @@ export default {
     },
     value (value) {
       this.selected = value
-    },
-    created () {
-      this.selected = this.value
     }
   },
+  created () {
+    this.selected = this.value
+  }
 }
 </script>

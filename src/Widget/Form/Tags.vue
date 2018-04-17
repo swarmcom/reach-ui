@@ -1,7 +1,7 @@
 <template>
 <div class="row" style="margin-top: 5px">
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <template v-if="effective">
+  <template v-if="has_effective()">
     <tags v-model="value" :placeholder="placeholder" class="col-5"></tags>
     <tags v-model="effective" disabled=true class="col-4"></tags>
   </template>
@@ -18,6 +18,9 @@ export default {
     }
   },
   methods: {
+    has_effective () {
+      return this.effective && this.effective.length > 0
+    }
   }
 }
 </script>

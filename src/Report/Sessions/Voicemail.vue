@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inbound</h3></div>
+    <div class="col"><h3>Voicemails</h3></div>
   </div>
   <widget-query v-model="query_params"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
@@ -77,10 +77,10 @@ export default {
   },
   methods: {
     query: async function(params) {
-      this.sessions = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
+      this.sessions = await this.$agent.p_mfa('ws_report', 'voicemail_sessions', [params])
     },
     click ({uuid}) {
-      this.$router.push(`/report/events/inqueue/${uuid}`)
+      this.$router.push(`/report/events/voicemail/${uuid}`)
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -100,7 +100,7 @@ export default {
       let params = this.query_params
       let session = this.sessions[this.sessions.length - 1]
       params.date_end = parseInt(session.ts/1000)
-      let more = await this.$agent.p_mfa('ws_report', 'inqueues_sessions', [params])
+      let more = await this.$agent.p_mfa('ws_report', 'voicemail_sessions', [params])
       this.sessions = this.sessions.concat(more)
     }
   },
