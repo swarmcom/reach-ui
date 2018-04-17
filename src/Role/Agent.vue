@@ -48,9 +48,9 @@ import Profile from '@/Role/Agent/Profile'
 
 const router = new VueRouter({
   routes: [
-    { path: '/help', component: Help },
+    { path: '/help', component: Help, name: 'help' },
     { path: '/profile', component: Profile },
-    { path: '/', component: Main }
+    { path: '/', component: Main, name: 'main' }
   ]
 })
 

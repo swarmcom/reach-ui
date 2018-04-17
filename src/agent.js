@@ -25,7 +25,7 @@ async function session_auth(agent) {
   try {
     let SessionKey = localStorage.getItem('session-key')
     if (SessionKey) {
-      let Agent = await agent.p_mfa('ws_auth', 'auth', [SessionKey])
+      let Agent = await agent.p_mfa('ws_auth', 'login', [SessionKey])
       agent.vm.agent = Agent
       localStorage.setItem('session-key', Agent.session_key)
       EventBus.$emit('agent-auth', agent.isAuth())
@@ -90,7 +90,7 @@ export default class Agent extends WsProto {
   logout () {
     window.location.href = '#'
     localStorage.removeItem('session-key')
-    this.call('stop', [], () => this.handleAuth())
+    this.mfa('ws_auth', 'logout', [], () => this.handleAuth())
     this.connect()
   }
   release (Id) { this.call('release', [Id]) }
@@ -115,9 +115,7 @@ export default class Agent extends WsProto {
     if (this.isAuth()) {
       this.handleAuth(this.vm.agent)
     } else {
-      this.mfa('ws_auth', 'auth', [Login, Password, false], (A) => this.handleAuth(A, Cb))
-      this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
-      this.subscribe('agents')
+      this.mfa('ws_auth', 'login', [window.location.hostname, Login, Password, false], (A) => this.handleAuth(A, Cb))
     }
   }
 
@@ -125,9 +123,7 @@ export default class Agent extends WsProto {
     if (this.isAuth()) {
       this.handleAuth(this.vm.agent)
     } else {
-      this.mfa('ws_auth', 'auth', [Login, Password, true], (A) => this.handleAuth(A, Cb))
-      this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
-      this.subscribe('agents')
+      this.mfa('ws_auth', 'login', [window.location.hostname, Login, Password, false], (A) => this.handleAuth(A, Cb))
     }
   }
 
