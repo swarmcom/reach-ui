@@ -50,9 +50,9 @@ import Params from '@/Role/Master/Params'
 const router = new VueRouter({
   routes: [
     { path: '/kam', component: Kam, children: KamRoutes },
-    { path: '/params', component: Params },
+    { path: '/params', component: Params, name: 'params' },
     { path: '/help', component: Help, name: 'help' },
-    { path: '/', component: Main }
+    { path: '/', component: Main, name: 'main' }
   ]
 })
 
