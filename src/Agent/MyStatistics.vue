@@ -2,103 +2,101 @@
 <div v-access:widget-my-statistics>
   <toggle-bar style="cursor: move"></toggle-bar>
   <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2 itemDragable">
-    <b-container style="margin-top:10px">
-      <b-row>
-        <b-col sm="4">
-          <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period">
-            <option v-for="period in periods" :value="period.value" :key="period.name">{{period.name}}</option>
-          </b-form-select>
-        </b-col>
-        <b-col sm="8">
-          <b-form-group label="Team tags:">
-            <b-form-checkbox-group id="tags" name="team tags" v-model="selectedSkills" :options="skillsOptions">
-            </b-form-checkbox-group>
-          </b-form-group>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-container style="margin-left:15px; min-width: 600px">
-          <b-row>
-            <b-col style="padding:0; max-width: 60px !important">
-              <div class="table-body-orange">
-                CIQ<br>
-                <span class="stats-value">{{statistics[0].ciq}}</span>
-              </div>
-            </b-col>
-            <b-col style="padding:0; max-width: 60px !important">
-              <div class="table-body-green">
-                Agents<br>
-                <span class="stats-value">{{statistics[0].agents}}</span>
-              </div>
-            </b-col>
-            <b-col style="padding:0; max-width: 102px !important; padding-right:10px; border-right: 2px solid white;">
-              <div style="background-color: #dbeffa">
-                <b-progress-bar :value="statistics[0].statesCounts.release" :max="maxAgents" show-progress>
-                  <div class="agent-state-texts">Released</div>
-                </b-progress-bar>
-              </div>
-              <div style="margin-top:2px; background-color: #fbe7c3">
-                <b-progress-bar variant="warning" :value="statistics[0].statesCounts.available"
-                                :max="maxAgents" show-progress>
-                  <div class="agent-state-texts">Available</div>
-                </b-progress-bar>
-              </div>
-              <div style="margin-top:2px; background-color: #fbe7c3">
-                <b-progress-bar variant="warning" :value="statistics[0].statesCounts.ringing"
-                                :max="maxAgents" show-progress>
-                  <div class="agent-state-texts">Ringing</div>
-                </b-progress-bar>
-              </div>
-              <div style="margin-top:2px; background-color: #e2fada">
-                <b-progress-bar variant="success" :value="statistics[0].statesCounts.oncall"
-                                :max="maxAgents" show-progress>
-                  <div class="agent-state-texts">Oncall</div>
-                </b-progress-bar>
-              </div>
-              <div style="margin-top:2px; background-color: #fbe7c3">
-                <b-progress-bar variant="warning" :value="statistics[0].statesCounts.wrapup"
-                                :max="maxAgents" show-progress>
-                  <div class="agent-state-texts">Wrapup</div>
-                </b-progress-bar>
-              </div>
-            </b-col>
-            <b-col style="padding:0; max-width: 60px !important">
-              <div class="table-body-blue">
-                My CPT<br>
-                <span class="stats-value">{{statistics[0].myCpt}}</span>
-              </div>
-            </b-col>
-            <b-col style="padding:0; max-width: 60px !important">
-              <div class="table-body-blue">
-                Team CPT<br>
-                <span class="stats-value">{{statistics[0].teamCpt}}</span>
-              </div>
-            </b-col>
-            <b-col style="padding:0; max-width: 60px !important">
-              <div class="table-body-blue">
-                Occup.<br>
-                <span class="stats-value">{{statistics[0].occup.oncall}}</span>
-              </div>
-            </b-col>
-            <b-col style="padding:0; max-width: 60px !important">
-              <div class="table-body-blue">
-                ASA<br>
-                <span class="stats-value">{{statistics[0].asa}}</span>
-              </div>
-            </b-col>
-            <b-col style="padding:0; max-width: 60px !important">
-              <div class="table-body-blue">
-                Longest<br>
-                <span class="stats-value">{{statistics[0].longest}}</span>
-              </div>
-            </b-col>
-            <b-col>
-              <b-btn size="sm" class="pointer" @click="refresh" variant="outline-secondary">Refresh</b-btn>
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-row>
-    </b-container>
+    <b-row style="margin-top:10px">
+      <b-col sm="4">
+        <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period">
+          <option v-for="period in periods" :value="period.value" :key="period.name">{{period.name}}</option>
+        </b-form-select>
+      </b-col>
+      <b-col sm="8">
+        <b-form-group label="Team tags:">
+          <b-form-checkbox-group id="tags" name="team tags" v-model="selectedSkills" :options="skillsOptions">
+          </b-form-checkbox-group>
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-container style="margin-left:15px; min-width: 600px">
+        <b-row>
+          <b-col style="padding:0; max-width: 60px !important">
+            <div class="table-body-orange">
+              CIQ<br>
+              <span class="stats-value">{{statistics[0].ciq}}</span>
+            </div>
+          </b-col>
+          <b-col style="padding:0; max-width: 60px !important">
+            <div class="table-body-green">
+              Agents<br>
+              <span class="stats-value">{{statistics[0].agents}}</span>
+            </div>
+          </b-col>
+          <b-col style="padding:0; max-width: 102px !important; padding-right:10px; border-right: 2px solid white;">
+            <div style="background-color: #dbeffa">
+              <b-progress-bar :value="statistics[0].statesCounts.release" :max="maxAgents" show-progress>
+                <div class="agent-state-texts">Released</div>
+              </b-progress-bar>
+            </div>
+            <div style="margin-top:2px; background-color: #fbe7c3">
+              <b-progress-bar variant="warning" :value="statistics[0].statesCounts.available"
+                              :max="maxAgents" show-progress>
+                <div class="agent-state-texts">Available</div>
+              </b-progress-bar>
+            </div>
+            <div style="margin-top:2px; background-color: #fbe7c3">
+              <b-progress-bar variant="warning" :value="statistics[0].statesCounts.ringing"
+                              :max="maxAgents" show-progress>
+                <div class="agent-state-texts">Ringing</div>
+              </b-progress-bar>
+            </div>
+            <div style="margin-top:2px; background-color: #e2fada">
+              <b-progress-bar variant="success" :value="statistics[0].statesCounts.oncall"
+                              :max="maxAgents" show-progress>
+                <div class="agent-state-texts">Oncall</div>
+              </b-progress-bar>
+            </div>
+            <div style="margin-top:2px; background-color: #fbe7c3">
+              <b-progress-bar variant="warning" :value="statistics[0].statesCounts.wrapup"
+                              :max="maxAgents" show-progress>
+                <div class="agent-state-texts">Wrapup</div>
+              </b-progress-bar>
+            </div>
+          </b-col>
+          <b-col style="padding:0; max-width: 60px !important">
+            <div class="table-body-blue">
+              My CPT<br>
+              <span class="stats-value">{{statistics[0].myCpt}}</span>
+            </div>
+          </b-col>
+          <b-col style="padding:0; max-width: 60px !important">
+            <div class="table-body-blue">
+              Team CPT<br>
+              <span class="stats-value">{{statistics[0].teamCpt}}</span>
+            </div>
+          </b-col>
+          <b-col style="padding:0; max-width: 60px !important">
+            <div class="table-body-blue">
+              Occup.<br>
+              <span class="stats-value">{{statistics[0].occup.oncall}}</span>
+            </div>
+          </b-col>
+          <b-col style="padding:0; max-width: 60px !important">
+            <div class="table-body-blue">
+              ASA<br>
+              <span class="stats-value">{{statistics[0].asa}}</span>
+            </div>
+          </b-col>
+          <b-col style="padding:0; max-width: 60px !important">
+            <div class="table-body-blue">
+              Longest<br>
+              <span class="stats-value">{{statistics[0].longest}}</span>
+            </div>
+          </b-col>
+          <b-col>
+            <b-btn size="sm" class="pointer" @click="refresh" variant="outline-secondary">Refresh</b-btn>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-row>
   </b-collapse>
 </div>
 </template>
