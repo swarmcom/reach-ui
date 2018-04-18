@@ -53,10 +53,10 @@ export default [
   { path: 'events/outgoing/:id', component: OutgoingEvents, props: true },
   { path: 'events/agent/:uuid', component: AgentEvents, props: true },
   // CDR
-  { path: 'legacy/cdr/cdr', component: CDR, name: CDR },
-  { path: 'legacy/cdr/inqueue', component: CDRInqueue, name: CDRInqueue },
-  { path: 'legacy/cdr/outgoing', component: CDROutgoing, name: CDROutgoing },
-  { path: 'legacy/cdr/voicemail', component: CDRVoicemail, name: CDRVoicemail },
+  { path: 'legacy/cdr/cdr', component: CDR },
+  { path: 'legacy/cdr/inqueue', component: CDRInqueue},
+  { path: 'legacy/cdr/outgoing', component: CDROutgoing },
+  { path: 'legacy/cdr/voicemail', component: CDRVoicemail },
   // Agent
   { path: 'legacy/agent/activity-individual', component: AgentActivityIndividual },
   { path: 'legacy/agent/activity-by-group', component: AgentActivityByGroup },
