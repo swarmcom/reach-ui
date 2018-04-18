@@ -1,32 +1,30 @@
 <template>
   <b-container fluid style="margin-left: unset; margin-right: unset; padding-left: 0; padding-right: 0; margin-top: 15px">
+    <b-row style="width: 100%; margin-left: unset; margin-bottom: 10px; margin-right: unset">
+      <b-col cols="12" class='report-headers' style="padding-top: 10px; margin-bottom: 10px">
+        <b-row>
+          <b-col style="cursor:pointer" v-on:click="isVisible = !isVisible">
+            <icon v-if="isVisible" name="minus" scale="0.5"></icon>
+            <icon v-if="!isVisible" name="plus" scale="0.5"></icon>
+            Input Controls
+          </b-col>
+        </b-row>
+      </b-col>
+      <b-col cols="12">
+        <b-form v-if="isVisible" @submit="apply">
+          <b-col>
+            <div>
+              <slot name="input-controls">
+                Put some input controls here.
+              </slot>
+            </div>
+          </b-col>
+          <b-button @click="reset" class="btn btn-outline-secondary float-right" size="sm">Reset</b-button>
+          <b-button type="submit" class="btn btn-outline-secondary float-right" style="margin-right: 20px" size="sm">Apply</b-button>
+        </b-form>
+      </b-col>
+    </b-row>
     <b-row style="width: 100%; margin-left: unset; margin-right: unset">
-      <b-form @submit="apply" style="width: 20%; max-width: 20%; min-width: 315px; padding: 0 2px 0 0;">
-        <b-col style="width: 100%; padding-right: 0; padding-left: 0">
-          <table style="width: 100%;">
-            <tr>
-              <td class='report-headers' style="width: 100%; max-width: 100%; min-width: 100%">
-                Input Controls
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 5px;">
-                <b-row style="padding: 0; margin: 0">
-                  <b-col style="padding: 0; margin: 0">
-                    <div>
-                      <slot name="input-controls">
-                        Put some input controls here.
-                      </slot>
-                    </div>
-                    <b-button @click="reset" class="btn btn-outline-secondary float-right" size="sm">Reset</b-button>
-                    <b-button type="submit" class="btn btn-outline-secondary float-right" style="margin-right: 20px" size="sm">Apply</b-button>
-                  </b-col>
-                </b-row>
-              </td>
-            </tr>
-          </table>
-        </b-col>
-      </b-form>
       <b-col style="overflow-x: auto; padding: unset;">
         <table style="width: 100%;">
           <tr>
@@ -35,7 +33,7 @@
             </td>
           </tr>
         </table>
-        <div style="overflow-x: auto; margin: 15px">
+        <div style="margin: 15px">
           <table style="margin-bottom: 3px">
             <tr>
               <td class='report-title' style="width: 100%">
@@ -84,6 +82,7 @@ export default {
         date_start: undefined,
         date_end: undefined,
       },
+      isVisible: true
     }
   },
   methods: {

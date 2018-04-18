@@ -1,23 +1,31 @@
 <template>
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
-      <from-to v-model="fromTo"></from-to>
-      <div>Agents:</div>
-      <div style="padding-bottom: 30px">
-      <b-form-select class="pointer" size="sm" v-model="agent" @change="setAgent">
+      <b-row>
+        <b-col cols="10" md="6" lg="4">
+          <from-to v-model="fromTo"></from-to>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="10" md="6" lg="4">
+          <div>Agents:</div>
+          <div style="padding-bottom: 30px">
+          <b-form-select class="pointer" size="sm" v-model="agent" @change="setAgent">
             <option v-for="agent in agents" :value="agent" :key="agent.id">{{agent.name}}</option>
-      </b-form-select>
-      </div>
+          </b-form-select>
+          </div>
+        </b-col>
+      </b-row>
     </div>
     <div slot="report">
-      <table>
+      <table style="width:100%">
         <tr>
-          <td class='table-sm table-header-group' style="width: 521px; max-width: 521px; min-width: 521px">
+          <td class='table-sm table-header-group' style="width: 100%; min-width: 519px; border-right:0px solid;">
             Agent Events
           </td>
         </tr>
       </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields">
+      <b-table style="min-width: 6px; width: 100%" small hover :items="sessions" :fields="fields">
       </b-table>
     </div>
   </report>
@@ -46,28 +54,28 @@ export default {
           label: 'State Entered',
           tdClass: 'table-body-orange-last-in-group',
           thClass: 'table-header-last-in-group',
-          thStyle: { width: '150px' },
+          thStyle: { width: '27%', 'min-width': '150px' },
           formatter: (v, _, item) => (v === 'release' && item.release.name !== undefined) ? (v + ' [ ' + item.release.name + ' ]') : v
         },
         ts_from: {
           label: 'From',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '123px' },
+          thStyle: { width: '24%', 'min-width': '123px' },
           formatter: v => Moment(v, "x").format("YYYY-MM-DD HH:mm:ss")
         },
         duration: {
           label: 'Duration',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '123px' },
+          thStyle: { width: '24%', 'min-width': '123px' },
           formatter: v => this.durationFormatter(v)
         },
         ts_to: {
           label: 'To',
           tdClass: ['table-body-blue', 'text-align-right'],
           thClass: 'table-header',
-          thStyle: { width: '123px' },
+          thStyle: { width: '24%', 'min-width': '123px', 'border-right': '0px solid' },
           formatter: v => Moment(v, "x").format("YYYY-MM-DD HH:mm:ss")
         }
       },

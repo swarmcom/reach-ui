@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 0; padding-bottom: 20px">
     <div>Time Range:</div>
-    <datetime v-model="from_to" :first-day-of-week="1" style="min-width:300px" range @confirm="onConfirm" type="datetime" input-class="mx-input-custom" format="yyyy-MM-DD HH:mm:ss" lang="en" confirm width="100%" :shortcuts="false"></datetime>
+    <datetime v-model="from_to" :first-day-of-week="1" style="min-width:100%" minute-step="1" range @confirm="onConfirm" type="datetime" input-class="mx-input-custom" format="yyyy-MM-DD HH:mm" lang="en" confirm width="100%" :shortcuts="false"></datetime>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
 .mx-input-custom {
   display: inline-block;
   width: 100%;
-  height: 31px;
+  height: 38px;
   padding: 6px 7px 6px 7px;
   font-size: 14px;
   line-height: 1.5;

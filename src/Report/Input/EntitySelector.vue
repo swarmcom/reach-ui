@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <div>{{entity}}:</div>
-    <div style="padding-bottom: 30px">
+  <div style="width: 100%">
+    <div style="padding-bottom: 30px;" class="form-inline">
+      <b-col cols="10" md="6" lg="4">
       <autocomplete v-model="obj" :query="query" :placeholder="entity" :to_name="skillsOptionName"></autocomplete>
+      </b-col>
       <button class="btn btn-sm btn-outline-primary" style="margin: 3px" v-for="obj in selected" :key="obj.id" @click="remove($event, obj)">{{obj.name}}</button>
     </div>
   </div>
