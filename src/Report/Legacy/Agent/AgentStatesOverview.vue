@@ -2,17 +2,11 @@
   <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
     <div slot="input-controls">
       <b-row>
-        <b-col cols="10" md="6" lg="4">
+        <b-col cols="10" md="6" lg="3" style="min-width: 250px; max-width:250px;">
           <timestamp v-model="ts"></timestamp>
         </b-col>
-      </b-row>
-      <b-row>
         <entity-selector v-model="skills" :query=skillsQuery entity="Skills"></entity-selector>
-      </b-row>
-      <b-row>
         <entity-selector v-model="agentGroups" :query=agentGroupsQuery entity="Agent Groups"></entity-selector>
-      </b-row>
-      <b-row>
         <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
       </b-row>
     </div>

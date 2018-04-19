@@ -39,7 +39,7 @@ export default {
   width: 100%;
   height: 38px;
   padding: 6px 7px 6px 7px;
-  font-size: 14px;
+  font-size: 11px;
   line-height: 1.5;
   color: #555;
   background-color: #fff;
