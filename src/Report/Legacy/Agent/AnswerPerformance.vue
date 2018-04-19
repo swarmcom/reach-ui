@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Agent Answer Performance</h3></div>
+    <div class="col"><h3>Agents Answer Performance</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:agents:agent_groups"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['answer_performance', 'report', query])
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['answer_performance', 'agent', query])
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })

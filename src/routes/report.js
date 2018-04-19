@@ -15,18 +15,22 @@ import CDROutgoing from '@/Report/Legacy/CDR/Outgoing'
 import CDRVoicemail from '@/Report/Legacy/CDR/Voicemail'
 
 // Agent
-import AgentActivityIndividual from '@/Report/Legacy/Agent/Activity'
-import AgentActivityByGroup from '@/Report/Legacy/Agent/ActivityByGroup'
-import AgentAnswerPerformanceByGroup from '@/Report/Legacy/Agent/AnswerPerformanceByGroup'
+import AgentActivity from '@/Report/Legacy/Agent/Activity'
+import AgentAnswerPerformance from '@/Report/Legacy/Agent/AnswerPerformance'
 import AgentAvailability from '@/Report/Legacy/Agent/Availability'
+import AgentProductivity from '@/Report/Legacy/Agent/Productivity'
 import AgentCallDisposition from '@/Report/Legacy/Agent/CallDisposition'
-import AgentGroupActivity from '@/Report/Legacy/Agent/GroupActivity'
-import AgentGroupProductivity from '@/Report/Legacy/Agent/GroupProductivity'
-import AgentProductivityByGroup from '@/Report/Legacy/Agent/ProductivityByGroup'
 import AgentStateHistory from '@/Report/Legacy/Agent/StateHistory'
 import AgentStatesOverview from '@/Report/Legacy/Agent/StatesOverview'
 import ConcurrentLoggedInAgents from '@/Report/Legacy/Agent/ConcurrentLoggedInAgents'
 import UnansweredCallDetails from '@/Report/Legacy/Agent/UnansweredCallDetails'
+
+// Agent Group
+import AgentGroupActivity from '@/Report/Legacy/Agent/Group/Activity'
+import AgentGroupAnswerPerformance from '@/Report/Legacy/Agent/Group/AnswerPerformance'
+import AgentGroupAvailability from '@/Report/Legacy/Agent/Group/Availability'
+import AgentGroupProductivity from '@/Report/Legacy/Agent/Group/Productivity'
+
 // Outbound
 import OutboundDetailByClient from '@/Report/Legacy/Outbound/OutboundDetailByClient'
 import OutboundOverviewByClient from '@/Report/Legacy/Outbound/OutboundOverviewByClient'
@@ -57,19 +61,24 @@ export default [
   { path: 'legacy/cdr/inqueue', component: CDRInqueue },
   { path: 'legacy/cdr/outgoing', component: CDROutgoing  },
   { path: 'legacy/cdr/voicemail', component: CDRVoicemail },
+
   // Agent
-  { path: 'legacy/agent/activity-individual', component: AgentActivityIndividual },
-  { path: 'legacy/agent/activity-by-group', component: AgentActivityByGroup },
-  { path: 'legacy/agent/answer-performance-by-group', component: AgentAnswerPerformanceByGroup },
+  { path: 'legacy/agent/activity', component: AgentActivity },
+  { path: 'legacy/agent/answer-performance', component: AgentAnswerPerformance },
   { path: 'legacy/agent/availability', component: AgentAvailability },
   { path: 'legacy/agent/call-disposition', component: AgentCallDisposition },
-  { path: 'legacy/agent/group-activity', component: AgentGroupActivity },
-  { path: 'legacy/agent/group-productivity', component: AgentGroupProductivity },
-  { path: 'legacy/agent/productivity-by-group', component: AgentProductivityByGroup },
+  { path: 'legacy/agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
+  { path: 'legacy/agent/productivity', component: AgentProductivity },
   { path: 'legacy/agent/state-history', component: AgentStateHistory },
   { path: 'legacy/agent/states-overview', component: AgentStatesOverview },
-  { path: 'legacy/agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
   { path: 'legacy/agent/unanswered-call-details', component: UnansweredCallDetails },
+
+  // Agent Group
+  { path: 'legacy/agent/group/activity', component: AgentGroupActivity },
+  { path: 'legacy/agent/group/answer-performance', component: AgentGroupAnswerPerformance },
+  { path: 'legacy/agent/group/availability', component: AgentGroupAvailability },
+  { path: 'legacy/agent/group/productivity', component: AgentGroupProductivity },
+  
   // Outbound
   { path: 'legacy/outbound/detail-by-client', component: OutboundDetailByClient },
   { path: 'legacy/outbound/overview-by-client', component: OutboundOverviewByClient },

@@ -23,19 +23,24 @@
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Agent">
-    <b-dropdown-item to="/reports/legacy/agent/activity-individual">Activity Individual</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/activity-by-group">Activity by Group</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/answer-performance-by-group">Answer Performance by Group</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/activity">Activity</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/answer-performance">Answer Performance</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/availability">Availability</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/group/productivity">Productivity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/call-disposition">Call Disposition</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/group-activity">Group Activity</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/group-productivity">Group Productivity</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/productivity-by-group">Productivity by Group</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/state-history">State History</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/states-overview">States Overview</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/concurrent-logged-in-agents">Concurrent Logged in Agents</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/unanswered-call-details">Unanswered Call Details</b-dropdown-item>
   </b-nav-item-dropdown>
+
+  <b-nav-item-dropdown text="Agent Group">
+    <b-dropdown-item to="/reports/legacy/agent/group/activity">Activity</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/group/answer-performance">Answer Performance</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/group/productivity">Productivity</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/group-activity">Group Activity</b-dropdown-item>
+  </b-nav-item-dropdown>
+
 
   <b-nav-item-dropdown text="Outbound">
     <b-dropdown-item to="/reports/legacy/outbound/detail-by-client">Detail by Client</b-dropdown-item>
