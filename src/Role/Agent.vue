@@ -83,9 +83,9 @@ const scrollBehavior = (to, from, savedPosition) => {
 const router = new VueRouter({
   scrollBehavior,
   routes: [
-    { path: '/help', component: Help, name: 'help' },
-    { path: '/profile', component: Profile, children: ProfileRoutes },
-    { path: '/main', component: Main, name: 'main' },
+    { path: '/help', component: Help, meta: { name: 'help' } },
+    { path: '/profile', component: Profile, children: ProfileRoutes, meta: { name: 'profile' } },
+    { path: '/main', component: Main, meta: { name: 'main' } },
     { path: '/', redirect: 'main' }
   ]
 })
