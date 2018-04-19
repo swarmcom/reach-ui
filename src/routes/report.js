@@ -28,7 +28,6 @@ import UnansweredCallDetails from '@/Report/Legacy/Agent/UnansweredCallDetails'
 // Agent Group
 import AgentGroupActivity from '@/Report/Legacy/Agent/Group/Activity'
 import AgentGroupAnswerPerformance from '@/Report/Legacy/Agent/Group/AnswerPerformance'
-import AgentGroupAvailability from '@/Report/Legacy/Agent/Group/Availability'
 import AgentGroupProductivity from '@/Report/Legacy/Agent/Group/Productivity'
 
 // Outbound
@@ -76,7 +75,6 @@ export default [
   // Agent Group
   { path: 'legacy/agent/group/activity', component: AgentGroupActivity },
   { path: 'legacy/agent/group/answer-performance', component: AgentGroupAnswerPerformance },
-  { path: 'legacy/agent/group/availability', component: AgentGroupAvailability },
   { path: 'legacy/agent/group/productivity', component: AgentGroupProductivity },
   
   // Outbound

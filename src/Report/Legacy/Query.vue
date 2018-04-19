@@ -33,6 +33,12 @@
     <b-col cols=3 v-if="enabled.range">
       <widget-date v-model="date_end" placeholder="End date"></widget-date>
     </b-col>
+    <b-col cols=1 v-if="enabled.step">
+      <input type="text" class="form-control" v-model="step" placeholder="step" value="step">
+    </b-col>
+    <b-col cols=1 v-if="enabled.sla">
+      <input type="text" class="form-control" v-model="sla" placeholder="sla" value="sla">
+    </b-col>
     <b-col cols=1>
       <button @click="apply" class="btn btn-outline-primary">Apply</button>
     </b-col>
@@ -68,7 +74,12 @@ export default {
       date_start: undefined,
       date_end: undefined,
       agent_groups: [],
-      agents: []
+      agents: [],
+      queue_groups: [],
+      queues: [],
+      clients: [],
+      step: 60,
+      sla: 10
     }
   },
   methods: {
@@ -80,6 +91,8 @@ export default {
       this.queue_groups = [],
       this.queues = [],
       this.clients = [],
+      this.step = 60
+      this.sla = 10
       this.$emit('input', this.make_query())
     },
     apply () {
@@ -94,6 +107,8 @@ export default {
       if (this.enabled.queues && this.queues.length > 0 ) { Q.queues = this.queues.map(queue => queue.id) }
       if (this.enabled.queue_groupss && this.queue_groups > 0 ) { Q.queue_groups = this.queue_groups.map(group => group.id) }
       if (this.enabled.clients && this.clients.length > 0 ) { Q.clients = this.clients.map(client => client.id) }
+      if (this.enabled.step && this.step > 0 ) { Q.step = parseInt(this.step) }
+      if (this.enabled.sla && this.sla > 0 ) { Q.sla = parseInt(this.sla) }
       return Q
     },
   },

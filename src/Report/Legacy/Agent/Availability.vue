@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Agents Availability</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients:step:sla"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   components: { 'widget-query': Query },
   data () {
     return {
-      query_params: {},
+      query_params: { step: 60, sla: 10 },
       data: [],
       fields: {
         ts_from: { label: 'From', formatter: ts => new Moment(ts, "x").format("YYYY-MM-DD HH:mm") },
@@ -42,8 +42,6 @@ export default {
         }
       },
       onlyActive: 'false',
-      sla: 10,
-      interval: 60,
     }
   },
   methods: {
