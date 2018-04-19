@@ -1,15 +1,31 @@
 <template>
 <b-container>
-  <b-row v-if="enabled.agent_groups" style="margin-bottom: 10px">
-    <b-col>
-      <widget-agent-groups v-model="agent_groups"></widget-agent-groups>
-    </b-col>
-  </b-row>
   <b-row v-if="enabled.agents" style="margin-bottom: 10px">
     <b-col>
       <widget-agents v-model="agents"></widget-agents>
     </b-col>
   </b-row>
+  <b-row v-if="enabled.agent_groups" style="margin-bottom: 10px">
+    <b-col>
+      <widget-agent-groups v-model="agent_groups"></widget-agent-groups>
+    </b-col>
+  </b-row>
+  <b-row v-if="enabled.queues" style="margin-bottom: 10px">
+    <b-col>
+      <widget-queues v-model="queues"></widget-queues>
+    </b-col>
+  </b-row>
+  <b-row v-if="enabled.queue_groups" style="margin-bottom: 10px">
+    <b-col>
+      <widget-queue-groups v-model="queue_groups"></widget-queue-groups>
+    </b-col>
+  </b-row>
+  <b-row v-if="enabled.clients" style="margin-bottom: 10px">
+    <b-col>
+      <widget-clients v-model="clients"></widget-clients>
+    </b-col>
+  </b-row>
+
   <b-row>
     <b-col cols=3 v-if="enabled.range">
       <widget-date v-model="date_start" placeholder="Start date"></widget-date>
@@ -31,6 +47,9 @@
 import ReportDate from '@/Report/Widget/Date'
 import AgentGroups from '@/Report/Widget/AgentGroups'
 import Agents from '@/Report/Widget/Agents'
+import Queues from '@/Report/Widget/Queues'
+import QueueGroups from '@/Report/Widget/QueueGroups'
+import Clients from '@/Report/Widget/Clients'
 
 export default {
   name: 'report-query',
@@ -38,7 +57,10 @@ export default {
   components: {
     'widget-date': ReportDate,
     'widget-agent-groups': AgentGroups,
-    'widget-agents': Agents
+    'widget-agents': Agents,
+    'widget-queue-groups': QueueGroups,
+    'widget-queues': Queues,
+    'widget-clients': Clients
   },
   data () {
     return {
@@ -55,6 +77,9 @@ export default {
       this.date_end = undefined,
       this.agent_groups = [],
       this.agents = [],
+      this.queue_groups = [],
+      this.queues = [],
+      this.clients = [],
       this.$emit('input', this.make_query())
     },
     apply () {
@@ -66,6 +91,9 @@ export default {
       if (this.enabled.range && this.date_end) { Q.date_end = parseInt(this.date_end) }
       if (this.enabled.agents && this.agents.length > 0 ) { Q.agents = this.agents.map(agent => agent.id) }
       if (this.enabled.agent_groupss && this.agent_groups > 0 ) { Q.agent_groups = this.agent_groups.map(group => group.id) }
+      if (this.enabled.queues && this.queues.length > 0 ) { Q.queues = this.queues.map(queue => queue.id) }
+      if (this.enabled.queue_groupss && this.queue_groups > 0 ) { Q.queue_groups = this.queue_groups.map(group => group.id) }
+      if (this.enabled.clients && this.clients.length > 0 ) { Q.clients = this.clients.map(client => client.id) }
       return Q
     },
   },

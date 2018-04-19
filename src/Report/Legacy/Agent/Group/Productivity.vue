@@ -18,12 +18,13 @@ export default {
     return {
       query_params: {},
       data: [],
-     fields: {
+      fields: {
         agent_group_name: { label: 'Name' },
+        agent_count: { label: 'Agents' },
         occupancy: { label: 'Ocpncy', formatter: v => v ? v + '%' : 0 + '%' },
         cpt: { label: 'CPT', formatter: v => v ? this.durationFormatter(v) : 'NA' },
         total_time: { label: 'Logged In', formatter: v => this.durationFormatter(v) },
-        logged_out: { label: 'Logged Out', formatter: (v, _, item) => this.durationFormatter(item.total_avail_time - item.total_time) },
+        logged_out: { label: 'Logged Out', formatter: (v, _, item) => this.durationFormatter(item.range - item.total_time) },
         released: { label: 'Rel.', formatter: v => this.durationFormatter(v) },
         suspended: { label: 'Susp.', formatter: v => this.durationFormatter(v) },
         idle: { label: 'Idle', formatter: v => this.durationFormatter(v) },

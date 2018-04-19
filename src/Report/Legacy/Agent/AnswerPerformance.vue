@@ -19,7 +19,6 @@ export default {
       query_params: {},
       fields: {
         agent_name: { label: 'Agent' },
-        agent_group_name: { label: 'Group' },
         ring_count: { label: 'Offered' },
         answered_count: { label: 'Answered' },
         abandoned: { label: 'Unanswered' },

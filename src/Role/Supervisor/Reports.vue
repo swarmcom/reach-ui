@@ -26,7 +26,7 @@
     <b-dropdown-item to="/reports/legacy/agent/activity">Activity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/answer-performance">Answer Performance</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/availability">Availability</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/group/productivity">Productivity</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/productivity">Productivity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/call-disposition">Call Disposition</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/state-history">State History</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/states-overview">States Overview</b-dropdown-item>
@@ -37,8 +37,8 @@
   <b-nav-item-dropdown text="Agent Group">
     <b-dropdown-item to="/reports/legacy/agent/group/activity">Activity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/group/answer-performance">Answer Performance</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/group/availability">Availability</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/group/productivity">Productivity</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/group-activity">Group Activity</b-dropdown-item>
   </b-nav-item-dropdown>
 
 
