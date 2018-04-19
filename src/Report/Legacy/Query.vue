@@ -64,8 +64,8 @@ export default {
       let Q = {}
       if (this.enabled.range && this.date_start) { Q.date_start = parseInt(this.date_start) }
       if (this.enabled.range && this.date_end) { Q.date_end = parseInt(this.date_end) }
-      if (this.enabled.agents && this.agents.length > 0 ) { Q.agents = this.agents }
-      if (this.enabled.agent_groupss && this.agent_groups > 0 ) { Q.agent_groups = this.agent_groups }
+      if (this.enabled.agents && this.agents.length > 0 ) { Q.agents = this.agents.map(agent => agent.id) }
+      if (this.enabled.agent_groupss && this.agent_groups > 0 ) { Q.agent_groups = this.agent_groups.map(group => group.id) }
       return Q
     },
   },
