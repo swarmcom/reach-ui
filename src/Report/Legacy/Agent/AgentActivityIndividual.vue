@@ -31,7 +31,7 @@ export default {
       },
       outbound_fields: {
         agent_name: { label: 'Name', sortable: true },
-        started: { label: 'Started' },
+        started: { label: 'Calls' },
         placed: { label: 'Placed' },
         answered: { label: 'Answered' },
         talk_time: { label: 'Talk Time', formatter: this.durationFormatter },
