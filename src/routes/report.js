@@ -15,8 +15,8 @@ import CDROutgoing from '@/Report/Legacy/CDR/Outgoing'
 import CDRVoicemail from '@/Report/Legacy/CDR/Voicemail'
 
 // Agent
-import AgentActivityIndividual from '@/Report/Legacy/Agent/AgentActivityIndividual'
-import AgentActivityByGroup from '@/Report/Legacy/Agent/AgentActivityByGroup'
+import AgentActivityIndividual from '@/Report/Legacy/Agent/Activity'
+import AgentActivityByGroup from '@/Report/Legacy/Agent/ActivityByGroup'
 import AgentAnswerPerformanceByGroup from '@/Report/Legacy/Agent/AgentAnswerPerformanceByGroup'
 import AgentAvailability from '@/Report/Legacy/Agent/AgentAvailability'
 import AgentCallDisposition from '@/Report/Legacy/Agent/AgentCallDisposition'
