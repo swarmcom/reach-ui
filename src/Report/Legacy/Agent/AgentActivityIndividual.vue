@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Agent Activity</h3></div>
+    <div class="col"><h3>Agents Activity</h3></div>
   </div>
-  <widget-query v-model="query_params" enable=agents:range></widget-query>
+  <widget-query v-model="query_params" enable="range:agents"></widget-query>
   <div class="row" style="margin-top: 20px"><div class="col"><h4>Inbound</h4></div>  </div>
   <b-table small striped hover :items="inbound" :fields="inbound_fields"></b-table>
   <div class="row"><div class="col"><h4>Outbound</h4></div>  </div>
@@ -16,7 +16,6 @@ import Query from '@/Report/Legacy/Query'
 import Moment from 'moment'
 
 export default {
-  name: 'AgentActivityIndividual',
   components: { 'widget-query': Query },
   data () {
     return {
