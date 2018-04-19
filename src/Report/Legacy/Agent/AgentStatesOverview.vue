@@ -58,7 +58,7 @@ export default {
           formatter: (v, _, item) => (v === 'release' && item.release.name !== undefined) ? (v + ' [ ' + item.release.name + ' ]') : v
         }
       },
-      ts: Moment().toDate(),
+      ts: Moment().format(),
       agentGroups: [],
       agents: [],
       allAgents: [],
@@ -66,7 +66,7 @@ export default {
       reportFields: {
         name: 'Agent States Overview',
         title: 'Agent States Overview',
-        timeRange: undefined
+        time: undefined
       },
       sessions: [],
       agentGroupsQuery: function () {
@@ -97,10 +97,9 @@ export default {
     },
     reset () {
       this.sessions = []
-      this.agentGroups = []
-      this.agents = []
+      this.agentGroups = this.agents = []
       this.skills = []
-      this.ts = Moment().toDate()
+      this.ts = Moment().format()
     },
     findName (id) {
       let obj = this.allAgents.find(v => { return v.id === id })
@@ -111,7 +110,8 @@ export default {
       return obj.login
     },
     setReportFields () {
-      this.reportFields.timeRange = new Moment(this.ts).format('MMMM D, YYYY HH:mm:ss')
+      //this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
+      //this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
     },
     getAgents: async function () {
       this.allAgents = await this.$agent.p_mfa('ws_agent', 'agents')

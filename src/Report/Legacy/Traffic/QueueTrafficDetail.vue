@@ -132,14 +132,15 @@ export default {
         }
       },
       fromTo: {
-        date_start: Moment().startOf('day').toDate(),
-        date_end: Moment().toDate()
+        date_start: Moment().subtract(1, 'days').format(),
+        date_end: Moment().format(),
       },
       queues: [],
       reportFields: {
         name: 'Queue Traffic Detail',
         title: 'Queue Traffic Detail',
-        timeRange: '-',
+        from: undefined,
+        to: undefined,
         interval: undefined,
         sla: undefined
       },
@@ -155,7 +156,8 @@ export default {
   },
   methods: {
     query: async function () {
-      this.reportFields.timeRange = this.formatTimeRange(this.fromTo.date_start, this.fromTo.date_end)
+      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
+      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
       this.reportFields.interval = this.interval
       let date_start = Moment(this.fromTo.date_start).unix()
       let date_end = Moment(this.fromTo.date_end).unix()
@@ -168,8 +170,8 @@ export default {
       this.sessions = []
       this.queues = []
       this.fromTo = {
-        date_start: Moment().startOf('day').toDate(),
-        date_end: Moment().toDate()
+        date_start: Moment().subtract(1, 'days').format(),
+        date_end: Moment().format()
       }
       this.onlyActive = 'false'
       this.sla = 10
@@ -183,6 +185,9 @@ export default {
         else
           return true
       }
+    },
+    durationFormatter (v) {
+      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   },
   computed: {
