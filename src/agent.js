@@ -157,19 +157,19 @@ export default class Agent extends WsProto {
   conference_to_queue (Queue) { this.call('conference_to_queue', [Queue]) }
   conference_to_uri (Uri, LineId) { this.call('conference_to_uri', [Uri, LineId]) }
 
-  login (Login, Password, Cb = (A) => A) {
+  login (Login, Password, Domain, Cb = (A) => A) {
     if (this.isAuth()) {
       this.handleAuth(this.vm.agent)
     } else {
-      this.mfa('ws_auth', 'login', [window.location.hostname, Login, Password, false], (A) => this.handleAuth(A, Cb))
+      this.mfa('ws_auth', 'login', [Domain, Login, Password, false], (A) => this.handleAuth(A, Cb))
     }
   }
 
-  takeover (Login, Password, Cb = (A) => A) {
+  takeover (Login, Password, Domain, Cb = (A) => A) {
     if (this.isAuth()) {
       this.handleAuth(this.vm.agent)
     } else {
-      this.mfa('ws_auth', 'login', [window.location.hostname, Login, Password, true], (A) => this.handleAuth(A, Cb))
+      this.mfa('ws_auth', 'login', [Domain, Login, Password, true], (A) => this.handleAuth(A, Cb))
     }
   }
 
