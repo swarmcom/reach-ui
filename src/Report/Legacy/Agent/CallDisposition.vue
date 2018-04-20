@@ -1,157 +1,40 @@
 <template>
-  <report v-bind="reportFields" v-on:apply="query" v-on:reset="reset">
-    <div slot="input-controls">
-      <from-to v-model="fromTo"></from-to>
-      <entity-selector v-model="agents" :query=agentsQuery entity="Agents"></entity-selector>
-    </div>
-    <div slot="report">
-      <table>
-        <tr>
-          <td class='table-sm table-header-group' style="width: 383px; max-width: 383px; min-width: 383px">
-            Agent
-          </td>
-          <td class='table-sm table-header-group' :style='dispColGroupWidth'>
-            Disposition Breakdown
-          </td>
-        </tr>
-      </table>
-      <b-table style="min-width: 6px; max-width: 6px; table-layout: fixed" small hover :items="sessions" :fields="fields">
-      </b-table>
-    </div>
-  </report>
+<div>
+  <div class="row">
+    <div class="col"><h3>Agent Call Disposition</h3></div>
+  </div>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups"></widget-query>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
+</div>
 </template>
 
 <script>
-import Report from '@/Report/Legacy/Report'
-import FromTo from '@/Report/Input/FromTo'
-import EntitySelector from '@/Report/Input/EntitySelector'
+import Query from '@/Report/Legacy/Query'
 import Moment from 'moment'
 
 export default {
-  name: 'AgentCallDisposition',
-  components: {
-    'report': Report,
-    'from-to': FromTo,
-    'entity-selector': EntitySelector
-  },
+  components: { 'widget-query': Query },
   data () {
     return {
-      fields: [],
-      fromTo: {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format(),
-      },
-      agents: [],
-      reportFields: {
-        name: 'Agent Call Disposition',
-        title: 'Agent Call Disposition',
-        from: undefined,
-        to: undefined
-      },
-      dispColGroupWidth: undefined,
-      sessions: [],
-      agentsQuery: function () {
-        return this.$agent.p_mfa('ws_agent', 'agents')
+      query_params: {},
+      data: [],
+      fields: {
+        agent_name: { label: 'Name' },
+        agent_group_name: { label: 'Group' },
+        calls: { label: 'Calls' },
+        dispositions: { label: 'Dispositions', formatter: (v) => JSON.stringify(v) },
       }
     }
   },
   methods: {
-    query: async function () {
-      this.setReportFields()
-      let date_start = Moment(this.fromTo.date_start).unix()
-      let date_end = Moment(this.fromTo.date_end).unix()
-      let agentsIDs = this.agents.map(obj => obj.id)
-      let data = await this.$agent.p_mfa('ws_report', 'agent_call_disposition', [date_start, date_end, agentsIDs])
-      this.generateTableColumns(data)
-      this.sessions = data
+    query: async function (Query) {
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'dispositions', Query])
     },
-    reset () {
-      this.sessions = []
-      this.fields = []
-      this.agents = []
-      this.fromTo = {
-        date_start: Moment().subtract(1, 'days').format(),
-        date_end: Moment().format()
-      }
-    },
-    setReportFields () {
-      this.reportFields.from = new Moment(this.fromTo.date_start).format('LL')
-      this.reportFields.to = new Moment(this.fromTo.date_end).format('LL')
-    },
-    findName (id) {
-      let obj = this.agents.find(v => { return v.id === id })
-      return obj.name
-    },
-    findLogin (id) {
-      let obj = this.agents.find(v => { return v.id === id })
-      return obj.login
-    },
-    findProfileName (id) {
-      let obj = this.agents.find(v => { return v.id === id })
-      return (obj.group.name !== undefined) ? obj.group.name : "No Profile"
-    },
-    generateTableColumns (data) {
-      this.fields = [
-        {
-          key: 'agent_id',
-          label: 'Name',
-          tdClass: 'table-body-blue',
-          thClass: 'table-header',
-          thStyle: { width: '120px' },
-          sortable: true,
-          formatter: v => this.findName(v)
-        },
-        {
-          key: 'agent_group',
-          label: 'Agent Group',
-          tdClass: 'table-body-blue',
-          thClass: 'table-header',
-          thStyle: { width: '120px' },
-          formatter: (_v, _, item) => this.findProfileName(item.agent_id)
-        },
-        {
-          key: 'login',
-          label: 'Login',
-          tdClass: 'table-body-blue',
-          thClass: 'table-header',
-          thStyle: { width: '70px' },
-          formatter: (_v, _, item) => this.findLogin(item.agent_id)
-        },
-        {
-          key: 'calls',
-          label: 'Total Calls Handled',
-          tdClass: ['table-body-blue-last-in-group', 'text-align-right'],
-          thClass: 'table-header-last-in-group',
-          thStyle: { width: '73px' },
-          sortable: true,
-          formatter: v => v ? v : 0
-        }
-      ]
-      let dispFields = [], dispKeys = new Set(), dispColGroupWidth = 2
-      data.forEach(function (row, index) {
-        Object.keys(row.dispositions).forEach(function (key) {
-          if (!dispKeys.has(key)) {
-            dispKeys.add(key)
-            let field = {
-              key: key,
-              label: key,
-              tdClass: [
-                'table-body-orange', 'text-align-right'],
-              thClass: 'table-header',
-              thStyle: { width: '70px' },
-              formatter: (_v, _, item) => (item.dispositions[key] !== undefined) ? item.dispositions[key] : 0
-            }
-            dispFields.push(field)
-            dispColGroupWidth += 70
-          }
-        })
-      })
-      this.dispColGroupWidth = {
-        'width': dispColGroupWidth+'px',
-        'max-width': dispColGroupWidth+'px',
-        'min-width': dispColGroupWidth+'px'
-      }
-      this.fields = this.fields.concat(dispFields)
+  },
+  watch: {
+    query_params (value) {
+      this.query(value)
+      return value
     }
   }
 }
