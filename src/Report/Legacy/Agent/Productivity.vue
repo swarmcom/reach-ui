@@ -35,7 +35,12 @@ export default {
   },
   methods: {
     query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['productivity', 'agent', query])
+      try {
+        this.data = await this.$agent.p_mfa('ws_report', 'query', ['productivity', 'agent', query])
+      }
+      catch (e) {
+        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
+      }
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })

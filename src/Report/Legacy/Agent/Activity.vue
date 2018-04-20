@@ -41,8 +41,13 @@ export default {
   },
   methods: {
     query: async function (query) {
-      this.inbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'inbound', query])
-      this.outbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'outbound', query])
+      try {
+        this.inbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'inbound', query])
+        this.outbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'outbound', query])
+      }
+      catch (e) {
+        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
+      }
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
