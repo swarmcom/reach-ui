@@ -28,8 +28,8 @@
     <b-dropdown-item to="/reports/legacy/agent/availability">Availability</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/productivity">Productivity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/call-disposition">Call Disposition</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/state-history">State History</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/states-overview">States Overview</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/bounded-events">Bounded Events</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/agent/events">Events</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/concurrent-logged-in-agents">Concurrent Logged in Agents</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/unanswered-call-details">Unanswered Call Details</b-dropdown-item>
   </b-nav-item-dropdown>

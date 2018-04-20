@@ -7,7 +7,7 @@ import OutgoingSessions from '@/Report/Sessions/Outgoing'
 import AgentSessions from '@/Report/Sessions/Agent'
 import InqueueEvents from '@/Report/Events/Inqueue'
 import OutgoingEvents from '@/Report/Events/Outgoing'
-import AgentEvents from '@/Report/Events/Agent'
+import AgentSessionEvents from '@/Report/Events/Agent'
 // CDR
 import CDR from '@/Report/Legacy/CDR/CDR'
 import CDRInqueue from '@/Report/Legacy/CDR/Inqueue'
@@ -20,8 +20,8 @@ import AgentAnswerPerformance from '@/Report/Legacy/Agent/AnswerPerformance'
 import AgentAvailability from '@/Report/Legacy/Agent/Availability'
 import AgentProductivity from '@/Report/Legacy/Agent/Productivity'
 import AgentCallDisposition from '@/Report/Legacy/Agent/CallDisposition'
-import AgentStateHistory from '@/Report/Legacy/Agent/StateHistory'
-import AgentStatesOverview from '@/Report/Legacy/Agent/StatesOverview'
+import AgentBoundedEvents from '@/Report/Legacy/Agent/BoundedEvents'
+import AgentEvents from '@/Report/Legacy/Agent/Events'
 import ConcurrentLoggedInAgents from '@/Report/Legacy/Agent/ConcurrentLoggedInAgents'
 import UnansweredCallDetails from '@/Report/Legacy/Agent/UnansweredCallDetails'
 
@@ -54,7 +54,7 @@ export default [
   { path: 'sessions/agent', component: AgentSessions },
   { path: 'events/inqueue/:uuid', component: InqueueEvents, props: true },
   { path: 'events/outgoing/:id', component: OutgoingEvents, props: true },
-  { path: 'events/agent/:uuid', component: AgentEvents, props: true },
+  { path: 'events/agent/:uuid', component: AgentSessionEvents, props: true },
   // CDR
   { path: 'legacy/cdr/cdr', component: CDR },
   { path: 'legacy/cdr/inqueue', component: CDRInqueue },
@@ -68,8 +68,8 @@ export default [
   { path: 'legacy/agent/call-disposition', component: AgentCallDisposition },
   { path: 'legacy/agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
   { path: 'legacy/agent/productivity', component: AgentProductivity },
-  { path: 'legacy/agent/state-history', component: AgentStateHistory },
-  { path: 'legacy/agent/states-overview', component: AgentStatesOverview },
+  { path: 'legacy/agent/bounded-events', component: AgentBoundedEvents },
+  { path: 'legacy/agent/events', component: AgentEvents },
   { path: 'legacy/agent/unanswered-call-details', component: UnansweredCallDetails },
 
   // Agent Group

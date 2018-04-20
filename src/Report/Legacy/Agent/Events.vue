@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Agents State History</h3></div>
+    <div class="col"><h3>Agents Events</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups"></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups:skills"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
@@ -20,6 +20,7 @@ export default {
       fields: {
         agent_name: { label: 'Name' },
         agent_group_name: { label: 'Group' },
+        ts_from: { label: 'Time', formatter: v => Moment(v, "x").format("YYYY-MM-DD HH:mm:ss") },
         state_from: {
           label: 'From',
           formatter: (v, _, item) => (v === 'release' && item.release.name !== undefined) ? (v + ' [ ' + item.release.name + ' ]') : v
@@ -27,16 +28,19 @@ export default {
         state: {
           label: 'To',
           formatter: (v, _, item) => (v === 'release' && item.release.name !== undefined) ? (v + ' [ ' + item.release.name + ' ]') : v
-        },
-        ts_from: { label: 'Time', formatter: v => Moment(v, "x").format("YYYY-MM-DD HH:mm:ss") },
-        duration: { label: 'Duration', formatter: v => this.durationFormatter(v) }
+        }
       },
       data: []
     }
   },
   methods: {
     query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'states', query])
+      try {
+        this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'events', query])
+      }
+      catch (e) {
+        console.log(e)
+      }
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
@@ -50,4 +54,3 @@ export default {
   }
 }
 </script>
-
