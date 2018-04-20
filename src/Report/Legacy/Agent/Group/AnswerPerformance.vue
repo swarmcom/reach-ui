@@ -38,7 +38,6 @@ export default {
       catch (e) {
         this.$notify({ title: 'Report Error:', text: e, type: 'error' })
       }
-
     },
     durationFormatter (v) {
       return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })

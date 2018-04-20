@@ -39,7 +39,7 @@ export default {
         this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'events', query])
       }
       catch (e) {
-        console.log(e)
+        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
       }
     },
     durationFormatter (v) {
