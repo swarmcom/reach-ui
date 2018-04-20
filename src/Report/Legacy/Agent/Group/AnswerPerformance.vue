@@ -21,7 +21,7 @@ export default {
         agent_group_name: { label: 'Group' },
         ring_count: { label: 'Offered' },
         answered_count: { label: 'Answered' },
-        abandoned: { label: 'Unanswered' },
+        abandoned: { label: 'Failed' },
         percent_answered: {
           label: 'Percent Answered',
           formatter: (v, _, item) => (item.ring_count != 0) ? (100 * item.answered_count / item.ring_count).toFixed(1) + '%' : 'NA'
@@ -38,9 +38,6 @@ export default {
       catch (e) {
         this.$notify({ title: 'Report Error:', text: e, type: 'error' })
       }
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
     }
   },
   watch: {

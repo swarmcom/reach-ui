@@ -57,6 +57,11 @@ import Queues from '@/Report/Widget/Queues'
 import QueueGroups from '@/Report/Widget/QueueGroups'
 import Clients from '@/Report/Widget/Clients'
 
+function maybe_copy_params(Dst, Src, Params) {
+  Params.forEach( k => { if (Src[k]) { Dst[k] = Src[k] } })
+  return Dst
+}
+
 export default {
   name: 'report-query',
   props: ['value', 'enable'],
@@ -117,6 +122,7 @@ export default {
       let enabled = this.enable.split(":")
       enabled.forEach((v) => this.enabled[v] = true)
     }
+    maybe_copy_params(this, this.value, ['date_start', 'date_end'])
   }
 }
 </script>

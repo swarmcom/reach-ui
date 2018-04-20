@@ -45,8 +45,14 @@
 import Query from '@/Report/Legacy/Query'
 import moment from 'moment'
 
+function maybe_copy_params(Dst, Src, Params) {
+  Params.forEach( k => { if (Src[k]) { Dst[k] = parseInt(Src[k]) } })
+  return Dst
+}
+
 export default {
   components: { 'widget-query': Query },
+  props: ['agent_id'],
   data () {
     return {
       query_params: {},
@@ -101,6 +107,7 @@ export default {
     }
   },
   created () {
+    maybe_copy_params(this.query_params, this.$route.query, ['agent_id', 'date_start', 'date_end'])
     this.query(this.query_params)
   },
   watch: {
