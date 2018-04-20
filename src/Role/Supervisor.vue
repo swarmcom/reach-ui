@@ -19,8 +19,8 @@
         </b-nav-item>
         <b-nav-form>
           <b-nav-item-dropdown right>
-            <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
-            <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
+            <b-dropdown-item v-if="isNarrow()" @click="changeWide()">Wide</b-dropdown-item>
+            <b-dropdown-item v-else @click="changeWide()">Narrow</b-dropdown-item>
             <template v-if="isMain()">
               <template v-if="canMyStat()">
                 <b-dropdown-item v-if="isMyStat()" @click="changeWidget('isActiveMS')">Remove My Stats</b-dropdown-item>
@@ -45,7 +45,7 @@
     You have been logged out by the system. Another user has logged in with the same credentials
   </b-modal>
 
-  <div class="container-fluid">
+  <div v-bind:class="maybeWide()">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -53,7 +53,7 @@
 
   <footer class="footer">
     <div class="container">
-      <div class="row  justify-content-center">
+      <div class="row justify-content-center">
         <small>
           Supervisor &copy; 2018 eZuce
           UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
@@ -89,12 +89,12 @@ const scrollBehavior = (to, from, savedPosition) => {
 const router = new VueRouter({
   scrollBehavior,
   routes: [
-    { path: '/main', component: Main, meta: { name: 'main' } },
-    { path: '/profile', component: Profile, children: ProfileRoutes, meta: { name: 'profile' } },
-    { path: '/help', component: Help, meta: { name: 'help' } },
-    { path: '/monitor', component: Monitor, meta: { name: 'monitor' } },
-    { path: '/recordings', component: Recordings, meta: { name: 'recordings' } },
-    { path: '/reports', component: Reports, children: ReportRoutes, meta: { name: 'reports' } },
+    { path: '/main', component: Main },
+    { path: '/profile', component: Profile, children: ProfileRoutes },
+    { path: '/help', component: Help },
+    { path: '/monitor', component: Monitor },
+    { path: '/recordings', component: Recordings },
+    { path: '/reports', component: Reports, children: ReportRoutes },
     { path: '/', redirect: 'main' }
   ]
 })
@@ -107,7 +107,7 @@ export default {
   data () {
     return {
       date: null,
-      page: 'main'
+      path: '/main'
     }
   },
   methods: {
@@ -117,14 +117,14 @@ export default {
     },
     handleTakeOver(S) {
       this.$refs.loggedout.show()
-    }
+    },
   },
   mounted () {
     this.$bus.$on('takeover', this.handleTakeOver)
   },
   beforeDestroy () {
     this.$bus.$off('takeover', this.handleTakeOver)
-  }
+  },
 }
 </script>
 

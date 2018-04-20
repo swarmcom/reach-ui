@@ -1,6 +1,6 @@
 <template>
 <div style="margin-top: 20px">
-	<h2>Master role</h2>
+	<h2>Admin role</h2>
 </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<div v-access:monitor-ui v-bind:class="classObject">
+<div v-access:monitor-ui>
   <draggable :list="widgets" :options="{draggable:'.itemDragable'}" @end="onDragEnd">
     <b-row v-for="(item, index) in widgets" :key="index" class="itemDragable">
       <b-col>
@@ -29,19 +29,10 @@ export default {
     }
   },
   created () {
-    if (this.$agent.vm.storage_data.monitorWidgets != undefined)
+    if (this.$agent.vm.storage_data.monitorWidgets != undefined) {
       this.widgets = this.$agent.vm.storage_data.monitorWidgets
-    else
+    } else {
       this.widgets = ['agents', 'inqueues']
-  },
-  computed: {
-    classObject: function () {
-      this.$agent.vm.storage_data["narrowScreenMonitor"] = this.$agent.vm.isNarrowLayout.monitor
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      return {
-        container: this.$agent.vm.isNarrowLayout.monitor,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.monitor
-      }
     }
   },
   components: {

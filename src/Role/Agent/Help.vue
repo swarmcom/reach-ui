@@ -1,5 +1,7 @@
 <template>
-<div v-bind:class="classObject"></div>
+<div style="margin-top: 20px">
+	<h2>Agent role</h2>
+</div>
 </template>
 
 <script>
@@ -8,15 +10,5 @@ export default {
     return {
     }
   },
-  computed: {
-    classObject: function () {
-      this.$agent.vm.storage_data["narrowScreenProfile"] = this.$agent.vm.isNarrowLayout.help
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      return {
-        container: this.$agent.vm.isNarrowLayout.help,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.help
-      }
-    }
-  }
 }
 </script>

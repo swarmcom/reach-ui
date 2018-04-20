@@ -1,5 +1,5 @@
 <template>
-<div v-bind:class="classObject" v-access:reports-ui>
+<div v-access:reports-ui>
 <ul style="margin-top: 10px" class="nav nav-tabs">
   <b-nav-item-dropdown text="Experimental">
     <b-dropdown-item to="/reports/agents/states">Agents man-hours</b-dropdown-item>
@@ -61,16 +61,6 @@
 export default {
   data () {
     return {}
-  },
-  computed: {
-    classObject: function () {
-      this.$agent.vm.storage_data["narrowScreenReports"] = this.$agent.vm.isNarrowLayout.reports
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      return {
-        container: this.$agent.vm.isNarrowLayout.reports,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.reports
-      }
-    }
   },
 }
 </script>

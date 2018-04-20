@@ -17,8 +17,8 @@
         </b-nav-item>
         <b-nav-form>
           <b-nav-item-dropdown right>
-            <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
-            <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
+            <b-dropdown-item v-if="isNarrow()" @click="changeWide()">Wide</b-dropdown-item>
+            <b-dropdown-item v-else @click="changeWide()">Narrow</b-dropdown-item>
             <template v-if="isMain()">
               <template v-if="canMyStat()">
                 <b-dropdown-item v-if="isMyStat()" @click="changeWidget('isActiveMS')">Remove My Stats</b-dropdown-item>
@@ -39,7 +39,7 @@
     </b-collapse>
   </b-navbar>
 
-  <div class="container-fluid">
+  <div v-bind:class="maybeWide()">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -83,9 +83,9 @@ const scrollBehavior = (to, from, savedPosition) => {
 const router = new VueRouter({
   scrollBehavior,
   routes: [
-    { path: '/help', component: Help, meta: { name: 'help' } },
-    { path: '/profile', component: Profile, children: ProfileRoutes, meta: { name: 'profile' } },
-    { path: '/main', component: Main, meta: { name: 'main' } },
+    { path: '/help', component: Help },
+    { path: '/profile', component: Profile, children: ProfileRoutes },
+    { path: '/main', component: Main },
     { path: '/', redirect: 'main' }
   ]
 })
@@ -98,7 +98,7 @@ export default {
   data () {
     return {
       date: null,
-      page: 'main'
+      path: '/main'
     }
   },
   methods: {
