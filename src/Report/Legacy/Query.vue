@@ -1,5 +1,5 @@
 <template>
-<b-container>
+<div>
   <b-row v-if="enabled.agents" style="margin-bottom: 10px">
     <b-col>
       <widget-agents v-model="agents"></widget-agents>
@@ -46,7 +46,7 @@
       <button @click="reset" class="btn btn-outline-success">Reset</button>
     </b-col>
   </b-row>
-</b-container>
+</div>
 </template>
 
 <script>
@@ -113,8 +113,10 @@ export default {
     },
   },
   created () {
-    let enabled = this.enable.split(":")
-    enabled.forEach((v) => this.enabled[v] = true)
+    if (this.enable) {
+      let enabled = this.enable.split(":")
+      enabled.forEach((v) => this.enabled[v] = true)
+    }
   }
 }
 </script>

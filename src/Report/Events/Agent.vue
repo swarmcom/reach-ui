@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Agent Events</h3></div>
+    <div class="col"><h3>Agent events</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="events" :fields="fields">
     <template slot="agent_id" slot-scope="data">
@@ -31,19 +31,19 @@ export default {
   data () {
     return {
       fields: {
-        ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        ts_ms: { label: 'Time', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
         state_from: { label: 'From' },
         state: { label: 'To' },
-        time: { label: 'Time', formatter: format_ms },
-        agent_id: { label: 'Id', sortable: true },
-        agent_name: { label: 'Agent', sortable: true }
+        time: { label: 'Duration', formatter: format_ms },
+        agent_id: { label: 'Agent Id', sortable: true },
+        agent_name: { label: 'Agent Name', sortable: true }
       },
       events: []
     }
   },
   methods: {
     query: async function() {
-      this.events = await this.$agent.p_mfa('ws_report', 'agent_events', [this.uuid])
+      this.events = await this.$agent.p_mfa('ws_report', 'query', ['report_events', 'agent', { uuid: this.uuid }])
     },
     maybe_name (item) {
       if (typeof item === 'object') {

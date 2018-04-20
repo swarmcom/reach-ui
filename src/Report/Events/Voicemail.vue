@@ -1,11 +1,11 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Outbound call events</h3></div>
+    <div class="col"><h3>Voicemail events</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="events" :fields="fields">
-    <template slot="line_out" slot-scope="data">
-      {{ data.item.line_out.name }}
+    <template slot="line_in" slot-scope="data">
+      {{ data.item.line_in.name }}
     </template>
     <template slot="client" slot-scope="data">
       {{ data.item.client.name }}
@@ -30,15 +30,15 @@ function format_ms(ms) {
 
 export default {
   name: 'report-events-inqueue',
-  props: ['id'],
+  props: ['uuid'],
   data () {
     return {
       fields: {
-        ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        ts_start_ms: { label: 'Time', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
         state_from: { label: 'From' },
         state: { label: 'To' },
         time: { label: 'Time', formatter: format_ms },
-        line_out: { label: 'Line In', sortable: true },
+        line_in: { label: 'Line In', sortable: true },
         client: { label: 'Client', sortable: true },
         agent: { label: 'Agent', sortable: true }
       },
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     query: async function() {
-      this.events = await this.$agent.p_mfa('ws_report', 'query', ['report_events', 'outgoing', { uuid: this.id }])
+      this.events = await this.$agent.p_mfa('ws_report', 'query', ['report_events', 'voicemail', { uuid: this.uuid }])
     },
     maybe_name (item) {
       if (typeof item === 'object') {

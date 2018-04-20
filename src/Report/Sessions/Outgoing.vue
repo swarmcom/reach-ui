@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Outgoing calls</h3></div>
   </div>
-  <widget-query v-model="query_params"></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
       {{ format_ms(data.item.states.total) }}
@@ -40,7 +40,7 @@
 
 <script>
 import Player from '@/Report/Player'
-import Query from '@/Report/Widget/Query'
+import Query from '@/Report/Legacy/Query'
 import moment from 'moment'
 
 export default {
@@ -50,7 +50,7 @@ export default {
     return {
       query_params: {},
       fields: {
-        ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        ts_ms: { label: 'Time', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
         state_total: { label: 'Total', tdClass: 'text-right' },
         state_ringing: { label: 'Ringing', tdClass: 'text-right' },
         state_oncall: { label: 'Oncall', tdClass: 'text-right' },
@@ -65,10 +65,15 @@ export default {
   },
   methods: {
     query: async function(params) {
-      this.sessions = await this.$agent.p_mfa('ws_report', 'outgoing_sessions', [params])
+      try {
+        this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'outgoing', params])
+      }
+      catch (e) {
+        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
+      }
     },
     click ({id}) {
-      this.$router.push(`/report/events/outgoing/${id}`)
+      this.$router.push(`/reports/events/outgoing/${id}`)
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {
@@ -88,7 +93,7 @@ export default {
       let params = this.query_params
       let session = this.sessions[this.sessions.length - 1]
       params.date_end = parseInt(session.ts/1000)
-      let more = await this.$agent.p_mfa('ws_report', 'outgoing_sessions', [params])
+      let more = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'outgoing', params])
       this.sessions = this.sessions.concat(more)
     }
   },

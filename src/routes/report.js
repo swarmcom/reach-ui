@@ -3,16 +3,13 @@ import AgentsUnique from '@/Report/Agents/Unique'
 import AgentsAvg from '@/Report/Agents/Avg'
 import MeasuresAvg from '@/Report/Measures/Avg'
 import InqueueSessions from '@/Report/Sessions/Inqueue'
+import VoicemailSessions from '@/Report/Sessions/Voicemail'
 import OutgoingSessions from '@/Report/Sessions/Outgoing'
 import AgentSessions from '@/Report/Sessions/Agent'
 import InqueueEvents from '@/Report/Events/Inqueue'
+import VoicemailEvents from '@/Report/Events/Voicemail'
 import OutgoingEvents from '@/Report/Events/Outgoing'
 import AgentSessionEvents from '@/Report/Events/Agent'
-// CDR
-import CDR from '@/Report/Legacy/CDR/CDR'
-import CDRInqueue from '@/Report/Legacy/CDR/Inqueue'
-import CDROutgoing from '@/Report/Legacy/CDR/Outgoing'
-import CDRVoicemail from '@/Report/Legacy/CDR/Voicemail'
 
 // Agent
 import AgentActivity from '@/Report/Legacy/Agent/Activity'
@@ -50,16 +47,13 @@ export default [
   { path: 'agents/avg', component: AgentsAvg },
   { path: 'measures/avg', component: MeasuresAvg },
   { path: 'sessions/inqueue', component: InqueueSessions },
+  { path: 'sessions/voicemail', component: VoicemailSessions },
   { path: 'sessions/outgoing', component: OutgoingSessions },
   { path: 'sessions/agent', component: AgentSessions },
   { path: 'events/inqueue/:uuid', component: InqueueEvents, props: true },
+  { path: 'events/voicemail/:uuid', component: VoicemailEvents, props: true },
   { path: 'events/outgoing/:id', component: OutgoingEvents, props: true },
   { path: 'events/agent/:uuid', component: AgentSessionEvents, props: true },
-  // CDR
-  { path: 'legacy/cdr/cdr', component: CDR },
-  { path: 'legacy/cdr/inqueue', component: CDRInqueue },
-  { path: 'legacy/cdr/outgoing', component: CDROutgoing  },
-  { path: 'legacy/cdr/voicemail', component: CDRVoicemail },
 
   // Agent
   { path: 'legacy/agent/activity', component: AgentActivity },

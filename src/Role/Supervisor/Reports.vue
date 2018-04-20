@@ -15,13 +15,6 @@
     <b-dropdown-item to="/reports/sessions/outgoing">Outbound</b-dropdown-item>
   </b-nav-item-dropdown>
 
-  <b-nav-item-dropdown text="CDR">
-    <b-dropdown-item to="/reports/legacy/cdr/cdr">Combined</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/cdr/inqueue">Inqueue</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/cdr/outgoing">Outgoing</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/cdr/voicemail">Voicemail</b-dropdown-item>
-  </b-nav-item-dropdown>
-
   <b-nav-item-dropdown text="Agent">
     <b-dropdown-item to="/reports/legacy/agent/activity">Activity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/answer-performance">Answer Performance</b-dropdown-item>

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inqueue Events</h3></div>
+    <div class="col"><h3>Inbound call events</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="events" :fields="fields">
     <template slot="line_in" slot-scope="data">
@@ -34,7 +34,7 @@ export default {
   data () {
     return {
       fields: {
-        ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        ts_start_ms: { label: 'Time', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
         state_from: { label: 'From' },
         state: { label: 'To' },
         time: { label: 'Time', formatter: format_ms },
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     query: async function() {
-      this.events = await this.$agent.p_mfa('ws_report', 'inqueue_events', [this.uuid])
+      this.events = await this.$agent.p_mfa('ws_report', 'query', ['report_events', 'inqueue', { uuid: this.uuid }])
     },
     maybe_name (item) {
       if (typeof item === 'object') {
