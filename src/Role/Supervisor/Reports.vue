@@ -11,6 +11,7 @@
   <b-nav-item-dropdown text="Sessions">
     <b-dropdown-item to="/reports/sessions/agent">Agent</b-dropdown-item>
     <b-dropdown-item to="/reports/sessions/inqueue">Inbound</b-dropdown-item>
+    <b-dropdown-item to="/reports/sessions/unanswered">Unanswered</b-dropdown-item>
     <b-dropdown-item to="/reports/sessions/voicemail">Voicemail</b-dropdown-item>
     <b-dropdown-item to="/reports/sessions/outgoing">Outbound</b-dropdown-item>
   </b-nav-item-dropdown>
@@ -24,7 +25,6 @@
     <b-dropdown-item to="/reports/legacy/agent/bounded-events">Bounded Events</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/events">Events</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/concurrent-logged-in-agents">Concurrent Logged in Agents</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/unanswered-call-details">Unanswered Call Details</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Agent Group">
@@ -32,7 +32,6 @@
     <b-dropdown-item to="/reports/legacy/agent/group/answer-performance">Answer Performance</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/group/productivity">Productivity</b-dropdown-item>
   </b-nav-item-dropdown>
-
 
   <b-nav-item-dropdown text="Outbound">
     <b-dropdown-item to="/reports/legacy/outbound/detail-by-client">Detail by Client</b-dropdown-item>

@@ -53,7 +53,6 @@ import Query from '@/Report/Legacy/Query'
 import moment from 'moment'
 
 export default {
-  name: 'stats-inqueue',
   components: { player: Player, 'widget-query': Query },
   data () {
     return {

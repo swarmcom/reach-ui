@@ -10,13 +10,11 @@
 
 <script>
 import Chart from '@/Report/Widget/Chart'
-import QueryRange from '@/Report/Widget/QueryRange'
 
 export default {
   name: 'report-agents-states',
   components: {
-    'widget-chart': Chart,
-    'widget-query': QueryRange
+    'widget-chart': Chart
   },
   data () {
     return {

@@ -41,7 +41,6 @@ import Query from '@/Report/Legacy/Query'
 import moment from 'moment'
 
 export default {
-  name: 'report-sessions-agent',
   components: { player: Player, 'widget-query': Query },
   data () {
     return {

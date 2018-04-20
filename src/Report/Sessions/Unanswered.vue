@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inbound calls</h3></div>
+    <div class="col"><h3>Unanswered inbound calls</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
+  <widget-query v-model="query_params" enable="range:queues:queue_groups:clients"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
       {{ format_ms(data.item.states.total) }}
@@ -14,9 +14,6 @@
     <template slot="state_agent" slot-scope="data">
       {{ format_ms(data.item.states.states.agent) }}
     </template>
-    <template slot="state_oncall" slot-scope="data">
-      {{ format_ms(data.item.states.states.oncall) }}
-    </template>
     <template slot="line_in" slot-scope="data">
       {{ maybe_name(data.item.line_in) }}
     </template>
@@ -26,9 +23,6 @@
     <template slot="queue" slot-scope="data">
       {{ maybe_name(data.item.queue) }}
     </template>
-    <template slot="agent" slot-scope="data">
-      {{ maybe_name(data.item.agent) }}
-    </template>
     <template slot="caller_ip" slot-scope="data">
       {{ data.item.caller_ip }}
     </template>
@@ -37,9 +31,6 @@
     </template>
     <template slot="calling" slot-scope="data">
       {{ data.item.calling }}
-    </template>
-    <template slot="player" slot-scope="data">
-      <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
     </template>
   </b-table>
   <b-row>
@@ -51,12 +42,11 @@
 </template>
 
 <script>
-import Player from '@/Report/Player'
 import Query from '@/Report/Legacy/Query'
 import moment from 'moment'
 
 export default {
-  components: { player: Player, 'widget-query': Query },
+  components: { 'widget-query': Query },
   data () {
     return {
       query_params: {},
@@ -69,11 +59,9 @@ export default {
         line_in: { label: 'Line In' },
         client: { label: 'Client' },
         queue: { label: 'Queue' },
-        agent: { label: 'Agent' },
         caller_ip: { label: 'IP' },
         caller: { label: 'Caller' },
-        calling: { label: 'Calling' },
-        player: { label: ' ' }
+        calling: { label: 'Calling' }
       },
       sessions: []
     }
@@ -81,7 +69,7 @@ export default {
   methods: {
     query: async function(params) {
       try {
-        this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'inqueue', params])
+        this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'unanswered', params])
       }
       catch (e) {
         this.$notify({ title: 'Report Error:', text: e, type: 'error' })

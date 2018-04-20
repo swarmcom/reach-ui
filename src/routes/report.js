@@ -6,6 +6,7 @@ import InqueueSessions from '@/Report/Sessions/Inqueue'
 import VoicemailSessions from '@/Report/Sessions/Voicemail'
 import OutgoingSessions from '@/Report/Sessions/Outgoing'
 import AgentSessions from '@/Report/Sessions/Agent'
+import UnansweredSessions from '@/Report/Sessions/Unanswered'
 import InqueueEvents from '@/Report/Events/Inqueue'
 import VoicemailEvents from '@/Report/Events/Voicemail'
 import OutgoingEvents from '@/Report/Events/Outgoing'
@@ -20,7 +21,6 @@ import AgentCallDisposition from '@/Report/Legacy/Agent/CallDisposition'
 import AgentBoundedEvents from '@/Report/Legacy/Agent/BoundedEvents'
 import AgentEvents from '@/Report/Legacy/Agent/Events'
 import ConcurrentLoggedInAgents from '@/Report/Legacy/Agent/ConcurrentLoggedInAgents'
-import UnansweredCallDetails from '@/Report/Legacy/Agent/UnansweredCallDetails'
 
 // Agent Group
 import AgentGroupActivity from '@/Report/Legacy/Agent/Group/Activity'
@@ -50,6 +50,7 @@ export default [
   { path: 'sessions/voicemail', component: VoicemailSessions },
   { path: 'sessions/outgoing', component: OutgoingSessions },
   { path: 'sessions/agent', component: AgentSessions },
+  { path: 'sessions/unanswered', component: UnansweredSessions },
   { path: 'events/inqueue/:uuid', component: InqueueEvents, props: true },
   { path: 'events/voicemail/:uuid', component: VoicemailEvents, props: true },
   { path: 'events/outgoing/:id', component: OutgoingEvents, props: true },
@@ -64,7 +65,6 @@ export default [
   { path: 'legacy/agent/productivity', component: AgentProductivity },
   { path: 'legacy/agent/bounded-events', component: AgentBoundedEvents },
   { path: 'legacy/agent/events', component: AgentEvents },
-  { path: 'legacy/agent/unanswered-call-details', component: UnansweredCallDetails },
 
   // Agent Group
   { path: 'legacy/agent/group/activity', component: AgentGroupActivity },
