@@ -55,6 +55,9 @@ export default {
       this.$router.push({ path: '/reports/sessions/unanswered', query: params })
     }
   },
+  created () {
+    this.query(this.query_params)
+  },
   watch: {
     query_params (query) {
       this.query(query)

@@ -107,7 +107,7 @@ export default {
     }
   },
   created () {
-    maybe_copy_params(this.query_params, this.$route.query, ['agent_id', 'date_start', 'date_end'])
+    maybe_copy_params(this.query_params, this.$route.query, ['agent_id', 'agent_group_id', 'date_start', 'date_end'])
     this.query(this.query_params)
   },
   watch: {
