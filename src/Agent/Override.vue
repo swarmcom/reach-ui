@@ -3,11 +3,11 @@
   <b-col>
     <b-input-group>
       <b-form-input v-model="uri" type="text" :placeholder="this.$agent.vm.agent.uri"></b-form-input>
-      <b-input-group-button>
+      <b-button-group>
         <b-dropdown text="Contacts" variant="outline-secondary" :disabled="isDisabled()" right>
           <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
         </b-dropdown>
-      </b-input-group-button>
+      </b-button-group>
     </b-input-group>
   </b-col>
   <b-col>

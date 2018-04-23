@@ -21,12 +21,12 @@
       <b-col cols="8" v-if="(selected==='number')">
         <b-input-group>
           <b-form-input v-model="selectedNumber" type="text" placeholder="enter a number..."></b-form-input>
-          <b-input-group-button>
+          <b-button-group>
             <b-dropdown v-if="lines.length > 0" text="Call as" variant="outline-secondary" right>
               <b-dropdown-item v-for="line of lines" :key="line.id" @click="selectLine(line)">{{line.name}}</b-dropdown-item>
             </b-dropdown>
             <b-btn v-if="$agent.vm.agent.line_id" @click="selectLine($agent.vm.agent.line)" variant="outline-secondary">{{$agent.vm.agent.line.name}}</b-btn>
-          </b-input-group-button>
+          </b-button-group>
         </b-input-group>
         <div v-if="!selectedLine" style="color:#F2635F" class="agent-state-text">
           Please select the line
