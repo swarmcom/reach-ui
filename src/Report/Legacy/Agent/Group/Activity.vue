@@ -13,13 +13,16 @@
 
 <script>
 import Query from '@/Report/Legacy/Query'
-import Moment from 'moment'
+import Base from '@/Report/Base'
 
 export default {
   components: { 'widget-query': Query },
+  mixins: [Base],
   data () {
     return {
       query_params: {},
+      inbound: [],
+      outbound: [],
       inbound_fields: {
         agent_group_name: { label: 'Name', sortable: true },
         answered: { label: 'Calls' },
@@ -35,29 +38,12 @@ export default {
         answered: { label: 'Answered' },
         talk_time: { label: 'Talk Time', formatter: this.durationFormatter },
       },
-      inbound: [],
-      outbound: []
     }
   },
   methods: {
     query: async function (query) {
-      try {
-        this.inbound = await this.$agent.p_mfa('ws_report', 'query', ['group_activity', 'inbound', query])
-        this.outbound = await this.$agent.p_mfa('ws_report', 'query', ['group_activity', 'outbound', query])
-      }
-      catch (e) {
-        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
-      }
-    },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
-    }
+      this.inbound = await this.$agent.p_mfa('ws_report', 'query', ['group_activity', 'inbound', query])
+      this.outbound = await this.$agent.p_mfa('ws_report', 'query', ['group_activity', 'outbound', query])
   },
-  watch: {
-    query_params (value) {
-      this.query(value)
-      return value
-    }
-  }
 }
 </script>

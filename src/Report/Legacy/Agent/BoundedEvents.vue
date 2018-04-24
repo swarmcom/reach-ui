@@ -10,10 +10,11 @@
 
 <script>
 import Query from '@/Report/Legacy/Query'
-import Moment from 'moment'
+import Base from '@/Report/Base'
 
 export default {
   components: { 'widget-query': Query },
+  mixins: [Base],
   data () {
     return {
       query_params: {},
@@ -28,31 +29,17 @@ export default {
           label: 'To',
           formatter: (v, _, item) => (v === 'release' && item.release.name !== undefined) ? (v + ' [ ' + item.release.name + ' ]') : v
         },
-        ts_from: { label: 'Time', formatter: v => Moment(v, "x").format("YYYY-MM-DD HH:mm:ss") },
-        duration: { label: 'Duration', formatter: v => this.durationFormatter(v) }
+        ts_from: { label: 'Time', formatter: this.tsFormatter },
+        duration: { label: 'Duration', formatter: this.tsFormatter }
       },
       data: []
     }
   },
   methods: {
     query: async function (query) {
-      try {
-        this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'bounded_events', query])
-      }
-      catch (e) {
-        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
-      }
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'bounded_events', query])
     },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
-    }
   },
-  watch: {
-    query_params (query) {
-      this.query(query)
-      return query
-    }
-  }
 }
 </script>
 

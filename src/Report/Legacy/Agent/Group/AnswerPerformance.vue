@@ -14,54 +14,33 @@
 
 <script>
 import Query from '@/Report/Legacy/Query'
-import Moment from 'moment'
-
-function maybe_copy_params(Dst, Src, Params) {
-  Params.forEach( k => { if (Src[k]) { Dst[k] = Src[k] } })
-  return Dst
-}
+import Base from '@/Report/Base'
 
 export default {
   components: { 'widget-query': Query },
+  mixins: [Base],
   data () {
     return {
       query_params: {},
+      data: [],
       fields: {
-        agent_group: { label: 'Group', formatter: v => v.name },
+        agent_group: { label: 'Group', formatter: this.nameFormatter },
         ring_count: { label: 'Offered' },
         answered_count: { label: 'Answered' },
         abandoned: { label: 'Failed' },
-        percent_answered: {
-          label: 'Percent Answered',
-          formatter: (v, _, item) => (item.ring_count != 0) ? (100 * item.answered_count / item.ring_count).toFixed(1) + '%' : 'NA'
-        },
+        percent_answered: { label: 'Percent Answered', formatter: (v, name, item) => this.percentageFormatter(item.answered_count, item.ring_count) },
         detail: { label: 'Detail' }
       },
-      data: []
     }
   },
   methods: {
     query: async function (query) {
-      try {
-        this.data = await this.$agent.p_mfa('ws_report', 'query', ['answer_performance', 'group', query])
-      }
-      catch (e) {
-        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
-      }
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['answer_performance', 'group', query])
     },
     detail (data) {
-      let params = maybe_copy_params({ agent_group_id: data.agent_group.id }, this.query_params, ['date_start', 'date_end'])
+      let params = this.maybe_copy_params({ agent_group_id: data.agent_group.id }, this.query_params, ['date_start', 'date_end'])
       this.$router.push({ path: '/reports/sessions/unanswered', query: params })
     }
   },
-  created () {
-    this.query(this.query_params)
-  },
-  watch: {
-    query_params (query) {
-      this.query(query)
-      return query
-    }
-  }
 }
 </script>

@@ -13,10 +13,11 @@
 
 <script>
 import Query from '@/Report/Legacy/Query'
-import Moment from 'moment'
+import Base from '@/Report/Base'
 
 export default {
   components: { 'widget-query': Query },
+  mixins: [Base],
   data () {
     return {
       query_params: {},
@@ -41,23 +42,9 @@ export default {
   },
   methods: {
     query: async function (query) {
-      try {
-        this.inbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'inbound', query])
-        this.outbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'outbound', query])
-      }
-      catch (e) {
-        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
-      }
+      this.inbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'inbound', query])
+      this.outbound = await this.$agent.p_mfa('ws_report', 'query', ['agent_activity', 'outbound', query])
     },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
-    }
-  },
-  watch: {
-    query_params (value) {
-      this.query(value)
-      return value
-    }
   }
 }
 </script>

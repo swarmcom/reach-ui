@@ -10,10 +10,11 @@
 
 <script>
 import Query from '@/Report/Legacy/Query'
-import Moment from 'moment'
+import Base from '@/Report/Base'
 
 export default {
   components: { 'widget-query': Query },
+  mixins: [Base],
   data () {
     return {
       query_params: {},
@@ -22,37 +23,23 @@ export default {
         agent_group_name: { label: 'Name' },
         agent_count: { label: 'Agents' },
         occupancy: { label: 'Ocpncy', formatter: v => v ? v + '%' : 0 + '%' },
-        cpt: { label: 'CPT', formatter: v => v ? this.durationFormatter(v) : 'NA' },
-        total_time: { label: 'Logged In', formatter: v => this.durationFormatter(v) },
+        cpt: { label: 'CPT', formatter: this.durationFormatter },
+        total_time: { label: 'Logged In', formatter: this.durationFormatter },
         logged_out: { label: 'Logged Out', formatter: (v, _, item) => this.durationFormatter(item.range - item.total_time) },
-        released: { label: 'Rel.', formatter: v => this.durationFormatter(v) },
-        suspended: { label: 'Susp.', formatter: v => this.durationFormatter(v) },
-        idle: { label: 'Idle', formatter: v => this.durationFormatter(v) },
-        ringing: { label: 'Ring', formatter: v => this.durationFormatter(v) },
-        talk_total: { label: 'Talk', formatter: v => this.durationFormatter(v) },
-        wrapup: { label: 'Wrap Up', formatter: v => this.durationFormatter(v) },
+        released: { label: 'Rel.', formatter: this.durationFormatter },
+        suspended: { label: 'Susp.', formatter: this.durationFormatter },
+        idle: { label: 'Idle', formatter: this.durationFormatter },
+        ringing: { label: 'Ring', formatter: this.durationFormatter },
+        talk_total: { label: 'Talk', formatter: this.durationFormatter },
+        wrapup: { label: 'Wrap Up', formatter: this.durationFormatter },
       },
     }
   },
   methods: {
     query: async function (query) {
-      try {
-        this.data = await this.$agent.p_mfa('ws_report', 'query', ['productivity', 'group', query])
-      }
-      catch (e) {
-        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
-      }
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['productivity', 'group', query])
     },
-    durationFormatter (v) {
-      return Moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
-    }
   },
-  watch: {
-    query_params (value) {
-      this.query(value)
-      return value
-    }
-  }
 }
 </script>
 
