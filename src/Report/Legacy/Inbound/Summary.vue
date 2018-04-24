@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inbound overview</h3></div>
+    <div class="col"><h3>Inbound traffic overview</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:clients:sla:group_by"></widget-query>
+  <widget-query v-model="query_params" enable="range:sla:group_by"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     query: async function (query) {
-      query.group_by = "client"
       this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'summary', query])
     },
   },

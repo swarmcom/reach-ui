@@ -1,20 +1,17 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inbound details</h3></div>
+    <div class="col"><h3>Inbound traffic details</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:clients:step:sla"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 
 </template>
 
 <script>
-import Query from '@/Report/Legacy/Query'
 import Base from '@/Report/Base'
 
 export default {
-  components: { 'widget-query': Query },
   mixins: [Base],
   data () {
     return {

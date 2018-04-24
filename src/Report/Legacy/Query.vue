@@ -1,8 +1,8 @@
 <template>
 <div>
   <b-row v-if="enabled.group_by" style="margin-bottom: 10px">
-    <b-col>
-
+    <b-col cols=3>
+      <b-form-select v-model="group_by" :options="group_by_options" @change="change_group_by"/>
     </b-col>
   </b-row>
   <b-row v-if="enabled.agents" style="margin-bottom: 10px">
@@ -81,8 +81,17 @@ export default {
   data () {
     return {
       enabled: {},
-      date_start: undefined,
-      date_end: undefined,
+      group_by_options: [
+        { value: 'client', text: 'Client' },
+        { value: 'agent', text: 'Agent' },
+        { value: 'agent_group', text: 'Agent Group' },
+        { value: 'queue', text: 'Queue' },
+        { value: 'queue_group', text: 'Queue Group' },
+        { value: 'line_in', text: 'Line In' }
+      ],
+      selected: null,
+      date_start: null,
+      date_end: null,
       agent_groups: [],
       agents: [],
       queue_groups: [],
@@ -90,21 +99,22 @@ export default {
       clients: [],
       step: 60,
       sla: 10,
-      group_by: undefined
+      group_by: null
     }
   },
   methods: {
     reset () {
-      this.date_start = undefined,
-      this.date_end = undefined,
-      this.agent_groups = [],
-      this.agents = [],
-      this.queue_groups = [],
-      this.queues = [],
-      this.clients = [],
+      this.selected = null
+      this.date_start = null
+      this.date_end = null
+      this.agent_groups = []
+      this.agents = []
+      this.queue_groups = []
+      this.queues = []
+      this.clients = []
       this.step = 60
       this.sla = 10
-      this.group_by = undefined
+      this.group_by = null
       this.$emit('input', this.make_query())
     },
     apply () {
@@ -121,9 +131,40 @@ export default {
       if (this.enabled.clients && this.clients.length > 0 ) { Q.clients = this.clients.map(client => client.id) }
       if (this.enabled.step && this.step > 0 ) { Q.step = parseInt(this.step) }
       if (this.enabled.sla && this.sla > 0 ) { Q.sla = parseInt(this.sla) }
-      if (this.enabled.group_by && this.group_by > 0 ) { Q.group_by = this.group_by }
+      if (this.enabled.group_by && this.group_by) { Q.group_by = this.group_by }
       return Q
     },
+    change_group_by (value) {
+      switch(value) {
+        case 'client':
+          this.make_selected('clients')
+          break
+        case 'agent':
+          this.make_selected('agents')
+          break
+        case 'agent_group':
+          this.make_selected('agent_groups')
+          break
+        case 'queue':
+          this.make_selected('queues')
+          break
+        case 'queue_group':
+          this.make_selected('queue_groups')
+          break
+        case 'line_in':
+          this.make_selected('line_ins')
+          break
+        default:
+          this.selected = null
+      }
+    },
+    make_selected (value) {
+      if (this.selected) {
+        this.enabled[this.selected] = false
+      }
+      this.enabled[value] = true
+      this.selected = value
+    }
   },
   created () {
     if (this.enable) {
