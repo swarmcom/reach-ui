@@ -4,7 +4,11 @@
     <div class="col"><h3>Inbound traffic overview</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:sla:group_by"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
+    <template slot="detail" slot-scope="data">
+      <b-link @click="detail(data.item)">details</b-link>
+    </template>
+  </b-table>
 </div>
 </template>
 
@@ -30,6 +34,7 @@ export default {
         sla_count: { label: "SLA" },
         cpt: { label: "CPT", formatter: this.durationFormatter },
         asa: { label: "ASA", formatter: this.durationFormatter },
+        detail: { label: 'Detail' }
       },
     }
   },
@@ -37,6 +42,10 @@ export default {
     query: async function (query) {
       this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'summary', query])
     },
+    detail (data) {
+      let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
+      this.$router.push({ path: '/reports/legacy/inbound/details', query: params })
+    }
   },
 }
 </script>
