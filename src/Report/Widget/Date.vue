@@ -39,6 +39,6 @@ export default {
     date (value) {
       this.$emit('input', this.to_timestamp(value))
     }
-  }
+  },
 }
 </script>

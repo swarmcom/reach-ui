@@ -10,7 +10,7 @@
 
 <script>
 import Chart from '@/Report/Widget/Chart'
-import Query from '@/Report/Widget/Query'
+import Query from '@/Report/Legacy/Query'
 
 export default {
   name: 'report-agents-states',

@@ -64,7 +64,7 @@ export default {
       this.sessions = await this.$agent.p_mfa('ws_report', 'agents_sessions', [params])
     },
     click ({uuid}) {
-      this.$router.push(`/report/events/agent/${uuid}`)
+      this.$router.push(`/reports/events/agent/${uuid}`)
     },
     format_ms (ms) {
       if (Number.isInteger(ms)) {

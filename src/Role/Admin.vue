@@ -12,7 +12,7 @@
     <button @click="logout" class="btn btn-sm btn-outline-danger">Logout</button>
   </div>
 </nav>
-<div class="container">
+<div v-bind:class="maybeWide()">
   <transition name="reach" mode="out-in">
     <router-view></router-view>
   </transition>

@@ -62,10 +62,10 @@ import ReportRoutes from '@/routes/report'
 
 const router = new VueRouter({
   routes: [
-    { path: '/', component: Admin, children: AdminRoutes },
-    { path: '/help', component: Help },
-    { path: '/monitor', component: Monitor },
-    { path: '/report', component: Report, children: ReportRoutes }
+    { path: '/', component: Admin, children: AdminRoutes, meta: { name: 'main' } },
+    { path: '/help', component: Help, meta: { name: 'help' } },
+    { path: '/monitor', component: Monitor, meta: { name: 'monitor' } },
+    { path: '/report', component: Report, children: ReportRoutes, meta: { name: 'report' } }
   ]
 })
 
