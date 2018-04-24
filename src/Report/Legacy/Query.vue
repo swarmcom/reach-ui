@@ -30,6 +30,17 @@
       <widget-clients v-model="clients"></widget-clients>
     </b-col>
   </b-row>
+  <b-row v-if="enabled.line_ins" style="margin-bottom: 10px">
+    <b-col>
+      <widget-line-ins v-model="line_ins"></widget-line-ins>
+    </b-col>
+  </b-row>
+  <b-row v-if="enabled.line_outs" style="margin-bottom: 10px">
+    <b-col>
+      <widget-line-outs v-model="line_outs"></widget-line-outs>
+    </b-col>
+  </b-row>
+
 
   <b-row>
     <b-col cols=3 v-if="enabled.range">
@@ -61,6 +72,8 @@ import Agents from '@/Report/Widget/Agents'
 import Queues from '@/Report/Widget/Queues'
 import QueueGroups from '@/Report/Widget/QueueGroups'
 import Clients from '@/Report/Widget/Clients'
+import LineIns from '@/Report/Widget/LineIns'
+import LineOuts from '@/Report/Widget/LineOuts'
 
 function maybe_copy_params(Dst, Src, Params) {
   Params.forEach( k => { if (Src[k]) { Dst[k] = Src[k] } })
@@ -69,25 +82,33 @@ function maybe_copy_params(Dst, Src, Params) {
 
 export default {
   name: 'report-query',
-  props: ['value', 'enable'],
+  props: ['value', 'enable', 'group-by'],
   components: {
     'widget-date': ReportDate,
-    'widget-agent-groups': AgentGroups,
     'widget-agents': Agents,
-    'widget-queue-groups': QueueGroups,
+    'widget-agent-groups': AgentGroups,
     'widget-queues': Queues,
-    'widget-clients': Clients
+    'widget-queue-groups': QueueGroups,
+    'widget-clients': Clients,
+    'widget-line-ins': LineIns,
+    'widget-line-outs': LineOuts,
   },
   data () {
     return {
       enabled: {},
-      group_by_options: [
+      inbound_group_by_options: [
         { value: 'client', text: 'Client' },
         { value: 'agent', text: 'Agent' },
         { value: 'agent_group', text: 'Agent Group' },
         { value: 'queue', text: 'Queue' },
         { value: 'queue_group', text: 'Queue Group' },
         { value: 'line_in', text: 'Line In' }
+      ],
+      outbound_group_by_options: [
+        { value: 'client', text: 'Client' },
+        { value: 'agent', text: 'Agent' },
+        { value: 'agent_group', text: 'Agent Group' },
+        { value: 'line_out', text: 'Line Out' }
       ],
       selected: null,
       date_start: null,
@@ -97,6 +118,8 @@ export default {
       queue_groups: [],
       queues: [],
       clients: [],
+      line_ins: [],
+      line_outs: [],
       step: 60,
       sla: 10,
       group_by: null
@@ -112,6 +135,8 @@ export default {
       this.queue_groups = []
       this.queues = []
       this.clients = []
+      this.line_ins = []
+      this.line_outs = []
       this.step = 60
       this.sla = 10
       this.group_by = null
@@ -129,6 +154,8 @@ export default {
       if (this.enabled.queues && this.queues.length > 0 ) { Q.queues = this.queues.map(queue => queue.id) }
       if (this.enabled.queue_groupss && this.queue_groups > 0 ) { Q.queue_groups = this.queue_groups.map(group => group.id) }
       if (this.enabled.clients && this.clients.length > 0 ) { Q.clients = this.clients.map(client => client.id) }
+      if (this.enabled.line_ins && this.line_ins.length > 0 ) { Q.line_ins = this.line_ins.map(line_in => line_in.id) }
+      if (this.enabled.line_outs && this.line_outs.length > 0 ) { Q.line_outs = this.line_outs.map(line_out => line_out.id) }
       if (this.enabled.step && this.step > 0 ) { Q.step = parseInt(this.step) }
       if (this.enabled.sla && this.sla > 0 ) { Q.sla = parseInt(this.sla) }
       if (this.enabled.group_by && this.group_by) { Q.group_by = this.group_by }
@@ -154,6 +181,9 @@ export default {
         case 'line_in':
           this.make_selected('line_ins')
           break
+        case 'line_out':
+          this.make_selected('line_outs')
+          break
         default:
           this.selected = null
       }
@@ -170,6 +200,11 @@ export default {
     if (this.enable) {
       let enabled = this.enable.split(":")
       enabled.forEach((v) => this.enabled[v] = true)
+    }
+    if (this.groupBy == "outbound") {
+      this.group_by_options = this.outbound_group_by_options
+    } else {
+      this.group_by_options = this.inbound_group_by_options
     }
     maybe_copy_params(this, this.value, ['date_start', 'date_end', 'step', 'sla'])
   }

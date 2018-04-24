@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Outbound details</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:clients"></widget-query>
+  <widget-query v-model="query_params" enable="range:step"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
@@ -32,8 +32,20 @@ export default {
   },
   methods: {
     query: async function (query) {
+      query = this.set_query_params(query)
       this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'details', query])
     },
-  }
+    set_query_params (params) {
+      let q = this.$route.query
+      maybe_copy_params(params, q, ['date_start', 'date_end'])
+      let entity = `${q.group_by}_id`
+      params[entity] = parseInt(q.entity_id)
+      return params
+    }
+  },
+  created () {
+    this.query_params = this.set_query_params(this.query_params)
+    this.query(this.query_params)
+  },
 }
 </script>

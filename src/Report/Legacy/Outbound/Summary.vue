@@ -3,8 +3,12 @@
   <div class="row">
     <div class="col"><h3>Outbound traffic summary</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:clients"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
+  <widget-query v-model="query_params" enable="range:group_by" group-by="outbound"></widget-query>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
+    <template slot="detail" slot-scope="data">
+      <b-link @click="detail(data.item)">details</b-link>
+    </template>
+  </b-table>
 </div>
 </template>
 
@@ -25,7 +29,8 @@ export default {
         answered: { label: 'Answered' },
         answered_percent: { label: 'Answered [%]', formatter: (v) => this.percentageFormatter(v.answered, v.placed)},
         avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
-        total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter }
+        total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter },
+        detail: { label: 'Detail' }
       },
     }
   },
@@ -33,6 +38,11 @@ export default {
     query: async function (query) {
       this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'summary', query])
     },
+    detail (data) {
+      let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
+      this.$router.push({ path: '/reports/legacy/outbound/details', query: params })
+    }
+
   },
 }
 </script>
