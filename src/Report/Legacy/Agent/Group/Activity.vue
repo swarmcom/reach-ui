@@ -44,6 +44,7 @@ export default {
     query: async function (query) {
       this.inbound = await this.$agent.p_mfa('ws_report', 'query', ['group_activity', 'inbound', query])
       this.outbound = await this.$agent.p_mfa('ws_report', 'query', ['group_activity', 'outbound', query])
+    }
   },
 }
 </script>

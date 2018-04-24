@@ -31,7 +31,7 @@ export default {
         abandoned: { label: 'Abandon' },
         sla_count: { label: 'SLA' },
         abandoned_percent: { label: 'Abandon [%]', formatter: (v, _, item) => this.percentageFormatter(item.abandoned, item.call_count) },
-        cpt: { label: 'CPT',formatter: this.durationFormatter }
+        cpt: { label: 'CPT',formatter: this.durationFormatter },
         asa: { label: 'ASA',formatter: this.durationFormatter }
       },
     }

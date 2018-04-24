@@ -122,7 +122,7 @@ export default {
       let enabled = this.enable.split(":")
       enabled.forEach((v) => this.enabled[v] = true)
     }
-    maybe_copy_params(this, this.value, ['date_start', 'date_end'])
+    maybe_copy_params(this, this.value, ['date_start', 'date_end', 'step', 'sla'])
   }
 }
 </script>
