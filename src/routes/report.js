@@ -27,19 +27,13 @@ import AgentGroupActivity from '@/Report/Legacy/Agent/Group/Activity'
 import AgentGroupAnswerPerformance from '@/Report/Legacy/Agent/Group/AnswerPerformance'
 import AgentGroupProductivity from '@/Report/Legacy/Agent/Group/Productivity'
 
-// Outbound
-import OutboundDetailByClient from '@/Report/Legacy/Outbound/OutboundDetailByClient'
-import OutboundOverviewByClient from '@/Report/Legacy/Outbound/OutboundOverviewByClient'
-// Traffic
-import ClientTrafficDetail from '@/Report/Legacy/Traffic/ClientTrafficDetail'
-import ClientTrafficOverview from '@/Report/Legacy/Traffic/ClientTrafficOverview'
-import LineTrafficDetail from '@/Report/Legacy/Traffic/LineTrafficDetail'
-import LineTrafficOverview from '@/Report/Legacy/Traffic/LineTrafficOverview'
-import QueueGroupTrafficOverview from '@/Report/Legacy/Traffic/QueueGroupTrafficOverview'
-import QueueTrafficDetail from '@/Report/Legacy/Traffic/QueueTrafficDetail'
-import QueueTrafficOverview from '@/Report/Legacy/Traffic/QueueTrafficOverview'
-import VoicemailDetail from '@/Report/Legacy/Traffic/VoicemailDetail'
-import VoicemailOverview from '@/Report/Legacy/Traffic/VoicemailOverview'
+// Traffic reports
+import OutboundDetails from '@/Report/Legacy/Outbound/Details'
+import OutboundSummary from '@/Report/Legacy/Outbound/Summary'
+import InboundDetails from '@/Report/Legacy/Inbound/Details'
+import InboundSummary from '@/Report/Legacy/Inbound/Summary'
+import VoicemailDetails from '@/Report/Legacy/Voicemail/Details'
+import VoicemailSummary from '@/Report/Legacy/Voicemail/Summary'
 
 export default [
   { path: 'agents/states', component: AgentsStates },
@@ -71,17 +65,11 @@ export default [
   { path: 'legacy/agent/group/answer-performance', component: AgentGroupAnswerPerformance },
   { path: 'legacy/agent/group/productivity', component: AgentGroupProductivity },
   
-  // Outbound
-  { path: 'legacy/outbound/detail-by-client', component: OutboundDetailByClient },
-  { path: 'legacy/outbound/overview-by-client', component: OutboundOverviewByClient },
   // Traffic
-  { path: 'legacy/traffic/client-detail', component: ClientTrafficDetail },
-  { path: 'legacy/traffic/client-overview', component: ClientTrafficOverview },
-  { path: 'legacy/traffic/line-detail', component: LineTrafficDetail },
-  { path: 'legacy/traffic/line-overview', component: LineTrafficOverview },
-  { path: 'legacy/traffic/queue-group-overview', component: QueueGroupTrafficOverview },
-  { path: 'legacy/traffic/queue-detail', component: QueueTrafficDetail },
-  { path: 'legacy/traffic/queue-overview', component: QueueTrafficOverview },
-  { path: 'legacy/traffic/voicemail-detail', component: VoicemailDetail },
-  { path: 'legacy/traffic/voicemail-overview', component: VoicemailOverview }
+  { path: 'legacy/outbound/details', component: OutboundDetails },
+  { path: 'legacy/outbound/summary', component: OutboundSummary },
+  { path: 'legacy/inbound/details', component: InboundDetails },
+  { path: 'legacy/inbound/summary', component: InboundSummary },
+  { path: 'legacy/voicemail/details', component: VoicemailDetails },
+  { path: 'legacy/voicemail/summary', component: VoicemailSummary },
 ]

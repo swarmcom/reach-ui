@@ -1,5 +1,10 @@
 <template>
 <div>
+  <b-row v-if="enabled.group_by" style="margin-bottom: 10px">
+    <b-col>
+
+    </b-col>
+  </b-row>
   <b-row v-if="enabled.agents" style="margin-bottom: 10px">
     <b-col>
       <widget-agents v-model="agents"></widget-agents>
@@ -84,7 +89,8 @@ export default {
       queues: [],
       clients: [],
       step: 60,
-      sla: 10
+      sla: 10,
+      group_by: undefined
     }
   },
   methods: {
@@ -98,6 +104,7 @@ export default {
       this.clients = [],
       this.step = 60
       this.sla = 10
+      this.group_by = undefined
       this.$emit('input', this.make_query())
     },
     apply () {
@@ -114,6 +121,7 @@ export default {
       if (this.enabled.clients && this.clients.length > 0 ) { Q.clients = this.clients.map(client => client.id) }
       if (this.enabled.step && this.step > 0 ) { Q.step = parseInt(this.step) }
       if (this.enabled.sla && this.sla > 0 ) { Q.sla = parseInt(this.sla) }
+      if (this.enabled.group_by && this.group_by > 0 ) { Q.group_by = this.group_by }
       return Q
     },
   },

@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Client traffic overview</h3></div>
+    <div class="col"><h3>Inbound details</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:clients:sla"></widget-query>
+  <widget-query v-model="query_params" enable="range:clients:step:sla"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 
@@ -12,17 +12,17 @@
 <script>
 import Query from '@/Report/Legacy/Query'
 import Base from '@/Report/Base'
-import Common from '@/Report/Legacy/Common'
 
 export default {
   components: { 'widget-query': Query },
-  mixins: [Base, Common],
+  mixins: [Base],
   data () {
     return {
-      query_params: {},
+      query_params: { step: 60 },
       data: [],
       fields: {
-        client: { label: 'Client', formatter: this.nameFormatter },
+        ts_from: { label: "From", formatter: this.tsFormatter },
+        ts_to: { label: "To", formatter: this.tsFormatter },
         call_count: { label: "Calls" },
         ring_count: { label: "Attempts" },
         answered_count: { label: "Answered" },
@@ -37,8 +37,7 @@ export default {
   },
   methods: {
     query: async function (query) {
-      query.group_by = "client"
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_traffic', 'summary', query])
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'details', query])
     },
   },
 }

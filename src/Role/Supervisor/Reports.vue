@@ -33,21 +33,10 @@
     <b-dropdown-item to="/reports/legacy/agent/group/productivity">Productivity</b-dropdown-item>
   </b-nav-item-dropdown>
 
-  <b-nav-item-dropdown text="Outbound">
-    <b-dropdown-item to="/reports/legacy/outbound/detail-by-client">Detail by Client</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/outbound/overview-by-client">Overview by Client</b-dropdown-item>
-  </b-nav-item-dropdown>
-
   <b-nav-item-dropdown text="Traffic">
-    <b-dropdown-item to="/reports/legacy/traffic/client-detail">Client Detail</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/client-overview">Client Overview</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/line-detail">Line Detail</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/line-overview">Line Overview</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/queue-group-overview">Queue Group Overview</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/queue-detail">Queue Detail</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/queue-overview">Queue Overview</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/voicemail-detail">Voicemail Detail</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/traffic/voicemail-overview">Voicemail Overview</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/inbound/summary">Inbound</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/outbound/summary">Outbound</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/voicemail/summary">Voicemail</b-dropdown-item>
   </b-nav-item-dropdown>
 
 </ul>
