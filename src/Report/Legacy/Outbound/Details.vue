@@ -29,7 +29,7 @@ export default {
         ts_to: { label: 'To', formatter: this.tsFormatter },
         placed: { label: 'Placed Calls' },
         answered: { label: 'Answered' },
-        answered_percent: { label: 'Answered [%]', formatter: (v) => this.percentageFormatter(v.placed/v.answered) },
+        answered_percent: { label: 'Answered [%]', formatter: (v, name, item) => this.percentageFormatter(item.placed, item.answered) },
         avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
         total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter },
       },
@@ -38,7 +38,7 @@ export default {
   methods: {
     query: async function (query) {
       query = this.set_query_params(query)
-      this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'details', query])
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'details', query])
     },
     set_query_params (params) {
       let q = this.$route.query

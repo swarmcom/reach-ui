@@ -24,10 +24,10 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        client: { label: 'Client', formatter: this.nameFormatter },
+        entity: { label: 'Name', formatter: this.nameFormatter },
         placed: { label: 'Calls' },
         answered: { label: 'Answered' },
-        answered_percent: { label: 'Answered [%]', formatter: (v) => this.percentageFormatter(v.answered, v.placed)},
+        answered_percent: { label: 'Answered [%]', formatter: (v, name, item) => this.percentageFormatter(item.answered, item.placed)},
         avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
         total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter },
         detail: { label: 'Detail' }
