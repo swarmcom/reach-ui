@@ -19,13 +19,13 @@
       <b-container style="margin-left:15px; min-width: 600px">
         <b-row>
           <b-col style="padding:0; max-width: 60px !important">
-            <div class="table-body-orange">
+            <div class="table-body-orange" style="height: 88px !important">
               CIQ<br>
               <span class="stats-value">{{statistics[0].ciq}}</span>
             </div>
           </b-col>
           <b-col style="padding:0; max-width: 60px !important">
-            <div class="table-body-green">
+            <div class="table-body-green" style="height: 88px !important">
               Agents<br>
               <span class="stats-value">{{statistics[0].agents}}</span>
             </div>
@@ -62,31 +62,31 @@
             </div>
           </b-col>
           <b-col style="padding:0; max-width: 60px !important">
-            <div class="table-body-blue">
+            <div class="table-body-blue" style="height: 88px !important">
               My CPT<br>
               <span class="stats-value">{{statistics[0].myCpt}}</span>
             </div>
           </b-col>
           <b-col style="padding:0; max-width: 60px !important">
-            <div class="table-body-blue">
+            <div class="table-body-blue" style="height: 88px !important">
               Team CPT<br>
               <span class="stats-value">{{statistics[0].teamCpt}}</span>
             </div>
           </b-col>
           <b-col style="padding:0; max-width: 60px !important">
-            <div class="table-body-blue">
+            <div class="table-body-blue" style="height: 88px !important">
               Occup.<br>
               <span class="stats-value">{{statistics[0].occup.oncall}}</span>
             </div>
           </b-col>
           <b-col style="padding:0; max-width: 60px !important">
-            <div class="table-body-blue">
+            <div class="table-body-blue" style="height: 88px !important">
               ASA<br>
               <span class="stats-value">{{statistics[0].asa}}</span>
             </div>
           </b-col>
           <b-col style="padding:0; max-width: 60px !important">
-            <div class="table-body-blue">
+            <div class="table-body-blue" style="height: 88px !important">
               Longest<br>
               <span class="stats-value">{{statistics[0].longest}}</span>
             </div>
