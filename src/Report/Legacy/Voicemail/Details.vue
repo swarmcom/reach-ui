@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Voicemail details</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:clients:sla"></widget-query>
+  <widget-query v-model="query_params" enable="step"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
@@ -12,38 +12,50 @@
 import Query from '@/Report/Legacy/Query'
 import Base from '@/Report/Base'
 
+function maybe_copy_params(Dst, Src, Params) {
+  Params.forEach( k => { if (Src[k]) { Dst[k] = parseInt(Src[k]) } })
+  return Dst
+}
+
 export default {
   components: { 'widget-query': Query },
   mixins: [Base],
   data () {
     return {
-      query_params: {},
+      query_params: { step: 60 },
       data: [],
       fields: {
         ts_from: { label: "From", formatter: this.tsFormatter },
         ts_to: { label: "To", formatter: this.tsFormatter },
-        queue: { label: 'Name', formatter: this.nameFormatter },
-        vm_left: { label: 'Total' },
-        vm_answered: { label: 'Answered' },
-        vm_callback_placed: { label: 'Callback' },
-        returned_percent: { label: 'Callback', formatter: (v, _, item) => this.percentageFormatter(item.vm_callback_placed, item.vm_answered) },
-        vm_callback_answered: { label: 'Answered by Caller' },
-        answered_caller_percent: {
-          label: '% Answered by Caller',
-          formatter: (v, _, item) => this.percentageFormatter(item.vm_callback_answered, item.vm_answered)
-        },
+        call_count: { label: 'Calls' },
+        ring_count: { label: 'Attempts' },
+        answered_count: { label: 'Answer' },
+        cpt: { label: "CPT", formatter: this.durationFormatter },
+        asa: { label: "ASA", formatter: this.durationFormatter },
         sla_count: { label: 'SLA' },
-        vm_sla_count: { label: 'Voicemail SLA' },
-        asa: { label: 'ASA', formatter: this.durationFormatter },
-        avg_time_to_callback: { label: 'Avg. Time to Callback', formatter: this.durationFormatter(v) },
+        callback_count: { label: 'Callbacks' },
+        callback_answered_count: { label: 'Answer' },
+        callback_abandoned_count: { label: 'Abandon' },
+        callback_cpt: { label: 'CPT' },
       },
     }
   },
   methods: {
     query: async function (query) {
-      query.group_by = "client"
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'summary', query])
+      query = this.set_query_params(query)
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'details', query])
     },
+    set_query_params (params) {
+      let q = this.$route.query
+      maybe_copy_params(params, q, ['date_start', 'date_end', 'sla'])
+      let entity = `${q.group_by}_id`
+      params[entity] = parseInt(q.entity_id)
+      return params
+    }
+  },
+  created () {
+    this.query_params = this.set_query_params(this.query_params)
+    this.query(this.query_params)
   },
 }
 </script>

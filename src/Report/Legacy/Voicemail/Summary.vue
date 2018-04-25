@@ -3,8 +3,12 @@
   <div class="row">
     <div class="col"><h3>Voicemail traffic overview</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:clients:sla"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
+  <widget-query v-model="query_params" enable="range:sla:group_by"></widget-query>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
+    <template slot="detail" slot-scope="data">
+      <b-link @click="detail(data.item)">details</b-link>
+    </template>
+  </b-table>
 </div>
 </template>
 
@@ -20,20 +24,18 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        queue: { label: 'Name', formatter: this.nameFormatter },
-        vm_left: { label: 'Total' },
-        vm_answered: { label: 'Answered' },
-        vm_callback_placed: { label: 'Callback' },
-        returned_percent: { label: 'Callback', formatter: (v, _, item) => this.percentageFormatter(item.vm_callback_placed, item.vm_answered) },
-        vm_callback_answered: { label: 'Answered by Caller' },
-        answered_caller_percent: {
-          label: '% Answered by Caller',
-          formatter: (v, _, item) => this.percentageFormatter(item.vm_callback_answered, item.vm_answered)
-        },
+        entity: { label: 'Name', formatter: this.nameFormatter },
+        call_count: { label: 'Calls' },
+        ring_count: { label: 'Attempts' },
+        answered_count: { label: 'Answer' },
+        cpt: { label: "CPT", formatter: this.durationFormatter },
+        asa: { label: "ASA", formatter: this.durationFormatter },
         sla_count: { label: 'SLA' },
-        vm_sla_count: { label: 'Voicemail SLA' },
-        asa: { label: 'ASA', formatter: this.durationFormatter },
-        avg_time_to_callback: { label: 'Avg. Time to Callback', formatter: this.durationFormatter(v) },
+        callback_count: { label: 'Callbacks' },
+        callback_answered_count: { label: 'Answer' },
+        callback_abandoned_count: { label: 'Abandon' },
+        callback_cpt: { label: 'CPT' },
+        detail: { label: 'Detail' }
       },
     }
   },
@@ -42,6 +44,14 @@ export default {
       query.group_by = "client"
       this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'summary', query])
     },
+    detail (data) {
+      let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
+      this.$router.push({ path: '/reports/legacy/voicemail/details', query: params })
+    }
+  },
+  created () {
+    this.query_params = this.set_query_params(this.query_params)
+    this.query(this.query_params)
   },
 }
 </script>
