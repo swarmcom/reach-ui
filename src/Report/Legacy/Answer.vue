@@ -1,12 +1,12 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Agent Groups Answer Performance</h3></div>
+    <div class="col"><h3>Answer Performance</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agent_groups"></widget-query>
+  <widget-query v-model="query_params" enable="range:group_by"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
     <template slot="detail" slot-scope="data">
-      <b-link @click="detail(data.item)">calls</b-link>
+      <b-link v-if="data.item.abandoned" @click="detail(data.item)">calls</b-link>
     </template>
   </b-table>
 </div>
@@ -24,23 +24,26 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        agent_group: { label: 'Group', formatter: this.nameFormatter },
+        entity: { label: 'Name', formatter: this.nameFormatter },
         ring_count: { label: 'Offered' },
         answered_count: { label: 'Answered' },
-        abandoned: { label: 'Failed' },
+        abandoned: { label: 'Abandoned' },
         percent_answered: { label: 'Percent Answered', formatter: (v, name, item) => this.percentageFormatter(item.answered_count, item.ring_count) },
-        detail: { label: 'Detail' }
+        detail: { label: 'Details' }
       },
     }
   },
   methods: {
     query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['answer_performance', 'group', query])
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_answer', 'summary', query])
     },
     detail (data) {
-      let params = this.maybe_copy_params({ agent_group_id: data.agent_group.id }, this.query_params, ['date_start', 'date_end'])
+      let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
       this.$router.push({ path: '/reports/sessions/unanswered', query: params })
     }
+  },
+  created () {
+    this.query(this.query_params)
   },
 }
 </script>

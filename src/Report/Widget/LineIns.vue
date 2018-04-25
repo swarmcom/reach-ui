@@ -1,6 +1,6 @@
 <template>
 <div class="form-inline">
-<autocomplete v-model="line_in" :query="query" placeholder="Line In..."></autocomplete>
+<autocomplete v-model="line" :query="query" placeholder="Line In..."></autocomplete>
 <button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="line in selected" @click="remove(line)">{{line.name}}</button>
 </div>
 </template>

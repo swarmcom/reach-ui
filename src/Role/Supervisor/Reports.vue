@@ -17,8 +17,6 @@
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Agent">
-    <b-dropdown-item to="/reports/legacy/agent/activity">Activity</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/answer-performance">Answer Performance</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/availability">Availability</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/productivity">Productivity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/call-disposition">Call Disposition</b-dropdown-item>
@@ -27,10 +25,10 @@
     <b-dropdown-item to="/reports/legacy/agent/concurrent-logged-in-agents">Concurrent Logged in Agents</b-dropdown-item>
   </b-nav-item-dropdown>
 
-  <b-nav-item-dropdown text="Agent Group">
-    <b-dropdown-item to="/reports/legacy/agent/group/activity">Activity</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/group/answer-performance">Answer Performance</b-dropdown-item>
-    <b-dropdown-item to="/reports/legacy/agent/group/productivity">Productivity</b-dropdown-item>
+  <b-nav-item-dropdown text="Summary">
+    <b-dropdown-item to="/reports/legacy/answer">Answer</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/activity">Activity</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/productivity">Productivity</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Traffic">

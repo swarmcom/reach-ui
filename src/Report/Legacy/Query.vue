@@ -110,6 +110,15 @@ export default {
         { value: 'agent_group', text: 'Agent Group' },
         { value: 'line_out', text: 'Line Out' }
       ],
+      activity_group_by_options: [
+        { value: 'agent', text: 'Agent' },
+        { value: 'agent_group', text: 'Agent Group' },
+        { value: 'client', text: 'Client' },
+      ],
+      productivity_group_by_options: [
+        { value: 'agent', text: 'Agent' },
+        { value: 'agent_group', text: 'Agent Group' },
+      ],
       selected: null,
       date_start: null,
       date_end: null,
@@ -201,10 +210,18 @@ export default {
       let enabled = this.enable.split(":")
       enabled.forEach((v) => this.enabled[v] = true)
     }
-    if (this.groupBy == "outbound") {
-      this.group_by_options = this.outbound_group_by_options
-    } else {
-      this.group_by_options = this.inbound_group_by_options
+    switch (this.groupBy) {
+      case "outbound":
+        this.group_by_options = this.outbound_group_by_options
+        break
+      case "activity":
+        this.group_by_options = this.activity_group_by_options
+        break
+      case "productivity":
+        this.group_by_options = this.productivity_group_by_options
+        break
+      default:
+        this.group_by_options = this.inbound_group_by_options
     }
     maybe_copy_params(this, this.value, ['date_start', 'date_end', 'step', 'sla'])
   }

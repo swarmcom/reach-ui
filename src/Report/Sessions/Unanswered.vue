@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Unanswered inbound calls</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:queues:queue_groups:clients"></widget-query>
+  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:queues:queue_groups:clients"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
       {{ format_ms(data.item.states.total) }}
@@ -52,7 +52,7 @@ function maybe_copy_params(Dst, Src, Params) {
 
 export default {
   components: { 'widget-query': Query },
-  props: ['agent_id'],
+  props: [],
   data () {
     return {
       query_params: {},
@@ -75,7 +75,7 @@ export default {
   methods: {
     query: async function(params) {
       try {
-        this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'unanswered', params])
+        this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_answer', 'details', params])
       }
       catch (e) {
         this.$notify({ title: 'Report Error:', text: e, type: 'error' })
@@ -102,12 +102,22 @@ export default {
       let params = this.query_params
       let session = this.sessions[this.sessions.length - 1]
       params.date_end = parseInt(session.ts/1000)
-      let more = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'inqueue', params])
+      let more = await this.$agent.p_mfa('ws_report', 'query', ['report_answer', 'details', params])
       this.sessions = this.sessions.concat(more)
+    },
+    is_standalone () {
+      return this.$route.query.group_by? false : true
+    },
+    set_query_params (params) {
+      let q = this.$route.query
+      maybe_copy_params(params, q, ['date_start', 'date_end'])
+      let entity = `${q.group_by}_id`
+      params[entity] = parseInt(q.entity_id)
+      return params
     }
   },
   created () {
-    maybe_copy_params(this.query_params, this.$route.query, ['agent_id', 'agent_group_id', 'date_start', 'date_end'])
+    this.query_params = this.set_query_params(this.query_params)
     this.query(this.query_params)
   },
   watch: {

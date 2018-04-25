@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Agent Groups Productivity</h3></div>
+    <div class="col"><h3>Productivity</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agent_groups"></widget-query>
+  <widget-query v-model="query_params" enable="range:group_by" group-by="productivity"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
@@ -20,14 +20,13 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        agent_group_name: { label: 'Name' },
-        agent_count: { label: 'Agents' },
+        entity: { label: 'Name', formatter: this.nameFormatter },
         occupancy: { label: 'Ocpncy', formatter: v => v ? v + '%' : 0 + '%' },
         cpt: { label: 'CPT', formatter: this.durationFormatter },
         total_time: { label: 'Logged In', formatter: this.durationFormatter },
         logged_out: { label: 'Logged Out', formatter: (v, _, item) => this.durationFormatter(item.range - item.total_time) },
-        released: { label: 'Rel.', formatter: this.durationFormatter },
-        suspended: { label: 'Susp.', formatter: this.durationFormatter },
+        released: { label: 'Release', formatter: this.durationFormatter },
+        suspended: { label: 'Suspend', formatter: this.durationFormatter },
         idle: { label: 'Idle', formatter: this.durationFormatter },
         ringing: { label: 'Ring', formatter: this.durationFormatter },
         talk_total: { label: 'Talk', formatter: this.durationFormatter },
@@ -37,7 +36,7 @@ export default {
   },
   methods: {
     query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['productivity', 'group', query])
+      this.data = await this.$agent.p_mfa('ws_report', 'query', ['productivity', 'report', query])
     },
   },
 }

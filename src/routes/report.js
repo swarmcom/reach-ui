@@ -13,19 +13,16 @@ import OutgoingEvents from '@/Report/Events/Outgoing'
 import AgentSessionEvents from '@/Report/Events/Agent'
 
 // Agent
-import AgentActivity from '@/Report/Legacy/Agent/Activity'
-import AgentAnswerPerformance from '@/Report/Legacy/Agent/AnswerPerformance'
 import AgentAvailability from '@/Report/Legacy/Agent/Availability'
-import AgentProductivity from '@/Report/Legacy/Agent/Productivity'
 import AgentCallDisposition from '@/Report/Legacy/Agent/CallDisposition'
 import AgentBoundedEvents from '@/Report/Legacy/Agent/BoundedEvents'
 import AgentEvents from '@/Report/Legacy/Agent/Events'
 import ConcurrentLoggedInAgents from '@/Report/Legacy/Agent/ConcurrentLoggedInAgents'
 
-// Agent Group
-import AgentGroupActivity from '@/Report/Legacy/Agent/Group/Activity'
-import AgentGroupAnswerPerformance from '@/Report/Legacy/Agent/Group/AnswerPerformance'
-import AgentGroupProductivity from '@/Report/Legacy/Agent/Group/Productivity'
+// Summary reports
+import AnswerSummary from '@/Report/Legacy/Answer'
+import ActivitySummary from '@/Report/Legacy/Activity'
+import ProductivitySummary from '@/Report/Legacy/Productivity'
 
 // Traffic reports
 import OutboundDetails from '@/Report/Legacy/Outbound/Details'
@@ -51,20 +48,17 @@ export default [
   { path: 'events/agent/:uuid', component: AgentSessionEvents, props: true },
 
   // Agent
-  { path: 'legacy/agent/activity', component: AgentActivity },
-  { path: 'legacy/agent/answer-performance', component: AgentAnswerPerformance },
   { path: 'legacy/agent/availability', component: AgentAvailability },
   { path: 'legacy/agent/call-disposition', component: AgentCallDisposition },
   { path: 'legacy/agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
-  { path: 'legacy/agent/productivity', component: AgentProductivity },
   { path: 'legacy/agent/bounded-events', component: AgentBoundedEvents },
   { path: 'legacy/agent/events', component: AgentEvents },
 
-  // Agent Group
-  { path: 'legacy/agent/group/activity', component: AgentGroupActivity },
-  { path: 'legacy/agent/group/answer-performance', component: AgentGroupAnswerPerformance },
-  { path: 'legacy/agent/group/productivity', component: AgentGroupProductivity },
-  
+  // Summary
+  { path: 'legacy/answer', component: AnswerSummary },
+  { path: 'legacy/activity', component: ActivitySummary },
+  { path: 'legacy/productivity', component: ProductivitySummary },
+
   // Traffic
   { path: 'legacy/outbound/details', component: OutboundDetails },
   { path: 'legacy/outbound/summary', component: OutboundSummary },
