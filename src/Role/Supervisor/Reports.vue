@@ -17,7 +17,6 @@
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Agent">
-    <b-dropdown-item to="/reports/legacy/agent/availability">Availability</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/productivity">Productivity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/call-disposition">Call Disposition</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/agent/bounded-events">Bounded Events</b-dropdown-item>
@@ -29,6 +28,7 @@
     <b-dropdown-item to="/reports/legacy/answer">Answer</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/activity">Activity</b-dropdown-item>
     <b-dropdown-item to="/reports/legacy/productivity">Productivity</b-dropdown-item>
+    <b-dropdown-item to="/reports/legacy/availability">Availability</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Traffic">

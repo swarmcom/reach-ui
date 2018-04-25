@@ -13,7 +13,6 @@ import OutgoingEvents from '@/Report/Events/Outgoing'
 import AgentSessionEvents from '@/Report/Events/Agent'
 
 // Agent
-import AgentAvailability from '@/Report/Legacy/Agent/Availability'
 import AgentCallDisposition from '@/Report/Legacy/Agent/CallDisposition'
 import AgentBoundedEvents from '@/Report/Legacy/Agent/BoundedEvents'
 import AgentEvents from '@/Report/Legacy/Agent/Events'
@@ -23,6 +22,7 @@ import ConcurrentLoggedInAgents from '@/Report/Legacy/Agent/ConcurrentLoggedInAg
 import AnswerSummary from '@/Report/Legacy/Answer'
 import ActivitySummary from '@/Report/Legacy/Activity'
 import ProductivitySummary from '@/Report/Legacy/Productivity'
+import Availability from '@/Report/Legacy/Availability'
 
 // Traffic reports
 import OutboundDetails from '@/Report/Legacy/Outbound/Details'
@@ -48,7 +48,6 @@ export default [
   { path: 'events/agent/:uuid', component: AgentSessionEvents, props: true },
 
   // Agent
-  { path: 'legacy/agent/availability', component: AgentAvailability },
   { path: 'legacy/agent/call-disposition', component: AgentCallDisposition },
   { path: 'legacy/agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
   { path: 'legacy/agent/bounded-events', component: AgentBoundedEvents },
@@ -56,6 +55,7 @@ export default [
 
   // Summary
   { path: 'legacy/answer', component: AnswerSummary },
+  { path: 'legacy/availability', component: Availability },
   { path: 'legacy/activity', component: ActivitySummary },
   { path: 'legacy/productivity', component: ProductivitySummary },
 
