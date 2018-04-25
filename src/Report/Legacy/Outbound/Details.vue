@@ -27,9 +27,10 @@ export default {
       fields: {
         ts_from: { label: 'From', formatter: this.tsFormatter  },
         ts_to: { label: 'To', formatter: this.tsFormatter },
-        placed: { label: 'Placed Calls' },
-        answered: { label: 'Answered' },
-        answered_percent: { label: 'Answered [%]', formatter: (v, name, item) => this.percentageFormatter(item.placed, item.answered) },
+        rings: { label: 'Calls' },
+        answers: { label: 'Answered' },
+        answered_percent: { label: 'Answered [%]', formatter: (v, name, item) => this.percentageFormatter(item.answers, item.calls)},
+        abandons: { label: 'Abandons' },
         avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
         total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter },
       },
