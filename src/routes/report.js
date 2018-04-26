@@ -13,24 +13,24 @@ import OutgoingEvents from '@/Report/Events/Outgoing'
 import AgentSessionEvents from '@/Report/Events/Agent'
 
 // Agent
-import AgentCallDisposition from '@/Report/Legacy/Agent/CallDisposition'
-import AgentBoundedEvents from '@/Report/Legacy/Agent/BoundedEvents'
-import AgentEvents from '@/Report/Legacy/Agent/Events'
-import ConcurrentLoggedInAgents from '@/Report/Legacy/Agent/ConcurrentLoggedInAgents'
+import AgentCallDisposition from '@/Report/Agent/CallDisposition'
+import AgentBoundedEvents from '@/Report/Agent/BoundedEvents'
+import AgentEvents from '@/Report/Agent/Events'
+import ConcurrentLoggedInAgents from '@/Report/Agent/ConcurrentLoggedInAgents'
 
 // Summary reports
-import AnswerSummary from '@/Report/Legacy/Answer'
-import ActivitySummary from '@/Report/Legacy/Activity'
-import ProductivitySummary from '@/Report/Legacy/Productivity'
-import Availability from '@/Report/Legacy/Availability'
+import AnswerSummary from '@/Report/Answer'
+import ActivitySummary from '@/Report/Activity'
+import ProductivitySummary from '@/Report/Productivity'
+import Availability from '@/Report/Availability'
 
 // Traffic reports
-import OutboundDetails from '@/Report/Legacy/Outbound/Details'
-import OutboundSummary from '@/Report/Legacy/Outbound/Summary'
-import InboundDetails from '@/Report/Legacy/Inbound/Details'
-import InboundSummary from '@/Report/Legacy/Inbound/Summary'
-import VoicemailDetails from '@/Report/Legacy/Voicemail/Details'
-import VoicemailSummary from '@/Report/Legacy/Voicemail/Summary'
+import OutboundDetails from '@/Report/Outbound/Details'
+import OutboundSummary from '@/Report/Outbound/Summary'
+import InboundDetails from '@/Report/Inbound/Details'
+import InboundSummary from '@/Report/Inbound/Summary'
+import VoicemailDetails from '@/Report/Voicemail/Details'
+import VoicemailSummary from '@/Report/Voicemail/Summary'
 
 export default [
   { path: 'agents/states', component: AgentsStates },
@@ -48,22 +48,22 @@ export default [
   { path: 'events/agent/:uuid', component: AgentSessionEvents, props: true },
 
   // Agent
-  { path: 'legacy/agent/call-disposition', component: AgentCallDisposition },
-  { path: 'legacy/agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
-  { path: 'legacy/agent/bounded-events', component: AgentBoundedEvents },
-  { path: 'legacy/agent/events', component: AgentEvents },
+  { path: 'agent/call-disposition', component: AgentCallDisposition },
+  { path: 'agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
+  { path: 'agent/bounded-events', component: AgentBoundedEvents },
+  { path: 'agent/events', component: AgentEvents },
 
   // Summary
-  { path: 'legacy/answer', component: AnswerSummary },
-  { path: 'legacy/availability', component: Availability },
-  { path: 'legacy/activity', component: ActivitySummary },
-  { path: 'legacy/productivity', component: ProductivitySummary },
+  { path: 'answer', component: AnswerSummary },
+  { path: 'availability', component: Availability },
+  { path: 'activity', component: ActivitySummary },
+  { path: 'productivity', component: ProductivitySummary },
 
   // Traffic
-  { path: 'legacy/outbound/details', component: OutboundDetails },
-  { path: 'legacy/outbound/summary', component: OutboundSummary },
-  { path: 'legacy/inbound/details', component: InboundDetails },
-  { path: 'legacy/inbound/summary', component: InboundSummary },
-  { path: 'legacy/voicemail/details', component: VoicemailDetails },
-  { path: 'legacy/voicemail/summary', component: VoicemailSummary },
+  { path: 'outbound/details', component: OutboundDetails },
+  { path: 'outbound/summary', component: OutboundSummary },
+  { path: 'inbound/details', component: InboundDetails },
+  { path: 'inbound/summary', component: InboundSummary },
+  { path: 'voicemail/details', component: VoicemailDetails },
+  { path: 'voicemail/summary', component: VoicemailSummary },
 ]
