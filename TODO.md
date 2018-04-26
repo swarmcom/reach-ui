@@ -5,6 +5,8 @@
 1. Cache data and maybe query parameters in reports (to allow navigation back and forth)
 2. Check group_by and range and display a warning if they are not set but required
 3. Maybe set default range to last 24 hours (if not specified)
+4. Add skills to queries
+5. Allow to hide empty intervals in traffic detail reports
 
 # Good to have
 
