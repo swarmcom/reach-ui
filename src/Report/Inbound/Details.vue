@@ -41,9 +41,9 @@ export default {
     }
   },
   methods: {
-    query: async function (query) {
+    query (query) {
       query = this.set_query_params(query)
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'details', query])
+      return this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'details', query])
     },
     set_query_params (params) {
       let q = this.$route.query
@@ -55,7 +55,7 @@ export default {
   },
   created () {
     this.query_params = this.set_query_params(this.query_params)
-    this.query(this.query_params)
+    this.safe_query(this.query_params)
   },
 }
 </script>

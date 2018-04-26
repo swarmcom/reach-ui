@@ -51,6 +51,12 @@
     <b-col cols=1 v-if="enabled.step">
       <input type="text" class="form-control" v-model="step" placeholder="step" value="step">
     </b-col>
+    <b-col cols=2 v-if="enabled.empty_intervals">
+      <b-form-select v-model="empty_intervals">
+        <option value=true>true</option>
+        <option value=false>false</option>
+      </b-form-select>
+    </b-col>
     <b-col cols=1 v-if="enabled.sla">
       <input type="text" class="form-control" v-model="sla" placeholder="sla" value="sla">
     </b-col>
@@ -133,6 +139,7 @@ export default {
       line_outs: [],
       step: 60,
       sla: 10,
+      empty_intervals: false,
       group_by: null
     }
   },
@@ -187,6 +194,7 @@ export default {
       if (this.enabled.step && this.step > 0 ) { Q.step = parseInt(this.step) }
       if (this.enabled.sla && this.sla > 0 ) { Q.sla = parseInt(this.sla) }
       if (this.enabled.group_by && this.group_by) { Q.group_by = this.group_by }
+      if (this.enabled.empty_intervals) { Q.empty_intervals = this.empty_intervals === 'true' }
       return Q
     },
     change_group_by (value) {
