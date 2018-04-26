@@ -40,9 +40,8 @@ export default {
     }
   },
   methods: {
-    query: async function (query) {
-      query.group_by = "client"
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'summary', query])
+    query (query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'summary', query])
     },
     detail (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
@@ -50,8 +49,7 @@ export default {
     }
   },
   created () {
-    this.query_params = this.set_query_params(this.query_params)
-    this.query(this.query_params)
+    this.safe_query(this.query_params)
   },
 }
 </script>

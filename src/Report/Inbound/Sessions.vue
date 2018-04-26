@@ -4,30 +4,30 @@
     <div class="col"><h3>Inbound calls</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
-      {{ format_ms(data.item.states.total) }}
+      {{ durationFormatter(data.item.states.total) }}
     </template>
     <template slot="state_inqueue" slot-scope="data">
-      {{ format_ms(data.item.states.states.inqueue) }}
+      {{ durationFormatter(data.item.states.states.inqueue) }}
     </template>
     <template slot="state_agent" slot-scope="data">
-      {{ format_ms(data.item.states.states.agent) }}
+      {{ durationFormatter(data.item.states.states.agent) }}
     </template>
     <template slot="state_oncall" slot-scope="data">
-      {{ format_ms(data.item.states.states.oncall) }}
+      {{ durationFormatter(data.item.states.states.oncall) }}
     </template>
     <template slot="line_in" slot-scope="data">
-      {{ maybe_name(data.item.line_in) }}
+      {{ nameFormatter(data.item.line_in) }}
     </template>
     <template slot="client" slot-scope="data">
-      {{ maybe_name(data.item.client) }}
+      {{ nameFormatter(data.item.client) }}
     </template>
     <template slot="queue" slot-scope="data">
-      {{ maybe_name(data.item.queue) }}
+      {{ nameFormatter(data.item.queue) }}
     </template>
     <template slot="agent" slot-scope="data">
-      {{ maybe_name(data.item.agent) }}
+      {{ nameFormatter(data.item.agent) }}
     </template>
     <template slot="caller_ip" slot-scope="data">
       {{ data.item.caller_ip }}
@@ -53,15 +53,17 @@
 <script>
 import Player from '@/Report/Player'
 import Query from '@/Report/Query'
-import moment from 'moment'
+import Base from '@/Report/Base'
 
 export default {
   components: { player: Player, 'widget-query': Query },
+  mixins: [Base],
   data () {
     return {
       query_params: {},
+      data: [],
       fields: {
-        ts_ms: { label: 'Ts', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
         state_total: { label: 'Total' },
         state_inqueue: { label: 'Inqueue' },
         state_agent: { label: 'Agent' },
@@ -73,53 +75,20 @@ export default {
         caller_ip: { label: 'IP' },
         caller: { label: 'Caller' },
         calling: { label: 'Calling' },
-        player: { label: ' ' }
+        player: { label: 'Play' }
       },
-      sessions: []
     }
   },
   methods: {
-    query: async function(params) {
-      try {
-        this.sessions = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'inqueue', params])
-      }
-      catch (e) {
-        this.$notify({ title: 'Report Error:', text: e, type: 'error' })
-      }
+    query (params) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'inqueue', params])
     },
     click ({uuid}) {
-      this.$router.push(`/reports/events/inqueue/${uuid}`)
+      this.$router.push(`/reports/inbound/session/events/${uuid}`)
     },
-    format_ms (ms) {
-      if (Number.isInteger(ms)) {
-        return (ms/1000).toFixed(1)
-      } else {
-        return ""
-      }
-    },
-    maybe_name (item) {
-      if (typeof item === 'object') {
-        return item.name
-      } else {
-        return ''
-      }
-    },
-    more: async function() {
-      let params = this.query_params
-      let session = this.sessions[this.sessions.length - 1]
-      params.date_end = parseInt(session.ts/1000)
-      let more = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'inqueue', params])
-      this.sessions = this.sessions.concat(more)
-    }
   },
   created () {
-    this.query(this.query_params)
+    this.safe_query(this.query_params)
   },
-  watch: {
-    query_params (value) {
-      this.query(value)
-      return value
-    }
-  }
 }
 </script>

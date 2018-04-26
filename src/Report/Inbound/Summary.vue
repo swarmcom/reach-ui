@@ -39,8 +39,8 @@ export default {
     }
   },
   methods: {
-    query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'summary', query])
+    query (params) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'summary', params])
     },
     detail (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])

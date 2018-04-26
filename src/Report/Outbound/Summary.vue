@@ -36,14 +36,13 @@ export default {
     }
   },
   methods: {
-    query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'summary', query])
+    query (query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'summary', query])
     },
     detail (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/outbound/details', query: params })
     }
-
   },
 }
 </script>

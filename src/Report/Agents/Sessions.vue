@@ -37,28 +37,15 @@ export default {
     }
   },
   methods: {
-    query: async function(params) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'agent', params])
+    query (params) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'agent', params])
     },
     click ({uuid}) {
       this.$router.push(`/reports/agent/session/events/${uuid}`)
     },
-    more: async function() {
-      let params = this.query_params
-      let session = this.data[this.data.length - 1]
-      params.date_end = parseInt(session.ts_ms/1000)
-      let more = await this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'agent', params])
-      this.data = this.data.concat(more)
-    }
   },
   created () {
-    this.query(this.query_params)
+    this.safe_query(this.query_params)
   },
-  watch: {
-    query_params (value) {
-      this.query(value)
-      return value
-    }
-  }
 }
 </script>
