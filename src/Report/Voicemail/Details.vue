@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Query from '@/Report/Legacy/Query'
+import Query from '@/Report/Query'
 import Base from '@/Report/Base'
 
 function maybe_copy_params(Dst, Src, Params) {

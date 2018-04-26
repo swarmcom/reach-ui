@@ -52,7 +52,7 @@
 
 <script>
 import Player from '@/Report/Player'
-import Query from '@/Report/Legacy/Query'
+import Query from '@/Report/Query'
 import moment from 'moment'
 
 export default {

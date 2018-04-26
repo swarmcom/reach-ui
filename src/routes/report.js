@@ -5,12 +5,14 @@ import MeasuresAvg from '@/Report/Measures/Avg'
 import InqueueSessions from '@/Report/Sessions/Inqueue'
 import VoicemailSessions from '@/Report/Sessions/Voicemail'
 import OutgoingSessions from '@/Report/Sessions/Outgoing'
-import AgentSessions from '@/Report/Sessions/Agent'
 import UnansweredSessions from '@/Report/Sessions/Unanswered'
 import InqueueEvents from '@/Report/Events/Inqueue'
 import VoicemailEvents from '@/Report/Events/Voicemail'
 import OutgoingEvents from '@/Report/Events/Outgoing'
-import AgentSessionEvents from '@/Report/Events/Agent'
+
+// Agents
+import AgentsSessions from '@/Report/Agents/Sessions'
+import AgentSessionEvents from '@/Report/Agent/Session/Events'
 
 // Agent
 import AgentCallDisposition from '@/Report/Agent/CallDisposition'
@@ -40,12 +42,14 @@ export default [
   { path: 'sessions/inqueue', component: InqueueSessions },
   { path: 'sessions/voicemail', component: VoicemailSessions },
   { path: 'sessions/outgoing', component: OutgoingSessions },
-  { path: 'sessions/agent', component: AgentSessions },
   { path: 'sessions/unanswered', component: UnansweredSessions },
   { path: 'events/inqueue/:uuid', component: InqueueEvents, props: true },
   { path: 'events/voicemail/:uuid', component: VoicemailEvents, props: true },
   { path: 'events/outgoing/:id', component: OutgoingEvents, props: true },
-  { path: 'events/agent/:uuid', component: AgentSessionEvents, props: true },
+
+  // Agents
+  { path: 'agents/sessions', component: AgentsSessions },
+  { path: 'agent/session/events/:uuid', component: AgentSessionEvents, props: true },
 
   // Agent
   { path: 'agent/call-disposition', component: AgentCallDisposition },

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Query from '@/Report/Legacy/Query'
+import Query from '@/Report/Query'
 import Base from '@/Report/Base'
 
 export default {
@@ -46,7 +46,7 @@ export default {
     },
     detail (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
-      this.$router.push({ path: '/reports/legacy/voicemail/details', query: params })
+      this.$router.push({ path: '/reports/voicemail/details', query: params })
     }
   },
   created () {

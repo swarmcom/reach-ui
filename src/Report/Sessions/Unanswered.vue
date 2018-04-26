@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import Query from '@/Report/Legacy/Query'
+import Query from '@/Report/Query'
 import moment from 'moment'
 
 function maybe_copy_params(Dst, Src, Params) {

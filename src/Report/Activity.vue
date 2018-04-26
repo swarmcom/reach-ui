@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Query from '@/Report/Legacy/Query'
+import Query from '@/Report/Query'
 import Base from '@/Report/Base'
 
 export default {
