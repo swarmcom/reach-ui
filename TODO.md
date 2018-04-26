@@ -2,16 +2,13 @@
 
 # On
 
-1. Display other inqueue types
-2. Make UI refreshable (e.g. reload window and reconnect to the same state)
-3. Make table views to remember column ordering
-4. Make Transfer/Conference drop-down list updated
- 
+1. Cache data and maybe query parameters in reports (to allow navigation back and forth)
+2. Check group_by and range and display a warning if they are not set but required
+3. Maybe set default range to last 24 hours (if not specified)
+
 # Good to have
 
-1. Make certain components more abstract, inheritance maybe
 3. Make it gzipped for production
-4. Maybe cache certain data (release codes)
 
 # Done
 
