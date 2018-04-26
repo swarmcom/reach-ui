@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Outbound traffic summary</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:group_by" group-by="outbound"></widget-query>
+  <widget-query v-model="query_params" enable="range:group_by" group-by="outbound" require-range></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="details">
     <template slot="entity" slot-scope="data">
       <b-link @click.stop="sessions(data)">{{ nameFormatter(data.item.entity) }}</b-link>

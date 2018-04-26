@@ -41,7 +41,6 @@
     </b-col>
   </b-row>
 
-
   <b-row>
     <b-col cols=3 v-if="enabled.range">
       <widget-date v-model="date_start" placeholder="Start date"></widget-date>
@@ -62,6 +61,7 @@
       <button @click="reset" class="btn btn-outline-success">Reset</button>
     </b-col>
   </b-row>
+  <b-modal header-bg-variant="danger" header-text-variant="light" title="Parameters error" ok-only v-model="showError">{{ error }}</b-modal>
 </div>
 </template>
 
@@ -82,7 +82,7 @@ function maybe_copy_params(Dst, Src, Params) {
 
 export default {
   name: 'report-query',
-  props: ['value', 'enable', 'group-by'],
+  props: ['value', 'enable', 'group-by', 'require-range'],
   components: {
     'widget-date': ReportDate,
     'widget-agents': Agents,
@@ -96,6 +96,8 @@ export default {
   data () {
     return {
       enabled: {},
+      showError: false,
+      error: '',
       inbound_group_by_options: [
         { value: 'client', text: 'Client' },
         { value: 'agent', text: 'Agent' },
@@ -152,7 +154,24 @@ export default {
       this.$emit('input', this.make_query())
     },
     apply () {
-      this.$emit('input', this.make_query())
+      if (this.validate()) {
+        this.$emit('input', this.make_query())
+      }
+    },
+    validate () {
+      if (this.enabled.group_by && ! this.group_by) {
+        this.show_error("Please select report group")
+        return false
+      }
+      if (this.requireRange && (! this.date_start || ! this.date_end)) {
+        this.show_error("Please specify a date range")
+        return false
+      }
+      return true
+    },
+    show_error (Error) {
+      this.error = Error
+      this.showError = true
     },
     make_query() {
       let Q = {}
@@ -222,6 +241,9 @@ export default {
         break
       default:
         this.group_by_options = this.inbound_group_by_options
+    }
+    if (this.requireRange == "") {
+      this.requireRange = true
     }
     maybe_copy_params(this, this.value, ['date_start', 'date_end', 'step', 'sla'])
   }
