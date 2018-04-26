@@ -5,6 +5,9 @@
   </div>
   <widget-query v-model="query_params" enable="range:sla:group_by"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+    <template slot="entity" slot-scope="data">
+      <b-link @click.stop="sessions(data)">{{ nameFormatter(data.item.entity) }}</b-link>
+    </template>
     <template slot="abandoned" slot-scope="data">
       {{ data.item.abandoned }} / {{ percentageFormatter(data.item.abandoned, data.item.ring_count) }}
     </template>
@@ -24,7 +27,7 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        entity: { label: 'Name', formatter: this.nameFormatter },
+        entity: { label: 'Name' },
         calls: { label: "Calls" },
         rings: { label: "Attempts" },
         answers: { label: "Answered" },
@@ -43,6 +46,10 @@ export default {
     click (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/inbound/details', query: params })
+    },
+    sessions ({item}) {
+      let params = this.maybe_copy_params({ entity_id: item.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
+      this.$router.push({ path: '/reports/inbound/sessions', query: params })
     }
   },
 }

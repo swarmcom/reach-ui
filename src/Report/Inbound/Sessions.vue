@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Inbound sessions</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
+  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
       {{ durationFormatter(data.item.states.total) }}
@@ -86,8 +86,22 @@ export default {
     click ({uuid}) {
       this.$router.push(`/reports/inbound/session/events/${uuid}`)
     },
+    is_standalone () {
+      return this.$route.query.group_by? false : true
+    },
+    set_query_params (params) {
+      if (! this.is_standalone()) {
+        return params
+      }
+      let q = this.$route.query
+      maybe_copy_params(params, q, ['date_start', 'date_end'])
+      let entity = `${q.group_by}_id`
+      params[entity] = parseInt(q.entity_id)
+      return params
+    }
   },
   created () {
+    this.query_params = this.set_query_params(this.query_params)
     this.safe_query(this.query_params)
   },
 }
