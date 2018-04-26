@@ -4,7 +4,7 @@
     <div class="col"><h3>Inbound traffic overview</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:sla:group_by"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="details">
     <template slot="entity" slot-scope="data">
       <b-link @click.stop="sessions(data)">{{ nameFormatter(data.item.entity) }}</b-link>
     </template>
@@ -43,7 +43,7 @@ export default {
     query (params) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'summary', params])
     },
-    click (data) {
+    details (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/inbound/details', query: params })
     },

@@ -26,8 +26,9 @@ export default {
     }
   },
   methods: {
-    query () {
-      return this.$agent.p_mfa('ws_report', 'query', ['report_events', 'outgoing', { uuid: this.id }])
+    query (params) {
+      params.uuid = this.id
+      return this.$agent.p_mfa('ws_report', 'query', ['report_events', 'outgoing', params])
     },
   },
   created () {

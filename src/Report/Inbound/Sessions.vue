@@ -86,19 +86,6 @@ export default {
     click ({uuid}) {
       this.$router.push(`/reports/inbound/session/events/${uuid}`)
     },
-    is_standalone () {
-      return this.$route.query.group_by? false : true
-    },
-    set_query_params (params) {
-      if (! this.is_standalone()) {
-        return params
-      }
-      let q = this.$route.query
-      maybe_copy_params(params, q, ['date_start', 'date_end'])
-      let entity = `${q.group_by}_id`
-      params[entity] = parseInt(q.entity_id)
-      return params
-    }
   },
   created () {
     this.query_params = this.set_query_params(this.query_params)

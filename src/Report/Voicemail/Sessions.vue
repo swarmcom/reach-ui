@@ -3,28 +3,28 @@
   <div class="row">
     <div class="col"><h3>Voicemails</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="sessions" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
-      {{ this.durationFormatter(data.item.states.total) }}
+      {{ durationFormatter(data.item.states.total) }}
     </template>
     <template slot="state_inqueue" slot-scope="data">
-      {{ this.durationFormatter(data.item.states.states.inqueue) }}
+      {{ durationFormatter(data.item.states.states.inqueue) }}
     </template>
     <template slot="state_agent" slot-scope="data">
-      {{ this.durationFormatter(data.item.states.states.agent) }}
+      {{ durationFormatter(data.item.states.states.agent) }}
     </template>
     <template slot="state_oncall" slot-scope="data">
-      {{ this.durationFormatter(data.item.states.states.oncall) }}
+      {{ durationFormatter(data.item.states.states.oncall) }}
     </template>
     <template slot="line_in" slot-scope="data">
-      {{ this.nameFormatter(data.item.line_in) }}
+      {{ nameFormatter(data.item.line_in) }}
     </template>
     <template slot="client" slot-scope="data">
-      {{ this.nameFormatter(data.item.client) }}
+      {{ nameFormatter(data.item.client) }}
     </template>
     <template slot="agent" slot-scope="data">
-      {{ this.nameFormatter(data.item.agent) }}
+      {{ nameFormatter(data.item.agent) }}
     </template>
     <template slot="caller_ip" slot-scope="data">
       {{ data.item.caller_ip }}
@@ -73,7 +73,6 @@ export default {
         calling: { label: 'Calling' },
         player: { label: ' ' }
       },
-      sessions: []
     }
   },
   methods: {
@@ -85,6 +84,7 @@ export default {
     },
   },
   created () {
+    this.query_params = this.set_query_params(this.query_params)
     this.safe_query(this.query_params)
   },
 }

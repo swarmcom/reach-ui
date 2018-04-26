@@ -3,62 +3,39 @@
   <div class="row">
     <div class="col"><h3>Voicemail events</h3></div>
   </div>
-  <b-table style="margin-top:10px" small striped hover :items="events" :fields="fields">
-    <template slot="line_in" slot-scope="data">
-      {{ data.item.line_in.name }}
-    </template>
-    <template slot="client" slot-scope="data">
-      {{ data.item.client.name }}
-    </template>
-    <template slot="agent" slot-scope="data">
-      {{ maybe_name(data.item.agent) }}
-    </template>
-  </b-table>
+  <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
 
 <script>
-import moment from 'moment'
-
-function format_ms(ms) {
-  if (Number.isInteger(ms)) {
-    return (ms/1000).toFixed(1)
-  } else {
-    return ""
-  }
-}
+import Base from '@/Report/Base'
 
 export default {
-  name: 'report-events-inqueue',
   props: ['uuid'],
+  mixins: [Base],
   data () {
     return {
+      query_params: {},
+      data: [],
       fields: {
-        ts_start_ms: { label: 'Time', sortable: true, formatter: ts => new moment(ts, "x").format("YYYY-MM-DD HH:mm:ss") },
+        ts_start_ms: { label: 'Time', formatter: this.tsMsFormatter },
         state_from: { label: 'From' },
         state: { label: 'To' },
-        time: { label: 'Time', formatter: format_ms },
-        line_in: { label: 'Line In', sortable: true },
-        client: { label: 'Client', sortable: true },
-        agent: { label: 'Agent', sortable: true }
+        time: { label: 'Time', formatter: this.durationFormatter },
+        queue: { label: 'Queue', formatter: this.nameFormatter },
+        agent: { label: 'Agent', formatter: this.nameFormatter}
       },
       events: []
     }
   },
   methods: {
-    query: async function() {
-      this.events = await this.$agent.p_mfa('ws_report', 'query', ['report_events', 'voicemail', { uuid: this.uuid }])
+    query (params) {
+      params.uuid = this.uuid
+      return this.$agent.p_mfa('ws_report', 'query', ['report_events', 'voicemail', params])
     },
-    maybe_name (item) {
-      if (typeof item === 'object') {
-        return item.name
-      } else {
-        return ''
-      }
-    }
   },
   created () {
-    this.query()
+    this.safe_query(this.query_params)
   },
 }
 </script>

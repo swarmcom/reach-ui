@@ -4,7 +4,10 @@
     <div class="col"><h3>Outbound traffic summary</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:group_by" group-by="outbound"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="details">
+    <template slot="entity" slot-scope="data">
+      <b-link @click.stop="sessions(data)">{{ nameFormatter(data.item.entity) }}</b-link>
+    </template>
     <template slot="answers" slot-scope="data">
       {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.calls) }}
     </template>
@@ -40,9 +43,13 @@ export default {
     query (query) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'summary', query])
     },
-    click (data) {
+    details (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/outbound/details', query: params })
+    },
+    sessions ({item}) {
+      let params = this.maybe_copy_params({ entity_id: item.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
+      this.$router.push({ path: '/reports/outbound/sessions', query: params })
     }
   },
 }

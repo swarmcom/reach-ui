@@ -45,11 +45,6 @@
 import Query from '@/Report/Query'
 import Base from '@/Report/Base'
 
-function maybe_copy_params(Dst, Src, Params) {
-  Params.forEach( k => { if (Src[k]) { Dst[k] = parseInt(Src[k]) } })
-  return Dst
-}
-
 export default {
   components: { 'widget-query': Query },
   mixins: [Base],
@@ -80,18 +75,6 @@ export default {
     click ({uuid}) {
       this.$router.push(`/reports/inbound/session/events/${uuid}`)
     },
-    is_standalone () {
-      return this.$route.query.group_by? false : true
-    },
-    set_query_params (params) {
-      let q = this.$route.query
-      if (q.group_by) {
-        maybe_copy_params(params, q, ['date_start', 'date_end'])
-        let entity = `${q.group_by}_id`
-        params[entity] = parseInt(q.entity_id)
-      }
-      return params
-    }
   },
   created () {
     this.query_params = this.set_query_params(this.query_params)

@@ -34,6 +34,10 @@ export default {
       Params.forEach( k => { if (Src[k]) { Dst[k] = Src[k] } })
       return Dst
     },
+    maybe_copy_int_params (Dst, Src, Params) {
+      Params.forEach( k => { if (Src[k]) { Dst[k] = parseInt(Src[k]) } })
+      return Dst
+    },
     more: async function() {
       if (this.data.length == 0) {
         return
@@ -43,6 +47,19 @@ export default {
       params.date_end = parseInt(session.ts_ms/1000)
       let more = await this.query(params)
       this.data = this.data.concat(more)
+    },
+    is_standalone () {
+      return this.$route.query.group_by? false : true
+    },
+    set_query_params (params) {
+      if (this.is_standalone()) {
+        return params
+      }
+      let q = this.$route.query
+      this.maybe_copy_int_params(params, q, ['date_start', 'date_end'])
+      let entity = `${q.group_by}_id`
+      params[entity] = parseInt(q.entity_id)
+      return params
     }
   },
   watch: {
