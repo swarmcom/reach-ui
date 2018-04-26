@@ -5,8 +5,20 @@
   </div>
   <widget-query v-model="query_params" enable="range:group_by"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
+    <template slot="answers" slot-scope="data">
+      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.rings) }}
+    </template>
+    <template slot="abandons" slot-scope="data">
+      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.rings) }}
+    </template>
+    <template slot="voicemails" slot-scope="data">
+      {{ data.item.voicemails }} / {{ percentageFormatter(data.item.voicemails, data.item.rings) }}
+    </template>
+    <template slot="aborts" slot-scope="data">
+      {{ data.item.aborts }} / {{ percentageFormatter(data.item.aborts, data.item.rings) }}
+    </template>
     <template slot="detail" slot-scope="data">
-      <b-link v-if="data.item.abandoned" @click="detail(data.item)">calls</b-link>
+      <b-link v-if="are_calls(data.item)" @click="detail(data.item)">calls</b-link>
     </template>
   </b-table>
 </div>
@@ -25,25 +37,26 @@ export default {
       data: [],
       fields: {
         entity: { label: 'Name', formatter: this.nameFormatter },
-        ring_count: { label: 'Offered' },
-        answered_count: { label: 'Answered' },
-        abandoned: { label: 'Abandoned' },
-        percent_answered: { label: 'Percent Answered', formatter: (v, name, item) => this.percentageFormatter(item.answered_count, item.ring_count) },
-        detail: { label: 'Details' }
+        rings: { label: 'Calls' },
+        answers: { label: 'Answer' },
+        abandons: { label: 'Abandon' },
+        aborts: { label: 'Abort' },
+        voicemails: { label: 'VM' },
+        detail: { label: 'Unanswered' }
       },
     }
   },
   methods: {
-    query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_answer', 'summary', query])
+    are_calls (item) {
+      return (item.abandons > 0 || item.voicemails > 0 || item.aborts > 0)
+    },
+    query (query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_answer', 'summary', query])
     },
     detail (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
-      this.$router.push({ path: '/reports/sessions/unanswered', query: params })
+      this.$router.push({ path: '/reports/inbound/unanswered', query: params })
     }
-  },
-  created () {
-    this.query(this.query_params)
   },
 }
 </script>

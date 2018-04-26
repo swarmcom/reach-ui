@@ -23,7 +23,7 @@ export default {
       }
     },
     percentageFormatter (a, b) {
-      return (a !== undefined && b !== 0) ? (100*a/b).toFixed(1)+'%' : ''
+      return (a > 0 && b > 0) ? (100*a/b).toFixed(1)+'%' : '0%'
     },
     nameFormatter (v) {
       return v.name
