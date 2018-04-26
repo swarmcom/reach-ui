@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inbound call events</h3></div>
+    <div class="col"><h3>Inbound session events</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
@@ -18,12 +18,12 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        ts_start_ms: { label: 'Time', formatter: this.msTsFormatter },
+        ts_start_ms: { label: 'Time', formatter: this.tsMsFormatter },
         state_from: { label: 'From' },
         state: { label: 'To' },
         time: { label: 'Time', formatter: this.durationFormatter },
-        queue: { label: 'Queue', formatter: this.msTsFormatter },
-        agent: { label: 'Agent', formatter: this.msTsFormatter }
+        queue: { label: 'Queue', formatter: this.nameFormatter },
+        agent: { label: 'Agent', formatter: this.nameFormatter }
       },
     }
   },

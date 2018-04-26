@@ -16,7 +16,11 @@ export default {
       }
     },
     durationFormatter (v) {
-      return moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
+      if (v) {
+        return moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
+      } else {
+        return ''
+      }
     },
     percentageFormatter (a, b) {
       return (a !== undefined && b !== 0) ? (100*a/b).toFixed(1)+'%' : ''
