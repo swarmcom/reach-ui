@@ -4,9 +4,12 @@
     <div class="col"><h3>Outbound traffic summary</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:group_by" group-by="outbound"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
-    <template slot="detail" slot-scope="data">
-      <b-link @click="detail(data.item)">details</b-link>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+    <template slot="answers" slot-scope="data">
+      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.calls) }}
+    </template>
+    <template slot="abandons" slot-scope="data">
+      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.calls) }}
     </template>
   </b-table>
 </div>
@@ -26,12 +29,10 @@ export default {
       fields: {
         entity: { label: 'Name', formatter: this.nameFormatter },
         rings: { label: 'Calls' },
-        answers: { label: 'Answered' },
-        answered_percent: { label: 'Answered [%]', formatter: (v, name, item) => this.percentageFormatter(item.answers, item.calls)},
-        abandons: { label: 'Abandons' },
+        answers: { label: 'Answer' },
+        abandons: { label: 'Abandon' },
         avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
-        total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter },
-        detail: { label: 'Detail' }
+        total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter }
       },
     }
   },
@@ -39,7 +40,7 @@ export default {
     query (query) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'summary', query])
     },
-    detail (data) {
+    click (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/outbound/details', query: params })
     }

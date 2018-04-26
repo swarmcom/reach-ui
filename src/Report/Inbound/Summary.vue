@@ -4,9 +4,9 @@
     <div class="col"><h3>Inbound traffic overview</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:sla:group_by"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
-    <template slot="detail" slot-scope="data">
-      <b-link @click="detail(data.item)">details</b-link>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
+    <template slot="abandoned" slot-scope="data">
+      {{ data.item.abandoned }} / {{ percentageFormatter(data.item.abandoned, data.item.ring_count) }}
     </template>
   </b-table>
 </div>
@@ -29,12 +29,10 @@ export default {
         ring_count: { label: "Attempts" },
         answered_count: { label: "Answered" },
         abandoned: { label: "Abandon" },
-        abandoned_percent: { label: "Abandon [%]", formatter: (v, _, item) => this.percentageFormatter(item.abandoned, item.ring_count) },
         voicemail: { label: "VM"  },
         sla_count: { label: "SLA" },
         cpt: { label: "CPT", formatter: this.durationFormatter },
         asa: { label: "ASA", formatter: this.durationFormatter },
-        detail: { label: 'Detail' }
       },
     }
   },
@@ -42,7 +40,7 @@ export default {
     query (params) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'summary', params])
     },
-    detail (data) {
+    click (data) {
       let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/inbound/details', query: params })
     }
