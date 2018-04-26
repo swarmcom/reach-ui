@@ -163,7 +163,7 @@ export default {
         this.show_error("Please select report group")
         return false
       }
-      if (this.requireRange && (! this.date_start || ! this.date_end)) {
+      if (this.requireRange == "" && (! this.date_start || ! this.date_end)) {
         this.show_error("Please specify a date range")
         return false
       }
@@ -241,9 +241,6 @@ export default {
         break
       default:
         this.group_by_options = this.inbound_group_by_options
-    }
-    if (this.requireRange == "") {
-      this.requireRange = true
     }
     maybe_copy_params(this, this.value, ['date_start', 'date_end', 'step', 'sla'])
   }
