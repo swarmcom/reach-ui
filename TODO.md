@@ -3,10 +3,10 @@
 # On
 
 1. Cache data and maybe query parameters in reports (to allow navigation back and forth)
-2. Check group_by and range and display a warning if they are not set but required
-3. Maybe set default range to last 24 hours (if not specified)
-4. Add skills to queries
-5. Allow to hide empty intervals in traffic detail reports
+2. Maybe set default range to last 24 hours (if not specified)
+3. Add skills to queries
+4. Allow to hide empty intervals in traffic detail reports
+5. Combine values with percentages where applicable
 
 # Good to have
 
@@ -14,6 +14,7 @@
 
 # Done
 
+2. Check group_by and range and display a warning if they are not set but required
 3. Fix time counter on incoming call on actions like requeue
 2. Have a config as a separate file (apart from web-pack)
 2. Add transfer_to_uri
