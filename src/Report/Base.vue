@@ -10,6 +10,7 @@ export default {
     safe_query: async function (query) {
       try {
         this.data = await this.query(query)
+        this.saveCache()
       }
       catch (e) {
         this.$notify({ title: 'Report Error:', text: e, type: 'error' })
@@ -64,13 +65,34 @@ export default {
       let entity = `${q.group_by}_id`
       params[entity] = parseInt(q.entity_id)
       return params
-    }
+    },
+    unique_name () {
+      return this.$route.path
+    },
+    saveCache () {
+      let key = this.unique_name()
+      if (!this.$agent.vm.reports_cache[key]) {
+        this.$agent.vm.reports_cache[key] = {}
+      }
+      this.$agent.vm.reports_cache[key]['query_params'] = this.query_params
+      this.$agent.vm.reports_cache[key]['data'] = this.data
+    },
+    loadCache () {
+      let key = this.unique_name()
+      if (this.$agent.vm.reports_cache[key]) {
+        this.query_params = this.$agent.vm.reports_cache[key]['query_params']
+        this.data = this.$agent.vm.reports_cache[key]['data']
+      }
+    },
   },
   watch: {
     query_params (value) {
       this.safe_query(value)
       return value
     }
+  },
+  created () {
+    this.loadCache()
   }
 }
 </script>

@@ -54,6 +54,7 @@ export default class Agent extends WsProto {
         activity_time: undefined,
         release_id: undefined,
         storage_data: {},
+        reports_cache: {},
         wide_page: {},
         layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
         canLogout: true,

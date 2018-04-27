@@ -250,7 +250,7 @@ export default {
       default:
         this.group_by_options = this.inbound_group_by_options
     }
-    maybe_copy_params(this, this.value, ['date_start', 'date_end', 'step', 'sla'])
+    maybe_copy_params(this, this.value, ['group_by', 'date_start', 'date_end', 'step', 'sla'])
   }
 }
 </script>
