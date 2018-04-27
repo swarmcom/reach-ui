@@ -55,6 +55,7 @@ export default {
   },
   created () {
     this.query_params = this.set_query_params(this.query_params)
+    this.safe_query(this.query_params)
   },
 }
 </script>

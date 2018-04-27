@@ -6,6 +6,11 @@ import moment from 'moment'
 import momentDurationFormat from 'moment-duration-format'
 
 export default {
+  data () {
+    return {
+      skip_load: false
+    }
+  },
   methods: {
     safe_query: async function (query) {
       try {
@@ -80,6 +85,7 @@ export default {
     loadCache () {
       let key = this.unique_name()
       if (this.$agent.vm.reports_cache[key]) {
+        this.skip_load = true
         this.query_params = this.$agent.vm.reports_cache[key]['query_params']
         this.data = this.$agent.vm.reports_cache[key]['data']
       }
@@ -87,7 +93,10 @@ export default {
   },
   watch: {
     query_params (value) {
-      this.safe_query(value)
+      if (! this.skip_load) {
+        this.safe_query(value)
+      }
+      this.skip_load = false
       return value
     }
   },
