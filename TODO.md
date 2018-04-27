@@ -2,7 +2,6 @@
 
 # On
 
-1. Cache data and maybe query parameters in reports (to allow navigation back and forth)
 2. Maybe set default range to last 24 hours (if not specified)
 3. Add skills to queries
 5. Dispositions report: by agent, by calls
@@ -17,6 +16,7 @@
 
 # Done
 
+1. Cache data and maybe query parameters in reports (to allow navigation back and forth)
 4. Combine values with percentages where applicable
 1. Allow to hide empty intervals in traffic detail reports
 2. Check group_by and range and display a warning if they are not set but required
