@@ -2,6 +2,7 @@
 
 # On
 
+1. Player functionality for vm, inbound and inqueue records
 2. Maybe set default range to last 24 hours (if not specified)
 3. Add skills to queries
 5. Dispositions report: by agent, by calls
