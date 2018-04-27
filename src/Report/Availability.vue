@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Availability</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients:step:sla"></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients:step:sla:empty_intervals" require-range></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
 </div>
 </template>
@@ -18,7 +18,7 @@ export default {
   mixins: [Base],
   data () {
     return {
-      query_params: { step: 60, sla: 10 },
+      query_params: { step: 60, sla: 10, empty_intervals: false },
       data: [],
       fields: {
         ts_from: { label: 'From', formatter: this.tsFormatter },
@@ -37,8 +37,8 @@ export default {
     }
   },
   methods: {
-    query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['availability', 'report', query])
+    query (query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['availability', 'report', query])
     }
   },
 }
