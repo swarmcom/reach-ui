@@ -4,7 +4,11 @@
     <div class="col"><h3>Inbound traffic details</h3></div>
   </div>
   <widget-query v-model="query_params" enable="step:empty_intervals"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
+    <template slot="abandoned" slot-scope="data">
+      {{ data.item.abandoned }} / {{ percentageFormatter(data.item.abandoned, data.item.ring_count) }}
+    </template>
+  </b-table>
 </div>
 
 </template>
@@ -32,7 +36,6 @@ export default {
         ring_count: { label: "Attempts" },
         answered_count: { label: "Answered" },
         abandoned: { label: "Abandon" },
-        abandoned_percent: { label: "Abandon [%]", formatter: (v, _, item) => this.percentageFormatter(item.abandoned, item.ring_count) },
         voicemail: { label: "VM"  },
         sla_count: { label: "SLA" },
         cpt: { label: "CPT", formatter: this.durationFormatter },

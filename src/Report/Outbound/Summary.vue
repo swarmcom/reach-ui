@@ -9,10 +9,10 @@
       <b-link @click.stop="sessions(data)">{{ nameFormatter(data.item.entity) }}</b-link>
     </template>
     <template slot="answers" slot-scope="data">
-      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.calls) }}
+      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.rings) }}
     </template>
     <template slot="abandons" slot-scope="data">
-      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.calls) }}
+      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.rings) }}
     </template>
   </b-table>
 </div>

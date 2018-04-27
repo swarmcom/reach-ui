@@ -4,7 +4,11 @@
     <div class="col"><h3>Availability</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients:step:sla:empty_intervals" require-range></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
+    <template slot="abandoned" slot-scope="data">
+      {{ data.item.abandoned }} / {{ percentageFormatter(data.item.abandoned, data.item.call_count) }}
+    </template>
+  </b-table>
 </div>
 </template>
 
@@ -29,7 +33,6 @@ export default {
         voicemail: { label: 'VM' },
         transferred_out: { label: 'Trnf.' },
         abandoned: { label: 'Abndn' },
-        abandoned_percent: { label: 'Abndn %', formatter: (v, _, item) => this.percentageFormatter(item.abandoned, item.call_count) },
         cpt: { label: 'CPT',formatter: this.durationFormatter },
         asa: { label: 'ASA',formatter: this.durationFormatter },
         sla_count: { label: 'SLA' },

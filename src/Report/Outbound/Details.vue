@@ -4,7 +4,14 @@
     <div class="col"><h3>Outbound details</h3></div>
   </div>
   <widget-query v-model="query_params" enable="step:empty_intervals"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
+  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
+    <template slot="answers" slot-scope="data">
+      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.rings) }}
+    </template>
+    <template slot="abandons" slot-scope="data">
+      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.rings) }}
+    </template>
+  </b-table>
 </div>
 </template>
 
@@ -29,7 +36,6 @@ export default {
         ts_to: { label: 'To', formatter: this.tsFormatter },
         rings: { label: 'Calls' },
         answers: { label: 'Answered' },
-        answered_percent: { label: 'Answered [%]', formatter: (v, name, item) => this.percentageFormatter(item.answers, item.calls)},
         abandons: { label: 'Abandons' },
         avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
         total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter },
