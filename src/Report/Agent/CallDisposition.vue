@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    query: async function (Query) {
+    query: function (Query) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'dispositions', Query])
     },
     sessions ({item}, disposition) {
