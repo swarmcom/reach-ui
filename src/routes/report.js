@@ -9,7 +9,6 @@ import AgentSessionEvents from '@/Report/Agent/Session/Events'
 import AgentsEvents from '@/Report/Agents/Events'
 
 // Agent
-import AgentCallDisposition from '@/Report/Agent/CallDisposition'
 import AgentBoundedEvents from '@/Report/Agent/BoundedEvents'
 import ConcurrentLoggedInAgents from '@/Report/Agent/ConcurrentLoggedInAgents'
 
@@ -37,6 +36,7 @@ import AnswerSummary from '@/Report/Answer'
 import ActivitySummary from '@/Report/Activity'
 import ProductivitySummary from '@/Report/Productivity'
 import Availability from '@/Report/Availability'
+import Dispositions from '@/Report/Dispositions'
 
 export default [
   { path: 'agents/states', component: AgentsStates },
@@ -50,7 +50,6 @@ export default [
   { path: 'agent/session/events/:uuid', component: AgentSessionEvents, props: true },
 
   // Agent
-  { path: 'agent/call-disposition', component: AgentCallDisposition },
   { path: 'agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
 
   // Inbound
@@ -77,5 +76,6 @@ export default [
   { path: 'availability', component: Availability },
   { path: 'activity', component: ActivitySummary },
   { path: 'productivity', component: ProductivitySummary },
+  { path: 'dispositions', component: Dispositions },
 
 ]

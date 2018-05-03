@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Agent Call Disposition</h3></div>
+    <div class="col"><h3>Calls Dispositions</h3></div>
   </div>
   <widget-query v-model="query_params" enable="range:group_by" require-range></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
