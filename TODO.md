@@ -3,10 +3,9 @@
 # On
 
 1. Player functionality for vm, inbound and inqueue records
+2. Update navigation/memoization
 2. Maybe set default range to last 24 hours (if not specified)
 3. Add skills to queries
-5. Dispositions report: by agent, by calls
-6. Release state report
 7. Help for input fields?
 8. Configurable page size for more (now hardcoded as 25)
 9. Provide percentages in each report (if they are any)
@@ -17,6 +16,8 @@
 
 # Done
 
+5. Dispositions report: by agent, by calls
+6. Release state report
 1. Cache data and maybe query parameters in reports (to allow navigation back and forth)
 4. Combine values with percentages where applicable
 1. Allow to hide empty intervals in traffic detail reports

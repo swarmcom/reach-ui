@@ -41,11 +41,11 @@ export default {
       return new moment(v, "x").format("YYYY-MM-DD HH:mm:ss")
     },
     maybe_copy_params (Dst, Src, Params) {
-      Params.forEach( k => { if (Src[k]) { Dst[k] = Src[k] } })
+      Params.forEach( k => { if (k in Src) { Dst[k] = Src[k] } })
       return Dst
     },
     maybe_copy_int_params (Dst, Src, Params) {
-      Params.forEach( k => { if (Src[k]) { Dst[k] = parseInt(Src[k]) } })
+      Params.forEach( k => { if (k in Src) { Dst[k] = parseInt(Src[k]) } })
       return Dst
     },
     more: async function() {
@@ -59,17 +59,19 @@ export default {
       this.data = this.data.concat(more)
     },
     is_standalone () {
-      return this.$route.query.group_by? false : true
+      let q = this.$route.query
+      return (q.group_by || 'disposition' in q || 'release' in q)? false : true
     },
     set_query_params (params) {
       if (this.is_standalone()) {
         return params
       }
       let q = this.$route.query
-      this.maybe_copy_int_params(params, q, ['date_start', 'date_end'])
-      this.maybe_copy_params(params, q, ['disposition'])
+      this.maybe_copy_int_params(params, q, ['release', 'disposition', 'date_start', 'date_end'])
       let entity = `${q.group_by}_id`
-      params[entity] = parseInt(q.entity_id)
+      if (q.entity_id) {
+        params[entity] = parseInt(q.entity_id)
+      }
       return params
     },
     unique_name () {
