@@ -25,8 +25,8 @@ export default {
     }
   },
   methods: {
-    query: async function() {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_events', 'agent', { uuid: this.uuid }])
+    query () {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_events', 'agent', { uuid: this.uuid }])
     },
   },
   created () {

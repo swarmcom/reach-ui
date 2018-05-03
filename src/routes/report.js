@@ -37,6 +37,7 @@ import ActivitySummary from '@/Report/Activity'
 import ProductivitySummary from '@/Report/Productivity'
 import Availability from '@/Report/Availability'
 import Dispositions from '@/Report/Dispositions'
+import Releases from '@/Report/Releases'
 
 export default [
   { path: 'agents/states', component: AgentsStates },
@@ -77,5 +78,6 @@ export default [
   { path: 'activity', component: ActivitySummary },
   { path: 'productivity', component: ProductivitySummary },
   { path: 'dispositions', component: Dispositions },
+  { path: 'releases', component: Releases },
 
 ]

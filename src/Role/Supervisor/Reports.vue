@@ -29,6 +29,7 @@
     <b-dropdown-item to="/reports/productivity">Productivity</b-dropdown-item>
     <b-dropdown-item to="/reports/availability">Availability</b-dropdown-item>
     <b-dropdown-item to="/reports/dispositions">Dispositions</b-dropdown-item>
+    <b-dropdown-item to="/reports/releases">Releases</b-dropdown-item>
   </b-nav-item-dropdown>
 
 </ul>

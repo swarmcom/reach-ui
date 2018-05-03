@@ -92,6 +92,8 @@ export default {
         } else {
           this.header = 'for disposition not set'
         }
+      } else {
+        this.header = ''
       }
     },
     query (params) {
