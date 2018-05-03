@@ -2,7 +2,7 @@
 <div>
   <div class="row">
     <div class="col">
-      <h3>Inbound sessions {{ detail() }}</h3>
+      <h3>Inbound sessions {{ header }}</h3>
     </div>
   </div>
   <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
@@ -64,6 +64,7 @@ export default {
     return {
       query_params: {},
       data: [],
+      header: '',
       fields: {
         ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
         state_total: { label: 'Total' },
@@ -82,10 +83,15 @@ export default {
     }
   },
   methods: {
-    detail () {
+    maybe_set_header: async function () {
       let q = this.query_params
       if ('disposition' in q) {
-        return q.disposition? `for disposition "${q.disposition}"` : 'for disposition not set'
+        if (q.disposition) {
+          let d = await this.$agent.p_mfa('ws_agent', 'disposition', [q.disposition])
+          this.header = `for disposition "${d.name}"`
+        } else {
+          this.header = 'for disposition not set'
+        }
       }
     },
     query (params) {
@@ -98,6 +104,7 @@ export default {
   created () {
     this.query_params = this.set_query_params(this.query_params)
     this.safe_query(this.query_params)
+    this.maybe_set_header()
   },
 }
 </script>
