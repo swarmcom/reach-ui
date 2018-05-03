@@ -60,26 +60,47 @@ export default {
     },
     is_standalone () {
       let q = this.$route.query
-      return (q.group_by || 'disposition' in q || 'release' in q)? false : true
+      return ('standalone' in q)? false : true
+    },
+    is_cached () {
+      let key = this.unique_name()
+      return (key in this.$agent.vm.reports_cache)
     },
     set_query_params (params) {
       if (this.is_standalone()) {
         return params
       }
       let q = this.$route.query
-      this.maybe_copy_int_params(params, q, ['release', 'disposition', 'date_start', 'date_end'])
+      this.maybe_copy_int_params(params, q, ['release', 'disposition', 'date_start', 'date_end', 'sla', 'step'])
       let entity = `${q.group_by}_id`
       if (q.entity_id) {
         params[entity] = parseInt(q.entity_id)
       }
       return params
     },
+    set_header: async function (entity, id) {
+      if (id) {
+        let obj = await this.$agent.p_mfa('ws_agent', 'entity', [entity, id])
+        this.header = `for ${entity} "${obj.name}"`
+      } else {
+        this.header = `for ${entity} not set"`
+      }
+    },
+    maybe_set_header: async function () {
+      let q = this.$route.query
+      if ('disposition' in q) {
+        this.set_header('disposition', q.disposition)
+      }
+      if ('group_by' in q) {
+        this.set_header(q.group_by, q.entity_id)
+      }
+    },
     unique_name () {
-      return this.$route.path
+      return this.$route.fullPath
     },
     saveCache () {
       let key = this.unique_name()
-      if (!this.$agent.vm.reports_cache[key]) {
+      if (! this.is_cached()) {
         this.$agent.vm.reports_cache[key] = {}
       }
       this.$agent.vm.reports_cache[key]['query_params'] = this.query_params

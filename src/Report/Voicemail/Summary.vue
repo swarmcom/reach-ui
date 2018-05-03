@@ -43,11 +43,11 @@ export default {
       return this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'summary', query])
     },
     details (data) {
-      let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
+      let params = this.maybe_copy_params({ standalone: false, entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/voicemail/details', query: params })
     },
     sessions ({item}) {
-      let params = this.maybe_copy_params({ entity_id: item.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
+      let params = this.maybe_copy_params({ standalone: false, entity_id: item.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
       this.$router.push({ path: '/reports/voicemail/sessions', query: params })
     }
   },

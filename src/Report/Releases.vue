@@ -38,7 +38,7 @@ export default {
       return this.$agent.p_mfa('ws_report', 'query', ['report_releases', 'summary', Query])
     },
     events ({item}) {
-      let params = this.maybe_copy_params({ release: item.release.id }, this.query_params, ['date_start', 'date_end'])
+      let params = this.maybe_copy_params({ standalone: false, release: item.release.id }, this.query_params, ['date_start', 'date_end'])
       this.$router.push({ path: '/reports/agents/events', query: params })
     }
   },

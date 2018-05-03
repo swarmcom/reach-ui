@@ -83,19 +83,6 @@ export default {
     }
   },
   methods: {
-    maybe_set_header: async function () {
-      let q = this.query_params
-      if ('disposition' in q) {
-        if (q.disposition) {
-          let d = await this.$agent.p_mfa('ws_agent', 'disposition', [q.disposition])
-          this.header = `for disposition "${d.name}"`
-        } else {
-          this.header = 'for disposition not set'
-        }
-      } else {
-        this.header = ''
-      }
-    },
     query (params) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'inqueue', params])
     },
@@ -104,9 +91,11 @@ export default {
     },
   },
   created () {
-    this.query_params = this.set_query_params(this.query_params)
-    this.safe_query(this.query_params)
-    this.maybe_set_header()
+    if (! this.is_standalone() && ! this.is_cached()) {
+      this.query_params = this.set_query_params(this.query_params)
+      this.safe_query(this.query_params)
+      this.maybe_set_header()
+    }
   },
 }
 </script>

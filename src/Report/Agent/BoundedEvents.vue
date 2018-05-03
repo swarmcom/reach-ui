@@ -36,8 +36,8 @@ export default {
     }
   },
   methods: {
-    query: async function (query) {
-      this.data = await this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'bounded_events', query])
+    query (query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'bounded_events', query])
     },
   },
 }
