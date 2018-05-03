@@ -3,11 +3,10 @@
   <div class="row">
     <div class="col"><h3>Calls Dispositions</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:group_by" require-range></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients" require-range></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
-    <template slot="dispositions" slot-scope="data">
-      <span v-for="(value, propertyName, index) in data.item.dispositions" :key="propertyName">
-        <b-link @click.stop="sessions(data, propertyName)">{{ propertyName }}</b-link>: {{ value }}{{ index < (Object.keys(data.item.dispositions).length-1) ? ', ' : '' }}
+    <template slot="details" slot-scope="data">
+        <b-link @click.stop="sessions(data)">sessions</b-link>
       </span>
     </template>
   </b-table>
@@ -26,19 +25,18 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        entity: { label: 'Name', formatter: (_v, _, item) => this.nameFormatter(item.entity)},
-        calls: { label: 'Calls' },
-        dispositions: { label: 'Dispositions', formatter: (v) => JSON.stringify(v) },
+        name: { label: 'Name' },
+        count: { label: 'Count' },
+        details: { label: 'Details' },
       }
     }
   },
   methods: {
-    query: function (Query) {
-      return this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'dispositions', Query])
+    query (Query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_dispositions', 'summary', Query])
     },
-    sessions ({item}, disposition) {
-      let params = this.maybe_copy_params({ entity_id: item.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
-      params.disposition = disposition
+    sessions ({item}) {
+      let params = this.maybe_copy_params({ disposition: item.name }, this.query_params, ['date_start', 'date_end'])
       this.$router.push({ path: '/reports/inbound/sessions', query: params })
     }
   },

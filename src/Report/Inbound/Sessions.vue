@@ -1,7 +1,9 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inbound sessions</h3></div>
+    <div class="col">
+      <h3>Inbound sessions {{ detail() }}</h3>
+    </div>
   </div>
   <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click">
@@ -80,6 +82,12 @@ export default {
     }
   },
   methods: {
+    detail () {
+      let q = this.query_params
+      if ('disposition' in q) {
+        return q.disposition? `for disposition "${q.disposition}"` : 'for disposition not set'
+      }
+    },
     query (params) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'inqueue', params])
     },
