@@ -10,10 +10,9 @@
 
 <script>
 import Chart from '@/Report/Widget/Chart'
-import Query from '@/Report/Widget/Query'
+import Query from '@/Report/Query'
 
 export default {
-  name: 'report-agents-states',
   components: {
     'widget-chart': Chart,
     'widget-query': Query

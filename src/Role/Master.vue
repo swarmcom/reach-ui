@@ -16,7 +16,7 @@
       </b-collapse>
     </b-navbar>
 
-    <div class="container-fluid" style="margin-top: 20px">
+    <div v-bind:class="maybeWide()" style="margin-top: 20px">
       <transition name="reach" mode="out-in">
         <router-view></router-view>
       </transition>
@@ -48,18 +48,26 @@ import Help from '@/Role/Master/Help'
 import Kam from '@/Role/Master/Kam'
 import KamRoutes from '@/routes/kam'
 import Params from '@/Role/Master/Params'
+import Layout from '@/Role/Layout'
 
 const router = new VueRouter({
   routes: [
     { path: '/kam', component: Kam, children: KamRoutes },
-    { path: '/params', component: Params, name: 'params' },
-    { path: '/help', component: Help, name: 'help' },
-    { path: '/', component: Main, name: 'main' }
+    { path: '/params', component: Params },
+    { path: '/help', component: Help },
+    { path: '/', component: Main }
   ]
 })
 
 export default {
   props: [ 'ref_ui', 'ref_backend' ],
+  mixins: [Layout],
+  data () {
+    return {
+      date: null,
+      path: '/'
+    }
+  },
   router
 }
 </script>

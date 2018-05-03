@@ -1,5 +1,5 @@
 <template>
-<div v-access:main-ui v-bind:class="classObject">
+<div v-access:main-ui>
   <draggable :list="widgets" :options="{draggable:'.itemDragable'}" @end="onDragEnd">
     <b-row v-for="(item, index) in widgets" :key="index" class="itemDragable">
       <b-col>
@@ -46,16 +46,6 @@ export default {
       this.widgets = this.$agent.vm.storage_data.agentWidgets
     else
       this.widgets = ['session-manager', 'my-statistics']
-  },
-  computed: {
-    classObject: function () {
-      this.$agent.vm.storage_data["narrowScreenMain"] = this.$agent.vm.isNarrowLayout.main
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      return {
-        container: this.$agent.vm.isNarrowLayout.main,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.main
-      }
-    }
   },
   components: {
     'session-manager': SessionManager,

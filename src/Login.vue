@@ -14,6 +14,12 @@
           <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
         </div>
       </div>
+      <div class="form-group row">
+        <label for="inputDomain" class="sr-only">Domain</label>
+        <div class="col-sm-3">
+          <input v-model="domain" v-on:keyup.enter="onSubmit" type="text" id="inputDomain" class="form-control" value="" required="true">
+        </div>
+      </div>
       <input type="checkbox" id="checkbox" v-model="remember">
       <label for="checkbox">Remember me</label>
       <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2 pointer" type="submit">Login</button>
@@ -38,6 +44,7 @@ export default {
     return {
       login: '',
       password: '',
+      domain: window.location.hostname,
       remember: false
     }
   },
@@ -46,7 +53,7 @@ export default {
       this.$refs.takeover.hide()
     },
     takeover: function() {
-      this.$agent.takeover(this.login, this.password, (Re) => {
+      this.$agent.takeover(this.login, this.password, this.domain, (Re) => {
         if (Re.error) {
           this.$notify({ title: 'Take over:', text: Re.error, type: 'error' })
         }
@@ -54,7 +61,7 @@ export default {
     },
     onSubmit () {
       this.saveDataStorage()
-      this.$agent.login(this.login, this.password, (Re) => {
+      this.$agent.login(this.login, this.password, this.domain, (Re) => {
         if (Re.error && Re.error == 'already_logged_in') {
           this.$refs.takeover.show()
         } else if (Re.error) {
@@ -63,14 +70,14 @@ export default {
       })
     },
     loadDataStorage() {
-      this.loadLocal('login', 'password', 'remember')
+      this.loadLocal('login', 'password', 'domain', 'remember')
     },
     saveDataStorage() {
       if (this.remember) {
-        this.saveLocal('login', 'password', 'remember').writeLocal()
+        this.saveLocal('login', 'password', 'domain', 'remember').writeLocal()
       }
       else {
-        this.eraseLocal('login', 'password', 'remember').writeLocal()
+        this.eraseLocal('login', 'password', 'domain', 'remember').writeLocal()
       }
     }
   },

@@ -1,5 +1,5 @@
 <template>
-<div v-bind:class="classObject">
+<div>
 <ul class="nav nav-tabs">
 
   <b-nav-item-dropdown text="Agents">
@@ -57,16 +57,6 @@
 export default {
   data () {
     return {}
-  },
-  computed: {
-    classObject: function () {
-      this.$agent.vm.storage_data["narrowScreenAdmin"] = this.$agent.vm.isNarrowLayout.admin
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      return {
-        container: this.$agent.vm.isNarrowLayout.admin,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.admin
-      }
-    }
   },
 }
 </script>

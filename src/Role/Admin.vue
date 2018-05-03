@@ -16,15 +16,15 @@
         </b-nav-item>
         <b-nav-form>
           <b-nav-item-dropdown right>
-            <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
-            <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
+            <b-dropdown-item v-if="isNarrow()" @click="changeWide()">Wide</b-dropdown-item>
+            <b-dropdown-item v-else @click="changeWide()">Narrow</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-nav-form>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 
-  <div class="container-fluid">
+  <div v-bind:class="maybeWide()">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -55,11 +55,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Admin from '@/Role/Admin/Admin'
 import AdminRoutes from '@/routes/admin'
+import Help from '@/Role/Admin/Help'
 import Layout from '@/Role/Layout'
 
 const router = new VueRouter({
   routes: [
     { path: '/', component: Admin, children: AdminRoutes },
+    { path: '/help', component: Help },
   ]
 })
 
@@ -71,7 +73,7 @@ export default {
   data () {
     return {
       date: null,
-      page: 'admin'
+      path: '/'
     }
   },
   methods: {

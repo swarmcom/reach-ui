@@ -4,13 +4,17 @@ import moment from 'moment'
 export default {
   methods: {
     isNarrow () {
-      return this.$agent.vm.isNarrowLayout[this.page]
+      return ! this.$agent.vm.wide_page[this.path]
     },
     isMain () {
-      return this.page == 'main'
+      return this.path == '/main'
     },
-    changeLayout () {
-      this.$agent.vm.isNarrowLayout[this.page] = ! this.$agent.vm.isNarrowLayout[this.page]
+    maybeWide () {
+      return this.$agent.vm.wide_page[this.path]? 'padding-container-fluid' : 'container'
+    },
+    changeWide () {
+      this.$agent.vm.wide_page[this.path] = ! this.$agent.vm.wide_page[this.path]
+      this.$agent.saveWidePage()
     },
     canMyStat() {
       return this.$agent.permAllowed('widget-my-statistics')
@@ -35,7 +39,6 @@ export default {
       this.$agent.vm.layoutSM[name] = state
       this.$agent.vm.storage_data[name] = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      console.log(name, state)
     },
   },
   created () {
@@ -49,9 +52,9 @@ export default {
   },
   watch:{
     $route (to, from) {
-      if (to.matched[0] && to.matched[0].meta && to.matched[0].meta.name) {
-        this.page = to.matched[0].meta.name
-      }
+      this.path = to.matched[to.matched.length - 1].path
+      let wp = this.$agent.vm.wide_page
+      this.$agent.vm.wide_page[this.path] = wp[this.path] == undefined? false : wp[this.path]
     }
   } 
 }
