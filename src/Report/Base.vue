@@ -67,8 +67,7 @@ export default {
         return params
       }
       let q = this.$route.query
-      this.maybe_copy_int_params(params, q, ['date_start', 'date_end'])
-      this.maybe_copy_params(params, q, ['disposition'])
+      this.maybe_copy_int_params(params, q, ['disposition', 'date_start', 'date_end'])
       let entity = `${q.group_by}_id`
       if (q.entity_id) {
         params[entity] = parseInt(q.entity_id)
