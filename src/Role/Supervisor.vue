@@ -7,7 +7,6 @@
       <b-navbar-nav>
         <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
         <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
-        <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
         <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
         <b-nav-item to="/help">Help</b-nav-item>
         <b-nav-item @click="logout">Logout</b-nav-item>
@@ -75,7 +74,6 @@ import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
 import Profile from '@/Role/Agent/Profile'
 import Monitor from '@/Role/Supervisor/Monitor'
-import Recordings from '@/Role/Supervisor/Recordings'
 import Reports from '@/Role/Supervisor/Reports'
 
 import ProfileRoutes from '@/routes/profile'
@@ -93,7 +91,6 @@ const router = new VueRouter({
     { path: '/profile', component: Profile, children: ProfileRoutes },
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
-    { path: '/recordings', component: Recordings },
     { path: '/reports', component: Reports, children: ReportRoutes },
     { path: '/', redirect: 'main' }
   ]

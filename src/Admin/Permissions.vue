@@ -172,7 +172,6 @@ export default {
         "main-ui": { name: "Main Tab" },
         "admin-ui": { name: "Admin" },
         "profile-ui": { name: "Profile" },
-        "recordings-ui": { name: "Recordings" },
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
         "widget-agent-manager": { name: "Agent Manger" },
