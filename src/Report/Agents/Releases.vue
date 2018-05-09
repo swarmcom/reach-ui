@@ -25,7 +25,7 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        release: { label: 'Name', formatter: this.nameFormatter  },
+        release: { label: 'Release name', formatter: this.nameFormatter  },
         count: { label: 'Count' },
         time: { label: 'Time', formatter: this.durationFormatter },
         time_avg: { label: 'Time Avg', formatter: this.durationFormatter },
