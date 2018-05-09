@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Calls Dispositions</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients" require-range></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients" require-range @reset="reset"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
     <template slot="details" slot-scope="data">
         <b-link @click.stop="sessions(data)">sessions</b-link>

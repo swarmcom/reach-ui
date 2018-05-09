@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Agents Events {{ header }}</h3></div>
   </div>
-  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:skills"></widget-query>
+  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:skills" @reset="reset"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click"></b-table>
   <b-row>
     <b-col>

@@ -3,7 +3,7 @@
   <b-row>
     <b-col><h3>Agents sessions {{ header }}</h3></b-col>
   </b-row>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups"></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups" @reset="reset"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click"></b-table>
   <b-row>
     <b-col>

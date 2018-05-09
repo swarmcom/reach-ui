@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Availability</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients:step:sla:empty_intervals" require-range></widget-query>
+  <widget-query v-model="query_params" enable="range:agents:agent_groups:queues:queue_groups:clients:step:sla:empty_intervals" require-range @reset="reset"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
     <template slot="abandoned" slot-scope="data">
       {{ data.item.abandoned }} / {{ percentageFormatter(data.item.abandoned, data.item.call_count) }}

@@ -3,7 +3,7 @@
   <b-row>
     <b-col><h2>Measures</h2></b-col>
   </b-row>
-  <widget-query v-model="query_params" style="margin-bottom: 10px"></widget-query>
+  <widget-query v-model="query_params" style="margin-bottom: 10px" @reset="reset"></widget-query>
   <widget-chart v-model="report"></widget-chart>
 </div>
 </template>

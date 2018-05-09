@@ -2,7 +2,7 @@
 <div>
   <b-row v-if="enabled.group_by" style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="group_by" :options="group_by_options" @change="change_group_by"/>
+      <b-form-select v-model="group_by" :options="group_by_options"/>
     </b-col>
   </b-row>
   <b-row v-if="enabled.agents" style="margin-bottom: 10px">
@@ -42,12 +42,19 @@
   </b-row>
 
   <b-row>
-    <b-col cols=3 v-if="enabled.range">
+    <b-col cols=2 v-if="enabled.range">
       <widget-date v-model="date_start" placeholder="Start date"></widget-date>
     </b-col>
-    <b-col cols=3 v-if="enabled.range">
+    <b-col cols=2 v-if="enabled.range">
       <widget-date v-model="date_end" placeholder="End date"></widget-date>
     </b-col>
+    <b-dropdown v-if="enabled.range" cols=1 text="Range">
+      <b-dropdown-item @click="select_range('today')">Today</b-dropdown-item>
+      <b-dropdown-item @click="select_range('this_week')">This Week</b-dropdown-item>
+      <b-dropdown-item @click="select_range('this_month')">This Month</b-dropdown-item>
+      <b-dropdown-item @click="select_range('last_7')">Last 7 days</b-dropdown-item>
+      <b-dropdown-item @click="select_range('last_30')">Last 30 days</b-dropdown-item>
+    </b-dropdown>
     <b-col cols=1 v-if="enabled.step">
       <input type="text" class="form-control" v-model="step" placeholder="step" value="step">
     </b-col>
@@ -80,6 +87,7 @@ import QueueGroups from '@/Report/Widget/QueueGroups'
 import Clients from '@/Report/Widget/Clients'
 import LineIns from '@/Report/Widget/LineIns'
 import LineOuts from '@/Report/Widget/LineOuts'
+import moment from 'moment'
 
 function maybe_copy_params(Dst, Src, Params) {
   Params.forEach( k => { if (Src[k]) { Dst[k] = Src[k] } })
@@ -158,7 +166,7 @@ export default {
       this.step = 60
       this.sla = 10
       this.group_by = null
-      this.$emit('input', this.make_query())
+      this.$emit('reset', this.make_query())
     },
     apply () {
       if (this.validate()) {
@@ -197,7 +205,67 @@ export default {
       if (this.enabled.empty_intervals) { Q.empty_intervals = this.empty_intervals === 'true' }
       return Q
     },
-    change_group_by (value) {
+    make_selected (value) {
+      if (this.selected) {
+        this.enabled[this.selected] = false
+      }
+      this.enabled[value] = true
+      this.selected = value
+    },
+    select_range (value) {
+      let now = moment()
+      switch (value) {
+        case "today":
+          this.date_end = now.unix()
+          this.date_start = now.subtract(1, 'days')
+          break
+        case "this_week":
+          this.date_end = now.unix()
+          this.date_start = now.startOf('week')
+          break
+        case "this_month":
+          this.date_end = now.unix()
+          this.date_start = now.startOf('month')
+          break
+        case "last_7":
+          this.date_end = now.unix()
+          this.date_start = now.subtract(7, 'days')
+          break
+        case "last_30":
+          this.date_end = now.unix()
+          this.date_start = now.subtract(30, 'days')
+          break
+
+        default:
+          break
+      }
+    }
+  },
+  created () {
+    if (this.enable) {
+      let enabled = this.enable.split(":")
+      enabled.forEach((v) => this.enabled[v] = true)
+    }
+    switch (this.groupBy) {
+      case "outbound":
+        this.group_by_options = this.outbound_group_by_options
+        break
+      case "activity":
+        this.group_by_options = this.activity_group_by_options
+        break
+      case "productivity":
+        this.group_by_options = this.productivity_group_by_options
+        break
+      default:
+        this.group_by_options = this.inbound_group_by_options
+    }
+    maybe_copy_params(this, this.value, [
+      'group_by', 'date_start', 'date_end', 'step', 'sla',
+      'agents', 'agent_groups', 'queues', 'queue_groups', 'clients', 'line_ins', 'line_outs'
+    ])
+  },
+  watch: {
+    group_by (value) {
       switch(value) {
         case 'client':
           this.make_selected('clients')
@@ -224,33 +292,6 @@ export default {
           this.selected = null
       }
     },
-    make_selected (value) {
-      if (this.selected) {
-        this.enabled[this.selected] = false
-      }
-      this.enabled[value] = true
-      this.selected = value
-    }
-  },
-  created () {
-    if (this.enable) {
-      let enabled = this.enable.split(":")
-      enabled.forEach((v) => this.enabled[v] = true)
-    }
-    switch (this.groupBy) {
-      case "outbound":
-        this.group_by_options = this.outbound_group_by_options
-        break
-      case "activity":
-        this.group_by_options = this.activity_group_by_options
-        break
-      case "productivity":
-        this.group_by_options = this.productivity_group_by_options
-        break
-      default:
-        this.group_by_options = this.inbound_group_by_options
-    }
-    maybe_copy_params(this, this.value, ['group_by', 'date_start', 'date_end', 'step', 'sla'])
   }
 }
 </script>

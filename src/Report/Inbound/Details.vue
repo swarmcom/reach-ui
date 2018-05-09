@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Inbound traffic details</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="step:empty_intervals"></widget-query>
+  <widget-query v-model="query_params" enable="step:empty_intervals" @reset="reset"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
     <template slot="abandoned" slot-scope="data">
       {{ data.item.abandoned }} / {{ percentageFormatter(data.item.abandoned, data.item.ring_count) }}

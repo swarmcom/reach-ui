@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Answer Performance</h3></div>
   </div>
-  <widget-query v-model="query_params" enable="range:group_by"></widget-query>
+  <widget-query v-model="query_params" enable="range:group_by" @reset="reset"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
     <template slot="answers" slot-scope="data">
       {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.rings) }}

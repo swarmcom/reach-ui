@@ -27,6 +27,10 @@ export default {
       if (index >= 0) {
         this.selected.splice(index, 1)
       }
+    },
+    get: async function (id) {
+      let entity = await this.$agent.p_mfa('ws_agent', 'entity', ['agent_group', id])
+      this.selected.push(entity)
     }
   },
   watch: {
@@ -46,6 +50,7 @@ export default {
     }
   },
   created () {
+    this.value.forEach(id => this.get(id))
   }
 }
 </script>
