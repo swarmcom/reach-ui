@@ -44,11 +44,11 @@ export default {
       return this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'summary', query])
     },
     details (data) {
-      let params = this.maybe_copy_params({ entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
+      let params = this.maybe_copy_params({ standalone: false, entity_id: data.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by', 'sla'])
       this.$router.push({ path: '/reports/outbound/details', query: params })
     },
     sessions ({item}) {
-      let params = this.maybe_copy_params({ entity_id: item.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
+      let params = this.maybe_copy_params({ standalone: false, entity_id: item.entity.id }, this.query_params, ['date_start', 'date_end', 'group_by'])
       this.$router.push({ path: '/reports/outbound/sessions', query: params })
     }
   },

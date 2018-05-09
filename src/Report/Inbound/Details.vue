@@ -29,6 +29,7 @@ export default {
     return {
       query_params: { step: 60, empty_intervals: false },
       data: [],
+      header: '',
       fields: {
         ts_from: { label: "From", formatter: this.tsFormatter },
         ts_to: { label: "To", formatter: this.tsFormatter },
@@ -45,19 +46,14 @@ export default {
   },
   methods: {
     query (query) {
-      query = this.set_query_params(query)
       return this.$agent.p_mfa('ws_report', 'query', ['report_inqueue', 'details', query])
     },
-    set_query_params (params) {
-      let q = this.$route.query
-      maybe_copy_params(params, q, ['date_start', 'date_end', 'sla'])
-      let entity = `${q.group_by}_id`
-      params[entity] = parseInt(q.entity_id)
-      return params
-    }
   },
   created () {
-    this.query_params = this.set_query_params(this.query_params)
+    if (! this.is_standalone() && ! this.is_cached()) {
+      this.query_params = this.set_query_params(this.query_params)
+      this.safe_query(this.query_params)
+    }
   },
 }
 </script>

@@ -106,7 +106,7 @@ import Common from '@/Admin/Common'
 import Storage from '@/Storage'
 
 export default {
-  widgetName: 'MY STATISTICS',
+  widgetName: 'My statistics',
   name: 'my-statistics',
   mixins: [Common, Storage],
   data () {
@@ -237,10 +237,7 @@ export default {
 </script>
 
 <style lang="scss">
-
-  .form-check {
-    margin-bottom: unset;
-  }
-
+.form-check {
+  margin-bottom: unset;
+}
 </style>
-

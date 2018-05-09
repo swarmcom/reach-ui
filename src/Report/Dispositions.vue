@@ -36,7 +36,7 @@ export default {
       return this.$agent.p_mfa('ws_report', 'query', ['report_dispositions', 'summary', Query])
     },
     sessions ({item}) {
-      let params = this.maybe_copy_params({ disposition: item.disposition.id }, this.query_params, ['date_start', 'date_end'])
+      let params = this.maybe_copy_params({ standalone: true, disposition: item.disposition.id }, this.query_params, ['date_start', 'date_end'])
       this.$router.push({ path: '/reports/inbound/sessions', query: params })
     }
   },

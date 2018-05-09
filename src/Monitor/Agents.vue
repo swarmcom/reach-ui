@@ -15,7 +15,7 @@ import Storage from '@/Storage'
 
 export default {
   name: 'agent-manager',
-  widgetName: 'AGENT MANAGER',
+  widgetName: 'Agent manager',
   mixins: [Storage],
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Outbound sessions</h3></div>
+    <div class="col"><h3>Outbound sessions {{ header }}</h3></div>
   </div>
   <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:clients"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" @row-clicked="click">
@@ -50,6 +50,7 @@ export default {
     return {
       query_params: {},
       data: [],
+      header: '',
       fields: {
         ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
         state_total: { label: 'Total' },
@@ -72,8 +73,11 @@ export default {
     },
   },
   created () {
-    this.query_params = this.set_query_params(this.query_params)
-    this.safe_query(this.query_params)
+    if (! this.is_standalone() && ! this.is_cached()) {
+      this.query_params = this.set_query_params(this.query_params)
+      this.safe_query(this.query_params)
+      this.maybe_set_header()
+    }
   },
 }
 </script>
