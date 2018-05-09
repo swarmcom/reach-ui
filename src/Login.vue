@@ -1,36 +1,36 @@
 <template>
-  <div class="container" v-if="this.$agent.can_login()">
-    <div class="form-signin">
-      <h6 class="form-signin-heading">Name and password:</h6>
-      <div class="form-group row align-items-center">
-        <label for="inputLogin" class="sr-only">Name</label>
-        <div class="col-sm-3">
-          <input v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" id="inputLogin" placeholder="Login" required="true" autofocus="true">
-        </div>
+<div class="container" v-if="this.$agent.can_login()">
+  <div class="form-signin">
+    <h6 class="form-signin-heading">Name and password:</h6>
+    <div class="form-group row align-items-center">
+      <label for="inputLogin" class="sr-only">Name</label>
+      <div class="col-sm-3">
+        <input v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" id="inputLogin" placeholder="Login" required="true" autofocus="true">
       </div>
-      <div class="form-group row">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <div class="col-sm-3">
-          <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputDomain" class="sr-only">Domain</label>
-        <div class="col-sm-3">
-          <input v-model="domain" v-on:keyup.enter="onSubmit" type="text" id="inputDomain" class="form-control" value="" required="true">
-        </div>
-      </div>
-      <input type="checkbox" id="checkbox" v-model="remember">
-      <label for="checkbox">Remember me</label>
-      <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2 pointer" type="submit">Login</button>
     </div>
-    <b-modal ref="takeover" hide-footer title="Agent is logged in">
-      <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
-      <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
-    </b-modal>
-
-    <notifications position="bottom right" :speed="500" :duration="1000"/>
+    <div class="form-group row">
+      <label for="inputPassword" class="sr-only">Password</label>
+      <div class="col-sm-3">
+        <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputDomain" class="sr-only">Domain</label>
+      <div class="col-sm-3">
+        <input v-model="domain" v-on:keyup.enter="onSubmit" type="text" id="inputDomain" class="form-control" value="" required="true">
+      </div>
+    </div>
+    <input type="checkbox" id="checkbox" v-model="remember">
+    <label for="checkbox">Remember me</label>
+    <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2 pointer" type="submit">Login</button>
   </div>
+  <b-modal ref="takeover" hide-footer title="Agent is logged in">
+    <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
+    <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
+  </b-modal>
+
+  <notifications position="bottom right" :speed="500" :duration="1000"/>
+</div>
 </template>
 
 <script>
