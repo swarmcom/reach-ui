@@ -8,7 +8,6 @@
   </b-row>
   <b-row>
     <b-col>
-
       <b-row>
         <b-col cols=6>
           <h4>Available Tabs:</h4>
@@ -17,10 +16,10 @@
           <b-btn variant="link" @click='select(tabs)'>all</b-btn>|<b-btn variant="link" @click='unselect(tabs)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="(p) of this.tabs" :key="p" v-if="isVisible(p)">
-        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
-        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
-      </b-row>
+      <div class="col offset-1 form-check" v-for="(p) of this.tabs" :key="p" v-if="isVisible(p)">
+        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
+        <label class="form-check-label" :for=p>{{names[p].name}}</label>
+      </div>
 
       <b-row style="margin-top: 15px">
         <b-col cols=6><h4>UI Features:</h4></b-col>
@@ -28,24 +27,24 @@
           <b-btn variant="link" @click='select(features)'>all</b-btn>|<b-btn variant="link" @click='unselect(features)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="(p) of this.features" :key="p">
-        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
-        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
-      </b-row>
+      <div class="col offset-1 form-check" v-for="(p) of this.features" :key="p">
+        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
+        <label class="form-check-label" :for=p>{{names[p].name}}</label>
+      </div>
+
     </b-col>
 
     <b-col>
-
       <b-row>
         <b-col cols=6><h4>Available Widgets:</h4></b-col>
         <b-col>
           <b-btn variant="link" @click='select(widgets)'>all</b-btn>|<b-btn variant="link" @click='unselect(widgets)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="p of this.widgets" :key="p" v-if="isVisible(p)">
-          <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
-          <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
-      </b-row>
+      <div class="col offset-1 form-check" v-for="(p) of this.widgets" :key="p">
+        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
+        <label class="form-check-label" :for=p>{{names[p].name}}</label>
+      </div>
 
       <b-row style="margin-top: 15px" v-if="ui != 'agent'">
         <b-col cols=6><h4>Call Features:</h4></b-col>
@@ -53,10 +52,10 @@
           <b-btn variant="link" @click='select(call_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(call_features)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="(p) of this.call_features" :key="p" v-if="ui != 'agent'">
-        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
-        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
-      </b-row>
+      <div class="col offset-1 form-check" v-for="(p) of this.call_features" :key="p" v-if="ui != 'agent'">
+        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
+        <label class="form-check-label" :for=p>{{names[p].name}}</label>
+      </div>
 
       <b-row style="margin-top: 15px">
         <b-col cols=6><h4>Agent Profile:</h4></b-col>
@@ -64,12 +63,14 @@
           <b-btn variant="link" @click='select(agent_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(agent_features)'>none</b-btn>
         </b-col>
       </b-row>
-      <b-row v-for="p of this.agent_features" :key="p">
-        <b-col cols="10">&nbsp;&nbsp;{{names[p].name}}</b-col>
-        <b-col cols="2"><b-form-checkbox v-model="effective[p]" v-on:change="onChange(p, $event)"></b-form-checkbox></b-col>
-      </b-row>
+
+      <div class="col offset-1 form-check" v-for="p of this.agent_features" :key="p">
+        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
+        <label class="form-check-label" :for=p>{{names[p].name}}</label>
+      </div>
 
     </b-col>
+
   </b-row>
 </div>
 </template>
@@ -212,14 +213,11 @@ export default {
     query: async function () {
       this.effective = await this.$agent.p_mfa('ws_db_permission', 'map', [this.id])
     },
-    onChange: async function(perm, checked) {
-      if (checked) {
+    onChange: async function (perm) {
+      if (this.effective[perm]) {
         await this.$agent.p_mfa('ws_db_permission', 'set', [this.id, perm])
-        this.effective[perm] = true
-      }
-      else {
+      } else {
         await this.$agent.p_mfa('ws_db_permission', 'unset', [this.id, perm])
-        this.effective[perm] = false
       }
     },
     isVisible: function (perm) {
@@ -235,37 +233,23 @@ export default {
     isAgent () {
       return this.ui == 'agent'
     },
+    setKey (key, value) {
+      if (this.isVisible(key)) {
+        this.effective[key] = value
+        this.onChange(key)
+      }
+    },
     selectAll () {
-      let self = this
-      Object.keys(this.names).forEach(function (key) {
-        if (self.isVisible(key)) {
-          self.onChange(key, true)
-        }
-      })
+      Object.keys(this.names).forEach(key => this.setKey(key, true))
     },
     unselectAll () {
-      let self = this
-      Object.keys(this.names).forEach(function (key) {
-        if (self.isVisible(key)) {
-          self.onChange(key, false)
-        }
-      })
+      Object.keys(this.names).forEach(key => this.setKey(key, false))
     },
     select (group) {
-      let self = this
-      group.forEach(function (key) {
-        if (self.isVisible(key)) {
-          self.onChange(key, true)
-        }
-      })
+      group.forEach(key => this.setKey(key, true))
     },
     unselect (group) {
-      let self = this
-      group.forEach(function (key) {
-        if (self.isVisible(key)) {
-          self.onChange(key, false)
-        }
-      })
+      group.forEach(key => this.setKey(key, false))
     }
   },
   created () {
