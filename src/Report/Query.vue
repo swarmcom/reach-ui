@@ -42,11 +42,20 @@
   </b-row>
 
   <b-row>
-    <b-col cols=3 v-if="enabled.range">
+    <b-col cols=2 v-if="enabled.range">
       <widget-date v-model="date_start" placeholder="Start date"></widget-date>
     </b-col>
-    <b-col cols=3 v-if="enabled.range">
+    <b-col cols=2 v-if="enabled.range">
       <widget-date v-model="date_end" placeholder="End date"></widget-date>
+    </b-col>
+    <b-col cols=1 v-if="enabled.range">
+      <b-dropdown text="Range">
+        <b-dropdown-item @click="select_range('today')">Today</b-dropdown-item>
+        <b-dropdown-item @click="select_range('this_week')">This Week</b-dropdown-item>
+        <b-dropdown-item @click="select_range('this_month')">This Month</b-dropdown-item>
+        <b-dropdown-item @click="select_range('last_7')">Last 7 days</b-dropdown-item>
+        <b-dropdown-item @click="select_range('last_30')">Last 30 days</b-dropdown-item>
+      </b-dropdown>
     </b-col>
     <b-col cols=1 v-if="enabled.step">
       <input type="text" class="form-control" v-model="step" placeholder="step" value="step">
@@ -80,6 +89,7 @@ import QueueGroups from '@/Report/Widget/QueueGroups'
 import Clients from '@/Report/Widget/Clients'
 import LineIns from '@/Report/Widget/LineIns'
 import LineOuts from '@/Report/Widget/LineOuts'
+import moment from 'moment'
 
 function maybe_copy_params(Dst, Src, Params) {
   Params.forEach( k => { if (Src[k]) { Dst[k] = Src[k] } })
@@ -203,6 +213,34 @@ export default {
       }
       this.enabled[value] = true
       this.selected = value
+    },
+    select_range (value) {
+      let now = moment()
+      switch (value) {
+        case "today":
+          this.date_end = now.unix()
+          this.date_start = now.subtract(1, 'days')
+          break
+        case "this_week":
+          this.date_end = now.unix()
+          this.date_start = now.startOf('week')
+          break
+        case "this_month":
+          this.date_end = now.unix()
+          this.date_start = now.startOf('month')
+          break
+        case "last_7":
+          this.date_end = now.unix()
+          this.date_start = now.subtract(7, 'days')
+          break
+        case "last_30":
+          this.date_end = now.unix()
+          this.date_start = now.subtract(30, 'days')
+          break
+
+        default:
+          break
+      }
     }
   },
   created () {
