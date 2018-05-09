@@ -261,7 +261,10 @@ export default {
       default:
         this.group_by_options = this.inbound_group_by_options
     }
-    maybe_copy_params(this, this.value, ['group_by', 'date_start', 'date_end', 'step', 'sla', 'agents'])
+    maybe_copy_params(this, this.value, [
+      'group_by', 'date_start', 'date_end', 'step', 'sla',
+      'agents', 'agent_groups', 'queues', 'queue_groups', 'clients', 'line_ins', 'line_outs'
+    ])
   },
   watch: {
     group_by (value) {
