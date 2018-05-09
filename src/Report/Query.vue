@@ -2,7 +2,7 @@
 <div>
   <b-row v-if="enabled.group_by" style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="group_by" :options="group_by_options" @change="change_group_by"/>
+      <b-form-select v-model="group_by" :options="group_by_options"/>
     </b-col>
   </b-row>
   <b-row v-if="enabled.agents" style="margin-bottom: 10px">
@@ -197,33 +197,6 @@ export default {
       if (this.enabled.empty_intervals) { Q.empty_intervals = this.empty_intervals === 'true' }
       return Q
     },
-    change_group_by (value) {
-      switch(value) {
-        case 'client':
-          this.make_selected('clients')
-          break
-        case 'agent':
-          this.make_selected('agents')
-          break
-        case 'agent_group':
-          this.make_selected('agent_groups')
-          break
-        case 'queue':
-          this.make_selected('queues')
-          break
-        case 'queue_group':
-          this.make_selected('queue_groups')
-          break
-        case 'line_in':
-          this.make_selected('line_ins')
-          break
-        case 'line_out':
-          this.make_selected('line_outs')
-          break
-        default:
-          this.selected = null
-      }
-    },
     make_selected (value) {
       if (this.selected) {
         this.enabled[this.selected] = false
@@ -250,7 +223,36 @@ export default {
       default:
         this.group_by_options = this.inbound_group_by_options
     }
-    maybe_copy_params(this, this.value, ['group_by', 'date_start', 'date_end', 'step', 'sla'])
+    maybe_copy_params(this, this.value, ['group_by', 'date_start', 'date_end', 'step', 'sla', 'agents'])
+  },
+  watch: {
+    group_by (value) {
+      switch(value) {
+        case 'client':
+          this.make_selected('clients')
+          break
+        case 'agent':
+          this.make_selected('agents')
+          break
+        case 'agent_group':
+          this.make_selected('agent_groups')
+          break
+        case 'queue':
+          this.make_selected('queues')
+          break
+        case 'queue_group':
+          this.make_selected('queue_groups')
+          break
+        case 'line_in':
+          this.make_selected('line_ins')
+          break
+        case 'line_out':
+          this.make_selected('line_outs')
+          break
+        default:
+          this.selected = null
+      }
+    },
   }
 }
 </script>
