@@ -48,15 +48,13 @@
     <b-col cols=2 v-if="enabled.range">
       <widget-date v-model="date_end" placeholder="End date"></widget-date>
     </b-col>
-    <b-col cols=1 v-if="enabled.range">
-      <b-dropdown text="Range">
-        <b-dropdown-item @click="select_range('today')">Today</b-dropdown-item>
-        <b-dropdown-item @click="select_range('this_week')">This Week</b-dropdown-item>
-        <b-dropdown-item @click="select_range('this_month')">This Month</b-dropdown-item>
-        <b-dropdown-item @click="select_range('last_7')">Last 7 days</b-dropdown-item>
-        <b-dropdown-item @click="select_range('last_30')">Last 30 days</b-dropdown-item>
-      </b-dropdown>
-    </b-col>
+    <b-dropdown v-if="enabled.range" cols=1 text="Range">
+      <b-dropdown-item @click="select_range('today')">Today</b-dropdown-item>
+      <b-dropdown-item @click="select_range('this_week')">This Week</b-dropdown-item>
+      <b-dropdown-item @click="select_range('this_month')">This Month</b-dropdown-item>
+      <b-dropdown-item @click="select_range('last_7')">Last 7 days</b-dropdown-item>
+      <b-dropdown-item @click="select_range('last_30')">Last 30 days</b-dropdown-item>
+    </b-dropdown>
     <b-col cols=1 v-if="enabled.step">
       <input type="text" class="form-control" v-model="step" placeholder="step" value="step">
     </b-col>
