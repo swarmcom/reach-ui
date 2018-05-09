@@ -29,7 +29,7 @@ import AgentState from '@/Agent/AgentState'
 import Storage from '@/Storage'
 
 export default {
-  widgetName: 'SESSION MANAGER',
+  widgetName: 'Session manager',
   name: 'session-manager',
   mixins: [Storage],
   data () {
