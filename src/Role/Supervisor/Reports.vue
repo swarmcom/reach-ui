@@ -21,6 +21,7 @@
   <b-nav-item-dropdown text="Agent">
     <b-dropdown-item to="/reports/agents/sessions">Sessions</b-dropdown-item>
     <b-dropdown-item to="/reports/agents/events">Events</b-dropdown-item>
+    <b-dropdown-item to="/reports/agents/releases">Releases</b-dropdown-item>
   </b-nav-item-dropdown>
 
   <b-nav-item-dropdown text="Summary">
@@ -29,7 +30,6 @@
     <b-dropdown-item to="/reports/productivity">Productivity</b-dropdown-item>
     <b-dropdown-item to="/reports/availability">Availability</b-dropdown-item>
     <b-dropdown-item to="/reports/dispositions">Dispositions</b-dropdown-item>
-    <b-dropdown-item to="/reports/releases">Releases</b-dropdown-item>
   </b-nav-item-dropdown>
 
 </ul>

@@ -11,6 +11,7 @@ import AgentsEvents from '@/Report/Agents/Events'
 // Agent
 import AgentBoundedEvents from '@/Report/Agent/BoundedEvents'
 import ConcurrentLoggedInAgents from '@/Report/Agent/ConcurrentLoggedInAgents'
+import AgentsReleases from '@/Report/Agents/Releases'
 
 // Inbound
 import InboundDetails from '@/Report/Inbound/Details'
@@ -37,7 +38,6 @@ import ActivitySummary from '@/Report/Activity'
 import ProductivitySummary from '@/Report/Productivity'
 import Availability from '@/Report/Availability'
 import Dispositions from '@/Report/Dispositions'
-import Releases from '@/Report/Releases'
 
 export default [
   { path: 'agents/states', component: AgentsStates },
@@ -49,6 +49,7 @@ export default [
   { path: 'agents/sessions', component: AgentsSessions },
   { path: 'agents/events', component: AgentsEvents },
   { path: 'agent/session/events/:uuid', component: AgentSessionEvents, props: true },
+  { path: 'agents/releases', component: AgentsReleases },
 
   // Agent
   { path: 'agent/concurrent-logged-in-agents', component: ConcurrentLoggedInAgents },
@@ -78,6 +79,5 @@ export default [
   { path: 'activity', component: ActivitySummary },
   { path: 'productivity', component: ProductivitySummary },
   { path: 'dispositions', component: Dispositions },
-  { path: 'releases', component: Releases },
 
 ]
