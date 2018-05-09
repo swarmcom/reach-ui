@@ -98,6 +98,12 @@ export default {
     unique_name () {
       return this.$route.fullPath
     },
+    reset () {
+      this.skip_load = true
+      this.query_params = {}
+      this.data = []
+      this.saveCache()
+    },
     saveCache () {
       let key = this.unique_name()
       if (! this.is_cached()) {

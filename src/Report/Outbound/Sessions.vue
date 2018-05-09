@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col"><h3>Outbound sessions {{ header }}</h3></div>
   </div>
-  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:clients"></widget-query>
+  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:clients" @reset="reset"></widget-query>
   <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" @row-clicked="click">
     <template slot="state_total" slot-scope="data">
       {{ durationFormatter(data.item.states.total) }}

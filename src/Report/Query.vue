@@ -166,7 +166,7 @@ export default {
       this.step = 60
       this.sla = 10
       this.group_by = null
-      this.$emit('input', this.make_query())
+      this.$emit('reset', this.make_query())
     },
     apply () {
       if (this.validate()) {
