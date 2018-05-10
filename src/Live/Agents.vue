@@ -66,7 +66,6 @@ export default {
     },
     query: async function () {
       this.data = await this.$agent.p_mfa('ws_live', 'agents', ['acl'])
-      this.$agent.p_mfa('ws_live', 'subscribe', ['agents', 'acl'])
     },
     onTimer () {
       this.data.forEach((E, i, A) => {
@@ -97,11 +96,13 @@ export default {
   },
   created () {
     this.query()
+    this.$agent.p_mfa('ws_live', 'subscribe', ['agents', 'acl'])
     this.$bus.$on('live_agent_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
   },
   beforeDestroy () {
     this.$bus.$off('live_agent_state', this.handleState)
+    this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', 'acl'])
     clearInterval(this.updater)
   },
 }
