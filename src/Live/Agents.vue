@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     handleState ({ tag, state }) {
+      state.time = 0
       if (tag === 'ws_login') {
         let i = this.data.findIndex(E => E.agent_id === state.agent_id)
         if (i >= 0) {
@@ -86,9 +87,10 @@ export default {
     stop (agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
     },
-    durationFormatter (v) {
-      if (v) {
-        return moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
+    durationFormatter (value) {
+      let v = parseInt(value)
+      if (v >= 0) {
+        return moment.duration(v).format("d[d] hh:*mm:ss", { forceLength: true })
       } else {
         return ''
       }
