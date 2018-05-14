@@ -19,9 +19,9 @@
       {{ durationFormatter(data.item.time) }}
     </template>
     <template slot="actions" slot-scope="data">
-      <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)">Available</b-button>
-      <b-button v-else size="sm" variant="primary" @click="release(data.item)">Release</b-button>
-      <b-button size="sm" variant="danger" @click="stop(data.item)">Kill</b-button>
+      <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)" class="pointer">Available</b-button>
+      <b-button v-else size="sm" variant="primary" @click="release(data.item)" class="pointer">Release</b-button>
+      <b-button size="sm" variant="danger" @click="stop(data.item)" class="pointer">Kill</b-button>
     </template>
   </b-table>
 </div>
