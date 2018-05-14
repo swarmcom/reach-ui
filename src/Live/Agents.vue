@@ -1,8 +1,13 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col"><h3>Agents</h3></div>
-  </div>
+  <b-row>
+    <b-col><h3>Live agents for {{type}}</h3></b-col>
+  </b-row>
+  <b-row style="margin-bottom: 10px">
+    <b-col cols=3>
+      <b-form-select v-model="type" :options="types" />
+    </b-col>
+  </b-row>
   <b-table small striped hover :items="data" :fields="fields">
     <template slot="login" slot-scope="data">
       {{ data.item.agent.login }}
@@ -29,6 +34,9 @@ import momentDurationFormat from 'moment-duration-format'
 export default {
   data () {
     return {
+      type: 'acl',
+      types: ['acl', 'group', 'skills'],
+      skip_load: false,
       fields: {
         login: { label: 'Login' },
         session_time: { label: 'Session Time' },
@@ -65,8 +73,10 @@ export default {
         }
       }
     },
-    query: async function () {
-      this.data = await this.$agent.p_mfa('ws_live', 'agents', ['acl'])
+    query: async function (type) {
+      this.data = await this.$agent.p_mfa('ws_live', 'agents', [type])
+      await this.$agent.p_mfa('ws_live', 'subscribe', ['agents', type])
+      this.saveCache()
     },
     onTimer () {
       this.data.forEach((E, i, A) => {
@@ -95,10 +105,31 @@ export default {
         return ''
       }
     },
+    is_cached () {
+      let key = this.unique_name()
+      return (key in this.$agent.vm.live_cache)
+    },
+    unique_name () {
+      return this.$route.fullPath
+    },
+    saveCache () {
+      let key = this.unique_name()
+      if (! this.is_cached()) {
+        this.$agent.vm.live_cache[key] = {}
+      }
+      this.$agent.vm.live_cache[key]['type'] = this.type
+    },
+    loadCache () {
+      let key = this.unique_name()
+      if (this.$agent.vm.live_cache[key]) {
+        this.skip_load = true
+        this.type = this.$agent.vm.live_cache[key]['type']
+      }
+    },
   },
   created () {
-    this.query()
-    this.$agent.p_mfa('ws_live', 'subscribe', ['agents', 'acl'])
+    this.loadCache()
+    this.query(this.type)
     this.$bus.$on('live_agent_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
   },
@@ -107,5 +138,15 @@ export default {
     this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', 'acl'])
     clearInterval(this.updater)
   },
+  watch: {
+    type: async function (value, old) {
+      if (this.skip_load) {
+        this.skip_load = false
+        return
+      }
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', old])
+      this.query(value)
+    }
+  }
 }
 </script>
