@@ -1,8 +1,13 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Inbounds</h3></div>
+    <div class="col"><h3>Live inbound calls for {{type}}</h3></div>
   </div>
+  <b-row style="margin-bottom: 10px">
+    <b-col cols=3>
+      <b-form-select v-model="type" :options="types" />
+    </b-col>
+  </b-row>
   <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields">
     <template slot="twe" slot-scope="data">
       {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
@@ -28,6 +33,8 @@
 export default {
   data () {
     return {
+      type: 'skills',
+      types: ['skills'],
       fields: {
         state: { label: 'State', sortable: true },
         record: { label: 'Type', sortable: true },
@@ -54,31 +61,15 @@ export default {
         this.inqueues.push(this.enrich_queue(info))
       }
     },
-    enrich_queue (info) {
-      info.time = Math.round(info.time/1000)
-      info.effective = Math.round(info.effective_time.time/1000)
-      info.queue = this.queue_name(info.queue_id)
-      return info
-    },
     query: async function() {
-      this.queues = await this.$agent.p_mfa('ws_db_queue', 'get', [])
-      this.inqueues = await this.$agent.p_mfa('ws_admin', 'inqueues', ['all'])
-      this.inqueues.forEach((inq) => {
-        inq.time = Math.round(inq.time/1000)
-        inq.effective = Math.round(inq.effective_time.time/1000)
-        inq.queue = this.queue_name(inq.queue_id)
-      })
+      this.data = await this.$agent.p_mfa('ws_live', 'inbounds')
     },
     onTimer () {
-      this.inqueues.forEach((E, i, Arr) => { 
+      this.data.forEach((E, i, Arr) => { 
         E.time = E.time + 1
         E.effective = E.effective + 1
         Arr.splice(i, 1, E)
       })
-    },
-    queue_name (Id) {
-      let Queue = this.queues.find(I => I.id == Id)
-      return Queue? Queue.name : ''
     },
     take ({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
@@ -95,13 +86,22 @@ export default {
   },
   created () {
     this.query()
-    this.$agent.subscribe('inqueues')
     this.$bus.$on('inqueue_state', this.handleState)
     this.updater = setInterval(this.onTimer, 1000)
   },
   beforeDestroy () {
     this.$bus.$off('inqueue_state', this.handleState)
     clearInterval(this.updater)
+  },
+  watch: {
+    type: async function (value, old) {
+      if (this.skip_load) {
+        this.skip_load = false
+        return
+      }
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds', old])
+      this.query(value)
+    }
   }
 }
 </script>

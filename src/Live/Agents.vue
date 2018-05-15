@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import moment from 'moment'
-import momentDurationFormat from 'moment-duration-format'
+import Base from '@/Live/Base'
 
 export default {
+  mixins: [Base],
   data () {
     return {
       type: 'acl',
@@ -97,46 +97,13 @@ export default {
     stop (agent) {
       this.$agent.mfa('ws_supervisor', 'stop', [agent.agent_id])
     },
-    durationFormatter (value) {
-      let v = parseInt(value)
-      if (v >= 0) {
-        return moment.duration(v).format("d[d] hh:*mm:ss", { forceLength: true })
-      } else {
-        return ''
-      }
-    },
-    is_cached () {
-      let key = this.unique_name()
-      return (key in this.$agent.vm.live_cache)
-    },
-    unique_name () {
-      return this.$route.fullPath
-    },
-    saveCache () {
-      let key = this.unique_name()
-      if (! this.is_cached()) {
-        this.$agent.vm.live_cache[key] = {}
-      }
-      this.$agent.vm.live_cache[key]['type'] = this.type
-    },
-    loadCache () {
-      let key = this.unique_name()
-      if (this.$agent.vm.live_cache[key]) {
-        this.skip_load = true
-        this.type = this.$agent.vm.live_cache[key]['type']
-      }
-    },
   },
   created () {
-    this.loadCache()
-    this.query(this.type)
     this.$bus.$on('live_agent_state', this.handleState)
-    this.updater = setInterval(this.onTimer, 1000)
   },
   beforeDestroy () {
     this.$bus.$off('live_agent_state', this.handleState)
-    this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', 'acl'])
-    clearInterval(this.updater)
+    this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', this.type])
   },
   watch: {
     type: async function (value, old) {
