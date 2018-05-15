@@ -129,16 +129,15 @@ export default {
     },
     widget_args (type) {
       switch (type) {
-        case 'queues': return this.queues
-        case 'queue_groups': return this.queue_groups
-        case 'clients': return this.clients
-        case 'line_ins': return this.line_ins
+        case 'queues': return this.queues.map(obj => obj.id)
+        case 'queue_groups': return this.queue_groups.map(obj => obj.id)
+        case 'clients': return this.clients.map(obj => obj.id)
+        case 'line_ins': return this.line_ins.map(obj => obj.id)
         default: return []
       }
     }
   },
   created () {
-    this.query(this.type)
     this.$bus.$on('live_inqueue_state', this.handleState)
   },
   beforeDestroy () {
@@ -150,9 +149,25 @@ export default {
         this.skip_load = false
         return
       }
-      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds', old, this.widget_args(old)])
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds', old])
       this.query(value)
-    }
+    },
+    queues: async function (value, old) {
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds', 'queues'])
+      this.query(this.type)
+    },
+    queue_groups: async function (value, old) {
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds', 'queue_groups'])
+      this.query(this.type)
+    },
+    clients: async function (value, old) {
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds', 'clients'])
+      this.query(this.type)
+    },
+    line_ins: async function (value, old) {
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds', 'line_ins'])
+      this.query(this.type)
+    },
   }
 }
 </script>
