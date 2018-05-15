@@ -8,66 +8,73 @@
       <b-form-select v-model="type" :options="types" />
     </b-col>
   </b-row>
-  <b-table style="margin-top:10px" small striped hover :items="inqueues" :fields="fields">
-    <template slot="twe" slot-scope="data">
-      {{data.item.time}} {{data.item.weight}} {{data.item.effective}}
+  <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
+    <template slot="time" slot-scope="data">
+      {{durationFormatter(data.item.time)}}
+    </template>
+    <template slot="effective_time" slot-scope="data">
+      {{data.item.effective_time.weight}} | {{durationFormatter(data.item.effective_time.time)}}
+    </template>
+    <template slot="queue" slot-scope="data">
+      {{data.item.queue.name}}
     </template>
     <template slot="skills" slot-scope="data">
       {{data.item.skills}}
     </template>
     <template slot="actions" slot-scope="data">
       <template v-if="data.item.state == 'oncall'">
-        <b-button size="sm" variant="primary" @click="takeover(data.item)">Takeover</b-button>
-        <b-button size="sm" variant="success" @click="spy(data.item)">Spy</b-button>
+        <b-button size="sm" variant="primary" @click="takeover(data.item)" class="pointer">Takeover</b-button>
+        <b-button size="sm" variant="success" @click="spy(data.item)" class="pointer">Spy</b-button>
       </template>
       <template v-if="data.item.state == 'inqueue' || data.item.state == 'agent'">
-        <b-button size="sm" variant="primary" @click="take(data.item)">Take</b-button>
+        <b-button size="sm" variant="primary" @click="take(data.item)" class="pointer">Take</b-button>
       </template>
-      <b-button size="sm" variant="danger" @click="hangup(data.item)">Hangup</b-button>
+      <b-button size="sm" variant="danger" @click="hangup(data.item)" class="pointer">Hangup</b-button>
     </template>
   </b-table>
 </div>
 </template>
 
 <script>
+import Base from '@/Live/Base'
+
 export default {
+  mixins: [Base],
   data () {
     return {
       type: 'skills',
       types: ['skills'],
       fields: {
-        state: { label: 'State', sortable: true },
-        record: { label: 'Type', sortable: true },
-        queue: { label: 'Queue', sortable: true },
+        state: { label: 'State' },
+        time: { label: 'Time' },
+        effective_time: { label: 'Eff.' },
+        queue: { label: 'Queue' },
         skills: { label: 'Skills' },
-        twe: { label: 'T.W.E.', sortable: true },
         actions: { label: 'Actions' }
       },
-      inqueues: [],
-      queues: [],
-      updater: null
     }
   },
   methods: {
-    handleState ({info}) {
-      let i = this.inqueues.findIndex(E => E.uuid === info.uuid)
+    handleState ({state}) {
+      let i = this.data.findIndex(E => E.uuid === state.uuid)
       if (i >= 0) {
-        if (info.state === 'terminate') {
-          this.inqueues.splice(i, 1)
+        if (state.state === 'terminate') {
+          this.data.splice(i, 1)
         } else {
-          this.inqueues.splice(i, 1, this.enrich_queue(info))
+          this.data.splice(i, 1, state)
         }
       } else {
-        this.inqueues.push(this.enrich_queue(info))
+        this.data.push(state)
       }
     },
-    query: async function() {
-      this.data = await this.$agent.p_mfa('ws_live', 'inbounds')
+    query: async function (type) {
+      this.data = await this.$agent.p_mfa('ws_live', 'inbounds', [type])
+      await this.$agent.p_mfa('ws_live', 'subscribe', ['inbounds', type])
     },
     onTimer () {
       this.data.forEach((E, i, Arr) => { 
-        E.time = E.time + 1
-        E.effective = E.effective + 1
+        E.time = E.time + 1000
+        E.effective_time.time = E.effective_time.time + 1000
         Arr.splice(i, 1, E)
       })
     },
@@ -85,13 +92,11 @@ export default {
     }
   },
   created () {
-    this.query()
-    this.$bus.$on('inqueue_state', this.handleState)
-    this.updater = setInterval(this.onTimer, 1000)
+    this.query(this.type)
+    this.$bus.$on('live_inqueue_state', this.handleState)
   },
   beforeDestroy () {
-    this.$bus.$off('inqueue_state', this.handleState)
-    clearInterval(this.updater)
+    this.$bus.$off('live_inqueue_state', this.handleState)
   },
   watch: {
     type: async function (value, old) {

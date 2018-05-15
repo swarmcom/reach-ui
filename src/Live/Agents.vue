@@ -36,7 +36,6 @@ export default {
     return {
       type: 'acl',
       types: ['acl', 'group', 'skills'],
-      skip_load: false,
       fields: {
         login: { label: 'Login' },
         session_time: { label: 'Session Time' },
@@ -45,8 +44,6 @@ export default {
         ws_peer: { label: 'Peer' },
         actions: { label: 'Actions' }
       },
-      data: [],
-      updater: ''
     }
   },
   methods: {

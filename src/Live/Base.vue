@@ -11,6 +11,7 @@ export default {
       type: null,
       types: [],
       skip_load: false,
+      data: [],
       updater: ''
     }
   },
