@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-row>
-    <b-col><h3>Live agents for {{type}}</h3></b-col>
+    <b-col><h3>Live agents by {{type}}</h3></b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
@@ -110,7 +110,7 @@ export default {
       }
       await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', old])
       this.query(value)
-    }
+    },
   }
 }
 </script>
