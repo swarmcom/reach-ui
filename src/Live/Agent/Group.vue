@@ -12,9 +12,6 @@
     </b-col>
   </b-row>
   <b-table small striped hover :items="data" :fields="fields">
-    <template slot="entity" slot-scope="data">
-      {{ data.item.entity.name }}
-    </template>
     <template slot="total_time" slot-scope="data">
       {{ durationFormatter(data.item.total_time) }}
     </template>
@@ -34,7 +31,6 @@ export default {
       types: ['acl', 'group', 'skills'],
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {
-        entity: { label: 'Name' },
         total_agents: { label: 'Agents' },
         oncall: { label: 'Oncall' },
         released: { label: 'Release' },
