@@ -49,7 +49,7 @@ export default {
       this.data = stats
     },
     query: async function (type) {
-      this.data = await this.$agent.p_mfa('ws_live', 'agent_groups', [type, type, this.period])
+      this.data = await this.$agent.p_mfa('ws_live', 'agent_groups', [type, this.period])
       await this.$agent.p_mfa('ws_live', 'subscribe', ['agent_groups', type, this.period])
       this.saveCache()
     },
@@ -73,7 +73,7 @@ export default {
     },
     period: async function (value, old) {
       await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agent_groups', this.type])
-      await this.$agent.p_mfa('ws_live', 'subscribe', ['agent_groups', this.type, value])
+      this.query(this.type)
     }
   }
 }
