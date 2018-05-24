@@ -1,7 +1,7 @@
 <template>
 <div>
   <b-row>
-    <b-col><h3>Live agents stats by {{type}}</h3></b-col>
+    <b-col><h3>Live agent group stats by {{type}}</h3></b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
@@ -31,7 +31,7 @@ export default {
     return {
       type: 'acl',
       period: '15m',
-      types: ['acl', 'group'],
+      types: ['acl', 'group', 'skills'],
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {
         entity: { label: 'Name' },
@@ -53,17 +53,17 @@ export default {
       this.data = stats
     },
     query: async function (type) {
-      await this.$agent.p_mfa('ws_live', 'subscribe', ['agent_groups', type, this.period])
+      await this.$agent.p_mfa('ws_live', 'subscribe', ['agent_group', type, this.period])
       this.saveCache()
     },
     onTimer () {
     },
   },
   created () {
-    this.$bus.$on('live_agents_stats', this.handleStats)
+    this.$bus.$on('live_agent_group_stats', this.handleStats)
   },
   beforeDestroy () {
-    this.$bus.$off('live_agents_stats', this.handleStats)
+    this.$bus.$off('live_agent_group_stats', this.handleStats)
   },
   watch: {
     type: async function (value, old) {
@@ -71,11 +71,11 @@ export default {
         this.skip_load = false
         return
       }
-      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agent_groups', old])
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agent_group', old])
       this.query(value)
     },
     period: async function (value, old) {
-      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agent_groups', this.type])
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agent_group', this.type])
       this.query(this.type)
     }
   }

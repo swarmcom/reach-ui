@@ -2,6 +2,9 @@
 <div>
 <ul style="margin-top: 10px" class="nav nav-tabs">
   <li class="nav-item">
+    <router-link class="nav-link" to="/live/agent">Agent</router-link>
+  </li>
+  <li class="nav-item">
     <router-link class="nav-link" to="/live/agents">Agents</router-link>
   </li>
   <li class="nav-item">
