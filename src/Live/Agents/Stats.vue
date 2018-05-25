@@ -53,7 +53,7 @@ export default {
       this.data = stats
     },
     query: async function (type) {
-      await this.$agent.p_mfa('ws_live', 'subscribe', ['agent_groups', type, this.period])
+      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['agent_groups', type, this.period])
       this.saveCache()
     },
     onTimer () {
@@ -64,6 +64,7 @@ export default {
   },
   beforeDestroy () {
     this.$bus.$off('live_agents_stats', this.handleStats)
+    this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['agent_groups', this.type])
   },
   watch: {
     type: async function (value, old) {
@@ -71,11 +72,11 @@ export default {
         this.skip_load = false
         return
       }
-      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agent_groups', old])
+      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['agent_groups', old])
       this.query(value)
     },
     period: async function (value, old) {
-      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agent_groups', this.type])
+      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['agent_groups', this.type])
       this.query(this.type)
     }
   }
