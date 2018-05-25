@@ -7,7 +7,7 @@
       <b-navbar-nav>
         <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
         <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
-        <b-nav-item v-access:recordings-ui to="/recordings">Recordings</b-nav-item>
+        <b-nav-item v-access:monitor-ui to="/live">Live</b-nav-item>
         <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
         <b-nav-item to="/help">Help</b-nav-item>
         <b-nav-item @click="logout">Logout</b-nav-item>
@@ -75,12 +75,13 @@ import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
 import Profile from '@/Role/Agent/Profile'
 import Monitor from '@/Role/Supervisor/Monitor'
-import Recordings from '@/Role/Supervisor/Recordings'
 import Reports from '@/Role/Supervisor/Reports'
 
 import ProfileRoutes from '@/routes/profile'
 import ReportRoutes from '@/routes/report'
 import Layout from '@/Role/Layout'
+import Live from '@/Role/Supervisor/Live'
+import LiveRoutes from '@/routes/live'
 
 const scrollBehavior = (to, from, savedPosition) => {
   return { x: 0, y: 0 }
@@ -93,7 +94,7 @@ const router = new VueRouter({
     { path: '/profile', component: Profile, children: ProfileRoutes },
     { path: '/help', component: Help },
     { path: '/monitor', component: Monitor },
-    { path: '/recordings', component: Recordings },
+    { path: '/live', component: Live, children: LiveRoutes },
     { path: '/reports', component: Reports, children: ReportRoutes },
     { path: '/', redirect: 'main' }
   ]
@@ -129,6 +130,7 @@ export default {
 </script>
 
 <style lang="scss">
+//
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>
 

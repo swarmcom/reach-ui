@@ -86,7 +86,6 @@ export default {
         "main-ui": false,
         "admin-ui": false,
         "profile-ui": false,
-        "recordings-ui": false,
         "reports-ui": false,
         "monitor-ui": false,
         "widget-agent-manager": false,
@@ -125,7 +124,6 @@ export default {
         'main-ui',
         'admin-ui',
         'profile-ui',
-        'recordings-ui',
         'reports-ui',
         'monitor-ui'
       ],
@@ -172,7 +170,6 @@ export default {
         "main-ui": { name: "Main Tab" },
         "admin-ui": { name: "Admin" },
         "profile-ui": { name: "Profile" },
-        "recordings-ui": { name: "Recordings" },
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
         "widget-agent-manager": { name: "Agent Manger" },
@@ -225,8 +222,7 @@ export default {
         return (perm != 'admin-ui')
       }
       else if (this.ui == 'agent') {
-        return (perm != 'widget-agent-manager' && perm != 'widget-queue-manager' && perm != 'admin-ui' &&
-          perm != 'recordings-ui' && perm != 'reports-ui' && perm != 'monitor-ui' &&
+        return (perm != 'widget-agent-manager' && perm != 'widget-queue-manager' && perm != 'admin-ui' && perm != 'reports-ui' && perm != 'monitor-ui' &&
           !perm.includes("supervisor-feature"))
       }
     },

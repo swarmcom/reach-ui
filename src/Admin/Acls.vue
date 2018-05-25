@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <h3>Access lists:</h3>
+      <h3>Access control lists:</h3>
     </div>
     <div class="col">
       <button @click="add" class="btn btn-outline-success"><icon name="plus" class="align-middle" scale="1"></icon></button>

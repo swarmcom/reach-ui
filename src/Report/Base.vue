@@ -21,9 +21,10 @@ export default {
         this.$notify({ title: 'Report Error:', text: e, type: 'error' })
       }
     },
-    durationFormatter (v) {
-      if (v) {
-        return moment.duration(parseInt(v)).format("d[d] hh:*mm:ss", { forceLength: true })
+    durationFormatter (value) {
+      let v = parseInt(value)
+      if (v >= 0) {
+        return moment.duration(v).format("d[d] hh:*mm:ss", { forceLength: true })
       } else {
         return ''
       }
