@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Voice mails stats by {{type}}</h3></div>
+    <div class="col"><h3>Voicemails stats by {{type}}</h3></div>
   </div>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
@@ -18,14 +18,8 @@
     <template slot="avg_talk_time" slot-scope="data">
       {{ durationFormatter(data.item.avg_talk_time) }}
     </template>
-    <template slot="avg_hold_time" slot-scope="data">
-      {{ durationFormatter(data.item.avg_hold_time) }}
-    </template>
     <template slot="talk_time" slot-scope="data">
       {{ durationFormatter(data.item.talk_time) }}
-    </template>
-    <template slot="hold_time" slot-scope="data">
-      {{ durationFormatter(data.item.hold_time) }}
     </template>
   </b-table>
 </div>
@@ -47,22 +41,29 @@ export default {
       fields: {
         entity: { label: 'Name' },
         calls: { label: 'Calls' },
-        rings: { label: 'Rings' },
+        offers: { label: 'Offers' },
         answers: { label: 'Answers' },
-        transfers: { label: 'Transfers' },
+        abandons: { label: 'Abandons' },
         avg_talk_time: { label: 'Avg.Talk' },
-        avg_hold_time: { label: 'Avg.Hold' },
-        talk_time: { label: 'Talk' },
-        hold_time: { label: 'Hold' },
+        talk_time: { label: 'Talk' }
       },
     }
   },
   methods: {
-    handleStats ({stats}) {
-      this.data = stats
+    handleStats ({stats, type}) {
+      switch (type) {
+        case 'voicemail_queue':
+        case 'voicemail_client':
+        case 'voicemail_line_in':
+        case 'voicemail_group':
+          this.data = stats
+          break
+        default:
+          break
+      }
     },
     query: async function (type) {
-      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['inbound_groups', type, this.period])
+      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['voicemail_groups', type, this.period])
       this.saveCache()
     },
     onTimer () {
@@ -72,7 +73,7 @@ export default {
     this.$bus.$on('live_stats', this.handleStats)
   },
   beforeDestroy () {
-    this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', this.type])
+    this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['voicemail_groups', this.type])
     this.$bus.$off('live_stats', this.handleStats)
   },
   watch: {
@@ -81,11 +82,11 @@ export default {
         this.skip_load = false
         return
       }
-      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', old])
+      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['voicemail_groups', old])
       this.query(value)
     },
     period: async function (value, old) {
-      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', this.type])
+      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['voicemail_groups', this.type])
       this.query(this.type)
     }
   }

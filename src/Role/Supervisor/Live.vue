@@ -13,9 +13,6 @@
   <li class="nav-item">
     <router-link class="nav-link" to="/live/outbounds">Outbounds</router-link>
   </li>
-  <li class="nav-item">
-    <router-link class="nav-link" to="/live/voicemails">Voicemails</router-link>
-  </li>
 </ul>
 <transition name="reach" mode="out-in">
   <router-view style="margin-top: 20px"></router-view>

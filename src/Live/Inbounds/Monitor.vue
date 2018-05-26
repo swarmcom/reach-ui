@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Live inbound calls</h3></div>
+    <div class="col"><h3>Live inqueue</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
     <template slot="time" slot-scope="data">
@@ -41,6 +41,7 @@ export default {
     return {
       fields: {
         state: { label: 'State' },
+        record: { label: 'Type' },
         time: { label: 'Time' },
         effective_time: { label: 'Eff.' },
         queue: { label: 'Queue' },
@@ -51,7 +52,7 @@ export default {
   },
   methods: {
     handleState ({state}) {
-      let i = this.data.findIndex(E => E.uuid === state.uuid)
+      let i = this.data.findIndex(E => E.uuid === state.uuid && E.record === state.record)
       if (i >= 0) {
         if (state.state === 'terminate') {
           this.data.splice(i, 1)
@@ -88,9 +89,11 @@ export default {
   },
   created () {
     this.$bus.$on('live_inqueue_state', this.handleState)
+    this.$bus.$on('live_inqueue_vm_state', this.handleState)
   },
   beforeDestroy () {
     this.$bus.$off('live_inqueue_state', this.handleState)
+    this.$bus.$off('live_inqueue_vm_state', this.handleState)
     this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds'])
   },
   watch: {
