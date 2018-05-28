@@ -41,7 +41,7 @@ export default {
   data () {
     return {
       type: 'queue',
-      types: ['queue', 'group', 'client', 'line_in'],
+      types: ['acl', 'group', 'client', 'line_out'],
       period: '15m',
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {
@@ -62,7 +62,7 @@ export default {
       this.data = stats
     },
     query: async function (type) {
-      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['inbound_groups', type, this.period])
+      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['outbound_groups', type, this.period])
       this.saveCache()
     },
     onTimer () {
@@ -72,7 +72,7 @@ export default {
     this.$bus.$on('live_stats', this.handleStats)
   },
   beforeDestroy () {
-    this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', this.type])
+    this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['outbound_groups', this.type])
     this.$bus.$off('live_stats', this.handleStats)
   },
   watch: {
@@ -81,11 +81,11 @@ export default {
         this.skip_load = false
         return
       }
-      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', old])
+      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['outbound_groups', old])
       this.query(value)
     },
     period: async function (value, old) {
-      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', this.type])
+      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['outbound_groups', this.type])
       this.query(this.type)
     }
   }

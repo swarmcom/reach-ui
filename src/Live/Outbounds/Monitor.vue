@@ -3,27 +3,25 @@
   <div class="row">
     <div class="col"><h3>Live outbound calls</h3></div>
   </div>
+  <b-row style="margin-bottom: 10px">
+    <b-col cols=3>
+      <b-form-select v-model="type" :options="types" />
+    </b-col>
+  </b-row>
   <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
     <template slot="time" slot-scope="data">
       {{durationFormatter(data.item.time)}}
     </template>
-    <template slot="effective_time" slot-scope="data">
-      {{data.item.effective_time.weight}} | {{durationFormatter(data.item.effective_time.time)}}
+    <template slot="agent" slot-scope="data">
+      {{data.item.agent.name}}
     </template>
-    <template slot="queue" slot-scope="data">
-      {{data.item.queue.name}}
+    <template slot="client" slot-scope="data">
+      {{data.item.client.name}}
     </template>
-    <template slot="skills" slot-scope="data">
-      {{data.item.skills}}
+    <template slot="line" slot-scope="data">
+      {{data.item.line_out.name}}
     </template>
     <template slot="actions" slot-scope="data">
-      <template v-if="data.item.state == 'oncall'">
-        <b-button size="sm" variant="primary" @click="takeover(data.item)" class="pointer">Takeover</b-button>
-        <b-button size="sm" variant="success" @click="spy(data.item)" class="pointer">Spy</b-button>
-      </template>
-      <template v-if="data.item.state == 'inqueue' || data.item.state == 'agent'">
-        <b-button size="sm" variant="primary" @click="take(data.item)" class="pointer">Take</b-button>
-      </template>
       <b-button size="sm" variant="danger" @click="hangup(data.item)" class="pointer">Hangup</b-button>
     </template>
   </b-table>
@@ -39,12 +37,14 @@ export default {
   },
   data () {
     return {
+      type: 'acl',
+      types: ['acl', 'group'],
       fields: {
         state: { label: 'State' },
         time: { label: 'Time' },
-        effective_time: { label: 'Eff.' },
-        queue: { label: 'Queue' },
-        skills: { label: 'Skills' },
+        agent: { lavel: 'Agent' },
+        client: { label: 'Client' },
+        line_out: { label: 'Line Out' },
         actions: { label: 'Actions' }
       },
     }
@@ -63,35 +63,25 @@ export default {
       }
     },
     query: async function (type) {
-      this.data = await this.$agent.p_mfa('ws_live', 'inbounds')
-      await this.$agent.p_mfa('ws_live', 'subscribe', ['inbounds'])
+      this.data = await this.$agent.p_mfa('ws_live', 'outgoings', [type])
+      await this.$agent.p_mfa('ws_live', 'subscribe', ['outgoings', type])
     },
     onTimer () {
       this.data.forEach((E, i, Arr) => { 
         E.time = E.time + 1000
-        E.effective_time.time = E.effective_time.time + 1000
         Arr.splice(i, 1, E)
       })
-    },
-    take ({record, uuid}) {
-      this.$agent.p_mfa('ws_supervisor', 'take', [record, uuid])
-    },
-    takeover ({record, uuid}) {
-      this.$agent.p_mfa('ws_supervisor', 'takeover', [record, uuid])
-    },
-    spy ({record, uuid}) {
-      this.$agent.p_mfa('ws_supervisor', 'spy', [record, uuid])
     },
     hangup ({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
     },
   },
   created () {
-    this.$bus.$on('live_inqueue_state', this.handleState)
+    this.$bus.$on('live_outgoing_state', this.handleState)
   },
   beforeDestroy () {
-    this.$bus.$off('live_inqueue_state', this.handleState)
-    this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds'])
+    this.$bus.$off('live_outgoing_state', this.handleState)
+    this.$agent.p_mfa('ws_live', 'unsubscribe', ['outgoings', this.type])
   },
   watch: {
     type: async function (value, old) {
@@ -99,7 +89,7 @@ export default {
         this.skip_load = false
         return
       }
-      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['inbounds'])
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['outgoings', old])
       this.query(value)
     },
   }
