@@ -32,6 +32,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-agents-monitor',
   data () {
     return {
       type: 'acl',

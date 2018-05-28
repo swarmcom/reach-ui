@@ -33,6 +33,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-outbounds-monitor',
   components: {
   },
   data () {

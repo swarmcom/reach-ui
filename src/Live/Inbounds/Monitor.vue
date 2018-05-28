@@ -35,6 +35,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-inbounds-monitor',
   components: {
   },
   data () {

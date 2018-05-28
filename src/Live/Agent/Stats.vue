@@ -24,6 +24,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-agent-stats',
   data () {
     return {
       period: '15m',

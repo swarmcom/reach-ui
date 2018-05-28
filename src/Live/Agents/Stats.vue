@@ -27,6 +27,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-agents-stats',
   data () {
     return {
       type: 'acl',

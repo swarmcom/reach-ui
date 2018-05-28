@@ -30,6 +30,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-voicemails-stats',
   components: {
   },
   data () {

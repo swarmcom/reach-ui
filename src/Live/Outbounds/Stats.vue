@@ -36,6 +36,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-outbounds-stats',
   components: {
   },
   data () {
