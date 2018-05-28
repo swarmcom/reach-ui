@@ -40,8 +40,8 @@ export default {
   },
   data () {
     return {
-      type: 'queue',
-      types: ['acl', 'group', 'client', 'line_out'],
+      type: 'acl',
+      types: ['acl', 'group', 'client', 'line'],
       period: '15m',
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {
