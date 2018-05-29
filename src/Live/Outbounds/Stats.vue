@@ -50,11 +50,9 @@ export default {
         calls: { label: 'Calls' },
         rings: { label: 'Rings' },
         answers: { label: 'Answers' },
-        transfers: { label: 'Transfers' },
+        abandons: { label: 'Abandons' },
         avg_talk_time: { label: 'Avg.Talk' },
-        avg_hold_time: { label: 'Avg.Hold' },
         talk_time: { label: 'Talk' },
-        hold_time: { label: 'Hold' },
       },
     }
   },
