@@ -15,17 +15,23 @@
     <template slot="entity" slot-scope="data">
       {{ data.item.entity.name }}
     </template>
-    <template slot="avg_talk_time" slot-scope="data">
-      {{ durationFormatter(data.item.avg_talk_time) }}
+    <template slot="agent_time" slot-scope="data">
+      {{ durationFormatter(data.item.agent_time) }}
     </template>
-    <template slot="avg_hold_time" slot-scope="data">
-      {{ durationFormatter(data.item.avg_hold_time) }}
+    <template slot="avg_agent_time" slot-scope="data">
+      {{ durationFormatter(data.item.avg_agent_time) }}
+    </template>
+    <template slot="calling_time" slot-scope="data">
+      {{ durationFormatter(data.item.calling_time) }}
+    </template>
+    <template slot="avg_calling_time" slot-scope="data">
+      {{ durationFormatter(data.item.avg_calling_time) }}
     </template>
     <template slot="talk_time" slot-scope="data">
       {{ durationFormatter(data.item.talk_time) }}
     </template>
-    <template slot="hold_time" slot-scope="data">
-      {{ durationFormatter(data.item.hold_time) }}
+    <template slot="avg_talk_time" slot-scope="data">
+      {{ durationFormatter(data.item.avg_talk_time) }}
     </template>
   </b-table>
 </div>
@@ -50,9 +56,14 @@ export default {
         calls: { label: 'Calls' },
         rings: { label: 'Rings' },
         answers: { label: 'Answers' },
-        abandons: { label: 'Abandons' },
-        avg_talk_time: { label: 'Avg.Talk' },
+        calling_abandons: { label: 'Calling fail' },
+        agent_abandons: { label: 'Agents fail' },
+        calling_time: { label: 'Calling' },
+        avg_calling_time: { label: 'Avg.Calling' },
+        agent_time: { label: 'Agent' },
+        avg_agent_time: { label: 'Avg.Agent' },
         talk_time: { label: 'Talk' },
+        avg_talk_time: { label: 'Avg.Talk' }
       },
     }
   },
