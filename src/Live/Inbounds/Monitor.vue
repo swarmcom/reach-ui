@@ -54,14 +54,16 @@ export default {
   methods: {
     handleState ({state}) {
       let i = this.data.findIndex(E => E.uuid === state.uuid && E.record === state.record)
-      if (i >= 0) {
-        if (state.state === 'terminate') {
+      if (state.state === 'terminate') {
+        if (i >= 0) {
           this.data.splice(i, 1)
-        } else {
-          this.data.splice(i, 1, state)
         }
       } else {
-        this.data.push(state)
+        if (i >= 0) {
+          this.data.splice(i, 1, state)
+        } else {
+          this.data.push(state)
+        }
       }
     },
     query: async function (type) {
