@@ -15,11 +15,14 @@
     <template slot="agent" slot-scope="data">
       {{data.item.agent.name}}
     </template>
-    <template slot="client" slot-scope="data">
-      {{data.item.client.name}}
-    </template>
-    <template slot="line" slot-scope="data">
+    <template slot="line_out" slot-scope="data">
       {{data.item.line_out.name}}
+    </template>
+    <template slot="callee" slot-scope="data">
+      {{data.item.call_vars['Caller-Callee-ID-Number']}} <{{data.item.call_vars['Caller-Callee-ID-Name']}}>
+    </template>
+    <template slot="caller" slot-scope="data">
+      {{data.item.call_vars['Caller-Caller-ID-Number']}} <{{data.item.call_vars['Caller-Caller-ID-Name']}}>
     </template>
     <template slot="actions" slot-scope="data">
       <b-button size="sm" variant="danger" @click="hangup(data.item)" class="pointer">Hangup</b-button>
@@ -44,8 +47,10 @@ export default {
         state: { label: 'State' },
         time: { label: 'Time' },
         agent: { lavel: 'Agent' },
-        client: { label: 'Client' },
+        target: { lavel: 'Target' },
         line_out: { label: 'Line Out' },
+        callee: { label: 'Callee' },
+        caller: { label: 'Caller' },
         actions: { label: 'Actions' }
       },
     }
