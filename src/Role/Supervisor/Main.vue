@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import SessionManager from '@/Agent/SessionManager.vue'
-import MyStatistics from '@/Agent/MyStatistics.vue'
+import SessionManager from '@/Agent/SessionManager'
+import Stats from '@/Agent/Stats'
 import draggable from 'vuedraggable'
 
 export default {
@@ -55,7 +55,7 @@ export default {
   },
   components: {
     'session-manager': SessionManager,
-    'my-statistics': MyStatistics,
+    'my-statistics': Stats,
     draggable
   }
 }

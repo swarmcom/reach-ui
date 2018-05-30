@@ -1,144 +1,185 @@
 <template>
-<div>
-  <b-row>
-    <b-col><h3>Stats:</h3></b-col>
-    <b-col>
-      <select class="custom-select" style="width: 100%" @change="set_period($event.target.value)">
-        <option v-for="period in periods" :value="period" :selected="isActive(period)">{{ period }}</option>
-      </select>
-    </b-col>
-  </b-row>
-  <b-row style="margin-top: 10px">
-    <b-col>
-      <table class="table table-striped table-sm">
-        <caption>Call metrics</caption>
-        <thead>
-          <tr>
-            <td></td>
-            <td>My</td>
-            <td>Group</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Longest</td>
-            <td>{{ time(stats.cpt.max.oncall) }}</td>
-            <td>{{ time(group_stats.cpt.max.oncall) }}</td>
-          </tr>
-          <tr>
-            <td>CPT</td>
-            <td>{{ time(stats.cpt.avg.oncall) }}</td>
-            <td>{{ time(group_stats.cpt.avg.oncall) }}</td>
-          </tr>
-          <tr>
-            <td>ASA</td>
-            <td>{{ time(stats.cpt.avg.answer) }}</td>
-            <td>{{ time(group_stats.cpt.avg.answer) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </b-col>
-    <b-col>
-      <table class="table table-striped table-sm">
-        <caption>Agent metrics</caption>
-        <thead class="thead-dark">
-          <tr>
-            <td></td>
-            <td class="text-right">My</td>
-            <td class="text-right">Group</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Occupancy</td>
-            <td class="text-right">{{ percent(stats.occupancy.ratio.oncall) }}</td>
-            <td class="text-right">{{ percent(group_stats.occupancy.ratio.oncall) }}</td>
-          </tr>
-          <tr>
-            <td>Available</td>
-            <td class="text-right">{{ percent(stats.occupancy.ratio.available) }}</td>
-            <td class="text-right">{{ percent(group_stats.occupancy.ratio.available) }}</td>
-          </tr>
-          <tr>
-            <td>Release</td>
-            <td class="text-right">{{ percent(stats.occupancy.ratio.release) }}</td>
-            <td class="text-right">{{ percent(group_stats.occupancy.ratio.release) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </b-col>
-  </b-row>
+<div v-access:widget-my-statistics>
+  <toggle-bar style="cursor: move"></toggle-bar>
+  <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2 itemDragable">
+    <b-row style="margin-top:10px">
+      <b-col sm="4">
+        <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period">
+          <option v-for="period in periods" :value="period.value" :key="period.name">{{period.name}}</option>
+        </b-form-select>
+      </b-col>
+    </b-row>
+    <b-row style="margin-top:10px">
+      <b-col>
+        <b-container>
+          <b-row>
+            <b-col style="padding:0; max-width: 60px !important">
+              <ciq class="table-body-orange"></ciq>
+            </b-col>
+            <b-col style="padding:0; max-width: 60px !important">
+              <div class="table-body-green">
+                Agents<br>
+                <span class="stats-value">{{stats.agents}}</span>
+              </div>
+            </b-col>
+            <b-col style="padding:0; max-width: 102px !important; padding-right:10px; border-right: 2px solid white;">
+              <div style="background-color: #dbeffa">
+                <b-progress-bar :value="stats.statesCounts.release" :max="maxAgents" show-progress>
+                  <div class="agent-state-texts">Released</div>
+                </b-progress-bar>
+              </div>
+              <div style="margin-top:2px; background-color: #fbe7c3">
+                <b-progress-bar variant="warning" :value="stats.statesCounts.available"
+                                :max="maxAgents" show-progress>
+                  <div class="agent-state-texts">Available</div>
+                </b-progress-bar>
+              </div>
+              <div style="margin-top:2px; background-color: #fbe7c3">
+                <b-progress-bar variant="warning" :value="stats.statesCounts.ringing"
+                                :max="maxAgents" show-progress>
+                  <div class="agent-state-texts">Ringing</div>
+                </b-progress-bar>
+              </div>
+              <div style="margin-top:2px; background-color: #e2fada">
+                <b-progress-bar variant="success" :value="stats.statesCounts.oncall"
+                                :max="maxAgents" show-progress>
+                  <div class="agent-state-texts">Oncall</div>
+                </b-progress-bar>
+              </div>
+              <div style="margin-top:2px; background-color: #fbe7c3">
+                <b-progress-bar variant="warning" :value="stats.statesCounts.wrapup"
+                                :max="maxAgents" show-progress>
+                  <div class="agent-state-texts">Wrapup</div>
+                </b-progress-bar>
+              </div>
+            </b-col>
+            <b-col style="padding:0; max-width: 60px !important">
+              <div class="table-body-blue">
+                My CPT<br>
+                <span class="stats-value">{{stats.myCpt}}</span>
+              </div>
+            </b-col>
+            <b-col style="padding:0; max-width: 60px !important">
+              <div class="table-body-blue">
+                Team CPT<br>
+                <span class="stats-value">{{stats.teamCpt}}</span>
+              </div>
+            </b-col>
+            <b-col style="padding:0; max-width: 60px !important">
+              <div class="table-body-blue">
+                Occup.<br>
+                <span class="stats-value">{{stats.occup.oncall}}</span>
+              </div>
+            </b-col>
+            <b-col style="padding:0; max-width: 60px !important">
+              <div class="table-body-blue">
+                ASA<br>
+                <span class="stats-value">{{stats.asa}}</span>
+              </div>
+            </b-col>
+            <b-col style="padding:0; max-width: 60px !important">
+              <div class="table-body-blue">
+                Longest<br>
+                <span class="stats-value">{{stats.longest}}</span>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-col>
+    </b-row>
+  </b-collapse>
 </div>
 </template>
 
 <script>
+import Common from '@/Admin/Common'
+import CIQ from '@/Agent/Stats/CIQ'
+import Storage from '@/Storage'
+
 export default {
-  name: 'agent-stats',
+  widgetName: 'My statistics',
+  name: 'my-statistics',
+  mixins: [Common, Storage],
+  components: {
+    ciq: CIQ
+  },
   data () {
     return {
-      periods: [ "15m", "30m", "1h", "1w", "1m"],
-      period: "15m",
       stats: {
-        cpt: {
-          avg: {},
-          max: {}
+        ciq: 0,
+        agents: 0,
+        statesCounts: {
+          release: 0,
+          available: 0,
+          ringing: 0,
+          oncall: 0,
+          wrapup: 0
         },
-        occupancy: {
-          ratio: {}
-        }
+        myCpt: 0,
+        teamCpt: 0,
+        occup: {
+          release: 0,
+          available: 0,
+          oncall: 0
+        },
+        asa: 0,
+        longest: 0
       },
-      group_stats: {
-        cpt: {
-          avg: {},
-          max: {}
-        },
-        occupancy: {
-          ratio: {}
-        }
-      }
+      periods: [
+        {value: "15m", name: "Last 15 minutes"},
+        {value: "30m", name: "Last 30 minutes"},
+        {value: "1h", name: "Last Hour"},
+        {value: "1d", name: "Today"},
+        {value: "1w", name: "This Week"},
+        {value: "1M", name: "This Month"}
+      ],
+      period: {value: "15m", name: "Last 15 minutes"},
+      showCollapse: true,
+      maxAgents: 1
     }
   },
   methods: {
-    query: async function () {
-      this.stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period])
-      this.group_stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
-    },
-    group_query: async function () {
+    query () {
+      this.states_query()
+      this.ciq_query()
+      this.my_stats_query()
     },
     percent (value) {
       if (value > 0) {
-        return `${(value*100).toFixed(2)}%`
+        return `${(value * 100).toFixed(2)}%`
       } else {
         return "0%"
       }
     },
-    isActive (value) {
-      return value == this.period
-    },
     time (value) {
-      if (value > 0) {
-        return `${(value/1000).toFixed(1)}s`
-      } else {
-        return "0s"
-      }
+      if (value > 0)
+        return this.msToMs(value)
+      else
+        return "--"
     },
     set_period (value) {
-      this.period = value
-      this.query()
-    },
-    handleUpdate () {
-      this.query()
-    },
+      this.period.value = value
+      this.my_stats_query()
+    }
   },
   created () {
-    this.$bus.$on('agent_skills', this.handleUpdate)
-    this.$bus.$on('agent_stats', this.handleUpdate)
     this.query()
-    this.group_query()
+    this.maybeInitLocal().loadLocal('showCollapse')
   },
   beforeDestroy () {
-    this.$bus.$off('agent_skills', this.handleUpdate)
-    this.$bus.$off('agent_stats', this.handleUpdate)
-  }
+  },
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal('showCollapse').writeLocal()
+      }
+    }
+  },
 }
 </script>
+
+<style lang="scss">
+.form-check {
+  margin-bottom: unset;
+}
+</style>
