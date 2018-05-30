@@ -13,8 +13,6 @@
 <script>
 import SessionManager from '@/Agent/SessionManager.vue'
 import MyStatistics from '@/Agent/MyStatistics.vue'
-import Agents from '@/Monitor/Agents'
-import Inqueues from '@/Monitor/Inqueues'
 import draggable from 'vuedraggable'
 
 export default {
@@ -58,8 +56,6 @@ export default {
   components: {
     'session-manager': SessionManager,
     'my-statistics': MyStatistics,
-    'agents': Agents,
-    'inqueues': Inqueues,
     draggable
   }
 }

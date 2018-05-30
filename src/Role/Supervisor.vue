@@ -6,7 +6,6 @@
     <b-collapse is-nav id="nav_collapse">
       <b-navbar-nav>
         <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
-        <b-nav-item v-access:monitor-ui to="/monitor">Monitor</b-nav-item>
         <b-nav-item v-access:monitor-ui to="/live">Live</b-nav-item>
         <b-nav-item v-access:reports-ui to="/reports">Reports</b-nav-item>
         <b-nav-item to="/help">Help</b-nav-item>
@@ -74,7 +73,6 @@ import VueRouter from 'vue-router'
 import Help from '@/Role/Supervisor/Help'
 import Main from '@/Role/Supervisor/Main'
 import Profile from '@/Role/Agent/Profile'
-import Monitor from '@/Role/Supervisor/Monitor'
 import Reports from '@/Role/Supervisor/Reports'
 
 import ProfileRoutes from '@/routes/profile'
@@ -93,7 +91,6 @@ const router = new VueRouter({
     { path: '/main', component: Main },
     { path: '/profile', component: Profile, children: ProfileRoutes },
     { path: '/help', component: Help },
-    { path: '/monitor', component: Monitor },
     { path: '/live', component: Live, children: LiveRoutes },
     { path: '/reports', component: Reports, children: ReportRoutes },
     { path: '/', redirect: 'main' }

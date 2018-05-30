@@ -1,4 +1,4 @@
-<template>
+C<template>
 <div v-access:main-ui>
   <draggable :list="widgets" :options="{draggable:'.itemDragable'}" @end="onDragEnd">
     <b-row v-for="(item, index) in widgets" :key="index" class="itemDragable">
@@ -14,9 +14,8 @@
 <script>
 import SessionManager from '@/Agent/SessionManager.vue'
 import MyStatistics from '@/Agent/MyStatistics.vue'
-import Agents from '@/Monitor/Agents'
-import Inqueues from '@/Monitor/Inqueues'
 import draggable from 'vuedraggable'
+
 export default {
   data () {
     return {
