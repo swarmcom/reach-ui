@@ -7,7 +7,7 @@ CIQ<br>
 
 <script>
 export default {
-  name: 'agent-ciq',
+  name: 'agent-stats-ciq',
   data () {
     return {
       ciq: undefined

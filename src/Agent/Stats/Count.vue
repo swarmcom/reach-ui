@@ -1,33 +1,34 @@
 <template>
 <div>
-CIQ: {{ ciq.ciq }}
+Agents<br>
+<span class="stats-value">{{count}}</span>
 </div>
 </template>
 
 <script>
 export default {
-  name: 'agent-ciq',
+  name: 'agent-stats-count',
   data () {
     return {
-      ciq: {}
+      count: undefined
     }
   },
   methods: {
     query: async function () {
-      this.ciq = await this.$agent.p_mfa('ws_stats', 'ciq', [])
+      this.ciq = await this.$agent.p_mfa('ws_live_agent', 'count')
     },
-    handleUpdate (ev) {
-      this.query()
+    handleUpdate ({count}) {
+      this.ciq = count
     }
   },
-  created () {
+  created: async function () {
     this.query()
-    this.$bus.$on('agent_skills', this.handleUpdate)
-    this.$bus.$on('inqueue_state', this.handleUpdate)
+    await this.$agent.p_mfa('ws_live_agent', 'subscribe', ['count'])
+    this.$bus.$on('live_agent_count', this.handleUpdate)
   },
-  beforeDestroy () {
-    this.$bus.$off('agent_skills', this.handleUpdate)
-    this.$bus.$off('inqueue_state', this.handleUpdate)
+  beforeDestroy: async function () {
+    await this.$agent.p_mfa('ws_live_agent', 'unsubscribe', ['count'])
+    this.$bus.$off('live_agent_count', this.handleUpdate)
   }
 }
 </script>
