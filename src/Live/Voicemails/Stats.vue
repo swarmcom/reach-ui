@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Voicemails stats by {{type}}</h3></div>
+    <div class="col"><h3>Voicemail stats by {{type}}</h3></div>
   </div>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>

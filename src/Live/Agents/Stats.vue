@@ -30,8 +30,8 @@ export default {
   name: 'live-agents-stats',
   data () {
     return {
-      type: 'acl',
-      types: ['acl', 'group'],
+      type: 'group',
+      types: ['group', 'acl'],
       period: '15m',
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {

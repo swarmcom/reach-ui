@@ -27,9 +27,9 @@ export default {
   name: 'live-agent-group',
   data () {
     return {
-      type: 'acl',
+      type: 'group',
       period: '15m',
-      types: ['acl', 'group', 'skills'],
+      types: ['group', 'acl', 'skills'],
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {
         total_agents: { label: 'Agents' },

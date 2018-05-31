@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Live inqueue</h3></div>
+    <div class="col"><h3>Live calls in queue</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
     <template slot="time" slot-scope="data">

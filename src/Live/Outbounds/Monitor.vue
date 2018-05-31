@@ -41,8 +41,8 @@ export default {
   },
   data () {
     return {
-      type: 'acl',
-      types: ['acl', 'group'],
+      type: 'group',
+      types: ['group', 'acl'],
       fields: {
         state: { label: 'State' },
         time: { label: 'Time' },

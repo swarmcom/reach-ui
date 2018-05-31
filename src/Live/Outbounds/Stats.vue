@@ -47,8 +47,8 @@ export default {
   },
   data () {
     return {
-      type: 'acl',
-      types: ['acl', 'group', 'client', 'line'],
+      type: 'group',
+      types: ['group', 'acl', 'client', 'line'],
       period: '15m',
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {
