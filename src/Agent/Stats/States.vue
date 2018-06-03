@@ -58,7 +58,6 @@ export default {
       this.updateStates(states)
     },
     updateStates (states) {
-      console.log("update", states)
       this.names.forEach( (state) => this.states[state] = maybe_zero(states[state]) )
     }
   },
