@@ -2,42 +2,50 @@
 <b-row>
   <b-col class="table-body-blue">
     My CPT<br>
-    <span class="stats-value">{{cpt}}</span>
+    <span class="stats-value">{{durationFormatter(stats.cpt)}}</span>
   </b-col>
   <b-col class="table-body-blue">
-    My Occup.<br>
-    <span class="stats-value">{{oncall}}</span>
+    Occup.<br>
+    <span class="stats-value">{{stats.occupancy}}</span>
   </b-col>
   <b-col class="table-body-blue">
-    My ASA<br>
-    <span class="stats-value">{{asa}}</span>
+    ASA<br>
+    <span class="stats-value">{{durationFormatter(stats.asa)}}</span>
   </b-col>
   <b-col class="table-body-blue">
-    My Longest<br>
-    <span class="stats-value">{{longest}}</span>
+    Longest<br>
+    <span class="stats-value">{{durationFormatter(stats.longest)}}</span>
+  </b-col>
+  <b-col class="table-body-blue">
+    Calls<br>
+    <span class="stats-value">{{stats.calls}}</span>
   </b-col>
 </b-row>
 </template>
 
 <script>
+import moment from 'moment'
+import momentDurationFormat from 'moment-duration-format'
+
 export default {
   name: 'agent-stats-agent',
   props: ['period'],
   data () {
     return {
-      cpt: undefined,
-      oncall: undefined,
-      asa: undefined,
-      longest: undefined
+      stats: {}
     }
   },
   methods: {
     query: async function () {
-      await this.$agent.p_mfa('ws_live_agent', 'agent', [this.period])
+      this.stats = await this.$agent.p_mfa('ws_live_agent', 'agent', [this.period])
     },
-    handleUpdate ({count}) {
-      this.ciq = count
-    }
+    handleUpdate ({stats}) {
+      this.stats = stats
+    },
+    durationFormatter (value) {
+      let v = parseInt(value)
+      return v >= 0 ? moment.duration(v).format("d[d] hh:*mm:ss", { forceLength: true }) : ''
+    },
   },
   created: async function () {
     this.query()
