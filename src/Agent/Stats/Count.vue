@@ -15,10 +15,10 @@ export default {
   },
   methods: {
     query: async function () {
-      this.ciq = await this.$agent.p_mfa('ws_live_agent', 'count')
+      this.count = await this.$agent.p_mfa('ws_live_agent', 'count')
     },
     handleUpdate ({count}) {
-      this.ciq = count
+      this.count = count
     }
   },
   created: async function () {

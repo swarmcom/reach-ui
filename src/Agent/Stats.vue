@@ -13,8 +13,8 @@
       <b-col style="padding:0; max-width: 60px !important"><ciq class="table-body-orange"></ciq></b-col>
       <b-col style="padding:0; max-width: 60px !important"><count class="table-body-green"></count></b-col>
       <b-col style="padding:0; max-width: 102px !important; padding-right:10px; border-right: 2px solid white;"><states></states></b-col>
-      <b-col><agent></agent></b-col>
-      <b-col><group></group></b-col>
+      <b-col><agent @period=period></agent></b-col>
+      <b-col><group @period=period></group></b-col>
     </b-row>
   </b-collapse>
 </div>
@@ -30,7 +30,6 @@ import States from '@/Agent/Stats/States'
 import Storage from '@/Storage'
 
 export default {
-  widgetName: 'My statistics',
   name: 'my-statistics',
   mixins: [Common, Storage],
   components: {
@@ -55,31 +54,6 @@ export default {
     }
   },
   methods: {
-    query () {
-    },
-    percent (value) {
-      if (value > 0) {
-        return `${(value * 100).toFixed(2)}%`
-      } else {
-        return "0%"
-      }
-    },
-    time (value) {
-      if (value > 0)
-        return this.msToMs(value)
-      else
-        return "--"
-    },
-    set_period (value) {
-      this.period.value = value
-      this.my_stats_query()
-    }
-  },
-  created () {
-    this.query()
-    this.maybeInitLocal().loadLocal('showCollapse')
-  },
-  beforeDestroy () {
   },
   watch: {
     showCollapse: function (newVal, oldVal) {
