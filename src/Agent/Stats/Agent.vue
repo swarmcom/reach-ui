@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     query: async function () {
-      this.ciq = await this.$agent.p_mfa('ws_live_agent', 'agent', this.period)
+      await this.$agent.p_mfa('ws_live_agent', 'agent', [this.period])
     },
     handleUpdate ({count}) {
       this.ciq = count
@@ -42,11 +42,17 @@ export default {
   created: async function () {
     this.query()
     await this.$agent.p_mfa('ws_live_agent', 'subscribe', ['agent', this.period])
-    this.$bus.$on('live_agent_count', this.handleUpdate)
+    this.$bus.$on('live_agent_stats', this.handleUpdate)
   },
   beforeDestroy: async function () {
     await this.$agent.p_mfa('ws_live_agent', 'unsubscribe', ['agent'])
-    this.$bus.$off('live_agent_count', this.handleUpdate)
+    this.$bus.$off('live_agent_stats', this.handleUpdate)
+  },
+  watch: {
+    period: async function (value, old) {
+      await this.$agent.p_mfa('ws_live_agent', 'unsubscribe', ['agent'])
+      this.query()
+    }
   }
 }
 </script>

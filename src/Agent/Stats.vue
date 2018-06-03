@@ -4,8 +4,8 @@
   <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2 itemDragable">
     <b-row style="margin-top:10px">
       <b-col sm="4">
-        <b-form-select class="pointer" size="sm" v-model="period.value" @change="set_period">
-          <option v-for="period in periods" :value="period.value" :key="period.name">{{period.name}}</option>
+        <b-form-select class="pointer" size="sm" v-model="period.value" @change="updateWidgets">
+          <option v-for="period in periods" :value="period.value" :key="period.value">{{period.name}}</option>
         </b-form-select>
       </b-col>
     </b-row>
@@ -13,8 +13,8 @@
       <b-col style="padding:0; max-width: 60px !important"><ciq class="table-body-orange"></ciq></b-col>
       <b-col style="padding:0; max-width: 60px !important"><count class="table-body-green"></count></b-col>
       <b-col style="padding:0; max-width: 102px !important; padding-right:10px; border-right: 2px solid white;"><states></states></b-col>
-      <b-col><agent @period=period></agent></b-col>
-      <b-col><group @period=period></group></b-col>
+      <b-col><agent :period="period.value"></agent></b-col>
+      <b-col><group :period="period.value"></group></b-col>
     </b-row>
   </b-collapse>
 </div>
@@ -54,6 +54,8 @@ export default {
     }
   },
   methods: {
+    updateWidgets (v) {
+    }
   },
   watch: {
     showCollapse: function (newVal, oldVal) {
