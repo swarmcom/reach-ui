@@ -124,7 +124,7 @@ export default {
   methods: {
     query: async function () {
       this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
-      this.agents = await this.$agent.p_mfa('ws_agent', 'live_agents')
+      this.agents = await this.$agent.p_mfa('ws_live', 'agents', ['group'])
       this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
     },
     handleState({tag, info}) {
@@ -253,15 +253,16 @@ export default {
       }
     }
   },
-  created () {
+  created: async function () {
     this.a = this.$agent.getData()
     this.query()
+    await this.$agent.p_mfa('ws_live', 'subscribe', ['agents', 'group'])
     this.$bus.$on('agents_state', this.handleState)
-    this.$agent.subscribe('agents')
     this.maybeInitLocal().loadLocal('showCollapse')
   },
-  beforeDestroy() {
+  beforeDestroy: async function () {
     this.$bus.$off('agents_state', this.handleState)
+    await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', 'group'])
   }
 }
 </script>
