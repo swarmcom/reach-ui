@@ -1,30 +1,43 @@
 <template>
-  <div class="container" v-if="this.$agent.can_login()">
-    <div class="form-signin">
-      <h6 class="form-signin-heading">Name and password:</h6>
-      <div class="form-group row align-items-center">
-        <label for="inputLogin" class="sr-only">Name</label>
-        <div class="col-sm-3">
-          <input v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" id="inputLogin" placeholder="Login" required="true" autofocus="true">
+<div class="container" v-if="this.$agent.can_login()">
+  <div class="row justify-content-center">
+    <div class="col-5">
+      <div class="row">
+        <div class="col">
+          <h2>Login Reach:</h2>
         </div>
       </div>
-      <div class="form-group row">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <div class="col-sm-3">
-          <input v-model="password" v-on:keyup.enter="onSubmit" type="password" id="inputPassword" class="form-control" placeholder="Password" required="true">
+      <div class="form-signin">
+        <div class="form-group">
+          <label for="inputLogin">Name:</label>
+          <input id="inputLogin" v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" placeholder="Login" required="true" autofocus="true">
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Password:</label>
+          <input id="inputPassword" v-model="password" v-on:keyup.enter="onSubmit" type="password" class="form-control" placeholder="Password" required="true">
+        </div>
+        <div class="form-group">
+          <label for="inputDomain">Domain:</label>
+          <input id="inputDomain" v-model="domain" v-on:keyup.enter="onSubmit" type="text" class="form-control" value="" required="true">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="checkbox" v-model="remember">
+          <label class="form-check-label" for="checkbox">Remember me</label>
+        </div>
+        <div class="row justify-content-end">
+          <div class="col-auto">
+            <button @click="onSubmit" class="btn btn-primary pointer" type="submit">Login</button>
+          </div>
         </div>
       </div>
-      <input type="checkbox" id="checkbox" v-model="remember">
-      <label for="checkbox">Remember me</label>
-      <button @click="onSubmit" class="btn btn-lg btn-primary btn-block col-sm-2 pointer" type="submit">Login</button>
     </div>
-    <b-modal ref="takeover" hide-footer title="Agent is logged in">
+  </div>
+  <b-modal ref="takeover" hide-footer title="Agent is logged in">
       <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
       <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
-    </b-modal>
-
-    <notifications position="bottom right" :speed="500" :duration="1000"/>
-  </div>
+  </b-modal>
+  <notifications position="bottom right" :speed="500" :duration="1000"></notifications>
+</div>
 </template>
 
 <script>
@@ -38,6 +51,7 @@ export default {
     return {
       login: '',
       password: '',
+      domain: window.location.hostname,
       remember: false
     }
   },
@@ -46,7 +60,7 @@ export default {
       this.$refs.takeover.hide()
     },
     takeover: function() {
-      this.$agent.takeover(this.login, this.password, (Re) => {
+      this.$agent.takeover(this.login, this.password, this.domain, (Re) => {
         if (Re.error) {
           this.$notify({ title: 'Take over:', text: Re.error, type: 'error' })
         }
@@ -54,7 +68,7 @@ export default {
     },
     onSubmit () {
       this.saveDataStorage()
-      this.$agent.login(this.login, this.password, (Re) => {
+      this.$agent.login(this.login, this.password, this.domain, (Re) => {
         if (Re.error && Re.error == 'already_logged_in') {
           this.$refs.takeover.show()
         } else if (Re.error) {
@@ -63,14 +77,14 @@ export default {
       })
     },
     loadDataStorage() {
-      this.loadLocal('login', 'password', 'remember')
+      this.loadLocal('login', 'password', 'domain', 'remember')
     },
     saveDataStorage() {
       if (this.remember) {
-        this.saveLocal('login', 'password', 'remember').writeLocal()
+        this.saveLocal('login', 'password', 'domain', 'remember').writeLocal()
       }
       else {
-        this.eraseLocal('login', 'password', 'remember').writeLocal()
+        this.eraseLocal('login', 'password', 'domain', 'remember').writeLocal()
       }
     }
   },
@@ -81,7 +95,7 @@ export default {
 </script>
 
 <style lang="scss">
-//@import "./custom-bootstrap.scss";
+//
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "custom.scss";
 </style>

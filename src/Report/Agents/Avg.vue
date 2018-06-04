@@ -3,14 +3,14 @@
   <b-row>
     <b-col><h2>Agents states averages</h2></b-col>
   </b-row>
-  <widget-query v-model="query_params" style="margin-bottom: 10px"></widget-query>
+  <widget-query v-model="query_params" @reset="reset" style="margin-bottom: 10px"></widget-query>
   <widget-chart v-model="report"></widget-chart>
 </div>
 </template>
 
 <script>
 import Chart from '@/Report/Widget/Chart'
-import Query from '@/Report/Widget/Query'
+import Query from '@/Report/Query'
 
 export default {
   name: 'report-agents-states',

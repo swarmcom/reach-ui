@@ -4,40 +4,42 @@
   <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
     <b-nav-toggle target="nav_collapse"></b-nav-toggle>
     <b-navbar-brand to="/main">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
-    <b-navbar-nav>
-      <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
-      <b-nav-item to="/help">Help</b-nav-item>
-      <b-nav-item @click="logout">Logout</b-nav-item>
-    </b-navbar-nav>
-
-    <b-navbar-nav class="ml-auto">
-      <b-nav-item>
-        <span>{{ date | filterDate }}</span>
-      </b-nav-item>
-      <b-nav-form>
-        <b-nav-item-dropdown right>
-          <b-dropdown-item v-if="isNarrow()" @click="changeLayout()">Wide</b-dropdown-item>
-          <b-dropdown-item v-else @click="changeLayout()">Narrow</b-dropdown-item>
-          <template v-if="isMain()">
-            <template v-if="canMyStat()">
-              <b-dropdown-item v-if="isMyStat()" @click="changeWidget('isActiveMS')">Remove My Stats</b-dropdown-item>
-              <b-dropdown-item v-else @click="changeWidget('isActiveMS')">Add My Stats</b-dropdown-item>
+    <b-collapse is-nav id="nav_collapse">
+      <b-navbar-nav>
+        <b-nav-item v-access:profile-ui to="/profile">Profile</b-nav-item>
+        <b-nav-item to="/help">Help</b-nav-item>
+        <b-nav-item @click="logout">Logout</b-nav-item>
+      </b-navbar-nav>
+      
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item>
+          <span>{{ date | filterDate }}</span>
+        </b-nav-item>
+        <b-nav-form>
+          <b-nav-item-dropdown right>
+            <b-dropdown-item v-if="isNarrow()" @click="changeWide()">Wide</b-dropdown-item>
+            <b-dropdown-item v-else @click="changeWide()">Narrow</b-dropdown-item>
+            <template v-if="isMain()">
+              <template v-if="canMyStat()">
+                <b-dropdown-item v-if="isMyStat()" @click="changeWidget('isActiveMS')">Remove My Stats</b-dropdown-item>
+                <b-dropdown-item v-else @click="changeWidget('isActiveMS')">Add My Stats</b-dropdown-item>
+              </template>
+              <template v-if="canAgentManager()">
+                <b-dropdown-item v-if="isAgentManager()" @click="changeWidget('isActiveAM')">Remove Agent Manager</b-dropdown-item>
+                <b-dropdown-item v-else @click="changeWidget('isActiveAM')">Add Agent Manager</b-dropdown-item>
+              </template>
+              <template v-if="canQueueManager()">
+                <b-dropdown-item v-if="isQueueManager()" @click="changeWidget('isActiveQM')">Remove Queue Manager</b-dropdown-item>
+                <b-dropdown-item v-else @click="changeWidget('isActiveQM')">Add Queue Manager</b-dropdown-item>
+              </template>
             </template>
-            <template v-if="canAgentManager()">
-              <b-dropdown-item v-if="isAgentManager()" @click="changeWidget('isActiveAM')">Remove Agent Manager</b-dropdown-item>
-              <b-dropdown-item v-else @click="changeWidget('isActiveAM')">Add Agent Manager</b-dropdown-item>
-            </template>
-            <template v-if="canQueueManager()">
-              <b-dropdown-item v-if="isQueueManager()" @click="changeWidget('isActiveQM')">Remove Queue Manager</b-dropdown-item>
-              <b-dropdown-item v-else @click="changeWidget('isActiveQM')">Add Queue Manager</b-dropdown-item>
-            </template>
-          </template>
-        </b-nav-item-dropdown>
-      </b-nav-form>
-    </b-navbar-nav>
+          </b-nav-item-dropdown>
+        </b-nav-form>
+      </b-navbar-nav>
+    </b-collapse>
   </b-navbar>
 
-  <div class="container-fluid">
+  <div v-bind:class="maybeWide()">
     <transition name="reach" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -81,9 +83,9 @@ const scrollBehavior = (to, from, savedPosition) => {
 const router = new VueRouter({
   scrollBehavior,
   routes: [
-    { path: '/help', component: Help, name: 'help' },
+    { path: '/help', component: Help },
     { path: '/profile', component: Profile, children: ProfileRoutes },
-    { path: '/main', component: Main, name: 'main' },
+    { path: '/main', component: Main },
     { path: '/', redirect: 'main' }
   ]
 })
@@ -96,7 +98,7 @@ export default {
   data () {
     return {
       date: null,
-      page: 'main'
+      path: '/main'
     }
   },
   methods: {
@@ -118,5 +120,6 @@ export default {
 </script>
 
 <style lang="scss">
+//
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 </style>

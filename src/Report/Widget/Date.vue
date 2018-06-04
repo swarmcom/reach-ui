@@ -39,6 +39,11 @@ export default {
     date (value) {
       this.$emit('input', this.to_timestamp(value))
     }
+  },
+  created () {
+    if (parseInt(this.value)) {
+      this.date = moment.unix(this.value).format()
+    }
   }
 }
 </script>

@@ -3,20 +3,18 @@
   <b-row>
     <b-col><h2>Measures</h2></b-col>
   </b-row>
-  <widget-query v-model="query_params" style="margin-bottom: 10px"></widget-query>
+  <widget-query v-model="query_params" style="margin-bottom: 10px" @reset="reset"></widget-query>
   <widget-chart v-model="report"></widget-chart>
 </div>
 </template>
 
 <script>
 import Chart from '@/Report/Widget/Chart'
-import QueryRange from '@/Report/Widget/QueryRange'
 
 export default {
   name: 'report-agents-states',
   components: {
-    'widget-chart': Chart,
-    'widget-query': QueryRange
+    'widget-chart': Chart
   },
   data () {
     return {

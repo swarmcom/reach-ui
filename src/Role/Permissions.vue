@@ -1,5 +1,5 @@
 <template>
-<div v-access:profile-ui v-bind:class="classObject">
+<div v-access:profile-ui>
   <b-row style="margin-top: 10px">
     <b-col cols=6>
       <b-row>
@@ -50,7 +50,6 @@ export default {
         "main-ui": { name: "Main Tab" },
         "admin-ui": { name: "Admin" },
         "profile-ui": { name: "Profile" },
-        "recordings-ui": { name: "Recordings" },
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
         "widget-agent-manager": { name: "Agent Manger" },
@@ -90,16 +89,6 @@ export default {
   methods: {
     isVisible: function (perm, type) {
       return Object.keys(perm).filter( Perm => Perm.includes(type) )
-    }
-  },
-  computed: {
-    classObject: function () {
-      this.$agent.vm.storage_data["narrowScreenPermissions"] = this.$agent.vm.isNarrowLayout.permissions
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      return {
-        container: this.$agent.vm.isNarrowLayout.permissions,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.permissions
-      }
     }
   },
 }

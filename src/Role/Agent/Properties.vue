@@ -1,5 +1,5 @@
 <template>
-<div v-access:profile-ui class="form" v-bind:class="classObject">
+<div v-access:profile-ui class="form">
   <form-text v-access:agent-profile-edit-name label="Agent Name" v-model="rec.name"></form-text>
   <form-text label="Login" v-model="rec.login"></form-text>
   <form-text v-access:agent-profile-edit-password label="Password" v-model="rec.password"></form-text>
@@ -69,16 +69,6 @@ export default {
     },
     onCancel () {
       this.$router.go(-1)
-    }
-  },
-  computed: {
-    classObject: function () {
-      this.$agent.vm.storage_data["narrowScreenProfile"] = this.$agent.vm.isNarrowLayout.profile
-      localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
-      return {
-        container: this.$agent.vm.isNarrowLayout.profile,
-        'padding-container-fluid': !this.$agent.vm.isNarrowLayout.profile
-      }
     }
   },
   created () {

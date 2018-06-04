@@ -17,7 +17,7 @@
     "howler": "^2.0.9",
     "jquery": "^3.2.1",
     "moment": "^2.20.1",
-    "moment-duration-format": "^2.2.1",
+    "moment-duration-format": "^2.2.2",
     "popper.js": "^1.12.3",
     "vue": "^2.5.13",
     "vue-awesome": "^2.3.4",
@@ -26,8 +26,7 @@
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.4.7",
     "vuedraggable": "^2.16.0",
-    "vuejs-datepicker": "^0.9.21",
-    "vue2-datepicker": "1.9.2"
+    "vuejs-datepicker": "^0.9.21"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",

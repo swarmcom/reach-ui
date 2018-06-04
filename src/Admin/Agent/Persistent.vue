@@ -67,7 +67,6 @@ export default {
   },
   created () {
     this.query()
-    this.$agent.subscribe('agents')
     this.$bus.$on('agents_state', this.handleState)
   },
   beforeDestroy () {
