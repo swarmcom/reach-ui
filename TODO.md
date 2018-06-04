@@ -1,15 +1,17 @@
 # Reach UI TODO
 
-# On
+# Bugs
 
-Bugs:
 0. productivity report - integer out of range
 
+# On
+
 1. Player functionality for vm, inbound and inqueue records
-3. Add skills to queries
-7. Help for input fields?
-8. Configurable page size for more (now hardcoded as 25)
-9. Provide percentages in each report (if they are any)
+2. Add skills to queries
+3. Help for input fields?
+4. Configurable page size for more (now hardcoded as 25)
+5. Provide percentages in each report (if they are any)
+6. Count how many pages are available for more
 
 # Good to have
 

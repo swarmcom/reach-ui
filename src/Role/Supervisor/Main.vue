@@ -13,6 +13,8 @@
 <script>
 import SessionManager from '@/Agent/SessionManager'
 import Stats from '@/Agent/Stats'
+import AgentsManager from '@/Agent/AgentsManager'
+import InboundsManager from '@/Agent/InboundsManager'
 import draggable from 'vuedraggable'
 
 export default {
@@ -26,16 +28,13 @@ export default {
       if (name === 'session-manager') {
         return true
       }
-      else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && 
-        this.$agent.permAllowed('widget-my-statistics')) {
+      else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && this.$agent.permAllowed('widget-my-statistics')) {
         return true
       }
-      else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  &&
-        this.$agent.permAllowed('widget-agent-manager')) {
+      else if (name === 'agents' && this.$agent.vm.layoutSM.isActiveAM  && this.$agent.permAllowed('widget-agent-manager')) {
         return true
       }
-      else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  &&
-        this.$agent.permAllowed('widget-queue-manager')) {
+      else if (name === 'inqueues' && this.$agent.vm.layoutSM.isActiveQM  && this.$agent.permAllowed('widget-queue-manager')) {
         return true
       }
       else {
@@ -48,14 +47,17 @@ export default {
     }
   },
   created () {
-    if (this.$agent.vm.storage_data.agentWidgets != undefined)
+    if (this.$agent.vm.storage_data.agentWidgets != undefined) {
       this.widgets = this.$agent.vm.storage_data.agentWidgets
+    }
     else
       this.widgets = ['session-manager', 'my-statistics', 'agents', 'inqueues']
   },
   components: {
     'session-manager': SessionManager,
     'my-statistics': Stats,
+    'agents': AgentsManager,
+    'inqueues': InboundsManager,
     draggable
   }
 }
