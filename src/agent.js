@@ -48,7 +48,6 @@ export default class Agent extends WsProto {
       data: {
         session_auth: false,
         agent: null,
-        transfer_agents: [],
         state: null,
         hangup_state: null,
         activity_time: undefined,
@@ -67,7 +66,6 @@ export default class Agent extends WsProto {
     Notification.requestPermission()
     EventBus.$on('agent_update', () => update_agent(this))
     EventBus.$on('agent_state', (S) => this.handleState(S.state))
-    EventBus.$on('agents_state', (S) => this.handleAgents(S))
     EventBus.$on('takeover', (S) => this.handleTakeOver(S))
   }
 
@@ -122,11 +120,6 @@ export default class Agent extends WsProto {
     super.onConnect()
     session_auth(this)
   }
-
-  // MONITOR API
-  subscribe (Channel) { this.mfa('ws_agent', 'subscribe', [Channel]) }
-  agents (Cb = (A) => A) { this.mfa('ws_agent', 'agents', [], Cb) }
-  inqueues (Cb = (A) => A) { this.mfa('ws_agent', 'inqueues', [], Cb) }
 
   // AGENT API
   logout () {
@@ -212,18 +205,6 @@ export default class Agent extends WsProto {
     }
   }
 
-  handleAgents ({info}) {
-    if (!this.vm.agent || info.agent.id === this.vm.agent.id) return
-    let i = this.vm.transfer_agents.findIndex(E => E.id === info.agent.id)
-    info.agent.state = info.state
-    if (i >= 0)
-      this.vm.transfer_agents.splice(i, 1)
-
-    if(info.state !== 'terminate' && info.state !== 'grace') {
-        this.vm.transfer_agents.push(info.agent)
-    }
-  }
-
   isAuth () { return this.vm.agent }
   role() { return this.vm.agent.role.ui }
   permAllowed(name) {
@@ -253,8 +234,6 @@ export default class Agent extends WsProto {
       this.vm.agent = Re.reply
       $('title').text(`Reach: ${this.vm.agent.name}`)
       localStorage.setItem('session-key', Re.reply.session_key)
-      this.call('get_transfer_agents', [], (A) => this.vm.transfer_agents = A.reply)
-      this.subscribe('agents')
     } else {
       this.vm.agent = null
     }
