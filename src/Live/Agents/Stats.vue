@@ -50,8 +50,15 @@ export default {
     }
   },
   methods: {
-    handleStats ({stats}) {
-      this.data = stats
+    handleStats ({stats, type}) {
+      switch (type) {
+        case 'agent_group':
+        case 'agent_acl_group':
+          this.data = stats
+          break
+        default:
+          break
+      }
     },
     query: async function (type) {
       await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['agent_groups', type, this.period])

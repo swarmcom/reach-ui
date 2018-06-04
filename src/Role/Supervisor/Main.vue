@@ -38,7 +38,6 @@ export default {
         return true
       }
       else {
-        console.log("NAME", name, this.$agent.vm.layoutSM.isActiveQM, this.$agent.permAllowed('widget-queue-manager'))
         return false
       }
     },
