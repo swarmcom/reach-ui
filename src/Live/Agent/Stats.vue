@@ -24,6 +24,7 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-agent-stats',
   data () {
     return {
       period: '15m',
@@ -42,7 +43,7 @@ export default {
       this.data = stats
     },
     query: async function (type) {
-      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['agent', this.period])
+      await this.$agent.p_mfa('ws_live_agent', 'subscribe', ['agent', this.period])
       this.saveCache()
     },
     onTimer () {
@@ -53,11 +54,11 @@ export default {
   },
   beforeDestroy () {
     this.$bus.$off('live_agent_stats', this.handleStats)
-    this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['agent'])
+    this.$agent.p_mfa('ws_live_agent', 'unsubscribe', ['agent'])
   },
   watch: {
     period: async function (value, old) {
-      await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['agent'])
+      await this.$agent.p_mfa('ws_live_agent', 'unsubscribe', ['agent'])
       this.query(this.type)
     }
   }

@@ -5,16 +5,13 @@
     <router-link class="nav-link" to="/live/agent">Agent</router-link>
   </li>
   <li class="nav-item">
-    <router-link class="nav-link" to="/live/agents">Agents</router-link>
+    <router-link class="nav-link" to="/live/agents">All Agents</router-link>
   </li>
   <li class="nav-item">
-    <router-link class="nav-link" to="/live/inbounds">Inbounds</router-link>
+    <router-link class="nav-link" to="/live/inbounds">Inbound calls</router-link>
   </li>
   <li class="nav-item">
     <router-link class="nav-link" to="/live/outbounds">Outbounds</router-link>
-  </li>
-  <li class="nav-item">
-    <router-link class="nav-link" to="/live/voicemails">Voicemails</router-link>
   </li>
 </ul>
 <transition name="reach" mode="out-in">

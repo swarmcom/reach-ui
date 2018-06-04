@@ -35,7 +35,7 @@ export default {
       return (key in this.$agent.vm.live_cache)
     },
     unique_name () {
-      return this.$route.fullPath
+      return this.$options.name + this.$route.fullPath
     },
     saveCache () {
       let key = this.unique_name()

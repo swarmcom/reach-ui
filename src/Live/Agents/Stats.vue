@@ -27,11 +27,12 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-agents-stats',
   data () {
     return {
-      type: 'acl',
+      type: 'group',
+      types: ['group', 'acl'],
       period: '15m',
-      types: ['acl', 'group'],
       periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
       fields: {
         entity: { label: 'Name' },
@@ -60,10 +61,10 @@ export default {
     },
   },
   created () {
-    this.$bus.$on('live_agents_stats', this.handleStats)
+    this.$bus.$on('live_stats', this.handleStats)
   },
   beforeDestroy () {
-    this.$bus.$off('live_agents_stats', this.handleStats)
+    this.$bus.$off('live_stats', this.handleStats)
     this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['agent_groups', this.type])
   },
   watch: {

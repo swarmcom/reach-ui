@@ -1,144 +1,75 @@
 <template>
-<div>
-  <b-row>
-    <b-col><h3>Stats:</h3></b-col>
-    <b-col>
-      <select class="custom-select" style="width: 100%" @change="set_period($event.target.value)">
-        <option v-for="period in periods" :value="period" :selected="isActive(period)">{{ period }}</option>
-      </select>
-    </b-col>
-  </b-row>
-  <b-row style="margin-top: 10px">
-    <b-col>
-      <table class="table table-striped table-sm">
-        <caption>Call metrics</caption>
-        <thead>
-          <tr>
-            <td></td>
-            <td>My</td>
-            <td>Group</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Longest</td>
-            <td>{{ time(stats.cpt.max.oncall) }}</td>
-            <td>{{ time(group_stats.cpt.max.oncall) }}</td>
-          </tr>
-          <tr>
-            <td>CPT</td>
-            <td>{{ time(stats.cpt.avg.oncall) }}</td>
-            <td>{{ time(group_stats.cpt.avg.oncall) }}</td>
-          </tr>
-          <tr>
-            <td>ASA</td>
-            <td>{{ time(stats.cpt.avg.answer) }}</td>
-            <td>{{ time(group_stats.cpt.avg.answer) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </b-col>
-    <b-col>
-      <table class="table table-striped table-sm">
-        <caption>Agent metrics</caption>
-        <thead class="thead-dark">
-          <tr>
-            <td></td>
-            <td class="text-right">My</td>
-            <td class="text-right">Group</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Occupancy</td>
-            <td class="text-right">{{ percent(stats.occupancy.ratio.oncall) }}</td>
-            <td class="text-right">{{ percent(group_stats.occupancy.ratio.oncall) }}</td>
-          </tr>
-          <tr>
-            <td>Available</td>
-            <td class="text-right">{{ percent(stats.occupancy.ratio.available) }}</td>
-            <td class="text-right">{{ percent(group_stats.occupancy.ratio.available) }}</td>
-          </tr>
-          <tr>
-            <td>Release</td>
-            <td class="text-right">{{ percent(stats.occupancy.ratio.release) }}</td>
-            <td class="text-right">{{ percent(group_stats.occupancy.ratio.release) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </b-col>
-  </b-row>
+<div v-access:widget-my-statistics>
+  <toggle-bar style="cursor: move"></toggle-bar>
+  <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2 itemDragable">
+    <b-row style="margin-top:10px">
+      <b-col sm="4">
+        <b-form-select class="pointer" size="sm" v-model="period.value" @change="updateWidgets">
+          <option v-for="period in periods" :value="period.value" :key="period.value">{{period.name}}</option>
+        </b-form-select>
+      </b-col>
+    </b-row>
+    <b-row style="margin-top:10px">
+      <b-col cols=1 class="table-body-orange"><ciq></ciq></b-col>
+      <b-col cols=1 class="table-body-green"><count></count></b-col>
+      <b-col cols=1 style="padding-left:0; margin-right: 2px; padding-right: 0"><states></states></b-col>
+      <b-col><agent :period="period.value"></agent></b-col>
+      <b-col><group :period="period.value"></group></b-col>
+    </b-row>
+  </b-collapse>
 </div>
 </template>
 
 <script>
+import Common from '@/Admin/Common'
+import CIQ from '@/Agent/Stats/CIQ'
+import Count from '@/Agent/Stats/Count'
+import Group from '@/Agent/Stats/Group'
+import Agent from '@/Agent/Stats/Agent'
+import States from '@/Agent/Stats/States'
+import Storage from '@/Storage'
+
 export default {
-  name: 'agent-stats',
+  widgetName: 'My statistics',
+  name: 'my-statistics',
+  mixins: [Common, Storage],
+  components: {
+    ciq: CIQ,
+    count: Count,
+    group: Group,
+    agent: Agent,
+    states: States
+  },
   data () {
     return {
-      periods: [ "15m", "30m", "1h", "1w", "1m"],
-      period: "15m",
-      stats: {
-        cpt: {
-          avg: {},
-          max: {}
-        },
-        occupancy: {
-          ratio: {}
-        }
-      },
-      group_stats: {
-        cpt: {
-          avg: {},
-          max: {}
-        },
-        occupancy: {
-          ratio: {}
-        }
-      }
+      period: {value: "15m", name: "Last 15 minutes"},
+      periods: [
+        {value: "15m", name: "Last 15 minutes"},
+        {value: "30m", name: "Last 30 minutes"},
+        {value: "1h", name: "Last Hour"},
+        {value: "1d", name: "Today"},
+        {value: "1w", name: "This Week"},
+        {value: "1M", name: "This Month"}
+      ],
+      showCollapse: true
     }
   },
   methods: {
-    query: async function () {
-      this.stats = await this.$agent.p_mfa('ws_stats', 'stats', [this.period])
-      this.group_stats = await this.$agent.p_mfa('ws_stats', 'tagged_stats', [this.period])
-    },
-    group_query: async function () {
-    },
-    percent (value) {
-      if (value > 0) {
-        return `${(value*100).toFixed(2)}%`
-      } else {
-        return "0%"
-      }
-    },
-    isActive (value) {
-      return value == this.period
-    },
-    time (value) {
-      if (value > 0) {
-        return `${(value/1000).toFixed(1)}s`
-      } else {
-        return "0s"
-      }
-    },
-    set_period (value) {
-      this.period = value
-      this.query()
-    },
-    handleUpdate () {
-      this.query()
-    },
+    updateWidgets (v) {
+    }
   },
-  created () {
-    this.$bus.$on('agent_skills', this.handleUpdate)
-    this.$bus.$on('agent_stats', this.handleUpdate)
-    this.query()
-    this.group_query()
+  watch: {
+    showCollapse: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.saveLocal('showCollapse').writeLocal()
+      }
+    }
   },
-  beforeDestroy () {
-    this.$bus.$off('agent_skills', this.handleUpdate)
-    this.$bus.$off('agent_stats', this.handleUpdate)
-  }
 }
 </script>
+
+<style lang="scss">
+.form-check {
+  margin-bottom: unset;
+}
+</style>

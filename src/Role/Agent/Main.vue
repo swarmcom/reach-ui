@@ -12,11 +12,10 @@
 </template>
 
 <script>
-import SessionManager from '@/Agent/SessionManager.vue'
-import MyStatistics from '@/Agent/MyStatistics.vue'
-import Agents from '@/Monitor/Agents'
-import Inqueues from '@/Monitor/Inqueues'
+import SessionManager from '@/Agent/SessionManager'
+import Stats from '@/Agent/Stats'
 import draggable from 'vuedraggable'
+
 export default {
   data () {
     return {
@@ -49,7 +48,7 @@ export default {
   },
   components: {
     'session-manager': SessionManager,
-    'my-statistics': MyStatistics,
+    'my-statistics': Stats,
     draggable
   }
 }

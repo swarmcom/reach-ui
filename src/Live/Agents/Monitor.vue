@@ -32,10 +32,11 @@ import Base from '@/Live/Base'
 
 export default {
   mixins: [Base],
+  name: 'live-agents-monitor',
   data () {
     return {
-      type: 'acl',
-      types: ['acl', 'group', 'skills'],
+      type: 'group',
+      types: ['group', 'acl', 'skills'],
       fields: {
         login: { label: 'Login' },
         session_time: { label: 'Session Time' },
