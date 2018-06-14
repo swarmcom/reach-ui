@@ -1,31 +1,16 @@
 <template>
 <div>
-  <div class="row"  style="margin-bottom: 20px">
+  <div class="row">
     <div class="col">
       <h3>Domain parameters:</h3>
     </div>
   </div>
   <div v-for="param of params" class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="del(param.key)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
-    </div>
     <div class="col-3">
-      <input type="text" class="form-control" v-model="param.key">
+      <input type="text" class="form-control" v-model="param.key" readonly>
     </div>
     <div class="col">
       <input type="text" class="form-control" v-model="param.value">
-    </div>
-  </div>
-
-  <div class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
-    </div>
-    <div class="col-3">
-      <input type="text" class="form-control" v-model="name">
-    </div>
-    <div class="col">
-      <input type="text" class="form-control" v-model="value">
     </div>
   </div>
 
