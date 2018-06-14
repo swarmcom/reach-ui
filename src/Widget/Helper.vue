@@ -22,6 +22,7 @@ export default {
   },
   methods: {
     show (ev) {
+      $('body').click()
       if(! this.visible) {
         this.visible = true
         ev.stopPropagation()
