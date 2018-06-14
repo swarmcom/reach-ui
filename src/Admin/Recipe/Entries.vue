@@ -3,8 +3,8 @@
   <div class="row"><div class="col"><h3>Recipe entries:</h3></div></div>
   <b-row style="margin-bottom: 20px">
     <b-col>
-      <button @click="enable_edit()" class="btn btn-outline-primary pointer">Show</button>
-      <button @click="hide_edit()" class="btn btn-outline-primary pointer">Hide</button>
+      <button v-if="! edit" @click="enable_edit()" class="btn btn-outline-primary pointer">Show Step Edit</button>
+      <button v-else @click="hide_edit()" class="btn btn-outline-primary pointer">Hide Step Edit</button>
     </b-col>
   </b-row>
 
