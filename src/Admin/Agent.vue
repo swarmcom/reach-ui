@@ -2,7 +2,7 @@
 <div class="form">
   <form-text label="Agent Name" v-model="rec.name"></form-text>
   <form-text label="Login" v-model="rec.login"></form-text>
-  <form-text label="Password" v-model="rec.password"></form-text>
+  <form-password label="Password" v-model="rec.password"></form-password>
   <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
   <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
   <lines label="Line Out" v-model="rec.line_id" :effective="eff.line_id ? eff.line.name : ''"></lines>
@@ -33,12 +33,13 @@
 import Common from '@/Admin/Common'
 import URIs from '@/Widget/URIs'
 import FormTextEffective from '@/Widget/FormTextEffective'
+import FormPassword from '@/Widget/FormPassword'
 import LineOuts from '@/Widget/LineOuts'
 
 export default {
   name: 'admin-agent',
   mixins: [Common],
-  components: { uris: URIs, 'form-text-effective': FormTextEffective },
+  components: { uris: URIs, 'form-text-effective': FormTextEffective, 'form-password': FormPassword },
   props: ['id'],
   data () {
     return {
