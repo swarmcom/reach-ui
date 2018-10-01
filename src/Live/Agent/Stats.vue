@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     handleStats ({stats}) {
-      this.data = stats
+      this.data = new Array(stats)
     },
     query: async function (type) {
       await this.$agent.p_mfa('ws_live_agent', 'subscribe', ['agent', this.period])
