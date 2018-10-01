@@ -52,8 +52,6 @@ export default {
         "profile-ui": { name: "Profile" },
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
-        "widget-agent-manager": { name: "Agent Manger" },
-        "widget-queue-manager": { name: "Queue Manager" },
         "widget-my-statistics": { name: "My Statistics" },
         "supervisor-feature-control-agent-state": { name: "Control Agent State" },
         "supervisor-feature-monitor": { name: "Monitor" },

@@ -128,9 +128,7 @@ export default {
         'monitor-ui'
       ],
       widgets: [
-        'widget-my-statistics',
-        'widget-queue-manager',
-        'widget-agent-manager'
+        'widget-my-statistics'
       ],
       features: [
         'agent-feature-my-phone',
