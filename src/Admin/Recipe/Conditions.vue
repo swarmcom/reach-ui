@@ -7,11 +7,11 @@
     <b-col cols=5>
       <b-input-group>
         <b-form-input v-model="cond.name"></b-form-input>
-        <b-input-group-button slot="left">
-          <b-dropdown text="C" variant="success" left>
+        <b-input-group-append>
+          <b-dropdown text="C" variant="success">
             <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set_cond(index, comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
-        </b-input-group-button>
+        </b-input-group-append>
       </b-input-group>
     </b-col>
     <b-col>
@@ -26,11 +26,11 @@
     <b-col cols=5>
       <b-input-group>
         <b-form-input v-model="condition"></b-form-input>
-        <b-input-group-button slot="left">
-          <b-dropdown variant="success" left>
+        <b-input-group-append>
+          <b-dropdown variant="success">
             <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
-        </b-input-group-button>
+        </b-input-group-append>
       </b-input-group>
     </b-col>
     <b-col>
