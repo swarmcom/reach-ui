@@ -88,8 +88,6 @@ export default {
         "profile-ui": false,
         "reports-ui": false,
         "monitor-ui": false,
-        "widget-agent-manager": false,
-        "widget-queue-manager": false,
         "widget-my-statistics": false,
         "supervisor-feature-control-agent-state": false,
         "supervisor-feature-monitor": false,
@@ -170,8 +168,6 @@ export default {
         "profile-ui": { name: "Profile" },
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
-        "widget-agent-manager": { name: "Agent Manger" },
-        "widget-queue-manager": { name: "Queue Manager" },
         "widget-my-statistics": { name: "My Statistics" },
         "supervisor-feature-control-agent-state": { name: "Control Agent State" },
         "supervisor-feature-monitor": { name: "Monitor" },
@@ -220,7 +216,7 @@ export default {
         return (perm != 'admin-ui')
       }
       else if (this.ui == 'agent') {
-        return (perm != 'widget-agent-manager' && perm != 'widget-queue-manager' && perm != 'admin-ui' && perm != 'reports-ui' && perm != 'monitor-ui' &&
+        return (perm != 'admin-ui' && perm != 'reports-ui' && perm != 'monitor-ui' &&
           !perm.includes("supervisor-feature"))
       }
     },
