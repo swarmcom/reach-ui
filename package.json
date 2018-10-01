@@ -9,8 +9,8 @@
     "build": "cross-env NODE_ENV=production webpack --no-color --optimize-minimize"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-beta.2",
-    "bootstrap-vue": "^1.5.1",
+    "bootstrap": "^4.1.3",
+    "bootstrap-vue": "^v2.0.0-rc.11",
     "chart.js": "^2.7.1",
     "css-loader": " ^0.28.10",
     "file-loader": "^1.1.9",
