@@ -6,12 +6,12 @@
     </b-col>
     <b-col cols=5>
       <b-input-group>
-        <b-form-input v-model="action.name"></b-form-input>
-        <b-input-group-append>
+        <b-input-group-prepend>
           <b-dropdown text="A" variant="primary">
             <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set_action(index, comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
-        </b-input-group-append>
+        </b-input-group-prepend>
+        <b-form-input v-model="action.name"></b-form-input>
       </b-input-group>
     </b-col>
     <b-col>
@@ -25,12 +25,12 @@
     </b-col>
     <b-col cols=5>
       <b-input-group>
-        <b-form-input v-model="action"></b-form-input>
-        <b-input-group-append>
+        <b-input-group-prepend>
           <b-dropdown text="A" variant="primary">
             <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
           </b-dropdown>
-        </b-input-group-append>
+        </b-input-group-prepend>
+        <b-form-input v-model="action"></b-form-input>
       </b-input-group>
     </b-col>
     <b-col>
