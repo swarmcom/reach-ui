@@ -225,7 +225,7 @@ export default {
     },
     setKey (key, value) {
       if (this.isVisible(key)) {
-        this.effective[key] = value
+        this.$agent.vm.$set(this.effective, key, value)
         this.onChange(key)
       }
     },
