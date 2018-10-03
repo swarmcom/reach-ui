@@ -12,7 +12,7 @@
     <b-row style="margin-top:2px">
       <b-col>
         <b-input-group size="sm">
-          <b-form-input class="customInput" variant="outline" size="sm" v-model="uri" type="text" :placeholder="this.$agent.vm.agent.uri"></b-form-input>
+          <b-form-input class="customInput" variant="outline" size="sm" v-model="value" type="text" :placeholder="this.$agent.vm.agent.uri"></b-form-input>
           <b-dropdown size="sm" text="Contacts" variant="outline-secondary" :disabled="this.$agent.vm.agent.uris.length == 0">
             <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
           </b-dropdown>
@@ -27,31 +27,53 @@ export default {
   name: 'my-phone-uri',
   data () {
     return {
-      uri: ''
+      uri: '',
+      value: ''
     }
   },
   methods: {
     query: async function() {
       this.uri = await this.$agent.p_mfa('ws_agent', 'override_uri')
-      this.uri = this.uri == 'undefined' ? '' : this.uri
+      this.uri = this.uri == null ? '' : this.uri
+      this.value = this.uri
     },
     set: async function(uri) {
-      this.uri = uri
       let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
-      this.$notify({ title: 'Success:', text: 'SIP Contact updated', type: 'success' })
+      if (re === 'ok') {
+        this.value = this.uri = uri
+        this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+      }
+      else {
+        this.$notify({ title: 'Failed:', text: 'SIP Contant failed', type: 'error' })
+      }
     },
     reset: async function() {
-      this.uri = undefined
       let re = await this.$agent.p_mfa('ws_agent', 'reset_uri', [])
-      this.$notify({ title: 'Success:', text: 'SIP Contact reset', type: 'success' })
+      if (re === 'ok') {
+        this.value = this.uri = ''
+        this.$notify({ title: 'Success:', text: 'SIP Contact reset', type: 'success' })
+      }
+      else {
+        this.$notify({ title: 'Failed:', text: 'SIP Contant reset failed', type: 'error' })
+      }
     },
     test () {
-      this.$agent.p_mfa('ws_agent', 'test_uri', [this.uri])
+      if (this.uri != '') {
+        this.$agent.p_mfa('ws_agent', 'test_uri', [this.uri])
+      } else {
+        this.$agent.p_mfa('ws_agent', 'test_uri', [this.$agent.vm.agent.uri])
+      }
     },
     override: async function() {
-      if (!!this.uri) {
-        let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
-        this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+      if (!!this.value) {
+        let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.value])
+        if (re === 'ok') {
+          this.uri = this.value
+          this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+        }
+        else {
+          this.$notify({ title: 'Failed:', text: 'SIP Contant failed', type: 'error' })
+        }
         //this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
       }
     }
