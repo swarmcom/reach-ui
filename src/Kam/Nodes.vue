@@ -3,9 +3,9 @@
   <b-row style="margin-bottom: 10px"><b-col><h3>Nodes:</h3></b-col></b-row>
 
   <div v-for="node of nodes" :key="node.id" style="margin-top: 5px">
-    <node :value="node" v-on:change="change" v-on:del="del" v-on:edit="edit"></node>
+    <node :disable=true :value="node" v-on:change="change" v-on:del="del" v-on:edit="edit"></node>
   </div>
-  <node :value="node" style="margin-top: 5px" v-on:change="change_node" v-on:add="add"></node>
+  <node :disable=false :value="node" style="margin-top: 5px" v-on:change="change_node" v-on:add="add"></node>
 
 </div>
 </template>

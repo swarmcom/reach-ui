@@ -15,7 +15,7 @@
   </b-col>
 
   <b-col cols=2>
-    <select class="custom-select" v-model="entry.type" style="width: 100%">
+    <select :disabled="disable" class="custom-select" v-model="entry.type" style="width: 100%">
       <option value="proxy">Proxy</option>
       <option value="media">Media</option>
       <option value="gateway">Gateway</option>
@@ -40,7 +40,7 @@
 <script>
 export default {
   name: 'admin-node',
-  props: ['value'],
+  props: ['value', 'disable'],
   data () {
     return {
       entry: {},
