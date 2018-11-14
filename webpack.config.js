@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: {
     build: [
       'babel-polyfill',
@@ -54,8 +55,9 @@ module.exports = {
         '@': path.resolve(__dirname, 'src/')
       }
   },
-  devServer: { historyApiFallback: true, noInfo: true  },
+  devServer: { historyApiFallback: true, noInfo: false },
   performance: { hints: false },
+  cache: true,
   devtool: '#eval-source-map',
   plugins: [
     new CopyWebpackPlugin([{
@@ -74,19 +76,21 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
+    new webpack.LoaderOptionsPlugin({ 
+      minimize: true,
+      optimization: {
+        options: {
+          minimize: true,
+          splitChunks: {
+            cacheGroups: {
+              vendor: {
+                name: "vendor",
+                minChunks: Infinity
+              }
+            }
+          }
+        }
       }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: { warnings: false }
-    }),
-    new webpack.LoaderOptionsPlugin({ minimize: true }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      minChunks: Infinity
     })
   ])
 }
