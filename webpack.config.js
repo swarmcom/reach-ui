@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: 'none',
   entry: {
     build: [
       'babel-polyfill',
@@ -54,6 +55,17 @@ module.exports = {
         '@': path.resolve(__dirname, 'src/')
       }
   },
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: "vendor",
+          minChunks: Infinity
+        }
+      }
+    }
+  },
   devServer: { historyApiFallback: true, noInfo: true  },
   performance: { hints: false },
   devtool: '#eval-source-map',
@@ -79,14 +91,6 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: { warnings: false }
-    }),
-    new webpack.LoaderOptionsPlugin({ minimize: true }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      minChunks: Infinity
-    })
+    new webpack.LoaderOptionsPlugin({ minimize: true })
   ])
 }
