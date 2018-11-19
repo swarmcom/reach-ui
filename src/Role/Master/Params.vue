@@ -5,7 +5,7 @@
       <h3>Instance parameters:</h3>
     </div>
   </div>
-  <div v-for="param of params" class="form-row" style="margin-top: 5px">
+  <div :key="param.key" v-for="param of params" class="form-row" style="margin-top: 5px">
     <div class="col-3">
       <input type="text" class="form-control" v-model="param.key" readonly>
     </div>
@@ -19,7 +19,7 @@
       <button @click="commit" class="btn btn-primary">Commit</button>
       <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
     </b-col>
-    <b-col cols=4>
+    <b-col v-show="false" cols=4>
       <button @click="save" class="btn btn-success">Save</button>
       <button @click="erase" class="btn btn-danger">Erase</button>
       <button @click="apply" class="btn btn-warning">Apply</button>
