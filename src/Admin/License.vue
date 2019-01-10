@@ -41,6 +41,8 @@ export default {
   methods: {
     query: async function () {
       this.license = await this.$agent.p_mfa('ws_admin', 'get_license_data')
+      this.license.start = this.validateDate(this.license.start)
+      this.license.end = this.validateDate(this.license.end)
     },
     remove: async function () {
       this.license = await this.$agent.p_mfa('ws_admin', 'delete_license')
@@ -69,7 +71,16 @@ export default {
       fd.append('license', file)
       xhr.send(fd)
     },
-
+    validateDate(value){
+      if (!value) return
+      let date = new Date(value)
+      if(!isFinite(date)){
+        return new Date("20" + value.substring(0,2) + "-" + value.substring(2,4) + "-" + value.substring(4,6) + "T" + value.substring(6,8) + ":" + value.substring(8,10) + ":" + value.substring(10,13)).toLocaleString('en-GB', { timeZone: 'UTC' }) + " UTC"
+      }
+      else {
+        return date.toLocaleString('en-GB', { timeZone: 'UTC' }) + " UTC"
+      }
+    }
   },
   created () {
     this.query()
