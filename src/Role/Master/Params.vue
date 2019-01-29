@@ -10,7 +10,8 @@
       <input type="text" class="form-control" v-model="param.key" readonly>
     </div>
     <div class="col">
-      <input type="text" class="form-control" v-model="param.value">
+      <input v-if="param.key != 'log_level'" type="text" class="form-control" v-model="param.value">
+      <b-form-select v-else :options="log_options" v-model="param.value"/>
     </div>
   </div>
 
@@ -46,6 +47,7 @@ export default {
     return {
       config_file: undefined,
       params: [],
+      log_options: ['debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'],
       name: '',
       value: ''
     }
