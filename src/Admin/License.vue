@@ -22,6 +22,15 @@
     </b-col>
   </b-row>
 
+  <b-row style="margin-top: 20px">
+    <b-col>
+      <b-form-input type="text" v-model="uid" placeholder="Type license unique id..."></b-form-input>
+    </b-col>
+    <b-col>
+      <button @click="update" class="btn btn-outline-primary">Update</button>
+    </b-col>
+  </b-row>
+
 </div>
 </template>
 
@@ -35,7 +44,8 @@ export default {
     return {
       license_file: undefined,
       license_uuid: undefined,
-      license: {}
+      license: {},
+      uid: undefined
     }
   },
   methods: {
@@ -49,6 +59,17 @@ export default {
     },
     cancel: async function () {
       this.$router.go(-1)
+    },
+    update: async function () {
+      this.license = await this.$agent.p_mfa('ws_admin', 'update_license', ["uid="+this.uid+"&name="+this.license.domain, "https://uniteweb.ezuce.org:3002/getInfo"], (re) => {
+        comsole.log(re)
+        if (re.reply == 'ok') {
+          this.$notify({ title: 'Success:', text: 'License uploaded', type: 'success' })
+        } else {
+          this.$notify({ title: 'Error:', text: re.error, type: 'error' })
+        }
+      })
+      this.query()
     },
     upload: function (file) {
       let xhr = new XMLHttpRequest()
