@@ -14,7 +14,7 @@
 
   <b-row style="margin-top: 20px">
     <b-col>
-      <b-form-file v-model="license_file" v-on:input="upload" placeholder="Choose license to upload..."></b-form-file>
+      <b-form-file v-model="license_file" accept=".lic" v-on:input="upload" placeholder="Choose license to upload..."></b-form-file>
     </b-col>
     <b-col>
       <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
