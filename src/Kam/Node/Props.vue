@@ -21,6 +21,7 @@
         </div>
       </template>
     </template>
+    <form-bool v-if="rec.type=='proxy'" label="NAT correction for inbound SDP" v-model="rec.props.fix_inbound_nated_sdp"></form-bool>
 
     <div style="margin-top:20px">
       <button @click="onCommit" class="btn btn-primary">Commit</button>
@@ -71,10 +72,11 @@
 import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
 import Nodes from '@/Kam/Widget/Nodes'
+import FormBool from '@/Widget/FormBool'
 
 export default {
   name: 'kam-node-properties',
-  components: { Nodes },
+  components: { Nodes, 'form-bool': FormBool },
   props: ['id'],
   mixins: [Common, Obj],
   data () {
@@ -127,7 +129,7 @@ export default {
     },
     onCancel () {
       this.$router.go(-1)
-    },
-  },
+    }
+  }
 }
 </script>
