@@ -12,22 +12,25 @@
   <b-row><b-col cols=1>Users:</b-col><b-col>{{ license.users }}</b-col></b-row>
   <b-row><b-col cols=1>Domain:</b-col><b-col>{{ license.domain }}</b-col></b-row>
 
-  <b-row style="margin-top: 20px">
+  <b-row style="margin-top: 20px"><b-col cols=6><b-form-select v-model="selected" :options="options" class="mb-3" /></b-col></b-row>
+  <b-row v-if="selected==1">
     <b-col>
       <b-form-file v-model="license_file" accept=".lic" v-on:input="upload" placeholder="Choose license to upload..."></b-form-file>
     </b-col>
     <b-col>
-      <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
+      <!--<button @click="cancel" class="btn btn-outline-primary">Cancel</button>-->
       <button @click="remove" class="btn btn-outline-danger">Delete</button>
     </b-col>
   </b-row>
 
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <b-form-input type="text" v-model="uid" placeholder="Type license unique id..."></b-form-input>
-    </b-col>
-    <b-col>
-      <button @click="update" class="btn btn-outline-primary">Update</button>
+  <b-row  v-if="selected==2">
+    <b-col cols="6">
+      <b-input-group>
+        <b-form-input type="text" v-model="uid" placeholder="Type license unique id..."></b-form-input>
+        <b-input-group-append>
+          <button @click="update" class="btn btn-outline-primary">Update</button>
+        </b-input-group-append>
+      </b-input-group>
     </b-col>
   </b-row>
 
@@ -42,6 +45,12 @@ export default {
   mixins: [Common],
   data () {
     return {
+      selected: null,
+      options: [
+        { value: null, text: 'Please select an option to apply the license' },
+        { value: 1, text: 'Upload license file' },
+        { value: 2, text: 'Use unique id' }
+      ],
       license_file: undefined,
       license_uuid: undefined,
       license: {},
@@ -51,6 +60,7 @@ export default {
   methods: {
     query: async function () {
       this.license = await this.$agent.p_mfa('ws_admin', 'get_license_data')
+      if (!this.license.domain) this.license.domain = this.$agent.vm.agent.domain.name
       this.license.start = this.validateDate(this.license.start)
       this.license.end = this.validateDate(this.license.end)
     },
@@ -61,8 +71,7 @@ export default {
       this.$router.go(-1)
     },
     update: async function () {
-      this.license = await this.$agent.p_mfa('ws_admin', 'update_license', ["uid="+this.uid+"&name="+this.license.domain, "https://uniteweb.ezuce.org:3002/getInfo"], (re) => {
-        comsole.log(re)
+      this.license = await this.$agent.p_mfa('ws_admin', 'update_license', ["uid="+this.uid+"&name="+this.license.domain, "https://msplicense.ezuce.com:3002/getInfo"], (re) => {
         if (re.reply == 'ok') {
           this.$notify({ title: 'Success:', text: 'License uploaded', type: 'success' })
         } else {
