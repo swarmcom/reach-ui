@@ -60,9 +60,17 @@ export default {
   methods: {
     query: async function () {
       this.license = await this.$agent.p_mfa('ws_admin', 'get_license_data')
-      if (!this.license.domain) this.license.domain = this.$agent.vm.agent.domain.name
-      this.license.start = this.validateDate(this.license.start)
-      this.license.end = this.validateDate(this.license.end)
+      if (this.license.license_type == 'server_lic') {
+        this.license.domain = this.license.domainDetails.name
+        this.license.users = this.license.domainDetails.r_seats
+        this.license.start = null
+        this.license.end = null
+      }
+      else {
+        if (!this.license.domain) this.license.domain = this.$agent.vm.agent.domain.name
+        this.license.start = this.validateDate(this.license.start)
+        this.license.end = this.validateDate(this.license.end)
+      }
     },
     remove: async function () {
       this.license = await this.$agent.p_mfa('ws_admin', 'delete_license')
@@ -70,15 +78,15 @@ export default {
     cancel: async function () {
       this.$router.go(-1)
     },
-    update: async function () {
-      this.license = await this.$agent.p_mfa('ws_admin', 'update_license', ["uid="+this.uid+"&name="+this.license.domain, "https://msplicense.ezuce.com:3002/getInfo"], (re) => {
+    update: function () {
+      this.$agent.mfa('ws_admin', 'license_server', [this.uid], (re) => {
         if (re.reply == 'ok') {
-          this.$notify({ title: 'Success:', text: 'License uploaded', type: 'success' })
+          this.$notify({ title: 'Success:', text: 'License updated', type: 'success' })
+          this.query()
         } else {
           this.$notify({ title: 'Error:', text: re.error, type: 'error' })
         }
       })
-      this.query()
     },
     upload: function (file) {
       let xhr = new XMLHttpRequest()
