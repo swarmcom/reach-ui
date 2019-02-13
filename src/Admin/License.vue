@@ -6,12 +6,19 @@
       <h3>Domain license:</h3>
     </div>
   </div>
-
-  <b-row><b-col cols=1>Start:</b-col><b-col>{{ license.start }}</b-col></b-row>
-  <b-row><b-col cols=1>End:</b-col><b-col>{{ license.end }}</b-col></b-row>
-  <b-row><b-col cols=1>Users:</b-col><b-col>{{ license.users }}</b-col></b-row>
-  <b-row><b-col cols=1>Domain:</b-col><b-col>{{ license.domain }}</b-col></b-row>
-
+  <div v-if="license.license_type == 'server_lic'">
+    <b-row><b-col cols=2>Type:</b-col><b-col>{{ license.domainDetails.license }}</b-col></b-row>
+    <b-row><b-col cols=2>Users:</b-col><b-col>{{ license.domainDetails.r_seats ? license.domainDetails.r_seats : 'Unlimited' }}</b-col></b-row>
+    <b-row v-if="license.domainDetails.license == 'Perpetual'"><b-col cols=2>Support:</b-col><b-col>{{ new Date(license.domainDetails.r_support).toLocaleString() }}</b-col></b-row>
+    <b-row v-if="license.domainDetails.license == 'Subscription'"><b-col cols=2>Subscription:</b-col><b-col>{{ new Date(license.domainDetails.r_support).toLocaleString() }}</b-col></b-row>
+    <b-row><b-col cols=2>Domain:</b-col><b-col>{{ license.domainDetails.name }}</b-col></b-row>
+  </div>
+  <div v-else>
+    <b-row><b-col cols=2>Start:</b-col><b-col>{{ license.start }}</b-col></b-row>
+    <b-row><b-col cols=2>End:</b-col><b-col>{{ license.end }}</b-col></b-row>
+    <b-row><b-col cols=2>Users:</b-col><b-col>{{ license.users }}</b-col></b-row>
+    <b-row><b-col cols=2>Domain:</b-col><b-col>{{ license.domain }}</b-col></b-row>
+  </div>
   <b-row style="margin-top: 20px"><b-col cols=6><b-form-select v-model="selected" :options="options" class="mb-3" /></b-col></b-row>
   <b-row v-if="selected==1">
     <b-col>
@@ -60,13 +67,7 @@ export default {
   methods: {
     query: async function () {
       this.license = await this.$agent.p_mfa('ws_admin', 'get_license_data')
-      if (this.license.license_type == 'server_lic') {
-        this.license.domain = this.license.domainDetails.name
-        this.license.users = this.license.domainDetails.r_seats
-        this.license.start = null
-        this.license.end = null
-      }
-      else {
+      if (this.license.license_type != 'server_lic') {
         if (!this.license.domain) this.license.domain = this.$agent.vm.agent.domain.name
         this.license.start = this.validateDate(this.license.start)
         this.license.end = this.validateDate(this.license.end)
