@@ -113,7 +113,9 @@ export default {
       let link = document.createElement('a')
       link.href = `${this.$agent.get_rr_uri()}/config/${UUID}.json`
       link.download = "reach_db.json"
+      document.body.appendChild(link)
       link.click()
+      link.remove()
     },
   },
   created () {
