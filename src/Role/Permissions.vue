@@ -53,6 +53,8 @@ export default {
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
         "widget-my-statistics": { name: "My Statistics" },
+        "widget-agent-manager": { name: "Agent Manager" },
+        "widget-queue-manager": { name: "Queue Manager" },
         "supervisor-feature-control-agent-state": { name: "Control Agent State" },
         "supervisor-feature-monitor": { name: "Monitor" },
         "supervisor-feature-barge": { name: "Barge" },
