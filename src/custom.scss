@@ -220,10 +220,15 @@ body {
 }
 
 .agent-state-button {
-  color: $agent-state-icon-color;
+  color: $agent-state-icon-color !important;
+  background-color: #e6e6e6 !important;
   min-width: 82px;
   max-width: 82px;
   height: 82px;
+}
+
+.agent-state-button:hover{
+  color: black !important;
 }
 
 .agent-release-dropdown {
