@@ -1,22 +1,26 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div v-if="effective" class="col-5">
-    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
+<b-row style="margin-top: 5px">
+  <b-col cols="3">
+    <label :id="label" class="col-form-label">{{ label }}</label>
+  </b-col>
+  <b-col v-if="effective" cols="5">
+    <b-form-select class="pointer" :value="value" :disabled="isDisabled()" @change="onUpdate">
       <option></option>
-      <option v-for="acl in acls" :value="acl.id" :selected="isActive(acl.id)" :key="acl.id">{{ acl.name }}</option>
-    </select>
-  </div>
-  <div v-if="effective" class="col-4">
-    <input class="form-control" type="text" :value="safe_effective" disabled>
-  </div>
-  <div v-else class="col-9">
-    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
+      <option v-for="acl in acls"
+        :value="acl.id" :selected="isActive(acl.id)" :key="acl.id">{{ acl.name }}</option>
+    </b-form-select>
+  </b-col>
+  <b-col v-if="effective" cols="4">
+    <b-form-input type="text" :value="safe_effective" disabled/>
+  </b-col>
+  <b-col v-else cols="9">
+    <b-form-select class="pointer" :value="value" :disabled="isDisabled()" @change="onUpdate">
       <option></option>
-      <option v-for="acl in acls" :value="acl.id" :selected="isActive(acl.id)" :key="acl.id">{{ acl.name }}</option>
-    </select>
-  </div>
-</div>
+      <option v-for="acl in acls"
+        :value="acl.id" :selected="isActive(acl.id)" :key="acl.id">{{ acl.name }}</option>
+    </b-form-select>
+  </b-col>
+</b-row>
 </template>
 
 <script>
