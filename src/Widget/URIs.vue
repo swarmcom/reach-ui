@@ -1,25 +1,29 @@
 <template>
-<div class="row">
+<b-row>
   <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9">
-    <div v-for="v of value" class="form-row" style="margin-top: 5px">
-      <div class="col-1">
-        <button @click="del(v)" class="btn btn-sm btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
-      </div>
-      <div class="col">
-        <input type="text" class="form-control" v-model="v.uri">
-      </div>
+  <b-col cols=9>
+    <div v-for="(v, index) of value" :key=index class="form-row" style="margin-top: 5px">
+      <b-col>
+        <b-input-group>
+          <b-input-group-prepend>
+            <b-btn @click="del(v)" size="sm" variant="outline-danger"><icon class="align-middle" name="minus" scale="1"></icon></b-btn>
+          </b-input-group-prepend>
+          <b-form-input type="text" v-model="v.uri"></b-form-input>
+        </b-input-group>
+      </b-col>
     </div>
-    <div class="form-row" style="margin-top: 5px">
-      <div class="col-1">
-        <button @click="add" class="btn btn-sm btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
-      </div>
-      <div class="col">
-        <input type="text" class="form-control" v-model="v">
-      </div>
-    </div>
-  </div>
-</div>
+    <b-row style="margin-top: 5px">
+      <b-col>
+        <b-input-group>
+          <b-input-group-prepend>
+            <b-btn @click="add" size="sm" variant="outline-secondary"><icon class="align-middle" name="plus" scale="1"></icon></b-btn>
+          </b-input-group-prepend>
+          <b-form-input type="text" v-model="v"></b-form-input>
+        </b-input-group>
+      </b-col>
+    </b-row>
+  </b-col>
+</b-row>
 </template>
 
 <script>

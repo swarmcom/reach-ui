@@ -1,15 +1,19 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div v-if="effective" class="col-5">
-    <input class="form-control" type="password" :value="safe_value" v-on:input="onUpdate($event.target.value)">
-  </div>
-  <div v-if="effective" class="col-4">
-    <input class="form-control" type="password" :value="safe_effective" disabled>
-  </div>
-  <div v-else class="col-9">
-    <input class="form-control" type="password" :value="safe_value" v-on:input="onUpdate($event.target.value)">
-  </div>
+<div style="margin-top: 5px">
+  <b-row>
+    <b-col cols="3">
+      <label :id="label" class="col-form-label">{{ label }}</label>
+    </b-col>
+    <b-col v-if="effective" cols="5">
+      <input class="form-control" type="password" :value="safe_value" v-on:input="onUpdate">
+    </b-col>
+    <b-col v-if="effective" cols="4">
+      <b-form-input type="password" :value="safe_effective" disabled/>
+    </b-col>
+    <b-col v-else cols="9">
+      <b-form-input type="password" :value="safe_value" v-on:input="onUpdate"/>
+    </b-col>
+  </b-row>
 </div>
 </template>
 
