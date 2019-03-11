@@ -1,16 +1,18 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div v-if="effective" class="col-5">
+<b-row style="margin-top: 5px">
+  <b-col cols="3">
+    <label :id="label" class="col-form-label">{{ label }}</label>
+  </b-col>
+  <b-col v-if="effective" cols="5">
     <b-form-select class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
-  </div>
-  <div v-if="effective" class="col-4">
-    <b-form-select class="pointer" :value="computed_effective" :options="options" disabled></b-form-select>
-  </div>
-  <div v-else class="col-9">
+  </b-col>
+  <b-col v-if="effective" cols="4">
+    <b-form-input :value="computed_effective" disabled/>
+  </b-col>
+  <b-col v-else cols="9">
     <b-form-select class="pointer" :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
-  </div>
-</div>
+  </b-col>
+</b-row>
 </template>
 
 <script>
