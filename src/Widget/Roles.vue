@@ -11,7 +11,7 @@
     </b-form-select>
   </b-col>
   <b-col v-if="effective" cols="4">
-    <b-form-input class="pointer"  type="text" :value="roles.find((element) => element.id == effective).name" disabled/>
+    <b-form-input type="text" :value="roles.find((element) => element.id == effective).name" disabled/>
   </b-col>
   <b-col v-else cols="9">
     <b-form-select class="pointer" :value="value" :disabled="isDisabled()" @change="onUpdate">
