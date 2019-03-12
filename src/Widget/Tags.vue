@@ -1,7 +1,12 @@
 <template>
 <div class="form-inline">
   <autocomplete v-if="! disabled" v-model="tag" :query="query" :to_name="to_name" :new="true" :placeholder="placeholder"></autocomplete>
-  <button class="btn btn-sm btn-outline-primary" :disabled="disabled" style="margin-left: 10px" v-for="tag in selected" @click="remove(tag)">{{tag}}</button>
+  <div v-if="disabled">
+    <b-btn size="sm" variant="outline-success" disabled style="margin-left: 5px" v-for="(tag, index) in selected" :key=index>{{tag}}</b-btn>
+  </div>
+  <div v-else>
+    <b-btn size="sm" variant="outline-primary" title="Click to Remove" style="margin-left: 5px" v-for="(tag, index) in selected" :key=index @click="remove(tag)">{{tag}}</b-btn>
+  </div>
 </div>
 </template>
 

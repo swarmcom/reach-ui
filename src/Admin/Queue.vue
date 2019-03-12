@@ -9,7 +9,7 @@
   <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled" :effective="eff.wrapup_enabled"></form-select-bool>
   <form-number label="Wrap-up timer" v-model="rec.wrapup_timer" :effective="eff.wrapup_timer"></form-number>
   <form-number label="Auto Wrap-up" v-model="rec.auto_wrapup" :effective="eff.auto_wrapup"></form-number>
-  <form-tags label="Queue Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
+  <form-tags label="Queue Skills" placeholder="Skill..." effective_label="Queue Inherited Skills" v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>

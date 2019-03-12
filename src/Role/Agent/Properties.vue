@@ -15,7 +15,7 @@
   <form-select-bool v-access:agent-profile-edit-max-ring-success label="Reset Max Rings On Success" v-model="rec.reset_rings_fails" :effective="eff.reset_rings_fails"></form-select-bool>
   <form-text v-access:agent-profile-edit-autologout label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-text>
   <form-file v-access:agent-profile-edit-avatar label="Avatar" uri="/avatar" v-model="rec.avatar" :fileType="'image/*'"></form-file>
-  <form-tags v-access:agent-profile-edit-agent-skills label="Agent Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
+  <form-tags v-access:agent-profile-edit-agent-skills label="Agent Skills" effective_label="Agent Inherited Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top:20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary  float-right pointer">Cancel</button>
