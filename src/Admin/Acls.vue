@@ -1,14 +1,10 @@
 <template>
 <div class="container">
-  <div class="row">
-    <div class="col-4">
-      <h3>Access control lists:</h3>
-    </div>
-    <div class="col">
-      <button @click="add" class="btn btn-outline-success"><icon name="plus" class="align-middle" scale="1"></icon></button>
-    </div>
-  </div>
-
+  <b-row>
+    <b-col>
+      <b-btn class="pointer" title="Add Access Control" variant="outline-success" @click="add"><icon name="plus" class="align-middle" scale="1"></icon></b-btn>
+    </b-col>
+  </b-row>
   <b-table style="margin-top:10px" striped hover small :items="acls" :fields="fields">
     <template slot="actions" slot-scope="data">
       <b-btn size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>

@@ -16,7 +16,7 @@
   <form-select-bool label="Override Caller ID" v-model="rec.override_clid" :effective="eff.override_clid"></form-select-bool>
   <form-text label="Caller ID Name" v-model="rec.caller_id_name" :effective="eff.caller_id_name"></form-text>
   <form-number label="Caller ID Number" v-model="rec.caller_id_number" :effective="eff.caller_id_number"></form-number>
-  <form-tags placeholder="Skill..." label="Line-In Skills" v-model="skills" :effective="effective_skills"></form-tags>
+  <form-tags placeholder="Skill..." label="Line-In Skills" effective_label="Line-In Inherited Skills" v-model="skills" :effective="effective_skills"></form-tags>
   <div style="margin-top: 20px">
     <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
     <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>

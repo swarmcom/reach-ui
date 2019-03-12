@@ -15,7 +15,8 @@
   </b-col>
 
   <b-col cols=2>
-    <select :disabled="disable" class="custom-select" v-model="entry.type" style="width: 100%">
+    <input v-if="disable" :disabled="disable" type="text" class="form-control" v-model="entry.type">
+    <select v-else class="custom-select" v-model="entry.type" style="width: 100%">
       <option value="proxy">Proxy</option>
       <option value="media">Media</option>
       <option value="gateway">Gateway</option>

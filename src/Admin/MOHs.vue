@@ -1,5 +1,5 @@
 <template>
-<btable :fields="fields" :data="mohs" :add_button=true></btable>
+<btable :fields="fields" :data="mohs" tooltip="Add MOH"  :add_button=true></btable>
 </template>
 
 <script>
