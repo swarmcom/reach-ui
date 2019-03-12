@@ -1,6 +1,6 @@
 <template>
 <div>
-  <btable :fields="fields" :data="line_ins" :add_button=true :filter_button=true :paginate=true>
+  <btable :fields="fields" :data="line_ins" tooltip="Add Line In" :add_button=true :filter_button=true :paginate=true>
   </btable>
 </div>
 </template>

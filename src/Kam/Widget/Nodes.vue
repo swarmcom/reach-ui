@@ -1,7 +1,7 @@
 <template>
 <select class="custom-select" :value="value" style="width: 100%" :disabled="isDisabled()" @change="change($event.target.value)">
   <option></option>
-  <option v-for="entry in entries" :value="entry.id" :selected="isActive(entry.id)">{{ entry.name }}</option>
+  <option v-for="entry in entries" :value="entry.id" :key="entry.id" :selected="isActive(entry.id)">{{ entry.name }}</option>
 </select>
 </template>
 

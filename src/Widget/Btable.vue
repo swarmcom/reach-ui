@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col">
-        <button v-if="add_button" @click="add" class="btn btn-outline-success pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
+        <button v-if="add_button" :title="tooltip" @click="add" class="btn btn-outline-success pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
       </div>
       <div v-if="paginate" class="col-md-2 float-right">
         <b-form-select :options="pageOptions" v-model="perPage" @input="onSelectChange" />
@@ -41,7 +41,8 @@ export default {
     data: Array,
     add_button: Boolean,
     filter_button: Boolean,
-    paginate: Boolean
+    paginate: Boolean,
+    tooltip: String
   },
   data () {
     return {

@@ -1,5 +1,5 @@
 <template>
-<btable :fields="fields" :data="clients" :add_button=true :filter_button=true :paginate=true></btable>
+<btable :fields="fields" :data="clients" :add_button=true tooltip="Add Client" :filter_button=true :paginate=true></btable>
 </template>
 
 <script>

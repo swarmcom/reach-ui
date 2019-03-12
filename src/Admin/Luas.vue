@@ -1,5 +1,5 @@
 <template>
-<btable :fields="fields" :data="luas" :add_button=true></btable>
+<btable :fields="fields" :data="luas" :add_button=true tooltip="Add Lua"></btable>
 </template>
 
 <script>
