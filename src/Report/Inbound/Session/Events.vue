@@ -4,6 +4,9 @@
     <div class="col"><h3>Inbound session events</h3></div>
   </div>
   <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields"></b-table>
+  <b-btn @click="$router.go(-1)">
+    Back
+  </b-btn>
 </div>
 </template>
 

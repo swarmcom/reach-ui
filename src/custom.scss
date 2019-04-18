@@ -306,10 +306,10 @@ body {
 }
 
 .player .time {
-  font-size:14px;
+  font-size:13px;
   height:32px;
   padding: 5px;
-  width: 170px;
+  min-width: 100px;
   border-top: solid 1px black;
   border-right: solid 1px black;
   border-bottom: solid 1px black;

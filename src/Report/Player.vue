@@ -98,8 +98,6 @@ export default {
     isError () { return this.state == 'error' },
   },
   created () {
-    console.log(this.$agent.get_rr_uri())
-    console.log(this.href)
     let ref = this.$agent.get_rr_uri() + this.href
     this.player = new Howl({
       src: [ ref ],
