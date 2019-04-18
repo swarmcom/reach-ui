@@ -27,7 +27,10 @@
       {{ data.item.target }}
     </template>
     <template slot="player" slot-scope="data">
-      <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
+      <b-form-checkbox v-if="data.item.keep_record" v-model="data.detailsShowing" @change="data.toggleDetails" />
+    </template>
+    <template slot="row-details" slot-scope="data">
+      <player v-if="data.item.keep_record" :href="'/records/' + data.item.uuid + '.wav'"></player>
     </template>
   </b-table>
   <b-row>
@@ -60,7 +63,7 @@ export default {
         client: { label: 'Client' },
         agent: { label: 'Agent' },
         target: { label: 'Target' },
-        player: { label: 'Play' }
+        player: { label: 'Player' }
       },
     }
   },
