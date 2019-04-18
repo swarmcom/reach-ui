@@ -41,9 +41,9 @@
       {{ data.item.calling }}
     </template>
     <template slot="player" slot-scope="data">
-      <b-form-checkbox v-if="data.item.keep_record" v-model="data.detailsShowing" @change="data.toggleDetails">
-        Player
-      </b-form-checkbox>
+      <b-btn variant="dark" v-if="data.item.keep_record" size="sm" @click="data.toggleDetails">
+        {{data.detailsShowing ? 'Hide' : 'Show'}} Player
+      </b-btn>
     </template>
     <template slot="row-details" slot-scope="data">
       <player v-if="data.item.keep_record" :href="'/records/' + data.item.uuid + '.wav'"></player>
