@@ -25,7 +25,7 @@
       {{data.item.queue.name}}
     </template>
     <template slot="skills" slot-scope="data">
-      {{data.item.skills}}
+      {{Object.keys(data.item.skills).toString()}}
     </template>
     <template slot="actions" slot-scope="data">
       <template v-if="data.item.state == 'oncall'">
