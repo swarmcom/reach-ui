@@ -41,7 +41,12 @@
       {{ data.item.calling }}
     </template>
     <template slot="player" slot-scope="data">
-      <player v-if="data.item.keep_record" :href="data.item.call_record_path"></player>
+      <b-btn variant="dark" v-if="data.item.keep_record" size="sm" @click="data.toggleDetails">
+        {{data.detailsShowing ? 'Hide' : 'Show'}} Player
+      </b-btn>
+    </template>
+    <template slot="row-details" slot-scope="data">
+      <player v-if="data.item.keep_record" :href="'/records/' + data.item.uuid + '.wav'"></player>
     </template>
   </b-table>
   <b-row>
@@ -78,7 +83,7 @@ export default {
         caller_ip: { label: 'IP' },
         caller: { label: 'Caller' },
         calling: { label: 'Calling' },
-        player: { label: 'Play' }
+        player: { label: 'Recordings' }
       },
     }
   },
