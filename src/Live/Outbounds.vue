@@ -13,7 +13,7 @@ import Monitor from '@/Live/Outbounds/Monitor'
 import Stats from '@/Live/Outbounds/Stats'
 
 export default {
-  widgetName: 'Outbound Queue Manager',
+  widgetName: 'Outbound Call Manager',
   components: {
     monitor: Monitor,
     stats: Stats

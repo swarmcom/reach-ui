@@ -15,7 +15,7 @@ import Stats from '@/Live/Inbounds/Stats'
 import VMStats from '@/Live/Voicemails/Stats'
 
 export default {
-  widgetName: 'Inbound Queue Manager',
+  widgetName: 'Inbound Call Manager',
   components: {
     monitor: Monitor,
     stats: Stats,
