@@ -1,14 +1,25 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Live outbound calls</h3></div>
+    <div class="col"><h6>Live outbound calls</h6></div>
   </div>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" />
+      <b-form-select v-model="type" :options="types" size="sm" />
     </b-col>
   </b-row>
-  <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
+  <b-table
+    style="margin-top:10px"
+    small
+    bordered
+    hover
+    head-variant=light
+    thead-tr-class="table-header"
+    tbody-tr-class="table-body"
+    sort-by="time"
+    :items="data"
+    :fields="fields"
+  >
     <template slot="time" slot-scope="data">
       {{durationFormatter(data.item.time)}}
     </template>
@@ -44,13 +55,13 @@ export default {
       type: 'group',
       types: ['group', 'acl'],
       fields: {
-        state: { label: 'State' },
-        time: { label: 'Time' },
-        agent: { lavel: 'Agent' },
-        target: { lavel: 'Target' },
-        line_out: { label: 'Line Out' },
-        callee: { label: 'Callee' },
-        caller: { label: 'Caller' },
+        state: { label: 'State', sortable: true },
+        time: { label: 'Time', sortable: true },
+        agent: { lavel: 'Agent', sortable: true },
+        target: { lavel: 'Target', sortable: true },
+        line_out: { label: 'Line Out', sortable: true },
+        callee: { label: 'Callee', sortable: true },
+        caller: { label: 'Caller', sortable: true },
         actions: { label: 'Actions' }
       },
     }

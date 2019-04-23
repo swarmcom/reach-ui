@@ -1,7 +1,10 @@
 <template>
 <div>
-  <stats></stats>
-  <monitor></monitor>
+  <toggle-bar></toggle-bar>
+  <b-collapse v-model="showCollapse" id="liveManager">
+    <stats></stats>
+    <monitor></monitor>
+  </b-collapse>
 </div>
 </template>
 
@@ -10,12 +13,14 @@ import Monitor from '@/Live/Outbounds/Monitor'
 import Stats from '@/Live/Outbounds/Stats'
 
 export default {
+  widgetName: 'Outbound Call Manager',
   components: {
     monitor: Monitor,
     stats: Stats
   },
   data () {
     return {
+      showCollapse: true
     }
   },
 }

@@ -1,7 +1,10 @@
 <template>
 <div>
-  <group></group>
-  <stats></stats>
+  <toggle-bar></toggle-bar>
+  <b-collapse v-model="showCollapse" id="liveManager">
+    <group></group>
+    <stats></stats>
+  </b-collapse>
 </div>
 </template>
 
@@ -10,12 +13,14 @@ import Stats from '@/Live/Agent/Stats'
 import Group from '@/Live/Agent/Group'
 
 export default {
+  widgetName: 'Agent Stats',
   components: {
     group: Group,
     stats: Stats
   },
   data () {
     return {
+      showCollapse: false
     }
   },
 }

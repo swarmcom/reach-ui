@@ -1,26 +1,36 @@
 <template>
 <div>
   <b-row>
-    <b-col><h3>Live agents by {{type}}</h3></b-col>
+    <b-col><h6>Live agents by {{type}}</h6></b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" />
+      <b-form-select v-model="type" :options="types" size="sm" />
     </b-col>
   </b-row>
-  <b-table small striped hover :items="data" :fields="fields">
-    <template slot="login" slot-scope="data">
+  <b-table
+    small
+    bordered
+    hover
+    head-variant=light
+    thead-tr-class="table-header"
+    tbody-tr-class="table-body"
+    sort-by="agent"
+    :items="data"
+    :fields="fields"
+  >
+    <template slot="agent" slot-scope="data">
       {{ data.item.agent.login }}
     </template>
-    <template slot="session_time" slot-scope="data">
+    <template slot="age" slot-scope="data">
       {{ durationFormatter(data.item.age) }}
     </template>
     <template slot="time" slot-scope="data">
       {{ durationFormatter(data.item.time) }}
     </template>
     <template slot="actions" slot-scope="data">
-      <b-button v-if="data.item.state == 'release'" size="sm" variant="warning" @click="available(data.item)" class="pointer">Available</b-button>
-      <b-button v-else size="sm" variant="primary" @click="release(data.item)" class="pointer">Release</b-button>
+      <b-button v-if="data.item.state == 'release'" size="sm" variant="success" @click="available(data.item)" class="pointer">Available</b-button>
+      <b-button v-else size="sm" variant="secondary" @click="release(data.item)" class="pointer">Release</b-button>
       <b-button size="sm" variant="danger" @click="stop(data.item)" class="pointer">Kill</b-button>
     </template>
   </b-table>
@@ -38,11 +48,11 @@ export default {
       type: 'group',
       types: ['group', 'acl', 'skills'],
       fields: {
-        login: { label: 'Login' },
-        session_time: { label: 'Session Time' },
-        state: { label: 'State' },
-        time: { label: 'State Time' },
-        ws_peer: { label: 'Peer' },
+        agent: { label: 'Login', sortable: true },
+        age: { label: 'Session Time', sortable: true },
+        state: { label: 'State', sortable: true },
+        time: { label: 'State Time', sortable: true },
+        ws_peer: { label: 'Peer', sortable: true },
         actions: { label: 'Actions' }
       },
     }
