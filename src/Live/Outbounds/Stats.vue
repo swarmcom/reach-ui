@@ -104,7 +104,6 @@ export default {
       }
     },
     query: async function (type) {
-      console.log(type)
       await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['outbound_groups', type, this.period])
       this.saveCache()
     },

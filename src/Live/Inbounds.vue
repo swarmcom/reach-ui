@@ -1,7 +1,7 @@
 <template>
 <div>
   <toggle-bar></toggle-bar>
-  <b-collapse v-model="showCollapse">
+  <b-collapse v-model="showCollapse" id="liveManager">
     <stats></stats>
     <vmstats></vmstats>
     <monitor></monitor>
