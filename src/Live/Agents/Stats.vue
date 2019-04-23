@@ -1,17 +1,27 @@
 <template>
 <div>
   <b-row>
-    <b-col><h3>Live agents stats by {{type}}</h3></b-col>
+    <b-col><h6>Live agents stats by {{type}}</h6></b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" />
+      <b-form-select v-model="type" :options="types" size="sm" />
     </b-col>
     <b-col cols=3>
-      <b-form-select v-model="period" :options="periods" />
+      <b-form-select v-model="period" :options="periods" size="sm"/>
     </b-col>
   </b-row>
-  <b-table small striped hover :items="data" :fields="fields">
+  <b-table
+    small
+    bordered
+    hover
+    head-variant=light
+    thead-tr-class="table-header"
+    tbody-tr-class="table-body"
+    sort-by="entity"
+    :items="data"
+    :fields="fields"
+  >
     <template slot="entity" slot-scope="data">
       {{ data.item.entity.name }}
     </template>
@@ -33,19 +43,26 @@ export default {
       type: 'group',
       types: ['group', 'acl'],
       period: '15m',
-      periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
+      periods: [
+        { value:'15m', text:'Last 15 minutes' },
+        { value:'30m', text:'Last 30 minutes' },
+        { value:'1h', text:'Last hour' },
+        { value:'1d', text:'Today' },
+        { value:'1w', text:'This Week' },
+        { value:'1M', text:'This Month' }
+      ],
       fields: {
-        entity: { label: 'Name' },
-        total_agents: { label: 'Agents' },
-        oncall: { label: 'Oncall' },
-        released: { label: 'Release' },
-        available: { label: 'Avail.' },
-        suspend: { label: 'Susp.' },
-        ringing: { label: 'Ring' },
-        conference: { label: 'Conf' },
-        wrapup: { label: 'Wrapup' },
-        occupancy: { label: 'Occp' },
-        total_time: { label: 'CPT' },
+        entity: { label: 'Name', sortable: true },
+        total_agents: { label: 'Agents', sortable: true },
+        oncall: { label: 'Oncall', sortable: true },
+        released: { label: 'Release', sortable: true },
+        available: { label: 'Available', sortable: true },
+        suspend: { label: 'Suspended', sortable: true },
+        ringing: { label: 'Ringing', sortable: true },
+        conference: { label: 'Conference', sortable: true },
+        wrapup: { label: 'Wrapup', sortable: true },
+        occupancy: { label: 'Occup.', sortable: true },
+        total_time: { label: 'CPT', sortable: true },
       },
     }
   },

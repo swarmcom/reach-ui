@@ -1,17 +1,31 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Outbounds stats by {{type}}</h3></div>
+    <div class="col">
+      <h6>Outbounds stats by {{type}}</h6>
+    </div>
   </div>
-  <b-row style="margin-bottom: 10px">
+  <b-row v-if="visible" style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" />
+      <b-form-select v-model="type" :options="types" size="sm" />
     </b-col>
     <b-col cols=3>
-      <b-form-select v-model="period" :options="periods" />
+      <b-form-select v-model="period" :options="periods" size="sm" />
     </b-col>
   </b-row>
-  <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
+  <b-table
+    v-if="visible"
+    style="margin-top:10px"
+    small
+    bordered
+    hover
+    head-variant=light
+    thead-tr-class="table-header"
+    tbody-tr-class="table-body"
+    sort-by="entity"
+    :items="data"
+    :fields="fields"
+  >
     <template slot="entity" slot-scope="data">
       {{ data.item.entity.name }}
     </template>
@@ -47,31 +61,50 @@ export default {
   },
   data () {
     return {
+      visible: true,
       type: 'group',
       types: ['group', 'acl', 'client', 'line'],
       period: '15m',
-      periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
+      periods: [
+        { value:'15m', text:'Last 15 minutes' },
+        { value:'30m', text:'Last 30 minutes' },
+        { value:'1h', text:'Last hour' },
+        { value:'1d', text:'Today' },
+        { value:'1w', text:'This Week' },
+        { value:'1M', text:'This Month' }
+      ],
       fields: {
         entity: { label: 'Name' },
         calls: { label: 'Calls' },
         rings: { label: 'Rings' },
         answers: { label: 'Answers' },
-        calling_abandons: { label: 'Calling fail' },
-        agent_abandons: { label: 'Agents fail' },
-        calling_time: { label: 'Calling' },
-        avg_calling_time: { label: 'Avg.Calling' },
-        agent_time: { label: 'Agent' },
-        avg_agent_time: { label: 'Avg.Agent' },
-        talk_time: { label: 'Talk' },
-        avg_talk_time: { label: 'Avg.Talk' }
+        calling_abandons: { label: 'Calling fail', sortable: true },
+        agent_abandons: { label: 'Agents fail', sortable: true },
+        calling_time: { label: 'Calling', sortable: true },
+        avg_calling_time: { label: 'Avg.Calling', sortable: true },
+        agent_time: { label: 'Agent', sortable: true },
+        avg_agent_time: { label: 'Avg.Agent', sortable: true },
+        talk_time: { label: 'Talk', sortable: true },
+        avg_talk_time: { label: 'Avg.Talk', sortable: true }
       },
     }
   },
   methods: {
-    handleStats ({stats}) {
-      this.data = stats
+    handleStats ({stats, type}) {
+      console.log(type)
+      switch (type) {
+        case 'outgoing_acl_group':
+        case 'outgoing_client':
+        case 'outgoing_line_out':
+        case 'outgoing_agent_group':
+          this.data = stats
+          break
+        default:
+          break
+      }
     },
     query: async function (type) {
+      console.log(type)
       await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['outbound_groups', type, this.period])
       this.saveCache()
     },

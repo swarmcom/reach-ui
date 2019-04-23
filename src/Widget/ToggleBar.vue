@@ -7,7 +7,7 @@
     <icon v-if="$parent.showCollapse" name="minus" scale="0.5"></icon>
     <icon v-if="!$parent.showCollapse" name="plus" scale="0.5"></icon>
   </button>
-  <div class="title">{{$parent.$options.widgetName}}</div>
+  <div class="title">{{$parent.$options.widgetName || $options.widgetName}}</div>
 </div>
 </template>
 

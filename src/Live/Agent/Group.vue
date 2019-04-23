@@ -1,17 +1,26 @@
 <template>
 <div>
   <b-row>
-    <b-col><h3>Live agent group stats by {{type}}</h3></b-col>
+    <b-col><h6>Live agent group stats by {{type}}</h6></b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" />
+      <b-form-select v-model="type" :options="types" size="sm" />
     </b-col>
     <b-col cols=3>
-      <b-form-select v-model="period" :options="periods" />
+      <b-form-select v-model="period" :options="periods" size="sm" />
     </b-col>
   </b-row>
-  <b-table small striped hover :items="data" :fields="fields">
+  <b-table
+    small
+    hover
+    bordered
+    head-variant=light
+    thead-tr-class="table-header"
+    tbody-tr-class="table-body"
+    :items="data"
+    :fields="fields"
+  >
     <template slot="total_time" slot-scope="data">
       {{ durationFormatter(data.item.total_time) }}
     </template>
@@ -30,17 +39,24 @@ export default {
       type: 'group',
       period: '15m',
       types: ['group', 'acl', 'skills'],
-      periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
+      periods: [
+        { value:'15m', text:'Last 15 minutes' },
+        { value:'30m', text:'Last 30 minutes' },
+        { value:'1h', text:'Last hour' },
+        { value:'1d', text:'Today' },
+        { value:'1w', text:'This Week' },
+        { value:'1M', text:'This Month' }
+      ],
       fields: {
         total_agents: { label: 'Agents' },
         oncall: { label: 'Oncall' },
         released: { label: 'Release' },
-        available: { label: 'Avail.' },
-        suspend: { label: 'Susp.' },
-        ringing: { label: 'Ring' },
+        available: { label: 'Available' },
+        suspend: { label: 'Suspended' },
+        ringing: { label: 'Ringing' },
         conference: { label: 'Conf' },
         wrapup: { label: 'Wrapup' },
-        occupancy: { label: 'Occp' },
+        occupancy: { label: 'Occup.' },
         total_time: { label: 'CPT' },
       },
     }

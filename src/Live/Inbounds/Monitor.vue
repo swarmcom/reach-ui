@@ -1,9 +1,20 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Live calls in queue</h3></div>
+    <div class="col"><h6>Live calls in queue</h6></div>
   </div>
-  <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
+  <b-table
+    style="margin-top:10px"
+    small
+    bordered
+    hover
+    head-variant=light
+    thead-tr-class="table-header"
+    tbody-tr-class="table-body"
+    sort-by="time"
+    :items="data"
+    :fields="fields"
+  >
     <template slot="time" slot-scope="data">
       {{durationFormatter(data.item.time)}}
     </template>
@@ -41,12 +52,12 @@ export default {
   data () {
     return {
       fields: {
-        state: { label: 'State' },
-        record: { label: 'Type' },
-        time: { label: 'Time' },
+        state: { label: 'State', sortable: true },
+        record: { label: 'Type', sortable: true },
+        time: { label: 'Time', sortable: true },
         effective_time: { label: 'Eff.' },
         queue: { label: 'Queue' },
-        skills: { label: 'Skills' },
+        skills: { label: 'Skills', sortable: true },
         actions: { label: 'Actions' }
       },
     }

@@ -1,8 +1,11 @@
 <template>
 <div>
-  <stats></stats>
-  <vmstats></vmstats>
-  <monitor></monitor>
+  <toggle-bar></toggle-bar>
+  <b-collapse v-model="showCollapse">
+    <stats></stats>
+    <vmstats></vmstats>
+    <monitor></monitor>
+  </b-collapse>
 </div>
 </template>
 
@@ -12,6 +15,7 @@ import Stats from '@/Live/Inbounds/Stats'
 import VMStats from '@/Live/Voicemails/Stats'
 
 export default {
+  widgetName: 'Inbound Queue Manager',
   components: {
     monitor: Monitor,
     stats: Stats,
@@ -19,6 +23,7 @@ export default {
   },
   data () {
     return {
+      showCollapse: true
     }
   },
 }

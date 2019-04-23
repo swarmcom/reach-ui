@@ -1,17 +1,28 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h3>Voicemail stats by {{type}}</h3></div>
+    <div class="col"><h6>Voicemail stats by {{type}}</h6></div>
   </div>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" />
+      <b-form-select v-model="type" :options="types" size="sm" />
     </b-col>
     <b-col cols=3>
-      <b-form-select v-model="period" :options="periods" />
+      <b-form-select v-model="period" :options="periods" size="sm" />
     </b-col>
   </b-row>
-  <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields">
+  <b-table
+    style="margin-top:10px"
+    small
+    bordered
+    hover
+    head-variant=light
+    thead-tr-class="table-header"
+    tbody-tr-class="table-body"
+    sort-by="entity"
+    :items="data"
+    :fields="fields"
+  >
     <template slot="entity" slot-scope="data">
       {{ data.item.entity.name }}
     </template>
@@ -38,15 +49,22 @@ export default {
       type: 'queue',
       types: ['queue', 'group', 'client', 'line_in'],
       period: '15m',
-      periods: ['15m', '30m', '1h', '1d', '1w', '1M'],
+      periods: [
+        { value:'15m', text:'Last 15 minutes' },
+        { value:'30m', text:'Last 30 minutes' },
+        { value:'1h', text:'Last hour' },
+        { value:'1d', text:'Today' },
+        { value:'1w', text:'This Week' },
+        { value:'1M', text:'This Month' }
+      ],
       fields: {
-        entity: { label: 'Name' },
-        calls: { label: 'Calls' },
-        offers: { label: 'Offers' },
-        answers: { label: 'Answers' },
-        abandons: { label: 'Abandons' },
-        avg_talk_time: { label: 'Avg.Talk' },
-        talk_time: { label: 'Talk' }
+        entity: { label: 'Name', sortable: true },
+        calls: { label: 'Calls', sortable: true },
+        offers: { label: 'Offers', sortable: true },
+        answers: { label: 'Answers', sortable: true },
+        abandons: { label: 'Abandons', sortable: true },
+        avg_talk_time: { label: 'Avg.Talk', sortable: true },
+        talk_time: { label: 'Talk', sortable: true }
       },
     }
   },
