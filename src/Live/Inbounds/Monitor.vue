@@ -27,6 +27,19 @@
     <template slot="skills" slot-scope="data">
       {{Object.keys(data.item.skills).toString()}}
     </template>
+    <template slot="line_in" slot-scope="data">
+      <b-row>
+        <b-col>
+        <b-img v-if="data.item.line_in.client.avatar" :src="$agent.get_rr_uri()+'/avatar/'+data.item.line_in.client.avatar" style="width:16px;" />
+        {{data.item.line_in.client.name}}
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          {{data.item.call_vars['Unique-ID']}}
+        </b-col>
+      </b-row>
+    </template>
     <template slot="actions" slot-scope="data">
       <template v-if="data.item.state == 'oncall'">
         <b-button size="sm" variant="primary" @click="takeover(data.item)" class="pointer">Takeover</b-button>
@@ -58,6 +71,7 @@ export default {
         effective_time: { label: 'Eff.' },
         queue: { label: 'Queue' },
         skills: { label: 'Skills', sortable: true },
+        line_in: { label: 'Call Details', sortable: true },
         actions: { label: 'Actions' }
       },
     }
