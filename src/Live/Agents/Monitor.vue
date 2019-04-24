@@ -34,12 +34,12 @@
       <b-button size="sm" variant="danger" @click="stop(data.item)" class="pointer">Kill</b-button>
     </template>
     <template slot="inqueue" slot-scope="data">
-      <b-row>
+      <b-row v-if="(data.item.state !=='release' && data.item.state !=='available')">
         <b-col>
           {{data.item.inqueue ? data.item.inqueue['record']: ''}}
         </b-col>
       </b-row>
-      <b-row>
+      <b-row v-if="(data.item.state !=='release' && data.item.state !=='available')">
         <b-col>
           {{data.item.inqueue ? data.item.inqueue['uuid'] : ''}}
           {{data.item.inqueue ? data.item.inqueue['target'] : ''}}
