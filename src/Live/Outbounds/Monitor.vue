@@ -35,6 +35,13 @@
     <template slot="caller" slot-scope="data">
       {{data.item.call_vars['Caller-Caller-ID-Number']}} <{{data.item.call_vars['Caller-Caller-ID-Name']}}>
     </template>
+    <template slot="call_vars" slot-scope="data">
+      <b-row>
+        <b-col>
+          {{data.item.call_vars['Unique-ID']}}
+        </b-col>
+      </b-row>
+    </template>
     <template slot="actions" slot-scope="data">
       <b-button size="sm" variant="danger" @click="hangup(data.item)" class="pointer">Hangup</b-button>
     </template>
@@ -62,6 +69,7 @@ export default {
         line_out: { label: 'Line Out', sortable: true },
         callee: { label: 'Callee', sortable: true },
         caller: { label: 'Caller', sortable: true },
+        call_vars: { label: 'Call Details', sortable: true },
         actions: { label: 'Actions' }
       },
     }

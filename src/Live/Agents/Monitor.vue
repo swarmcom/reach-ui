@@ -33,6 +33,19 @@
       <b-button v-else size="sm" variant="secondary" @click="release(data.item)" class="pointer">Release</b-button>
       <b-button size="sm" variant="danger" @click="stop(data.item)" class="pointer">Kill</b-button>
     </template>
+    <template slot="inqueue" slot-scope="data">
+      <b-row>
+        <b-col>
+          {{data.item.inqueue ? data.item.inqueue['record']: ''}}
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          {{data.item.inqueue ? data.item.inqueue['uuid'] : ''}}
+          {{data.item.inqueue ? data.item.inqueue['target'] : ''}}
+        </b-col>
+      </b-row>
+    </template>
   </b-table>
 </div>
 </template>
@@ -53,6 +66,7 @@ export default {
         state: { label: 'State', sortable: true },
         time: { label: 'State Time', sortable: true },
         ws_peer: { label: 'Peer', sortable: true },
+        inqueue: { label: 'Call Details', sortable: true },
         actions: { label: 'Actions' }
       },
     }
