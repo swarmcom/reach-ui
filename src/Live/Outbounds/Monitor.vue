@@ -1,11 +1,19 @@
 <template>
 <div>
   <div class="row">
-    <div class="col"><h6>Live outbound calls</h6></div>
+    <div class="col">
+      <h6>
+        Live outbound calls
+      </h6>
+    </div>
   </div>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" size="sm" />
+      <b-form-select
+        v-model="type"
+        :options="types"
+        size="sm"
+      />
     </b-col>
   </b-row>
   <b-table
@@ -20,30 +28,58 @@
     :items="data"
     :fields="fields"
   >
-    <template slot="time" slot-scope="data">
+    <template
+      slot="time"
+      slot-scope="data"
+    >
       {{durationFormatter(data.item.time)}}
     </template>
-    <template slot="agent" slot-scope="data">
+    <template
+      slot="agent"
+      slot-scope="data"
+    >
       {{data.item.agent.name}}
     </template>
-    <template slot="line_out" slot-scope="data">
+    <template
+      slot="line_out"
+      slot-scope="data"
+    >
       {{data.item.line_out.name}}
     </template>
-    <template slot="callee" slot-scope="data">
+    <template
+      slot="callee"
+      slot-scope="data"
+    >
       {{data.item.call_vars['Caller-Callee-ID-Number']}} <{{data.item.call_vars['Caller-Callee-ID-Name']}}>
     </template>
-    <template slot="caller" slot-scope="data">
+    <template
+      slot="caller"
+      slot-scope="data"
+    >
       {{data.item.call_vars['Caller-Caller-ID-Number']}} <{{data.item.call_vars['Caller-Caller-ID-Name']}}>
     </template>
-    <template slot="call_vars" slot-scope="data">
+    <template
+      slot="call_vars"
+      slot-scope="data"
+    >
       <b-row>
         <b-col>
           {{data.item.call_vars['Unique-ID']}}
         </b-col>
       </b-row>
     </template>
-    <template slot="actions" slot-scope="data">
-      <b-button size="sm" variant="danger" @click="hangup(data.item)" class="pointer">Hangup</b-button>
+    <template
+      slot="actions"
+      slot-scope="data"
+    >
+      <b-button
+        size="sm"
+        variant="danger"
+        @click="hangup(data.item)"
+        class="pointer"
+      >
+        Hangup
+      </b-button>
     </template>
   </b-table>
 </div>

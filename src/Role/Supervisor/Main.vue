@@ -1,9 +1,20 @@
 <template>
-<div v-access:main-ui>
-  <draggable :list="widgets" :options="{draggable:'.itemDragable'}" @end="onDragEnd">
-    <b-row v-for="(item, index) in widgets" :key="index" class="itemDragable">
+<div>
+  <draggable
+    :list="widgets"
+    :options="{draggable:'.itemDragable'}"
+    @end="onDragEnd"
+  >
+    <b-row
+      v-for="(item, index) in widgets"
+      :key="index"
+      class="itemDragable"
+    >
       <b-col>
-        <component v-if="showWidget(item)" v-bind:is="item" />
+        <component
+          v-if="showWidget(item)"
+          v-bind:is="item"
+        />
       </b-col>
     </b-row>
   </draggable>

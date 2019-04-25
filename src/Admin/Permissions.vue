@@ -1,76 +1,248 @@
 <template>
 <div>
   <b-row style="margin-bottom: 10px">
-    <b-col cols=2><h3>Permissions:</h3></b-col>
+    <b-col cols=2>
+      <h3>
+        Permissions:
+      </h3>
+    </b-col>
     <b-col>
-      <b-btn variant="link" @click='selectAll()'>all</b-btn>|<b-btn variant="link" @click='unselectAll()'>none</b-btn>
+      <b-btn
+        variant="link"
+        @click='selectAll()'
+      >
+        all
+      </b-btn>
+      |
+      <b-btn
+        variant="link"
+        @click='unselectAll()'
+      >
+        none
+      </b-btn>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-row>
         <b-col cols=6>
-          <h4>Available Tabs:</h4>
+          <h4>
+            Available Tabs:
+          </h4>
         </b-col>
         <b-col>
-          <b-btn variant="link" @click='select(tabs)'>all</b-btn>|<b-btn variant="link" @click='unselect(tabs)'>none</b-btn>
+          <b-btn
+            variant="link"
+            @click='select(tabs)'
+          >
+            all
+          </b-btn>
+          |
+          <b-btn
+            variant="link"
+            @click='unselect(tabs)'
+          >
+            none
+          </b-btn>
         </b-col>
       </b-row>
-      <div class="col offset-1 form-check" v-for="(p) of this.tabs" :key="p" v-if="isVisible(p)">
-        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
-        <label class="form-check-label" :for=p>{{names[p].name}}</label>
-      </div>
+      <b-col
+        offset="1"
+        class="form-check"
+        v-for="(p) of visibleTabs"
+          :key="p"
+        >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          v-model="effective[p]"
+          v-on:change="onChange(p)"
+          :id="p"
+        >
+        <label
+          class="form-check-label"
+          :for=p
+        >
+          {{names[p].name}}
+        </label>
+      </b-col>
 
       <b-row style="margin-top: 15px">
-        <b-col cols=6><h4>UI Features:</h4></b-col>
+        <b-col
+          cols=6
+        >
+          <h4>
+            UI Features:
+          </h4>
+        </b-col>
         <b-col>
-          <b-btn variant="link" @click='select(features)'>all</b-btn>|<b-btn variant="link" @click='unselect(features)'>none</b-btn>
+          <b-btn
+            variant="link"
+            @click='select(features)'
+          >
+            all
+          </b-btn>
+          |
+          <b-btn
+            variant="link"
+            @click='unselect(features)'
+          >
+            none
+          </b-btn>
         </b-col>
       </b-row>
-      <div class="col offset-1 form-check" v-for="(p) of this.features" :key="p">
-        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
-        <label class="form-check-label" :for=p>{{names[p].name}}</label>
-      </div>
-
+      <b-col
+        offset="1"
+        class="form-check"
+        v-for="(p) of this.features"
+        :key="p"
+      >
+        <input 
+          class="form-check-input"
+          type="checkbox"
+          v-model="effective[p]"
+          v-on:change="onChange(p)"
+          :id="p"
+        >
+        <label
+          class="form-check-label"
+          :for=p
+        >
+          {{names[p].name}}
+        </label>
+      </b-col>
     </b-col>
-
     <b-col>
       <b-row>
-        <b-col cols=6><h4>Available Widgets:</h4></b-col>
+        <b-col cols=6>
+          <h4>
+            Available Widgets:
+          </h4>
+        </b-col>
         <b-col>
-          <b-btn variant="link" @click='select(widgets)'>all</b-btn>|<b-btn variant="link" @click='unselect(widgets)'>none</b-btn>
+          <b-btn
+            variant="link"
+            @click='select(widgets)'
+          >
+            all
+          </b-btn>
+          |
+          <b-btn
+            variant="link"
+            @click='unselect(widgets)'
+          >
+            none
+          </b-btn>
         </b-col>
       </b-row>
-      <div class="col offset-1 form-check" v-for="(p) of this.widgets" :key="p">
-        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
-        <label class="form-check-label" :for=p>{{names[p].name}}</label>
-      </div>
-
-      <b-row style="margin-top: 15px" v-if="ui != 'agent'">
-        <b-col cols=6><h4>Call Features:</h4></b-col>
+      <b-col
+        offset="1"
+        class="form-check"
+        v-for="(p) of this.widgets"
+        :key="p"
+      >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          v-model="effective[p]"
+          v-on:change="onChange(p)"
+          :id="p"
+        >          
+        <label
+          class="form-check-label"
+          :for="p"
+        >
+          {{names[p].name}}
+        </label>
+      </b-col>
+      <b-row
+        style="margin-top: 15px"
+        v-if="ui != 'agent'"
+      >
+        <b-col cols=6>
+          <h4>
+            Call Features:
+          </h4>
+        </b-col>
         <b-col>
-          <b-btn variant="link" @click='select(call_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(call_features)'>none</b-btn>
+          <b-btn
+            variant="link"
+            @click='select(call_features)'
+          >
+            all
+          </b-btn>
+          |
+          <b-btn
+            variant="link"
+            @click='unselect(call_features)'
+          >
+            none
+          </b-btn>
         </b-col>
       </b-row>
-      <div class="col offset-1 form-check" v-for="(p) of this.call_features" :key="p" v-if="ui != 'agent'">
-        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
-        <label class="form-check-label" :for=p>{{names[p].name}}</label>
-      </div>
-
+      <b-col
+        offset="1"
+        class="form-check"
+        v-for="(p) of visibleCallFeatures"
+        :key="p"
+      >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          v-model="effective[p]"
+          v-on:change="onChange(p)"
+          :id="p"
+        >
+        <label
+          class="form-check-label"
+          :for="p"
+        >
+          {{names[p].name}}
+        </label>
+      </b-col>
       <b-row style="margin-top: 15px">
-        <b-col cols=6><h4>Agent Profile:</h4></b-col>
+        <b-col cols=6>
+          <h4>
+            Agent Profile:
+          </h4>
+        </b-col>
         <b-col>
-          <b-btn variant="link" @click='select(agent_features)'>all</b-btn>|<b-btn variant="link" @click='unselect(agent_features)'>none</b-btn>
+          <b-btn
+            variant="link"
+            @click='select(agent_features)'
+          >
+            all
+          </b-btn>
+          |
+          <b-btn
+          variant="link"
+          @click='unselect(agent_features)'
+          >
+            none
+          </b-btn>
         </b-col>
       </b-row>
-
-      <div class="col offset-1 form-check" v-for="p of this.agent_features" :key="p">
-        <input class="form-check-input" type="checkbox" v-model="effective[p]" v-on:change="onChange(p)" :id=p>
-        <label class="form-check-label" :for=p>{{names[p].name}}</label>
-      </div>
-
+      <b-col
+        offset="1"
+        class="form-check"
+        v-for="p of this.agent_features"
+        :key="p"
+      >
+        <input
+          class="form-check-input"
+          type="checkbox"
+          v-model="effective[p]"
+          v-on:change="onChange(p)"
+          :id="p"
+        >
+        <label
+          class="form-check-label"
+          :for="p"
+        >
+          {{names[p].name}}
+        </label>
+      </b-col>
     </b-col>
-
   </b-row>
 </div>
 </template>
@@ -83,16 +255,12 @@ export default {
     return {
       name: undefined,
       effective: {
-        "main-ui": false,
-        "admin-ui": false,
         "profile-ui": false,
         "reports-ui": false,
         "monitor-ui": false,
         "widget-my-statistics": false,
         "supervisor-feature-control-agent-state": false,
-        "supervisor-feature-monitor": false,
         "supervisor-feature-barge": false,
-        "supervisor-feature-whisper": false,
         "supervisor-feature-take-over": false,
         "supervisor-feature-take-call-queue": false,
         "supervisor-feature-hangup-call-queue": false,
@@ -119,8 +287,6 @@ export default {
         "agent-profile-edit-agent-skills": false
       },
       tabs: [
-        'main-ui',
-        'admin-ui',
         'profile-ui',
         'reports-ui',
         'monitor-ui'
@@ -142,8 +308,6 @@ export default {
       ],
       call_features: [
         'supervisor-feature-control-agent-state',
-        'supervisor-feature-monitor',
-        'supervisor-feature-whisper',
         'supervisor-feature-barge',
         'supervisor-feature-take-over',
         'supervisor-feature-take-call-queue',
@@ -163,16 +327,12 @@ export default {
         "agent-profile-edit-agent-skills"
       ],
       names: {
-        "main-ui": { name: "Main Tab" },
-        "admin-ui": { name: "Admin" },
         "profile-ui": { name: "Profile" },
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
         "widget-my-statistics": { name: "My Statistics" },
         "supervisor-feature-control-agent-state": { name: "Control Agent State" },
-        "supervisor-feature-monitor": { name: "Monitor" },
         "supervisor-feature-barge": { name: "Barge" },
-        "supervisor-feature-whisper": { name: "Whisper" },
         "supervisor-feature-take-over": { name: "Take Over" },
         "supervisor-feature-take-call-queue": { name: "Take call from queue" },
         "supervisor-feature-hangup-call-queue": { name: "Hangup call from queue"},
@@ -240,6 +400,22 @@ export default {
     },
     unselect (group) {
       group.forEach(key => this.setKey(key, false))
+    }
+  },
+  computed: {
+    visibleTabs: function () {
+      if (this.ui == 'agent') {
+        return ['profile-ui']
+      } else {
+        return this.tabs
+      }
+    },
+    visibleCallFeatures: function () {
+      if (this.ui == 'agent') {
+        return []
+      } else {
+        return this.call_features
+      }
     }
   },
   created () {

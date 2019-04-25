@@ -1,13 +1,31 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9">
-    <select class="custom-select pointer" style="width: 100%" :disabled="isDisabled()" :value="value" @change="onUpdate($event.target.value)">
+<b-row style="margin-top: 5px">
+  <label
+    :id="label"
+    class="col-3 col-form-label"
+  >
+    {{ label }}
+  </label>
+  <b-col cols="9">
+    <select
+      class="custom-select pointer"
+      style="width: 100%"
+      :disabled="isDisabled()"
+      :value="value"
+      @change="onUpdate($event.target.value)"
+    >
       <option></option>
-      <option v-for="group in groups" :value="group.id" :selected="isActive(group.id)">{{ group.name }}</option>
+      <option
+        v-for="group in groups"
+        :value="group.id"
+        :key="group.id"
+        :selected="isActive(group.id)"
+      >
+        {{ group.name }}
+      </option>
     </select>
-  </div>
-</div>
+  </b-col>
+</b-row>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
 <div v-if="visible" style="margin-top: 20px">
-  <h3>Conference requests:</h3>
+  <h6>Conference requests:</h6>
   <div v-for="request in requests" :key="request.uuid" class="row" style="margin-bottom: 5px">
     <div class="col">
       {{ request.queue.name }}

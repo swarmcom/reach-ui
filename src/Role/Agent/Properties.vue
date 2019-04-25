@@ -1,7 +1,17 @@
 <template>
-<div v-access:profile-ui class="form">
-  <form-text v-access:agent-profile-edit-name label="Agent Name" v-model="rec.name"></form-text>
-  <form-text label="Login" v-model="rec.login"></form-text>
+<div 
+  v-access:profile-ui
+  class="form"
+>
+  <form-text
+    v-access:agent-profile-edit-name
+    label="Agent Name"
+    v-model="rec.name"
+  />
+  <form-text
+    label="Login"
+    v-model="rec.login"
+  />
   <form-text v-access:agent-profile-edit-password label="Password" v-model="rec.password"></form-text>
   <profile-agent-groups label="Agent Group" v-model="rec.group_id"></profile-agent-groups>
   <profile-release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></profile-release-groups>

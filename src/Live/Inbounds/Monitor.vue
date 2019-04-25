@@ -41,14 +41,44 @@
       </b-row>
     </template>
     <template slot="actions" slot-scope="data">
-      <template v-if="data.item.state == 'oncall'">
-        <b-button size="sm" variant="primary" @click="takeover(data.item)" class="pointer">Takeover</b-button>
-        <b-button size="sm" variant="success" @click="spy(data.item)" class="pointer">Spy</b-button>
+      <template v-if="data.item.state == 'oncall' && ($agent.vm.state == 'release' || $agent.vm.state == 'idle')">
+        <b-button
+          v-if="$agent.vm.agent.permissions['supervisor-feature-take-over']"
+          size="sm"
+          variant="primary"
+          @click="takeover(data.item)"
+          class="pointer">Takeover
+        </b-button>
+        <b-button
+          v-if="$agent.vm.agent.permissions['supervisor-feature-barge']"
+          size="sm"
+          variant="success"
+          @click="spy(data.item)"
+          class="pointer"
+        >
+          Spy/Barge
+        </b-button>
       </template>
-      <template v-if="data.item.state == 'inqueue' || data.item.state == 'agent'">
-        <b-button size="sm" variant="primary" @click="take(data.item)" class="pointer">Take</b-button>
+      <template v-if="(data.item.state == 'inqueue' || data.item.state == 'agent') && ($agent.vm.state == 'release' || $agent.vm.state == 'idle')">
+        <b-button
+          v-if="$agent.vm.agent.permissions['supervisor-feature-take-call-queue']"
+          size="sm"
+          variant="primary"
+          @click="take(data.item)"
+          class="pointer"
+        >
+          Take
+        </b-button>
       </template>
-      <b-button size="sm" variant="danger" @click="hangup(data.item)" class="pointer">Hangup</b-button>
+      <b-button
+        v-if="$agent.vm.agent.permissions['supervisor-feature-hangup-call-queue']"
+        size="sm"
+        variant="danger"
+        @click="hangup(data.item)"
+        class="pointer"
+      >
+        Hangup
+      </b-button>
     </template>
   </b-table>
 </div>

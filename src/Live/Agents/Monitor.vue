@@ -1,11 +1,19 @@
 <template>
 <div>
   <b-row>
-    <b-col><h6>Live agents by {{type}}</h6></b-col>
+    <b-col>
+      <h6>
+        Live agents by {{type}}
+      </h6>
+    </b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" size="sm" />
+      <b-form-select
+        v-model="type"
+        :options="types"
+        size="sm"
+      />
     </b-col>
   </b-row>
   <b-table
@@ -19,21 +27,59 @@
     :items="data"
     :fields="fields"
   >
-    <template slot="agent" slot-scope="data">
+    <template
+      slot="agent"
+      slot-scope="data"
+    >
       {{ data.item.agent.login }}
     </template>
-    <template slot="age" slot-scope="data">
+    <template
+      slot="age"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.age) }}
     </template>
-    <template slot="time" slot-scope="data">
+    <template
+      slot="time"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.time) }}
     </template>
-    <template slot="actions" slot-scope="data">
-      <b-button v-if="data.item.state == 'release'" size="sm" variant="success" @click="available(data.item)" class="pointer">Available</b-button>
-      <b-button v-else size="sm" variant="secondary" @click="release(data.item)" class="pointer">Release</b-button>
-      <b-button size="sm" variant="danger" @click="stop(data.item)" class="pointer">Kill</b-button>
+    <template
+      slot="actions"
+      slot-scope="data"
+    >
+      <b-button
+        v-if="data.item.state == 'release' && $agent.vm.agent.permissions['supervisor-feature-control-agent-state']"
+        size="sm"
+        variant="success"
+        @click="available(data.item)"
+        class="pointer"
+      >
+        Available
+      </b-button>
+      <b-button
+        v-if="data.item.state != 'release' && $agent.vm.agent.permissions['supervisor-feature-control-agent-state']"
+        size="sm"
+        variant="secondary"
+        @click="release(data.item)"
+        class="pointer"
+      >
+        Release
+      </b-button>
+      <b-button
+        size="sm"
+        variant="danger"
+        @click="stop(data.item)"
+        class="pointer"
+      >
+        Kill
+      </b-button>
     </template>
-    <template slot="inqueue" slot-scope="data">
+    <template
+      slot="inqueue"
+      slot-scope="data"
+    >
       <b-row v-if="(data.item.state !=='release' && data.item.state !=='available')">
         <b-col>
           {{data.item.inqueue ? data.item.inqueue['record']: ''}}
