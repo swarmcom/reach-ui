@@ -1,14 +1,26 @@
 <template>
 <div>
   <b-row>
-    <b-col><h6>Live agents stats by {{type}}</h6></b-col>
+    <b-col>
+      <h6>
+        Live agents stats by {{type}}
+      </h6>
+    </b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="type" :options="types" size="sm" />
+      <b-form-select
+        v-model="type"
+        :options="types"
+        size="sm"
+      />
     </b-col>
     <b-col cols=3>
-      <b-form-select v-model="period" :options="periods" size="sm"/>
+      <b-form-select
+        v-model="period"
+        :options="periods"
+        size="sm"
+      />
     </b-col>
   </b-row>
   <b-table
@@ -22,10 +34,16 @@
     :items="data"
     :fields="fields"
   >
-    <template slot="entity" slot-scope="data">
+    <template
+      slot="entity"
+      slot-scope="data"
+    >
       {{ data.item.entity.name }}
     </template>
-    <template slot="total_time" slot-scope="data">
+    <template
+      slot="total_time"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.total_time) }}
     </template>
   </b-table>

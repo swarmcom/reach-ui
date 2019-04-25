@@ -1,8 +1,12 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col"><h6>Live calls in queue</h6></div>
-  </div>
+  <b-row>
+    <b-col>
+      <h6>
+        Live calls in queue
+      </h6>
+    </b-col>
+  </b-row>
   <b-table
     style="margin-top:10px"
     small
@@ -15,23 +19,42 @@
     :items="data"
     :fields="fields"
   >
-    <template slot="time" slot-scope="data">
+    <template
+      slot="time"
+      slot-scope="data"
+    >
       {{durationFormatter(data.item.time)}}
     </template>
-    <template slot="effective_time" slot-scope="data">
+    <template
+      slot="effective_time"
+      slot-scope="data"
+    >
       {{data.item.effective_time.weight}} | {{durationFormatter(data.item.effective_time.time)}}
     </template>
-    <template slot="queue" slot-scope="data">
+    <template
+      slot="queue"
+      slot-scope="data"
+    >
       {{data.item.queue.name}}
     </template>
-    <template slot="skills" slot-scope="data">
+    <template
+      slot="skills"
+      slot-scope="data"
+    >
       {{Object.keys(data.item.skills).toString()}}
     </template>
-    <template slot="line_in" slot-scope="data">
+    <template
+      slot="line_in"
+      slot-scope="data"
+    >
       <b-row>
         <b-col>
-        <b-img v-if="data.item.line_in.client.avatar" :src="$agent.get_rr_uri()+'/avatar/'+data.item.line_in.client.avatar" style="width:16px;" />
-        {{data.item.line_in.client.name}}
+          <b-img
+            v-if="data.item.line_in.client.avatar"
+            :src="$agent.get_rr_uri()+'/avatar/'+data.item.line_in.client.avatar"
+            style="width:16px;"
+          />
+          {{data.item.line_in.client.name}}
         </b-col>
       </b-row>
       <b-row>
@@ -40,15 +63,50 @@
         </b-col>
       </b-row>
     </template>
-    <template slot="actions" slot-scope="data">
-      <template v-if="data.item.state == 'oncall'">
-        <b-button size="sm" variant="primary" @click="takeover(data.item)" class="pointer">Takeover</b-button>
-        <b-button size="sm" variant="success" @click="spy(data.item)" class="pointer">Spy</b-button>
+    <template
+      slot="actions"
+      slot-scope="data"
+    >
+      <template v-if="data.item.state == 'oncall' && ($agent.vm.state == 'release' || $agent.vm.state == 'idle')">
+        <b-button
+          v-if="$agent.vm.agent.permissions['supervisor-feature-take-over']"
+          size="sm"
+          variant="primary"
+          @click="takeover(data.item)"
+          class="pointer"
+        >
+          Takeover
+        </b-button>
+        <b-button
+          v-if="$agent.vm.agent.permissions['supervisor-feature-barge']"
+          size="sm"
+          variant="success"
+          @click="spy(data.item)"
+          class="pointer"
+        >
+          Spy/Barge
+        </b-button>
       </template>
-      <template v-if="data.item.state == 'inqueue' || data.item.state == 'agent'">
-        <b-button size="sm" variant="primary" @click="take(data.item)" class="pointer">Take</b-button>
+      <template v-if="(data.item.state == 'inqueue' || data.item.state == 'agent') && ($agent.vm.state == 'release' || $agent.vm.state == 'idle')">
+        <b-button
+          v-if="$agent.vm.agent.permissions['supervisor-feature-take-call-queue']"
+          size="sm"
+          variant="primary"
+          @click="take(data.item)"
+          class="pointer"
+        >
+          Take
+        </b-button>
       </template>
-      <b-button size="sm" variant="danger" @click="hangup(data.item)" class="pointer">Hangup</b-button>
+      <b-button
+        v-if="$agent.vm.agent.permissions['supervisor-feature-hangup-call-queue']"
+        size="sm"
+        variant="danger"
+        @click="hangup(data.item)"
+        class="pointer"
+      >
+        Hangup
+      </b-button>
     </template>
   </b-table>
 </div>

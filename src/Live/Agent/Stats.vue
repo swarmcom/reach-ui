@@ -1,11 +1,19 @@
 <template>
 <div>
   <b-row>
-    <b-col><h6>Live agent stats</h6></b-col>
+    <b-col>
+      <h6>
+        Live agent stats
+      </h6>
+    </b-col>
   </b-row>
   <b-row style="margin-bottom: 10px">
     <b-col cols=3>
-      <b-form-select v-model="period" :options="periods" size="sm" />
+      <b-form-select
+        v-model="period"
+        :options="periods"
+        size="sm"
+      />
     </b-col>
   </b-row>
   <b-table
@@ -18,16 +26,28 @@
     :items="data"
     :fields="fields"
   >
-    <template slot="entity" slot-scope="data">
+    <template
+      slot="entity"
+      slot-scope="data"
+    >
       {{ data.item.entity.name }}
     </template>
-    <template slot="longest" slot-scope="data">
+    <template
+      slot="longest"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.longest) }}
     </template>
-    <template slot="cpt" slot-scope="data">
+    <template
+      slot="cpt"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.cpt) }}
     </template>
-    <template slot="asa" slot-scope="data">
+    <template
+      slot="asa"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.asa) }}
     </template>
   </b-table>
