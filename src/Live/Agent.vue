@@ -1,9 +1,12 @@
 <template>
 <div>
-  <toggle-bar></toggle-bar>
-  <b-collapse v-model="showCollapse" id="liveManager">
-    <group></group>
-    <stats></stats>
+  <toggle-bar />
+  <b-collapse 
+    v-model="showCollapse"
+    id="liveManager"
+  >
+    <group />
+    <stats />
   </b-collapse>
 </div>
 </template>

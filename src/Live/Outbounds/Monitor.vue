@@ -1,14 +1,14 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col">
+  <b-row>
+    <b-col>
       <h6>
         Live outbound calls
       </h6>
-    </div>
-  </div>
+    </b-col>
+  </b-row>
   <b-row style="margin-bottom: 10px">
-    <b-col cols=3>
+    <b-col cols="3">
       <b-form-select
         v-model="type"
         :options="types"

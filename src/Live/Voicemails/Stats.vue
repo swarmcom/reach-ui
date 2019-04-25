@@ -1,14 +1,26 @@
 <template>
 <div>
-  <div class="row">
-    <div class="col"><h6>Voicemail stats by {{type}}</h6></div>
-  </div>
-  <b-row style="margin-bottom: 10px">
-    <b-col cols=3>
-      <b-form-select v-model="type" :options="types" size="sm" />
+  <b-row>
+    <b-col>
+      <h6>
+        Voicemail stats by {{type}}
+      </h6>
     </b-col>
-    <b-col cols=3>
-      <b-form-select v-model="period" :options="periods" size="sm" />
+  </b-row>
+  <b-row style="margin-bottom: 10px">
+    <b-col cols="3">
+      <b-form-select
+        v-model="type"
+        :options="types"
+        size="sm"
+      />
+    </b-col>
+    <b-col cols="3">
+      <b-form-select
+        v-model="period"
+        :options="periods"
+        size="sm"
+      />
     </b-col>
   </b-row>
   <b-table
@@ -23,13 +35,22 @@
     :items="data"
     :fields="fields"
   >
-    <template slot="entity" slot-scope="data">
+    <template
+      slot="entity"
+      slot-scope="data"
+    >
       {{ data.item.entity.name }}
     </template>
-    <template slot="avg_talk_time" slot-scope="data">
+    <template
+      slot="avg_talk_time"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.avg_talk_time) }}
     </template>
-    <template slot="talk_time" slot-scope="data">
+    <template
+      slot="talk_time"
+      slot-scope="data"
+    >
       {{ durationFormatter(data.item.talk_time) }}
     </template>
   </b-table>
