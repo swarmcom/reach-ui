@@ -1,28 +1,79 @@
 <template>
-<div class="row">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <skills-list v-if="effective" v-model="value" class="col-5"></skills-list>
-  <div v-if="effective" class="col-4">
-    <div v-for="sk of effective" class="form-row" style="margin-top: 5px">
-      <div class="col-3">
-        <input type="text" class="form-control" v-model="sk.key" disabled>
+  <b-row>
+    <b-col cols="3">
+      <label
+        :id="label"
+      >
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="5"
+    >
+      <skills-list
+        v-model="value"
+      />
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="4"
+    >
+      <div
+        v-for="sk of effective"
+        :key="sk"
+        class="form-row"
+        style="margin-top: 5px"
+      >
+        <b-col cols="3">
+          <input
+            v-model="sk.key"
+            type="text"
+            class="form-control"
+            disabled
+          >
+        </b-col>
+        <b-col>
+          <input
+            v-model="sk.value"
+            type="text"
+            class="form-control"
+            disabled
+          >
+        </b-col>
       </div>
-      <div class="col">
-        <input type="text" class="form-control" v-model="sk.value" disabled>
-      </div>
-    </div>
-  </div>
-  <skills-list v-model="value" v-else class="col-9"></skills-list>
-</div>
+    </b-col>
+    <b-col
+      v-else
+      cols="9"
+    >
+      <skills-list
+        v-model="value"
+      />
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 import SkillsList from '@/Widget/SkillsList'
 
 export default {
-  name: 'skills',
-  props: ['label', 'value', 'effective'],
+  name: 'Skills',
   components: { 'skills-list': SkillsList },
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    effective: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       k: '',

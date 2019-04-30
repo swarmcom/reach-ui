@@ -1,16 +1,35 @@
 <template>
-<div>
-  <b-row>
-    <b-col><h3>Agents sessions {{ header }}</h3></b-col>
-  </b-row>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups" @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="click"></b-table>
-  <b-row>
-    <b-col>
-      <b-button variant="outline-primary" class="float-right" @click="more">More</b-button>
-    </b-col>
-  </b-row>
-</div>
+  <div>
+    <b-row>
+      <b-col><h3>Agents sessions {{ header }}</h3></b-col>
+    </b-row>
+    <widget-query
+      v-model="query_params"
+      enable="range:agents:agent_groups"
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+      tbody-tr-class="pointer"
+      @row-clicked="click"
+    />
+    <b-row>
+      <b-col>
+        <b-button
+          variant="outline-primary"
+          class="float-right"
+          @click="more"
+        >
+          More
+        </b-button>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -37,6 +56,11 @@ export default {
       },
     }
   },
+  created () {
+    this.query_params = this.set_query_params(this.query_params)
+    this.safe_query(this.query_params)
+    this.maybe_set_header()
+  },
   methods: {
     query (params) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'agent', params])
@@ -46,11 +70,6 @@ export default {
     },
     maybe_set_header () {
     }
-  },
-  created () {
-    this.query_params = this.set_query_params(this.query_params)
-    this.safe_query(this.query_params)
-    this.maybe_set_header()
   },
 }
 </script>

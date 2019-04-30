@@ -1,4 +1,5 @@
 <template>
+  <div />
 </template>
 
 <script>
@@ -10,6 +11,18 @@ export default {
     return {
       skip_load: false
     }
+  },
+  watch: {
+    query_params (value) {
+      if (! this.skip_load) {
+        this.safe_query(value)
+      }
+      this.skip_load = false
+      return value
+    }
+  },
+  created () {
+    this.loadCache()
   },
   methods: {
     safe_query: async function (query) {
@@ -121,18 +134,6 @@ export default {
         this.data = this.$agent.vm.reports_cache[key]['data']
       }
     },
-  },
-  watch: {
-    query_params (value) {
-      if (! this.skip_load) {
-        this.safe_query(value)
-      }
-      this.skip_load = false
-      return value
-    }
-  },
-  created () {
-    this.loadCache()
   }
 }
 </script>

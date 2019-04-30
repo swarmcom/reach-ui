@@ -1,29 +1,97 @@
 <template>
-<div class="form">
-  <form-text label="Client Name" v-model="rec.name"></form-text>
-  <disposition-groups label="Disposition Group" v-model="rec.disposition_group_id"></disposition-groups>
-  <luas label="Entry Lua Script" v-model="rec.entry_lua_id"></luas>
-  <luas label="Exit Lua Script" v-model="rec.exit_lua_id"></luas>
-  <luas label="Agent Lua Script" v-model="rec.uri_lua_id"></luas>
-  <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
-  <prompts label="Announce" v-model="rec.announce_id"></prompts>
-  <form-select-bool label="Allow Voicemail" v-model="rec.allow_voicemail"></form-select-bool>
-  <prompts label="Voicemail prompt" v-model="rec.voicemail_prompt_id"></prompts>
-  <form-call-recording label="Call recording" v-model="rec.enable_call_recording"></form-call-recording>
-  <form-select-bool label="Override Caller ID on Line In" v-model="rec.override_clid_line_in"></form-select-bool>
-  <form-select-bool label="Override Caller ID on Line Out" v-model="rec.override_clid_line_out"></form-select-bool>
-  <form-text label="Caller ID Name" v-model="rec.caller_id_name"></form-text>
-  <form-number label="Caller ID Number" v-model="rec.caller_id_number"></form-number>
-  <form-file label="Client Avatar" uri="/avatar" v-model="rec.avatar" :fileType="'image/*'"></form-file>
-  <form-tags label="Client Skills" placeholder="Skill..." v-model="skills"></form-tags>
-  <div style="margin-top: 20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
-  </div>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Client Name"
+    />
+    <disposition-groups
+      v-model="rec.disposition_group_id"
+      label="Disposition Group"
+    />
+    <luas
+      v-model="rec.entry_lua_id"
+      label="Entry Lua Script"
+    />
+    <luas
+      v-model="rec.exit_lua_id"
+      label="Exit Lua Script"
+    />
+    <luas
+      v-model="rec.uri_lua_id"
+      label="Agent Lua Script"
+    />
+    <mohs
+      v-model="rec.moh_id"
+      label="Music on hold"
+    />
+    <prompts
+      v-model="rec.announce_id"
+      label="Announce"
+    />
+    <form-select-bool
+      v-model="rec.allow_voicemail"
+      label="Allow Voicemail"
+    />
+    <prompts
+      v-model="rec.voicemail_prompt_id"
+      label="Voicemail prompt"
+    />
+    <form-call-recording
+      v-model="rec.enable_call_recording"
+      label="Call recording"
+    />
+    <form-select-bool
+      v-model="rec.override_clid_line_in"
+      label="Override Caller ID on Line In"
+    />
+    <form-select-bool
+      v-model="rec.override_clid_line_out"
+      label="Override Caller ID on Line Out"
+    />
+    <form-text
+      v-model="rec.caller_id_name"
+      label="Caller ID Name"
+    />
+    <form-number
+      v-model="rec.caller_id_number"
+      label="Caller ID Number"
+    />
+    <form-file
+      v-model="rec.avatar"
+      label="Client Avatar"
+      uri="/avatar"
+      :file-type="'image/*'"
+    />
+    <form-tags
+      v-model="skills"
+      label="Client Skills"
+      placeholder="Skill..."
+    />
+    <div style="margin-top: 20px">
+      <b-btn
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
 
-  <help></help>
-</div>
+    <help />
+  </div>
 </template>
 
 <script>
@@ -32,10 +100,15 @@ import Common from '@/Admin/Common'
 import FormCallRecording from '@/Widget/FormCallRecording'
 
 export default {
-  name: 'admin-client',
-  props: ['id'],
-  mixins: [Common, Obj],
+  name: 'AdminClient',
   components: { 'form-call-recording': FormCallRecording },
+  mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

@@ -1,23 +1,45 @@
 <template>
-<div style="margin-top:20px">
-  <div class="row">
-    <div class="col-4">
-      <h3>Disposition group:</h3>
+  <div style="margin-top:20px">
+    <b-row>
+      <b-col cols="4">
+        <h3>Disposition group:</h3>
+      </b-col>
+    </b-row>
+    <div class="form">
+      <form-text
+        v-model="rec.name"
+        label="Disposition Group Name"
+      />
+      <form-text
+        v-model="rec.description"
+        label="Disposition Group Description"
+      />
+      <div style="margin-top: 20px">
+        <b-btn
+          class="pointer"
+          variant="primary"
+          @click="onCommit"
+        >
+          Commit
+        </b-btn>
+        <b-btn
+          class="pointer"
+          variant="outline-primary"
+          @click="onCancel"
+        >
+          Cancel
+        </b-btn>
+        <b-btn
+          class="float-right pointer"
+          variant="danger"
+          @click="onDelete"
+        >
+          Delete
+        </b-btn>
+      </div>
     </div>
+    <help />
   </div>
-
-  <div class="form">
-    <form-text label="Disposition Group Name" v-model="rec.name"></form-text>
-    <form-text label="Disposition Group Description" v-model="rec.description"></form-text>
-    <div style="margin-top: 20px">
-      <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-      <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-      <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
-    </div>
-  </div>
-
-  <help></help>
-</div>
 </template>
 
 <script>
@@ -25,9 +47,14 @@ import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-disposition-group',
-  props: ['id'],
+  name: 'AdminDispositionGroup',
   mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

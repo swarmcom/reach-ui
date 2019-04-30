@@ -1,47 +1,131 @@
 <template>
-<div>
-  <div class="row"><div class="col"><h3>Recipe entries:</h3></div></div>
-  <b-row style="margin-bottom: 20px">
-    <b-col>
-      <button v-if="! edit" @click="enable_edit()" class="btn btn-outline-primary pointer">Show Step Edit</button>
-      <button v-else @click="hide_edit()" class="btn btn-outline-primary pointer">Hide Step Edit</button>
-    </b-col>
-  </b-row>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Recipe entries:</h3>
+      </div>
+    </div>
+    <b-row style="margin-bottom: 20px">
+      <b-col>
+        <button
+          v-if="! edit"
+          class="btn btn-outline-primary pointer"
+          @click="enable_edit()"
+        >
+          Show Step Edit
+        </button>
+        <button
+          v-else
+          class="btn btn-outline-primary pointer"
+          @click="hide_edit()"
+        >
+          Hide Step Edit
+        </button>
+      </b-col>
+    </b-row>
 
-  <b-row v-for="entry of entries" :key="entry.id" style="margin-bottom: 10px">
-    <b-col cols=2>
-      <button @click="del(entry.id)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
+    <b-row
+      v-for="entry of entries"
+      :key="entry.id"
+      style="margin-bottom: 10px"
+    >
+      <b-col cols="2">
+        <button
+          class="btn btn-outline-danger pointer"
+          @click="del(entry.id)"
+        >
+          <icon
+            class="align-middle"
+            name="minus"
+            scale="1"
+          />
+        </button>
       &nbsp;
-      <button @click="up(entry.id)" class="btn btn-outline-success pointer"><icon class="align-middle" name="arrow-up" scale="1"></icon></button>
-      <button @click="down(entry.id)" class="btn btn-outline-primary pointer"><icon class="align-middle" name="arrow-down" scale="1"></icon></button>
-    </b-col>
-    <b-col cols=10 style="margin-bottom: 10px">
-      <input class="form-control" placeholder="Recipe step description"
-        type="text" :value="safe_value(entry.description)" v-on:input="update_description(entry.id, $event.target.value)">
-    </b-col>
-    <b-col cols="6">
-      <conditions :value="entry.conditions" :edit="edit" @input="update_condition(entry.id, $event)"></conditions>
-    </b-col>
-    <b-col cols="6">
-      <actions :value="entry.actions" :edit="edit" @input="update_action(entry.id, $event)"></actions>
-    </b-col>
-  </b-row>
+        <button
+          class="btn btn-outline-success pointer"
+          @click="up(entry.id)"
+        >
+          <icon
+            class="align-middle"
+            name="arrow-up"
+            scale="1"
+          />
+        </button>
+        <button
+          class="btn btn-outline-primary pointer"
+          @click="down(entry.id)"
+        >
+          <icon
+            class="align-middle"
+            name="arrow-down"
+            scale="1"
+          />
+        </button>
+      </b-col>
+      <b-col
+        cols="10"
+        style="margin-bottom: 10px"
+      >
+        <input
+          class="form-control"
+          placeholder="Recipe step description"
+          type="text"
+          :value="safe_value(entry.description)"
+          @input="update_description(entry.id, $event.target.value)"
+        >
+      </b-col>
+      <b-col cols="6">
+        <conditions
+          :value="entry.conditions"
+          :edit="edit"
+          @input="update_condition(entry.id, $event)"
+        />
+      </b-col>
+      <b-col cols="6">
+        <actions
+          :value="entry.actions"
+          :edit="edit"
+          @input="update_action(entry.id, $event)"
+        />
+      </b-col>
+    </b-row>
 
-  <b-row>
-    <b-col cols=1>
-      <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
-    </b-col>
-    <b-col cols=11 style="margin-bottom: 10px">
-      <b-form-input v-model="description" placeholder="Recipe step description"></b-form-input>
-    </b-col>
-    <b-col cols="6">
-      <conditions :value="conditions" @input="set_conditions($event)"></conditions>
-    </b-col>
-    <b-col cols="6">
-      <actions :value="actions" @input="set_actions($event)"></actions>
-    </b-col>
-  </b-row>
-</div>
+    <b-row>
+      <b-col cols="1">
+        <button
+          class="btn btn-outline-secondary pointer"
+          @click="add"
+        >
+          <icon
+            class="align-middle"
+            name="plus"
+            scale="1"
+          />
+        </button>
+      </b-col>
+      <b-col
+        cols="11"
+        style="margin-bottom: 10px"
+      >
+        <b-form-input
+          v-model="description"
+          placeholder="Recipe step description"
+        />
+      </b-col>
+      <b-col cols="6">
+        <conditions
+          :value="conditions"
+          @input="set_conditions($event)"
+        />
+      </b-col>
+      <b-col cols="6">
+        <actions
+          :value="actions"
+          @input="set_actions($event)"
+        />
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -49,11 +133,16 @@ import Conditions from '@/Admin/Recipe/Conditions'
 import Actions from '@/Admin/Recipe/Actions'
 
 export default {
-  name: 'admin-recipe-entries',
-  props: ['id'],
+  name: 'AdminRecipeEntries',
   components: {
     conditions: Conditions,
     actions: Actions,
+  },
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
   },
   data () {
     return {
@@ -63,6 +152,9 @@ export default {
       actions: [],
       entries: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     safe_value (value) {
@@ -122,13 +214,7 @@ export default {
       if (id >= 0) {
         this.entries.splice(id, 1)
       }
-    },
-    safe_value (Value) {
-      return Value === 'undefined' ? '' : Value
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

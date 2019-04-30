@@ -1,18 +1,37 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Outbound details</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Outbound details</h3>
+      </div>
+    </div>
+    <widget-query
+      v-model="query_params"
+      enable="step:empty_intervals"
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+    >
+      <template
+        slot="answers"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.answers }} / {{ percentageFormatter(dataSlot.item.answers, dataSlot.item.rings) }}
+      </template>
+      <template
+        slot="abandons"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.abandons }} / {{ percentageFormatter(dataSlot.item.abandons, data.item.rings) }}
+      </template>
+    </b-table>
   </div>
-  <widget-query v-model="query_params" enable="step:empty_intervals" @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
-    <template slot="answers" slot-scope="data">
-      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.rings) }}
-    </template>
-    <template slot="abandons" slot-scope="data">
-      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.rings) }}
-    </template>
-  </b-table>
-</div>
 </template>
 
 <script>
@@ -43,16 +62,16 @@ export default {
       },
     }
   },
-  methods: {
-    query (query) {
-      return this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'details', query])
-    },
-  },
   created () {
     if (! this.is_standalone() && ! this.is_cached()) {
       this.query_params = this.set_query_params(this.query_params)
       this.safe_query(this.query_params)
     }
+  },
+  methods: {
+    query (query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_outbound', 'details', query])
+    },
   },
 }
 </script>

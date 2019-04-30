@@ -1,71 +1,190 @@
 <template>
-<div class="container" style="margin-top:20px">
-  <div class="row">
-    <div class="col-4">
-      <h3>Node properties:</h3>
+  <div
+    class="container"
+    style="margin-top:20px"
+  >
+    <div class="row">
+      <div class="col-4">
+        <h3>Node properties:</h3>
+      </div>
     </div>
-  </div>
 
-  <div class="form">
-    <form-text label="Property Name" v-model="rec.name"></form-text>
-    <form-text label="Property Description" v-model="rec.description"></form-text>
-    <template v-if="isGateway(rec)">
-      <form-text label="Address" v-model="rec.address"></form-text>
-      <form-text label="IP" v-model="rec.ip"></form-text>
-      <template v-if="rec.type=='media'">
-        <div class="row" style="margin-top: 5px">
-          <label class="col-3 col-form-label">Proxy instance</label>
-          <div class="col-9">
-            <nodes :value="rec.props.proxy" type="proxy" v-on:input="props('proxy', arguments[0])"></nodes>
+    <div class="form">
+      <form-text
+        v-model="rec.name"
+        label="Property Name"
+      />
+      <form-text
+        v-model="rec.description"
+        label="Property Description"
+      />
+      <template v-if="isGateway(rec)">
+        <form-text
+          v-model="rec.address"
+          label="Address"
+        />
+        <form-text
+          v-model="rec.ip"
+          label="IP"
+        />
+        <template v-if="rec.type=='media'">
+          <div
+            class="row"
+            style="margin-top: 5px"
+          >
+            <label class="col-3 col-form-label">Proxy instance</label>
+            <div class="col-9">
+              <nodes
+                :value="rec.props.proxy"
+                type="proxy"
+                @input="props('proxy', arguments[0])"
+              />
+            </div>
           </div>
-        </div>
+        </template>
       </template>
-    </template>
-    <form-bool v-if="rec.type=='proxy'" label="NAT correction for inbound SDP" v-model="rec.props.fix_inbound_nated_sdp"></form-bool>
+      <form-bool
+        v-if="rec.type=='proxy'"
+        v-model="rec.props.fix_inbound_nated_sdp"
+        label="NAT correction for inbound SDP"
+      />
 
-    <div style="margin-top:20px">
-      <button @click="onCommit" class="btn btn-primary">Commit</button>
-      <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-      <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
+      <div style="margin-top:20px">
+        <button
+          class="btn btn-primary"
+          @click="onCommit"
+        >
+          Commit
+        </button>
+        <button
+          class="btn btn-outline-primary"
+          @click="onCancel"
+        >
+          Cancel
+        </button>
+        <button
+          class="btn btn-danger float-right"
+          @click="onDelete"
+        >
+          Delete
+        </button>
+      </div>
     </div>
+
+    <b-row
+      v-if="rec.type=='media'"
+      style="margin-top:20px"
+    >
+      <b-col>
+        <button
+          class="btn btn-danger"
+          @click="sofia_reload"
+        >
+          SIP Restart
+        </button>
+        <button
+          class="btn btn-primary"
+          @click="sofia_rescan"
+        >
+          SIP Reload
+        </button>
+        <button
+          class="btn btn-secondary"
+          @click="sofia_status"
+        >
+          Sofia Status
+        </button>
+        <button
+          class="btn btn-secondary"
+          @click="node_status"
+        >
+          Node Status
+        </button>
+        <button
+          class="btn btn-secondary"
+          @click="sofia_profile_status"
+        >
+          SIP Profile Status
+        </button>
+      </b-col>
+    </b-row>
+
+    <b-row
+      v-if="rec.type=='proxy'"
+      style="margin-top:20px"
+    >
+      <b-col>
+        <button
+          class="btn btn-outline-secondary"
+          @click="proxy_debug('debug')"
+        >
+          Debug
+        </button>
+        <button
+          class="btn btn-outline-secondary"
+          @click="proxy_debug('info')"
+        >
+          Info
+        </button>
+        <button
+          class="btn btn-outline-secondary"
+          @click="proxy_debug('notice')"
+        >
+          Notice
+        </button>
+        <button
+          class="btn btn-outline-secondary"
+          @click="proxy_debug('warn')"
+        >
+          Warn
+        </button>
+        <button
+          class="btn btn-outline-secondary"
+          @click="proxy_debug('err')"
+        >
+          Err
+        </button>
+      </b-col>
+    </b-row>
+
+    <b-row
+      v-if="rec.type=='proxy'"
+      style="margin-top:20px"
+    >
+      <b-col>
+        <button
+          class="btn btn-secondary"
+          @click="proxy_stats"
+        >
+          Stats
+        </button>
+        <button
+          class="btn btn-secondary"
+          @click="proxy_cfgs"
+        >
+          Configs
+        </button>
+        <button
+          class="btn btn-secondary"
+          @click="proxy_regs"
+        >
+          Regs
+        </button>
+        <button
+          class="btn btn-secondary"
+          @click="proxy_dlgs"
+        >
+          Dialogs
+        </button>
+      </b-col>
+    </b-row>
+
+    <b-row style="margin-top:20px">
+      <b-col>
+        <pre>{{ result }}</pre>
+      </b-col>
+    </b-row>
   </div>
-
-  <b-row style="margin-top:20px" v-if="rec.type=='media'">
-    <b-col>
-      <button @click="sofia_reload" class="btn btn-danger">SIP Restart</button>
-      <button @click="sofia_rescan" class="btn btn-primary">SIP Reload</button>
-      <button @click="sofia_status" class="btn btn-secondary">Sofia Status</button>
-      <button @click="node_status" class="btn btn-secondary">Node Status</button>
-      <button @click="sofia_profile_status" class="btn btn-secondary">SIP Profile Status</button>
-    </b-col>
-  </b-row>
-
-  <b-row style="margin-top:20px" v-if="rec.type=='proxy'">
-    <b-col>
-      <button @click="proxy_debug('debug')" class="btn btn-outline-secondary">Debug</button>
-      <button @click="proxy_debug('info')" class="btn btn-outline-secondary">Info</button>
-      <button @click="proxy_debug('notice')" class="btn btn-outline-secondary">Notice</button>
-      <button @click="proxy_debug('warn')" class="btn btn-outline-secondary">Warn</button>
-      <button @click="proxy_debug('err')" class="btn btn-outline-secondary">Err</button>
-    </b-col>
-  </b-row>
-
-  <b-row style="margin-top:20px" v-if="rec.type=='proxy'">
-    <b-col>
-      <button @click="proxy_stats" class="btn btn-secondary">Stats</button>
-      <button @click="proxy_cfgs" class="btn btn-secondary">Configs</button>
-      <button @click="proxy_regs" class="btn btn-secondary">Regs</button>
-      <button @click="proxy_dlgs" class="btn btn-secondary">Dialogs</button>
-    </b-col>
-  </b-row>
-
-  <b-row style="margin-top:20px">
-    <b-col>
-      <pre>{{ result }}</pre>
-    </b-col>
-  </b-row>
-
-</div>
 </template>
 
 <script>
@@ -75,10 +194,15 @@ import Nodes from '@/Kam/Widget/Nodes'
 import FormBool from '@/Widget/FormBool'
 
 export default {
-  name: 'kam-node-properties',
+  name: 'KamNodeProperties',
   components: { Nodes, 'form-bool': FormBool },
-  props: ['id'],
   mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       rec: {},

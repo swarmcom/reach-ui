@@ -1,12 +1,16 @@
 <template>
-<div>
-  <toggle-bar style="cursor: move"></toggle-bar>
-  <b-collapse v-model="showCollapse" id="collapseSessionManager" class="mt-2 itemDragable">
-    <stats></stats>
-    <vmstats></vmstats>
-    <monitor></monitor>
-  </b-collapse>
-</div>
+  <div>
+    <toggle-bar style="cursor: move" />
+    <b-collapse
+      id="collapseSessionManager"
+      v-model="showCollapse"
+      class="mt-2 itemDragable"
+    >
+      <stats />
+      <vmstats />
+      <monitor />
+    </b-collapse>
+  </div>
 </template>
 
 <script>

@@ -1,40 +1,99 @@
 <template>
-<div class="form">
-  <form-text label="Agent Group Name" v-model="rec.name"></form-text>
-  <release-groups label="Release Group" v-model="rec.release_group_id"></release-groups>
-  <lines label="Line Out" v-model="rec.line_id"></lines>
-  <roles label="Role" v-model="rec.role_id"></roles>
-  <acl label="Access list" v-model="rec.acl_group_id"></acl>
-  <form-number label="Ring Timeout" v-model="rec.ring_timeout"></form-number>
-  <form-number label="Suspend Time" v-model="rec.suspend_time"></form-number>
-  <form-number label="Auto Logout" v-model="rec.autologout"></form-number>
-  <form-number label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails"></form-number>
-  <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails"></form-select-bool>
-  <form-tags placeholder="Skill..." label="Skills" v-model="skills"></form-tags>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Agent Group Name"
+    />
+    <release-groups
+      v-model="rec.release_group_id"
+      label="Release Group"
+    />
+    <lines
+      v-model="rec.line_id"
+      label="Line Out"
+    />
+    <roles
+      v-model="rec.role_id"
+      label="Role"
+    />
+    <acl
+      v-model="rec.acl_group_id"
+      label="Access list"
+    />
+    <form-number
+      v-model="rec.ring_timeout"
+      label="Ring Timeout"
+    />
+    <form-number
+      v-model="rec.suspend_time"
+      label="Suspend Time"
+    />
+    <form-number
+      v-model="rec.autologout"
+      label="Auto Logout"
+    />
+    <form-number
+      v-model="rec.max_ring_fails"
+      label="Max Missed Calls (auto release)"
+    />
+    <form-select-bool
+      v-model="rec.reset_rings_fails"
+      label="Reset Max Rings On Success"
+    />
+    <form-tags
+      v-model="skills"
+      placeholder="Skill..."
+      label="Skills"
+    />
 
-  <div style="margin-top:20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+    <div style="margin-top:20px">
+      <b-btn
+        class="pointer"
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-
-  <help></help>
-</div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-agent-group',
-  props: ['id'],
+  name: 'AdminAgentGroup',
   mixins: [Common],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},
       module: 'ws_db_agent_group',
       skills: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -66,9 +125,6 @@ export default {
     onCancel () {
       this.$router.go(-1)
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

@@ -1,14 +1,38 @@
 <template>
-<div class="form">
-  <form-text label="Recipe Name" v-model="rec.name"></form-text>
-  <form-text label="Recipe Description" v-model="rec.description"></form-text>
-  <div style="margin-top:20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Recipe Name"
+    />
+    <form-text
+      v-model="rec.description"
+      label="Recipe Description"
+    />
+    <div style="margin-top:20px">
+      <b-btn
+        class="pointer"
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-  <help></help>
-</div>
 </template>
 
 <script>
@@ -16,9 +40,14 @@ import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-recipe',
-  props: ['id'],
+  name: 'AdminRecipe',
   mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

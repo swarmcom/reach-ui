@@ -1,23 +1,47 @@
 <template>
-<b-form-row>
-  <b-col>
-    <select class="custom-select" :value="value" @change="onUpdate($event.target.value)">
-      <option></option>
-      <option v-for="queue in queues" :value="queue.id" :selected="isActive(queue.id)">{{ queue.name }}</option>
-    </select>
-  </b-col>
-</b-form-row>
+  <b-form-row>
+    <b-col>
+      <select
+        class="custom-select"
+        :value="value"
+        @change="onUpdate($event.target.value)"
+      >
+        <option />
+        <option
+          v-for="queue in queues"
+          :key="queue.id"
+          :value="queue.id"
+          :selected="isActive(queue.id)"
+        >
+          {{ queue.name }}
+        </option>
+      </select>
+    </b-col>
+  </b-form-row>
 </template>
 
 <script>
 export default {
-  name: 'admin-recipe-action-transfer-to-queue',
-  props: ['args'],
+  name: 'AdminRecipeActionTransferToQueue',
+  props: {
+    args: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       value: this.args[0],
       queues: []
     }
+  },
+  watch: {
+    value () {
+      this.commit()
+    }
+  },
+  created () {
+    this.query()
   },
   methods: {
     commit () {
@@ -33,14 +57,6 @@ export default {
       this.value = value
       this.commit()
     }
-  },
-  watch: {
-    value () {
-      this.commit()
-    }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

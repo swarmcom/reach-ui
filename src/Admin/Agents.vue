@@ -1,12 +1,22 @@
 <template>
-<btable :fields="fields" :data="agents" :add_button=true tooltip="Add Agent" :filter_button=true :paginate=true></btable>
+  <btable
+    :fields="fields"
+    :data="agents"
+    :add-button="true"
+    tooltip="Add Agent"
+    :filter-button="true"
+    :paginate="true"
+  />
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-agents',
+  name: 'AdminAgents',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -20,6 +30,9 @@ export default {
       agents: []
     }
   },
+  created () {
+    this.query()
+  },
   methods: {
     query: async function () {
       let agents = await this.$agent.p_mfa('ws_db_agent', 'get')
@@ -32,12 +45,6 @@ export default {
     onClick (data) {
       this.$router.push(`/agent/${data.id}`)
     }
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

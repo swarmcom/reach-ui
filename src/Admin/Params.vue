@@ -1,33 +1,59 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col">
-      <h3>Domain parameters:</h3>
+  <div>
+    <b-row>
+      <b-col>
+        <h3>Domain parameters:</h3>
+      </b-col>
+    </b-row>
+    <div
+      v-for="param of params"
+      :key="param.key"
+      class="form-row"
+      style="margin-top: 5px"
+    >
+      <b-col cols="3">
+        <input
+          v-model="param.key"
+          type="text"
+          class="form-control"
+          readonly
+        >
+      </b-col>
+      <b-col>
+        <input
+          v-model="param.value"
+          type="text"
+          class="form-control"
+        >
+      </b-col>
     </div>
-  </div>
-  <div v-for="param of params" class="form-row" style="margin-top: 5px">
-    <div class="col-3">
-      <input type="text" class="form-control" v-model="param.key" readonly>
-    </div>
-    <div class="col">
-      <input type="text" class="form-control" v-model="param.value">
-    </div>
-  </div>
 
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <button @click="commit" class="btn btn-primary pointer">Commit</button>
-      <button @click="cancel" class="btn btn-outline-primary pointer">Cancel</button>
-    </b-col>
-  </b-row>
-</div>
+    <b-row style="margin-top: 20px">
+      <b-col>
+        <b-btn
+          class="pointer"
+          variant="primary"
+          @click="commit"
+        >
+          Commit
+        </b-btn>
+        <b-btn
+          class="pointer"
+          variant="outline-primary"
+          @click="cancel"
+        >
+          Cancel
+        </b-btn>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-params',
+  name: 'AdminParams',
   mixins: [Common],
   data () {
     return {
@@ -36,6 +62,9 @@ export default {
       name: '',
       value: ''
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -61,9 +90,6 @@ export default {
     cancel: async function () {
       this.$router.push('/agents')
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

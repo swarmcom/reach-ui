@@ -1,5 +1,8 @@
 <script>
 export default {
+  created () {
+    this.query()
+  },
   methods: {
     query: async function () {
       if (this.id) {
@@ -28,9 +31,6 @@ export default {
     onCancel () {
       this.$router.go(-1)
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

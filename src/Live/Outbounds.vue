@@ -1,14 +1,14 @@
 <template>
-<div>
-  <toggle-bar />
-  <b-collapse
-    v-model="showCollapse"
-    id="liveManager"
-  >
-    <stats />
-    <monitor />
-  </b-collapse>
-</div>
+  <div>
+    <toggle-bar />
+    <b-collapse
+      id="liveManager"
+      v-model="showCollapse"
+    >
+      <stats />
+      <monitor />
+    </b-collapse>
+  </div>
 </template>
 
 <script>

@@ -1,26 +1,30 @@
 <template>
-<b-form-row>
-  <b-col cols="6">
-  </b-col>
-</b-form-row>
+  <b-form-row>
+    <b-col cols="6" />
+  </b-form-row>
 </template>
 
 <script>
 export default {
-  name: 'admin-recipe-action-deprioritize',
-  props: ['args'],
-  data () {
-    return {
+  name: 'AdminRecipeActionDeprioritize',
+  props: {
+    args: {
+      type: Array,
+      default: () => ([])
     }
   },
-  methods: {
-    commit () {
-      this.$emit('input', [])
+  data () {
+    return {
     }
   },
   watch: {
     value () {
       this.commit()
+    }
+  },
+  methods: {
+    commit () {
+      this.$emit('input', [])
     }
   },
 }

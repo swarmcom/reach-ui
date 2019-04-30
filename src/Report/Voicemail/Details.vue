@@ -1,11 +1,24 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Voicemail details</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Voicemail details</h3>
+      </div>
+    </div>
+    <widget-query
+      v-model="query_params"
+      enable="step:empty_intervals"
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+    />
   </div>
-  <widget-query v-model="query_params" enable="step:empty_intervals" @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
-</div>
 </template>
 
 <script>
@@ -41,16 +54,16 @@ export default {
       },
     }
   },
-  methods: {
-    query (query) {
-      return this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'details', query])
-    },
-  },
   created () {
     if (! this.is_standalone() && ! this.is_cached()) {
       this.query_params = this.set_query_params(this.query_params)
       this.safe_query(this.query_params)
     }
+  },
+  methods: {
+    query (query) {
+      return this.$agent.p_mfa('ws_report', 'query', ['report_voicemail', 'details', query])
+    },
   },
 }
 </script>

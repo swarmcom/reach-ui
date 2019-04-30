@@ -1,81 +1,177 @@
 <template>
-<div>
-  <b-row v-if="enabled.group_by" style="margin-bottom: 10px">
-    <b-col cols=3>
-      <b-form-select v-model="group_by" :options="group_by_options"/>
-    </b-col>
-  </b-row>
-  <b-row v-if="enabled.agents" style="margin-bottom: 10px">
-    <b-col>
-      <widget-agents v-model="agents"></widget-agents>
-    </b-col>
-  </b-row>
-  <b-row v-if="enabled.agent_groups" style="margin-bottom: 10px">
-    <b-col>
-      <widget-agent-groups v-model="agent_groups"></widget-agent-groups>
-    </b-col>
-  </b-row>
-  <b-row v-if="enabled.queues" style="margin-bottom: 10px">
-    <b-col>
-      <widget-queues v-model="queues"></widget-queues>
-    </b-col>
-  </b-row>
-  <b-row v-if="enabled.queue_groups" style="margin-bottom: 10px">
-    <b-col>
-      <widget-queue-groups v-model="queue_groups"></widget-queue-groups>
-    </b-col>
-  </b-row>
-  <b-row v-if="enabled.clients" style="margin-bottom: 10px">
-    <b-col>
-      <widget-clients v-model="clients"></widget-clients>
-    </b-col>
-  </b-row>
-  <b-row v-if="enabled.line_ins" style="margin-bottom: 10px">
-    <b-col>
-      <widget-line-ins v-model="line_ins"></widget-line-ins>
-    </b-col>
-  </b-row>
-  <b-row v-if="enabled.line_outs" style="margin-bottom: 10px">
-    <b-col>
-      <widget-line-outs v-model="line_outs"></widget-line-outs>
-    </b-col>
-  </b-row>
+  <div>
+    <b-row
+      v-if="enabled.group_by"
+      style="margin-bottom: 10px"
+    >
+      <b-col cols="3">
+        <b-form-select
+          v-model="group_by"
+          :options="group_by_options"
+        />
+      </b-col>
+    </b-row>
+    <b-row
+      v-if="enabled.agents"
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <widget-agents v-model="agents" />
+      </b-col>
+    </b-row>
+    <b-row
+      v-if="enabled.agent_groups"
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <widget-agent-groups v-model="agent_groups" />
+      </b-col>
+    </b-row>
+    <b-row
+      v-if="enabled.queues"
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <widget-queues v-model="queues" />
+      </b-col>
+    </b-row>
+    <b-row
+      v-if="enabled.queue_groups"
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <widget-queue-groups v-model="queue_groups" />
+      </b-col>
+    </b-row>
+    <b-row
+      v-if="enabled.clients"
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <widget-clients v-model="clients" />
+      </b-col>
+    </b-row>
+    <b-row
+      v-if="enabled.line_ins"
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <widget-line-ins v-model="line_ins" />
+      </b-col>
+    </b-row>
+    <b-row
+      v-if="enabled.line_outs"
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <widget-line-outs v-model="line_outs" />
+      </b-col>
+    </b-row>
 
-  <b-row>
-    <b-col cols=2 v-if="enabled.range">
-      <widget-date v-model="date_start" placeholder="Start date"></widget-date>
-    </b-col>
-    <b-col cols=2 v-if="enabled.range">
-      <widget-date v-model="date_end" placeholder="End date"></widget-date>
-    </b-col>
-    <b-dropdown v-if="enabled.range" cols=1 text="Range">
-      <b-dropdown-item @click="select_range('today')">Today</b-dropdown-item>
-      <b-dropdown-item @click="select_range('this_week')">This Week</b-dropdown-item>
-      <b-dropdown-item @click="select_range('this_month')">This Month</b-dropdown-item>
-      <b-dropdown-item @click="select_range('last_7')">Last 7 days</b-dropdown-item>
-      <b-dropdown-item @click="select_range('last_30')">Last 30 days</b-dropdown-item>
-    </b-dropdown>
-    <b-col cols=1 v-if="enabled.step">
-      <input type="text" class="form-control" v-model="step" placeholder="step" value="step">
-    </b-col>
-    <b-col cols=2 v-if="enabled.empty_intervals">
-      <b-form-select v-model="empty_intervals">
-        <option value=true>true</option>
-        <option value=false>false</option>
-      </b-form-select>
-    </b-col>
-    <b-col cols=1 v-if="enabled.sla">
-      <input type="text" class="form-control" v-model="sla" placeholder="sla" value="sla">
-    </b-col>
-    <b-col cols=1>
-      <button @click="apply" class="btn btn-outline-primary">Apply</button>
-    </b-col>
-    <b-col cols=1>
-      <button @click="reset" class="btn btn-outline-success">Reset</button>
-    </b-col>
-  </b-row>
-  <b-modal header-bg-variant="danger" header-text-variant="light" title="Parameters error" ok-only v-model="showError">{{ error }}</b-modal>
-</div>
+    <b-row>
+      <b-col
+        v-if="enabled.range"
+        cols="2"
+      >
+        <widget-date
+          v-model="date_start"
+          placeholder="Start date"
+        />
+      </b-col>
+      <b-col
+        v-if="enabled.range"
+        cols="2"
+      >
+        <widget-date
+          v-model="date_end"
+          placeholder="End date"
+        />
+      </b-col>
+      <b-dropdown
+        v-if="enabled.range"
+        cols="1"
+        text="Range"
+      >
+        <b-dropdown-item @click="select_range('today')">
+          Today
+        </b-dropdown-item>
+        <b-dropdown-item @click="select_range('this_week')">
+          This Week
+        </b-dropdown-item>
+        <b-dropdown-item @click="select_range('this_month')">
+          This Month
+        </b-dropdown-item>
+        <b-dropdown-item @click="select_range('last_7')">
+          Last 7 days
+        </b-dropdown-item>
+        <b-dropdown-item @click="select_range('last_30')">
+          Last 30 days
+        </b-dropdown-item>
+      </b-dropdown>
+      <b-col
+        v-if="enabled.step"
+        cols="1"
+      >
+        <input
+          v-model="step"
+          type="text"
+          class="form-control"
+          placeholder="step"
+          value="step"
+        >
+      </b-col>
+      <b-col
+        v-if="enabled.empty_intervals"
+        cols="2"
+      >
+        <b-form-select v-model="empty_intervals">
+          <option value="true">
+            true
+          </option>
+          <option value="false">
+            false
+          </option>
+        </b-form-select>
+      </b-col>
+      <b-col
+        v-if="enabled.sla"
+        cols="1"
+      >
+        <input
+          v-model="sla"
+          type="text"
+          class="form-control"
+          placeholder="sla"
+          value="sla"
+        >
+      </b-col>
+      <b-col cols="1">
+        <button
+          class="btn btn-outline-primary"
+          @click="apply"
+        >
+          Apply
+        </button>
+      </b-col>
+      <b-col cols="1">
+        <button
+          class="btn btn-outline-success"
+          @click="reset"
+        >
+          Reset
+        </button>
+      </b-col>
+    </b-row>
+    <b-modal
+      v-model="showError"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      title="Parameters error"
+      ok-only
+    >
+      {{ error }}
+    </b-modal>
+  </div>
 </template>
 
 <script>
@@ -95,8 +191,7 @@ function maybe_copy_params(Dst, Src, Params) {
 }
 
 export default {
-  name: 'report-query',
-  props: ['value', 'enable', 'group-by', 'require-range'],
+  name: 'ReportQuery',
   components: {
     'widget-date': ReportDate,
     'widget-agents': Agents,
@@ -106,6 +201,24 @@ export default {
     'widget-clients': Clients,
     'widget-line-ins': LineIns,
     'widget-line-outs': LineOuts,
+  },
+  props: {
+    value: {
+      type: Object,
+      default: () => ({})
+    },
+    enable: {
+      type: String,
+      default: ""
+    },
+    groupBy: {
+      type: String,
+      default: ""
+    },
+    requireRange: {
+      type: String,
+      default: ""
+    }
   },
   data () {
     return {
@@ -150,6 +263,58 @@ export default {
       empty_intervals: false,
       group_by: null
     }
+  },
+  watch: {
+    group_by (value) {
+      switch(value) {
+        case 'client':
+          this.make_selected('clients')
+          break
+        case 'agent':
+          this.make_selected('agents')
+          break
+        case 'agent_group':
+          this.make_selected('agent_groups')
+          break
+        case 'queue':
+          this.make_selected('queues')
+          break
+        case 'queue_group':
+          this.make_selected('queue_groups')
+          break
+        case 'line_in':
+          this.make_selected('line_ins')
+          break
+        case 'line_out':
+          this.make_selected('line_outs')
+          break
+        default:
+          this.selected = null
+      }
+    },
+  },
+  created () {
+    if (this.enable) {
+      let enabled = this.enable.split(":")
+      enabled.forEach((v) => this.enabled[v] = true)
+    }
+    switch (this.groupBy) {
+      case "outbound":
+        this.group_by_options = this.outbound_group_by_options
+        break
+      case "activity":
+        this.group_by_options = this.activity_group_by_options
+        break
+      case "productivity":
+        this.group_by_options = this.productivity_group_by_options
+        break
+      default:
+        this.group_by_options = this.inbound_group_by_options
+    }
+    maybe_copy_params(this, this.value, [
+      'group_by', 'date_start', 'date_end', 'step', 'sla',
+      'agents', 'agent_groups', 'queues', 'queue_groups', 'clients', 'line_ins', 'line_outs'
+    ])
   },
   methods: {
     reset () {
@@ -240,58 +405,6 @@ export default {
           break
       }
     }
-  },
-  created () {
-    if (this.enable) {
-      let enabled = this.enable.split(":")
-      enabled.forEach((v) => this.enabled[v] = true)
-    }
-    switch (this.groupBy) {
-      case "outbound":
-        this.group_by_options = this.outbound_group_by_options
-        break
-      case "activity":
-        this.group_by_options = this.activity_group_by_options
-        break
-      case "productivity":
-        this.group_by_options = this.productivity_group_by_options
-        break
-      default:
-        this.group_by_options = this.inbound_group_by_options
-    }
-    maybe_copy_params(this, this.value, [
-      'group_by', 'date_start', 'date_end', 'step', 'sla',
-      'agents', 'agent_groups', 'queues', 'queue_groups', 'clients', 'line_ins', 'line_outs'
-    ])
-  },
-  watch: {
-    group_by (value) {
-      switch(value) {
-        case 'client':
-          this.make_selected('clients')
-          break
-        case 'agent':
-          this.make_selected('agents')
-          break
-        case 'agent_group':
-          this.make_selected('agent_groups')
-          break
-        case 'queue':
-          this.make_selected('queues')
-          break
-        case 'queue_group':
-          this.make_selected('queue_groups')
-          break
-        case 'line_in':
-          this.make_selected('line_ins')
-          break
-        case 'line_out':
-          this.make_selected('line_outs')
-          break
-        default:
-          this.selected = null
-      }
-    },
   }
 }
 </script>

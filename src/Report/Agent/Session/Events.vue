@@ -1,18 +1,32 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Agent session events</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Agent session events</h3>
+      </div>
+    </div>
+    <b-table
+      style="margin-top:10px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+    />
   </div>
-  <b-table style="margin-top:10px" small striped hover :items="data" :fields="fields"></b-table>
-</div>
 </template>
 
 <script>
 import Base from '@/Report/Base'
 export default {
-  name: 'report-events-agent',
-  props: ['uuid'],
+  name: 'ReportEventsAgent',
   mixins: [Base],
+  props: {
+    uuid: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       data: [],
@@ -24,13 +38,13 @@ export default {
       }
     }
   },
+  created () {
+    this.safe_query()
+  },
   methods: {
     query () {
       return this.$agent.p_mfa('ws_report', 'query', ['report_events', 'agent', { uuid: this.uuid }])
     },
-  },
-  created () {
-    this.safe_query()
   },
 }
 </script>

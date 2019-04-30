@@ -1,46 +1,101 @@
 <template>
-<div>
-  <div class="row" style="margin-bottom: 10px"><div class="col"><h3>Dispositions:</h3></div></div>
-
-  <div v-for="disposition of dispositions" class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="del(disposition.id)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
+  <div>
+    <b-row style="margin-bottom: 10px">
+      <b-col>
+        <h3>Dispositions:</h3>
+      </b-col>
+    </b-row>
+    <div
+      v-for="disposition of dispositions"
+      :key="disposition.id"
+      class="form-row"
+      style="margin-top: 5px"
+    >
+      <b-col cols="1">
+        <b-btn
+          class="btn btn-outline-danger pointer"
+          variant="outline-danger"
+          @click="del(disposition.id)"
+        >
+          <icon
+            class="align-middle"
+            name="minus"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+      <b-col cols="4">
+        <input
+          type="text"
+          class="form-control"
+          :value="safe_value(disposition.name)"
+          @change="onChange(disposition, 'name', $event.target.value)"
+        >
+      </b-col>
+      <b-col cols="5">
+        <input
+          type="text"
+          class="form-control"
+          :value="safe_value(disposition.description)"
+          @change="onChange(disposition, 'description', $event.target.value)"
+        >
+      </b-col>
     </div>
-    <div class="col-4">
-      <input type="text" class="form-control"
-        :value="safe_value(disposition.name)" v-on:change="onChange(disposition, 'name', $event.target.value)">
-    </div>
-    <div class="col-5">
-      <input type="text" class="form-control"
-        :value="safe_value(disposition.description)" v-on:change="onChange(disposition, 'description', $event.target.value)">
+    <div
+      class="form-row"
+      style="margin-top: 5px"
+    >
+      <b-col cols="1">
+        <b-btn
+          class="pointer"
+          variant="outline-secondary"
+          @click="add"
+        >
+          <icon
+            class="align-middle"
+            name="plus"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+      <b-col cols="4">
+        <input
+          v-model="name"
+          type="text"
+          class="form-control"
+          placeholder="Name"
+        >
+      </b-col>
+      <b-col cols="5">
+        <input
+          v-model="description"
+          type="text"
+          class="form-control"
+          placeholder="Description"
+        >
+      </b-col>
     </div>
   </div>
-
-  <div class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
-    </div>
-    <div class="col-4">
-      <input type="text" class="form-control" v-model="name" placeholder="Name">
-    </div>
-    <div class="col-5">
-      <input type="text" class="form-control" v-model="description" placeholder="Description">
-    </div>
-  </div>
-
-</div>
 </template>
 
 <script>
 export default {
-  name: 'admin-disposition-entries',
-  props: ['id'],
+  name: 'AdminDispositionEntries',
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       name: undefined,
       description: undefined,
       dispositions: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -68,9 +123,6 @@ export default {
     safe_value (Value) {
       return Value === 'undefined' ? '' : Value
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

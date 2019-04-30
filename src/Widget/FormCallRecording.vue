@@ -1,16 +1,43 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div v-if="effective" class="col-5">
-    <b-form-select :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
-  </div>
-  <div v-if="effective" class="col-4">
-    <b-form-select :value="computed_effective" :options="options" disabled></b-form-select>
-  </div>
-  <div v-else class="col-9">
-    <b-form-select :value="computed_value" :options="options" v-on:change="onChange"></b-form-select>
-  </div>
-</div>
+  <b-row
+    style="margin-top: 5px"
+  >
+    <b-col cols="3">
+      <label :id="label">
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="5"
+    >
+      <b-form-select
+        :value="computed_value"
+        :options="options"
+        @change="onChange"
+      />
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="4"
+    >
+      <b-form-select
+        :value="computed_effective"
+        :options="options"
+        disabled
+      />
+    </b-col>
+    <b-col
+      v-else
+      cols="9"
+    >
+      <b-form-select
+        :value="computed_value"
+        :options="options"
+        @change="onChange"
+      />
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -26,8 +53,21 @@ function verbose(value) {
 }
 
 export default {
-  name: 'form-bool-drop',
-  props: ['label', 'value', 'effective'],
+  name: 'FormBoolDrop',
+  props: {
+    value: {
+      type: [String, Boolean],
+      default: ""
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    effective: {
+      type: [String, Boolean],
+      default: ""
+    }
+  },
   data () {
     return {
       options: ['On Demand', 'Enabled', 'Disabled']
@@ -41,6 +81,8 @@ export default {
       return verbose(this.effective)
     }
   },
+  created () {
+  },
   methods: {
     onChange (V) {
       if (V == 'On Demand') {
@@ -51,8 +93,6 @@ export default {
         this.$emit('input', false)
       }
     }
-  },
-  created () {
   }
 }
 </script>

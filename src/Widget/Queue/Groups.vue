@@ -1,23 +1,56 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9">
-    <select class="custom-select pointer" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
-      <option></option>
-      <option v-for="group in groups" :value="group.id" :selected="isActive(group.id)">{{ group.name }}</option>
-    </select>
-  </div>
-</div>
+  <b-row
+    style="margin-top: 5px"
+  >
+    <b-col cols="3">
+      <label
+        :id="label"
+      >
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col cols="9">
+      <select
+        class="custom-select pointer"
+        style="width: 100%"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate($event.target.value)"
+      >
+        <option />
+        <option
+          v-for="group in groups"
+          :key="group.id"
+          :value="group.id"
+          :selected="isActive(group.id)"
+        >
+          {{ group.name }}
+        </option>
+      </select>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'queue-groups',
-  props: ['label', 'value'],
+  name: 'QueueGroups',
+  props: {
+    value: {
+      type: Number,
+      default: 0
+    },
+    label: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       groups: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isDisabled() {
@@ -32,9 +65,6 @@ export default {
     onUpdate (value) {
       this.$emit('input', value)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

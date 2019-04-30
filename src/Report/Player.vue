@@ -1,46 +1,101 @@
 <template>
-<b-row class="player" align-h="center">
-  <b-button-group size="sm">
-    <b-button v-if="isStop() || isPause()" variant="outline-dark" @click.stop="play">
-      <icon name="play" scale="1" class="align-middle">
-      </icon>
-    </b-button>
-    <b-button v-if="isPlay()" variant="outline-dark" @click.stop="pause">
-      <icon name="pause" scale="1" class="align-middle"></icon>
-    </b-button>
-    <b-button variant="outline-dark" @click.stop="stop">
-      <icon name="stop" scale="1" class="align-middle"></icon>
-    </b-button>
-    <span class="time">
-      {{ toHHMMSS }} / {{ getHHMMSS(player.duration()) }}
-    </span>
-    <b-form-input
-      class="slider"
-      v-model.number="actualTime"
-      type="range"
-      min="0"
-      step=1
-      :max="player.duration()"
-      @change="onSeek()"
-    />
-    <b-button variant="outline-dark" @click="volume(!volume_on)">
-      <icon v-if="volume_on" style="width: 15px" name="volume-up" scale="1" class="align-middle"></icon>
-      <icon v-else style="width: 15px" name="volume-down" scale="1" class="align-middle"></icon>
-    </b-button>
-    <b-button v-if="!isError()" variant="outline-dark" target="_blank" download :href="$agent.get_rr_uri() + this.href">
-      <icon name="download" scale="1" class="align-middle"></icon>
-    </b-button>
-  </b-button-group>
-  <span v-if="isError()"> Failed to load record. </span>
-</b-row>
+  <b-row
+    class="player"
+    align-h="center"
+  >
+    <b-button-group size="sm">
+      <b-button
+        v-if="isStop() || isPause()"
+        variant="outline-dark"
+        @click.stop="play"
+      >
+        <icon
+          name="play"
+          scale="1"
+          class="align-middle"
+        />
+      </b-button>
+      <b-button
+        v-if="isPlay()"
+        variant="outline-dark"
+        @click.stop="pause"
+      >
+        <icon
+          name="pause"
+          scale="1"
+          class="align-middle"
+        />
+      </b-button>
+      <b-button
+        variant="outline-dark"
+        @click.stop="stop"
+      >
+        <icon
+          name="stop"
+          scale="1"
+          class="align-middle"
+        />
+      </b-button>
+      <span class="time">
+        {{ toHHMMSS }} / {{ getHHMMSS(player.duration()) }}
+      </span>
+      <b-form-input
+        v-model.number="actualTime"
+        class="slider"
+        type="range"
+        min="0"
+        step="1"
+        :max="player.duration()"
+        @change="onSeek()"
+      />
+      <b-button
+        variant="outline-dark"
+        @click="volume(!volume_on)"
+      >
+        <icon
+          v-if="volume_on"
+          style="width: 15px"
+          name="volume-up"
+          scale="1"
+          class="align-middle"
+        />
+        <icon
+          v-else
+          style="width: 15px"
+          name="volume-down"
+          scale="1"
+          class="align-middle"
+        />
+      </b-button>
+      <b-button
+        v-if="!isError()"
+        variant="outline-dark"
+        target="_blank"
+        download
+        :href="$agent.get_rr_uri() + href"
+      >
+        <icon
+          name="download"
+          scale="1"
+          class="align-middle"
+        />
+      </b-button>
+    </b-button-group>
+    <span v-if="isError()"> Failed to load record. </span>
+  </b-row>
 </template>
 
 <script>
 import { Howl } from 'howler'
 
 export default {
-  name: 'stats-player',
-  props: ['href'],
+  name: 'StatsPlayer',
+  props: {
+    href: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       player: null,
@@ -49,6 +104,27 @@ export default {
       actualTime: 0,
       actualVolume: '1.0',
       volume_on: true
+    }
+  },
+  computed: {
+    toHHMMSS () {
+      return this.getHHMMSS(this.actualTime)
+    }
+  },
+  created () {
+    let ref = this.$agent.get_rr_uri() + this.href
+    this.player = new Howl({
+      src: [ ref ],
+      onplay: () => this.state = 'play',
+      onpause: () => this.state = 'pause',
+      onend: () => { this.state = 'stop'; this.actualTime = 0 },
+      onstop: () => { this.state = 'stop'; this.actualTime = 0 },
+      onloaderror: () => this.state = 'error',
+    })
+  },
+  beforeDestroy () {
+    if (this.updater) {
+      clearInterval(this.updater)
     }
   },
   methods: {
@@ -96,27 +172,6 @@ export default {
     isPause () { return this.state == 'pause' },
     isPlay () { return this.state == 'play' },
     isError () { return this.state == 'error' },
-  },
-  created () {
-    let ref = this.$agent.get_rr_uri() + this.href
-    this.player = new Howl({
-      src: [ ref ],
-      onplay: () => this.state = 'play',
-      onpause: () => this.state = 'pause',
-      onend: () => { this.state = 'stop'; this.actualTime = 0 },
-      onstop: () => { this.state = 'stop'; this.actualTime = 0 },
-      onloaderror: () => this.state = 'error',
-    })
-  },
-  beforeDestroy () {
-    if (this.updater) {
-      clearInterval(this.updater)
-    }
-  },
-  computed: {
-    toHHMMSS () {
-      return this.getHHMMSS(this.actualTime)
-    }
   }
 }
 </script>

@@ -1,21 +1,35 @@
 <template>
-<div v-if="visible" style="margin-top: 20px">
-  <h6>Conference requests:</h6>
-  <div v-for="request in requests" :key="request.uuid" class="row" style="margin-bottom: 5px">
-    <div class="col">
-      {{ request.queue.name }}
-    </div>
-    <div class="col">
-      {{ request.state }}
-    </div>
-    <div class="col">
-      {{ request.time }}s / {{ request.effective }}s
-    </div>
-    <div class="col">
-      <b-button size="sm" variant="outline-danger" @click="stop(request.uuid)">Cancel</b-button>
+  <div
+    v-if="visible"
+    style="margin-top: 20px"
+  >
+    <h6>Conference requests:</h6>
+    <div
+      v-for="request in requests"
+      :key="request.uuid"
+      class="row"
+      style="margin-bottom: 5px"
+    >
+      <div class="col">
+        {{ request.queue.name }}
+      </div>
+      <div class="col">
+        {{ request.state }}
+      </div>
+      <div class="col">
+        {{ request.time }}s / {{ request.effective }}s
+      </div>
+      <div class="col">
+        <b-button
+          size="sm"
+          variant="outline-danger"
+          @click="stop(request.uuid)"
+        >
+          Cancel
+        </b-button>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -26,6 +40,15 @@ export default {
       updater: undefined,
       requests: []
     }
+  },
+  created () {
+    this.updater = setInterval(this.onTimer, 1000)
+    this.query()
+    this.$bus.$on('inqueue_state', this.handleState)
+  },
+  beforeDestroy () {
+    clearInterval(this.updater)
+    this.$bus.$off('inqueue_state', this.handleState)
   },
   methods: {
     query: async function () {
@@ -51,15 +74,6 @@ export default {
         Arr.splice(i, 1, E)
       })
     }
-  },
-  created () {
-    this.updater = setInterval(this.onTimer, 1000)
-    this.query()
-    this.$bus.$on('inqueue_state', this.handleState)
-  },
-  beforeDestroy () {
-    clearInterval(this.updater)
-    this.$bus.$off('inqueue_state', this.handleState)
   },
 }
 </script>

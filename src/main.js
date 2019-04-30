@@ -62,17 +62,22 @@ Vue.mixin({
 
 const app = new Vue({
   el: '#app',
-  data: {
-    ref_ui: 'HEAD',
-    ref_backend: 'HEAD',
-    app: undefined
-  },
   components: {
     agent: Agent,
     admin: Admin,
     supervisor: Supervisor,
     master: Master,
     login: Login
+  },
+  data: {
+    ref_ui: 'HEAD',
+    ref_backend: 'HEAD',
+    app: undefined
+  },
+  created: async function () {
+    this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui
+    this.$bus.$on('agent-auth', this.handleAuth)
+    this.chooseApp()
   },
   methods: {
     handleAuth: async function (Auth) {
@@ -101,10 +106,5 @@ const app = new Vue({
         }
       }
     }
-  },
-  created: async function () {
-    this.ref_ui = window.version.ui == 'REF_UI'? 'HEAD' : window.version.ui
-    this.$bus.$on('agent-auth', this.handleAuth)
-    this.chooseApp()
   }
 })

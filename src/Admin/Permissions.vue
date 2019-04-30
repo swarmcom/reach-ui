@@ -1,256 +1,265 @@
 <template>
-<div>
-  <b-row style="margin-bottom: 10px">
-    <b-col cols=2>
-      <h3>
-        Permissions:
-      </h3>
-    </b-col>
-    <b-col>
-      <b-btn
-        variant="link"
-        @click='selectAll()'
-      >
-        all
-      </b-btn>
-      |
-      <b-btn
-        variant="link"
-        @click='unselectAll()'
-      >
-        none
-      </b-btn>
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col>
-      <b-row>
-        <b-col cols=6>
-          <h4>
-            Available Tabs:
-          </h4>
-        </b-col>
-        <b-col>
-          <b-btn
-            variant="link"
-            @click='select(tabs)'
-          >
-            all
-          </b-btn>
-          |
-          <b-btn
-            variant="link"
-            @click='unselect(tabs)'
-          >
-            none
-          </b-btn>
-        </b-col>
-      </b-row>
-      <b-col
-        offset="1"
-        class="form-check"
-        v-for="(p) of visibleTabs"
-          :key="p"
-        >
-        <input
-          class="form-check-input"
-          type="checkbox"
-          v-model="effective[p]"
-          v-on:change="onChange(p)"
-          :id="p"
-        >
-        <label
-          class="form-check-label"
-          :for=p
-        >
-          {{names[p].name}}
-        </label>
+  <div>
+    <b-row style="margin-bottom: 10px">
+      <b-col cols="2">
+        <h3>
+          Permissions:
+        </h3>
       </b-col>
-
-      <b-row style="margin-top: 15px">
-        <b-col
-          cols=6
-        >
-          <h4>
-            UI Features:
-          </h4>
-        </b-col>
-        <b-col>
-          <b-btn
-            variant="link"
-            @click='select(features)'
-          >
-            all
-          </b-btn>
-          |
-          <b-btn
-            variant="link"
-            @click='unselect(features)'
-          >
-            none
-          </b-btn>
-        </b-col>
-      </b-row>
-      <b-col
-        offset="1"
-        class="form-check"
-        v-for="(p) of this.features"
-        :key="p"
-      >
-        <input 
-          class="form-check-input"
-          type="checkbox"
-          v-model="effective[p]"
-          v-on:change="onChange(p)"
-          :id="p"
-        >
-        <label
-          class="form-check-label"
-          :for=p
-        >
-          {{names[p].name}}
-        </label>
-      </b-col>
-    </b-col>
-    <b-col>
-      <b-row>
-        <b-col cols=6>
-          <h4>
-            Available Widgets:
-          </h4>
-        </b-col>
-        <b-col>
-          <b-btn
-            variant="link"
-            @click='select(widgets)'
-          >
-            all
-          </b-btn>
-          |
-          <b-btn
-            variant="link"
-            @click='unselect(widgets)'
-          >
-            none
-          </b-btn>
-        </b-col>
-      </b-row>
-      <b-col
-        offset="1"
-        class="form-check"
-        v-for="(p) of this.widgets"
-        :key="p"
-      >
-        <input
-          class="form-check-input"
-          type="checkbox"
-          v-model="effective[p]"
-          v-on:change="onChange(p)"
-          :id="p"
-        >          
-        <label
-          class="form-check-label"
-          :for="p"
-        >
-          {{names[p].name}}
-        </label>
-      </b-col>
-      <b-row
-        style="margin-top: 15px"
-        v-if="ui != 'agent'"
-      >
-        <b-col cols=6>
-          <h4>
-            Call Features:
-          </h4>
-        </b-col>
-        <b-col>
-          <b-btn
-            variant="link"
-            @click='select(call_features)'
-          >
-            all
-          </b-btn>
-          |
-          <b-btn
-            variant="link"
-            @click='unselect(call_features)'
-          >
-            none
-          </b-btn>
-        </b-col>
-      </b-row>
-      <b-col
-        offset="1"
-        class="form-check"
-        v-for="(p) of visibleCallFeatures"
-        :key="p"
-      >
-        <input
-          class="form-check-input"
-          type="checkbox"
-          v-model="effective[p]"
-          v-on:change="onChange(p)"
-          :id="p"
-        >
-        <label
-          class="form-check-label"
-          :for="p"
-        >
-          {{names[p].name}}
-        </label>
-      </b-col>
-      <b-row style="margin-top: 15px">
-        <b-col cols=6>
-          <h4>
-            Agent Profile:
-          </h4>
-        </b-col>
-        <b-col>
-          <b-btn
-            variant="link"
-            @click='select(agent_features)'
-          >
-            all
-          </b-btn>
-          |
-          <b-btn
+      <b-col>
+        <b-btn
           variant="link"
-          @click='unselect(agent_features)'
-          >
-            none
-          </b-btn>
-        </b-col>
-      </b-row>
-      <b-col
-        offset="1"
-        class="form-check"
-        v-for="p of this.agent_features"
-        :key="p"
-      >
-        <input
-          class="form-check-input"
-          type="checkbox"
-          v-model="effective[p]"
-          v-on:change="onChange(p)"
-          :id="p"
+          @click="selectAll()"
         >
-        <label
-          class="form-check-label"
-          :for="p"
+          all
+        </b-btn>
+        |
+        <b-btn
+          variant="link"
+          @click="unselectAll()"
         >
-          {{names[p].name}}
-        </label>
+          none
+        </b-btn>
       </b-col>
-    </b-col>
-  </b-row>
-</div>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-row>
+          <b-col cols="6">
+            <h4>
+              Available Tabs:
+            </h4>
+          </b-col>
+          <b-col>
+            <b-btn
+              variant="link"
+              @click="select(tabs)"
+            >
+              all
+            </b-btn>
+            |
+            <b-btn
+              variant="link"
+              @click="unselect(tabs)"
+            >
+              none
+            </b-btn>
+          </b-col>
+        </b-row>
+        <b-col
+          v-for="(p) of visibleTabs"
+          :key="p"
+          offset="1"
+          class="form-check"
+        >
+          <input
+            :id="p"
+            v-model="effective[p]"
+            class="form-check-input"
+            type="checkbox"
+            @change="onChange(p)"
+          >
+          <label
+            class="form-check-label"
+            :for="p"
+          >
+            {{ names[p].name }}
+          </label>
+        </b-col>
+
+        <b-row style="margin-top: 15px">
+          <b-col
+            cols="6"
+          >
+            <h4>
+              UI Features:
+            </h4>
+          </b-col>
+          <b-col>
+            <b-btn
+              variant="link"
+              @click="select(features)"
+            >
+              all
+            </b-btn>
+            |
+            <b-btn
+              variant="link"
+              @click="unselect(features)"
+            >
+              none
+            </b-btn>
+          </b-col>
+        </b-row>
+        <b-col
+          v-for="(p) of features"
+          :key="p"
+          offset="1"
+          class="form-check"
+        >
+          <input 
+            :id="p"
+            v-model="effective[p]"
+            class="form-check-input"
+            type="checkbox"
+            @change="onChange(p)"
+          >
+          <label
+            class="form-check-label"
+            :for="p"
+          >
+            {{ names[p].name }}
+          </label>
+        </b-col>
+      </b-col>
+      <b-col>
+        <b-row>
+          <b-col cols="6">
+            <h4>
+              Available Widgets:
+            </h4>
+          </b-col>
+          <b-col>
+            <b-btn
+              variant="link"
+              @click="select(widgets)"
+            >
+              all
+            </b-btn>
+            |
+            <b-btn
+              variant="link"
+              @click="unselect(widgets)"
+            >
+              none
+            </b-btn>
+          </b-col>
+        </b-row>
+        <b-col
+          v-for="(p) of widgets"
+          :key="p"
+          offset="1"
+          class="form-check"
+        >
+          <input
+            :id="p"
+            v-model="effective[p]"
+            class="form-check-input"
+            type="checkbox"
+            @change="onChange(p)"
+          >          
+          <label
+            class="form-check-label"
+            :for="p"
+          >
+            {{ names[p].name }}
+          </label>
+        </b-col>
+        <b-row
+          v-if="ui != 'agent'"
+          style="margin-top: 15px"
+        >
+          <b-col cols="6">
+            <h4>
+              Call Features:
+            </h4>
+          </b-col>
+          <b-col>
+            <b-btn
+              variant="link"
+              @click="select(call_features)"
+            >
+              all
+            </b-btn>
+            |
+            <b-btn
+              variant="link"
+              @click="unselect(call_features)"
+            >
+              none
+            </b-btn>
+          </b-col>
+        </b-row>
+        <b-col
+          v-for="(p) of visibleCallFeatures"
+          :key="p"
+          offset="1"
+          class="form-check"
+        >
+          <input
+            :id="p"
+            v-model="effective[p]"
+            class="form-check-input"
+            type="checkbox"
+            @change="onChange(p)"
+          >
+          <label
+            class="form-check-label"
+            :for="p"
+          >
+            {{ names[p].name }}
+          </label>
+        </b-col>
+        <b-row style="margin-top: 15px">
+          <b-col cols="6">
+            <h4>
+              Agent Profile:
+            </h4>
+          </b-col>
+          <b-col>
+            <b-btn
+              variant="link"
+              @click="select(agent_features)"
+            >
+              all
+            </b-btn>
+            |
+            <b-btn
+              variant="link"
+              @click="unselect(agent_features)"
+            >
+              none
+            </b-btn>
+          </b-col>
+        </b-row>
+        <b-col
+          v-for="p of agent_features"
+          :key="p"
+          offset="1"
+          class="form-check"
+        >
+          <input
+            :id="p"
+            v-model="effective[p]"
+            class="form-check-input"
+            type="checkbox"
+            @change="onChange(p)"
+          >
+          <label
+            class="form-check-label"
+            :for="p"
+          >
+            {{ names[p].name }}
+          </label>
+        </b-col>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'admin-role-permissions',
-  props: ['id', 'ui'],
+  name: 'AdminRolePermissions',
+  props: {
+    id: {
+      type: String,
+      default: ""
+    },
+    ui: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       name: undefined,
@@ -360,6 +369,25 @@ export default {
       }
     }
   },
+  computed: {
+    visibleTabs: function () {
+      if (this.ui == 'agent') {
+        return ['profile-ui']
+      } else {
+        return this.tabs
+      }
+    },
+    visibleCallFeatures: function () {
+      if (this.ui == 'agent') {
+        return []
+      } else {
+        return this.call_features
+      }
+    }
+  },
+  created () {
+    this.query()
+  },
   methods: {
     query: async function () {
       this.effective = await this.$agent.p_mfa('ws_db_permission', 'map', [this.id])
@@ -401,25 +429,6 @@ export default {
     unselect (group) {
       group.forEach(key => this.setKey(key, false))
     }
-  },
-  computed: {
-    visibleTabs: function () {
-      if (this.ui == 'agent') {
-        return ['profile-ui']
-      } else {
-        return this.tabs
-      }
-    },
-    visibleCallFeatures: function () {
-      if (this.ui == 'agent') {
-        return []
-      } else {
-        return this.call_features
-      }
-    }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

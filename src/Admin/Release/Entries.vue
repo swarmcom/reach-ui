@@ -1,47 +1,112 @@
 <template>
-<div>
-  <div class="row" style="margin-bottom: 10px"><div class="col"><h3>Release types:</h3></div></div>
-
-  <div v-for="release of releases" :key="release.id" class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="del(release.id)" class="btn btn-sm btn-outline-danger pointer"><icon name="minus" class="align-middle" scale="1"></icon></button>
+  <div>
+    <b-row
+      style="margin-bottom: 10px"
+    >
+      <b-col>
+        <h3>Release types:</h3>
+      </b-col>
+    </b-row>
+    <div
+      v-for="release of releases"
+      :key="release.id"
+      class="form-row"
+      style="margin-top: 5px"
+    >
+      <b-col cols="1">
+        <b-btn
+          class="pointer"
+          variant="outline-danger"
+          size="sm"
+          @click="del(release.id)"
+        >
+          <icon
+            name="minus"
+            class="align-middle"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+      <b-col cols="4">
+        <input
+          type="text"
+          class="form-control"
+          :value="safe_value(release.name)"
+          @change="onChange(release, 'name', $event.target.value)"
+        >
+      </b-col>
+      <b-col cols="5">
+        <input
+          type="text"
+          class="form-control"
+          :value="safe_value(release.description)"
+          @change="onChange(release, 'description', $event.target.value)"
+        >
+      </b-col>
+      <b-col cols="2">
+        <input
+          type="number"
+          class="form-control"
+          :value="safe_value(release.score)"
+          @change="onChange(release, 'score', $event.target.value)"
+        >
+      </b-col>
     </div>
-    <div class="col-4">
-      <input type="text" class="form-control"
-        :value="safe_value(release.name)" v-on:change="onChange(release, 'name', $event.target.value)">
-    </div>
-    <div class="col-5">
-      <input type="text" class="form-control"
-        :value="safe_value(release.description)" v-on:change="onChange(release, 'description', $event.target.value)">
-    </div>
-    <div class="col-2">
-      <input type="number" class="form-control"
-        :value="safe_value(release.score)" v-on:change="onChange(release, 'score', $event.target.value)">
+    <div
+      class="form-row"
+      style="margin-top: 5px"
+    >
+      <b-col cols="1">
+        <b-btn
+          class="pointer"
+          variant="outline-secondary"
+          size="sm"
+          @click="add"
+        >
+          <icon
+            name="plus"
+            class="align-middle"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+      <b-col cols="4">
+        <input
+          v-model="name"
+          type="text"
+          class="form-control"
+          placeholder="Name"
+        >
+      </b-col>
+      <b-col cols="5">
+        <input
+          v-model="description"
+          type="text"
+          class="form-control"
+          placeholder="Description"
+        >
+      </b-col>
+      <b-col cols="2">
+        <input
+          v-model="score"
+          type="number"
+          class="form-control"
+          placeholder="Score"
+        >
+      </b-col>
     </div>
   </div>
-
-  <div class="form-row" style="margin-top: 5px">
-    <div class="col-1">
-      <button @click="add" class="btn btn-sm btn-outline-secondary pointer"><icon name="plus" class="align-middle" scale="1"></icon></button>
-    </div>
-    <div class="col-4">
-      <input type="text" class="form-control" v-model="name" placeholder="Name">
-    </div>
-    <div class="col-5">
-      <input type="text" class="form-control" v-model="description" placeholder="Description">
-    </div>
-    <div class="col-2">
-      <input type="number" class="form-control" v-model="score" placeholder="Score">
-    </div>
-  </div>
-
-</div>
 </template>
 
 <script>
 export default {
-  name: 'admin-release-entries',
-  props: ['id'],
+  name: 'AdminReleaseEntries',
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       name: undefined,
@@ -49,6 +114,9 @@ export default {
       score: undefined,
       releases: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -77,9 +145,6 @@ export default {
     safe_value (Value) {
       return Value === 'undefined' ? '' : Value
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

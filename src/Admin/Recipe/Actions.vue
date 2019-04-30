@@ -1,43 +1,104 @@
 <template>
-<div>
-  <div v-if="edit" v-for="(action, index) of actions" class="form-row" style="margin-bottom: 5px">
-    <b-col cols=1>
-      <button @click="del(index)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
-    </b-col>
-    <b-col cols=5>
-      <b-input-group>
-        <b-input-group-prepend>
-          <b-dropdown text="A" variant="primary">
-            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set_action(index, comp.ref)">{{comp.name}}</b-dropdown-item>
-          </b-dropdown>
-        </b-input-group-prepend>
-        <b-form-input v-model="action.name"></b-form-input>
-      </b-input-group>
-    </b-col>
-    <b-col>
-      <component v-bind:is="action.name" :args="action.args" @input="update_args(index, $event)"></component>
-    </b-col>
-  </div>
+  <div>
+    <div
+      v-for="(itemAction, index) of actions"
+      :key="index"
+      class="form-row"
+      style="margin-bottom: 5px"
+    >
+      <b-col
+        v-if="edit"
+        cols="1"
+      >
+        <b-btn
+          class="pointer"
+          variant="outline-danger"
+          @click="del(index)"
+        >
+          <icon
+            class="align-middle"
+            name="minus"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+      <b-col
+        v-if="edit"
+        cols="5"
+      >
+        <b-input-group>
+          <b-input-group-prepend>
+            <b-dropdown
+              text="A"
+              variant="primary"
+            >
+              <b-dropdown-item
+                v-for="comp of parts"
+                :key="comp.ref"
+                @click="set_action(index, comp.ref)"
+              >
+                {{ comp.name }}
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-input-group-prepend>
+          <b-form-input v-model="itemAction.name" />
+        </b-input-group>
+      </b-col>
+      <b-col v-if="edit">
+        <component
+          :is="itemAction.name"
+          :args="itemAction.args"
+          @input="update_args(index, $event)"
+        />
+      </b-col>
+    </div>
 
-  <div class="form-row" v-if="edit" style="margin-bottom: 20px">
-    <b-col cols=1>
-      <button @click="add" class="btn btn-outline-seactionary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
-    </b-col>
-    <b-col cols=5>
-      <b-input-group>
-        <b-input-group-prepend>
-          <b-dropdown text="A" variant="primary">
-            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
-          </b-dropdown>
-        </b-input-group-prepend>
-        <b-form-input v-model="action"></b-form-input>
-      </b-input-group>
-    </b-col>
-    <b-col>
-      <component :is="action" :args="args" @input="set_args"></component>
-    </b-col>
+    <div
+      v-if="edit"
+      class="form-row"
+      style="margin-bottom: 20px"
+    >
+      <b-col cols="1">
+        <b-btn
+          class="pointer"
+          variant="outline-secondary"
+          @click="add"
+        >
+          <icon
+            class="align-middle"
+            name="plus"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+      <b-col cols="5">
+        <b-input-group>
+          <b-input-group-prepend>
+            <b-dropdown
+              text="A"
+              variant="primary"
+            >
+              <b-dropdown-item
+                v-for="comp of parts"
+                :key="comp.ref"
+                @click="set(comp.ref)"
+              >
+                {{ comp.name }}
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-input-group-prepend>
+          <b-form-input v-model="action" />
+        </b-input-group>
+      </b-col>
+      <b-col>
+        <component
+          :is="action"
+          :args="args"
+          @input="set_args"
+        />
+      </b-col>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -54,12 +115,21 @@ import AddSkills from '@/Admin/Recipe/Action/AddSkills'
 import RemoveSkills from '@/Admin/Recipe/Action/RemoveSkills'
 
 export default {
-  name: 'admin-recipe-actions',
-  props: ['value', 'edit'],
+  name: 'AdminRecipeActions',
   components: {
     hangup: Hangup, announce: Announce, voicemail: Voicemail, priority: Priority, prioritize: Prioritize, deprioritize: Deprioritize,
     transfer_to_queue: TransferToQueue, transfer_to_outgoing: TransferToOutgoing, lua_script: Lua, lua_job: Lua,
     add_skills: AddSkills, remove_skills: RemoveSkills
+  },
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    },
+    edit: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
@@ -81,6 +151,11 @@ export default {
       args: [],
       actions: this.value
     }
+  },
+  watch: {
+    actions () {
+      this.commit()
+    },
   },
   methods: {
     commit () {
@@ -112,11 +187,6 @@ export default {
     show () {
       console.log(this)
     }
-  },
-  watch: {
-    actions () {
-      this.commit()
-    },
   },
 }
 </script>

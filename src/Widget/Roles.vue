@@ -1,36 +1,90 @@
 <template>
-<b-row style="margin-top: 5px">
-  <b-col cols="3">
-    <label :id="label" class="col-form-label">{{ label }}</label>
-  </b-col>
-  <b-col v-if="effective" cols="5">
-    <b-form-select class="pointer" :value="value" :disabled="isDisabled()" @change="onUpdate">
-      <option></option>
-      <option v-for="role in roles"
-        :value="role.id" :selected="isActive(role.id)" :key="role.id">{{ role.name }}</option>
-    </b-form-select>
-  </b-col>
-  <b-col v-if="effective" cols="4">
-    <b-form-input type="text" :value="roles.find((element) => element.id == effective).name" disabled/>
-  </b-col>
-  <b-col v-else cols="9">
-    <b-form-select class="pointer" :value="value" :disabled="isDisabled()" @change="onUpdate">
-      <option></option>
-      <option v-for="role in roles"
-        :value="role.id" :selected="isActive(role.id)" :key="role.id">{{ role.name }}</option>
-    </b-form-select>
-  </b-col>
-</b-row>
+  <b-row style="margin-top: 5px">
+    <b-col cols="3">
+      <label
+        :id="label"
+        class="col-form-label"
+      >{{ label }}</label>
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="5"
+    >
+      <b-form-select
+        class="pointer"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate"
+      >
+        <option />
+        <option
+          v-for="role in roles"
+          :key="role.id"
+          :value="role.id"
+          :selected="isActive(role.id)"
+        >
+          {{ role.name }}
+        </option>
+      </b-form-select>
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="4"
+    >
+      <b-form-input
+        type="text"
+        :value="roles.find((element) => element.id == effective).name"
+        disabled
+      />
+    </b-col>
+    <b-col
+      v-else
+      cols="9"
+    >
+      <b-form-select
+        class="pointer"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate"
+      >
+        <option />
+        <option
+          v-for="role in roles"
+          :key="role.id"
+          :value="role.id"
+          :selected="isActive(role.id)"
+        >
+          {{ role.name }}
+        </option>
+      </b-form-select>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'widget-roles',
-  props: ['label', 'value', 'effective'],
+  name: 'WidgetRoles',
+  props: {
+    value: {
+      type: [Number, String],
+      default: ""
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    effective: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       roles: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isActive(Id) {
@@ -48,9 +102,6 @@ export default {
     onUpdate (value) {
       this.$emit('input', value)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

@@ -1,23 +1,62 @@
 <template>
-<div class="container">
-  <b-row>
-    <b-col>
-      <b-btn class="pointer" title="Add Domain" variant="outline-success" @click="add"><icon name="plus" class="align-middle" scale="1"></icon></b-btn>
-    </b-col>
-  </b-row>
-  <b-table style="margin-top:10px" striped hover small :items="domains" :fields="fields">
-    <template slot="actions" slot-scope="data">
-      <b-btn size="sm" variant="primary" @click="edit(data.item)">Edit</b-btn>
-      <b-btn size="sm" variant="secondary" @click="dialplan(data.item)">Dialplan</b-btn>
-      <b-btn size="sm" variant="success" @click="admins(data.item)">Admins</b-btn>
-    </template>
-  </b-table>
-</div>
+  <div class="container">
+    <b-row>
+      <b-col>
+        <b-btn
+          class="pointer"
+          title="Add Domain"
+          variant="outline-success"
+          @click="add"
+        >
+          <icon
+            name="plus"
+            class="align-middle"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+    </b-row>
+    <b-table
+      style="margin-top:10px"
+      striped
+      hover
+      small
+      :items="domains"
+      :fields="fields"
+    >
+      <template
+        slot="actions"
+        slot-scope="data"
+      >
+        <b-btn
+          size="sm"
+          variant="primary"
+          @click="edit(data.item)"
+        >
+          Edit
+        </b-btn>
+        <b-btn
+          size="sm"
+          variant="secondary"
+          @click="dialplan(data.item)"
+        >
+          Dialplan
+        </b-btn>
+        <b-btn
+          size="sm"
+          variant="success"
+          @click="admins(data.item)"
+        >
+          Admins
+        </b-btn>
+      </template>
+    </b-table>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'admin-domains',
+  name: 'AdminDomains',
   data () {
     return {
       fields: {
@@ -27,6 +66,9 @@ export default {
       },
       domains: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -47,9 +89,6 @@ export default {
     admins (data) {
       this.$router.push(`/kam/domain/${data.id}/admins`)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

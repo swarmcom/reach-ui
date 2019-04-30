@@ -1,22 +1,52 @@
 <template>
-<div class="form">
-  <form-text label="Lua Name" v-model="rec.name"></form-text>
-  <form-text label="Lua Description" v-model="rec.description"></form-text>
-  <b-row style="margin-top: 5px">
-    <b-col>
-      <div class="codemirror" style="border: 1px solid #eee">
-        <!-- codemirror -->
-        <codemirror v-model="rec.script" :options="editorOption"></codemirror>
-      </div>
-    </b-col>
-  </b-row>
-  <div style="margin-top: 20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Lua Name"
+    />
+    <form-text
+      v-model="rec.description"
+      label="Lua Description"
+    />
+    <b-row style="margin-top: 5px">
+      <b-col>
+        <div
+          class="codemirror"
+          style="border: 1px solid #eee"
+        >
+          <!-- codemirror -->
+          <codemirror
+            v-model="rec.script"
+            :options="editorOption"
+          />
+        </div>
+      </b-col>
+    </b-row>
+    <div style="margin-top: 20px">
+      <b-btn
+        class="btn btn-primary pointer"
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-  <help></help>
-</div>
 </template>
 
 <script>
@@ -35,9 +65,14 @@ require('codemirror/addon/search/searchcursor.js')
 require('codemirror/addon/search/match-highlighter.js')
 
 export default {
-  name: 'admin-lua',
-  props: ['id'],
+  name: 'AdminLua',
   mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

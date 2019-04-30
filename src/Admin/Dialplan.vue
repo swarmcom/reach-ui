@@ -1,63 +1,137 @@
 <template>
-<div>
-  <b-row style="margin-bottom: 10px">
-    <b-col><h3>Inbound routing:</h3></b-col>
-  </b-row>
+  <div>
+    <b-row style="margin-bottom: 10px">
+      <b-col><h3>Inbound routing:</h3></b-col>
+    </b-row>
 
-  <b-form-row v-for="dial of entries" :key="dial.id" style="margin-top: 5px">
-    <b-col cols=2>
-      <button @click="del(dial.id)" class="btn btn-sm btn-outline-danger pointer">
-        <icon class="align-middle" name="minus" scale="1"></icon>
-      </button>
-      <button @click="up(dial.id)" class="btn btn-sm btn-outline-success">
-        <icon class="align-middle" name="arrow-up" scale="1"></icon>
-      </button>
-      <button @click="down(dial.id)" class="btn btn-sm btn-outline-primary">
-        <icon class="align-middle" name="arrow-down" scale="1"></icon>
-      </button>
-    </b-col>
+    <b-form-row
+      v-for="dial of entries"
+      :key="dial.id"
+      style="margin-top: 5px"
+    >
+      <b-col cols="2">
+        <b-btn
+          class="pointer"
+          variant="outline-danger"
+          size="sm"
+          @click="del(dial.id)"
+        >
+          <icon
+            class="align-middle"
+            name="minus"
+            scale="1"
+          />
+        </b-btn>
+        <b-btn
+          class="pointer"
+          variant="outline-success"
+          size="sm"
+          @click="up(dial.id)"
+        >
+          <icon
+            class="align-middle"
+            name="arrow-up"
+            scale="1"
+          />
+        </b-btn>
+        <b-btn
+          class="pointer"
+          variant="outline-primary"
+          size="sm"
+          @click="down(dial.id)"
+        >
+          <icon
+            class="align-middle"
+            name="arrow-down"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
 
-    <b-col cols=3>
-      <select class="custom-select pointer" v-model="dial.header" v-on:change="onChange(dial)">
-        <option></option>
-        <option v-for="header in headers" :value="header" :selected="header == dial.header">{{ header }}</option>
-      </select>
-    </b-col>
-    <b-col cols=5>
-      <input type="text" class="form-control" v-model="dial.match" placeholder="Regex" v-on:change="onChange(dial)">
-    </b-col>
-    <b-col>
-      <lines v-model="dial.line_in_id" v-on:input="onChange(dial)"></lines>
-    </b-col>
-  </b-form-row>
+      <b-col cols="3">
+        <select
+          v-model="dial.header"
+          class="custom-select pointer"
+          @change="onChange(dial)"
+        >
+          <option />
+          <option
+            v-for="itemHeader in headers"
+            :key="itemHeader"
+            :value="itemHeader"
+            :selected="itemHeader == dial.header"
+          >
+            {{ itemHeader }}
+          </option>
+        </select>
+      </b-col>
+      <b-col cols="5">
+        <input
+          v-model="dial.match"
+          type="text"
+          class="form-control"
+          placeholder="Regex"
+          @change="onChange(dial)"
+        >
+      </b-col>
+      <b-col>
+        <lines
+          v-model="dial.line_in_id"
+          @input="onChange(dial)"
+        />
+      </b-col>
+    </b-form-row>
 
-  <b-form-row style="margin-top: 5px">
-    <b-col cols=2>
-      <button @click="add" class="btn btn-sm btn-outline-secondary pointer">
-        <icon name="plus" scale="1" class="align-middle"></icon>
-      </button>
-    </b-col>
-    <b-col cols=3>
-      <select class="custom-select pointer" v-model="header">
-        <option></option>
-        <option v-for="header in headers" :value="header">{{ header }}</option>
-      </select>
-    </b-col>
-    <b-col cols=5>
-      <input type="text" class="form-control" v-model="match" placeholder="Regex">
-    </b-col>
-    <b-col>
-      <lines v-model="line_id"></lines>
-    </b-col>
-  </b-form-row>
-</div>
+    <b-form-row style="margin-top: 5px">
+      <b-col cols="2">
+        <b-btn
+          class="pointer"
+          variant="outline-secondary"
+          size="sm"
+          @click="add"
+        >
+          <icon
+            name="plus"
+            scale="1"
+            class="align-middle"
+          />
+        </b-btn>
+      </b-col>
+      <b-col cols="3">
+        <select
+          v-model="header"
+          class="custom-select pointer"
+        >
+          <option />
+          <option
+            v-for="itemHeader in headers"
+            :key="itemHeader"
+            :value="itemHeader"
+          >
+            {{ itemHeader }}
+          </option>
+        </select>
+      </b-col>
+      <b-col cols="5">
+        <input
+          v-model="match"
+          type="text"
+          class="form-control"
+          placeholder="Regex"
+        >
+      </b-col>
+      <b-col>
+        <lines v-model="line_id" />
+      </b-col>
+    </b-form-row>
+  </div>
 </template>
 
 <script>
 import LineIns from '@/Widget/LineIns'
 
 export default {
-  name: 'admin-dialplan',
+  name: 'AdminDialplan',
   components: {
     lines: LineIns
   },
@@ -74,6 +148,9 @@ export default {
       header: undefined,
       entries: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -102,9 +179,6 @@ export default {
         this.entries.splice(id, 1)
       }
     }
-  },
-  created () {
-    this.query()
   },
 }
 </script>

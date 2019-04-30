@@ -1,12 +1,22 @@
 <template>
-<btable :fields="fields" :data="queues" :add_button=true tooltip="Add Queue" :filter_button=true :paginate=true></btable>
+  <btable
+    :fields="fields"
+    :data="queues"
+    :add-button="true"
+    tooltip="Add Queue"
+    :filter-button="true"
+    :paginate="true"
+  />
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-queues',
+  name: 'AdminQueues',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -20,6 +30,9 @@ export default {
       },
       queues: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -35,12 +48,6 @@ export default {
     onClick(data) {
       this.$router.push(`/queue/${data.id}`)
     }
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

@@ -1,35 +1,66 @@
 <template>
-<div class="container">
-
-  <div class="row"  style="margin-bottom: 10px">
-    <div class="col">
-      <h3>Domain license:</h3>
+  <div class="container">
+    <div
+      class="row"
+      style="margin-bottom: 10px"
+    >
+      <div class="col">
+        <h3>Domain license:</h3>
+      </div>
     </div>
+
+    <b-row>
+      <b-col cols="1">
+        Start:
+      </b-col><b-col>{{ license.start }}</b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="1">
+        End:
+      </b-col><b-col>{{ license.end }}</b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="1">
+        Users:
+      </b-col><b-col>{{ license.users }}</b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="1">
+        Domain:
+      </b-col><b-col>{{ license.domain }}</b-col>
+    </b-row>
+
+    <b-row style="margin-top: 20px">
+      <b-col>
+        <b-form-file
+          v-model="license_file"
+          placeholder="Choose license to upload..."
+          @input="upload"
+        />
+      </b-col>
+      <b-col>
+        <button
+          class="btn btn-outline-primary"
+          @click="cancel"
+        >
+          Cancel
+        </button>
+        <button
+          class="btn btn-outline-danger"
+          @click="remove"
+        >
+          Delete
+        </button>
+      </b-col>
+    </b-row>
   </div>
-
-  <b-row><b-col cols=1>Start:</b-col><b-col>{{ license.start }}</b-col></b-row>
-  <b-row><b-col cols=1>End:</b-col><b-col>{{ license.end }}</b-col></b-row>
-  <b-row><b-col cols=1>Users:</b-col><b-col>{{ license.users }}</b-col></b-row>
-  <b-row><b-col cols=1>Domain:</b-col><b-col>{{ license.domain }}</b-col></b-row>
-
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <b-form-file v-model="license_file" v-on:input="upload" placeholder="Choose license to upload..."></b-form-file>
-    </b-col>
-    <b-col>
-      <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
-      <button @click="remove" class="btn btn-outline-danger">Delete</button>
-    </b-col>
-  </b-row>
-
-</div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-params',
+  name: 'AdminParams',
   mixins: [Common],
   data () {
     return {
@@ -37,6 +68,9 @@ export default {
       license_uuid: undefined,
       license: {}
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -81,9 +115,6 @@ export default {
         return date.toLocaleString('en-GB', { timeZone: 'UTC' }) + " UTC"
       }
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

@@ -1,30 +1,97 @@
 <template>
-<div class="container">
-  <b-row style="margin-bottom: 10px"><b-col><h3>Access Lists:</h3></b-col></b-row>
-  <b-row><b-col><h3>Queues:</h3></b-col></b-row>
-  <b-row><b-col><queues v-model="queues" @add="set('queue', $event)" @remove="unset('queue', $event)"></queues></b-col></b-row>
+  <div class="container">
+    <b-row style="margin-bottom: 10px">
+      <b-col><h3>Access Lists:</h3></b-col>
+    </b-row>
+    <b-row><b-col><h3>Queues:</h3></b-col></b-row>
+    <b-row>
+      <b-col>
+        <queues
+          v-model="queues"
+          @add="set('queue', $event)"
+          @remove="unset('queue', $event)"
+        />
+      </b-col>
+    </b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Queue Groups:</h3></b-col></b-row>
-  <b-row><b-col><queue-groups v-model="queue_groups" @add="set('queue_group', $event)" @remove="unset('queue_group', $event)"></queue-groups></b-col></b-row>
+    <b-row style="margin-top: 20px">
+      <b-col><h3>Queue Groups:</h3></b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <queue-groups
+          v-model="queue_groups"
+          @add="set('queue_group', $event)"
+          @remove="unset('queue_group', $event)"
+        />
+      </b-col>
+    </b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Clients:</h3></b-col></b-row>
-  <b-row><b-col><clients v-model="clients" @add="set('client', $event)" @remove="unset('client', $event)"></clients></b-col></b-row>
+    <b-row style="margin-top: 20px">
+      <b-col><h3>Clients:</h3></b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <clients
+          v-model="clients"
+          @add="set('client', $event)"
+          @remove="unset('client', $event)"
+        />
+      </b-col>
+    </b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Agents:</h3></b-col></b-row>
-  <b-row><b-col><agents v-model="agents" @add="set('agent', $event)" @remove="unset('agent', $event)"></agents></b-col></b-row>
+    <b-row style="margin-top: 20px">
+      <b-col><h3>Agents:</h3></b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <agents
+          v-model="agents"
+          @add="set('agent', $event)"
+          @remove="unset('agent', $event)"
+        />
+      </b-col>
+    </b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Agent Groups:</h3></b-col></b-row>
-  <b-row><b-col><agent-groups v-model="agent_groups" @add="set('agent_group', $event)" @remove="unset('agent_group', $event)"></agent-groups></b-col></b-row>
+    <b-row style="margin-top: 20px">
+      <b-col><h3>Agent Groups:</h3></b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <agent-groups
+          v-model="agent_groups"
+          @add="set('agent_group', $event)"
+          @remove="unset('agent_group', $event)"
+        />
+      </b-col>
+    </b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Lines In:</h3></b-col></b-row>
-  <b-row><b-col><line-ins v-model="line_ins" @add="set('line_in', $event)" @remove="unset('line_in', $event)"></line-ins></b-col></b-row>
+    <b-row style="margin-top: 20px">
+      <b-col><h3>Lines In:</h3></b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <line-ins
+          v-model="line_ins"
+          @add="set('line_in', $event)"
+          @remove="unset('line_in', $event)"
+        />
+      </b-col>
+    </b-row>
 
-  <b-row style="margin-top: 20px"><b-col><h3>Lines Out:</h3></b-col></b-row>
-  <b-row><b-col><line-outs v-model="line_outs" @add="set('line_out', $event)" @remove="unset('line_out', $event)"></line-outs></b-col></b-row>
-
-
-
-</div>
+    <b-row style="margin-top: 20px">
+      <b-col><h3>Lines Out:</h3></b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <line-outs
+          v-model="line_outs"
+          @add="set('line_out', $event)"
+          @remove="unset('line_out', $event)"
+        />
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -38,8 +105,7 @@ import LineIns from '@/Admin/ACL/LineIns'
 import LineOuts from '@/Admin/ACL/LineOuts'
 
 export default {
-  name: 'admin-agent-group-acl',
-  mixins: [Common],
+  name: 'AdminAgentGroupAcl',
   components: {
     'queues': Queues,
     'queue-groups': QueueGroups,
@@ -49,7 +115,13 @@ export default {
     'line-ins': LineIns,
     'line-outs': LineOuts
   },
-  props: ['id'],
+  mixins: [Common],
+  props: {
+    id: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       acl: {},
@@ -62,6 +134,9 @@ export default {
       agent_groups: [],
       queue_groups: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -85,9 +160,6 @@ export default {
     unset: async function (Record, Obj) {
       await this.$agent.p_mfa('ws_db_acl', 'delete', [Record, Obj.id, this.id])
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

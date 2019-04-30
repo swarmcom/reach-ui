@@ -1,27 +1,60 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Answer Performance</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Answer Performance</h3>
+      </div>
+    </div>
+    <widget-query
+      v-model="query_params"
+      enable="range:group_by"
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+    >
+      <template
+        slot="answers"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.answers }} / {{ percentageFormatter(dataSlot.item.answers, dataSlot.item.rings) }}
+      </template>
+      <template
+        slot="abandons"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.abandons }} / {{ percentageFormatter(dataSlot.item.abandons, dataSlot.item.rings) }}
+      </template>
+      <template
+        slot="voicemails"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.voicemails }} / {{ percentageFormatter(dataSlot.item.voicemails, dataSlot.item.rings) }}
+      </template>
+      <template
+        slot="aborts"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.aborts }} / {{ percentageFormatter(dataSlot.item.aborts, dataSlot.item.rings) }}
+      </template>
+      <template
+        slot="detail"
+        slot-scope="dataSlot"
+      >
+        <b-link
+          v-if="are_calls(dataSlot.item)"
+          @click="detail(dataSlot.item)"
+        >
+          calls
+        </b-link>
+      </template>
+    </b-table>
   </div>
-  <widget-query v-model="query_params" enable="range:group_by" @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields">
-    <template slot="answers" slot-scope="data">
-      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.rings) }}
-    </template>
-    <template slot="abandons" slot-scope="data">
-      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.rings) }}
-    </template>
-    <template slot="voicemails" slot-scope="data">
-      {{ data.item.voicemails }} / {{ percentageFormatter(data.item.voicemails, data.item.rings) }}
-    </template>
-    <template slot="aborts" slot-scope="data">
-      {{ data.item.aborts }} / {{ percentageFormatter(data.item.aborts, data.item.rings) }}
-    </template>
-    <template slot="detail" slot-scope="data">
-      <b-link v-if="are_calls(data.item)" @click="detail(data.item)">calls</b-link>
-    </template>
-  </b-table>
-</div>
 </template>
 
 <script>

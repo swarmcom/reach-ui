@@ -1,28 +1,53 @@
 <template>
-<b-container>
-  <b-row style="margin-bottom: 10px">
-    <b-col><h3>Domain dialplan:</h3></b-col>
-  </b-row>
+  <b-container>
+    <b-row style="margin-bottom: 10px">
+      <b-col><h3>Domain dialplan:</h3></b-col>
+    </b-row>
 
-  <div v-for="entry of entries" :key="entry.id" style="margin-top: 5px">
-    <entry :id="id" :value="entry" v-on:change="change" v-on:up="up" v-on:down="down" v-on:del="del"></entry>
-  </div>
-  <entry :id="id" :value="entry" style="margin-top: 5px" v-on:change="change_entry" v-on:add="add"></entry>
-</b-container>
+    <div
+      v-for="itemEntry of entries"
+      :key="itemEntry.id"
+      style="margin-top: 5px"
+    >
+      <entry
+        :id="id"
+        :value="itemEntry"
+        @change="change"
+        @up="up"
+        @down="down"
+        @del="del"
+      />
+    </div>
+    <entry
+      :id="id"
+      :value="entry"
+      style="margin-top: 5px"
+      @change="change_entry"
+      @add="add"
+    />
+  </b-container>
 </template>
 
 <script>
 import Entry from '@/Kam/Domain/Dialplan/Entry'
 
 export default {
-  name: 'admin-domain-dialplan',
-  props: ['id'],
+  name: 'AdminDomainDialplan',
   components: { Entry },
+  props: {
+    id: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       entry: {},
       entries: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -52,9 +77,6 @@ export default {
         this.entries.splice(id, 1)
       }
     }
-  },
-  created () {
-    this.query()
   },
 }
 </script>

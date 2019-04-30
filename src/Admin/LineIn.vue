@@ -1,29 +1,111 @@
 <template>
-<div class="form">
-  <form-text label="Line-In Name" v-model="rec.name"></form-text>
-  <form-text label="Line-In Description" v-model="rec.description"></form-text>
-  <disposition-groups label="Disposition Group" v-model="rec.disposition_group_id" :effective="eff.disposition_group_id"></disposition-groups>
-  <luas label="Entry Lua Script" v-model="rec.entry_lua_id" :effective="eff.entry_lua_id"></luas>
-  <luas label="Exit Lua Script" v-model="rec.exit_lua_id" :effective="eff.exit_lua_id"></luas>
-  <luas label="Agent Lua Script" v-model="rec.uri_lua_id" :effective="eff.uri_lua_id"></luas>
-  <queues label="Queue" v-model="rec.queue_id"></queues>
-  <clients label="Client" v-model="rec.client_id"></clients>
-  <prompts label="Welcome Message" v-model="rec.announce_id" :effective="eff.announce_id"></prompts>
-  <form-select-bool label="Allow Voicemail" v-model="rec.allow_voicemail"></form-select-bool>
-  <prompts label="Voicemail Prompt" v-model="rec.voicemail_prompt_id" :effective="eff.voicemail_prompt_id"></prompts>
-  <form-call-recording label="Call recording" v-model="rec.enable_call_recording" :effective="eff.enable_call_recording"></form-call-recording>
-  <form-select-bool label="Answer on Agent pickup" v-model="rec.answer_on_agent"></form-select-bool>
-  <form-select-bool label="Override Caller ID" v-model="rec.override_clid" :effective="eff.override_clid"></form-select-bool>
-  <form-text label="Caller ID Name" v-model="rec.caller_id_name" :effective="eff.caller_id_name"></form-text>
-  <form-number label="Caller ID Number" v-model="rec.caller_id_number" :effective="eff.caller_id_number"></form-number>
-  <form-tags placeholder="Skill..." label="Line-In Skills" effective_label="Line-In Inherited Skills" v-model="skills" :effective="effective_skills"></form-tags>
-  <div style="margin-top: 20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Line-In Name"
+    />
+    <form-text
+      v-model="rec.description"
+      label="Line-In Description"
+    />
+    <disposition-groups
+      v-model="rec.disposition_group_id"
+      label="Disposition Group"
+      :effective="eff.disposition_group_id"
+    />
+    <luas
+      v-model="rec.entry_lua_id"
+      label="Entry Lua Script"
+      :effective="eff.entry_lua_id"
+    />
+    <luas
+      v-model="rec.exit_lua_id"
+      label="Exit Lua Script"
+      :effective="eff.exit_lua_id"
+    />
+    <luas
+      v-model="rec.uri_lua_id"
+      label="Agent Lua Script"
+      :effective="eff.uri_lua_id"
+    />
+    <queues
+      v-model="rec.queue_id"
+      label="Queue"
+    />
+    <clients
+      v-model="rec.client_id"
+      label="Client"
+    />
+    <prompts
+      v-model="rec.announce_id"
+      label="Welcome Message"
+      :effective="eff.announce_id"
+    />
+    <form-select-bool
+      v-model="rec.allow_voicemail"
+      label="Allow Voicemail"
+    />
+    <prompts
+      v-model="rec.voicemail_prompt_id"
+      label="Voicemail Prompt"
+      :effective="eff.voicemail_prompt_id"
+    />
+    <form-call-recording
+      v-model="rec.enable_call_recording"
+      label="Call recording"
+      :effective="eff.enable_call_recording"
+    />
+    <form-select-bool
+      v-model="rec.answer_on_agent"
+      label="Answer on Agent pickup"
+    />
+    <form-select-bool
+      v-model="rec.override_clid"
+      label="Override Caller ID"
+      :effective="eff.override_clid"
+    />
+    <form-text
+      v-model="rec.caller_id_name"
+      label="Caller ID Name"
+      :effective="eff.caller_id_name"
+    />
+    <form-number
+      v-model="rec.caller_id_number"
+      label="Caller ID Number"
+      :effective="eff.caller_id_number"
+    />
+    <form-tags
+      v-model="skills"
+      placeholder="Skill..."
+      label="Line-In Skills"
+      effective_label="Line-In Inherited Skills"
+      :effective="effective_skills"
+    />
+    <div style="margin-top: 20px">
+      <b-btn
+        class="btn btn-primary pointer"
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-  <help></help>
-</div>
 </template>
 
 <script>
@@ -32,10 +114,15 @@ import Obj from '@/Admin/Object'
 import FormCallRecording from '@/Widget/FormCallRecording'
 
 export default {
-  name: 'admin-line-in',
-  props: ['id'],
-  mixins: [Common, Obj],
+  name: 'AdminLineIn',
   components: { 'form-call-recording': FormCallRecording },
+  mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

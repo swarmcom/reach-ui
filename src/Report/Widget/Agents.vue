@@ -1,36 +1,38 @@
 <template>
-<div class="form-inline">
-<autocomplete v-model="agent" :query="query" placeholder="Agent..."></autocomplete>
-<button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="agent in selected" @click="remove(agent)">{{agent.name}}</button>
-</div>
+  <div class="form-inline">
+    <autocomplete
+      v-model="agent"
+      :query="query"
+      placeholder="Agent..."
+    />
+    <button
+      v-for="itemAgent in selected"
+      :key="itemAgent.id"
+      class="btn btn-sm btn-outline-primary"
+      style="margin-left: 10px"
+      @click="remove(itemAgent)"
+    >
+      {{ itemAgent.name }}
+    </button>
+  </div>
 </template>
 
 <script>
 import Autocomplete from '@/Widget/Autocomplete'
 
 export default {
-  name: 'report-widget-agents',
+  name: 'ReportWidgetAgents',
   components: {Autocomplete},
-  props: ['value'],
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       agent: undefined,
       selected: []
-    }
-  },
-  methods: {
-    query (text) {
-      return this.$agent.p_mfa('ws_agent', 'suggest', ['agent', text])
-    },
-    remove (agent) {
-      let index = this.selected.findIndex(el => el.id === agent.id)
-      if (index >= 0) {
-        this.selected.splice(index, 1)
-      }
-    },
-    get: async function (id) {
-      let entity = await this.$agent.p_mfa('ws_agent', 'entity', ['agent', id])
-      this.selected.push(entity)
     }
   },
   watch: {
@@ -51,6 +53,21 @@ export default {
   },
   created () {
     this.value.forEach(id => this.get(id))
+  },
+  methods: {
+    query (text) {
+      return this.$agent.p_mfa('ws_agent', 'suggest', ['agent', text])
+    },
+    remove (agent) {
+      let index = this.selected.findIndex(el => el.id === agent.id)
+      if (index >= 0) {
+        this.selected.splice(index, 1)
+      }
+    },
+    get: async function (id) {
+      let entity = await this.$agent.p_mfa('ws_agent', 'entity', ['agent', id])
+      this.selected.push(entity)
+    }
   }
 }
 </script>

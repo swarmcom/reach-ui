@@ -1,19 +1,50 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <button v-if="add_button" :title="tooltip" @click="add" class="btn btn-outline-success pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
-      </div>
-      <div v-if="paginate" class="col-md-2 float-right">
-        <b-form-select :options="pageOptions" v-model="perPage" @input="onSelectChange" />
-      </div>
-      <div v-if="filter_button" class="col-md-4 float-right">
-        <b-form-input :value="filter" v-on:input="onFilterUpdate" :state="filterState" placeholder="Type to Filter" />
-      </div>
-    </div>
+    <b-row>
+      <b-col>
+        <button
+          v-if="addButton"
+          :title="tooltip"
+          class="btn btn-outline-success pointer"
+          @click="add"
+        >
+          <icon
+            class="align-middle"
+            name="plus"
+            scale="1"
+          />
+        </button>
+      </b-col>
+      <b-col
+        v-if="paginate"
+        class="float-right"
+        md="2"
+      >
+        <b-form-select
+          v-model="perPage"
+          :options="pageOptions"
+          @input="onSelectChange"
+        />
+      </b-col>
+      <b-col
+        v-if="filterButton"
+        class="float-right"
+        md="4"
+      >
+        <b-form-input
+          :value="filter"
+          :state="filterState"
+          placeholder="Type to Filter"
+          @input="onFilterUpdate"
+        />
+      </b-col>
+    </b-row>
     <b-row style="margin-top: 10px">
       <b-col>
-        <b-table striped hover small
+        <b-table
+          striped
+          hover
+          small
           tbody-tr-class="pointer"
           :current-page="currentPage"
           :per-page="perPage"
@@ -21,28 +52,52 @@
           :items="data"
           :fields="fields"
           :filter="filter"
-          :sortDesc="sortDesc"
+          :sort-desc="sortDesc"
           @row-clicked="onClick"
           @filtered="onFiltered"
-          @sort-changed="onSortingChanged">
-        </b-table>
+          @sort-changed="onSortingChanged"
+        />
       </b-col>
     </b-row>
-    <b-pagination align="center" v-if="perPage > 0" :total-rows="totalRows" :per-page="perPage" v-model="currentPage" />
+    <b-pagination
+      v-if="perPage > 0"
+      v-model="currentPage"
+      align="center"
+      :total-rows="totalRows"
+      :per-page="perPage"
+    />
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'btable',
+  name: 'Btable',
   props: {
-    fields: Object,
-    data: Array,
-    add_button: Boolean,
-    filter_button: Boolean,
-    paginate: Boolean,
-    tooltip: String
+    fields: {
+      type: Object,
+      default: () => ({})
+    },
+    data: {
+      type: Array,
+      default: () => ([])
+    },
+    addButton: {
+      type: Boolean,
+      default: false
+    },
+    filterButton: {
+      type: Boolean,
+      default: false
+    },
+    paginate: {
+      type: Boolean,
+      default: false
+    },
+    tooltip: {
+      type: String,
+      default: ""
+    }
   },
   data () {
     return {
@@ -59,6 +114,12 @@ export default {
       totalRows: 0,
       filterState: null
     }
+  },
+  created () {
+    this.storageName = this.$parent.$options.name
+    this.totalRows = this.data.length
+    this.sortBy = Object.keys(this.fields)[0]
+    this.loadDataStorage(this.storageName)
   },
   methods: {
     add () {
@@ -98,12 +159,6 @@ export default {
         this.perPage = dataStore.perPage
       }
     }
-  },
-  created () {
-    this.storageName = this.$parent.$options.name
-    this.totalRows = this.data.length
-    this.sortBy = Object.keys(this.fields)[0]
-    this.loadDataStorage(this.storageName)
   },
 }
 </script>

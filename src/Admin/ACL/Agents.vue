@@ -1,8 +1,21 @@
 <template>
-<div class="form-inline">
-  <autocomplete v-model="obj" :query="query" placeholder="Agent..."></autocomplete>
-  <button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="obj in selected" :key="obj.id" @click="remove(obj)">{{obj.name}}</button>
-</div>
+  <div class="form-inline">
+    <autocomplete
+      v-model="obj"
+      :query="query"
+      placeholder="Agent..."
+    />
+    <b-btn
+      v-for="itemObj in selected"
+      :key="itemObj.id"
+      variant="outline-primary"
+      size="sm"
+      style="margin-left: 10px"
+      @click="remove(itemObj)"
+    >
+      {{ itemObj.name }}
+    </b-btn>
+  </div>
 </template>
 
 <script>
@@ -10,10 +23,15 @@ import Autocomplete from '@/Widget/Autocomplete'
 import API from '@/Admin/ACL/API'
 
 export default {
-  name: 'acl-widget-agents',
+  name: 'AclWidgetAgents',
   components: {Autocomplete},
-  props: ['value'],
   mixins: [API],
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       module: 'ws_db_agent',

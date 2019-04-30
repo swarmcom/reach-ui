@@ -1,14 +1,27 @@
 <template>
-<b-dropdown size="sm" text="Agent" variant="outline-primary" :disabled=disable() :title=hover_message @mouseover.native="mouseOver">
-  <div>
-    <b-dropdown-item v-for="agent in this.$agent.vm.transfer_agents" :key="agent.id" @click="onUpdate(agent.id)">{{ agent.login }}</b-dropdown-item>
-  </div>
-</b-dropdown>
+  <b-dropdown
+    size="sm"
+    text="Agent"
+    variant="outline-primary"
+    :disabled="disable()"
+    :title="hover_message"
+    @mouseover.native="mouseOver"
+  >
+    <div>
+      <b-dropdown-item
+        v-for="agent in this.$agent.vm.transfer_agents"
+        :key="agent.id"
+        @click="onUpdate(agent.id)"
+      >
+        {{ agent.login }}
+      </b-dropdown-item>
+    </div>
+  </b-dropdown>
 </template>
 
 <script>
 export default {
-  name: 'conference-agent',
+  name: 'ConferenceAgent',
   data () {
     return {
       hover_message: '',

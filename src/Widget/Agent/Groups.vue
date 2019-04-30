@@ -1,28 +1,54 @@
 <template>
-<div style="margin-top: 5px">
-  <b-row>
-    <b-col cols="3">
-      <label :id="label" class="col-form-label">{{ label }}</label>
-    </b-col>
-    <b-col cols="9">
-      <b-form-select class="pointer" :value="value" :disabled="isDisabled()" @change="onUpdate">
-        <option></option>
-        <option v-for="group in groups"
-          :value="group.id" :selected="isActive(group.id)" :key="group.id">{{ group.name }}</option>
-      </b-form-select>
-    </b-col>
-  </b-row>
-</div>
+  <div style="margin-top: 5px">
+    <b-row>
+      <b-col cols="3">
+        <label
+          :id="label"
+          class="col-form-label"
+        >{{ label }}</label>
+      </b-col>
+      <b-col cols="9">
+        <b-form-select
+          class="pointer"
+          :value="value"
+          :disabled="isDisabled()"
+          @change="onUpdate"
+        >
+          <option />
+          <option
+            v-for="group in groups"
+            :key="group.id"
+            :value="group.id"
+            :selected="isActive(group.id)"
+          >
+            {{ group.name }}
+          </option>
+        </b-form-select>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'agent-groups',
-  props: ['label', 'value'],
+  name: 'AgentGroups',
+  props: {
+    label: {
+      type: String,
+      default: ""
+    },
+    value: {
+      type: [Number, String],
+      default: ""
+    }
+  },
   data () {
     return {
       groups: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isActive(Id) {
@@ -37,9 +63,6 @@ export default {
     onUpdate (value) {
       this.$emit('input', value)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

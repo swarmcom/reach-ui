@@ -1,15 +1,24 @@
 <template>
-<div>
-  <btable :fields="fields" :data="line_ins" tooltip="Add Line In" :add_button=true :filter_button=true :paginate=true>
-  </btable>
-</div>
+  <div>
+    <btable
+      :fields="fields"
+      :data="line_ins"
+      tooltip="Add Line In"
+      :add-button="true"
+      :filter-button="true"
+      :paginate="true"
+    />
+  </div>
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-line-ins',
+  name: 'AdminLineIns',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -20,6 +29,9 @@ export default {
       },
       line_ins: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -32,12 +44,6 @@ export default {
       console.log(data)
       this.$router.push(`/line_in/${data.id}`)
     }
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

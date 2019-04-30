@@ -1,5 +1,5 @@
 <template>
-<canvas></canvas>
+  <canvas />
 </template>
 
 <script>
@@ -8,8 +8,13 @@ import moment from 'moment'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
-  name: 'report-widget-chart',
-  props: ['value'],
+  name: 'ReportWidgetChart',
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       chart: undefined,
@@ -17,6 +22,23 @@ export default {
       palette: ['#7fc97f', '#beaed4', '#fdc086', '#ffff99', '#386cb0', '#f0027f', '#bf5b17', '#666666'],
       palette_id: 0
     }
+  },
+  watch: {
+    value (n, old) {
+      if (this.chart) {
+        this.preprocess(n)
+        this.chart.data = n
+        this.chart.update()
+      }
+      return n
+    }
+  },
+  created () {
+  },
+  mounted () {
+    this.create_chart()
+  },
+  beforeDestroy () {
   },
   methods: {
     color (self) {
@@ -63,23 +85,6 @@ export default {
         X.fill = false
         X.steppedLine = 'before'
       })
-    }
-  },
-  created () {
-  },
-  mounted () {
-    this.create_chart()
-  },
-  beforeDestroy () {
-  },
-  watch: {
-    value (n, old) {
-      if (this.chart) {
-        this.preprocess(n)
-        this.chart.data = n
-        this.chart.update()
-      }
-      return n
     }
   }
 }

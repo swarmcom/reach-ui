@@ -1,30 +1,66 @@
 <template>
-<b-form-row>
-  <b-col>
-    <b-input-group>
-      <b-form-input v-model="uri" type="text" :placeholder="this.$agent.vm.agent.uri"></b-form-input>
-      <b-input-group-append>
-        <b-dropdown text="Contacts" variant="outline-secondary" :disabled="isDisabled()" right>
-          <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
-        </b-dropdown>
-      </b-input-group-append>
-    </b-input-group>
-  </b-col>
-  <b-col>
-    <b-btn class="pointer" @click="override" variant="primary">Set</b-btn>
-    <b-btn class="pointer" @click="reset" variant="secondary">Reset</b-btn>
-    <b-btn class="pointer" @click="test" variant="success">Test</b-btn>
-  </b-col>
-</b-form-row>
+  <b-form-row>
+    <b-col>
+      <b-input-group>
+        <b-form-input
+          v-model="uri"
+          type="text"
+          :placeholder="this.$agent.vm.agent.uri"
+        />
+        <b-input-group-append>
+          <b-dropdown
+            text="Contacts"
+            variant="outline-secondary"
+            :disabled="isDisabled()"
+            right
+          >
+            <b-dropdown-item
+              v-for="itemUri of this.$agent.vm.agent.uris"
+              :key="itemUri.uri"
+              @click="set(itemUri.uri)"
+            >
+              {{ itemUri.uri }}
+            </b-dropdown-item>
+          </b-dropdown>
+        </b-input-group-append>
+      </b-input-group>
+    </b-col>
+    <b-col>
+      <b-btn
+        class="pointer"
+        variant="primary"
+        @click="override"
+      >
+        Set
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="secondary"
+        @click="reset"
+      >
+        Reset
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="success"
+        @click="test"
+      >
+        Test
+      </b-btn>
+    </b-col>
+  </b-form-row>
 </template>
 
 <script>
 export default {
-  name: 'override',
+  name: 'Override',
   data () {
     return {
       uri: ''
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function() {
@@ -51,9 +87,6 @@ export default {
       let re = await this.$agent.p_mfa('ws_agent', 'reset_uri', [])
       this.$notify({ title: 'Success:', text: 'SIP Contact reset', type: 'success' })
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

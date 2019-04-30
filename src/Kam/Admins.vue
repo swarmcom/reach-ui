@@ -1,27 +1,49 @@
 <template>
-<div class="container">
-  <b-row style="margin-bottom: 10px"><b-col><h3>Admins:</h3></b-col></b-row>
+  <div class="container">
+    <b-row style="margin-bottom: 10px">
+      <b-col><h3>Admins:</h3></b-col>
+    </b-row>
 
-  <div v-for="admin of admins" :key="admin.id" style="margin-top: 5px">
-    <admin :value="admin" v-on:change="change" v-on:del="del"></admin>
+    <div
+      v-for="itemAdmin of admins"
+      :key="itemAdmin.id"
+      style="margin-top: 5px"
+    >
+      <admin
+        :value="itemAdmin"
+        @change="change"
+        @del="del"
+      />
+    </div>
+    <admin
+      :value="admin"
+      style="margin-top: 5px"
+      @change="change_admin"
+      @add="add"
+    />
   </div>
-  <admin :value="admin" style="margin-top: 5px" v-on:change="change_admin" v-on:add="add"></admin>
-
-</div>
 </template>
 
 <script>
 import Admin from '@/Kam/Admin'
 
 export default {
-  name: 'admin-kam-admins',
+  name: 'AdminKamAdmins',
   components: { Admin },
-  props: ['id'],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       admin: {},
       admins: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -45,9 +67,6 @@ export default {
         this.admins.splice(idx, 1)
       }
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

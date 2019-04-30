@@ -1,22 +1,46 @@
 <template>
-<div>
-  <b-form-select size="sm" v-model="selected" :disabled="isDisabled()" @change="disposition">
-    <option :value="null" disabled>Disposition</option>
-    <option v-for="r in dispositions" :key="r.id" :value="r.id">{{r.name}}</option>
-  </b-form-select>
-</div>
+  <div>
+    <b-form-select
+      v-model="selected"
+      size="sm"
+      :disabled="isDisabled()"
+      @change="disposition"
+    >
+      <option
+        :value="null"
+        disabled
+      >
+        Disposition
+      </option>
+      <option
+        v-for="r in dispositions"
+        :key="r.id"
+        :value="r.id"
+      >
+        {{ r.name }}
+      </option>
+    </b-form-select>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'agent-disposition-select',
-  props: ['uuid'],
+  name: 'AgentDispositionSelect',
+  props: {
+    uuid: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       dispositions: [],
       selected: null,
       inqueue: {}
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isDisabled() {
@@ -31,9 +55,6 @@ export default {
     disposition (id) {
       this.$agent.p_mfa('ws_agent', 'disposition', [this.uuid, id])
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

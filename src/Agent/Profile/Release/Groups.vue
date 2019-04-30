@@ -1,87 +1,103 @@
 <template>
-<b-row style="margin-top: 5px">
-  <label
-    :id="label"
-    class="col-3 col-form-label"
-  >
-    {{ label }}
-  </label>
-  <b-col
-    v-if="effective"
-    cols="5"
-  >
-    <select
-      class="custom-select pointer"
-      style="width: 100%"
-      :value="value"
-      :disabled="isDisabled()"
-      @change="onUpdate($event.target.value)"
+  <b-row style="margin-top: 5px">
+    <label
+      :id="label"
+      class="col-3 col-form-label"
     >
-      <option></option>
-      <option
-        v-for="release in releases"
-        :key="release.id"
-        :value="release.id"
-        :selected="isActive(release.id)"
-      >
-        {{ release.name }}
-      </option>
-    </select>
-  </b-col>
-  <b-col
-    v-if="effective"
-    cols="4"
-  >
-    <select
-      class="custom-select pointer"
-      style="width: 100%"
-      :value="value"
-      disabled
+      {{ label }}
+    </label>
+    <b-col
+      v-if="effective"
+      cols="5"
     >
-      <option></option>
-      <option
-        v-for="release in releases"
-        :value="release.id"
-        :key="release.id"
-        :selected="isEffective(release.id)"
+      <select
+        class="custom-select pointer"
+        style="width: 100%"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate($event.target.value)"
       >
-        {{ release.name }}
-      </option>
-    </select>
-  </b-col>
-  <b-col
-    v-else
-    cols="9"
-  >
-    <select
-      class="custom-select pointer"
-      style="width: 100%"
-      :value="value"
-      :disabled="isDisabled()"
-      @change="onUpdate($event.target.value)"
+        <option />
+        <option
+          v-for="release in releases"
+          :key="release.id"
+          :value="release.id"
+          :selected="isActive(release.id)"
+        >
+          {{ release.name }}
+        </option>
+      </select>
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="4"
     >
-      <option></option>
-      <option
-        v-for="release in releases"
-        :value="release.id"
-        :key="release.id"
-        :selected="isActive(release.id)"
+      <select
+        class="custom-select pointer"
+        style="width: 100%"
+        :value="value"
+        disabled
       >
-        {{ release.name }}
-      </option>
-    </select>
-  </b-col>
-</b-row>
+        <option />
+        <option
+          v-for="release in releases"
+          :key="release.id"
+          :value="release.id"
+          :selected="isEffective(release.id)"
+        >
+          {{ release.name }}
+        </option>
+      </select>
+    </b-col>
+    <b-col
+      v-else
+      cols="9"
+    >
+      <select
+        class="custom-select pointer"
+        style="width: 100%"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate($event.target.value)"
+      >
+        <option />
+        <option
+          v-for="release in releases"
+          :key="release.id"
+          :value="release.id"
+          :selected="isActive(release.id)"
+        >
+          {{ release.name }}
+        </option>
+      </select>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'widget-releases',
-  props: ['label', 'value', 'effective'],
+  name: 'WidgetReleases',
+  props: {
+    label: {
+      type: String,
+      default: ''
+    },
+    value: {
+      type: String,
+      default: ''
+    },
+    effective: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       releases: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isActive(Id) {
@@ -99,9 +115,6 @@ export default {
     onUpdate (value) {
       this.$emit('input', value)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

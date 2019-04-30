@@ -1,6 +1,6 @@
 <template>
-<div>
-<!-- <ul style="margin-top: 10px" class="nav nav-tabs">
+  <div>
+    <!-- <ul style="margin-top: 10px" class="nav nav-tabs">
   <li class="nav-item">
     <router-link class="nav-link" to="/live/agent">Agent</router-link>
   </li>
@@ -17,11 +17,11 @@
 <transition name="reach" mode="out-in">
   <router-view style="margin-top: 20px"></router-view>
 </transition> -->
-  <live-agent style="margin-top:20px"/>
-  <live-agents />
-  <live-inbound />
-  <live-outbound />
-</div>
+    <live-agent style="margin-top:20px" />
+    <live-agents />
+    <live-inbound />
+    <live-outbound />
+  </div>
 </template>
 
 <script>
@@ -31,20 +31,20 @@ import LiveInbound from '@/Live/Inbounds'
 import LiveOutbound from '@/Live/Outbounds'
 
 export default {
-  data () {
-    return {
-      showCollapse: true,
-    }
-  },
-  methods: {
-  },
-  created () {
-  },
   components: {
     'live-agent': LiveAgent,
     'live-agents': LiveAgents,
     'live-inbound': LiveInbound,
     'live-outbound': LiveOutbound
+  },
+  data () {
+    return {
+      showCollapse: true,
+    }
+  },
+  created () {
+  },
+  methods: {
   }
 }
 </script>

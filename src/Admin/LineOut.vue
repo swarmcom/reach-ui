@@ -1,19 +1,58 @@
 <template>
-<div class="form">
-  <form-text label="Line-Out Name" v-model="rec.name"></form-text>
-  <form-text label="Line-Out Description" v-model="rec.description"></form-text>
-  <clients label="Client" v-model="rec.client_id"></clients>
-  <form-call-recording label="Call recording" v-model="rec.enable_call_recording"></form-call-recording>
-  <form-select-bool label="Override Caller ID (outbound)" v-model="rec.override_clid"></form-select-bool>
-  <form-text label="Caller ID name" v-model="rec.caller_id_name"></form-text>
-  <form-number label="Caller ID number" v-model="rec.caller_id_number"></form-number>
-  <div style="margin-top: 20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Line-Out Name"
+    />
+    <form-text
+      v-model="rec.description"
+      label="Line-Out Description"
+    />
+    <clients
+      v-model="rec.client_id"
+      label="Client"
+    />
+    <form-call-recording
+      v-model="rec.enable_call_recording"
+      label="Call recording"
+    />
+    <form-select-bool
+      v-model="rec.override_clid"
+      label="Override Caller ID (outbound)"
+    />
+    <form-text
+      v-model="rec.caller_id_name"
+      label="Caller ID name"
+    />
+    <form-number
+      v-model="rec.caller_id_number"
+      label="Caller ID number"
+    />
+    <div style="margin-top: 20px">
+      <b-btn
+        class="btn btn-primary pointer"
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-  <help></help>
-</div>
 </template>
 
 <script>
@@ -22,10 +61,15 @@ import Obj from '@/Admin/Object'
 import FormCallRecording from '@/Widget/FormCallRecording'
 
 export default {
-  name: 'admin-line-out',
-  props: ['id'],
-  mixins: [Common, Obj],
+  name: 'AdminLineOut',
   components: { 'form-call-recording': FormCallRecording },
+  mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

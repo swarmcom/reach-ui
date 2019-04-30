@@ -1,18 +1,31 @@
 <template>
-<b-form-row>
-  <b-col cols="4">
-    <b-form-select v-model="comparision" @change="commit" :options="comparasions"></b-form-select>
-  </b-col>
-  <b-col>
-    <b-form-select v-model="value" @change="commit" :options="values"></b-form-select>
-  </b-col>
-</b-form-row>
+  <b-form-row>
+    <b-col cols="4">
+      <b-form-select
+        v-model="comparision"
+        :options="comparasions"
+        @change="commit"
+      />
+    </b-col>
+    <b-col>
+      <b-form-select
+        v-model="value"
+        :options="values"
+        @change="commit"
+      />
+    </b-col>
+  </b-form-row>
 </template>
 
 <script>
 export default {
-  name: 'admin-recipe-condition-hour',
-  props: ['args'],
+  name: 'AdminRecipeConditionHour',
+  props: {
+    args: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       comparasions: [ '=', '!=' ],
@@ -21,17 +34,17 @@ export default {
       value: this.args[1]
     }
   },
-  methods: {
-    commit () {
-      this.$emit('input', [this.comparision, this.value])
-    }
-  },
   watch: {
     comparision () {
       this.commit()
     },
     value () {
       this.commit()
+    }
+  },
+  methods: {
+    commit () {
+      this.$emit('input', [this.comparision, this.value])
     }
   },
 }
