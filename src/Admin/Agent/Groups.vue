@@ -1,12 +1,22 @@
 <template>
-  <btable :fields="fields" :data="agent_groups" :add_button=true tooltip="Add Agent Group" :filter_button=true :paginate=true></btable>
+  <btable
+    :fields="fields"
+    :data="agent_groups"
+    :add-button="true"
+    tooltip="Add Agent Group"
+    :filter-button="true"
+    :paginate="true"
+  />
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-agent-groups',
+  name: 'AdminAgentGroups',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -18,6 +28,9 @@ export default {
       },
       agent_groups: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -32,12 +45,6 @@ export default {
     acl (id) {
       this.$router.push(`/agent_group/${id}`)
     }
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

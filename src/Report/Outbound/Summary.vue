@@ -1,21 +1,49 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Outbound traffic summary</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Outbound traffic summary</h3>
+      </div>
+    </div>
+    <widget-query
+      v-model="query_params"
+      enable="range:group_by"
+      group-by="outbound"
+      require-range
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+      tbody-tr-class="pointer"
+      @row-clicked="details"
+    >
+      <template
+        slot="entity"
+        slot-scope="dataSlot"
+      >
+        <b-link @click.stop="sessions(dataSlot)">
+          {{ nameFormatter(dataSlot.item.entity) }}
+        </b-link>
+      </template>
+      <template
+        slot="answers"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.answers }} / {{ percentageFormatter(dataSlot.item.answers, dataSlot.item.rings) }}
+      </template>
+      <template
+        slot="abandons"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.abandons }} / {{ percentageFormatter(dataSlot.item.abandons, dataSlot.item.rings) }}
+      </template>
+    </b-table>
   </div>
-  <widget-query v-model="query_params" enable="range:group_by" group-by="outbound" require-range @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="details">
-    <template slot="entity" slot-scope="data">
-      <b-link @click.stop="sessions(data)">{{ nameFormatter(data.item.entity) }}</b-link>
-    </template>
-    <template slot="answers" slot-scope="data">
-      {{ data.item.answers }} / {{ percentageFormatter(data.item.answers, data.item.rings) }}
-    </template>
-    <template slot="abandons" slot-scope="data">
-      {{ data.item.abandons }} / {{ percentageFormatter(data.item.abandons, data.item.rings) }}
-    </template>
-  </b-table>
-</div>
 </template>
 
 <script>

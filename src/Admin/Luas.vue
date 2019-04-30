@@ -1,12 +1,20 @@
 <template>
-<btable :fields="fields" :data="luas" :add_button=true tooltip="Add Lua"></btable>
+  <btable
+    :fields="fields"
+    :data="luas"
+    :add-button="true"
+    tooltip="Add Lua"
+  />
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-luas',
+  name: 'AdminLuas',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -16,6 +24,9 @@ export default {
       },
       luas: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -27,12 +38,6 @@ export default {
     onClick (data) {
       this.$router.push(`/lua/${data.id}`)
     },
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

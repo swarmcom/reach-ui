@@ -1,36 +1,38 @@
 <template>
-<div class="form-inline">
-<autocomplete v-model="client" :query="query" placeholder="Client..."></autocomplete>
-<button class="btn btn-sm btn-outline-primary" style="margin-left: 10px" v-for="client in selected" @click="remove(client)">{{client.name}}</button>
-</div>
+  <div class="form-inline">
+    <autocomplete
+      v-model="client"
+      :query="query"
+      placeholder="Client..."
+    />
+    <button
+      v-for="itemClient in selected"
+      :key="itemClient.id"
+      class="btn btn-sm btn-outline-primary"
+      style="margin-left: 10px"
+      @click="remove(itemClient)"
+    >
+      {{ itemClient.name }}
+    </button>
+  </div>
 </template>
 
 <script>
 import Autocomplete from '@/Widget/Autocomplete'
 
 export default {
-  name: 'report-widget-clients',
+  name: 'ReportWidgetClients',
   components: {Autocomplete},
-  props: ['value'],
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    }
+  },
   data () {
     return {
       client: undefined,
       selected: []
-    }
-  },
-  methods: {
-    query (text) {
-      return this.$agent.p_mfa('ws_agent', 'suggest', ['client', text])
-    },
-    remove (client) {
-      let index = this.selected.findIndex(el => el.id === client.id)
-      if (index >= 0) {
-        this.selected.splice(index, 1)
-      }
-    },
-    get: async function (id) {
-      let entity = await this.$agent.p_mfa('ws_agent', 'entity', ['client', id])
-      this.selected.push(entity)
     }
   },
   watch: {
@@ -51,6 +53,21 @@ export default {
   },
   created () {
     this.value.forEach(id => this.get(id))
+  },
+  methods: {
+    query (text) {
+      return this.$agent.p_mfa('ws_agent', 'suggest', ['client', text])
+    },
+    remove (client) {
+      let index = this.selected.findIndex(el => el.id === client.id)
+      if (index >= 0) {
+        this.selected.splice(index, 1)
+      }
+    },
+    get: async function (id) {
+      let entity = await this.$agent.p_mfa('ws_agent', 'entity', ['client', id])
+      this.selected.push(entity)
+    }
   }
 }
 </script>

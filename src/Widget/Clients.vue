@@ -1,23 +1,56 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9">
-    <select class="custom-select pointer" :value="value" style="width: 100%" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
-      <option></option>
-      <option v-for="client in clients" :value="client.id" :selected="isActive(client.id)">{{ client.name }}</option>
-    </select>
-  </div>
-</div>
+  <b-row
+    style="margin-top: 5px"
+  >
+    <b-col cols="3">
+      <label
+        :id="label"
+      >
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col cols="9">
+      <select
+        class="custom-select pointer"
+        :value="value"
+        style="width: 100%"
+        :disabled="isDisabled()"
+        @change="onUpdate($event.target.value)"
+      >
+        <option />
+        <option
+          v-for="client in clients"
+          :key="client.id"
+          :value="client.id"
+          :selected="isActive(client.id)"
+        >
+          {{ client.name }}
+        </option>
+      </select>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'form-text',
-  props: ['label', 'value'],
+  name: 'FormText',
+  props: {
+    label: {
+      type: String,
+      default: ""
+    },
+    value: {
+      type: [String, Number],
+      default: ""
+    }
+  },
   data () {
     return {
       clients: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isActive(Id) {
@@ -32,9 +65,6 @@ export default {
     onUpdate (value) {
       this.$emit('input', value)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

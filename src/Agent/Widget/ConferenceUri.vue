@@ -1,10 +1,18 @@
 <template>
-  <b-form-input size="sm" variant="outline-secondary" v-model="uri" @keydown.enter.native="onEnter" type="text" placeholder="Enter number" autofocus="true"></b-form-input>
+  <b-form-input
+    v-model="uri"
+    size="sm"
+    variant="outline-secondary"
+    type="text"
+    placeholder="Enter number"
+    autofocus="true"
+    @keydown.enter.native="onEnter"
+  />
 </template>
 
 <script>
 export default {
-  name: 'conference-uri',
+  name: 'ConferenceUri',
   data () {
     return {
       uri: ''

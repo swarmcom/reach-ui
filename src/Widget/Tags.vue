@@ -1,13 +1,39 @@
 <template>
-<div class="form-inline">
-  <autocomplete v-if="! disabled" v-model="tag" :query="query" :to_name="to_name" :new="true" :placeholder="placeholder"></autocomplete>
-  <div v-if="disabled">
-    <b-btn size="sm" variant="outline-success" disabled style="margin-left: 5px" v-for="(tag, index) in selected" :key=index>{{tag}}</b-btn>
+  <div class="form-inline">
+    <autocomplete
+      v-if="! disabled"
+      v-model="tag"
+      :query="query"
+      :to-name="toName"
+      :new="true"
+      :placeholder="placeholder"
+    />
+    <div v-if="disabled">
+      <b-btn
+        v-for="(itemTag, index) in selected"
+        :key="index"
+        size="sm"
+        variant="outline-success"
+        disabled
+        style="margin-left: 5px"
+      >
+        {{ itemTag }}
+      </b-btn>
+    </div>
+    <div v-else>
+      <b-btn
+        v-for="(itemTag, index) in selected"
+        :key="index"
+        size="sm"
+        variant="outline-primary"
+        title="Click to Remove"
+        style="margin-left: 5px"
+        @click="remove(itemTag)"
+      >
+        {{ itemTag }}
+      </b-btn>
+    </div>
   </div>
-  <div v-else>
-    <b-btn size="sm" variant="outline-primary" title="Click to Remove" style="margin-left: 5px" v-for="(tag, index) in selected" :key=index @click="remove(tag)">{{tag}}</b-btn>
-  </div>
-</div>
 </template>
 
 <script>
@@ -15,25 +41,24 @@ import Autocomplete from '@/Widget/Autocomplete'
 
 export default {
   components: { Autocomplete },
-  props: ["value", "placeholder", "disabled"],
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    },
+    placeholder: {
+      type: String,
+      default: ""
+    },
+    disabled: {
+      type: [String, Boolean],
+      default: false
+    }
+  },
   data () {
     return {
       tag: undefined,
       selected: []
-    }
-  },
-  methods: {
-    to_name (name) {
-      return name
-    },
-    query (text) {
-      return this.$agent.p_mfa("ws_db_tag", "suggest", [text])
-    },
-    remove (value) {
-      let index = this.selected.findIndex(el => el === value)
-      if (index >= 0) {
-        this.selected.splice(index, 1)
-      }
     }
   },
   watch: {
@@ -58,6 +83,20 @@ export default {
   },
   created () {
     this.selected = this.value
+  },
+  methods: {
+    toName (name) {
+      return name
+    },
+    query (text) {
+      return this.$agent.p_mfa("ws_db_tag", "suggest", [text])
+    },
+    remove (value) {
+      let index = this.selected.findIndex(el => el === value)
+      if (index >= 0) {
+        this.selected.splice(index, 1)
+      }
+    }
   }
 }
 </script>

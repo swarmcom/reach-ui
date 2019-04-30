@@ -6,6 +6,7 @@ The attemt to rewrite Reach UI with a modern JavaScript toolchain:
 * [VueJS](https://vuejs.org)
 * [Bootstrap 4](https://getbootstrap.com)
 * [Bootstrap Vue](https://bootstrap-vue.js.org)
+* [ESLint plugin for VueJs](https://vuejs.github.io/eslint-plugin-vue)
 
 ## Build Setup
 
@@ -18,6 +19,16 @@ yarn run dev
 
 # build for production with minification
 yarn run build
+```
+
+## Use lint
+
+``` bash
+# to check for warnings/errors
+yarn run lint
+
+# to automatically fix warning/errors
+yarn run lint --fix
 ```
 
 ## Deployment

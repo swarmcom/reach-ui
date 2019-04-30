@@ -1,18 +1,38 @@
 <template>
-<span>
-  <div class="input-group">
-    <input id="autocomplete" type="text" class="reference form-control" v-model="text" @keydown="keydown" :placeholder="placeholder">
-    <span class="input-group-btn">
-      <button class="btn btn-secondary" type="button" @click="display">
-        <icon class="align-middle" name="caret-down" scale="1"></icon>
-      </button>
-    </span>
-  </div>
-  <div class="popper dropdown-menu">
-    <button class="dropdown-item"
-      v-for="(opt, i) in options" :key="i" @click="ev => select(i, ev)" :class="{active: isActive(i)}">{{ to_name(opt) }}</button>
-  </div>
-</span>
+  <span>
+    <div class="input-group">
+      <input
+        id="autocomplete"
+        v-model="text"
+        type="text"
+        class="reference form-control"
+        :placeholder="placeholder"
+        @keydown="keydown"
+      >
+      <span class="input-group-btn">
+        <button
+          class="btn btn-secondary"
+          type="button"
+          @click="display"
+        >
+          <icon
+            class="align-middle"
+            name="caret-down"
+            scale="1"
+          />
+        </button>
+      </span>
+    </div>
+    <div class="popper dropdown-menu">
+      <button
+        v-for="(opt, i) in options"
+        :key="i"
+        class="dropdown-item"
+        :class="{active: isActive(i)}"
+        @click="ev => select(i, ev)"
+      >{{ toName(opt) }}</button>
+    </div>
+  </span>
 </template>
 
 <script>
@@ -21,10 +41,22 @@ import Popper from 'popper.js'
 
 export default {
   props: {
-    query: { type: Function, required: true },
-    to_name: { type: Function, default: ob => ob.name },
-    new: { type: Boolean, default: false },
-    placeholder: { type: String },
+    query: {
+      type: Function,
+      required: true
+    },
+    toName: {
+      type: Function,
+      default: ob => ob.name
+    },
+    new: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: "" 
+    },
   },
   data () {
     return {
@@ -36,6 +68,29 @@ export default {
       visible: false,
       options: []
     }
+  },
+  watch: {
+    options (value, old) {
+      if (value.length !== old.length) {
+        this.index = 0
+      }
+      this.show()
+      return value
+    },
+    text (value) {
+      if (this.visible || value.length > 2) {
+        this.async_query(value)
+      }
+      return value
+    }
+  },
+  mounted () {
+    this.reference = $('.reference', this.$el)
+    this.popper = $('.popper', this.$el)
+    window.addEventListener('click', this.clickListener)
+  },
+  beforeDestroy () {
+    window.removeEventListener('click', this.clickListener)
   },
   methods: {
     async_query: async function(text) {
@@ -111,29 +166,6 @@ export default {
           this.hide()
         }
       }
-    }
-  },
-  mounted () {
-    this.reference = $('.reference', this.$el)
-    this.popper = $('.popper', this.$el)
-    window.addEventListener('click', this.clickListener)
-  },
-  beforeDestroy () {
-    window.removeEventListener('click', this.clickListener)
-  },
-  watch: {
-    options (value, old) {
-      if (value.length !== old.length) {
-        this.index = 0
-      }
-      this.show()
-      return value
-    },
-    text (value) {
-      if (this.visible || value.length > 2) {
-        this.async_query(value)
-      }
-      return value
     }
   }
 }

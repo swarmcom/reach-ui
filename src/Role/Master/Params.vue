@@ -1,47 +1,104 @@
 <template>
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h3>Instance parameters:</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3>Instance parameters:</h3>
+      </div>
     </div>
-  </div>
-  <div :key="param.key" v-for="param of params" class="form-row" style="margin-top: 5px">
-    <div class="col-3">
-      <input type="text" class="form-control" v-model="param.key" readonly>
+    <div
+      v-for="param of params"
+      :key="param.key"
+      class="form-row"
+      style="margin-top: 5px"
+    >
+      <div class="col-3">
+        <input
+          v-model="param.key"
+          type="text"
+          class="form-control"
+          readonly
+        >
+      </div>
+      <div class="col">
+        <input
+          v-if="param.key != 'log_level'"
+          v-model="param.value"
+          type="text"
+          class="form-control"
+        >
+        <b-form-select
+          v-else
+          v-model="param.value"
+          :options="log_options"
+        />
+      </div>
     </div>
-    <div class="col">
-      <input v-if="param.key != 'log_level'" type="text" class="form-control" v-model="param.value">
-      <b-form-select v-else :options="log_options" v-model="param.value"/>
-    </div>
-  </div>
 
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <button @click="commit" class="btn btn-primary">Commit</button>
-      <button @click="cancel" class="btn btn-outline-primary">Cancel</button>
-    </b-col>
-    <b-col v-show="false" cols=4>
-      <button @click="save" class="btn btn-success">Save</button>
-      <button @click="erase" class="btn btn-danger">Erase</button>
-      <button @click="apply" class="btn btn-warning">Apply</button>
-    </b-col>
-  </b-row>
-  <b-row style="margin-top: 20px">
-    <b-col>
-      <button @click="download" class="btn btn-success">Download</button>
-    </b-col>
-    <b-col>
-      <b-form-file v-model="config_file" v-on:input="upload" placeholder="Choose json config to upload..." accept=".json"></b-form-file>
-    </b-col>
-  </b-row>
-</div>
+    <b-row style="margin-top: 20px">
+      <b-col>
+        <button
+          class="btn btn-primary"
+          @click="commit"
+        >
+          Commit
+        </button>
+        <button
+          class="btn btn-outline-primary"
+          @click="cancel"
+        >
+          Cancel
+        </button>
+      </b-col>
+      <b-col
+        v-show="false"
+        cols="4"
+      >
+        <button
+          class="btn btn-success"
+          @click="save"
+        >
+          Save
+        </button>
+        <button
+          class="btn btn-danger"
+          @click="erase"
+        >
+          Erase
+        </button>
+        <button
+          class="btn btn-warning"
+          @click="apply"
+        >
+          Apply
+        </button>
+      </b-col>
+    </b-row>
+    <b-row style="margin-top: 20px">
+      <b-col>
+        <button
+          class="btn btn-success"
+          @click="download"
+        >
+          Download
+        </button>
+      </b-col>
+      <b-col>
+        <b-form-file
+          v-model="config_file"
+          placeholder="Choose json config to upload..."
+          accept=".json"
+          @input="upload"
+        />
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-params',
+  name: 'AdminParams',
   mixins: [Common],
   data () {
     return {
@@ -51,6 +108,9 @@ export default {
       name: '',
       value: ''
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -117,9 +177,6 @@ export default {
       link.click()
       link.remove()
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

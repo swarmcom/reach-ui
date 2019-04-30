@@ -1,98 +1,98 @@
 <template>
-<div>
-  <b-row>
-    <b-col>
-      <h6>
-        Live outbound calls
-      </h6>
-    </b-col>
-  </b-row>
-  <b-row style="margin-bottom: 10px">
-    <b-col cols="3">
-      <b-form-select
-        v-model="type"
-        :options="types"
-        size="sm"
-      />
-    </b-col>
-  </b-row>
-  <b-table
-    style="margin-top:10px"
-    small
-    bordered
-    hover
-    head-variant=light
-    thead-tr-class="table-header"
-    tbody-tr-class="table-body"
-    sort-by="time"
-    :items="data"
-    :fields="fields"
-  >
-    <template
-      slot="time"
-      slot-scope="data"
+  <div>
+    <b-row>
+      <b-col>
+        <h6>
+          Live outbound calls
+        </h6>
+      </b-col>
+    </b-row>
+    <b-row style="margin-bottom: 10px">
+      <b-col cols="3">
+        <b-form-select
+          v-model="type"
+          :options="types"
+          size="sm"
+        />
+      </b-col>
+    </b-row>
+    <b-table
+      style="margin-top:10px"
+      small
+      bordered
+      hover
+      head-variant="light"
+      thead-tr-class="table-header"
+      tbody-tr-class="table-body"
+      sort-by="time"
+      :items="data"
+      :fields="fields"
     >
-      {{durationFormatter(data.item.time)}}
-    </template>
-    <template
-      slot="agent"
-      slot-scope="data"
-    >
-      {{data.item.agent.name}}
-    </template>
-    <template
-      slot="line_out"
-      slot-scope="data"
-    >
-      {{data.item.line_out.name}}
-    </template>
-    <template
-      slot="callee"
-      slot-scope="data"
-    >
-      {{data.item.call_vars['Caller-Callee-ID-Number']}} <{{data.item.call_vars['Caller-Callee-ID-Name']}}>
-    </template>
-    <template
-      slot="caller"
-      slot-scope="data"
-    >
-      {{data.item.call_vars['Caller-Caller-ID-Number']}} <{{data.item.call_vars['Caller-Caller-ID-Name']}}>
-    </template>
-    <template
-      slot="call_vars"
-      slot-scope="data"
-    >
-      <b-row>
-        <b-col>
-          {{data.item.call_vars['Unique-ID']}}
-        </b-col>
-      </b-row>
-    </template>
-    <template
-      slot="actions"
-      slot-scope="data"
-    >
-      <b-button
-        size="sm"
-        variant="danger"
-        @click="hangup(data.item)"
-        class="pointer"
+      <template
+        slot="time"
+        slot-scope="data"
       >
-        Hangup
-      </b-button>
-    </template>
-  </b-table>
-</div>
+        {{ durationFormatter(data.item.time) }}
+      </template>
+      <template
+        slot="agent"
+        slot-scope="data"
+      >
+        {{ data.item.agent.name }}
+      </template>
+      <template
+        slot="line_out"
+        slot-scope="data"
+      >
+        {{ data.item.line_out.name }}
+      </template>
+      <template
+        slot="callee"
+        slot-scope="data"
+      >
+        {{ data.item.call_vars['Caller-Callee-ID-Number'] }} &lt;{{ data.item.call_vars['Caller-Callee-ID-Name'] }}>
+      </template>
+      <template
+        slot="caller"
+        slot-scope="data"
+      >
+        {{ data.item.call_vars['Caller-Caller-ID-Number'] }} &lt;{{ data.item.call_vars['Caller-Caller-ID-Name'] }}>
+      </template>
+      <template
+        slot="call_vars"
+        slot-scope="data"
+      >
+        <b-row>
+          <b-col>
+            {{ data.item.call_vars['Unique-ID'] }}
+          </b-col>
+        </b-row>
+      </template>
+      <template
+        slot="actions"
+        slot-scope="data"
+      >
+        <b-button
+          size="sm"
+          variant="danger"
+          class="pointer"
+          @click="hangup(data.item)"
+        >
+          Hangup
+        </b-button>
+      </template>
+    </b-table>
+  </div>
 </template>
 
 <script>
 import Base from '@/Live/Base'
 
 export default {
-  mixins: [Base],
-  name: 'live-outbounds-monitor',
+  name: 'LiveOutboundsMonitor',
   components: {
   },
+  mixins: [Base],
   data () {
     return {
       type: 'group',
@@ -109,6 +109,23 @@ export default {
         actions: { label: 'Actions' }
       },
     }
+  },
+  watch: {
+    type: async function (value, old) {
+      if (this.skip_load) {
+        this.skip_load = false
+        return
+      }
+      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['outgoings', old])
+      this.query(value)
+    },
+  },
+  created () {
+    this.$bus.$on('live_outgoing_state', this.handleState)
+  },
+  beforeDestroy () {
+    this.$bus.$off('live_outgoing_state', this.handleState)
+    this.$agent.p_mfa('ws_live', 'unsubscribe', ['outgoings', this.type])
   },
   methods: {
     handleState ({state}) {
@@ -137,23 +154,6 @@ export default {
     },
     hangup ({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
-    },
-  },
-  created () {
-    this.$bus.$on('live_outgoing_state', this.handleState)
-  },
-  beforeDestroy () {
-    this.$bus.$off('live_outgoing_state', this.handleState)
-    this.$agent.p_mfa('ws_live', 'unsubscribe', ['outgoings', this.type])
-  },
-  watch: {
-    type: async function (value, old) {
-      if (this.skip_load) {
-        this.skip_load = false
-        return
-      }
-      await this.$agent.p_mfa('ws_live', 'unsubscribe', ['outgoings', old])
-      this.query(value)
     },
   }
 }

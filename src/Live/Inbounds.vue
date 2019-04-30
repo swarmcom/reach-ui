@@ -1,15 +1,15 @@
 <template>
-<div>
-  <toggle-bar />
-  <b-collapse
-    v-model="showCollapse"
-    id="liveManager"
-  >
-    <stats />
-    <vmstats />
-    <monitor />
-  </b-collapse>
-</div>
+  <div>
+    <toggle-bar />
+    <b-collapse
+      id="liveManager"
+      v-model="showCollapse"
+    >
+      <stats />
+      <vmstats />
+      <monitor />
+    </b-collapse>
+  </div>
 </template>
 
 <script>

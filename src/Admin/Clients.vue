@@ -1,12 +1,22 @@
 <template>
-<btable :fields="fields" :data="clients" :add_button=true tooltip="Add Client" :filter_button=true :paginate=true></btable>
+  <btable
+    :fields="fields"
+    :data="clients"
+    :add-button="true"
+    tooltip="Add Client"
+    :filter-button="true"
+    :paginate="true"
+  />
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-clients',
+  name: 'AdminClients',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -15,6 +25,9 @@ export default {
       },
       clients: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -26,12 +39,6 @@ export default {
     onClick (data) {
       this.$router.push(`/client/${data.id}`)
     },
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

@@ -1,12 +1,22 @@
 <template>
-<btable :fields="fields" :data="line_outs" tooltip="Add Line Out" :add_button=true :filter_button=true :paginate=true></btable>
+  <btable
+    :fields="fields"
+    :data="line_outs"
+    tooltip="Add Line Out"
+    :add-button="true"
+    :filter-button="true"
+    :paginate="true"
+  />
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-line-outs',
+  name: 'AdminLineOuts',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -18,6 +28,9 @@ export default {
       line_outs: []
     }
   },
+  created () {
+    this.query()
+  },
   methods: {
     query: async function () {
       this.line_outs = await this.$agent.p_mfa('ws_db_line_out', 'get')
@@ -28,12 +41,6 @@ export default {
     onClick (data) {
       this.$router.push(`/line_out/${data.id}`)
     }
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

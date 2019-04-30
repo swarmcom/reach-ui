@@ -1,19 +1,50 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-5">
-    <input class="form-control" type="text" :value="safe_value" v-on:input="onUpdate($event.target.value)">
-  </div>
-  <div class="col-4">
-    <input class="form-control" type="text" :value="safe_effective" disabled>
-  </div>
-</div>
+  <b-row
+    style="margin-top: 5px"
+  >
+    <b-col cols="3">
+      <label
+        :id="label"
+      >
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col cols="5">
+      <input
+        class="form-control"
+        type="text"
+        :value="safe_value"
+        @input="onUpdate($event.target.value)"
+      >
+    </b-col>
+    <b-col cols="4">
+      <input
+        class="form-control"
+        type="text"
+        :value="safe_effective"
+        disabled
+      >
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'form-text-effective',
-  props: ['label', 'value', 'effective'],
+  name: 'FormTextEffective',
+  props: {
+    value: {
+      type: String,
+      default: ""
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    effective: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {}
   },

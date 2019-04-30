@@ -1,45 +1,89 @@
 <template>
   <b-form-row>
-
     <b-col cols="2">
       <template v-if="isEntry()">
-        <button @click="del(entry.id)" class="btn btn-sm btn-outline-danger">
-          <icon class="align-middle" name="minus" scale="1"></icon>
+        <button
+          class="btn btn-sm btn-outline-danger"
+          @click="del(entry.id)"
+        >
+          <icon
+            class="align-middle"
+            name="minus"
+            scale="1"
+          />
         </button>
-        <button @click="up(entry.id)" class="btn btn-sm btn-outline-success">
-          <icon class="align-middle" name="arrow-up" scale="1"></icon>
+        <button
+          class="btn btn-sm btn-outline-success"
+          @click="up(entry.id)"
+        >
+          <icon
+            class="align-middle"
+            name="arrow-up"
+            scale="1"
+          />
         </button>
-        <button @click="down(entry.id)" class="btn btn-sm btn-outline-primary">
-          <icon class="align-middle" name="arrow-down" scale="1"></icon>
+        <button
+          class="btn btn-sm btn-outline-primary"
+          @click="down(entry.id)"
+        >
+          <icon
+            class="align-middle"
+            name="arrow-down"
+            scale="1"
+          />
         </button>
       </template>
       <template v-else>
-        <button @click="add" class="btn btn-sm btn-outline-secondary">
-          <icon name="plus" scale="1" class="align-middle"></icon>
+        <button
+          class="btn btn-sm btn-outline-secondary"
+          @click="add"
+        >
+          <icon
+            name="plus"
+            scale="1"
+            class="align-middle"
+          />
         </button>
       </template>
     </b-col>
-
     <b-col>
-      <nodes :value="entry.source" v-on:input="change('source', arguments[0])"></nodes>
+      <nodes
+        :value="entry.source"
+        @input="change('source', arguments[0])"
+      />
     </b-col>
-
     <b-col>
-      <input type="text" class="form-control" placeholder="Match"
-        :value="safe_value(entry.match)" v-on:change="change('match', $event.target.value)">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Match"
+        :value="safe_value(entry.match)"
+        @change="change('match', $event.target.value)"
+      >
     </b-col>
-
-    <b-col cols=1.5>
-      <select v-model="entry.action" class="custom-select" style="width: 100%" v-on:change="change('action', $event.target.value)">
-        <option value="pass">Pass</option>
-        <option value="block">Block</option>
+    <b-col cols="1.5">
+      <select
+        v-model="entry.action"
+        class="custom-select"
+        style="width: 100%"
+        @change="change('action', $event.target.value)"
+      >
+        <option value="pass">
+          Pass
+        </option>
+        <option value="block">
+          Block
+        </option>
       </select>
     </b-col>
-
     <b-col>
-      <nodes v-if="entry.action=='pass'" :domain="this.id" :value="entry.target" v-on:input="change('target', arguments[0])"></nodes>
+      <nodes
+        v-if="entry.action=='pass'"
+        :domain="id"
+        :value="entry.target"
+        @input="change('target', arguments[0])"
+      />
     </b-col>
-
   </b-form-row>
 </template>
 
@@ -47,13 +91,25 @@
 import Nodes from '@/Kam/Widget/Nodes'
 
 export default {
-  name: 'admin-domain-dialplan-entry',
+  name: 'AdminDomainDialplanEntry',
   components: { Nodes },
-  props: ['id', 'value'],
+  props: {
+    id: {
+      type: String,
+      default: ''
+    },
+    value: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   data () {
     return {
       entry: {},
     }
+  },
+  created () {
+    this.entry = this.value
   },
   methods: {
     safe_value (value) {
@@ -79,9 +135,6 @@ export default {
     del (id) {
       this.$emit('del', id)
     }
-  },
-  created () {
-    this.entry = this.value
   }
 }
 </script>

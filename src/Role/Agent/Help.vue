@@ -1,7 +1,7 @@
 <template>
-<div style="margin-top: 20px">
-	<h2>Agent role</h2>
-</div>
+  <div style="margin-top: 20px">
+    <h2>Agent role</h2>
+  </div>
 </template>
 
 <script>

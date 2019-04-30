@@ -1,13 +1,13 @@
 <template>
-<div v-bind:style="{ color: activeColor}">
-  {{msToHms(computedTime())}}
-</div>
+  <div :style="{ color: activeColor}">
+    {{ msToHms(computedTime()) }}
+  </div>
 </template>
 
 <script>
 import Common from '../../Admin/Common'
 export default {
-  name: 'wrap-up',
+  name: 'WrapUp',
   mixins: [Common],
   data () {
     return {

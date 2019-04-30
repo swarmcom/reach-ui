@@ -1,12 +1,20 @@
 <template>
-<btable :fields="fields" :data="prompts" tooltip="Add Prompt" :add_button=true></btable>
+  <btable
+    :fields="fields"
+    :data="prompts"
+    tooltip="Add Prompt"
+    :add-button="true"
+  />
 </template>
 
 <script>
 import Btable from '@/Widget/Btable'
 
 export default {
-  name: 'admin-prompts',
+  name: 'AdminPrompts',
+  components: {
+    btable: Btable
+  },
   data () {
     return {
       fields: {
@@ -18,6 +26,9 @@ export default {
       prompts: []
     }
   },
+  created () {
+    this.query()
+  },
   methods: {
     query: async function () {
       this.prompts = await this.$agent.p_mfa('ws_db_prompt', 'get')
@@ -28,12 +39,6 @@ export default {
     onClick (data) {
       this.$router.push(`/prompt/${data.id}`)
     },
-  },
-  created () {
-    this.query()
-  },
-  components: {
-    btable: Btable
   }
 }
 </script>

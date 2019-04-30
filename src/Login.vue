@@ -1,43 +1,104 @@
 <template>
-<div class="container" v-if="this.$agent.can_login()">
-  <div class="row justify-content-center">
-    <div class="col-5">
-      <div class="row">
-        <div class="col">
-          <h2>Login Reach:</h2>
-        </div>
-      </div>
-      <div class="form-signin">
-        <div class="form-group">
-          <label for="inputLogin">Name:</label>
-          <input id="inputLogin" v-model="login" v-on:keyup.enter="onSubmit" type="text" class="form-control" placeholder="Login" required="true" autofocus="true">
-        </div>
-        <div class="form-group">
-          <label for="inputPassword">Password:</label>
-          <input id="inputPassword" v-model="password" v-on:keyup.enter="onSubmit" type="password" class="form-control" placeholder="Password" required="true">
-        </div>
-        <div class="form-group">
-          <label for="inputDomain">Domain:</label>
-          <input id="inputDomain" v-model="domain" v-on:keyup.enter="onSubmit" type="text" class="form-control" value="" required="true">
-        </div>
-        <div class="form-check">
-          <input type="checkbox" id="checkbox" v-model="remember">
-          <label class="form-check-label" for="checkbox">Remember me</label>
-        </div>
-        <div class="row justify-content-end">
-          <div class="col-auto">
-            <button @click="onSubmit" class="btn btn-primary pointer" type="submit">Login</button>
+  <b-container
+    v-if="this.$agent.can_login()"
+  >
+    <b-row class="justify-content-center">
+      <b-col cols="5">
+        <b-row>
+          <b-col>
+            <h2>Login Reach:</h2>
+          </b-col>
+        </b-row>
+        <div class="form-signin">
+          <div class="form-group">
+            <label for="inputLogin">Name:</label>
+            <input
+              id="inputLogin"
+              v-model="login"
+              type="text"
+              class="form-control"
+              placeholder="Login"
+              required="true"
+              autofocus="true"
+              @keyup.enter="onSubmit"
+            >
           </div>
+          <div class="form-group">
+            <label for="inputPassword">Password:</label>
+            <input
+              id="inputPassword"
+              v-model="password"
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              required="true"
+              @keyup.enter="onSubmit"
+            >
+          </div>
+          <div class="form-group">
+            <label for="inputDomain">Domain:</label>
+            <input
+              id="inputDomain"
+              v-model="domain"
+              type="text"
+              class="form-control"
+              value=""
+              required="true"
+              @keyup.enter="onSubmit"
+            >
+          </div>
+          <div class="form-check">
+            <input
+              id="checkbox"
+              v-model="remember"
+              type="checkbox"
+            >
+            <label
+              class="form-check-label"
+              for="checkbox"
+            >Remember me</label>
+          </div>
+          <b-row class="justify-content-end">
+            <div class="col-auto">
+              <b-btn
+                class="pointer"
+                variant="primary"
+                type="submit"
+                @click="onSubmit"
+              >
+                Login
+              </b-btn>
+            </div>
+          </b-row>
         </div>
-      </div>
-    </div>
-  </div>
-  <b-modal ref="takeover" hide-footer title="Agent is logged in">
-      <b-btn class="pointer" variant="outline-danger" @click="takeover">Take over</b-btn>
-      <b-btn class="pointer" variant="outline-success" @click="cancel">Cancel</b-btn>
-  </b-modal>
-  <notifications position="bottom right" :speed="500" :duration="1000"></notifications>
-</div>
+      </b-col>
+    </b-row>
+    <b-modal
+      ref="takeover"
+      hide-footer
+      title="Agent is logged in"
+    >
+      <b-btn
+        class="pointer"
+        variant="outline-danger"
+        @click="takeover"
+      >
+        Take over
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-success"
+        @click="cancel"
+      >
+        Cancel
+      </b-btn>
+    </b-modal>
+    <notifications
+      position="bottom right"
+      :speed="500"
+      :duration="1000"
+    />
+  </b-container>
 </template>
 
 <script>
@@ -45,7 +106,7 @@ import {EventBus} from '@/event-bus.js'
 import Storage from '@/Storage'
 
 export default {
-  name: 'login',
+  name: 'Login',
   mixins: [Storage],
   data () {
     return {
@@ -54,6 +115,9 @@ export default {
       domain: window.location.hostname,
       remember: false
     }
+  },
+  created () {
+    this.maybeInitLocal().loadDataStorage()
   },
   methods: {
     cancel () {
@@ -87,9 +151,6 @@ export default {
         this.eraseLocal('login', 'password', 'domain', 'remember').writeLocal()
       }
     }
-  },
-  created () {
-    this.maybeInitLocal().loadDataStorage()
   }
 }
 </script>

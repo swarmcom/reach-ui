@@ -1,23 +1,47 @@
 <template>
-<div style="margin-top:20px">
-  <div class="row">
-    <div class="col-4">
-      <h3>Release group:</h3>
+  <div style="margin-top:20px">
+    <b-row>
+      <b-col cols="4">
+        <h3>Release group:</h3>
+      </b-col>
+    </b-row>
+    <div class="form">
+      <form-text
+        id="name"
+        v-model="rec.name"
+        label="Release Group Name"
+      />
+      <form-text
+        id="description"
+        v-model="rec.description"
+        label="Release Group Description"
+      />
+      <div style="margin-top:20px">
+        <b-btn
+          class="pointer"
+          variant="primary"
+          @click="onCommit"
+        >
+          Commit
+        </b-btn>
+        <b-btn
+          class="pointer"
+          variant="outline-primary"
+          @click="onCancel"
+        >
+          Cancel
+        </b-btn>
+        <b-btn
+          class="float-right pointer"
+          variant="danger"
+          @click="onDelete"
+        >
+          Delete
+        </b-btn>
+      </div>
     </div>
+    <help />
   </div>
-
-  <div class="form">
-    <form-text id="name" label="Release Group Name" v-model="rec.name"></form-text>
-    <form-text id="description" label="Release Group Description" v-model="rec.description"></form-text>
-    <div style="margin-top:20px">
-      <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-      <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-      <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
-    </div>
-  </div>
-
-  <help></help>
-</div>
 </template>
 
 <script>
@@ -25,9 +49,14 @@ import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-release-group',
-  props: ['id'],
+  name: 'AdminReleaseGroup',
   mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

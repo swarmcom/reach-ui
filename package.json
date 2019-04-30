@@ -2,11 +2,12 @@
   "name": "reach-ui",
   "description": "Reach UI",
   "version": "1.0.0",
-  "author": "Roman Galeev <roman.galeev@ezuce.com>",
+  "author": "Roman Galeev <roman.galeev@ezuce.com>, Martin Harcar <martin.harcar@ezuce.com>",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
-    "build": "cross-env NODE_ENV=production webpack --no-color --optimize-minimize"
+    "build": "cross-env NODE_ENV=production webpack --no-color --optimize-minimize",
+    "lint": "eslint --ext .js,.vue src/"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
@@ -37,6 +38,8 @@
     "callback-loader": "^0.2.4",
     "copy-webpack-plugin": "^4.2.0",
     "cross-env": "^5.1.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.2.2",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.8",
     "precss": "^2.0.0",

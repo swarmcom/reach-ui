@@ -1,32 +1,113 @@
 <template>
-<div class="float-right">
-  <b-row>
-    <div v-if="this.$agent.can_hangup()" class="state-time">{{msToHms( this.state_time )}}</div>
-    <wrap-timer  v-if="this.wrap_visible" class="state-time"></wrap-timer>
-    <button v-if="this.$agent.is_hold()" style="background:#FFEDA4" @click="unhold" class="btn call-action-button">
-      <icon style="padding-top:5px" name="pause" scale="2"></icon>
-    </button>
-    <button v-if="this.$agent.is_oncall()" @click="hold" class="btn call-action-button">
-      <icon style="padding-top:5px" name="pause" scale="2"></icon>
-    </button>
+  <div class="float-right">
+    <b-row>
+      <div
+        v-if="this.$agent.can_hangup()"
+        class="state-time"
+      >
+        {{ msToHms( state_time ) }}
+      </div>
+      <wrap-timer
+        v-if="wrap_visible"
+        class="state-time"
+      />
+      <button
+        v-if="this.$agent.is_hold()"
+        style="background:#FFEDA4"
+        class="btn call-action-button"
+        @click="unhold"
+      >
+        <icon
+          style="padding-top:5px"
+          name="pause"
+          scale="2"
+        />
+      </button>
+      <button
+        v-if="this.$agent.is_oncall()"
+        class="btn call-action-button"
+        @click="hold"
+      >
+        <icon
+          style="padding-top:5px"
+          name="pause"
+          scale="2"
+        />
+      </button>
 
-    <button v-if="this.$agent.can_hangup()" @click="hangup" style="margin-left:2px" class="btn call-action-button">
-      <icon style="padding-top:2px" name="close" scale="2"></icon></button>
-    <button v-if="this.$agent.is_wrapup()" @click="wrapup" style="margin-left:2px" class="btn call-action-button">
-      <icon style="padding-top:2px" name="close" scale="2"></icon></button>
-    <button v-if="this.$agent.vm.state == 'barge'" @click="hangup" style="margin-left:2px" class="btn call-action-button">
-      <icon style="padding-top:2px" name="close" scale="2"></icon></button>
-  </b-row>
-  <b-row style="margin-top:5px; width:200px;">
-    <disposition v-if="this.uuid!=undefined && this.disp_visible" v-bind:uuid="this.uuid" style="width:100%"></disposition>
-  </b-row>
-  <br>
-  <br>
-  <b-row style="margin-top:5px;" class="float-right" v-if="can_record()">
-    <b-button style="width:85px" size="sm" class="pointer" v-if="!isRecording()" @click="record" variant="outline-danger">Record</b-button>
-    <b-button style="width:85px" size="sm" class="pointer" v-else variant="danger" :disabled="isRecording()">Recording</b-button>
-  </b-row>
-</div>
+      <button
+        v-if="this.$agent.can_hangup()"
+        style="margin-left:2px"
+        class="btn call-action-button"
+        @click="hangup"
+      >
+        <icon
+          style="padding-top:2px"
+          name="close"
+          scale="2"
+        />
+      </button>
+      <button
+        v-if="this.$agent.is_wrapup()"
+        style="margin-left:2px"
+        class="btn call-action-button"
+        @click="wrapup"
+      >
+        <icon
+          style="padding-top:2px"
+          name="close"
+          scale="2"
+        />
+      </button>
+      <button
+        v-if="this.$agent.vm.state == 'barge'"
+        style="margin-left:2px"
+        class="btn call-action-button"
+        @click="hangup"
+      >
+        <icon
+          style="padding-top:2px"
+          name="close"
+          scale="2"
+        />
+      </button>
+    </b-row>
+    <b-row style="margin-top:5px; width:200px;">
+      <disposition
+        v-if="uuid!='' && disp_visible"
+        :uuid="uuid"
+        style="width:100%"
+      />
+    </b-row>
+    <br>
+    <br>
+    <b-row
+      v-if="can_record()"
+      style="margin-top:5px;"
+      class="float-right"
+    >
+      <b-button
+        v-if="!isRecording()"
+        style="width:85px"
+        size="sm"
+        class="pointer"
+        variant="outline-danger"
+        @click="record"
+      >
+        Record
+      </b-button>
+      <b-button
+        v-else
+        style="width:85px"
+        size="sm"
+        class="pointer"
+        variant="danger"
+        :disabled="isRecording()"
+      >
+        Recording
+      </b-button>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -35,9 +116,16 @@ import Wrap from '@/Agent/Widget/Wrap'
 import DispositionSelect from '@/Agent/Widget/DispositionSelect'
 
 export default {
+  components: {
+    'wrap-timer': Wrap,
+    'disposition': DispositionSelect,
+  },
   mixins: [Common],
   props: {
-    uuid: String,
+    uuid: { 
+      type: String,
+      default: ''
+    },
     showDispositions: {
       type: Boolean,
       default: true
@@ -53,6 +141,23 @@ export default {
       wrap_visible: false,
       disp_visible: this.showDispositions,
       wrap: undefined
+    }
+  },
+  watch: {
+    showDispositions (v) {
+      this.disp_visible = v
+      return v
+    }
+  },
+  created () {
+    this.$bus.$on('agent_state', this.getState)
+    this.updater = setInterval(this.onTimer, 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.updater)
+    this.$bus.$off('agent_state', this.getState)
+    if(this.outgoing) {
+      this.$agent.mfa('ws_agent', 'unsubscribe', ['outgoing', this.outgoing.id])
     }
   },
   methods: {
@@ -127,27 +232,6 @@ export default {
     isRecording () {
       return ((this.inqueue && this.inqueue.keep_record) || (this.outgoing && this.outgoing.keep_record)) 
     }
-  },
-  watch: {
-    showDispositions (v) {
-      this.disp_visible = v
-      return v
-    }
-  },
-  created () {
-    this.$bus.$on('agent_state', this.getState)
-    this.updater = setInterval(this.onTimer, 1000)
-  },
-  beforeDestroy () {
-    clearInterval(this.updater)
-    this.$bus.$off('agent_state', this.getState)
-    if(this.outgoing) {
-      this.$agent.mfa('ws_agent', 'unsubscribe', ['outgoing', this.outgoing.id])
-    }
-  },
-  components: {
-    'wrap-timer': Wrap,
-    'disposition': DispositionSelect,
   },
 }
 </script>

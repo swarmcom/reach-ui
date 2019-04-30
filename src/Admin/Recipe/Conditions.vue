@@ -1,43 +1,101 @@
 <template>
-<div class="container">
-  <b-form-row v-if="edit" v-for="(cond, index) of conditions" :key="cond.name" style="margin-bottom: 5px">
-    <b-col cols=1>
-      <button @click="del(index)" class="btn btn-outline-danger pointer"><icon class="align-middle" name="minus" scale="1"></icon></button>
-    </b-col>
-    <b-col cols=5>
-      <b-input-group>
-        <b-input-group-prepend>
-          <b-dropdown text="C" variant="success">
-            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set_cond(index, comp.ref)">{{comp.name}}</b-dropdown-item>
-          </b-dropdown>
-        </b-input-group-prepend>
-        <b-form-input v-model="cond.name"></b-form-input>
-      </b-input-group>
-    </b-col>
-    <b-col>
-      <component v-bind:is="cond.name" :args="cond.args" @input="update_args(index, $event)"></component>
-    </b-col>
-  </b-form-row>
+  <div class="container">
+    <b-form-row
+      v-for="(cond, index) of conditions"
+      :key="cond.name"
+      style="margin-bottom: 5px"
+    >
+      <b-col
+        v-if="edit"
+        cols="1"
+      >
+        <b-btn
+          class="pointer"
+          variant="outline-danger"
+          @click="del(index)"
+        >
+          <icon
+            class="align-middle"
+            name="minus"
+            scale="1"
+          />
+        </b-btn>
+      </b-col>
+      <b-col
+        v-if="edit"
+        cols="5"
+      >
+        <b-input-group>
+          <b-input-group-prepend>
+            <b-dropdown
+              text="C"
+              variant="success"
+            >
+              <b-dropdown-item
+                v-for="comp of parts"
+                :key="comp.ref"
+                @click="set_cond(index, comp.ref)"
+              >
+                {{ comp.name }}
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-input-group-prepend>
+          <b-form-input v-model="cond.name" />
+        </b-input-group>
+      </b-col>
+      <b-col v-if="edit">
+        <component
+          :is="cond.name"
+          :args="cond.args"
+          @input="update_args(index, $event)"
+        />
+      </b-col>
+    </b-form-row>
 
-  <div class="form-row" v-if="edit">
-    <b-col cols=1>
-      <button @click="add" class="btn btn-outline-secondary pointer"><icon class="align-middle" name="plus" scale="1"></icon></button>
-    </b-col>
-    <b-col cols=5>
-      <b-input-group>
-        <b-input-group-prepend>
-          <b-dropdown text="C" variant="success">
-            <b-dropdown-item v-for="comp of parts" :key="comp.ref" @click="set(comp.ref)">{{comp.name}}</b-dropdown-item>
-          </b-dropdown>
-        </b-input-group-prepend>
-        <b-form-input v-model="condition"></b-form-input>
-      </b-input-group>
-    </b-col>
-    <b-col>
-      <component :is="condition" :args="args" @input="set_args"></component>
-    </b-col>
+    <div
+      v-if="edit"
+      class="form-row"
+    >
+      <b-col cols="1">
+        <button
+          class="btn btn-outline-secondary pointer"
+          @click="add"
+        >
+          <icon
+            class="align-middle"
+            name="plus"
+            scale="1"
+          />
+        </button>
+      </b-col>
+      <b-col cols="5">
+        <b-input-group>
+          <b-input-group-prepend>
+            <b-dropdown
+              text="C"
+              variant="success"
+            >
+              <b-dropdown-item
+                v-for="comp of parts"
+                :key="comp.ref"
+                @click="set(comp.ref)"
+              >
+                {{ comp.name }}
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-input-group-prepend>
+          <b-form-input v-model="condition" />
+        </b-input-group>
+      </b-col>
+      <b-col>
+        <component
+          :is="condition"
+          :args="args"
+          @input="set_args"
+        />
+      </b-col>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -62,8 +120,7 @@ import CallerId from '@/Admin/Recipe/Condition/CallerId'
 import CallerName from '@/Admin/Recipe/Condition/CallerName'
 import CallSkills from '@/Admin/Recipe/Condition/CallSkills'
 export default {
-  name: 'admin-recipe-conditions',
-  props: ['value', 'edit'],
+  name: 'AdminRecipeConditions',
   components: {
     ticks: Ticks,
     periodic: Periodic,
@@ -85,6 +142,16 @@ export default {
     caller_id: CallerId,
     caller_name: CallerName,
     call_skills: CallSkills,
+  },
+  props: {
+    value: {
+      type: Array,
+      default: () => ([])
+    },
+    edit: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
@@ -114,6 +181,11 @@ export default {
       args: [],
       conditions: this.value
     }
+  },
+  watch: {
+    conditions () {
+      this.commit()
+    },
   },
   methods: {
     commit () {
@@ -146,11 +218,6 @@ export default {
     show () {
       console.log(this)
     }
-  },
-  watch: {
-    conditions () {
-      this.commit()
-    },
   },
 }
 </script>

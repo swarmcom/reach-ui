@@ -1,25 +1,24 @@
 <template>
-<div>
-  <draggable
-    :list="widgets"
-    :options="{draggable:'.itemDragable'}"
-    @end="onDragEnd"
-  >
-    <b-row
-      v-for="(item, index) in widgets"
-      :key="index"
-      class="itemDragable"
+  <div>
+    <draggable
+      :list="widgets"
+      :options="{draggable:'.itemDragable'}"
+      @end="onDragEnd"
     >
-      <b-col>
-        <component
-          v-if="showWidget(item)"
-          v-bind:is="item"
-        />
-      </b-col>
-    </b-row>
-  </draggable>
-</div>
-
+      <b-row
+        v-for="(item, index) in widgets"
+        :key="index"
+        class="itemDragable"
+      >
+        <b-col>
+          <component
+            :is="item"
+            v-if="showWidget(item)"
+          />
+        </b-col>
+      </b-row>
+    </draggable>
+  </div>
 </template>
 
 <script>
@@ -28,10 +27,21 @@ import Stats from '@/Agent/Stats'
 import draggable from 'vuedraggable'
 
 export default {
+  components: {
+    'session-manager': SessionManager,
+    'my-statistics': Stats,
+    draggable
+  },
   data () {
     return {
       widgets: []
     }
+  },
+  created () {
+    if (this.$agent.vm.storage_data.agentWidgets != undefined)
+      this.widgets = this.$agent.vm.storage_data.agentWidgets
+    else
+      this.widgets = ['session-manager', 'my-statistics']
   },
   methods: {
     showWidget(name) {
@@ -50,17 +60,6 @@ export default {
       this.$agent.vm.storage_data["agentWidgets"] = this.widgets
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     }
-  },
-  created () {
-    if (this.$agent.vm.storage_data.agentWidgets != undefined)
-      this.widgets = this.$agent.vm.storage_data.agentWidgets
-    else
-      this.widgets = ['session-manager', 'my-statistics']
-  },
-  components: {
-    'session-manager': SessionManager,
-    'my-statistics': Stats,
-    draggable
   }
 }
 </script>

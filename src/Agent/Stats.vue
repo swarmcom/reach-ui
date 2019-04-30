@@ -1,23 +1,53 @@
 <template>
-<div v-access:widget-my-statistics>
-  <toggle-bar style="cursor: move"></toggle-bar>
-  <b-collapse v-model="showCollapse" id="collapseMyStatistics" class="mt-2 itemDragable">
-    <b-row style="margin-top:10px">
-      <b-col sm="4">
-        <b-form-select class="pointer" size="sm" v-model="period.value" @change="updateWidgets">
-          <option v-for="period in periods" :value="period.value" :key="period.value">{{period.name}}</option>
-        </b-form-select>
-      </b-col>
-    </b-row>
-    <b-row style="margin-top:10px">
-      <b-col cols=1 class="table-body-orange"><ciq></ciq></b-col>
-      <b-col cols=1 class="table-body-green"><count></count></b-col>
-      <b-col cols=1 style="padding-left:0; margin-right: 2px; padding-right: 0"><states></states></b-col>
-      <b-col><agent :period="period.value"></agent></b-col>
-      <b-col><group :period="period.value"></group></b-col>
-    </b-row>
-  </b-collapse>
-</div>
+  <div v-access:widget-my-statistics>
+    <toggle-bar style="cursor: move" />
+    <b-collapse
+      id="collapseMyStatistics"
+      v-model="showCollapse"
+      class="mt-2 itemDragable"
+    >
+      <b-row style="margin-top:10px">
+        <b-col sm="4">
+          <b-form-select
+            v-model="period.value"
+            class="pointer"
+            size="sm"
+            @change="updateWidgets"
+          >
+            <option
+              v-for="itemPeriod in periods"
+              :key="itemPeriod.value"
+              :value="itemPeriod.value"
+            >
+              {{ itemPeriod.name }}
+            </option>
+          </b-form-select>
+        </b-col>
+      </b-row>
+      <b-row style="margin-top:10px">
+        <b-col
+          cols="1"
+          class="table-body-orange"
+        >
+          <ciq />
+        </b-col>
+        <b-col
+          cols="1"
+          class="table-body-green"
+        >
+          <count />
+        </b-col>
+        <b-col
+          cols="1"
+          style="padding-left:0; margin-right: 2px; padding-right: 0"
+        >
+          <states />
+        </b-col>
+        <b-col><agent :period="period.value" /></b-col>
+        <b-col><group :period="period.value" /></b-col>
+      </b-row>
+    </b-collapse>
+  </div>
 </template>
 
 <script>
@@ -31,8 +61,7 @@ import Storage from '@/Storage'
 
 export default {
   widgetName: 'My statistics',
-  name: 'my-statistics',
-  mixins: [Common, Storage],
+  name: 'MyStatistics',
   components: {
     ciq: CIQ,
     count: Count,
@@ -40,6 +69,7 @@ export default {
     agent: Agent,
     states: States
   },
+  mixins: [Common, Storage],
   data () {
     return {
       period: {value: "15m", name: "Last 15 minutes"},
@@ -54,15 +84,15 @@ export default {
       showCollapse: true
     }
   },
-  methods: {
-    updateWidgets (v) {
-    }
-  },
   watch: {
     showCollapse: function (newVal, oldVal) {
       if (newVal !== oldVal) {
         this.saveLocal('showCollapse').writeLocal()
       }
+    }
+  },
+  methods: {
+    updateWidgets (v) {
     }
   },
 }

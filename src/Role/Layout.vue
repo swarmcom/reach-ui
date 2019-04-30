@@ -2,6 +2,22 @@
 import moment from 'moment'
 
 export default {
+  filters: {
+    filterDate: function (date) {
+      return moment(date).format('ddd[,] Do MMM YYYY[,] HH:mm:ss');
+    }
+  },
+  watch:{
+    $route (to, from) {
+      this.path = to.matched[to.matched.length - 1].path
+      let wp = this.$agent.vm.wide_page
+      this.$agent.vm.wide_page[this.path] = wp[this.path] == undefined? false : wp[this.path]
+    }
+  },
+  created () {
+    this.date = new Date()
+    setInterval(() => this.date = new Date, 1000)
+  },
   methods: {
     isNarrow () {
       return ! this.$agent.vm.wide_page[this.path]
@@ -40,22 +56,6 @@ export default {
       this.$agent.vm.storage_data[name] = state
       localStorage.setItem("reach-ui", JSON.stringify(this.$agent.vm.storage_data))
     },
-  },
-  created () {
-    this.date = new Date()
-    setInterval(() => this.date = new Date, 1000)
-  },
-  filters: {
-    filterDate: function (date) {
-      return moment(date).format('ddd[,] Do MMM YYYY[,] HH:mm:ss');
-    }
-  },
-  watch:{
-    $route (to, from) {
-      this.path = to.matched[to.matched.length - 1].path
-      let wp = this.$agent.vm.wide_page
-      this.$agent.vm.wide_page[this.path] = wp[this.path] == undefined? false : wp[this.path]
-    }
   } 
 }
 </script>

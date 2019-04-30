@@ -1,18 +1,42 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Inbound traffic overview</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Inbound traffic overview</h3>
+      </div>
+    </div>
+    <widget-query
+      v-model="query_params"
+      enable="range:sla:group_by"
+      require-range
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+      tbody-tr-class="pointer"
+      @row-clicked="details"
+    >
+      <template
+        slot="entity"
+        slot-scope="dataSlot"
+      >
+        <b-link @click.stop="sessions(dataSlot)">
+          {{ nameFormatter(dataSlot.item.entity) }}
+        </b-link>
+      </template>
+      <template
+        slot="abandoned"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.abandoned }} / {{ percentageFormatter(dataSlot.item.abandoned, dataSlot.item.ring_count) }}
+      </template>
+    </b-table>
   </div>
-  <widget-query v-model="query_params" enable="range:sla:group_by" require-range @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" tbody-tr-class="pointer" @row-clicked="details">
-    <template slot="entity" slot-scope="data">
-      <b-link @click.stop="sessions(data)">{{ nameFormatter(data.item.entity) }}</b-link>
-    </template>
-    <template slot="abandoned" slot-scope="data">
-      {{ data.item.abandoned }} / {{ percentageFormatter(data.item.abandoned, data.item.ring_count) }}
-    </template>
-  </b-table>
-</div>
 </template>
 
 <script>

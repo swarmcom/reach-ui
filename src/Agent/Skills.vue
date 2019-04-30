@@ -1,5 +1,9 @@
 <template>
-  <tags v-model="skills" v-on:input="commit()" placeholder="Agent effective tags..."></tags>
+  <tags
+    v-model="skills"
+    placeholder="Agent effective tags..."
+    @input="commit()"
+  />
 </template>
 
 <script>
@@ -7,13 +11,16 @@ import Skills from '@/Agent/Widget/Skills'
 import Common from '@/Admin/Common'
 import Tags from '@/Widget/Tags'
 export default {
-  name: 'agent-skills',
+  name: 'AgentSkills',
   components: { 'tags': Tags },
   mixins: [Common],
   data () {
     return {
       skills: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -23,9 +30,6 @@ export default {
     commit () {
       this.$agent.p_mfa('ws_agent', 'skills', [this.list2skills(this.skills)])
     }
-  },
-  created () {
-    this.query()
   },
 }
 </script>

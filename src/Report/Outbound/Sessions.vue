@@ -1,46 +1,102 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Outbound sessions {{ header }}</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Outbound sessions {{ header }}</h3>
+      </div>
+    </div>
+    <widget-query
+      v-if="is_standalone()"
+      v-model="query_params"
+      enable="range:agents:agent_groups:clients"
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+      @row-clicked="click"
+    >
+      <template
+        slot="state_total"
+        slot-scope="dataSlot"
+      >
+        {{ durationFormatter(dataSlot.item.states.total) }}
+      </template>
+      <template
+        slot="state_ringing"
+        slot-scope="dataSlot"
+      >
+        {{ durationFormatter(dataSlot.item.states.states.ringing) }}
+      </template>
+      <template
+        slot="state_oncall"
+        slot-scope="dataSlot"
+      >
+        {{ durationFormatter(dataSlot.item.states.states.oncall) }}
+      </template>
+      <template
+        slot="line_out"
+        slot-scope="dataSlot"
+      >
+        {{ nameFormatter(dataSlot.item.line_out) }}
+      </template>
+      <template
+        slot="client"
+        slot-scope="dataSlot"
+      >
+        {{ nameFormatter(dataSlot.item.client) }}
+      </template>
+      <template
+        slot="agent"
+        slot-scope="dataSlot"
+      >
+        {{ nameFormatter(dataSlot.item.agent) }}
+      </template>
+      <template
+        slot="calling"
+        slot-scope="dataSlot"
+      >
+        {{ dataSlot.item.target }}
+      </template>
+      <template
+        slot="player"
+        slot-scope="dataSlot"
+      >
+        <b-btn
+          v-if="dataSlot.item.keep_record"
+          variant="dark"
+          size="sm"
+          @click="dataSlot.toggleDetails"
+        >
+          {{ dataSlot.detailsShowing ? 'Hide' : 'Show' }} Player
+        </b-btn>
+      </template>
+      <template
+        slot="row-details"
+        slot-scope="dataSlot"
+      >
+        <player
+          v-if="dataSlot.item.keep_record"
+          :href="'/records/' + dataSlot.item.uuid + '.wav'"
+        />
+      </template>
+    </b-table>
+    <b-row>
+      <b-col>
+        <b-button
+          variant="outline-primary"
+          class="float-right"
+          @click="more"
+        >
+          More
+        </b-button>
+      </b-col>
+    </b-row>
   </div>
-  <widget-query v-if="is_standalone()" v-model="query_params" enable="range:agents:agent_groups:clients" @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields" @row-clicked="click">
-    <template slot="state_total" slot-scope="data">
-      {{ durationFormatter(data.item.states.total) }}
-    </template>
-    <template slot="state_ringing" slot-scope="data">
-      {{ durationFormatter(data.item.states.states.ringing) }}
-    </template>
-    <template slot="state_oncall" slot-scope="data">
-      {{ durationFormatter(data.item.states.states.oncall) }}
-    </template>
-    <template slot="line_out" slot-scope="data">
-      {{ nameFormatter(data.item.line_out) }}
-    </template>
-    <template slot="client" slot-scope="data">
-      {{ nameFormatter(data.item.client) }}
-    </template>
-    <template slot="agent" slot-scope="data">
-      {{ nameFormatter(data.item.agent) }}
-    </template>
-    <template slot="calling" slot-scope="data">
-      {{ data.item.target }}
-    </template>
-    <template slot="player" slot-scope="data">
-      <b-btn variant="dark" v-if="data.item.keep_record" size="sm" @click="data.toggleDetails">
-        {{data.detailsShowing ? 'Hide' : 'Show'}} Player
-      </b-btn>
-    </template>
-    <template slot="row-details" slot-scope="data">
-      <player v-if="data.item.keep_record" :href="'/records/' + data.item.uuid + '.wav'"></player>
-    </template>
-  </b-table>
-  <b-row>
-    <b-col>
-      <b-button variant="outline-primary" class="float-right" @click="more">More</b-button>
-    </b-col>
-  </b-row>
-</div>
 </template>
 
 <script>
@@ -69,6 +125,13 @@ export default {
       },
     }
   },
+  created () {
+    if (! this.is_standalone() && ! this.is_cached()) {
+      this.query_params = this.set_query_params(this.query_params)
+      this.safe_query(this.query_params)
+      this.maybe_set_header()
+    }
+  },
   methods: {
     query (params) {
       return this.$agent.p_mfa('ws_report', 'query', ['report_sessions', 'outgoing', params])
@@ -76,13 +139,6 @@ export default {
     click ({uuid}) {
       this.$router.push(`/reports/outbound/session/events/${uuid}`)
     },
-  },
-  created () {
-    if (! this.is_standalone() && ! this.is_cached()) {
-      this.query_params = this.set_query_params(this.query_params)
-      this.safe_query(this.query_params)
-      this.maybe_set_header()
-    }
   },
 }
 </script>

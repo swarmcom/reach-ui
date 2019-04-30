@@ -1,15 +1,31 @@
 <template>
-  <tags v-model="skills" placeholder="Add Skills"></tags>
+  <tags
+    v-model="skills"
+    placeholder="Add Skills"
+  />
 </template>
 
 <script>
   export default {
-    name: 'add-skills',
-    props: ['args'],
+    name: 'AddSkills',
+    props: {
+      args: {
+        type: Array,
+        default: () => ([])
+      }
+    },
     data () {
       return {
         skills: [],
       }
+    },
+    watch: {
+      skills () {
+        this.commit()
+      }
+    },
+    created () {
+      this.query()
     },
     methods: {
       commit () {
@@ -20,14 +36,6 @@
         if (this.args[0] !== undefined)
           this.skills = this.args[0]
       },
-    },
-    watch: {
-      skills () {
-        this.commit()
-      }
-    },
-    created () {
-      this.query()
     }
   }
 </script>

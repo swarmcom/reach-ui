@@ -1,35 +1,106 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div v-if="effecitve" class="col-5">
-    <select class="custom-select" style="width: 100%" :value="value"  :disabled="isDisabled()" @change="onUpdate($event.target.value)">
-      <option></option>
-      <option v-for="prompt in prompts" :value="prompt.id" :selected="isActive(prompt.id)">{{ prompt.name }}</option>
-    </select>
-  </div>
-  <div v-if="effecitve" class="col-4">
-    <select class="custom-select" style="width: 100%" :value="value" disabled>
-      <option></option>
-      <option v-for="prompt in prompts" :value="prompt.id" :selected="isEffective(prompt.id)">{{ prompt.name }}</option>
-    </select>
-  </div>
-  <div v-else class="col-9">
-    <select class="custom-select" style="width: 100%" :value="value" :disabled="isDisabled()" @change="onUpdate($event.target.value)">
-      <option></option>
-      <option v-for="prompt in prompts" :value="prompt.id" :selected="isActive(prompt.id)">{{ prompt.name }}</option>
-    </select>
-  </div>
-</div>
+  <b-row
+    style="margin-top: 5px"
+  >
+    <b-col cols="3">
+      <label
+        :id="label"
+      >
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col
+      v-if="effecitve"
+      cols="5"
+    >
+      <select
+        class="custom-select"
+        style="width: 100%"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate($event.target.value)"
+      >
+        <option />
+        <option
+          v-for="prompt in prompts"
+          :key="prompt.id"
+          :value="prompt.id"
+          :selected="isActive(prompt.id)"
+        >
+          {{ prompt.name }}
+        </option>
+      </select>
+    </b-col>
+    <b-col
+      v-if="effecitve"
+      cols="4"
+    >
+      <select
+        class="custom-select"
+        style="width: 100%"
+        :value="value"
+        disabled
+      >
+        <option />
+        <option
+          v-for="prompt in prompts"
+          :key="prompt.id"
+          :value="prompt.id"
+          :selected="isEffective(prompt.id)"
+        >
+          {{ prompt.name }}
+        </option>
+      </select>
+    </b-col>
+    <b-col
+      v-else
+      cols="9"
+    >
+      <select
+        class="custom-select"
+        style="width: 100%"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate($event.target.value)"
+      >
+        <option />
+        <option
+          v-for="prompt in prompts"
+          :key="prompt.id"
+          :value="prompt.id"
+          :selected="isActive(prompt.id)"
+        >
+          {{ prompt.name }}
+        </option>
+      </select>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'widget-prompts',
-  props: ['label', 'value', 'effecitve'],
+  name: 'WidgetPrompts',
+  props: {
+    value: {
+      type: String,
+      default: ""
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    effecitve: {
+      type: Boolean,
+      value: false
+    }
+  },
   data () {
     return {
       prompts: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isActive(Id) {
@@ -47,9 +118,6 @@ export default {
     onUpdate (value) {
       this.$emit('input', value)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

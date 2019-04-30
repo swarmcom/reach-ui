@@ -1,22 +1,64 @@
 <template>
-<b-row style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <b-col v-if="defined()">
-    <b-img :src="filePath()" fluid/>
-  </b-col>
-  <b-col>
-    <b-form-file v-model="file" v-on:input="onFile" :placeholder="placeholder" :accept="fileType"></b-form-file>
-  </b-col>
-  <b-col v-if="defined()" cols="1">
-    <b-btn variant="outline-danger" @click="clear">Clear</b-btn>
-  </b-col>
-</b-row>
+  <b-row style="margin-top: 5px">
+    <label
+      :id="label"
+      class="col-3 col-form-label"
+    >
+      {{ label }}
+    </label>
+    <b-col v-if="defined()">
+      <b-img
+        :src="filePath()"
+        fluid
+      />
+    </b-col>
+    <b-col>
+      <b-form-file
+        v-model="file"
+        :placeholder="placeholder"
+        :accept="fileType"
+        @input="onFile"
+      />
+    </b-col>
+    <b-col
+      v-if="defined()"
+      cols="1"
+    >
+      <b-btn
+        variant="outline-danger"
+        @click="clear"
+      >
+        Clear
+      </b-btn>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'form-file',
-  props: ['label', 'value', 'placeholder', 'uri', 'fileType' ],
+  name: 'FormFile',
+  props: {
+    label: {
+      type: String,
+      default: ""
+    },
+    value: {
+      type: String,
+      default: "undefined"
+    },
+    placeholder: {
+      type: String,
+      default: "No file chosen"
+    },
+    uri: {
+      type: String,
+      default: ""
+    },
+    fileType: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       file: undefined

@@ -1,26 +1,46 @@
 <template>
-<div class="container">
-  <b-row style="margin-bottom: 10px"><b-col><h3>Nodes:</h3></b-col></b-row>
+  <div class="container">
+    <b-row style="margin-bottom: 10px">
+      <b-col><h3>Nodes:</h3></b-col>
+    </b-row>
 
-  <div v-for="node of nodes" :key="node.id" style="margin-top: 5px">
-    <node :disable=true :value="node" v-on:change="change" v-on:del="del" v-on:edit="edit"></node>
+    <div
+      v-for="itemNode of nodes"
+      :key="itemNode.id"
+      style="margin-top: 5px"
+    >
+      <node
+        :disable="true"
+        :value="itemNode"
+        @change="change"
+        @del="del"
+        @edit="edit"
+      />
+    </div>
+    <node
+      :disable="false"
+      :value="node"
+      style="margin-top: 5px"
+      @change="change_node"
+      @add="add"
+    />
   </div>
-  <node :disable=false :value="node" style="margin-top: 5px" v-on:change="change_node" v-on:add="add"></node>
-
-</div>
 </template>
 
 <script>
 import Node from '@/Kam/Node'
 
 export default {
-  name: 'admin-kam-nodes',
+  name: 'AdminKamNodes',
   components: { Node },
   data () {
     return {
       node: {},
       nodes: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -47,9 +67,6 @@ export default {
     edit (id) {
       this.$router.push(`/kam/node/${id}`)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

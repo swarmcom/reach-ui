@@ -1,36 +1,90 @@
 <template>
-<div class="form">
-  <form-text label="Queue Group Name" v-model="rec.name"></form-text>
-  <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
-  <mohs label="Music on hold" v-model="rec.moh_id"></mohs>
-  <form-number-real label="Aging" v-model="rec.aging_factor"></form-number-real>
-  <form-number label="Weight" v-model="rec.weight"></form-number>
-  <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled"></form-select-bool>
-  <form-number label="Wrap-up timer" v-model="rec.wrapup_timer"></form-number>
-  <form-number label="Auto wrap-up" v-model="rec.auto_wrapup"></form-number>
-  <form-tags label="Skills" placeholder="Skill..." v-model="skills"></form-tags>
-  <div style="margin-top:20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Queue Group Name"
+    />
+    <recipes
+      v-model="rec.recipe_id"
+      label="Recipe"
+    />
+    <mohs
+      v-model="rec.moh_id"
+      label="Music on hold"
+    />
+    <form-number-real
+      v-model="rec.aging_factor"
+      label="Aging"
+    />
+    <form-number
+      v-model="rec.weight"
+      label="Weight"
+    />
+    <form-select-bool
+      v-model="rec.wrapup_enabled"
+      label="Wrap-up enabled"
+    />
+    <form-number
+      v-model="rec.wrapup_timer"
+      label="Wrap-up timer"
+    />
+    <form-number
+      v-model="rec.auto_wrapup"
+      label="Auto wrap-up"
+    />
+    <form-tags
+      v-model="skills"
+      label="Skills"
+      placeholder="Skill..."
+    />
+    <div style="margin-top:20px">
+      <b-btn
+        class="pointer"
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-  <help></help>
-</div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-queue-group',
-  props: ['id'],
+  name: 'AdminQueueGroup',
   mixins: [Common],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},
       module: 'ws_db_queue_group',
       skills: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -62,9 +116,6 @@ export default {
     onCancel () {
       this.$router.go(-1)
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

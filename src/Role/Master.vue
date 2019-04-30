@@ -1,24 +1,50 @@
 <template>
   <div style="min-height: 100%; padding-bottom: 60px">
-    <b-navbar class="navbar-custom fixed-top" toggleable="md" type="dark" variant="info">
-      <b-nav-toggle target="nav_collapse"></b-nav-toggle>
-      <b-navbar-brand to="/">{{ this.$agent.vm.agent.name}}</b-navbar-brand>
-      <b-collapse is-nav id="nav_collapse">
+    <b-navbar
+      class="navbar-custom fixed-top"
+      toggleable="md"
+      type="dark"
+      variant="info"
+    >
+      <b-nav-toggle target="nav_collapse" />
+      <b-navbar-brand to="/">
+        {{ this.$agent.vm.agent.name }}
+      </b-navbar-brand>
+      <b-collapse
+        id="nav_collapse"
+        is-nav
+      >
         <b-navbar-nav>
           <b-nav-item-dropdown text="Instance">
-            <b-dropdown-item to="/kam/nodes">Nodes</b-dropdown-item>
-            <b-dropdown-item to="/kam/domains">Domains</b-dropdown-item>
-            <b-dropdown-item to="/kam/registry">Registry</b-dropdown-item>
+            <b-dropdown-item to="/kam/nodes">
+              Nodes
+            </b-dropdown-item>
+            <b-dropdown-item to="/kam/domains">
+              Domains
+            </b-dropdown-item>
+            <b-dropdown-item to="/kam/registry">
+              Registry
+            </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item to="/params">Parameters</b-nav-item>
-          <b-nav-item @click="logout">Logout</b-nav-item>
+          <b-nav-item to="/params">
+            Parameters
+          </b-nav-item>
+          <b-nav-item @click="logout">
+            Logout
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
 
-    <div v-bind:class="maybeWide()" style="margin-top: 20px">
-      <transition name="reach" mode="out-in">
-        <router-view></router-view>
+    <div
+      :class="maybeWide()"
+      style="margin-top: 20px"
+    >
+      <transition
+        name="reach"
+        mode="out-in"
+      >
+        <router-view />
       </transition>
     </div>
 
@@ -27,15 +53,24 @@
         <div class="row justify-content-center">
           <small>
             Agent &copy; 2018 eZuce
-            UI: <a target="_blank" :href="ref_ui_uri()">{{ ref_ui }}</a>
-            Backend: <a target="_blank" :href="ref_backend_uri()">{{ ref_backend }}</a>
+            UI: <a
+              target="_blank"
+              :href="ref_ui_uri()"
+            >{{ refui }}</a>
+            Backend: <a
+              target="_blank"
+              :href="ref_backend_uri()"
+            >{{ refbackend }}</a>
           </small>
         </div>
       </div>
     </footer>
 
-    <notifications position="bottom right" :speed="500" :duration="1000"/>
-
+    <notifications
+      position="bottom right"
+      :speed="500"
+      :duration="1000"
+    />
   </div>
 </template>
 
@@ -60,8 +95,17 @@ const router = new VueRouter({
 })
 
 export default {
-  props: [ 'ref_ui', 'ref_backend' ],
   mixins: [Layout],
+  props: {
+    refui: {
+      type: String,
+      default: ''
+    },
+    refbackend: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       date: null,

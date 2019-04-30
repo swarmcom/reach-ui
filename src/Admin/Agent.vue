@@ -1,46 +1,138 @@
 <template>
-<div class="form">
-  <form-text label="Agent Name" v-model="rec.name"></form-text>
-  <form-text label="Login" v-model="rec.login"></form-text>
-  <form-password label="Password" v-model="rec.password"></form-password>
-  <agent-groups label="Agent Group" v-model="rec.group_id"></agent-groups>
-  <release-groups label="Release Group" v-model="rec.release_group_id" :effective="eff.release_group_id"></release-groups>
-  <lines label="Line Out" v-model="rec.line_id" :effective="eff.line_id ? eff.line.name : ''"></lines>
-  <roles label="Role" v-model="rec.role_id" :effective="eff.role_id"></roles>
-  <acl label="Access list" v-model="rec.acl_group_id" :effective="eff.acl_group_id"></acl>
-  <form-text label="Primary Contact" v-model="rec.uri"></form-text>
-  <uris label="Additional Contacts" v-model="rec.uris"></uris>
-  <form-text label="Agent Caller ID Number" v-model="rec.caller_id_number"></form-text>
-  <form-number label="Ring Timeout" v-model="rec.ring_timeout" :effective="eff.ring_timeout"></form-number>
-  <form-number label="Suspend Time" v-model="rec.suspend_time"></form-number>
-  <form-number label="Max Missed Calls (auto release)" v-model="rec.max_ring_fails" :effective="eff.max_ring_fails"></form-number>
-  <form-select-bool label="Reset Max Rings On Success" v-model="rec.reset_rings_fails" :effective="eff.reset_rings_fails"></form-select-bool>
-  <form-number label="Auto Logout" v-model="rec.autologout" :effective="eff.autologout"></form-number>
-  <form-bool label="Persistent" v-model="rec.persistent"></form-bool>
-  <form-file label="Avatar" uri="/avatar" v-model="rec.avatar" :fileType="'image/*'"></form-file>
-  <form-tags label="Agent Skills" effective_label="Agent Inherited Skills" placeholder="Skill..." v-model="skills" :effective="effective_skills"></form-tags>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Agent Name"
+    />
+    <form-text
+      v-model="rec.login"
+      label="Login"
+    />
+    <form-password
+      v-model="rec.password"
+      label="Password"
+    />
+    <agent-groups
+      v-model="rec.group_id"
+      label="Agent Group"
+    />
+    <release-groups
+      v-model="rec.release_group_id"
+      label="Release Group"
+      :effective="eff.release_group_id"
+    />
+    <lines
+      v-model="rec.line_id"
+      label="Line Out"
+      :effective="eff.line_id ? eff.line.name : ''"
+    />
+    <roles
+      v-model="rec.role_id"
+      label="Role"
+      :effective="eff.role_id"
+    />
+    <acl
+      v-model="rec.acl_group_id"
+      label="Access list"
+      :effective="eff.acl_group_id"
+    />
+    <form-text
+      v-model="rec.uri"
+      label="Primary Contact"
+    />
+    <uris
+      v-model="rec.uris"
+      label="Additional Contacts"
+    />
+    <form-text
+      v-model="rec.caller_id_number"
+      label="Agent Caller ID Number"
+    />
+    <form-number
+      v-model="rec.ring_timeout"
+      label="Ring Timeout"
+      :effective="eff.ring_timeout"
+    />
+    <form-number
+      v-model="rec.suspend_time"
+      label="Suspend Time"
+    />
+    <form-number
+      v-model="rec.max_ring_fails"
+      label="Max Missed Calls (auto release)"
+      :effective="eff.max_ring_fails"
+    />
+    <form-select-bool
+      v-model="rec.reset_rings_fails"
+      label="Reset Max Rings On Success"
+      :effective="eff.reset_rings_fails"
+    />
+    <form-number
+      v-model="rec.autologout"
+      label="Auto Logout"
+      :effective="eff.autologout"
+    />
+    <form-bool
+      v-model="rec.persistent"
+      label="Persistent"
+    />
+    <form-file
+      v-model="rec.avatar"
+      label="Avatar"
+      uri="/avatar"
+      :file-type="'image/*'"
+    />
+    <form-tags
+      v-model="skills"
+      label="Agent Skills"
+      effective-label="Agent Inherited Skills"
+      placeholder="Skill..."
+      :effective="effective_skills"
+    />
 
-  <div style="margin-top:20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+    <div style="margin-top:20px">
+      <b-btn
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-  <help></help>
-</div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
 import URIs from '@/Widget/URIs'
-import FormTextEffective from '@/Widget/FormTextEffective'
 import FormPassword from '@/Widget/FormPassword'
-import LineOuts from '@/Widget/LineOuts'
 
 export default {
-  name: 'admin-agent',
+  name: 'AdminAgent',
+  components: {
+    uris: URIs,
+    'form-password': FormPassword
+  },
   mixins: [Common],
-  components: { uris: URIs, 'form-text-effective': FormTextEffective, 'form-password': FormPassword },
-  props: ['id'],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},
@@ -48,6 +140,9 @@ export default {
       skills: [],
       effective_skills: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -81,9 +176,6 @@ export default {
     onCancel () {
       this.$router.go(-1)
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

@@ -1,11 +1,25 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Productivity</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Productivity</h3>
+      </div>
+    </div>
+    <widget-query
+      v-model="query_params"
+      enable="range:group_by"
+      group-by="productivity"
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+    />
   </div>
-  <widget-query v-model="query_params" enable="range:group_by" group-by="productivity" @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
-</div>
 </template>
 
 <script>

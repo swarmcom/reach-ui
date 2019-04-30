@@ -1,4 +1,5 @@
 <template>
+  <div />  
 </template>
 
 <script>
@@ -14,6 +15,14 @@ export default {
       data: [],
       updater: ''
     }
+  },
+  created () {
+    this.loadCache()
+    this.query(this.type)
+    this.updater = setInterval(this.onTimer, 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.updater)
   },
   methods: {
     query: async function (type) {
@@ -51,14 +60,6 @@ export default {
         this.type = this.$agent.vm.live_cache[key]['type']
       }
     },
-  },
-  created () {
-    this.loadCache()
-    this.query(this.type)
-    this.updater = setInterval(this.onTimer, 1000)
-  },
-  beforeDestroy () {
-    clearInterval(this.updater)
   }
 }
 </script>

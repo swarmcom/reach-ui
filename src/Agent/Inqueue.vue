@@ -1,25 +1,51 @@
 <template>
-<div>
-  <b-row>
-    <b-col cols="12" md="9" order="2" order-md="1">
-      <outgoing v-if="outgoing_visible"></outgoing>
-      <call v-if="call_visible" :uuid="uuid"></call>
-      <vm v-if="vm_visible" :uuid="uuid"></vm>
-      <spy v-if="spy_visible" :uuid="uuid"></spy>
-    </b-col>
-    <b-col cols="12" md="3" order="1" order-md="2">
-      <phone-actions :uuid="uuid" :showDispositions="showDispositions"></phone-actions>
-    </b-col>
-  </b-row>
-  <b-row>
-    <b-col cols="12">
-      <ringer v-if="ringer_visible"></ringer>
-      <transfer-conference :uuid="uuid" :inqueue_record="inqueue_record" v-if="$agent.can_conference()"></transfer-conference>
-      <conference v-if="conf_visible"></conference>
-      <conf-request></conf-request>
-    </b-col>
-  </b-row>
-</div>
+  <div>
+    <b-row>
+      <b-col
+        cols="12"
+        md="9"
+        order="2"
+        order-md="1"
+      >
+        <outgoing v-if="outgoing_visible" />
+        <call
+          v-if="call_visible"
+          :uuid="uuid"
+        />
+        <vm
+          v-if="vm_visible"
+          :uuid="uuid"
+        />
+        <spy
+          v-if="spy_visible"
+          :uuid="uuid"
+        />
+      </b-col>
+      <b-col
+        cols="12"
+        md="3"
+        order="1"
+        order-md="2"
+      >
+        <phone-actions
+          :uuid="uuid"
+          :show-dispositions="showDispositions"
+        />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="12">
+        <ringer v-if="ringer_visible" />
+        <transfer-conference
+          v-if="$agent.can_conference()"
+          :uuid="uuid"
+          :inqueue_record="inqueue_record"
+        />
+        <conference v-if="conf_visible" />
+        <conf-request />
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -33,6 +59,17 @@ import InqueueConf from '@/Agent/Inqueue/Conf'
 import PhoneActions from '@/Agent/Inqueue/PhoneActions'
 import TransferConference from '@/Agent/Widget/TransferConference'
 export default {
+  components: {
+    call: Call,
+    vm: Vm,
+    conference: Conference,
+    outgoing: Outgoing,
+    ringer: Ringer,
+    spy: Spy,
+    'conf-request': InqueueConf,
+    'phone-actions': PhoneActions,
+    'transfer-conference': TransferConference,
+  },
   data () {
     return {
       call_visible: false,
@@ -45,6 +82,13 @@ export default {
       uuid: undefined,
       inqueue_record: null
     }
+  },
+  created () {
+    this.$agent.p_mfa('ws_agent', 'request_state', [])
+    this.$bus.$on('agent_state', this.handleState)
+  },
+  beforeDestroy () {
+    this.$bus.$off('agent_state', this.handleState)
   },
   methods: {
     handleState ({ state }) {
@@ -96,24 +140,6 @@ export default {
         }
       }
     },
-  },
-  created () {
-    this.$agent.p_mfa('ws_agent', 'request_state', [])
-    this.$bus.$on('agent_state', this.handleState)
-  },
-  beforeDestroy () {
-    this.$bus.$off('agent_state', this.handleState)
-  },
-  components: {
-    call: Call,
-    vm: Vm,
-    conference: Conference,
-    outgoing: Outgoing,
-    ringer: Ringer,
-    spy: Spy,
-    'conf-request': InqueueConf,
-    'phone-actions': PhoneActions,
-    'transfer-conference': TransferConference,
   },
 }
 </script>

@@ -1,33 +1,75 @@
 <template>
-<div style="margin-top:20px">
-  <div class="row">
-    <div class="col-4">
-      <h3>Role:</h3>
+  <div style="margin-top:20px">
+    <b-row>
+      <b-col cols="4">
+        <h3>Role:</h3>
+      </b-col>
+    </b-row>
+    <div class="form">
+      <form-text
+        id="name"
+        v-model="rec.name"
+        label="Role Name"
+      />
+      <form-text
+        id="description"
+        v-model="rec.description"
+        label="Role Description"
+      />
+      <b-row 
+        style="margin-top: 5px"
+      >
+        <label
+          id="UI Variant"
+          class="col-3 col-form-label"
+        >UI Variant</label>
+        <b-col cols="9">
+          <select
+            v-model="rec.ui"
+            class="custom-select"
+          >
+            <option />
+            <option
+              v-for="ui in uis"
+              :key="ui"
+              :value="ui"
+              :selected="ui == rec.ui"
+            >
+              {{ ui }}
+            </option>
+          </select>
+        </b-col>
+      </b-row>
     </div>
-  </div>
 
-  <div class="form">
-    <form-text id="name" label="Role Name" v-model="rec.name"></form-text>
-    <form-text id="description" label="Role Description" v-model="rec.description"></form-text>
-    <div class="row" style="margin-top: 5px">
-      <label id="UI Variant" class="col-3 col-form-label">UI Variant</label>
-      <div class="col-9">
-        <select class="custom-select" v-model="rec.ui">
-          <option></option>
-          <option v-for="ui in uis" :value="ui" :selected="ui == rec.ui">{{ ui }}</option>
-        </select>
-      </div>
-    </div>
+    <b-row
+      style="margin-top: 20px"
+    >
+      <b-col>
+        <b-btn
+          class="pointer"
+          variant="primary"
+          @click="onCommit"
+        >
+          Commit
+        </b-btn>
+        <b-btn
+          class="pointer"
+          variant="outline-primary"
+          @click="onCancel"
+        >
+          Cancel
+        </b-btn>
+        <b-btn
+          class="float-right pointer"
+          variant="danger"
+          @click="onDelete"
+        >
+          Delete
+        </b-btn>
+      </b-col>
+    </b-row>
   </div>
-
-  <div class="row" style="margin-top: 20px">
-    <div class="col">
-      <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-      <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-      <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
@@ -35,9 +77,14 @@ import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-role',
-  props: ['id'],
+  name: 'AdminRole',
   mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

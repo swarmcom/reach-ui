@@ -1,11 +1,24 @@
 <template>
-<div>
-  <div class="row">
-    <div class="col"><h3>Agents Bounded Events</h3></div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <h3>Agents Bounded Events</h3>
+      </div>
+    </div>
+    <widget-query
+      v-model="query_params"
+      enable="range:agents:agent_groups"
+      @reset="reset"
+    />
+    <b-table
+      style="margin-top: 20px"
+      small
+      striped
+      hover
+      :items="data"
+      :fields="fields"
+    />
   </div>
-  <widget-query v-model="query_params" enable="range:agents:agent_groups" @reset="reset"></widget-query>
-  <b-table style="margin-top: 20px" small striped hover :items="data" :fields="fields"></b-table>
-</div>
 </template>
 
 <script>

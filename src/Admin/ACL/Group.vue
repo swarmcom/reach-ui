@@ -1,23 +1,48 @@
 <template>
-<div class="container" style="margin-top:20px">
-  <div class="row">
-    <div class="col-4">
-      <h3>Access list:</h3>
+  <div
+    class="container"
+    style="margin-top:20px"
+  >
+    <b-row>
+      <b-col cols="4">
+        <h3>Access list:</h3>
+      </b-col>
+    </b-row>
+    <div class="form">
+      <form-text
+        id="name"
+        v-model="rec.name"
+        label="Access List Name"
+      />
+      <form-text
+        id="description"
+        v-model="rec.description"
+        label="Access List Description"
+      />
+      <div style="margin-top:20px">
+        <b-btn
+          variant="primary"
+          @click="onCommit"
+        >
+          Commit
+        </b-btn>
+        <b-btn
+          variant="outline-primary"
+          @click="onCancel"
+        >
+          Cancel
+        </b-btn>
+        <b-btn
+          class="float-right"
+          variant="danger"
+          @click="onDelete"
+        >
+          Delete
+        </b-btn>
+      </div>
     </div>
+    <help />
   </div>
-
-  <div class="form">
-    <form-text id="name" label="Access List Name" v-model="rec.name"></form-text>
-    <form-text id="description" label="Access List Description" v-model="rec.description"></form-text>
-    <div style="margin-top:20px">
-      <button @click="onCommit" class="btn btn-primary">Commit</button>
-      <button @click="onCancel" class="btn btn-outline-primary">Cancel</button>
-      <button @click="onDelete" class="btn btn-danger float-right">Delete</button>
-    </div>
-  </div>
-
-  <help></help>
-</div>
 </template>
 
 <script>
@@ -25,9 +50,14 @@ import Obj from '@/Admin/Object'
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-acl-group',
-  props: ['id'],
+  name: 'AdminAclGroup',
   mixins: [Common, Obj],
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},

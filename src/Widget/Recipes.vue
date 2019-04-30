@@ -1,23 +1,56 @@
 <template>
-<div class="row" style="margin-top: 5px">
-  <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-  <div class="col-9">
-    <select class="custom-select pointer" style="width: 100%" :value="value" @change="onUpdate($event.target.value)" :disabled="isDisabled()">
-      <option></option>
-      <option v-for="recipe in recipes" :value="recipe.id" :selected="isActive(recipe.id)">{{ recipe.name }}</option>
-    </select>
-  </div>
-</div>
+  <b-row
+    style="margin-top: 5px"
+  >
+    <b-col cols="3">
+      <label
+        :id="label"
+      >
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col cols="9">
+      <select
+        class="custom-select pointer"
+        style="width: 100%"
+        :value="value"
+        :disabled="isDisabled()"
+        @change="onUpdate($event.target.value)"
+      >
+        <option />
+        <option
+          v-for="recipe in recipes"
+          :key="recipe.id"
+          :value="recipe.id"
+          :selected="isActive(recipe.id)"
+        >
+          {{ recipe.name }}
+        </option>
+      </select>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 export default {
-  name: 'widget-recipes',
-  props: ['label', 'value'],
+  name: 'WidgetRecipes',
+  props: {
+    value: {
+      type: Number,
+      default: 0
+    },
+    label: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       recipes: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     isDisabled() {
@@ -32,9 +65,6 @@ export default {
     onUpdate (value) {
       this.$emit('input', value)
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

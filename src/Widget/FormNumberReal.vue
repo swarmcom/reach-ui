@@ -1,22 +1,68 @@
 <template>
-  <div class="row" style="margin-top: 5px">
-    <label :id="label" class="col-3 col-form-label">{{ label }}</label>
-    <div v-if="effective" class="col-5">
-      <b-form-input :value="safe_value" v-on:input="onUpdate" :state="filterState"></b-form-input>
-    </div>
-    <div v-if="effective" class="col-4">
-      <b-form-input :value="safe_effective" disabled></b-form-input>
-    </div>
-    <div v-else class="col-9">
-      <b-form-input :value="safe_value" v-on:input="onUpdate" :state="filterState"></b-form-input>
-    </div>
-  </div>
+  <b-row
+    style="margin-top: 5px"
+  >
+    <b-col cols="3">
+      <label
+        :id="label"
+      >
+        {{ label }}
+      </label>
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="5"
+    >
+      <b-form-input
+        :value="safe_value"
+        :state="filterState"
+        @input="onUpdate"
+      />
+    </b-col>
+    <b-col
+      v-if="effective"
+      cols="4"
+    >
+      <b-form-input
+        :value="safe_effective"
+        disabled
+      />
+    </b-col>
+    <b-col
+      v-else
+      cols="9"
+    >
+      <b-form-input
+        :value="safe_value"
+        :state="filterState"
+        @input="onUpdate"
+      />
+    </b-col>
+  </b-row>
 </template>
 
 <script>
   export default {
-    name: 'form-number',
-    props: ['label', 'value', 'effective'],
+    name: 'FormNumber',
+    props: {
+      value: {
+        type: [String, Number],
+        default: ""
+      },
+      label: {
+        type: String,
+        default: ""
+      },
+      effective: {
+        type: [String, Number],
+        default: ""
+      }
+    },
+    data () {
+      return {
+        filterState: null
+      }
+    },
     computed: {
       safe_value () {
         return this.value === 'undefined' ? '' : this.value
@@ -34,11 +80,6 @@
         else {
           this.filterState = false
         }
-      }
-    },
-    data () {
-      return {
-        filterState: null
       }
     }
   }

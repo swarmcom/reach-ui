@@ -3,18 +3,60 @@
     <b-row>
       <b-col>
         <b-button-group style="width:100%">
-          <b-btn size="sm" class="pointer" style="width:33%" @click="override" variant="outline-secondary">Set</b-btn>
-          <b-btn size="sm" class="pointer" style="width:33%" @click="reset" variant="outline-secondary">Reset</b-btn>
-          <b-btn size="sm" class="pointer" style="width:50%" @click="test" variant="outline-secondary">Test</b-btn>
+          <b-btn
+            size="sm"
+            class="pointer"
+            style="width:33%"
+            variant="outline-secondary"
+            @click="override"
+          >
+            Set
+          </b-btn>
+          <b-btn
+            size="sm"
+            class="pointer"
+            style="width:33%"
+            variant="outline-secondary"
+            @click="reset"
+          >
+            Reset
+          </b-btn>
+          <b-btn
+            size="sm"
+            class="pointer"
+            style="width:50%"
+            variant="outline-secondary"
+            @click="test"
+          >
+            Test
+          </b-btn>
         </b-button-group>
       </b-col>
     </b-row>
     <b-row style="margin-top:2px">
       <b-col>
         <b-input-group size="sm">
-          <b-form-input class="customInput" variant="outline" size="sm" v-model="value" type="text" :placeholder="this.$agent.vm.agent.uri"></b-form-input>
-          <b-dropdown size="sm" text="Contacts" variant="outline-secondary" :disabled="this.$agent.vm.agent.uris.length == 0">
-            <b-dropdown-item v-for="uri of this.$agent.vm.agent.uris" :key="uri.uri" @click="set(uri.uri)">{{uri.uri}}</b-dropdown-item>
+          <b-form-input
+            v-model="value"
+            class="customInput"
+            variant="outline"
+            size="sm"
+            type="text"
+            :placeholder="this.$agent.vm.agent.uri"
+          />
+          <b-dropdown
+            size="sm"
+            text="Contacts"
+            variant="outline-secondary"
+            :disabled="this.$agent.vm.agent.uris.length == 0"
+          >
+            <b-dropdown-item
+              v-for="itemUri of this.$agent.vm.agent.uris"
+              :key="itemUri.uri"
+              @click="set(itemUri.uri)"
+            >
+              {{ itemUri.uri }}
+            </b-dropdown-item>
           </b-dropdown>
         </b-input-group>
       </b-col>
@@ -24,12 +66,15 @@
 
 <script>
 export default {
-  name: 'my-phone-uri',
+  name: 'MyPhoneUri',
   data () {
     return {
       uri: '',
       value: ''
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function() {
@@ -77,9 +122,6 @@ export default {
         //this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
       }
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

@@ -1,32 +1,93 @@
 <template>
-<div class="form">
-  <form-text label="Queue Name" v-model="rec.name"></form-text>
-  <queue-groups label="Queue Group" v-model="rec.group_id"></queue-groups>
-  <recipes label="Recipe" v-model="rec.recipe_id"></recipes>
-  <mohs label="Music on hold" v-model="rec.moh_id" :effective="eff.moh_id"></mohs>
-  <form-number label="Weight" v-model="rec.weight" :effective="eff.weight"></form-number>
-  <form-number-real label="Aging" v-model="rec.aging_factor" :effective="eff.aging_factor"></form-number-real>
-  <form-select-bool label="Wrap-up enabled" v-model="rec.wrapup_enabled" :effective="eff.wrapup_enabled"></form-select-bool>
-  <form-number label="Wrap-up timer" v-model="rec.wrapup_timer" :effective="eff.wrapup_timer"></form-number>
-  <form-number label="Auto Wrap-up" v-model="rec.auto_wrapup" :effective="eff.auto_wrapup"></form-number>
-  <form-tags label="Queue Skills" placeholder="Skill..." effective_label="Queue Inherited Skills" v-model="skills" :effective="effective_skills"></form-tags>
-  <div style="margin-top:20px">
-    <button @click="onCommit" class="btn btn-primary pointer">Commit</button>
-    <button @click="onCancel" class="btn btn-outline-primary pointer">Cancel</button>
-    <button @click="onDelete" class="btn btn-danger float-right pointer">Delete</button>
+  <div class="form">
+    <form-text
+      v-model="rec.name"
+      label="Queue Name"
+    />
+    <queue-groups
+      v-model="rec.group_id"
+      label="Queue Group"
+    />
+    <recipes
+      v-model="rec.recipe_id"
+      label="Recipe"
+    />
+    <mohs
+      v-model="rec.moh_id"
+      label="Music on hold"
+      :effective="eff.moh_id"
+    />
+    <form-number
+      v-model="rec.weight"
+      label="Weight"
+      :effective="eff.weight"
+    />
+    <form-number-real
+      v-model="rec.aging_factor"
+      label="Aging"
+      :effective="eff.aging_factor"
+    />
+    <form-select-bool
+      v-model="rec.wrapup_enabled"
+      label="Wrap-up enabled"
+      :effective="eff.wrapup_enabled"
+    />
+    <form-number
+      v-model="rec.wrapup_timer"
+      label="Wrap-up timer"
+      :effective="eff.wrapup_timer"
+    />
+    <form-number
+      v-model="rec.auto_wrapup"
+      label="Auto Wrap-up"
+      :effective="eff.auto_wrapup"
+    />
+    <form-tags
+      v-model="skills"
+      label="Queue Skills"
+      placeholder="Skill..."
+      effective-label="Queue Inherited Skills"
+      :effective="effective_skills"
+    />
+    <div style="margin-top:20px">
+      <b-btn
+        class="pointer"
+        variant="primary"
+        @click="onCommit"
+      >
+        Commit
+      </b-btn>
+      <b-btn
+        class="pointer"
+        variant="outline-primary"
+        @click="onCancel"
+      >
+        Cancel
+      </b-btn>
+      <b-btn
+        class="float-right pointer"
+        variant="danger"
+        @click="onDelete"
+      >
+        Delete
+      </b-btn>
+    </div>
+    <help />
   </div>
-  <help></help>
-</div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
 
 export default {
-  name: 'admin-queue',
-  props: ['id'],
+  name: 'AdminQueue',
   mixins: [Common],
-
+  props: {
+    id: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       rec: {},
@@ -35,6 +96,9 @@ export default {
       eff: {},
       recipe: []
     }
+  },
+  created () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -68,9 +132,6 @@ export default {
     onCancel () {
       this.$router.go(-1)
     },
-  },
-  created () {
-    this.query()
   }
 }
 </script>

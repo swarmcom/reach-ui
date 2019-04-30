@@ -1,16 +1,30 @@
 <template>
-<b-dropdown size="sm" id="ddown1" text="Queue" variant="outline-primary">
-  <b-dropdown-item v-for="queue in queues" :key="queue.id" @click="onUpdate(queue.id)">{{ queue.name }}</b-dropdown-item>
-</b-dropdown>
+  <b-dropdown
+    id="ddown1"
+    size="sm"
+    text="Queue"
+    variant="outline-primary"
+  >
+    <b-dropdown-item
+      v-for="queue in queues"
+      :key="queue.id"
+      @click="onUpdate(queue.id)"
+    >
+      {{ queue.name }}
+    </b-dropdown-item>
+  </b-dropdown>
 </template>
 
 <script>
 export default {
-  name: 'conference-queue',
+  name: 'ConferenceQueue',
   data () {
     return {
       queues: []
     }
+  },
+  mounted () {
+    this.query()
   },
   methods: {
     query: async function () {
@@ -19,9 +33,6 @@ export default {
     onUpdate (id) {
       this.$agent.conference_to_queue(id)
     }
-  },
-  mounted () {
-    this.query()
   }
 }
 </script>

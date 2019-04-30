@@ -1,19 +1,33 @@
 <template>
-<div class="container">
-  <b-row style="margin-bottom: 10px"><b-col><h3>Nodes:</h3></b-col></b-row>
-  <b-row style="margin-bottom: 10px"><b-col>
-    <b-btn size="sm" variant="outline-danger" @click="resolve_all">Resolve all</b-btn>
-  </b-col></b-row>
-  <b-table striped hover small :items="nodes" :fields="fields" @row-clicked="row_click">
-  </b-table>
-</div>
-
+  <div class="container">
+    <b-row style="margin-bottom: 10px">
+      <b-col><h3>Nodes:</h3></b-col>
+    </b-row>
+    <b-row style="margin-bottom: 10px">
+      <b-col>
+        <b-btn
+          size="sm"
+          variant="outline-danger"
+          @click="resolve_all"
+        >
+          Resolve all
+        </b-btn>
+      </b-col>
+    </b-row>
+    <b-table
+      striped
+      hover
+      small
+      :items="nodes"
+      :fields="fields"
+      @row-clicked="row_click"
+    />
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'admin-kam-nodes',
-  components: { Node },
+  name: 'AdminKamNodes',
   data () {
     return {
       nodes: [],
@@ -27,6 +41,9 @@ export default {
       },
     }
   },
+  created () {
+    this.query()
+  },
   methods: {
     query: async function () {
       this.nodes = await this.$agent.p_mfa('ws_kam_node', 'get')
@@ -39,9 +56,6 @@ export default {
       this.query()
       this.$notify({ title: 'Resolve', text: "Success", type: 'success' })
     }
-  },
-  created () {
-    this.query()
   }
 }
 </script>

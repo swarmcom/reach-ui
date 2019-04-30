@@ -1,5 +1,10 @@
 <template>
-<datepicker v-model="date" :placeholder="placeholder" :highlighted="highlighted" bootstrapStyling></datepicker>
+  <datepicker
+    v-model="date"
+    :placeholder="placeholder"
+    :highlighted="highlighted"
+    bootstrap-styling
+  />
 </template>
 
 <script>
@@ -7,9 +12,18 @@ import moment from 'moment'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
-  name: 'report-widget-date',
+  name: 'ReportWidgetDate',
   components: {Datepicker},
-  props: ['value', 'placeholder'],
+  props: {
+    value: {
+      type: [Number, String, Object],
+      default: ""
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       date: undefined,
@@ -17,15 +31,6 @@ export default {
         dates: [new Date()]
       }
     }
-  },
-  methods: {
-    to_timestamp(date) {
-      if (date) {
-        return (new moment(date)).format("X")
-      } else {
-        return undefined
-      }
-    },
   },
   watch: {
     value (value, old) {
@@ -44,6 +49,15 @@ export default {
     if (parseInt(this.value)) {
       this.date = moment.unix(this.value).format()
     }
+  },
+  methods: {
+    to_timestamp(date) {
+      if (date) {
+        return (new moment(date)).format("X")
+      } else {
+        return undefined
+      }
+    },
   }
 }
 </script>

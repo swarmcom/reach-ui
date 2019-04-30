@@ -1,9 +1,12 @@
 <template>
-<div class="help popover" style="display: none">
-  <div class="popover-body">
-    <slot></slot>
+  <div
+    class="help popover"
+    style="display: none"
+  >
+    <div class="popover-body">
+      <slot />
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -11,7 +14,12 @@ import $ from 'jquery'
 import Popper from 'popper.js'
 
 export default {
-  props: ['target'],
+  props: {
+    target: {
+      type: String,
+      default: ""
+    }
+  },
   data () {
     return {
       visible: false,
@@ -19,6 +27,14 @@ export default {
       help: undefined,
       reference: undefined
     }
+  },
+  mounted () {
+    this.reference = $(document.getElementById(this.target))
+    this.reference.on('click', ev => this.onclick(ev) )
+    this.reference.css('cursor', 'help')
+  },
+  beforeDestroy () {
+    this.reference.off('click')
   },
   methods: {
     show (ev) {
@@ -42,14 +58,6 @@ export default {
     onclick (ev) {
       this.show(ev)
     }
-  },
-  mounted () {
-    this.reference = $(document.getElementById(this.target))
-    this.reference.on('click', ev => this.onclick(ev) )
-    this.reference.css('cursor', 'help')
-  },
-  beforeDestroy () {
-    this.reference.off('click')
   }
 }
 </script>
