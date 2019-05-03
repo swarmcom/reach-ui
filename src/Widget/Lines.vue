@@ -76,8 +76,8 @@ export default {
       default: ""
     },
     effective: {
-      type: Boolean,
-      value: false
+      type: [String, Number],
+      value: ""
     }
   },
   data () {
