@@ -37,12 +37,13 @@
 </template>
 
 <script>
+
 export default {
-  name: 'Dialer',
+  name: 'VmDialer',
   props: {
     lines: {
-      type: Object,
-      default: () => ({})
+      type: Array,
+      default: () => ([])
     },
     originalCaller: {
       type: String,
@@ -51,7 +52,7 @@ export default {
   },
   data () {
     return {
-      number: this.original_caller,
+      number: this.original_caller
     }
   },
   created () {

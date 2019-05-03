@@ -82,7 +82,7 @@ export default {
   name: 'FormText',
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ""
     },
     label: {
@@ -90,8 +90,8 @@ export default {
       default: ""
     },
     effective: {
-      type: Boolean,
-      value: false
+      type: [String, Number],
+      default: ""
     }
   },
   data () {

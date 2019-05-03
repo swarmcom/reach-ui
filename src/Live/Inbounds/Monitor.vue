@@ -67,7 +67,7 @@
         slot="actions"
         slot-scope="data"
       >
-        <template v-if="data.item.state == 'oncall' && ($agent.vm.state == 'release' || $agent.vm.state == 'idle')">
+        <template v-if="data.item.state == 'oncall' && ($agent.vm.state == 'release' || $agent.vm.state == 'available')">
           <b-button
             v-if="$agent.vm.agent.permissions['supervisor-feature-take-over']"
             size="sm"
@@ -87,7 +87,7 @@
             Spy/Barge
           </b-button>
         </template>
-        <template v-if="(data.item.state == 'inqueue' || data.item.state == 'agent') && ($agent.vm.state == 'release' || $agent.vm.state == 'idle')">
+        <template v-if="((data.item.state == 'inqueue' || data.item.state == 'agent') && ($agent.vm.state == 'release' || $agent.vm.state == 'available'))">
           <b-button
             v-if="$agent.vm.agent.permissions['supervisor-feature-take-call-queue']"
             size="sm"

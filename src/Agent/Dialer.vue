@@ -7,8 +7,18 @@
       <b-form-input
         v-model="number"
         type="text"
+        list="dialer-number-list-id"
         placeholder="enter a number..."
+        @change="updateCacheNumber()"
       />
+      <datalist id="dialer-number-list-id">
+        <option
+          v-for="num in cachedNumber"
+          :key="num"
+        >
+          {{ num }}
+        </option>
+      </datalist>
       <b-input-group-append>
         <b-dropdown
           v-if="lines.length > 0"
@@ -37,8 +47,11 @@
 </template>
 
 <script>
+import Storage from '@/Storage'
+
 export default {
   name: 'Dialer',
+  mixins: [Storage],
   props: {
     originalCaller: {
       type: String,
@@ -50,6 +63,7 @@ export default {
       number: this.original_caller,
       line_out: {},
       lines: [],
+      cachedNumber: []
     }
   },
   watch: {
@@ -61,6 +75,7 @@ export default {
   },
   created () {
     this.query()
+    this.maybeInitLocal().loadLocal('cachedNumber')
   },
   methods: {
     query: async function () {
@@ -69,10 +84,16 @@ export default {
     call (line) {
       this.$agent.place_call(line.id, this.number)
     },
-    can_call() {
+    can_call () {
       return this.$agent.can_call() && (this.lines.length > 0 || this.$agent.vm.agent.line_id) 
+    },
+    updateCacheNumber () {
+      let found = this.cachedNumber.find((element) => element === this.number)
+      if (!found) {
+        this.cachedNumber.push(this.number)
+        this.saveLocal('cachedNumber').writeLocal()
+      }
     }
-
   }
 }
 </script>
