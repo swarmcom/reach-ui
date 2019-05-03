@@ -4,7 +4,7 @@
     style="margin-top: 10px"
   >
     <b-row v-if="lua_result">
-      <b-col>{{ lua_result }}</b-col>
+      <b-col v-html="lua_result"></b-col>
     </b-row>
 
     <b-row>
