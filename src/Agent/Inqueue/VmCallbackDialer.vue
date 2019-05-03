@@ -65,7 +65,7 @@ export default {
   data () {
     return {
       number: this.original_caller,
-      chedNumber: []
+      cachedNumber: []
     }
   },
   created () {
