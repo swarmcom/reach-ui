@@ -4,6 +4,7 @@
     <b-collapse 
       id="liveManager"
       v-model="showCollapse"
+      style="padding-top: 10px"
     >
       <group />
       <stats />
