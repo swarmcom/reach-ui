@@ -259,14 +259,11 @@ export default {
     }
   },
   created: async function () {
-    this.a = this.$agent.getData()
     this.query()
-    await this.$agent.p_mfa('ws_live', 'subscribe', ['agents', 'group'])
-    this.$bus.$on('agents_state', this.handleState)
     this.maybeInitLocal().loadLocal('showCollapse')
   },
   beforeDestroy: async function () {
-    this.$bus.$off('agents_state', this.handleState)
+    this.$bus.$off('live_agent_state', this.handleState)
     await this.$agent.p_mfa('ws_live', 'unsubscribe', ['agents', 'group'])
   },
   methods: {
@@ -274,28 +271,28 @@ export default {
       this.queues = await this.$agent.p_mfa('ws_agent', 'get_transfer_queues')
       this.agents = await this.$agent.p_mfa('ws_live', 'agents', ['group'])
       this.lines = await this.$agent.p_mfa('ws_agent', 'lines_out')
+      this.$bus.$on('live_agent_state', this.handleState)
+      await this.$agent.p_mfa('ws_live', 'subscribe', ['agents', 'group'])
     },
-    handleState({tag, info}) {
-      if (info != 'undefined') {
-        if (tag === 'ws_login') {
-          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-          if (i >= 0) {
-            this.agents.splice(i, 1, info)
-          } else {
-            this.agents.push(info)
-          }
+    handleState({tag, state}) {
+      if (tag === 'ws_login') {
+        let i = this.agents.findIndex(E => E.agent_id === state.agent_id)
+        if (i >= 0) {
+          this.agents.splice(i, 1, state)
+        } else {
+          this.agents.push(state)
         }
-        else if (info.state === 'terminate') {
-          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-          if (i >= 0) {
-            this.agents.splice(i, 1)
-          }
+      }
+      else if (state.state === 'terminate') {
+        let i = this.agents.findIndex(E => E.agent_id === state.agent_id)
+        if (i >= 0) {
+          this.agents.splice(i, 1)
         }
-        else {
-          let i = this.agents.findIndex(E => E.agent_id === info.agent_id)
-          if (i >= 0) {
-            this.agents.splice(i, 1, info)
-          }
+      }
+      else {
+        let i = this.agents.findIndex(E => E.agent_id === state.agent_id)
+        if (i >= 0) {
+          this.agents.splice(i, 1, state)
         }
       }
     },
