@@ -25,7 +25,7 @@
             v-access:monitor-ui
             to="/live"
           >
-            Live
+            Monitor
           </b-nav-item>
           <b-nav-item
             v-access:reports-ui
