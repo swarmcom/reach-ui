@@ -66,8 +66,18 @@
             <b-form-input
               v-model="selectedNumber"
               type="text"
+              list="tr-number-list-id"
               placeholder="enter a number..."
+              @change="updateCacheNumber()"
             />
+            <datalist id="tr-number-list-id">
+              <option
+                v-for="num in cachedNumber"
+                :key="num"
+              >
+                {{ num }}
+              </option>
+            </datalist>
             <b-input-group-append>
               <b-dropdown
                 v-if="lines.length > 0"
@@ -220,7 +230,8 @@ export default {
       queues: [],
       agents: [],
       lines: [],
-      selectedLine: null
+      selectedLine: null,
+      cachedNumber: []
     }
   },
   computed: {
@@ -260,7 +271,7 @@ export default {
   },
   created: async function () {
     this.query()
-    this.maybeInitLocal().loadLocal('showCollapse')
+    this.maybeInitLocal().loadLocal('showCollapse', 'cachedNumber')
   },
   beforeDestroy: async function () {
     this.$bus.$off('live_agent_state', this.handleState)
@@ -274,7 +285,7 @@ export default {
       this.$bus.$on('live_agent_state', this.handleState)
       await this.$agent.p_mfa('ws_live', 'subscribe', ['agents', 'group'])
     },
-    handleState({tag, state}) {
+    handleState ({tag, state}) {
       if (tag === 'ws_login') {
         let i = this.agents.findIndex(E => E.agent_id === state.agent_id)
         if (i >= 0) {
@@ -327,7 +338,7 @@ export default {
         this.allowTransConf = false
       }
     },
-    canTransConf(uuid) {
+    canTransConf (uuid) {
       return this.$agent.permAllowed('agent-feature-conference-change-skills') && uuid != ""
     },
     can_conference () {
@@ -355,12 +366,19 @@ export default {
     can_call () {
       return (this.lines.length > 0 || this.$agent.vm.agent.line_id)
     },
-    selectLine(line) {
+    selectLine (line) {
       if (this.selectedLine === line.id) {
         this.selectedLine = null
       }
       else {
         this.selectedLine = line.id
+      }
+    },
+    updateCacheNumber () {
+      let found = this.cachedNumber.find((element) => element === this.selectedNumber)
+      if (!found) {
+        this.cachedNumber.push(this.selectedNumber)
+        this.saveLocal('cachedNumber').writeLocal()
       }
     }
   }
