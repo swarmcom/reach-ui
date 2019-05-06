@@ -83,12 +83,12 @@ export default {
       default: ''
     },
     value: {
-      type: String,
-      default: ''
+      type: [String, Number],
+      default: ""
     },
     effective: {
-      type: Boolean,
-      default: false
+      type: [String, Number],
+      default: ""
     }
   },
   data () {

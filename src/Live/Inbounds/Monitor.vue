@@ -145,6 +145,7 @@ export default {
     },
   },
   created () {
+    this.loadCache()
     this.$bus.$on('live_inqueue_state', this.handleState)
     this.$bus.$on('live_inqueue_vm_state', this.handleState)
   },
@@ -171,6 +172,7 @@ export default {
     query: async function (type) {
       this.data = await this.$agent.p_mfa('ws_live', 'inbounds')
       await this.$agent.p_mfa('ws_live', 'subscribe', ['inbounds'])
+      this.saveCache()
     },
     onTimer () {
       this.data.forEach((E, i, Arr) => { 

@@ -121,6 +121,7 @@ export default {
     },
   },
   created () {
+    this.loadCache()
     this.$bus.$on('live_outgoing_state', this.handleState)
   },
   beforeDestroy () {
@@ -145,6 +146,7 @@ export default {
     query: async function (type) {
       this.data = await this.$agent.p_mfa('ws_live', 'outgoings', [type])
       await this.$agent.p_mfa('ws_live', 'subscribe', ['outgoings', type])
+      this.saveCache()
     },
     onTimer () {
       this.data.forEach((E, i, Arr) => { 

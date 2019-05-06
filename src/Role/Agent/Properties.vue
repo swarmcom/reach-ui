@@ -30,6 +30,7 @@
       v-model="rec.line_id"
       v-access:agent-profile-edit-line-out
       label="Line Out"
+      :effective="eff.line_id ? eff.line.name : ''"
     />
     <form-text
       v-model="rec.uri"

@@ -10,6 +10,7 @@ export default {
   data () {
     return {
       type: null,
+      period: null,
       types: [],
       skip_load: false,
       data: [],
@@ -18,14 +19,14 @@ export default {
   },
   created () {
     this.loadCache()
-    this.query(this.type)
+    this.query(this.type, this.period)
     this.updater = setInterval(this.onTimer, 1000)
   },
   beforeDestroy () {
     clearInterval(this.updater)
   },
   methods: {
-    query: async function (type) {
+    query: async function (type, period) {
     },
     onTimer () {
     },
@@ -52,12 +53,18 @@ export default {
         this.$agent.vm.live_cache[key] = {}
       }
       this.$agent.vm.live_cache[key]['type'] = this.type
+      this.$agent.vm.live_cache[key]['period'] = this.period
     },
     loadCache () {
       let key = this.unique_name()
       if (this.$agent.vm.live_cache[key]) {
-        this.skip_load = true
-        this.type = this.$agent.vm.live_cache[key]['type']
+        // this.skip_load = true
+        if (this.$agent.vm.live_cache[key]['type']) {
+          this.type = this.$agent.vm.live_cache[key]['type']
+        }
+        if (this.$agent.vm.live_cache[key]['period']) {
+          this.period = this.$agent.vm.live_cache[key]['period']
+        }
       }
     },
   }
