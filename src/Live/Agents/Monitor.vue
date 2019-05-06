@@ -128,6 +128,7 @@ export default {
     },
   },
   created () {
+    this.loadCache()
     this.$bus.$on('live_agent_state', this.handleState)
   },
   beforeDestroy () {

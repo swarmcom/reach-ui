@@ -82,11 +82,16 @@ export default {
   },
   watch: {
     period: async function (value, old) {
+      if (this.skip_load) {
+        this.skip_load = false
+        return
+      }
       await this.$agent.p_mfa('ws_live_agent', 'unsubscribe', ['agent'])
-      this.query(this.type)
+      this.query(this.type, value)
     }
   },
   created () {
+    this.loadCache()
     this.$bus.$on('live_agent_stats', this.handleStats)
   },
   beforeDestroy () {
@@ -97,8 +102,8 @@ export default {
     handleStats ({stats}) {
       this.data = new Array(stats)
     },
-    query: async function (type) {
-      await this.$agent.p_mfa('ws_live_agent', 'subscribe', ['agent', this.period])
+    query: async function (type, period) {
+      await this.$agent.p_mfa('ws_live_agent', 'subscribe', ['agent', period])
       this.saveCache()
     },
     onTimer () {

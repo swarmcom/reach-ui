@@ -110,14 +110,15 @@ export default {
         return
       }
       await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', old])
-      this.query(value)
+      this.query(value, this.period)
     },
     period: async function (value, old) {
       await this.$agent.p_mfa('ws_live_stats', 'unsubscribe', ['inbound_groups', this.type])
-      this.query(this.type)
+      this.query(this.type, value)
     }
   },
   created () {
+    this.loadCache()
     this.$bus.$on('live_stats', this.handleStats)
   },
   beforeDestroy () {
@@ -137,8 +138,8 @@ export default {
           break
       }
     },
-    query: async function (type) {
-      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['inbound_groups', type, this.period])
+    query: async function (type, period) {
+      await this.$agent.p_mfa('ws_live_stats', 'subscribe', ['inbound_groups', type, period])
       this.saveCache()
     },
     onTimer () {
