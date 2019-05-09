@@ -86,10 +86,10 @@ export default {
       let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
       if (re === 'ok') {
         this.value = this.uri = uri
-        this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+        this.$notify({ title: 'Success:', text: 'SIP Contact updated', type: 'success' })
       }
       else {
-        this.$notify({ title: 'Failed:', text: 'SIP Contant failed', type: 'error' })
+        this.$notify({ title: 'Failed:', text: 'SIP Contact failed', type: 'error' })
       }
     },
     reset: async function() {
@@ -99,7 +99,7 @@ export default {
         this.$notify({ title: 'Success:', text: 'SIP Contact reset', type: 'success' })
       }
       else {
-        this.$notify({ title: 'Failed:', text: 'SIP Contant reset failed', type: 'error' })
+        this.$notify({ title: 'Failed:', text: 'SIP Contact reset failed', type: 'error' })
       }
     },
     test () {
@@ -114,10 +114,10 @@ export default {
         let re = await this.$agent.p_mfa('ws_agent', 'override_uri', [this.value])
         if (re === 'ok') {
           this.uri = this.value
-          this.$notify({ title: 'Success:', text: 'SIP Contant updated', type: 'success' })
+          this.$notify({ title: 'Success:', text: 'SIP Contact updated', type: 'success' })
         }
         else {
-          this.$notify({ title: 'Failed:', text: 'SIP Contant failed', type: 'error' })
+          this.$notify({ title: 'Failed:', text: 'SIP Contact failed', type: 'error' })
         }
         //this.$agent.p_mfa('ws_agent', 'override_uri', [this.uri])
       }
