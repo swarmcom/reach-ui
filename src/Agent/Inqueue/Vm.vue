@@ -311,7 +311,7 @@ export default {
       if (state.state === 'conference') {
         this.queryCall()
       }
-      else if (state.state === 'oncall') {
+      else if (state.state === 'wrapup') {
         this.title = 'Voicemail Processing'
         this.queryCallInfo()
         this.dialer_visible = true
