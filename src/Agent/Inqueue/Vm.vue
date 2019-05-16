@@ -8,39 +8,69 @@
     </b-row>
 
     <b-row>
-      <b-col cols="2">
-        <div class="call-phone-center">
-          <icon
-            style="color:#838383"
-            name="file-audio-o"
-            scale="3"
-          />
-        </div>
-      </b-col>
-      <b-col cols="5">
-        <dl class="row agent-state-text">
-          <dt class="col-sm-12 session-manager-text">
-            {{ title }}:
-          </dt>
-          <dd class="col-sm-5">
-            Queue:
-          </dd>
-          <dd class="col-sm-7">
-            {{ inqueue.queue.name }}
-          </dd>
-          <dd
-            v-if="!this.$agent.is_ringing()"
-            class="col-sm-5"
-          >
-            Wait Time:
-          </dd>
-          <dd
-            v-if="!this.$agent.is_ringing()"
-            class="col-sm-7"
-          >
-            {{ msToHms(this.$agent.vm.wait_time) }}
-          </dd>
-        </dl>
+      <b-col cols="7">
+        <b-row>
+          <b-col cols="2">
+            <icon
+              class="call-phone-center"
+              style="color:#838383"
+              name="file-audio-o"
+              scale="3"
+            />
+          </b-col>
+          <b-col cols="5">
+            <dl class="row agent-state-text">
+              <dt class="col-sm-12 session-manager-text">
+                {{ title }}:
+              </dt>
+              <dd class="col-sm-5">
+                Queue:
+              </dd>
+              <dd class="col-sm-7">
+                {{ inqueue.queue.name }}
+              </dd>
+              <dd
+                v-if="!this.$agent.is_ringing()"
+                class="col-sm-5"
+              >
+                Wait Time:
+              </dd>
+              <dd
+                v-if="!this.$agent.is_ringing()"
+                class="col-sm-7"
+              >
+                {{ msToHms(this.$agent.vm.wait_time) }}
+              </dd>
+            </dl>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="2">
+            <div class="call-hand-center">
+              <b-img
+                v-if="inqueue.line_in.client.avatar"
+                :src="$agent.get_rr_uri()+'/avatar/'+inqueue.line_in.client.avatar"
+                style="width:64px;"
+              />
+              <icon
+                v-else
+                style="color:#838383"
+                name="handshake-o"
+                scale="3"
+              />
+            </div>
+          </b-col>
+          <b-col cols="5">
+            <dl class="row agent-state-text">
+              <dt class="col-sm-12 session-manager-text">
+                {{ inqueue.line_in.client.name }}
+              </dt>
+              <dd class="col-sm-12">
+                {{ inqueue.call_vars["Caller-ANI"] }}
+              </dd>
+            </dl>
+          </b-col>
+        </b-row>
       </b-col>
       <b-col cols="5">
         <dl class="row agent-state-text">
@@ -134,95 +164,33 @@
               </b-col>
             </b-row>
           </dd>
-        <!-- <dt class="col-sm-6">Transferers:</dt>
-        <dd class="col-sm-6">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd> -->
         </dl>
       </b-col>
     </b-row>
     <b-row>
-      <b-col cols="2">
-        <div class="call-hand-center">
-          <b-img
-            v-if="inqueue.line_in.client.avatar"
-            :src="$agent.get_rr_uri()+'/avatar/'+inqueue.line_in.client.avatar"
-            style="width:64px;"
-          />
-          <icon
-            v-else
-            style="color:#838383"
-            name="handshake-o"
-            scale="4"
-          />
-        </div>
+      <b-col>
+        <player v-if="$agent.is_oncall() && inqueue.vm_length > 0" :length="inqueue.vm_length" :uuid="uuid" />
       </b-col>
-      <b-col cols="5">
-        <dl class="row agent-state-text">
-          <dt class="col-sm-12 session-manager-text">
-            {{ inqueue.line_in.client.name }}
-          </dt>
-          <dd class="col-sm-12">
-            {{ inqueue.call_vars["Caller-ANI"] }}
-          </dd>
-        </dl>
-      </b-col>
-      <b-col v-if="this.$agent.is_oncall()" cols="5">
-        <button
-            class="btn btn-primary"
-            @click="onVMPlay"
-        >
-          Play
-        </button>
-        <button
-            class="btn btn-primary"
-            @click="onVMPlayOff"
-        >
-          Play with Offset
-        </button>
-
-        <button
-            class="btn btn-primary"
-            @click="onVMStop"
-        >
-          Stop
-        </button>
-        <button
-            class="btn btn-primary"
-            @click="onVMPause"
-        >
-          Pause
-        </button>
-        <button
-            class="btn btn-primary"
-            @click="onVMPlay"
-        >
-          Resume
-        </button>
-        <button
-            class="btn btn-primary"
-            @click="onVMPlayOff"
-        >
-          Resume with Offset
-        </button>
-        <div>
-          {{ msToMs(this.inqueue.vm_length) }}
-        </div>
+      <b-col>
+        <dialer
+          v-if="dialer_visible"
+          :original_caller="originalCaller"
+          :lines="lines"
+          @dialer_input="onDialerInput"
+        />
       </b-col>
     </b-row>
-    <dialer
-      v-if="dialer_visible"
-      :original_caller="originalCaller"
-      :lines="lines"
-      @dialer_input="onDialerInput"
-    />
   </div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
+import VmPlayer from '@/Agent/Inqueue/VmPlayer'
 import Dialer from '@/Agent/Inqueue/VmCallbackDialer'
 export default {
   components: {
     dialer: Dialer,
+    player: VmPlayer
   },
   mixins: [Common],
   props: {
@@ -340,8 +308,6 @@ export default {
       else if (state.state === 'oncall') {
         this.title = 'Voicemail Processing'
         this.queryCallInfo()
-      }
-      else if (state.state === 'wrapup') {
         this.dialer_visible = true
       }
     }
