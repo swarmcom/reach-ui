@@ -165,6 +165,48 @@
           </dd>
         </dl>
       </b-col>
+      <b-col v-if="this.$agent.is_oncall()" cols="5">
+        <button
+            class="btn btn-primary"
+            @click="onVMPlay"
+        >
+          Play
+        </button>
+        <button
+            class="btn btn-primary"
+            @click="onVMPlayOff"
+        >
+          Play with Offset
+        </button>
+
+        <button
+            class="btn btn-primary"
+            @click="onVMStop"
+        >
+          Stop
+        </button>
+        <button
+            class="btn btn-primary"
+            @click="onVMPause"
+        >
+          Pause
+        </button>
+        <button
+            class="btn btn-primary"
+            @click="onVMPlay"
+        >
+          Resume
+        </button>
+        <button
+            class="btn btn-primary"
+            @click="onVMPlayOff"
+        >
+          Resume with Offset
+        </button>
+        <div>
+          {{ msToMs(this.inqueue.vm_length) }}
+        </div>
+      </b-col>
     </b-row>
     <dialer
       v-if="dialer_visible"
@@ -251,6 +293,18 @@ export default {
     },
     onDialerInput () {
       this.visible = false
+    },
+    onVMPlay () {
+      this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid])
+    },
+    onVMPlayOff () {
+      this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid, 3000])
+    },
+    onVMStop () {
+      this.$agent.p_mfa('ws_agent', 'stop_vm', [this.uuid])
+    },
+    onVMPause () {
+      this.$agent.p_mfa('ws_agent', 'pause_vm', [this.uuid])
     },
     update_skills () {
       this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2skills(this.skills)])
