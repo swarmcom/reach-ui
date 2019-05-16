@@ -175,10 +175,12 @@
           :uuid="uuid"
         />
       </b-col>
+    </b-row>
+    <b-row>
       <b-col>
         <dialer
           v-if="dialer_visible"
-          :original_caller="originalCaller"
+          :originalCaller="originalCaller"
           :lines="lines"
           @dialer_input="onDialerInput"
         />
@@ -218,7 +220,7 @@ export default {
   },
   computed: {
     originalCaller: function () {
-      return this.inqueue.call_vars["Caller-ANI"]
+      return this.inqueue.call_vars["Caller-ANI"] + '@' + this.inqueue.call_vars["sip_from_host"]
     }
   },
   watch: {

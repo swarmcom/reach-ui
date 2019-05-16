@@ -1,7 +1,7 @@
 <template>
   <b-form-group
     v-if="this.$agent.can_call()"
-    label="Voicemail"
+    label="Voicemail playback:"
   >
     <b-button-group
       class="vmplayer"
@@ -134,7 +134,7 @@ export default {
       if (this.updater) {
         clearInterval(this.updater)
       }
-      if (this.isStop()) {
+      if (!this.isStop()) {
         this.$agent.p_mfa('ws_agent', 'stop_vm', [this.uuid])
       }
       this.state = 'stop'

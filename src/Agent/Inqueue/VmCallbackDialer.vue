@@ -54,10 +54,11 @@ export default {
   },
   data () {
     return {
-      number: this.original_caller
+      number: ""
     }
   },
   created () {
+    this.number=this.originalCaller
   },
   methods: {
     call (line) {

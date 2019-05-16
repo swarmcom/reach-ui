@@ -305,14 +305,18 @@ body {
   font-weight: 700;
 }
 
+.vmplayer {
+  width: 100%;
+}
+
 .vmplayer .time {
-    font-size:13px;
-    height:32px;
-    padding: 5px;
-    min-width: 100px;
-    border-top: solid 1px #6c757d;
-    border-right: solid 1px #6c757d;
-    border-bottom: solid 1px #6c757d;
+  font-size:13px;
+  height:32px;
+  padding: 5px;
+  min-width: 100px;
+  border-top: solid 1px #6c757d;
+  border-right: solid 1px #6c757d;
+  border-bottom: solid 1px #6c757d;
 }
 
 .vmplayer .slider {
