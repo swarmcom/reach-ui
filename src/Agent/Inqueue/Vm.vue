@@ -4,7 +4,7 @@
     style="margin-top: 10px"
   >
     <b-row v-if="lua_result">
-      <b-col v-html="lua_result"></b-col>
+      <b-col v-html="lua_result" />
     </b-row>
 
     <b-row>
@@ -169,7 +169,11 @@
     </b-row>
     <b-row>
       <b-col>
-        <player v-if="$agent.is_oncall() && inqueue.vm_length > 0" :length="inqueue.vm_length" :uuid="uuid" />
+        <player
+          v-if="$agent.is_oncall() && inqueue.vm_length > 0"
+          :length="inqueue.vm_length"
+          :uuid="uuid"
+        />
       </b-col>
       <b-col>
         <dialer

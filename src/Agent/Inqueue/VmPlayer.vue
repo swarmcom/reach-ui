@@ -3,7 +3,10 @@
     v-if="this.$agent.can_call()"
     label="Voicemail"
   >
-    <b-button-group class="vmplayer" size="sm">
+    <b-button-group
+      class="vmplayer"
+      size="sm"
+    >
       <b-button
         v-if="isStop() || isPause()"
         variant="outline-dark"
