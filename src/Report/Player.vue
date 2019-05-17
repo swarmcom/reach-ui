@@ -123,9 +123,7 @@ export default {
     })
   },
   beforeDestroy () {
-    if (this.updater) {
-      clearInterval(this.updater)
-    }
+    this.player.stop()
   },
   methods: {
     onTimer () {
