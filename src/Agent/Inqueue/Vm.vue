@@ -180,7 +180,7 @@
       <b-col>
         <dialer
           v-if="dialer_visible"
-          :originalCaller="originalCaller"
+          :original-caller="originalCaller"
           :lines="lines"
           @dialer_input="onDialerInput"
         />
