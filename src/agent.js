@@ -90,7 +90,14 @@ export default class Agent extends WsProto {
       if (this.vm.storage_data.isActiveMS != undefined) {
         this.vm.layoutSM.isActiveMS = this.vm.storage_data.isActiveMS
       }
+      if (this.vm.storage_data.live) {
+        this.vm.live_cache = this.vm.storage_data.live
+      }
     }
+  }
+  saveCache(name) {
+    this.vm.storage_data['live'] = this.vm.live_cache
+    localStorage.setItem(name, JSON.stringify(this.vm.storage_data))
   }
 
   getData () {
@@ -123,6 +130,10 @@ export default class Agent extends WsProto {
 
   // AGENT API
   logout () {
+    this.saveCache('reach-ui')
+    if (this.vm.state === 'wrapup') {
+      this.end_wrapup()
+    }
     window.location.href = '#'
     localStorage.removeItem('session-key')
     this.mfa('ws_auth', 'logout', [], () => this.handleAuth())
