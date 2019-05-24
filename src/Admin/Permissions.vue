@@ -268,6 +268,7 @@ export default {
         "reports-ui": false,
         "monitor-ui": false,
         "widget-my-statistics": false,
+        "widget-call-details": false,
         "supervisor-feature-control-agent-state": false,
         "supervisor-feature-barge": false,
         "supervisor-feature-take-over": false,
@@ -301,7 +302,8 @@ export default {
         'monitor-ui'
       ],
       widgets: [
-        'widget-my-statistics'
+        'widget-my-statistics',
+        'widget-call-details'
       ],
       features: [
         'agent-feature-my-phone',
@@ -340,6 +342,7 @@ export default {
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
         "widget-my-statistics": { name: "My Statistics" },
+        "widget-call-details": { name: "Call Details" },
         "supervisor-feature-control-agent-state": { name: "Control Agent State" },
         "supervisor-feature-barge": { name: "Barge" },
         "supervisor-feature-take-over": { name: "Take Over" },

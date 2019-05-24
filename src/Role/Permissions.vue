@@ -95,6 +95,7 @@ export default {
         "reports-ui": { name: "Reports" },
         "monitor-ui": { name: "Monitor" },
         "widget-my-statistics": { name: "My Statistics" },
+        "widget-call-details": { name: "Call Details" },
         "supervisor-feature-control-agent-state": { name: "Control Agent State" },
         "supervisor-feature-barge": { name: "Barge" },
         "supervisor-feature-take-over": { name: "Take Over" },

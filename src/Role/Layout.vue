@@ -35,6 +35,9 @@ export default {
     canMyStat() {
       return this.$agent.permAllowed('widget-my-statistics')
     },
+    canCallDetails() {
+      return this.$agent.permAllowed('widget-call-details')
+    },
     canAgentManager() {
       return this.$agent.permAllowed('widget-agent-manager') && this.$agent.role() == 'supervisor'
     },
@@ -43,6 +46,9 @@ export default {
     },
     isMyStat () {
       return this.$agent.vm.layoutSM.isActiveMS
+    },
+    isCallDetails () {
+      return this.$agent.vm.layoutSM.isActiveCD
     },
     isAgentManager () {
       return this.$agent.vm.layoutSM.isActiveAM

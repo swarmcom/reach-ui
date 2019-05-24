@@ -56,7 +56,7 @@ export default class Agent extends WsProto {
         reports_cache: {},
         live_cache: {},
         wide_page: {},
-        layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true},
+        layoutSM: { isActiveAM: false, isActiveQM: false, isActiveMS: true, isActiveCD: true},
         canLogout: true,
         notification: null
       }
@@ -89,6 +89,9 @@ export default class Agent extends WsProto {
       }
       if (this.vm.storage_data.isActiveMS != undefined) {
         this.vm.layoutSM.isActiveMS = this.vm.storage_data.isActiveMS
+      }
+      if (this.vm.storage_data.isActiveCD != undefined) {
+        this.vm.layoutSM.isActiveCD = this.vm.storage_data.isActiveCD
       }
       if (this.vm.storage_data.live) {
         this.vm.live_cache = this.vm.storage_data.live

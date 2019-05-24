@@ -75,6 +75,20 @@
                     Add My Stats
                   </b-dropdown-item>
                 </template>
+                <template v-if="canCallDetails()">
+                  <b-dropdown-item
+                    v-if="isCallDetails()"
+                    @click="changeWidget('isActiveCD')"
+                  >
+                    Remove Call Details
+                  </b-dropdown-item>
+                  <b-dropdown-item
+                    v-else
+                    @click="changeWidget('isActiveCD')"
+                  >
+                    Add Call Details
+                  </b-dropdown-item>
+                </template>
                 <template v-if="canAgentManager()">
                   <b-dropdown-item
                     v-if="isAgentManager()"
