@@ -77,7 +77,7 @@ export default {
     },
     effective: {
       type: [String, Number],
-      value: ""
+      default: ""
     }
   },
   data () {

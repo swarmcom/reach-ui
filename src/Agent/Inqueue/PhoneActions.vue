@@ -226,8 +226,8 @@ export default {
     },
     can_record () {
       return this.$agent.permAllowed('agent-feature-call-recording-on-demand') &&
-        (this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null ||
-        this.outgoing && this.outgoing.line_out && this.outgoing.line_out.enable_call_recording === null) 
+        (this.inqueue && this.inqueue.line_in && this.inqueue.line_in.enable_call_recording === null && !this.wrap_visible ||
+        this.outgoing && this.outgoing.line_out && this.outgoing.line_out.enable_call_recording === null && !this.wrap_visible)
     },
     isRecording () {
       return ((this.inqueue && this.inqueue.keep_record) || (this.outgoing && this.outgoing.keep_record)) 

@@ -3,7 +3,7 @@
     v-if="this.$agent.can_call()"
     label="Call back to:"
   >
-    <b-input-group>
+    <b-input-group size="sm">
       <b-form-input
         v-model="number"
         type="text"
@@ -12,6 +12,7 @@
       <b-input-group-append>
         <b-dropdown
           v-if="lines.length > 0"
+          size="sm"
           text="Call as"
           variant="outline-secondary"
           right
@@ -26,6 +27,7 @@
         </b-dropdown>
         <b-btn
           v-if="$agent.vm.agent.line_id"
+          size="sm"
           variant="outline-secondary"
           @click="call($agent.vm.agent.line)"
         >
@@ -52,10 +54,11 @@ export default {
   },
   data () {
     return {
-      number: this.original_caller
+      number: ""
     }
   },
   created () {
+    this.number=this.originalCaller
   },
   methods: {
     call (line) {

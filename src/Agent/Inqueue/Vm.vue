@@ -4,43 +4,73 @@
     style="margin-top: 10px"
   >
     <b-row v-if="lua_result">
-      <b-col v-html="lua_result"></b-col>
+      <b-col v-html="lua_result" />
     </b-row>
 
     <b-row>
-      <b-col cols="2">
-        <div class="call-phone-center">
-          <icon
-            style="color:#838383"
-            name="file-audio-o"
-            scale="3"
-          />
-        </div>
-      </b-col>
-      <b-col cols="5">
-        <dl class="row agent-state-text">
-          <dt class="col-sm-12 session-manager-text">
-            {{ title }}:
-          </dt>
-          <dd class="col-sm-5">
-            Queue:
-          </dd>
-          <dd class="col-sm-7">
-            {{ inqueue.queue.name }}
-          </dd>
-          <dd
-            v-if="!this.$agent.is_ringing()"
-            class="col-sm-5"
-          >
-            Wait Time:
-          </dd>
-          <dd
-            v-if="!this.$agent.is_ringing()"
-            class="col-sm-7"
-          >
-            {{ msToHms(this.$agent.vm.wait_time) }}
-          </dd>
-        </dl>
+      <b-col cols="7">
+        <b-row>
+          <b-col cols="2">
+            <icon
+              class="call-phone-center"
+              style="color:#838383"
+              name="file-audio-o"
+              scale="3"
+            />
+          </b-col>
+          <b-col cols="5">
+            <dl class="row agent-state-text">
+              <dt class="col-sm-12 session-manager-text">
+                {{ title }}:
+              </dt>
+              <dd class="col-sm-5">
+                Queue:
+              </dd>
+              <dd class="col-sm-7">
+                {{ inqueue.queue.name }}
+              </dd>
+              <dd
+                v-if="!this.$agent.is_ringing()"
+                class="col-sm-5"
+              >
+                Wait Time:
+              </dd>
+              <dd
+                v-if="!this.$agent.is_ringing()"
+                class="col-sm-7"
+              >
+                {{ msToHms(this.$agent.vm.wait_time) }}
+              </dd>
+            </dl>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="2">
+            <div class="call-hand-center">
+              <b-img
+                v-if="inqueue.line_in.client.avatar"
+                :src="$agent.get_rr_uri()+'/avatar/'+inqueue.line_in.client.avatar"
+                style="width:64px;"
+              />
+              <icon
+                v-else
+                style="color:#838383"
+                name="handshake-o"
+                scale="3"
+              />
+            </div>
+          </b-col>
+          <b-col cols="5">
+            <dl class="row agent-state-text">
+              <dt class="col-sm-12 session-manager-text">
+                {{ inqueue.line_in.client.name }}
+              </dt>
+              <dd class="col-sm-12">
+                {{ inqueue.call_vars["Caller-ANI"] }}
+              </dd>
+            </dl>
+          </b-col>
+        </b-row>
       </b-col>
       <b-col cols="5">
         <dl class="row agent-state-text">
@@ -134,53 +164,39 @@
               </b-col>
             </b-row>
           </dd>
-        <!-- <dt class="col-sm-6">Transferers:</dt>
-        <dd class="col-sm-6">{{ this.inqueue.transferers.map( (agent) => agent.name ).join(", ") }}</dd> -->
         </dl>
       </b-col>
     </b-row>
     <b-row>
-      <b-col cols="2">
-        <div class="call-hand-center">
-          <b-img
-            v-if="inqueue.line_in.client.avatar"
-            :src="$agent.get_rr_uri()+'/avatar/'+inqueue.line_in.client.avatar"
-            style="width:64px;"
-          />
-          <icon
-            v-else
-            style="color:#838383"
-            name="handshake-o"
-            scale="4"
-          />
-        </div>
-      </b-col>
-      <b-col cols="5">
-        <dl class="row agent-state-text">
-          <dt class="col-sm-12 session-manager-text">
-            {{ inqueue.line_in.client.name }}
-          </dt>
-          <dd class="col-sm-12">
-            {{ inqueue.call_vars["Caller-ANI"] }}
-          </dd>
-        </dl>
+      <b-col>
+        <player
+          v-if="$agent.is_oncall() && inqueue.vm_length > 0"
+          :length="inqueue.vm_length"
+          :uuid="uuid"
+        />
       </b-col>
     </b-row>
-    <dialer
-      v-if="dialer_visible"
-      :original_caller="originalCaller"
-      :lines="lines"
-      @dialer_input="onDialerInput"
-    />
+    <b-row>
+      <b-col>
+        <dialer
+          v-if="dialer_visible"
+          :original-caller="originalCaller"
+          :lines="lines"
+          @dialer_input="onDialerInput"
+        />
+      </b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
 import Common from '@/Admin/Common'
+import VmPlayer from '@/Agent/Inqueue/VmPlayer'
 import Dialer from '@/Agent/Inqueue/VmCallbackDialer'
 export default {
   components: {
     dialer: Dialer,
+    player: VmPlayer
   },
   mixins: [Common],
   props: {
@@ -204,7 +220,7 @@ export default {
   },
   computed: {
     originalCaller: function () {
-      return this.inqueue.call_vars["Caller-ANI"]
+      return this.inqueue.call_vars["Caller-ANI"] + '@' + this.inqueue.call_vars["sip_from_host"]
     }
   },
   watch: {
@@ -252,6 +268,18 @@ export default {
     onDialerInput () {
       this.visible = false
     },
+    onVMPlay () {
+      this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid])
+    },
+    onVMPlayOff () {
+      this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid, 3000])
+    },
+    onVMStop () {
+      this.$agent.p_mfa('ws_agent', 'stop_vm', [this.uuid])
+    },
+    onVMPause () {
+      this.$agent.p_mfa('ws_agent', 'pause_vm', [this.uuid])
+    },
     update_skills () {
       this.$agent.p_mfa('ws_agent', 'skills', ['inqueue', this.uuid, this.list2skills(this.skills)])
     },
@@ -283,11 +311,9 @@ export default {
       if (state.state === 'conference') {
         this.queryCall()
       }
-      else if (state.state === 'oncall') {
+      else if (state.state === 'wrapup') {
         this.title = 'Voicemail Processing'
         this.queryCallInfo()
-      }
-      else if (state.state === 'wrapup') {
         this.dialer_visible = true
       }
     }

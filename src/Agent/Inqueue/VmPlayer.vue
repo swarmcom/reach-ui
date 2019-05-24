@@ -1,13 +1,16 @@
 <template>
-  <b-row
-    class="player"
-    align-h="center"
+  <b-form-group
+    v-if="this.$agent.can_call()"
+    label="Voicemail playback:"
   >
-    <b-button-group size="sm">
+    <b-button-group
+      class="vmplayer"
+      size="sm"
+    >
       <b-button
         v-if="isStop() || isPause()"
         variant="outline-dark"
-        @click.stop="play"
+        @click="play"
       >
         <icon
           name="play"
@@ -18,7 +21,7 @@
       <b-button
         v-if="isPlay()"
         variant="outline-dark"
-        @click.stop="pause"
+        @click="pause"
       >
         <icon
           name="pause"
@@ -28,7 +31,7 @@
       </b-button>
       <b-button
         variant="outline-dark"
-        @click.stop="stop"
+        @click="stop"
       >
         <icon
           name="stop"
@@ -37,7 +40,7 @@
         />
       </b-button>
       <span class="time">
-        {{ toHHMMSS }} / {{ getHHMMSS(player.duration()) }}
+        {{ toHHMMSS }} / {{ getHHMMSS(length/1000) }}
       </span>
       <b-form-input
         v-model.number="actualTime"
@@ -45,65 +48,33 @@
         type="range"
         min="0"
         step="1"
-        :max="player.duration()"
+        :max="length/1000"
         @change="onSeek()"
       />
-      <b-button
-        variant="outline-dark"
-        @click="volume(!volume_on)"
-      >
-        <icon
-          v-if="volume_on"
-          style="width: 15px"
-          name="volume-up"
-          scale="1"
-          class="align-middle"
-        />
-        <icon
-          v-else
-          style="width: 15px"
-          name="volume-down"
-          scale="1"
-          class="align-middle"
-        />
-      </b-button>
-      <b-button
-        v-if="!isError()"
-        variant="outline-dark"
-        target="_blank"
-        download
-        :href="$agent.get_rr_uri() + href"
-      >
-        <icon
-          name="download"
-          scale="1"
-          class="align-middle"
-        />
-      </b-button>
     </b-button-group>
-    <span v-if="isError()"> Failed to load record. </span>
-  </b-row>
+  </b-form-group>
 </template>
 
 <script>
-import { Howl } from 'howler'
 
 export default {
-  name: 'StatsPlayer',
+  name: 'VmPlayer',
   props: {
-    href: {
+    length: {
+      type: Number,
+      default: 0
+    },
+    uuid: {
       type: String,
       default: ''
     }
   },
   data () {
     return {
-      player: null,
       state: 'stop',
       updater: null,
       actualTime: 0,
-      actualVolume: '1.0',
-      volume_on: true
+      volume_on: true,
     }
   },
   computed: {
@@ -112,23 +83,23 @@ export default {
     }
   },
   created () {
-    let ref = this.$agent.get_rr_uri() + this.href
-    this.player = new Howl({
-      src: [ ref ],
-      onplay: () => this.state = 'play',
-      onpause: () => this.state = 'pause',
-      onend: () => { this.state = 'stop'; this.actualTime = 0 },
-      onstop: () => { this.state = 'stop'; this.actualTime = 0 },
-      onloaderror: () => this.state = 'error',
-    })
   },
   beforeDestroy () {
-    this.player.stop()
+    if (this.isPlay()) {
+      this.$agent.p_mfa('ws_agent', 'stop_vm', [this.uuid])
+    }
+    if (this.updater) {
+      clearInterval(this.updater)
+    }
   },
   methods: {
     onTimer () {
       if (this.isPlay()) {
-        this.actualTime = this.player.seek()
+        this.actualTime = this.actualTime + 0.5
+        if (this.actualTime >= this.length/1000) {
+          this.actualTime = 0
+          this.state = "stop"
+        }
       }
     },
     getHHMMSS (value) {
@@ -147,30 +118,42 @@ export default {
       if (this.updater) {
         clearInterval(this.updater)
       }
-      this.updater = setInterval(this.onTimer, 300)
-      this.player.play()
+      this.updater = setInterval(this.onTimer, 500)
+      if (this.actualTime > 0) {
+        if (this.isStop()) {
+          this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid])
+        } else {
+          this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid, this.actualTime * 1000])
+        }
+      } else {
+        this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid])
+      }
+      this.state = 'play'
     },
     stop () {
       if (this.updater) {
         clearInterval(this.updater)
       }
-      this.player.stop()
+      if (!this.isStop()) {
+        this.$agent.p_mfa('ws_agent', 'stop_vm', [this.uuid])
+      }
+      this.state = 'stop'
+      this.actualTime = 0
     },
     pause () {
-      this.player.pause()
+      this.state = 'pause'
+      this.$agent.p_mfa('ws_agent', 'pause_vm', [this.uuid])
     },
     onSeek () {
-      this.player.seek(this.actualTime)
-    },
-    volume (status) {
-      this.volume_on = status
-      status ? this.player.volume(this.actualVolume) : this.player.volume(0.0)
+      if (this.isPlay()) {
+        this.$agent.p_mfa('ws_agent', 'play_vm', [this.uuid, this.actualTime * 1000])
+      } else {
+        this.state = 'pause'
+      }
     },
     isStop () { return this.state == 'stop' },
     isPause () { return this.state == 'pause' },
     isPlay () { return this.state == 'play' },
-    isError () { return this.state == 'error' },
   }
 }
 </script>
-
