@@ -4,7 +4,16 @@
     style="margin-top: 10px"
   >
     <b-row v-if="lua_result">
-      <b-col v-html="lua_result"></b-col>
+      <b-col
+        v-if="lua_type === 'embed'"
+        v-html="lua_result"
+      />
+      <b-embed
+        v-if="lua_type === 'window'"
+        type="iframe"
+        :src="lua_result"
+        style="visibility:visible"
+      />
     </b-row>
 
     <b-row>
@@ -199,6 +208,7 @@ export default {
       inqueue: {},
       call_info: {},
       lua_result: false,
+      lua_type: "",
       updater: undefined,
       notification: undefined,
       original_caller: undefined
@@ -253,9 +263,12 @@ export default {
       if (LuaRe && typeof LuaRe == 'object') {
         let [Type, Value] = LuaRe
         if (Type == "embed") {
+          this.lua_type = "embed"
           this.lua_result = Value
         } else if (Type == "window") {
-          window.open(Value, "Reach")
+          this.lua_type = "window"
+          this.lua_result = Value
+          //window.open(Value, "Reach") 
         }
       }
     },
