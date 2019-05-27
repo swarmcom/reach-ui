@@ -82,7 +82,7 @@ export default {
   name: 'WidgetPrompts',
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ""
     },
     label: {
