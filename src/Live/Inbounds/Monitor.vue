@@ -99,7 +99,7 @@
           </b-button>
         </template>
         <b-button
-          v-if="$agent.vm.agent.permissions['supervisor-feature-hangup-call-queue']"
+          v-if="$agent.vm.agent.permissions['supervisor-feature-hangup-call-queue'] && data.item.state !=='wrapup'"
           size="sm"
           variant="danger"
           class="pointer"
@@ -177,7 +177,7 @@ export default {
     onTimer () {
       this.data.forEach((E, i, Arr) => { 
         E.time = E.time + 1000
-        E.effective_time.time = E.effective_time.time + 1000
+        E.effective_time.time = E.effective_time.time + (1000 * this.getAgingFactor(E))
         Arr.splice(i, 1, E)
       })
     },
@@ -193,6 +193,15 @@ export default {
     hangup ({record, uuid}) {
       this.$agent.p_mfa('ws_supervisor', 'hangup', [record, uuid])
     },
+    getAgingFactor(data) {
+      if (data.queue.aging_factor) {
+        return data.queue.aging_factor
+      } else if (data.queue.group && data.queue.group.aging_factor) {
+        return data.queue.group.aging_factor
+      } else {
+        return 1
+      }
+    }
   }
 }
 </script>
