@@ -8,17 +8,18 @@
     </b-row>
 
     <b-row>
-      <b-col cols="7">
+      <b-col cols="6">
         <b-row>
-          <b-col cols="2">
-            <icon
-              class="call-phone-center"
-              style="color:#838383"
-              name="file-audio-o"
-              scale="3"
-            />
+          <b-col cols="4">
+            <div class="call-phone-center">
+              <icon
+                style="color:#838383"
+                name="file-audio-o"
+                scale="3"
+              />
+            </div>
           </b-col>
-          <b-col cols="5">
+          <b-col cols="8">
             <dl class="row agent-state-text">
               <dt class="col-sm-12 session-manager-text">
                 {{ title }}:
@@ -45,7 +46,7 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col cols="2">
+          <b-col cols="4">
             <div class="call-hand-center">
               <b-img
                 v-if="inqueue.line_in.client.avatar"
@@ -72,7 +73,7 @@
           </b-col>
         </b-row>
       </b-col>
-      <b-col cols="5">
+      <b-col cols="6">
         <dl class="row agent-state-text">
           <dt class="col-sm-12 session-manager-text">
             Skills:
@@ -88,15 +89,17 @@
               >
                 queue:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.queue.skills"
-                  :key="index"
-                  cols="12"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.queue.skills"
+                    :key="index"
+                    cols="12"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
             <b-row>
               <b-col
@@ -105,15 +108,17 @@
               >
                 queue group:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.queue.group.skills"
-                  :key="index"
-                  cols="6"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.queue.group.skills"
+                    :key="index"
+                    cols="12"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
             <b-row>
               <b-col
@@ -122,15 +127,17 @@
               >
                 line:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.line_in.skills"
-                  :key="index"
-                  cols="6"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.line_in.skills"
+                    :key="index"
+                    cols="12"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
             <b-row>
               <b-col
@@ -139,15 +146,17 @@
               >
                 client:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.line_in.client.skills"
-                  :key="index"
-                  cols="12"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.line_in.client.skills"
+                    :key="index"
+                    cols="12"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
           </dd>
           <dd class="col-sm-6">
