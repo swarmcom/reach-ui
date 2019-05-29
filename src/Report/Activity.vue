@@ -21,17 +21,17 @@
     </div>
     <b-row>
       <b-col
-        style="max-width:14px"
+        class="cvs-download"
         title="export to csv"
       >
         <download-csv
-          :data   = "comp_inbound"
+          :data="comp_inbound"
           :labels="json_inbound_labels"
-          name = "inbound-activity.csv"
+          name="inbound-activity.csv"
         >
           <icon
             style="color:#838383"
-            name="file"
+            name="download"
             scale="1"
           />
         </download-csv>
@@ -51,17 +51,17 @@
     </div>
     <b-row>
       <b-col
-        style="max-width:14px"
+        class="cvs-download"
         title="export to csv"
       >
         <download-csv
-          :data   = "comp_outbound"
+          :data="comp_outbound"
           :labels="json_outbound_labels"
-          name = "outbound-activity.csv"
+          name="outbound-activity.csv"
         >
           <icon
             style="color:#838383"
-            name="file"
+            name="download"
             scale="1"
           />
         </download-csv>
