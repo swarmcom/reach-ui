@@ -1,23 +1,43 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+    <b-row>
+      <b-col>
         <h3>Voicemail details</h3>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
     <widget-query
       v-model="query_params"
       enable="step:empty_intervals"
       @reset="reset"
     />
+    <b-row style="margin-top: 20px">
+      <b-col
+        class="cvs-download"
+        title="export to csv"
+      >
+        <download-csv
+          :data="comp_voicemail_details"
+          :labels="json_voicemail_details_labels"
+          name="voicemail_details.csv"
+        >
+          <icon
+            style="color:#838383"
+            name="download"
+            scale="1"
+          />
+        </download-csv>
+      </b-col>
+    </b-row>
     <b-table
-      style="margin-top: 20px"
       small
       striped
       hover
       :items="data"
       :fields="fields"
     />
+    <b-btn @click="$router.go(-1)">
+      Back
+    </b-btn>
   </div>
 </template>
 
@@ -52,6 +72,42 @@ export default {
         callback_abandoned_count: { label: 'Abandon' },
         callback_cpt: { label: 'CPT' },
       },
+      json_voicemail_details_labels: {
+        ts_from: "From",
+        ts_to: "To",
+        call_count: "Calls",
+        ring_count: "Attempts ",
+        answered_count: "Answer ",
+        cpt: "CPT ",
+        asa: "ASA",
+        sla_count: "SLA",
+        callback_count: "Callbacks",
+        callback_answered_count: "Answer",
+        callback_abandoned_count: "Abandon",
+        callback_cpt: "CPT"
+      }
+    }
+  },
+  computed: {
+    comp_voicemail_details: function () {
+      let array = []
+      this.data.forEach( item => {
+        let object = {}
+        object['ts_from'] = this.tsFormatter(item['ts_from'])
+        object['ts_to'] = this.tsFormatter(item['ts_to'])
+        object['call_count'] = item['call_count']
+        object['ring_count'] = item['ring_count']
+        object['answered_count'] = item['answered_count']
+        object['cpt'] = this.durationFormatter(item['cpt'])
+        object['asa'] = this.durationFormatter(item['asa'])
+        object['sla_count'] = item['sla_count']
+        object['callback_count'] = item['callback_count']
+        object['callback_answered_count'] = item['callback_answered_count']
+        object['callback_abandoned_count'] = item['callback_abandoned_count']
+        object['callback_cpt'] = item['callback_cpt']
+        array.push(object)
+      })
+      return array
     }
   },
   created () {

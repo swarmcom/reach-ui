@@ -38,6 +38,11 @@
       @row-clicked="click"
     />
     <b-row>
+      <b-col v-if="!is_standalone()">
+        <b-btn @click="$router.go(-1)">
+          Back
+        </b-btn>
+      </b-col>
       <b-col>
         <b-button
           variant="outline-primary"
