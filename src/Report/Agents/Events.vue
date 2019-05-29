@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+    <b-row>
+      <b-col>
         <h3>Agents Events {{ header }}</h3>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
     <widget-query
       v-if="is_standalone()"
       v-model="query_params"
