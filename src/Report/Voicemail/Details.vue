@@ -7,7 +7,7 @@
     </b-row>
     <widget-query
       v-model="query_params"
-      enable="step:empty_intervals"
+      enable="range:step:empty_intervals"
       @reset="reset"
     />
     <b-row style="margin-top: 20px">

@@ -98,15 +98,6 @@
       >
         {{ dataSlot.item.calling }}
       </template>
-      <template
-        slot="player"
-        slot-scope="dataSlot"
-      >
-        <player
-          v-if="dataSlot.item.keep_record"
-          :href="dataSlot.item.call_record_path"
-        />
-      </template>
     </b-table>
     <b-row>
       <b-col v-if="!is_standalone()">
@@ -128,12 +119,11 @@
 </template>
 
 <script>
-import Player from '@/Report/Player'
 import Query from '@/Report/Query'
 import Base from '@/Report/Base'
 
 export default {
-  components: { player: Player, 'widget-query': Query },
+  components: { 'widget-query': Query },
   mixins: [Base],
   data () {
     return {
@@ -151,8 +141,7 @@ export default {
         agent: { label: 'Agent' },
         caller_ip: { label: 'IP' },
         caller: { label: 'Caller' },
-        calling: { label: 'Calling' },
-        player: { label: ' ' }
+        calling: { label: 'Calling' }
       },
       json_voicemail_sessions_labels: {
         ts_ms: "Time",

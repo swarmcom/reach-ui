@@ -1,18 +1,35 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+    <b-row>
+      <b-col>
         <h3>Inbound traffic overview</h3>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
     <widget-query
       v-model="query_params"
       enable="range:sla:group_by"
       require-range
       @reset="reset"
     />
+    <b-row style="margin-top: 20px">
+      <b-col
+        class="cvs-download"
+        title="export to csv"
+      >
+        <download-csv
+          :data="comp_inbound_summary"
+          :labels="json_inbound_summary_labels"
+          name="inbound_summary.csv"
+        >
+          <icon
+            style="color:#838383"
+            name="download"
+            scale="1"
+          />
+        </download-csv>
+      </b-col>
+    </b-row>
     <b-table
-      style="margin-top: 20px"
       small
       striped
       hover
@@ -61,6 +78,36 @@ export default {
         cpt: { label: "CPT", formatter: this.durationFormatter },
         asa: { label: "ASA", formatter: this.durationFormatter },
       },
+      json_inbound_summary_labels: {
+        entity: "Name",
+        calls: "Calls",
+        rings: "Attempts",
+        answers: "Answered",
+        abandons: "Abandon",
+        voicemails: "VM",
+        sla_count: "SLA",
+        cpt: "CPT",
+        asa: "ASA"
+      }
+    }
+  },
+  computed: {
+    comp_inbound_summary: function () {
+      let array = []
+      this.data.forEach( item => {
+        let object = {}
+        object['entity'] = this.nameFormatter(item['entity'])
+        object['calls'] = item['calls']
+        object['rings'] = item['rings']
+        object['answers'] = item['answers']
+        object['abandons'] = item['abandons']
+        object['voicemails'] = item['voicemails']
+        object['sla_count'] = item['sla_count']
+        object['cpt'] = this.durationFormatter(item['cpt'])
+        object['asa'] = this.durationFormatter(item['asa'])
+        array.push(object)
+      })
+      return array
     }
   },
   methods: {
