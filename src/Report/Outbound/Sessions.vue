@@ -1,18 +1,35 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+    <b-row>
+      <b-col>
         <h3>Outbound sessions {{ header }}</h3>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
     <widget-query
       v-if="is_standalone()"
       v-model="query_params"
       enable="range:agents:agent_groups:clients"
       @reset="reset"
     />
+    <b-row style="margin-top: 20px">
+      <b-col
+        class="cvs-download"
+        title="export to csv"
+      >
+        <download-csv
+          :data="comp_outbound_sessions"
+          :labels="json_outbound_sessions_labels"
+          name="outbound_sessions.csv"
+        >
+          <icon
+            style="color:#838383"
+            name="download"
+            scale="1"
+          />
+        </download-csv>
+      </b-col>
+    </b-row>
     <b-table
-      style="margin-top: 20px"
       small
       striped
       hover
@@ -86,6 +103,11 @@
       </template>
     </b-table>
     <b-row>
+      <b-col v-if="!is_standalone()">
+        <b-btn @click="$router.go(-1)">
+          Back
+        </b-btn>
+      </b-col>
       <b-col>
         <b-button
           variant="outline-primary"
@@ -117,12 +139,40 @@ export default {
         state_total: { label: 'Total' },
         state_ringing: { label: 'Ringing' },
         state_oncall: { label: 'Oncall' },
-        line_out: { label: 'Line out' },
+        line_out: { label: 'Line Out' },
         client: { label: 'Client' },
         agent: { label: 'Agent' },
         target: { label: 'Target' },
         player: { label: 'Recordings' }
       },
+      json_outbound_sessions_labels: {
+        ts_ms: "Time",
+        state_total: "Total",
+        state_ringing: "Ringing",
+        state_oncall: "Oncall",
+        line_out: "Line Out",
+        client: "Client",
+        agent: "Agent",
+        target: "Target"
+      }
+    }
+  },
+  computed: {
+    comp_outbound_sessions: function () {
+      let array = []
+      this.data.forEach( item => {
+        let object = {}
+        object['ts_ms'] = this.tsMsFormatter(item['ts_ms'])
+        object['state_total'] = this.durationFormatter(item['states']['total'])
+        object['state_ringing'] = this.durationFormatter(item['states']['states']['ringing'])
+        object['state_oncall'] = this.durationFormatter(item['states']['states']['oncall'])
+        object['line_out'] = this.nameFormatter(item['line_out'])
+        object['client'] = this.nameFormatter(item['client'])
+        object['agent'] = this.nameFormatter(item['agent'])
+        object['target'] = item['calling']
+        array.push(object)
+      })
+      return array
     }
   },
   created () {

@@ -10,8 +10,25 @@
       enable="range:group_by"
       @reset="reset"
     />
+    <b-row style="margin-top: 20px">
+      <b-col
+        class="cvs-download"
+        title="export to csv"
+      >
+        <download-csv
+          :data="comp_answer"
+          :labels="json_answer_labels"
+          name="answer.csv"
+        >
+          <icon
+            style="color:#838383"
+            name="download"
+            scale="1"
+          />
+        </download-csv>
+      </b-col>
+    </b-row>
     <b-table
-      style="margin-top: 20px"
       small
       striped
       hover
@@ -77,6 +94,30 @@ export default {
         voicemails: { label: 'VM' },
         detail: { label: 'Unanswered' }
       },
+      json_answer_labels: {
+        name: "Name",
+        rings: "Calls",
+        answers: "Answer",
+        abandons: "Abandon",
+        aborts: "Abort",
+        voicemails: "VM"
+      },
+    }
+  },
+  computed: {
+    comp_answer: function () {
+      let array = []
+      this.data.forEach( item => {
+        let object = {}
+        object['name'] = item['entity']['name']
+        object['rings'] = item['rings']
+        object['answers'] = item['answers'] + '/' + this.percentageFormatter(item['answers'], item['rings'])
+        object['abandons'] = item['abandons'] + '/' + this.percentageFormatter(item['abandons'], item['rings'])
+        object['aborts'] = item['aborts'] + '/' + this.percentageFormatter(item['aborts'], item['rings'])
+        object['voicemails'] = item['voicemails'] + '/' + this.percentageFormatter(item['voicemails'], item['rings'])
+        array.push(object)
+      })
+      return array
     }
   },
   methods: {

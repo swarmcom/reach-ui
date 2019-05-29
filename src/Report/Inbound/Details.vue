@@ -1,17 +1,34 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+    <b-row>
+      <b-col>
         <h3>Inbound traffic details</h3>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
     <widget-query
       v-model="query_params"
-      enable="step:empty_intervals"
+      enable="range:step:empty_intervals"
       @reset="reset"
     />
+    <b-row style="margin-top: 20px">
+      <b-col
+        class="cvs-download"
+        title="export to csv"
+      >
+        <download-csv
+          :data="comp_inbound_details"
+          :labels="json_inbound_details_labels"
+          name="inbound_details.csv"
+        >
+          <icon
+            style="color:#838383"
+            name="download"
+            scale="1"
+          />
+        </download-csv>
+      </b-col>
+    </b-row>
     <b-table
-      style="margin-top: 20px"
       small
       striped
       hover
@@ -25,6 +42,9 @@
         {{ dataSlot.item.abandoned }} / {{ percentageFormatter(dataSlot.item.abandoned, dataSlot.item.ring_count) }}
       </template>
     </b-table>
+    <b-btn @click="$router.go(-1)">
+      Back
+    </b-btn>
   </div>
 </template>
 
@@ -57,6 +77,38 @@ export default {
         cpt: { label: "CPT", formatter: this.durationFormatter },
         asa: { label: "ASA", formatter: this.durationFormatter },
       },
+      json_inbound_details_labels: {
+        ts_from: "From",
+        ts_to: "To",
+        call_count: "Calls",
+        ring_count: "Attempts ",
+        answered_count: "Answered ",
+        abandoned: "Abandon",
+        voicemail: "VM",
+        sla_count: "SLA",
+        cpt: "CPT",
+        asa: "ASA"
+      }
+    }
+  },
+  computed: {
+    comp_inbound_details: function () {
+      let array = []
+      this.data.forEach( item => {
+        let object = {}
+        object['ts_from'] = this.tsFormatter(item['ts_from'])
+        object['ts_to'] = this.tsFormatter(item['ts_to'])
+        object['call_count'] = item['call_count']
+        object['ring_count'] = item['ring_count']
+        object['answered_count'] = item['answered_count']
+        object['abandoned'] = item['abandoned'] + '/' + this.percentageFormatter(item['abandoned'], item['ring_count'])
+        object['voicemail'] = item['voicemail']
+        object['sla_count'] = item['sla_count']
+        object['cpt'] = this.durationFormatter(item['cpt'])
+        object['asa'] = this.durationFormatter(item['asa'])
+        array.push(object)
+      })
+      return array
     }
   },
   created () {

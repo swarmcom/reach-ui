@@ -1,18 +1,35 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
+    <b-row>
+      <b-col>
         <h3>Agents Releases</h3>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
     <widget-query
       v-model="query_params"
       enable="range:agents:agent_groups"
       require-range
       @reset="reset"
     />
+    <b-row style="margin-top: 20px">
+      <b-col
+        class="cvs-download"
+        title="export to csv"
+      >
+        <download-csv
+          :data="comp_agents_releases"
+          :labels="json_agents_releases_labels"
+          name="agents_releases.csv"
+        >
+          <icon
+            style="color:#838383"
+            name="download"
+            scale="1"
+          />
+        </download-csv>
+      </b-col>
+    </b-row>
     <b-table
-      style="margin-top: 20px"
       small
       striped
       hover
@@ -48,7 +65,27 @@ export default {
         time: { label: 'Time', formatter: this.durationFormatter },
         time_avg: { label: 'Time Avg', formatter: this.durationFormatter },
         details: { label: 'Details' },
+      },
+      json_agents_releases_labels: {
+        release: "Release name",
+        state: "To",
+        time: "Time",
+        time_avg: "Time Avg"
       }
+    }
+  },
+  computed: {
+    comp_agents_releases: function () {
+      let array = []
+      this.data.forEach( item => {
+        let object = {}
+        object['release'] = this.nameFormatter(item['release'])
+        object['count'] = item['count']
+        object['time'] = this.durationFormatter(item['time'])
+        object['time_avg'] = this.durationFormatter(item['time_avg'])
+        array.push(object)
+      })
+      return array
     }
   },
   methods: {
