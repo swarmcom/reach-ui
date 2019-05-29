@@ -4,45 +4,85 @@
     style="margin-top: 10px"
   >
     <b-row v-if="lua_result">
-      <b-col v-html="lua_result"></b-col>
+      <b-col
+        v-if="lua_type === 'embed'"
+        v-html="lua_result"
+      />
+      <b-embed
+        v-if="lua_type === 'window'"
+        type="iframe"
+        :src="lua_result"
+        style="visibility:visible"
+      />
     </b-row>
 
     <b-row>
-      <b-col cols="2">
-        <div class="call-phone-center">
-          <icon
-            style="color:#838383"
-            name="mobile"
-            scale="4"
-          />
-        </div>
+      <b-col cols="6">
+        <b-row>
+          <b-col cols="4">
+            <div class="call-phone-center">
+              <icon
+                style="color:#838383"
+                name="mobile"
+                scale="4"
+              />
+            </div>
+          </b-col>
+          <b-col cols="8">
+            <dl class="row agent-state-text">
+              <dt class="col-sm-12 session-manager-text">
+                Incoming Call:
+              </dt>
+              <dd class="col-sm-5">
+                Queue:
+              </dd>
+              <dd class="col-sm-7">
+                {{ inqueue.queue.name }}
+              </dd>
+              <dd
+                v-if="!this.$agent.is_ringing()"
+                class="col-sm-5"
+              >
+                Wait Time:
+              </dd>
+              <dd
+                v-if="!this.$agent.is_ringing()"
+                class="col-sm-7"
+              >
+                {{ msToHms(this.$agent.vm.wait_time) }}
+              </dd>
+            </dl>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col cols="4">
+            <div class="call-hand-center">
+              <b-img
+                v-if="inqueue.line_in.client.avatar"
+                :src="$agent.get_rr_uri()+'/avatar/'+inqueue.line_in.client.avatar"
+                style="width:64px;"
+              />
+              <icon
+                v-else
+                style="color:#838383"
+                name="handshake-o"
+                scale="3"
+              />
+            </div>
+          </b-col>
+          <b-col cols="8">
+            <dl class="row agent-state-text">
+              <dt class="col-sm-12 session-manager-text">
+                {{ inqueue.line_in.client.name }}
+              </dt>
+              <dd class="col-sm-12">
+                {{ isDefined(inqueue.call_vars['Caller-ANI']) }}
+              </dd>
+            </dl>
+          </b-col>
+        </b-row>
       </b-col>
-      <b-col cols="5">
-        <dl class="row agent-state-text">
-          <dt class="col-sm-12 session-manager-text">
-            Incoming Call:
-          </dt>
-          <dd class="col-sm-5">
-            Queue:
-          </dd>
-          <dd class="col-sm-7">
-            {{ inqueue.queue.name }}
-          </dd>
-          <dd
-            v-if="!this.$agent.is_ringing()"
-            class="col-sm-5"
-          >
-            Wait Time:
-          </dd>
-          <dd
-            v-if="!this.$agent.is_ringing()"
-            class="col-sm-7"
-          >
-            {{ msToHms(this.$agent.vm.wait_time) }}
-          </dd>
-        </dl>
-      </b-col>
-      <b-col cols="5">
+      <b-col cols="6">
         <dl class="row agent-state-text">
           <dt class="col-sm-12 session-manager-text">
             Skills:
@@ -58,15 +98,17 @@
               >
                 queue:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.queue.skills"
-                  :key="index"
-                  cols="12"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.queue.skills"
+                    :key="index"
+                    cols="12"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
             <b-row>
               <b-col
@@ -75,15 +117,16 @@
               >
                 queue group:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.queue.group.skills"
-                  :key="index"
-                  cols="6"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.queue.group.skills"
+                    :key="index"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
             <b-row>
               <b-col
@@ -92,15 +135,17 @@
               >
                 line:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.line_in.skills"
-                  :key="index"
-                  cols="6"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.line_in.skills"
+                    :key="index"
+                    cols="12"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
             <b-row>
               <b-col
@@ -109,15 +154,17 @@
               >
                 client:
               </b-col>
-              <b-row>
-                <b-col
-                  v-for="(v, k, index) in inqueue.line_in.client.skills"
-                  :key="index"
-                  cols="12"
-                >
-                  {{ k }}
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-row>
+                  <b-col
+                    v-for="(v, k, index) in inqueue.line_in.client.skills"
+                    :key="index"
+                    cols="12"
+                  >
+                    {{ k }}
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-row>
           </dd>
           <dd class="col-sm-6">
@@ -139,33 +186,6 @@
           </dt>
           <dd class="col-sm-6">
             {{ inqueue.transferers.map( (agent) => agent.name ).join(", ") }}
-          </dd>
-        </dl>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col cols="2">
-        <div class="call-hand-center">
-          <b-img
-            v-if="inqueue.line_in.client.avatar"
-            :src="$agent.get_rr_uri()+'/avatar/'+inqueue.line_in.client.avatar"
-            style="width:64px;"
-          />
-          <icon
-            v-else
-            style="color:#838383"
-            name="handshake-o"
-            scale="4"
-          />
-        </div>
-      </b-col>
-      <b-col cols="5">
-        <dl class="row agent-state-text">
-          <dt class="col-sm-12 session-manager-text">
-            {{ inqueue.line_in.client.name }}
-          </dt>
-          <dd class="col-sm-12">
-            {{ isDefined(inqueue.call_vars['Caller-ANI']) }}
           </dd>
         </dl>
       </b-col>
@@ -199,6 +219,7 @@ export default {
       inqueue: {},
       call_info: {},
       lua_result: false,
+      lua_type: "",
       updater: undefined,
       notification: undefined,
       original_caller: undefined
@@ -253,9 +274,12 @@ export default {
       if (LuaRe && typeof LuaRe == 'object') {
         let [Type, Value] = LuaRe
         if (Type == "embed") {
+          this.lua_type = "embed"
           this.lua_result = Value
         } else if (Type == "window") {
-          window.open(Value, "Reach")
+          this.lua_type = "window"
+          this.lua_result = Value
+          //window.open(Value, "Reach") 
         }
       }
     },

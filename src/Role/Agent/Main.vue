@@ -24,12 +24,14 @@
 <script>
 import SessionManager from '@/Agent/SessionManager'
 import Stats from '@/Agent/Stats'
+import CallDetails from '@/Agent/CallDetails'
 import draggable from 'vuedraggable'
 
 export default {
   components: {
     'session-manager': SessionManager,
     'my-statistics': Stats,
+    'call-details': CallDetails,
     draggable
   },
   data () {
@@ -38,14 +40,18 @@ export default {
     }
   },
   created () {
-    if (this.$agent.vm.storage_data.agentWidgets != undefined)
+    if (this.$agent.vm.storage_data.agentWidgets != undefined && this.$agent.vm.storage_data.agentWidgets.length === 3)
       this.widgets = this.$agent.vm.storage_data.agentWidgets
     else
-      this.widgets = ['session-manager', 'my-statistics']
+      this.widgets = ['session-manager', 'call-details', 'my-statistics']
   },
   methods: {
     showWidget(name) {
       if (name === 'session-manager') {
+        return true
+      }
+      else if (name === 'call-details' && this.$agent.vm.layoutSM.isActiveCD &&
+        this.$agent.permAllowed('widget-call-details')) {
         return true
       }
       else if (name === 'my-statistics' && this.$agent.vm.layoutSM.isActiveMS && 

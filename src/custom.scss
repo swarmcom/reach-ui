@@ -437,3 +437,13 @@ td.table-cell {
   border-color: silver !important;
   cursor: pointer;
 }
+
+.cvs-download {
+  max-width:14px;
+}
+
+.cvs-download:hover {
+  max-width:14px;
+  color: #007bff;
+  cursor: pointer;
+}

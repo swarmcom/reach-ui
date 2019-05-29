@@ -91,6 +91,9 @@ export default {
       }
     }
   },
+  created () {
+    this.maybeInitLocal().loadLocal('showCollapse')
+  },
   methods: {
     updateWidgets (v) {
     }

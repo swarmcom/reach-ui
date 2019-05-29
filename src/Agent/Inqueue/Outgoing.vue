@@ -16,7 +16,7 @@
           <icon
             style="color:#838383"
             name="handshake-o"
-            scale="4"
+            scale="3"
           />
         </div>
       </b-col>
