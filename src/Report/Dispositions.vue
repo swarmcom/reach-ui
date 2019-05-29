@@ -11,8 +11,25 @@
       require-range
       @reset="reset"
     />
+    <b-row style="margin-top: 20px">
+      <b-col
+        class="cvs-download"
+        title="export to csv"
+      >
+        <download-csv
+          :data="comp_dispositions"
+          :labels="json_dispositions_labels"
+          name="dispositions.csv"
+        >
+          <icon
+            style="color:#838383"
+            name="download"
+            scale="1"
+          />
+        </download-csv>
+      </b-col>
+    </b-row>
     <b-table
-      style="margin-top: 20px"
       small
       striped
       hover
@@ -46,7 +63,23 @@ export default {
         disposition: { label: 'Disposition', formatter: this.nameFormatter },
         count: { label: 'Count' },
         details: { label: 'Details' },
+      },
+      json_dispositions_labels: {
+        disposition: "Disposition",
+        count: "Count"
       }
+    }
+  },
+  computed: {
+    comp_dispositions: function () {
+      let array = []
+      this.data.forEach( item => {
+        let object = {}
+        object['disposition'] = this.nameFormatter(item['disposition'])
+        object['count'] = item['count']
+        array.push(object)
+      })
+      return array
     }
   },
   methods: {
