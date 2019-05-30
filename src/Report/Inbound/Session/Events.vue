@@ -52,12 +52,28 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        ts_start_ms: { label: 'Time', formatter: this.tsMsFormatter },
-        state_from: { label: 'From' },
-        state: { label: 'To' },
-        time: { label: 'Duration', formatter: this.durationFormatter },
-        queue: { label: 'Queue', formatter: this.nameFormatter },
-        agent: { label: 'Agent', formatter: this.nameFormatter }
+        ts_start_ms: {
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        state_from: { label: 'From', sortable: true },
+        state: { label: 'To', sortable: true },
+        time: {
+          label: 'Duration',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        queue: {
+          label: 'Queue',
+          key: 'queue.name',
+          sortable: true
+        },
+        agent: {
+          label: 'Agent',
+          key: 'agent.name',
+          sortable: true
+        }
       },
       json_inbound_events_labels: {
         ts_start_ms: "Time",
