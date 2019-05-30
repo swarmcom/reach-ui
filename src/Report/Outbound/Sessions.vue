@@ -36,6 +36,7 @@
       :items="data"
       :fields="fields"
       @row-clicked="click"
+      tbody-tr-class="pointer"
     >
       <template
         slot="player"

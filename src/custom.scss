@@ -257,6 +257,10 @@ body {
   cursor: pointer;
 }
 
+.default_cursor {
+  cursor: default;
+}
+
 .pointerLink {
   cursor: pointer;
 }
@@ -444,6 +448,5 @@ td.table-cell {
 
 .cvs-download:hover {
   max-width:14px;
-  color: #007bff;
   cursor: pointer;
 }
