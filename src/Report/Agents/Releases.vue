@@ -35,6 +35,7 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     >
       <template
         slot="details"
@@ -60,11 +61,23 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        release: { label: 'Release name', formatter: this.nameFormatter  },
-        count: { label: 'Count' },
-        time: { label: 'Time', formatter: this.durationFormatter },
-        time_avg: { label: 'Time Avg', formatter: this.durationFormatter },
-        details: { label: 'Details' },
+        release: {
+          label: 'Release name',
+          key: 'release.name',
+          sortable: true
+        },
+        count: { label: 'Count', sortable: true },
+        time: {
+          label: 'Time',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        time_avg: {
+          label: 'Time Avg',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        details: { label: 'Details' }
       },
       json_agents_releases_labels: {
         release: "Release name",

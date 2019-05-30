@@ -69,14 +69,50 @@ export default {
       data: [],
       header: '',
       fields: {
-        ts_ms: { label: 'Time', formatter: this.tsFormatter },
-        state_total: { label: 'Total', formatter: (v, name, item) => this.durationFormatter(item.states.total) },
-        state_release: { label: 'Release', formatter: (v, name, item) => this.durationFormatter(item.states.states.release) },
-        state_available: { label: 'Available', formatter: (v, name, item) => this.durationFormatter(item.states.states.available) },
-        state_oncall: { label: 'Oncall', formatter: (v, name, item) => this.durationFormatter(item.states.states.oncall) },
-        agent_name: { label: 'Name', formatter: (v, name, item) => item.agent.name },
-        agent_login: { label: 'Login', formatter: (v, name, item) => item.agent.login },
-        agent_peer: { label: 'Peer IP', formatter: (v, name, item) => item.peer },
+        ts_ms: {
+          label: 'Time',
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        state_total: {
+          label: 'Total',
+          key:'states.total',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_release: {
+          label: 'Release',
+          key:'states.states.release',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_available: {
+          label: 'Available',
+          key:'states.states.available',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_oncall: {
+          label: 'Oncall',
+          key:'states.states.oncall',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        agent_name: {
+          label: 'Name',
+          key:'agent.name',
+          sortable: true
+        },
+        agent_login: {
+          label: 'Login',
+          key:'agent.login',
+          sortable: true
+        },
+        agent_peer: {
+          label: 'Name',
+          key:'peer',
+          sortable: true
+        },
       },
       json_agents_sessions_labels: {
         ts_ms: "Time",
