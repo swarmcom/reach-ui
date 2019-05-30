@@ -29,6 +29,7 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     />
     <b-btn @click="$router.go(-1)">
       Back

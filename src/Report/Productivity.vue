@@ -35,6 +35,7 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     />
   </div>
 </template>
@@ -51,17 +52,57 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        entity: { label: 'Name', formatter: this.nameFormatter },
-        occupancy: { label: 'Ocpncy', formatter: v => v ? v + '%' : 0 + '%' },
-        cpt: { label: 'CPT', formatter: this.durationFormatter },
-        total_time: { label: 'Logged In', formatter: this.durationFormatter },
-        logged_out: { label: 'Logged Out', formatter: (v, _, item) => this.durationFormatter(item.range - item.total_time) },
-        released: { label: 'Release', formatter: this.durationFormatter },
-        suspended: { label: 'Suspend', formatter: this.durationFormatter },
-        idle: { label: 'Idle', formatter: this.durationFormatter },
-        ringing: { label: 'Ring', formatter: this.durationFormatter },
-        talk_total: { label: 'Talk', formatter: this.durationFormatter },
-        wrapup: { label: 'Wrap Up', formatter: this.durationFormatter },
+        entity: {
+          label: 'Name',
+          key: 'entity.name',
+          sortable: true
+        },
+        occupancy: {
+          label: 'Ocpncy',
+          formatter: v => v ? v + '%' : 0 + '%',
+          sortable: true
+        },
+        cpt: {
+          label: 'CPT',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        total_time: {
+          label: 'Logged In',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        logged_out: {label: 'Logged Out', formatter: (v, _, item) => this.durationFormatter(item.range - item.total_time) },
+        released: {
+          label: 'Release',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        suspended: {
+          label: 'Suspend',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        idle: {
+          label: 'Idle',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        ringing: {
+          label: 'Ring',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        talk_total: {
+          label: 'Talk',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        wrapup: {
+          label: 'Wrap Up',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
       },
       json_productivity_labels: {
         name: "Name",

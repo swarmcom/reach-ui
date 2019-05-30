@@ -35,14 +35,8 @@
       hover
       :items="data"
       :fields="fields"
-    >
-      <template
-        slot="abandoned"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.abandoned }} / {{ percentageFormatter(dataSlot.item.abandoned, dataSlot.item.call_count) }}
-      </template>
-    </b-table>
+      tbody-tr-class="default_cursor"
+    />
   </div>
 </template>
 
@@ -59,17 +53,37 @@ export default {
       query_params: { step: 60, sla: 10, empty_intervals: false },
       data: [],
       fields: {
-        ts_from: { label: 'From', formatter: this.tsFormatter },
-        ts_to: { label: 'To', formatter: this.tsFormatter },
-        call_count: { label: 'Calls' },
-        ring_count: { label: 'Placed' },
-        answered_count: { label: 'Answered' },
-        voicemail: { label: 'VM' },
-        transferred_out: { label: 'Trnf.' },
-        abandoned: { label: 'Abndn' },
-        cpt: { label: 'CPT',formatter: this.durationFormatter },
-        asa: { label: 'ASA',formatter: this.durationFormatter },
-        sla_count: { label: 'SLA' },
+        ts_from: {
+          label: 'From',
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        ts_to: {
+          label: 'To',
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        call_count: { label: 'Calls', sortable: true },
+        ring_count: { label: 'Placed', sortable: true },
+        answered_count: { label: 'Answered', sortable: true },
+        voicemail: { label: 'VM', sortable: true },
+        transferred_out: { label: 'Trnf.', sortable: true },
+        abandoned: {
+          label: 'Abndn',
+          formatter: (abandoned, _, item) => abandoned + ' / ' + this.percentageFormatter(abandoned, item.call_count),
+          sortable: true
+        },
+        cpt: {
+          label: 'CPT',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        asa: {
+          label: 'ASA',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        sla_count: { label: 'SLA', sortable: true },
       },
       json_availability_labels: {
         ts_from: "From",

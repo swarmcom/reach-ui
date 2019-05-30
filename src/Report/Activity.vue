@@ -43,6 +43,7 @@
       hover
       :items="inbound"
       :fields="inbound_fields"
+      tbody-tr-class="default_cursor"
     />
     <div class="row">
       <div class="col">
@@ -73,6 +74,7 @@
       hover
       :items="outbound"
       :fields="outbound_fields"
+      tbody-tr-class="default_cursor"
     />
   </div>
 </template>
@@ -88,33 +90,65 @@ export default {
     return {
       query_params: {},
       inbound_fields: {
-        entity: { label: 'Name', formatter: this.nameFormatter },
-        rings: { label: 'Calls' },
-        answered: { label: 'Answer' },
-        transferred: { label: 'Transfer' },
-        talk_time: { label: 'Talk', formatter: this.durationFormatter },
-        hold_time: { label: 'Hold', formatter: this.durationFormatter },
-        avg_talk_time: { label: 'Avg. Talk', formatter: this.durationFormatter },
-        avg_hold_time: { label: 'Avg. Hold', formatter: this.durationFormatter }
+        entity: {
+          label: 'Name',
+          key: 'entity.name',
+          sortable: true
+        },          
+        rings: { label: 'Calls', sortable: true },
+        answers: { label: 'Answer', sortable: true },
+        transfers: { label: 'Transfer', sortable: true },
+        talk_time: {
+          label: 'Talk',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        hold_time: {
+          label: 'Hold',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        avg_talk_time: {
+          label: 'Avg. Talk',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        avg_hold_time: {
+          label: 'Avg. Hold',
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_inbound_labels: {
         name: "Name",
         rings: "Calls",
-        answered: "Answer",
-        transferred: "Transfer",
+        answers: "Answer",
+        transfers: "Transfer",
         talk_time: "Talk",
         hold_time: "Hold",
         avg_talk_time: "Avg. Talk",
         avg_hold_time: "Avg. Hold"
       },
       outbound_fields: {
-        entity: { label: 'Name', formatter: this.nameFormatter },
-        calls: { label: 'Calls' },
-        rings: { label: 'Placed' },
-        answers: { label: 'Answer' },
-        abandons: { label: 'Abandon' },
-        talk_time: { label: 'Talk', formatter: this.durationFormatter },
-        avg_talk_time: { label: 'Avg. Talk', formatter: this.durationFormatter },
+        entity: {
+          label: 'Name',
+          key: 'entity.name',
+          sortable: true
+        },
+        calls: { label: 'Calls', sortable: true },
+        rings: { label: 'Placed', sortable: true },
+        answers: { label: 'Answer', sortable: true },
+        abandons: { label: 'Abandon', sortable: true },
+        talk_time: {
+          label: 'Talk',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        avg_talk_time: {
+          label: 'Avg. Talk',
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_outbound_labels: {
         name: "Name",
@@ -151,8 +185,8 @@ export default {
         let object = {}
         object['name'] = item['entity']['name']
         object['rings'] = item['rings']
-        object['answered'] = item['answered']
-        object['transferred'] = item['transferred']
+        object['answers'] = item['answers']
+        object['transfers'] = item['transfers']
         object['talk_time'] = this.durationFormatter(item['talk_time'])
         object['hold_time'] = this.durationFormatter(item['hold_time'])
         object['avg_talk_time'] = this.durationFormatter(item['avg_talk_time'])

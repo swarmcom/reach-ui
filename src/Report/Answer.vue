@@ -34,31 +34,8 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     >
-      <template
-        slot="answers"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.answers }} / {{ percentageFormatter(dataSlot.item.answers, dataSlot.item.rings) }}
-      </template>
-      <template
-        slot="abandons"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.abandons }} / {{ percentageFormatter(dataSlot.item.abandons, dataSlot.item.rings) }}
-      </template>
-      <template
-        slot="voicemails"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.voicemails }} / {{ percentageFormatter(dataSlot.item.voicemails, dataSlot.item.rings) }}
-      </template>
-      <template
-        slot="aborts"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.aborts }} / {{ percentageFormatter(dataSlot.item.aborts, dataSlot.item.rings) }}
-      </template>
       <template
         slot="detail"
         slot-scope="dataSlot"
@@ -86,12 +63,32 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        entity: { label: 'Name', formatter: this.nameFormatter },
-        rings: { label: 'Calls' },
-        answers: { label: 'Answer' },
-        abandons: { label: 'Abandon' },
-        aborts: { label: 'Abort' },
-        voicemails: { label: 'VM' },
+        entity: {
+          label: 'Name',
+          key: 'entity.name',
+          sortable: true
+        },
+        rings: { label: 'Calls', sortable: true },
+        answers: {
+          label: 'Answer',
+          formatter: (answers, _, item) => answers + ' / ' + this.percentageFormatter(answers, item.rings),
+          sortable: true
+        },
+        abandons: {
+          label: 'Abandon',
+          formatter: (abandons, _, item) => abandons + ' / ' + this.percentageFormatter(abandons, item.rings),
+          sortable: true
+        },
+        aborts: {
+          label: 'Abort',
+          formatter: (aborts, _, item) => aborts + ' / ' + this.percentageFormatter(aborts, item.rings),
+          sortable: true
+        },
+        voicemails: {
+          label: 'VM',
+          formatter: (voicemails, _, item) => voicemails + ' / ' + this.percentageFormatter(voicemails, item.rings),
+          sortable: true
+        },
         detail: { label: 'Unanswered' }
       },
       json_answer_labels: {
