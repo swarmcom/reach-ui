@@ -34,6 +34,7 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     />
     <b-btn @click="$router.go(-1)">
       Back
@@ -59,18 +60,38 @@ export default {
       data: [],
       header: '',
       fields: {
-        ts_from: { label: "From", formatter: this.tsFormatter },
-        ts_to: { label: "To", formatter: this.tsFormatter },
-        call_count: { label: 'Calls' },
-        ring_count: { label: 'Attempts' },
-        answered_count: { label: 'Answer' },
-        cpt: { label: "CPT", formatter: this.durationFormatter },
-        asa: { label: "ASA", formatter: this.durationFormatter },
-        sla_count: { label: 'SLA' },
-        callback_count: { label: 'Callbacks' },
-        callback_answered_count: { label: 'Answer' },
-        callback_abandoned_count: { label: 'Abandon' },
-        callback_cpt: { label: 'CPT' },
+        ts_from: {
+          label: "From",
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        ts_to: {
+          label: "To",
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        call_count: { label: 'Calls', sortable: true },
+        ring_count: { label: 'Attempts', sortable: true },
+        answered_count: { label: 'Answer', sortable: true },
+        cpt: {
+          label: "CPT",
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        asa: {
+          label: "ASA",
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        sla_count: { label: 'SLA', sortable: true },
+        callback_count: { label: 'Callbacks', sortable: true },
+        callback_answered_count: { label: 'Answer ', sortable: true },
+        callback_abandoned_count: { label: 'Abandon', sortable: true },
+        callback_cpt: {
+          label: 'CPT ', 
+          formatter: this.durationFormatter,
+          sortable: true
+        },
       },
       json_voicemail_details_labels: {
         ts_from: "From",
@@ -104,7 +125,7 @@ export default {
         object['callback_count'] = item['callback_count']
         object['callback_answered_count'] = item['callback_answered_count']
         object['callback_abandoned_count'] = item['callback_abandoned_count']
-        object['callback_cpt'] = item['callback_cpt']
+        object['callback_cpt'] = this.durationFormatter(item['callback_cpt'])
         array.push(object)
       })
       return array

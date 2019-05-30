@@ -7,7 +7,7 @@
     </b-row>
     <widget-query
       v-model="query_params"
-      enable="range:step:empty_intervals"
+      enable="range:step:sla:empty_intervals"
       @reset="reset"
     />
     <b-row style="margin-top: 20px">
@@ -34,14 +34,8 @@
       hover
       :items="data"
       :fields="fields"
-    >
-      <template
-        slot="abandoned"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.abandoned }} / {{ percentageFormatter(dataSlot.item.abandoned, dataSlot.item.ring_count) }}
-      </template>
-    </b-table>
+      tbody-tr-class="default_cursor"
+    />
     <b-btn @click="$router.go(-1)">
       Back
     </b-btn>
@@ -62,20 +56,44 @@ export default {
   mixins: [Base],
   data () {
     return {
-      query_params: { step: 60, empty_intervals: false },
+      query_params: { step: 60, empty_intervals: false, sla: 10 },
       data: [],
       header: '',
       fields: {
-        ts_from: { label: "From", formatter: this.tsFormatter },
-        ts_to: { label: "To", formatter: this.tsFormatter },
-        call_count: { label: "Calls" },
-        ring_count: { label: "Attempts" },
-        answered_count: { label: "Answered" },
-        abandoned: { label: "Abandon" },
-        voicemail: { label: "VM"  },
-        sla_count: { label: "SLA" },
-        cpt: { label: "CPT", formatter: this.durationFormatter },
-        asa: { label: "ASA", formatter: this.durationFormatter },
+        ts_from: {
+          label: "From",
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        ts_to: {
+          label: "To",
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        call_count: { label: "Calls", sortable: true },
+        ring_count: { label: "Attempts", sortable: true },
+        answered_count: {
+          label: "Answered",
+          formatter: (answered_count, _, item) => answered_count + ' / ' + this.percentageFormatter(answered_count, item.ring_count),
+          sortable: true
+        },
+        abandoned: {
+          label: "Abandon",
+          formatter: (abandoned, _, item) => abandoned + ' / ' + this.percentageFormatter(abandoned, item.ring_count),
+          sortable: true
+        },
+        voicemail: { label: "VM", sortable: true  },
+        sla_count: { label: "SLA", sortable: true },
+        cpt: {
+          label: "CPT",
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        asa: {
+          label: "ASA",
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_inbound_details_labels: {
         ts_from: "From",
@@ -100,7 +118,7 @@ export default {
         object['ts_to'] = this.tsFormatter(item['ts_to'])
         object['call_count'] = item['call_count']
         object['ring_count'] = item['ring_count']
-        object['answered_count'] = item['answered_count']
+        object['answered_count'] = item['answered_count'] + '/' + this.percentageFormatter(item['answered_count'], item['ring_count'])
         object['abandoned'] = item['abandoned'] + '/' + this.percentageFormatter(item['abandoned'], item['ring_count'])
         object['voicemail'] = item['voicemail']
         object['sla_count'] = item['sla_count']

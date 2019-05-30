@@ -40,24 +40,12 @@
       @row-clicked="details"
     >
       <template
-        slot="entity"
+        slot="entity.name"
         slot-scope="dataSlot"
       >
         <b-link @click.stop="sessions(dataSlot)">
           {{ nameFormatter(dataSlot.item.entity) }}
         </b-link>
-      </template>
-      <template
-        slot="answers"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.answers }} / {{ percentageFormatter(dataSlot.item.answers, dataSlot.item.rings) }}
-      </template>
-      <template
-        slot="abandons"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.abandons }} / {{ percentageFormatter(dataSlot.item.abandons, dataSlot.item.rings) }}
       </template>
     </b-table>
   </div>
@@ -75,12 +63,32 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        entity: { label: 'Name', formatter: this.nameFormatter },
-        rings: { label: 'Calls' },
-        answers: { label: 'Answer' },
-        abandons: { label: 'Abandon' },
-        avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
-        total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter }
+        entity: {
+          label: 'Name',
+          key: 'entity.name',
+          sortable: true
+        },
+        rings: { label: 'Calls', sortable: true },
+        answers: {
+          label: 'Answer',
+          formatter: (answers, _, item) => answers + ' / ' + this.percentageFormatter(answers, item.rings),
+          sortable: true
+        },
+        abandons: {
+          label: 'Abandon',
+          formatter: (abandons, _, item) => abandons + ' / ' + this.percentageFormatter(abandons, item.rings),
+          sortable: true
+        },
+        avg_talk_time: {
+          label: 'Average Talk Time',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        total_talk_time: {
+          label: 'Total Talk Time',
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_outbound_summary_labels: {
         entity: "Name",

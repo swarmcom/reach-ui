@@ -35,6 +35,7 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     >
       <template
         slot="details"
@@ -60,8 +61,12 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        disposition: { label: 'Disposition', formatter: this.nameFormatter },
-        count: { label: 'Count' },
+        disposition: {
+          label: 'Disposition',
+          formatter: this.nameFormatter,
+          sortable: true
+        },
+        count: { label: 'Count', sortable: true },
         details: { label: 'Details' },
       },
       json_dispositions_labels: {

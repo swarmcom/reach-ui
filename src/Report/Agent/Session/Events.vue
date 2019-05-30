@@ -29,6 +29,7 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     />
     <b-btn @click="$router.go(-1)">
       Back
@@ -51,10 +52,18 @@ export default {
     return {
       data: [],
       fields: {
-        ts_ms: { label: 'Time', sortable: true, formatter: this.tsMsFormatter },
-        state_from: { label: 'From' },
-        state: { label: 'To' },
-        time: { label: 'Duration', formatter: this.durationFormatter }
+        ts_ms: {
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        state_from: { label: 'From', sortable: true },
+        state: { label: 'To', sortable: true },
+        time: {
+          label: 'Duration',
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_agents_session_events_labels: {
         ts_ms: "Time",

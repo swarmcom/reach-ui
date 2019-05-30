@@ -39,18 +39,12 @@
       @row-clicked="details"
     >
       <template
-        slot="entity"
+        slot="entity.name"
         slot-scope="dataSlot"
       >
         <b-link @click.stop="sessions(dataSlot)">
           {{ nameFormatter(dataSlot.item.entity) }}
         </b-link>
-      </template>
-      <template
-        slot="abandoned"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.abandoned }} / {{ percentageFormatter(dataSlot.item.abandoned, dataSlot.item.ring_count) }}
       </template>
     </b-table>
   </div>
@@ -68,15 +62,35 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        entity: { label: 'Name' },
-        calls: { label: "Calls" },
-        rings: { label: "Attempts" },
-        answers: { label: "Answered" },
-        abandons: { label: "Abandon" },
-        voicemails: { label: "VM"  },
-        sla_count: { label: "SLA" },
-        cpt: { label: "CPT", formatter: this.durationFormatter },
-        asa: { label: "ASA", formatter: this.durationFormatter },
+        entity: {
+          label: 'Name',
+          key: 'entity.name',
+          sortable: true
+        },
+        calls: { label: "Calls", sortable: true },
+        rings: { label: "Attempts", sortable: true },
+        answers: {
+          label: "Answered",
+          formatter: (answers, _, item) => answers + ' / ' + this.percentageFormatter(answers, item.rings),
+          sortable: true
+        },
+        abandons: {
+          label: "Abandon",
+          formatter: (abandons, _, item) => abandons + ' / ' + this.percentageFormatter(abandons, item.rings),
+          sortable: true
+        },
+        voicemails: { label: "VM", sortable: true },
+        sla_count: { label: "SLA", sortable: true },
+        cpt: {
+          label: "CPT",
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        asa: {
+          label: "ASA",
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_inbound_summary_labels: {
         entity: "Name",
@@ -99,8 +113,8 @@ export default {
         object['entity'] = this.nameFormatter(item['entity'])
         object['calls'] = item['calls']
         object['rings'] = item['rings']
-        object['answers'] = item['answers']
-        object['abandons'] = item['abandons']
+        object['answers'] = item['answers'] + '/' + this.percentageFormatter(item['answers'], item['rings'])
+        object['abandons'] = item['abandons'] + '/' + this.percentageFormatter(item['abandons'], item['rings'])
         object['voicemails'] = item['voicemails']
         object['sla_count'] = item['sla_count']
         object['cpt'] = this.durationFormatter(item['cpt'])

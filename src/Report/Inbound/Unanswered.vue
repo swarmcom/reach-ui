@@ -37,62 +37,7 @@
       :fields="fields"
       tbody-tr-class="pointer"
       @row-clicked="click"
-    >
-      <template
-        slot="state_total"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.total) }}
-      </template>
-      <template
-        slot="state_inqueue"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.states.inqueue) }}
-      </template>
-      <template
-        slot="state_agent"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.states.agent) }}
-      </template>
-      <template
-        slot="line_in"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.line_in) }}
-      </template>
-      <template
-        slot="client"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.client) }}
-      </template>
-      <template
-        slot="queue"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.queue) }}
-      </template>
-      <template
-        slot="caller_ip"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.caller_ip }}
-      </template>
-      <template
-        slot="caller"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.caller }}
-      </template>
-      <template
-        slot="calling"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.calling }}
-      </template>
-    </b-table>
+    />
     <b-row>
       <b-col v-if="!is_standalone()">
         <b-btn @click="$router.go(-1)">
@@ -126,17 +71,53 @@ export default {
       data: [],
       header: '',
       fields: {
-        ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
-        state_total: { label: 'Total' },
-        state_inqueue: { label: 'Inqueue' },
-        state_agent: { label: 'Agent' },
-        state_oncall: { label: 'Oncall' },
-        line_in: { label: 'Line In' },
-        client: { label: 'Client' },
-        queue: { label: 'Queue' },
-        caller_ip: { label: 'IP' },
-        caller: { label: 'Caller' },
-        calling: { label: 'Calling' }
+        ts_ms: {
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        state_total: {
+          label: 'Total',
+          key: 'states.total',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_inqueue: {
+          label: 'Inqueue',
+          key: 'states.states.inqueue',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_agent: {
+          label: 'Agent',
+          key: 'states.states.agent',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_oncall: {
+          label: 'Oncall',
+          key: 'states.states.oncall',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        line_in: {
+          label: 'Line In',
+          key: 'line_in.name',
+          sortable: true
+        },
+        client: {
+          label: 'Client',
+          key: 'client.name',
+          sortable: true
+        },
+        queue: {
+          label: 'Queue',
+          key: 'queue.name',
+          sortable: true
+        },
+        caller_ip: { label: 'IP', sortable: true },
+        caller: { label: 'Caller', sortable: true },
+        calling: { label: 'Calling', sortable: true }
       },
       json_unanswered_labels: {
         ts_ms: "Time",

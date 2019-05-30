@@ -39,7 +39,7 @@
       @row-clicked="details"
     >
       <template
-        slot="entity"
+        slot="entity.name"
         slot-scope="dataSlot"
       >
         <b-link @click.stop="sessions(dataSlot)">
@@ -62,17 +62,33 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        entity: { label: 'Name', formatter: this.nameFormatter },
-        call_count: { label: 'Calls' },
-        ring_count: { label: 'Attempts' },
-        answered_count: { label: 'Answer' },
-        cpt: { label: "CPT", formatter: this.durationFormatter },
-        asa: { label: "ASA", formatter: this.durationFormatter },
-        sla_count: { label: 'SLA' },
-        callback_count: { label: 'Callbacks' },
-        callback_answered_count: { label: 'Answer' },
-        callback_abandoned_count: { label: 'Abandon' },
-        callback_cpt: { label: 'CPT' }
+        entity: {
+          label: 'Name',
+          key: 'entity.name',
+          sortable: true
+        },
+        call_count: { label: 'Calls', sortable: true },
+        ring_count: { label: 'Attempts', sortable: true },
+        answered_count: { label: 'Answer', sortable: true },
+        cpt: {
+          label: "CPT",
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        asa: {
+          label: "ASA",
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        sla_count: { label: 'SLA', sortable: true },
+        callback_count: { label: 'Callbacks', sortable: true },
+        callback_answered_count: { label: 'Answer ', sortable: true },
+        callback_abandoned_count: { label: 'Abandon', sortable: true },
+        callback_cpt: {
+          label: 'CPT ',
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_voicemail_summary_labels: {
         entity: "Name",
@@ -104,7 +120,7 @@ export default {
         object['callback_count'] = item['callback_count']
         object['callback_answered_count'] = item['callback_answered_count']
         object['callback_abandoned_count'] = item['callback_abandoned_count']
-        object['callback_cpt'] = item['callback_cpt']
+        object['callback_cpt'] = this.durationFormatter(item['callback_cpt'])
         array.push(object)
       })
       return array

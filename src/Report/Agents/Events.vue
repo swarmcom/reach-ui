@@ -70,13 +70,33 @@ export default {
       data: [],
       header: '',
       fields: {
-        ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
-        agent: { label: 'Name', formatter: this.nameFormatter },
-        agent_group: { label: 'Group', formatter: this.nameFormatter },
-        state_from: { label: 'From' },
-        state: { label: 'To' },
-        time: { label: 'Duration', formatter: this.durationFormatter },
-        release: { label: 'Release', formatter: this.nameFormatter }
+        ts_ms: {
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        agent: {
+          label: 'Name',
+          key: 'agent.name',
+          sortable: true
+        },
+        agent_group: {
+          label: 'Group',
+          key: 'agent_group.name',
+          sortable: true
+        },
+        state_from: { label: 'From', sortable: true },
+        state: { label: 'To', sortable: true },
+        time: {
+          label: 'Duration',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        release: {
+          label: 'Release',
+          key: 'release.name',
+          sortable: true
+        }
       },
       json_agents_events_labels: {
         ts_ms: "Time",

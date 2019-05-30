@@ -39,72 +39,6 @@
       @row-clicked="click"
     >
       <template
-        slot="state_total"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.total) }}
-      </template>
-      <template
-        slot="state_inqueue"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.states.inqueue) }}
-      </template>
-      <template
-        slot="state_agent"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.states.agent) }}
-      </template>
-      <template
-        slot="state_oncall"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.states.oncall) }}
-      </template>
-      <template
-        slot="line_in"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.line_in) }}
-      </template>
-      <template
-        slot="client"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.client) }}
-      </template>
-      <template
-        slot="queue"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.queue) }}
-      </template>
-      <template
-        slot="agent"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.agent) }}
-      </template>
-      <template
-        slot="caller_ip"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.caller_ip }}
-      </template>
-      <template
-        slot="caller"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.caller }}
-      </template>
-      <template
-        slot="calling"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.calling }}
-      </template>
-      <template
         slot="player"
         slot-scope="dataSlot"
       >
@@ -160,18 +94,58 @@ export default {
       data: [],
       header: '',
       fields: {
-        ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
-        state_total: { label: 'Total' },
-        state_inqueue: { label: 'Inqueue' },
-        state_agent: { label: 'Agent' },
-        state_oncall: { label: 'Oncall' },
-        line_in: { label: 'Line In' },
-        client: { label: 'Client' },
-        queue: { label: 'Queue' },
-        agent: { label: 'Agent' },
-        caller_ip: { label: 'IP' },
-        caller: { label: 'Caller' },
-        calling: { label: 'Calling' },
+        ts_ms: { 
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        state_total: {
+          label: 'Total',
+          key:'states.total',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_inqueue: {
+          label: 'Inqueue',
+          key:'states.states.inqueue',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_agent: {
+          label: 'Agent',
+          key:'states.states.agent',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_oncall: {
+          label: 'Oncall',
+          key:'states.states.oncall',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        line_in: {
+          label: 'Line In',
+          key: 'line_in.name',
+          sortable: true
+        },
+        client: {
+          label: 'Client',
+          key: 'client.name',
+          sortable: true
+        },
+        queue: {
+          label: 'Queue',
+          key: 'queue.name',
+          sortable: true
+        },
+        agent: {
+          label: 'Agent',
+          key: 'agent.name',
+          sortable: true
+        },
+        caller_ip: { label: 'IP', sortable: true },
+        caller: { label: 'Caller', sortable: true },
+        calling: { label: 'Calling', sortable: true },
         player: { label: 'Recordings' }
       },
       json_inbound_sessions_labels: {
@@ -225,7 +199,7 @@ export default {
     },
     click ({uuid}) {
       this.$router.push(`/reports/inbound/session/events/${uuid}`)
-    },
+    }
   },
 }
 </script>
