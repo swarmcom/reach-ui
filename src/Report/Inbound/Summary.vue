@@ -71,12 +71,12 @@ export default {
         rings: { label: "Attempts", sortable: true },
         answers: {
           label: "Answered",
-          formatter: (answers, _, item) => answers + '/' + this.percentageFormatter(answers, item.rings),
+          formatter: (answers, _, item) => answers + ' / ' + this.percentageFormatter(answers, item.rings),
           sortable: true
         },
         abandons: {
           label: "Abandon",
-          formatter: (abandons, _, item) => abandons + '/' + this.percentageFormatter(abandons, item.rings),
+          formatter: (abandons, _, item) => abandons + ' / ' + this.percentageFormatter(abandons, item.rings),
           sortable: true
         },
         voicemails: { label: "VM", sortable: true },

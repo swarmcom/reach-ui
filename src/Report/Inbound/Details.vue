@@ -73,12 +73,12 @@ export default {
         ring_count: { label: "Attempts", sortable: true },
         answered_count: {
           label: "Answered",
-          formatter: (answered_count, _, item) => answered_count + '/' + this.percentageFormatter(answered_count, item.ring_count),
+          formatter: (answered_count, _, item) => answered_count + ' / ' + this.percentageFormatter(answered_count, item.ring_count),
           sortable: true
         },
         abandoned: {
           label: "Abandon",
-          formatter: (abandoned, _, item) => abandoned + '/' + this.percentageFormatter(abandoned, item.ring_count),
+          formatter: (abandoned, _, item) => abandoned + ' / ' + this.percentageFormatter(abandoned, item.ring_count),
           sortable: true
         },
         voicemail: { label: "VM", sortable: true  },
