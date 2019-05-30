@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^v2.0.0-rc.18",
+    "bootstrap-vue": "^v2.0.0-rc.21",
     "chart.js": "^2.7.1",
     "css-loader": " ^0.28.10",
     "file-loader": "^1.1.9",
@@ -20,7 +20,7 @@
     "moment": "^2.20.1",
     "moment-duration-format": "^2.2.2",
     "popper.js": "^1.12.3",
-    "vue": "^2.5.13",
+    "vue": "^2.6.10",
     "vue-awesome": "^2.3.4",
     "vue-codemirror": "^4.0.2",
     "vue-json-csv": "^1.2.4",
