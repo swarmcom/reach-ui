@@ -34,20 +34,7 @@
       hover
       :items="data"
       :fields="fields"
-    >
-      <template
-        slot="answers"
-        slot-scope="dataSlot"
-      > 
-        {{ dataSlot.item.answers }} / {{ percentageFormatter(dataSlot.item.answers, dataSlot.item.rings) }}
-      </template>
-      <template
-        slot="abandons"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.abandons }} / {{ percentageFormatter(dataSlot.item.abandons, dataSlot.item.rings) }}
-      </template>
-    </b-table>
+    />
     <b-btn @click="$router.go(-1)">
       Back
     </b-btn>
@@ -72,13 +59,37 @@ export default {
       data: [],
       header: '',
       fields: {
-        ts_from: { label: 'From', formatter: this.tsFormatter  },
-        ts_to: { label: 'To', formatter: this.tsFormatter },
-        rings: { label: 'Calls' },
-        answers: { label: 'Answered' },
-        abandons: { label: 'Abandons' },
-        avg_talk_time: { label: 'Average Talk Time', formatter: this.durationFormatter },
-        total_talk_time: { label: 'Total Talk Time', formatter: this.durationFormatter },
+        ts_from: {
+          label: 'From',
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        ts_to: {
+          label: 'To',
+          formatter: this.tsFormatter,
+          sortable: true
+        },
+        rings: { label: 'Calls', sortable: true },
+        answers: {
+          label: 'Answered',
+          formatter: (answers, _, item) => answers + ' / ' + this.percentageFormatter(answers, item.rings),
+          sortable: true
+        },
+        abandons: {
+          label: 'Abandons',
+          formatter: (abandons, _, item) => abandons + ' / ' + this.percentageFormatter(abandons, item.rings),
+          sortable: true
+        },
+        avg_talk_time: {
+          label: 'Average Talk Time',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        total_talk_time: {
+          label: 'Total Talk Time',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
       },
       json_outbound_details_labels: {
         ts_from: "From",

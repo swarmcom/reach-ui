@@ -38,48 +38,6 @@
       @row-clicked="click"
     >
       <template
-        slot="state_total"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.total) }}
-      </template>
-      <template
-        slot="state_ringing"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.states.ringing) }}
-      </template>
-      <template
-        slot="state_oncall"
-        slot-scope="dataSlot"
-      >
-        {{ durationFormatter(dataSlot.item.states.states.oncall) }}
-      </template>
-      <template
-        slot="line_out"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.line_out) }}
-      </template>
-      <template
-        slot="client"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.client) }}
-      </template>
-      <template
-        slot="agent"
-        slot-scope="dataSlot"
-      >
-        {{ nameFormatter(dataSlot.item.agent) }}
-      </template>
-      <template
-        slot="calling"
-        slot-scope="dataSlot"
-      >
-        {{ dataSlot.item.target }}
-      </template>
-      <template
         slot="player"
         slot-scope="dataSlot"
       >
@@ -135,14 +93,49 @@ export default {
       data: [],
       header: '',
       fields: {
-        ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
-        state_total: { label: 'Total' },
-        state_ringing: { label: 'Ringing' },
-        state_oncall: { label: 'Oncall' },
-        line_out: { label: 'Line Out' },
-        client: { label: 'Client' },
-        agent: { label: 'Agent' },
-        target: { label: 'Target' },
+        ts_ms: { 
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        state_total: {
+          label: 'Total',
+          key: 'states.total',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_ringing: {
+          label: 'Ringing',
+          key: 'states.states.ringing',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        state_oncall: {
+          label: 'Oncall',
+          key: 'states.states.oncall',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        line_out: {
+          label: 'Line Out',
+          key: 'line_out.name',
+          sortable: true
+        },
+        client: {
+          label: 'Client',
+          key: 'client.name',
+          sortable: true
+        },
+        agent: {
+          label: 'Agent',
+          key: 'agent.name',
+          sortable: true
+        },
+        target: {
+          label: 'Target',
+          key: 'calling',
+          sortable: true
+        },
         player: { label: 'Recordings' }
       },
       json_outbound_sessions_labels: {

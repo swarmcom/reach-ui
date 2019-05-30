@@ -52,10 +52,18 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        ts_ms: { label: 'Time', formatter: this.tsMsFormatter },
-        state_from: { label: 'From' },
-        state: { label: 'To' },
-        time: { label: 'Duration', formatter: this.durationFormatter }
+        ts_ms: {
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        state_from: { label: 'From', sortable: true },
+        state: { label: 'To', sortable: true },
+        time: {
+          label: 'Duration',
+          formatter: this.durationFormatter,
+          sortable: true
+        }
       },
       json_outbound_events_labels: {
         ts_ms: "Time",

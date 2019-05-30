@@ -125,22 +125,22 @@ export default {
         },
         line_in: {
           label: 'Line In',
-          formatter: this.nameFormatter,
+          key: 'line_in.name',
           sortable: true
         },
         client: {
           label: 'Client',
-          formatter: this.nameFormatter,
+          key: 'client.name',
           sortable: true
         },
         queue: {
           label: 'Queue',
-          formatter: this.nameFormatter,
+          key: 'queue.name',
           sortable: true
         },
         agent: {
           label: 'Agent',
-          formatter: this.nameFormatter,
+          key: 'agent.name',
           sortable: true
         },
         caller_ip: { label: 'IP', sortable: true },
