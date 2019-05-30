@@ -29,6 +29,7 @@
       hover
       :items="data"
       :fields="fields"
+      tbody-tr-class="default_cursor"
     />
     <b-btn @click="$router.go(-1)">
       Back
@@ -52,12 +53,28 @@ export default {
       query_params: {},
       data: [],
       fields: {
-        ts_start_ms: { label: 'Time', formatter: this.tsMsFormatter },
-        state_from: { label: 'From' },
-        state: { label: 'To' },
-        time: { label: 'Time', formatter: this.durationFormatter },
-        queue: { label: 'Queue', formatter: this.nameFormatter },
-        agent: { label: 'Agent', formatter: this.nameFormatter}
+        ts_start_ms: {
+          label: 'Time',
+          formatter: this.tsMsFormatter,
+          sortable: true
+        },
+        state_from: { label: 'From', sortable: true },
+        state: { label: 'To', sortable: true },
+        time: {
+          label: 'Time',
+          formatter: this.durationFormatter,
+          sortable: true
+        },
+        queue: {
+          label: 'Queue',
+          key: 'queue.name',
+          sortable: true
+        },
+        agent: {
+          label: 'Agent',
+          key: 'agent.name',
+          sortable: true
+        }
       },
       json_voicemail_events_labels: {
         ts_start_ms: "Time",

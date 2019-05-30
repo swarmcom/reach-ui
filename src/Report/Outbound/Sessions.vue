@@ -35,8 +35,8 @@
       hover
       :items="data"
       :fields="fields"
-      @row-clicked="click"
       tbody-tr-class="pointer"
+      @row-clicked="click"
     >
       <template
         slot="player"
