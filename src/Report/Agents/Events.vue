@@ -1,9 +1,7 @@
 <template>
   <div>
     <b-row>
-      <b-col>
-        <h3>Agents Events {{ header }}</h3>
-      </b-col>
+      <b-col><h3>Agents Events {{ header }}</h3></b-col>
     </b-row>
     <widget-query
       v-if="is_standalone()"
@@ -12,21 +10,26 @@
       @reset="reset"
     />
     <b-row style="margin-top: 20px">
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
-        <download-csv
-          :data="comp_agents_events"
-          :labels="json_agents_events_labels"
-          name="agents_events.csv"
+      <b-col>
+        <b-btn
+          class="cvs-download"
+          size="sm"
+          variant="light"
+          :disabled="data.length===0"
         >
-          <icon
-            style="color:#838383"
-            name="download"
-            scale="1"
-          />
-        </download-csv>
+          <download-csv
+            :data="comp_agents_events"
+            :labels="json_agents_events_labels"
+            name="agents_events.csv"
+          >
+            <icon
+              style="color:#838383"
+              name="download"
+              scale="1"
+            />
+            Download as CSV
+          </download-csv>
+        </b-btn>
       </b-col>
     </b-row>
     <b-table
@@ -45,13 +48,13 @@
         </b-btn>
       </b-col>
       <b-col>
-        <b-button
+        <b-btn
           variant="outline-primary"
           class="float-right"
           @click="more"
         >
           More
-        </b-button>
+        </b-btn>
       </b-col>
     </b-row>
   </div>

@@ -6,11 +6,9 @@
       </b-col>
     </b-row>
     <b-row style="margin-top: 20px">
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
+      <b-col>
         <download-csv
+          class="cvs-download"
           :data="comp_agents_session_events"
           :labels="json_agents_session_events_labels"
           name="agents_session_events.csv"
@@ -20,6 +18,7 @@
             name="download"
             scale="1"
           />
+          Download as CSV
         </download-csv>
       </b-col>
     </b-row>

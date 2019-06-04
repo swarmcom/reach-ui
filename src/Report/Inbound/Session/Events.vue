@@ -1,26 +1,29 @@
 <template>
   <div>
     <b-row>
-      <b-col>
-        <h3>Inbound session events</h3>
-      </b-col>
+      <b-col><h3>Inbound session events</h3></b-col>
     </b-row>
     <b-row style="margin-top: 10px">
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
-        <download-csv
-          :data="comp_inbound_events"
-          :labels="json_inbound_events_labels"
-          name="inbound_events.csv"
+      <b-col>
+        <b-btn
+          class="cvs-download"
+          size="sm"
+          variant="light"
+          :disabled="data.length===0"
         >
-          <icon
-            style="color:#838383"
-            name="download"
-            scale="1"
-          />
-        </download-csv>
+          <download-csv
+            :data="comp_inbound_events"
+            :labels="json_inbound_events_labels"
+            name="inbound_events.csv"
+          >
+            <icon
+              style="color:#838383"
+              name="download"
+              scale="1"
+            />
+            Download as CSV
+          </download-csv>
+        </b-btn>
       </b-col>
     </b-row>
     <b-table
