@@ -1,9 +1,7 @@
 <template>
   <div>
     <b-row>
-      <b-col>
-        <h3>Inbound traffic overview</h3>
-      </b-col>
+      <b-col><h3>Inbound traffic overview</h3></b-col>
     </b-row>
     <widget-query
       v-model="query_params"
@@ -12,21 +10,26 @@
       @reset="reset"
     />
     <b-row style="margin-top: 20px">
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
-        <download-csv
-          :data="comp_inbound_summary"
-          :labels="json_inbound_summary_labels"
-          name="inbound_summary.csv"
+      <b-col>
+        <b-btn
+          class="cvs-download"
+          size="sm"
+          variant="light"
+          :disabled="data.length===0"
         >
-          <icon
-            style="color:#838383"
-            name="download"
-            scale="1"
-          />
-        </download-csv>
+          <download-csv
+            :data="comp_inbound_summary"
+            :labels="json_inbound_summary_labels"
+            name="inbound_summary.csv"
+          >
+            <icon
+              style="color:#838383"
+              name="download"
+              scale="1"
+            />
+            Download as CSV
+          </download-csv>
+        </b-btn>
       </b-col>
     </b-row>
     <b-table

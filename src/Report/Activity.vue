@@ -1,39 +1,37 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <h3>Activity</h3>
-      </div>
-    </div>
+    <b-row>
+      <b-col><h3>Activity</h3></b-col>
+    </b-row>
     <widget-query
       v-model="query_params"
       enable="range:group_by"
       group-by="activity"
       @reset="reset"
     />
-    <div
-      class="row"
-      style="margin-top: 20px"
-    >
-      <div class="col">
-        <h4>Inbound</h4>
-      </div>
-    </div>
+    <b-row style="margin-top: 20px">
+      <b-col><h4>Inbound</h4></b-col>
+    </b-row>
     <b-row>
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
+      <b-col>
         <download-csv
           :data="comp_inbound"
           :labels="json_inbound_labels"
           name="inbound-activity.csv"
         >
-          <icon
-            style="color:#838383"
-            name="download"
-            scale="1"
-          />
+          <b-btn
+            class="cvs-download"
+            size="sm"
+            variant="light"
+            :disabled="inbound.length===0"
+          >
+            <icon
+              style="color:#838383"
+              name="download"
+              scale="1"
+            />
+            Download as CSV
+          </b-btn>
         </download-csv>
       </b-col>
     </b-row>
@@ -45,26 +43,29 @@
       :fields="inbound_fields"
       tbody-tr-class="default_cursor"
     />
-    <div class="row">
-      <div class="col">
-        <h4>Outbound</h4>
-      </div>
-    </div>
     <b-row>
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
+      <b-col><h4>Outbound</h4></b-col>
+    </b-row>
+    <b-row>
+      <b-col>
         <download-csv
           :data="comp_outbound"
           :labels="json_outbound_labels"
           name="outbound-activity.csv"
         >
-          <icon
-            style="color:#838383"
-            name="download"
-            scale="1"
-          />
+          <b-btn
+            class="cvs-download"
+            size="sm"
+            variant="light"
+            :disabled="outbound.length===0"
+          >
+            <icon
+              style="color:#838383"
+              name="download"
+              scale="1"
+            />
+            Download as CSV
+          </b-btn>
         </download-csv>
       </b-col>
     </b-row>

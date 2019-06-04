@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <h3>Productivity</h3>
-      </div>
-    </div>
+    <b-row>
+      <b-col><h3>Productivity</h3></b-col>
+    </b-row>
     <widget-query
       v-model="query_params"
       enable="range:group_by"
@@ -12,21 +10,26 @@
       @reset="reset"
     />
     <b-row style="margin-top: 20px">
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
-        <download-csv
-          :data="comp_productivity"
-          :labels="json_productivity_labels"
-          name="productivity.csv"
+      <b-col>
+        <b-btn
+          class="cvs-download"
+          size="sm"
+          variant="light"
+          :disabled="data.length===0"
         >
-          <icon
-            style="color:#838383"
-            name="download"
-            scale="1"
-          />
-        </download-csv>
+          <download-csv
+            :data="comp_productivity"
+            :labels="json_productivity_labels"
+            name="productivity.csv"
+          >
+            <icon
+              style="color:#838383"
+              name="download"
+              scale="1"
+            />
+            Download as CSV
+          </download-csv>
+        </b-btn>
       </b-col>
     </b-row>
     <b-table

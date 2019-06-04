@@ -1,9 +1,7 @@
 <template>
   <div>
     <b-row>
-      <b-col>
-        <h3>Agents sessions {{ header }}</h3>
-      </b-col>
+      <b-col><h3>Agents sessions {{ header }}</h3></b-col>
     </b-row>
     <widget-query
       v-model="query_params"
@@ -11,21 +9,26 @@
       @reset="reset"
     />
     <b-row style="margin-top: 20px">
-      <b-col
-        class="cvs-download"
-        title="export to csv"
-      >
-        <download-csv
-          :data="comp_agents_sessions"
-          :labels="json_agents_sessions_labels"
-          name="agents_sessions.csv"
+      <b-col>
+        <b-btn
+          class="cvs-download"
+          size="sm"
+          variant="light"
+          :disabled="data.length===0"
         >
-          <icon
-            style="color:#838383"
-            name="download"
-            scale="1"
-          />
-        </download-csv>
+          <download-csv
+            :data="comp_agents_sessions"
+            :labels="json_agents_sessions_labels"
+            name="agents_sessions.csv"
+          >
+            <icon
+              style="color:#838383"
+              name="download"
+              scale="1"
+            />
+            Download as CSV
+          </download-csv>
+        </b-btn>
       </b-col>
     </b-row>
     <b-table
@@ -44,13 +47,13 @@
         </b-btn>
       </b-col>
       <b-col>
-        <b-button
+        <b-btn
           variant="outline-primary"
           class="float-right"
           @click="more"
         >
           More
-        </b-button>
+        </b-btn>
       </b-col>
     </b-row>
   </div>
