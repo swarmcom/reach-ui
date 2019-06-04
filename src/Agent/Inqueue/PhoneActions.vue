@@ -106,6 +106,18 @@
       >
         Recording
       </b-button>
+      <b-btn
+        variant="outline-info"
+        title="Park a Call"
+        size="sm"
+        style="margin-left:2px"
+      >
+        <icon
+          name="phone"
+          scale="2"
+        />
+        <icon name="parking" />
+      </b-btn>
     </b-row>
   </div>
 </template>
