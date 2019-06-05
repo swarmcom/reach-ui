@@ -22,7 +22,9 @@
         <label
           id="UI Variant"
           class="col-3 col-form-label"
-        >UI Variant</label>
+        >
+          Profile Type
+        </label>
         <b-col cols="9">
           <select
             v-model="rec.ui"
