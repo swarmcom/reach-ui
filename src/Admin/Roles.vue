@@ -21,6 +21,7 @@
       striped
       hover
       small
+      sort-by="name"
       :items="roles"
       :fields="fields"
     >
