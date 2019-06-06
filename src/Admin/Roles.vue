@@ -21,6 +21,7 @@
       striped
       hover
       small
+      sort-by="name"
       :items="roles"
       :fields="fields"
     >
@@ -78,7 +79,7 @@ export default {
       this.$router.push(`/role/${data.id}`)
     },
     permissions (data) {
-      this.$router.push(`/role/${data.id}/permissions/${data.ui}`)
+      this.$router.push(`/role/${data.id}/permissions/${data.ui}/${data.name}`)
     }
   }
 }

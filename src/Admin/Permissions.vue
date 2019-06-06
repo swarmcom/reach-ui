@@ -1,25 +1,23 @@
 <template>
   <div>
     <b-row style="margin-bottom: 10px">
-      <b-col cols="2">
-        <h3>
-          Permissions:
-        </h3>
-      </b-col>
       <b-col>
-        <b-btn
-          variant="link"
-          @click="selectAll()"
-        >
-          all
-        </b-btn>
-        |
-        <b-btn
-          variant="link"
-          @click="unselectAll()"
-        >
-          none
-        </b-btn>
+        <h3>
+          Permissions - {{ roleName }}:
+          <b-btn
+            variant="link"
+            @click="selectAll()"
+          >
+            all
+          </b-btn>
+          |
+          <b-btn
+            variant="link"
+            @click="unselectAll()"
+          >
+            none
+          </b-btn>
+        </h3>
       </b-col>
     </b-row>
     <b-row>
@@ -156,7 +154,7 @@
           </label>
         </b-col>
         <b-row
-          v-if="ui != 'agent'"
+          v-if="ui != 'agent' && effective['monitor-ui']"
           style="margin-top: 15px"
         >
           <b-col cols="6">
@@ -200,7 +198,10 @@
             {{ names[p].name }}
           </label>
         </b-col>
-        <b-row style="margin-top: 15px">
+        <b-row 
+          v-if="effective['profile-ui']"
+          style="margin-top: 15px"
+        >
           <b-col cols="6">
             <h4>
               Agent Profile:
@@ -223,7 +224,7 @@
           </b-col>
         </b-row>
         <b-col
-          v-for="p of agent_features"
+          v-for="p of visibleProfileTabs"
           :key="p"
           offset="1"
           class="form-check"
@@ -244,6 +245,9 @@
         </b-col>
       </b-col>
     </b-row>
+    <b-btn @click="$router.go(-1)">
+      Back
+    </b-btn>
   </div>
 </template>
 
@@ -256,6 +260,10 @@ export default {
       default: ""
     },
     ui: {
+      type: String,
+      default: ""
+    },
+    roleName: {
       type: String,
       default: ""
     }
@@ -380,8 +388,15 @@ export default {
         return this.tabs
       }
     },
+    visibleProfileTabs: function () {
+      if (this.effective['profile-ui']) {
+        return this.agent_features
+      } else {
+        return []
+      }
+    },
     visibleCallFeatures: function () {
-      if (this.ui == 'agent') {
+      if (this.ui == 'agent' || !this.effective['monitor-ui']) {
         return []
       } else {
         return this.call_features
