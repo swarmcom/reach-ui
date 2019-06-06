@@ -103,6 +103,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: Admin, children: AdminRoutes },
     { path: '/help', component: Help },
+    { path: '*', redirect: '/' }
   ]
 })
 

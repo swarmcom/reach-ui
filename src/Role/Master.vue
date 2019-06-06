@@ -90,7 +90,8 @@ const router = new VueRouter({
     { path: '/kam', component: Kam, children: KamRoutes },
     { path: '/params', component: Params },
     { path: '/help', component: Help },
-    { path: '/', component: Main }
+    { path: '/', component: Main },
+    { path: '*', redirect: '/' }
   ]
 })
 
