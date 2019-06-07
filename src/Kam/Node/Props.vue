@@ -54,7 +54,7 @@
           class="btn btn-primary"
           @click="onCommit"
         >
-          Commit
+          Save
         </button>
         <button
           class="btn btn-outline-primary"

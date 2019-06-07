@@ -35,7 +35,7 @@
           variant="primary"
           @click="commit"
         >
-          Commit
+          Save
         </b-btn>
         <b-btn
           class="pointer"

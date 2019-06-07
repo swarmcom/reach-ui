@@ -94,7 +94,7 @@
         class="btn btn-primary pointer"
         @click="onCommit"
       >
-        Commit
+        Save
       </button>
       <button
         class="btn btn-outline-primary float-right pointer"

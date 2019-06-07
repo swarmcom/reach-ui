@@ -75,7 +75,7 @@
           class="btn btn-sm btn-primary float-right pointer"
           @click="commit"
         >
-          Commit
+          Save
         </button>
       </div>
     </div>

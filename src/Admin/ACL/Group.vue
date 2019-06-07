@@ -24,7 +24,7 @@
           variant="primary"
           @click="onCommit"
         >
-          Commit
+          Save
         </b-btn>
         <b-btn
           variant="outline-primary"
