@@ -55,7 +55,6 @@
             v-model="effective[p]"
             class="form-check-input"
             type="checkbox"
-            @change="onChange(p)"
           >
           <label
             class="form-check-label"
@@ -100,7 +99,6 @@
             v-model="effective[p]"
             class="form-check-input"
             type="checkbox"
-            @change="onChange(p)"
           >
           <label
             class="form-check-label"
@@ -144,7 +142,6 @@
             v-model="effective[p]"
             class="form-check-input"
             type="checkbox"
-            @change="onChange(p)"
           >          
           <label
             class="form-check-label"
@@ -189,7 +186,6 @@
             v-model="effective[p]"
             class="form-check-input"
             type="checkbox"
-            @change="onChange(p)"
           >
           <label
             class="form-check-label"
@@ -234,7 +230,6 @@
             v-model="effective[p]"
             class="form-check-input"
             type="checkbox"
-            @change="onChange(p)"
           >
           <label
             class="form-check-label"
@@ -245,8 +240,17 @@
         </b-col>
       </b-col>
     </b-row>
-    <b-btn @click="$router.go(-1)">
-      Back
+    <b-btn
+      variant="primary"
+      @click="onCommit"
+    >
+      Save
+    </b-btn>
+    <b-btn
+      variant="outline-primary"
+      @click="onCancel"
+    >
+      Cancel
     </b-btn>
   </div>
 </template>
@@ -432,8 +436,14 @@ export default {
     setKey (key, value) {
       if (this.isVisible(key)) {
         this.$agent.vm.$set(this.effective, key, value)
-        this.onChange(key)
       }
+    },
+    onCancel () {
+      this.$router.go(-1)
+    },
+    onCommit () {
+      Object.keys(this.names).forEach(key => { if (this.isVisible(key)) { this.onChange(key) } })
+      this.$router.go(-1)
     },
     selectAll () {
       Object.keys(this.names).forEach(key => this.setKey(key, true))
