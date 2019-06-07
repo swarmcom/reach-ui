@@ -52,7 +52,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <small>
-            Agent &copy; 2018 eZuce
+            Agent &copy; 2019 eZuce
             UI: <a
               target="_blank"
               :href="ref_ui_uri()"

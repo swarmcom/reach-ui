@@ -143,7 +143,7 @@
       <b-container>
         <b-row class="justify-content-center">
           <small>
-            Supervisor &copy; 2018 eZuce
+            Supervisor &copy; 2019 eZuce
             UI: <a
               target="_blank"
               :href="ref_ui_uri()"

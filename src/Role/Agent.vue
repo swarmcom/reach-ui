@@ -136,7 +136,7 @@
       <b-container>
         <b-row class="justify-content-center">
           <small>
-            Agent &copy; 2018 eZuce
+            Agent &copy; 2019 eZuce
             UI: <a
               target="_blank"
               :href="ref_ui_uri()"
