@@ -138,6 +138,10 @@ export default {
   },
   methods: {
     query (query) {
+      if(query.agent_groups > 0) {
+        query.sessions_agent_groups = query.agent_groups
+        delete query.agent_groups
+      }
       return this.$agent.p_mfa('ws_report', 'query', ['report_agent', 'events', query])
     },
     click ({uuid}) {
