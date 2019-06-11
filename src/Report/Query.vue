@@ -358,9 +358,9 @@ export default {
       if (this.enabled.range && this.date_start) { Q.date_start = parseInt(this.date_start) }
       if (this.enabled.range && this.date_end) { Q.date_end = parseInt(this.date_end) }
       if (this.enabled.agents && this.agents.length > 0 ) { Q.agents = this.agents.map(agent => agent.id) }
-      if (this.enabled.agent_groupss && this.agent_groups > 0 ) { Q.agent_groups = this.agent_groups.map(group => group.id) }
+      if (this.enabled.agent_groups && this.agent_groups.length > 0 ) { Q.agent_groups = this.agent_groups.map(group => group.id) }
       if (this.enabled.queues && this.queues.length > 0 ) { Q.queues = this.queues.map(queue => queue.id) }
-      if (this.enabled.queue_groupss && this.queue_groups > 0 ) { Q.queue_groups = this.queue_groups.map(group => group.id) }
+      if (this.enabled.queue_groups && this.queue_groups.length > 0 ) { Q.queue_groups = this.queue_groups.map(group => group.id) }
       if (this.enabled.clients && this.clients.length > 0 ) { Q.clients = this.clients.map(client => client.id) }
       if (this.enabled.line_ins && this.line_ins.length > 0 ) { Q.line_ins = this.line_ins.map(line_in => line_in.id) }
       if (this.enabled.line_outs && this.line_outs.length > 0 ) { Q.line_outs = this.line_outs.map(line_out => line_out.id) }
