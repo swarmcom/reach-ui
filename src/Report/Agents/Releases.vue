@@ -107,6 +107,10 @@ export default {
   },
   methods: {
     query (Query) {
+      if(Query.agent_groups > 0) {
+        Query.sessions_agent_groups = Query.agent_groups
+        delete Query.agent_groups
+      }
       return this.$agent.p_mfa('ws_report', 'query', ['report_releases', 'summary', Query])
     },
     events ({item}) {
