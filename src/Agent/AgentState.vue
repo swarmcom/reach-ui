@@ -144,6 +144,26 @@
           />
           <div>Wrap Up</div>
         </div>
+        <div
+            v-if="a.state == 'intransfer'"
+            class="agent-state-transferring"
+        >
+          <icon
+              name="phone"
+              scale="2.7"
+              style="transform: rotate(45deg);"
+          />
+          <icon
+              name="arrow-right"
+              scale="1"
+          />
+          <icon
+              name="phone"
+              scale="2.7"
+              style="transform: rotate(45deg);"
+          />
+          <div style="padding-top: 15px;">Transferring Call</div>
+        </div>
       </div>
     </div>
     <div
