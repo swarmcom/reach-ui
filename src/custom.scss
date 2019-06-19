@@ -219,6 +219,17 @@ body {
   height: 100%;
 }
 
+.agent-state-transferring {
+  background: #d4fcbb;
+  color: $agent-state-icon-color;
+  padding-top: 11px;
+  padding-left: 0px;
+  text-align: center;
+  width: $agent-state-width;
+  font-size: $agent-state-font;
+  height: 100%;
+}
+
 .agent-state-button {
   color: $agent-state-icon-color !important;
   background-color: #e6e6e6 !important;
