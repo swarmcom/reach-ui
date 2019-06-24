@@ -191,7 +191,7 @@ const router = new VueRouter({
     { path: '/help', component: Help },
     { path: '/live', component: Live, children: LiveRoutes },
     { path: '/reports', component: Reports, children: ReportRoutes },
-    { path: '/', redirect: 'main' }
+    { path: '/', redirect: 'live' }
   ]
 })
 
@@ -212,7 +212,7 @@ export default {
   data () {
     return {
       date: null,
-      path: '/main'
+      path: '/live'
     }
   },
   mounted () {
