@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import JsonExcel from 'vue-json-excel'
 import JsonCSV from 'vue-json-csv'
 
 import Agent from '@/Role/Agent'
@@ -22,7 +21,6 @@ import AgentAPI from '@/agent-api-plugin'
 import '@/widgets'
 
 Vue.component('icon', Icon)
-Vue.component('downloadExcel', JsonExcel)
 Vue.component('downloadCsv', JsonCSV)
 
 Vue.use(AgentAPI)
