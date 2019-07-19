@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import Popper from 'popper.js'
 
 export default {
@@ -29,28 +28,32 @@ export default {
     }
   },
   mounted () {
-    this.reference = $(document.getElementById(this.target))
-    this.reference.on('click', ev => this.onclick(ev) )
-    this.reference.css('cursor', 'help')
+    this.reference = document.getElementById(this.target)
+    if (this.reference){
+      this.reference.addEventListener("click", this.onclick)
+      this.reference.style.cursor = "help"
+    }
   },
   beforeDestroy () {
-    this.reference.off('click')
+    if (this.reference) {
+      this.reference.removeEventListener("click")
+    }
   },
   methods: {
     show (ev) {
-      $('body').click()
+      document.body.click()
       if(! this.visible) {
         this.visible = true
         ev.stopPropagation()
         this.ref = new Popper(this.reference, this.$el, { 'placement': 'bottom-start' })
-        $(this.$el).show()
+        this.$el.style.display = "block"
         window.addEventListener('click', this.hide)
       }
     },
     hide () {
       if (this.visible) {
         this.visible = false
-        $(this.$el).hide()
+        this.$el.style.display = "none"
         this.ref.destroy()
         window.removeEventListener('click', this.hide)
       }

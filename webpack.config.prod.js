@@ -22,8 +22,6 @@ module.exports = {
     ],
     vendor: [
       "vue",
-      "jquery",
-      "bootstrap",
       "bootstrap-vue",
       "vue-codemirror",
       "vue-awesome",
@@ -101,9 +99,6 @@ module.exports = {
       from: 'src/config.js', to: 'config.js'
     }]),
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default']
     }),
     new VueLoaderPlugin()

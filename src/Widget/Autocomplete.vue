@@ -2,10 +2,10 @@
   <span>
     <div class="input-group">
       <input
-        id="autocomplete"
+        ref="reference"
         v-model="text"
         type="text"
-        class="reference form-control"
+        class="form-control"
         :placeholder="placeholder"
         @keydown="keydown"
       >
@@ -23,7 +23,10 @@
         </button>
       </span>
     </div>
-    <div class="popper dropdown-menu">
+    <div
+      ref="popper"
+      class="dropdown-menu"
+    >
       <button
         v-for="(opt, i) in options"
         :key="i"
@@ -36,7 +39,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import Popper from 'popper.js'
 
 export default {
@@ -85,8 +87,8 @@ export default {
     }
   },
   mounted () {
-    this.reference = $('.reference', this.$el)
-    this.popper = $('.popper', this.$el)
+    this.reference = this.$refs.reference
+    this.popper = this.$refs.popper
     window.addEventListener('click', this.clickListener)
   },
   beforeDestroy () {
@@ -103,7 +105,7 @@ export default {
       if (this.options.length > 0) {
         this.ref = new Popper(this.reference, this.popper, { 'placement': 'bottom-start' })
         this.visible = true
-        this.popper.show()
+        this.popper.style.display = "block"
       }
       else {
         this.hide()
@@ -112,7 +114,7 @@ export default {
     hide() {
       if (this.visible) {
         this.visible = false
-        this.popper.hide()
+        this.popper.style.display = "none"
         this.ref.destroy()
       }
     },
@@ -124,7 +126,7 @@ export default {
     },
     display () {
       if (!this.visible) {
-        $("#autocomplete", this.$el).focus()
+        this.$refs.reference.focus()
         this.async_query(this.text)
       }
     },
