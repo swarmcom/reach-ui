@@ -36,7 +36,7 @@ export default {
   },
   beforeDestroy () {
     if (this.reference) {
-      this.reference.removeEventListener("click")
+      this.reference.removeEventListener("click", this.onclick)
     }
   },
   methods: {
