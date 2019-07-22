@@ -1,26 +1,14 @@
 var path = require('path')
 var webpack = require('webpack')
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode: 'development',
   entry: {
     build: [
       'babel-polyfill',
       './src/main.js'
-    ],
-    vendor: [
-      "vue",
-      "jquery",
-      "bootstrap",
-      "bootstrap-vue",
-      "vue-codemirror",
-      "vue-awesome",
-      "vue-notification",
-      "vue-router",
-      "vuejs-datepicker",
-      "popper.js",
-      "chart.js"
     ]
   },
   output: {
@@ -39,14 +27,39 @@ module.exports = {
       } } },
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.(png|jpg|gif|svg)$/, loader: 'file-loader', options: { name: '[name].[ext]?[hash]' } },
-      { test: /\.css$/, use: [ { loader: "style-loader" }, { loader: "css-loader" } ] },
+      { test: /\.css$/, use: [ 
+        { loader: "style-loader" }, 
+        { 
+          loader: "css-loader",
+        }
+      ] },
       { test: /\.scss$/, use: [
         { loader: "style-loader" },
         { loader: "css-loader" },
         { loader: "postcss-loader", options: { plugins: function() { return [require('precss'), require('autoprefixer')] } } },
         { loader: "sass-loader" }
-      ] }
+      ] },
+      {
+        test: /\.styl(us)?$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'stylus-loader'
+        ]
+      }
     ]
+  },
+  node: {
+    // prevent webpack from injecting useless setImmediate polyfill because Vue
+    // source contains it (although only uses it if it's native).
+    setImmediate: false,
+    // prevent webpack from injecting mocks to Node native modules
+    // that does not make sense for the client
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -64,33 +77,8 @@ module.exports = {
       from: 'src/config.js', to: 'config.js'
     }]),
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default']
-    })
+    }),
+    new VueLoaderPlugin()
   ]
-}
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.LoaderOptionsPlugin({ 
-      minimize: true,
-      optimization: {
-        options: {
-          minimize: true,
-          splitChunks: {
-            cacheGroups: {
-              vendor: {
-                name: "vendor",
-                minChunks: Infinity
-              }
-            }
-          }
-        }
-      }
-    })
-  ])
 }
