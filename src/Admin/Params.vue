@@ -14,6 +14,7 @@
       <b-col cols="3">
         <input
           v-model="param.key"
+          v-if="isVisible(param.key)"
           type="text"
           class="form-control"
           readonly
@@ -22,6 +23,7 @@
       <b-col>
         <input
           v-model="param.value"
+          v-if="isVisible(param.key)"
           type="text"
           class="form-control"
         >
@@ -90,6 +92,13 @@ export default {
     cancel: async function () {
       this.$router.push('/agents')
     },
+    isVisible (key) {
+      if (key === 'admin_role_id' || key === 'agent_role_id' || key === 'supervisor_role_id') {
+        return false
+      } else {
+        return true
+      }
+    }
   }
 }
 </script>

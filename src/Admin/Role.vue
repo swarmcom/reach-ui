@@ -29,8 +29,8 @@
           <select
             v-model="rec.ui"
             class="custom-select"
+            :disabled="rec.ui==='admin'"
           >
-            <option />
             <option
               v-for="ui in uis"
               :key="ui"
@@ -66,6 +66,7 @@
           class="float-right pointer"
           variant="danger"
           @click="onDelete"
+          :disabled="rec.ui==='admin'"
         >
           Delete
         </b-btn>
